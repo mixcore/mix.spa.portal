@@ -22,7 +22,8 @@ var dest = '.';//For publish folder use "./bin/Release/PublishOutput/";
 //C:\\Git\\GitHub\\Queen-Beauty\\QueenBeauty\\
 
 var paths = {
-    webroot: "./dist/Mix.Cms.Web/wwwroot/", //"../mix.core/src/Mix.Cms.Web/wwwroot/"
+    //webroot: "./dist/Mix.Cms.Web/wwwroot/",
+    webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", 
     webapp: "./src/app/", //app
     scriptLib: "./src/lib/", //app
     styleLib: "./src/lib/", //app
