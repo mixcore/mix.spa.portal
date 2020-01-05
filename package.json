@@ -6,6 +6,7 @@
     "gulp-concat": "",
     "gulp-cssmin": "",
     "gulp-htmlmin": "",
+    "gulp-remove-html-comments": "^1.0.1",
     "gulp-uglify": "",
     "gulp-uglify-es": "",
     "pump": "",
