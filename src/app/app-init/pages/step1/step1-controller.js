@@ -33,10 +33,6 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
         $scope.changeTypeDB = async function (type) {
             $scope.initCmsModel.isUseLocal = type;
         };
-        $scope.loadProgress = async function (percent) {
-            var elem = document.getElementsByClassName("progress-bar")[0]; 
-            elem.style.width = percent + '%'; 
-        };
         $scope.initCmsModel = {
             isUseLocal: true,
             localDbConnectionString: '',

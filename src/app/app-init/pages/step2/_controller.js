@@ -9,10 +9,6 @@ app.controller('Step2Controller',
         confirmPassword: '',
         isAgreed: false
     }
-    $scope.loadProgress = async function (percent) {
-        var elem = document.getElementsByClassName("progress-bar")[0]; 
-        elem.style.width = percent + '%'; 
-    };
     $scope.register = async function () {
         if (!$scope.user.isAgreed) {
             var ele = document.getElementById("notTNCYetChecked");
