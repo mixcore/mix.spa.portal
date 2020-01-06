@@ -1,12 +1,20 @@
 <!-- Main content -->
 <section>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isSelectAll"
-                    ng-change="$ctrl.selectAll($ctrl.selectedList.isSelectAll, $ctrl.exportData.pages)"
+                    ng-change="$ctrl.selectAll($ctrl.exportData.pages)"
                     id="switchSelectAllPages" />
                 <label class="custom-control-label" for="switchSelectAllPages">Select all pages</label>
+            </div>            
+        </div>
+        <div class="col-md-6">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isExportData"
+                    ng-change="$ctrl.selectAll($ctrl.exportData.pages)"
+                    id="switchSelectAllData" />
+                <label class="custom-control-label" for="switchSelectAllData">With Data</label>
             </div>
         </div>
     </div>

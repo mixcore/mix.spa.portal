@@ -9,12 +9,13 @@ app.component('themeExportAttributeSets', {
             //     e.data = angular.copy($rootScope.filterArray(e.data, ['isActived'], [true]));
             // });
         };    
-        ctrl.selectAll = function (isSelectAll, arr) {
+        ctrl.selectAll = function (arr) {
             ctrl.selectedList.data = [];
             angular.forEach(arr, function (e) {
-                e.isActived = isSelectAll;
-                ctrl.updateAttributeSetExport();
+                e.isActived = ctrl.selectedList.isSelectAll;
+                e.isExportData = ctrl.selectedList.isExportData;
             });
+            ctrl.updateAttributeSetExport();
         };        
     }],
     bindings: {

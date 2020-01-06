@@ -23,10 +23,11 @@ app.component('themeExportPages', {
 
 
         };
-        ctrl.selectAll = function (isSelectAll, arr) {
+        ctrl.selectAll = function (arr) {
             ctrl.selectedList.data = [];
             angular.forEach(arr, function (e) {
-                e.isActived = isSelectAll;
+                e.isActived = ctrl.selectedList.isSelectAll;
+                e.isExportData = ctrl.selectedList.isExportData;
             });
             ctrl.updatePageExport();
         };        
