@@ -349,17 +349,17 @@ gulp.task("build", gulp.series('clean:js', 'min:js', 'min:css', "min:views"));
 gulp.task("buildp", gulp.series('min:portalApp', 'min:appCss', 'min:portalCss', "min:views"));
 
 gulp.task('watch:html', function () {
-    gulp.watch('./app/**/**/*.html', gulp.series('min:views'));
-    gulp.watch('./app/**/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
-    gulp.watch('./app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
+    gulp.watch('./src/app/**/**/*.html', gulp.series('min:views'));
+    gulp.watch('./src/app/**/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
+    gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
 });
 
 gulp.task('watch', function () {
-    gulp.watch('./app/**/**/*.html', gulp.series('min:views'));
-    gulp.watch('./app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
-    gulp.watch('./app/app-shared/**/*.js', gulp.series('min:sharedApp'));
-    gulp.watch('./app/app-/**/*.js', gulp.series('min:sharedApp'));
-    gulp.watch('./app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
+    gulp.watch('./src/app/**/**/*.html', gulp.series('min:views'));
+    gulp.watch('./src/app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
+    gulp.watch('./src/app/app-shared/**/*.js', gulp.series('min:sharedApp'));
+    gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
+    gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
 });
 
 // [Watch Portal] View & Portal's js & CSS > gulp watch:html
