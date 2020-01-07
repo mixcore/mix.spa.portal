@@ -20,6 +20,6 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm i
-        gulp build:portal
+        gulp build:portal --gulpfile gulpfile-dist.js
       env:
         CI: true
