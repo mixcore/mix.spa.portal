@@ -41,6 +41,9 @@ jobs:
         git clone --branch develop https://github.com/mixcore/mix.core.git ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/
         ls
         cp -a ${GITHUB_WORKSPACE}/dist/. ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/src/
+        cd ..
+        cd mix.core
+        ls
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mix.core.git
         git add .
         # Only commit and push if we have changes
