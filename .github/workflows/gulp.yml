@@ -38,7 +38,7 @@ jobs:
         # git remote set-url origin https://x-access-token:mixcore@github.com/mix.core.git
         # Checkout the branch so we can push back to it
         # git checkout develop
-        git clone https://x-access-token:mixcore@github.com/mix.core.git ${GITHUB_WORKSPACE}
+        git clone https://x-access-token:mixcore@github.com/mix.core.git ${HOME}
         ls
         # git add .
         # Only commit and push if we have changes
