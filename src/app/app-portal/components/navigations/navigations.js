@@ -1,6 +1,6 @@
 ﻿
 modules.component('navs', {
-    templateUrl: '/app/app-shared/components/navigations/navigations.html',
+    templateUrl: '/app/app-portal/components/navigations/navigations.html',
     bindings: {
         prefix: '=',
         detailsUrl: '=',
