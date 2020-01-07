@@ -23,3 +23,20 @@ jobs:
         gulp build:portal --gulpfile gulpfile-dist.js
       env:
         CI: true
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v2.3.2
+      with:
+        # The name of the user that will be displayed as the author of the commit
+        author_name: # optional
+        # The email of the user that will be displayed as the author of the commit
+        author_email: # optional
+        # The directory where your repository is located. You should use actions/checkout first to set it up
+        cwd: # optional, default is .
+        # Whether to use the force option on git add, in order to bypass eventual gitignores
+        force: # optional, default is false
+        # The message for the commit
+        message: # optional, default is Commit from GitHub Actions
+        # The path to stage files from
+        path: # optional, default is .
+        # The pattern that mathces file names
+        pattern: # optional, default is *.*
