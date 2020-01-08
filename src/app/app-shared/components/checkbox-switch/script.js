@@ -5,7 +5,6 @@ modules.component('checkboxSwitch', {
         var ctrl = this;
         ctrl.guid = $rootScope.generateUUID();
         ctrl.$onInit = function(){
-            ctrl.d
         };
         ctrl.limString = function(str, max){          
             if(str){  

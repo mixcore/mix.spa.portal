@@ -17,29 +17,39 @@ modules.component('attributeSetValues', {
     controller: ['$rootScope', '$scope', 'AttributeSetDataService',
         function ($rootScope, $scope, dataService) {
             var ctrl = this;
-            ctrl.selectedList = {
-                action: 'Delete',
-                data: []
-            };
             ctrl.actions = ['Delete', 'SendMail'];
             ctrl.filterTypes = ['contain', 'equal'];
-
-            ctrl.selectedProp = null;            
+            ctrl.fields = [];
+            ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.select = function (id, isSelected) {
-                if (isSelected) {
-                    ctrl.selectedList.data.push(id);
+            ctrl.$onInit = function(){
+                if(!ctrl.selectedList){
+                    ctrl.selectedList = {
+                        action: 'Delete',
+                        data: []
+                    };
+                }
+                // if(ctrl.data[0] && ctrl.data[0].fields){
+                //     ctrl.fields = angular.copy(ctrl.data[0].fields);
+                // }
+            };
+            ctrl.select = function (item) {
+                if (item.isSelected) {
+                    var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
+                    if (!current) {
+                        ctrl.selectedList.push(item);
+                    }
                 }
                 else {
-                    $rootScope.removeObject(ctrl.selectedList.data, id);
+                    $rootScope.removeObject(ctrl.selectedList, item.id);
                 }
             };
             ctrl.selectAll = function (isSelected) {
-                ctrl.selectedList.data = [];
+                ctrl.selectedList = [];
                 angular.forEach(ctrl.data, function (e) {
                     e.isSelected = isSelected;
                     if (isSelected) {
-                        ctrl.selectedList.data.push(e.id);
+                        ctrl.selectedList.push(e.id);
                     }
                 });
 
@@ -47,7 +57,7 @@ modules.component('attributeSetValues', {
             ctrl.filter = function () {
             };
             ctrl.sendMail = async function (data) {
-                ctrl.onSendMail({data: data});
+                ctrl.onSendMail({ data: data });
             };
             ctrl.apply = async function () {
                 ctrl.onApplyList();
