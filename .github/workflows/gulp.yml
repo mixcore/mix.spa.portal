@@ -23,17 +23,17 @@ jobs:
         gulp build:portal --gulpfile gulpfile-dist.js
       env:
         CI: true
-    - name: Commit to repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
-        COMMIT_MSG: |
-          Commit latest code from mix.spa.portal
-          skip-checks: true
+    - name: Commit files
       run: |
-        git config --global user.email "i.love.to.smile.around@gmail.com"
-        git config --global user.name "smilefounder"
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        git checkout master
-        git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin master)
+        git config --local user.email "i.love.to.smile.around@gmail.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Add changes" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Trigger copy
+      run: |
         curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core.git/dispatches --data '{"event_type": "build_application"}'
+
+        
