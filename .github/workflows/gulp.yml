@@ -31,13 +31,24 @@ jobs:
           skip-checks: true
       run: |
         # Hard-code user configuration
-        git config user.email "i.love.to.smile.around@gmail.com"
-        git config user.name "smilefounder"
+        git config --global user.email "i.love.to.smile.around@gmail.com"
+        git config --global user.name "smilefounder"
         # Update origin with token
-        # git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        git remote set-url origin https://x-access-token:mixcore@github.com/mix.core.git
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        # git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mix.core.git
         # Checkout the branch so we can push back to it
-        git checkout develop
+        # git checkout develop
+        # git clone --branch develop https://github.com/mixcore/mix.core.git ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/
+        #ls
+        # cp -a ${GITHUB_WORKSPACE}/dist/. ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/src/
+        #ls
+        # cd ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/
+        #ls
+        #git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mixcore/mix.core.git
         git add .
         # Only commit and push if we have changes
-        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin master)
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin develop)
+        curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core.git/dispatches --data '{"event_type": "build_application"}'
+        
+        
+        
