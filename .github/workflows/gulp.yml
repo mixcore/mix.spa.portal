@@ -42,9 +42,7 @@ jobs:
         ls
         cp -a ${GITHUB_WORKSPACE}/dist/. ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/src/
         ls
-        cd ..
-        ls
-        cd mix.core
+        cd ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/
         ls
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mix.core.git
         git add .
