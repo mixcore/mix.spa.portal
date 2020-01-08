@@ -31,8 +31,8 @@ jobs:
           skip-checks: true
       run: |
         # Hard-code user configuration
-        git config user.email "i.love.to.smile.around@gmail.com"
-        git config user.name "smilefounder"
+        git config --global user.email "i.love.to.smile.around@gmail.com"
+        git config --global user.name "smilefounder"
         # Update origin with token
         # git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         # git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mix.core.git
