@@ -44,7 +44,7 @@ jobs:
         #ls
         cd ${HOME}/work/${GITHUB_REPOSITORY}/mix.core/
         #ls
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mix.core.git
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/mixcore/mix.core.git
         git add .
         # Only commit and push if we have changes
         git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin develop)
