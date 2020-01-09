@@ -280,6 +280,7 @@ gulp.task("clean:portalApp", function (cb) {
 gulp.task("min:portalApp", function (cb) {
     return gulp.src(paths.appPortal.src, { base: "." })
         .pipe(concat(paths.appPortal.dest))
+        .pipe(header('/* ' + ((new Date()).getTime()) + ' */'))
         //.pipe(uglify())
         // .pipe(minify(paths.jsOptions))
         .pipe(gulp.dest(dest));
@@ -299,6 +300,7 @@ gulp.task("min:portalAppRequired", function (cb) {
         .pipe(concat(paths.appPortalRequired.dest))
         .pipe(uglify())
         .pipe(minify(paths.jsOptions))
+        .pipe(header('/* ' + ((new Date()).getTime()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
