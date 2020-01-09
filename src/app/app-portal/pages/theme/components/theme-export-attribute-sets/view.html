@@ -19,7 +19,7 @@
         </div>
     </div>
     <hr>
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-left">
         <div class="col-md-4 mb-2" ng-repeat="attributeSet in $ctrl.exportData.attributeSets track by attributeSet.id">
             <checkbox-switch data="attributeSet" callback="$ctrl.updateAttributeSetExport()" description="attributeSet.title">
             </checkbox-switch>
