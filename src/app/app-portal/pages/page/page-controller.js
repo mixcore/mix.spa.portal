@@ -1,21 +1,23 @@
 ﻿'use strict';
 app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$location', '$routeParams',
-            'PageService','PagePostService','PagePageService', 'UrlAliasService',
-    function ($scope, $rootScope, ngAppSettings, $location, $routeParams, 
-            service, pagePostService, pagePageService, urlAliasService) {
-        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);        
-        $scope.request.query = 'level=0';       
-        $scope.pageData={
-            posts:[],
-            products:[],
-            data:[],
+    'PageService', 'PagePostService', 'PagePageService', 'UrlAliasService',
+    function ($scope, $rootScope, ngAppSettings, $location, $routeParams,
+        service, pagePostService, pagePageService, urlAliasService) {
+        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        $scope.request.query = 'level=0';
+        $scope.selectedCategories = [];
+        $scope.selectedTags = [];
+        $scope.pageData = {
+            posts: [],
+            products: [],
+            data: [],
         };
         $scope.postRequest = angular.copy(ngAppSettings.request);
         $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
         $scope.loadPosts = async function () {
             $rootScope.isBusy = true;
             var id = $routeParams.id;
-            $scope.postRequest.query += '&page_id='+id;
+            $scope.postRequest.query += '&page_id=' + id;
             var response = await pagePostService.getList($scope.postRequest);
             if (response.isSucceed) {
                 $scope.pageData.posts = response.data;
@@ -28,16 +30,33 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                 $scope.$apply();
             }
         };
-        $scope.getListSuccessCallback = function(){
+        $scope.getSingleSuccessCallback = function () {
+
+            if ($scope.activedData.sysCategories) {
+                angular.forEach($scope.activedData.sysCategories, function (e) {
+                    e.data.isActived = true;
+                    $scope.selectedCategories.push(e.data);
+                });
+            }
+
+            if ($scope.activedData.sysTags) {
+                angular.forEach($scope.activedData.sysTags, function (e) {
+                    e.data.isActived = true;
+                    $scope.selectedTags.push(e.data);
+                });
+            }
+
+        }
+        $scope.getListSuccessCallback = function () {
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
         };
-        $scope.showChilds = function(id){
-            $('#childs-'+ id).toggleClass('collapse');
+        $scope.showChilds = function (id) {
+            $('#childs-' + id).toggleClass('collapse');
         };
         $scope.updateInfos = async function (index) {
             $scope.data.items.splice(index, 1);
             $rootScope.isBusy = true;
-            var startIndex = $scope.data.items[0].priority-1;
+            var startIndex = $scope.data.items[0].priority - 1;
             for (var i = 0; i < $scope.data.items.length; i++) {
                 $scope.data.items[i].priority = startIndex + i + 1;
             }
@@ -55,17 +74,17 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
             }
         }
         $scope.goUp = async function (items, index) {
-            items[index].priority -= 1; 
-            items[index-1].priority += 1;             
+            items[index].priority -= 1;
+            items[index - 1].priority += 1;
         }
-        
+
         $scope.goDown = async function (items, index) {
-            items[index].priority += 1; 
-            items[index-1].priority -= 1;             
+            items[index].priority += 1;
+            items[index - 1].priority -= 1;
         }
-        
+
         $scope.updatePagePage = async function (items) {
-            $rootScope.isBusy = true;            
+            $rootScope.isBusy = true;
             var resp = await pagePageService.updateInfos(items);
             if (resp && resp.isSucceed) {
                 $scope.activedPage = resp.data;
@@ -76,29 +95,56 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                 if (resp) { $rootScope.showErrors(resp.errors); }
                 $rootScope.isBusy = false;
                 $scope.$apply();
-            }          
+            }
         }
         // $scope.saveSuccessCallback = function () {
         //     $location.url($scope.referrerUrl);
         // }
 
-        $scope.addAlias = async function(){
+        $scope.addAlias = async function () {
             var getAlias = await urlAliasService.getSingle();
-            if(getAlias.isSucceed){                
+            if (getAlias.isSucceed) {
                 $scope.activedData.urlAliases.push(getAlias.data);
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
-            else{
+            else {
                 $rootScope.showErrors(getAlias.errors);
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
         }
-        
-        $scope.removeAliasCallback = async function(index){
+        $scope.updateSysCategories = function (data) {
+            // Loop selected categories
+            angular.forEach($scope.selectedCategories, function (e) {
+                // add if not exist in sysCategories                
+                var current = $rootScope.findObjectByKey($scope.activedData.sysCategories, 'id', e.id);
+                if (!current) {
+                    $scope.activedData.sysCategories.push({
+                        id: e.id,
+                        parentId: $scope.activedData.id,
+                        attributeSetName: 'sys_category'
+                    });
+                }
+            });
+        }
+        $scope.updateSysTags = function (data) {
+            // Loop selected categories
+            angular.forEach($scope.selectedTags, function (e) {
+                // add if not exist in sysCategories                
+                var current = $rootScope.findObjectByKey($scope.activedData.sysTags, 'id', e.id);
+                if (!current) {
+                    $scope.activedData.sysCategories.push({
+                        id: e.id,
+                        parentId: $scope.activedData.id,
+                        attributeSetName: 'sys_tag'
+                    });
+                }
+            });
+        }
+        $scope.removeAliasCallback = async function (index) {
             $scope.activedData.urlAliases.splice(index, 1);
             $scope.$apply();
         }
-        
+
     }]);

@@ -3,6 +3,9 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
     'ngAppSettings', '$routeParams', 'PostService', 'UrlAliasService', 'AttributeSetService',
     function ($scope, $rootScope, $location, $filter, ngAppSettings, $routeParams, service, urlAliasService, attributeSetService) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        $scope.selectedCategories = [];
+        $scope.selectedTags = [];
+
         $scope.preview = function (item) {
             item.editUrl = '/portal/post/details/' + item.id;
             $rootScope.preview('post', item, item.title, 'modal-lg');
@@ -11,7 +14,7 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
         // $scope.saveSuccessCallback = function () {
         //     $location.url($scope.referrerUrl);
         // }
-        $scope.getListRelated = async function(pageIndex){                 
+        $scope.getListRelated = async function (pageIndex) {
             if (pageIndex !== undefined) {
                 $scope.request.pageIndex = pageIndex;
             }
@@ -25,7 +28,7 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
             }
             var resp = await service.getList($scope.request);
             if (resp && resp.isSucceed) {
-       
+
                 $scope.activedData.postNavs = $rootScope.filterArray($scope.activedData.postNavs, ['isActived'], [true]);
                 angular.forEach(resp.data.items, element => {
                     var obj = {
@@ -47,18 +50,18 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
-            
+
         };
-        $scope.saveFailCallback = function(){
-            angular.forEach($scope.activedData.attributeSetNavs, function(nav){
-                if(nav.isActived){
+        $scope.saveFailCallback = function () {
+            angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
+                if (nav.isActived) {
                     $rootScope.decryptAttributeSet(nav.attributeSet.attributes, nav.attributeSet.postData.items);
                 }
             });
         };
-        $scope.saveSuccessCallback = function(){
-            angular.forEach($scope.activedData.attributeSetNavs, function(nav){
-                if(nav.isActived){
+        $scope.saveSuccessCallback = function () {
+            angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
+                if (nav.isActived) {
                     $rootScope.decryptAttributeSet(nav.attributeSet.attributes, nav.attributeSet.postData.items);
                 }
             });
@@ -78,17 +81,32 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                     pageNav.isActived = true;
                 }
             }
-            if( $routeParams.attr_set_ids){
+            if ($routeParams.attr_set_ids) {
                 var req = angular.copy(ngAppSettings.request);
-                req.query = 'attr_set_ids='+  $routeParams.attr_set_ids;
+                req.query = 'attr_set_ids=' + $routeParams.attr_set_ids;
                 var getData = attributeSetService.getList(req);
-                if(getData.isSucceed){
-                    angular.forEach(getData.data.items, function(e){
+                if (getData.isSucceed) {
+                    angular.forEach(getData.data.items, function (e) {
                         e.isActived = true;
                     });
                     $scope.activedData.attributeSetNavs = getData.data;
                 }
             }
+
+            if ($scope.activedData.sysCategories) {
+                angular.forEach($scope.activedData.sysCategories, function (e) {
+                    e.data.isActived = true;
+                    $scope.selectedCategories.push(e.data);
+                });
+            }
+
+            if ($scope.activedData.sysTags) {
+                angular.forEach($scope.activedData.sysTags, function (e) {
+                    e.data.isActived = true;
+                    $scope.selectedTags.push(e.data);
+                });
+            }
+
             $scope.activedData.publishedDateTime = $filter('utcToLocalTime')($scope.activedData.publishedDateTime);
         }
         $scope.generateSeo = function () {
@@ -125,13 +143,42 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
             $scope.activedData.urlAliases.splice(index, 1);
             $scope.$apply();
         }
-        $scope.validate = function(){
-            angular.forEach($scope.activedData.attributeSetNavs, function(nav){
-                if(nav.isActived){
+
+        $scope.updateSysCategories = function (data) {
+            // Loop selected categories
+            angular.forEach($scope.selectedCategories, function (e) {
+                // add if not exist in sysCategories                
+                var current = $rootScope.findObjectByKey($scope.activedData.sysCategories, 'id', e.id);
+                if (!current) {
+                    $scope.activedData.sysCategories.push({
+                        id: e.id,
+                        parentId: $scope.activedData.id,
+                        attributeSetName: 'sys_category'
+                    });
+                }
+            });
+        };
+        $scope.updateSysTags = function (data) {
+            // Loop selected categories
+            angular.forEach($scope.selectedTags, function (e) {
+                // add if not exist in sysCategories                
+                var current = $rootScope.findObjectByKey($scope.activedData.sysTags, 'id', e.id);
+                if (!current) {
+                    $scope.activedData.sysCategories.push({
+                        id: e.id,
+                        parentId: $scope.activedData.id,
+                        attributeSetName: 'sys_tag'
+                    });
+                }
+            });
+        }
+        $scope.validate = function () {
+            angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
+                if (nav.isActived) {
                     $rootScope.encryptAttributeSet(nav.attributeSet.attributes, nav.attributeSet.postData.items);
                 }
             });
             return true;
-        };        
+        };
     }
 ]);
