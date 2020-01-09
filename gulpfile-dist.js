@@ -8,6 +8,7 @@ var gulp = require("gulp"),
     //fontmin = require("gulp-fontmin"),
     htmlmin = require("gulp-htmlmin"),
     removeHtmlComments = require('gulp-remove-html-comments'),
+    header = require('gulp-header'),
     uglify = require("gulp-uglify-es").default;
     
 
@@ -253,6 +254,7 @@ gulp.task("min:portal", function (cb) {
     return gulp.src(paths.portal.src, { base: "." })
         .pipe(concat(paths.portal.dest))
         .pipe(minify(paths.jsOptions))
+        .pipe(header('/* ' + ((new Date()).getTime()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
