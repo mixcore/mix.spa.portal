@@ -8,6 +8,7 @@ var gulp = require("gulp"),
     //fontmin = require("gulp-fontmin"),
     htmlmin = require("gulp-htmlmin"),
     removeHtmlComments = require('gulp-remove-html-comments'),
+    header = require('gulp-header'),
     uglify = require("gulp-uglify-es").default;
     
 
@@ -253,6 +254,7 @@ gulp.task("min:portal", function (cb) {
     return gulp.src(paths.portal.src, { base: "." })
         .pipe(concat(paths.portal.dest))
         .pipe(minify(paths.jsOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
@@ -278,6 +280,7 @@ gulp.task("clean:portalApp", function (cb) {
 gulp.task("min:portalApp", function (cb) {
     return gulp.src(paths.appPortal.src, { base: "." })
         .pipe(concat(paths.appPortal.dest))
+        .pipe(header('/* ' + (Date()) + ' */'))
         //.pipe(uglify())
         // .pipe(minify(paths.jsOptions))
         .pipe(gulp.dest(dest));
@@ -297,6 +300,7 @@ gulp.task("min:portalAppRequired", function (cb) {
         .pipe(concat(paths.appPortalRequired.dest))
         .pipe(uglify())
         .pipe(minify(paths.jsOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
@@ -315,6 +319,7 @@ gulp.task("min:portalCss", function (cb) {
     return gulp.src(paths.portalCss.src, { base: "." })
         .pipe(concat(paths.portalCss.dest))
         .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 

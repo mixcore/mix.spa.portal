@@ -7,6 +7,7 @@
     "gulp-babel": "",
     "gulp-concat": "",
     "gulp-cssmin": "",
+    "gulp-header": "^2.0.9",
     "gulp-htmlmin": "",
     "gulp-remove-html-comments": "^1.0.1",
     "gulp-uglify": "",
