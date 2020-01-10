@@ -65,12 +65,15 @@
             </section>
             <section class="col-sm-4 pl-3" style="padding-left:0">
                 <actions preview-url="activedData.detailsUrl" back-url="'/portal/page/list'"></actions>
-                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id" parent-type="'3'"
-                    type="''" attribute-set-name="'sys_category'" select-callback="updateSysCategories(data)"
-                    field-display="'title'" selected-list="selectedCategories"></modal-nav-metas>
-                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'2'" type="''"
-                    attribute-set-name="'sys_tag'" select-callback="updateSysTags(data)" field-display="'title'"
-                    selected-list="selectedTags"></modal-nav-metas>
+                <!-- Categories -->
+                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+                    parent-type="'3'" type="''" attribute-set-name="'sys_category'"
+                    select-callback="updateSysCategories(data)" field-display="'title'"
+                    selected-list="selectedCategories"></modal-nav-metas>
+                <!-- Tags -->
+                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'" select-callback="updateSysTags(data)"
+                    field-display="'title'" selected-list="selectedTags"></modal-nav-metas>
                 <div class="card mb-4">
                     <h6 class="card-header position-sticky position-sticky-under-actionbar">
                         Info
