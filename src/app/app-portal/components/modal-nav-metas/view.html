@@ -13,13 +13,13 @@
         </div>
         <div class="row">
             <div class="col-12" ng-repeat="item in $ctrl.selectedList">
-                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item.data[$ctrl.fieldDisplay]">
+                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item[$ctrl.fieldDisplay]">
                 </checkbox-switch>
             </div>
         </div>
         <div class="row">
-            <div class="col-12" ng-repeat="item in $ctrl.data.items" ng-hide="item.disabled">
-                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item.data[$ctrl.fieldDisplay]">
+            <div class="col-12" ng-repeat="item in $ctrl.data.items| filter:$ctrl.newTitle" ng-hide="item.disabled">
+                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item[$ctrl.fieldDisplay]">
                 </checkbox-switch>
             </div>
         </div>

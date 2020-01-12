@@ -59,23 +59,13 @@
                         ctrl.request.query += '&' + e + '=' + ctrl.queries[e];
                     }
                 });
+                ctrl.request.key = 'data';
                 var response = await service.getList(ctrl.request);
                 if (response.isSucceed) {
                     ctrl.data = response.data;
                     ctrl.navs = [];
                     angular.forEach(response.data.items, function (e) {
                         e.disabled = $rootScope.findObjectByKey(ctrl.selectedList, 'id', e.id) != null;
-                        // var item = {
-                        //     priority: e.priority,
-                        //     description: e.data.title,
-                        //     postId: e.id,
-                        //     image: e.thumbnailUrl,
-                        //     specificulture: e.specificulture,
-                        //     status: 2,
-                        //     isActived: false
-                        // };
-                        // item[ctrl.srcField] = ctrl.srcId;
-                        // ctrl.navs.push(item);
                     });
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -95,7 +85,7 @@
                             parentId: ctrl.parentId,
                             parentType: ctrl.parentType,
                             id: data.id
-                        }
+                        };
                         navService.save('portal', nav).then(resp => {
                             if (resp.isSucceed) {
                                 var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', data.id);
@@ -157,23 +147,34 @@
                 }
             };
             ctrl.createData = function () {
-                var data = {
-                    title: ctrl.newTitle,
-                    slug: $rootScope.generateKeyword(ctrl.newTitle, '-'),
-                    type: ctrl.type
-                };
-                service.saveByName(ctrl.attributeSetName, data).then(resp => {
-                    if (resp.isSucceed) {
-                        ctrl.data.items.push(resp.data);
-                        $rootScope.showMessage('success', 'success');
-                        $rootScope.isBusy = false;
-                        $scope.$apply();
-                    } else {
-                        $rootScope.showErrors(resp.errors);
-                        $rootScope.isBusy = false;
-                        $scope.$apply();
-                    }
-                });
+                var tmp = $rootScope.findObjectByKey(ctrl.data.items, 'title', ctrl.newTitle);
+                if(!tmp){
+                    var data = {
+                        title: ctrl.newTitle,
+                        slug: $rootScope.generateKeyword(ctrl.newTitle, '-'),
+                        type: ctrl.type
+                    };
+                    service.saveByName(ctrl.attributeSetName, data).then(resp => {
+                        if (resp.isSucceed) {
+                            resp.data.isActived = true;
+                            ctrl.data.items.push(resp.data);
+                            // $rootScope.showMessage('success', 'success');
+                            // $rootScope.isBusy = false;                        
+                            // $scope.$apply();
+    
+                            ctrl.select(resp.data);
+                        } else {
+                            $rootScope.showErrors(resp.errors);
+                            $rootScope.isBusy = false;
+                            $scope.$apply();
+                        }
+                    });
+                }
+                else{
+                    tmp.isActived = true;
+                    ctrl.select(tmp);
+                }
+                
             }
         }
 

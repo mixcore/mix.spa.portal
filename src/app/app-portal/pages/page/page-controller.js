@@ -34,15 +34,15 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
 
             if ($scope.activedData.sysCategories) {
                 angular.forEach($scope.activedData.sysCategories, function (e) {
-                    e.data.isActived = true;
-                    $scope.selectedCategories.push(e.data);
+                    e.data.data.isActived = true;
+                    $scope.selectedCategories.push(e.data.data);
                 });
             }
 
             if ($scope.activedData.sysTags) {
                 angular.forEach($scope.activedData.sysTags, function (e) {
-                    e.data.isActived = true;
-                    $scope.selectedTags.push(e.data);
+                    e.data.data.isActived = true;
+                    $scope.selectedCategories.push(e.data.data);
                 });
             }
 
