@@ -20,8 +20,8 @@ app.controller('MixAttributeSetDataController',
                 $scope.refParentId = $routeParams.refParentId;
                 $scope.refParentType = $routeParams.refParentType;
                 $scope.dataId = $routeParams.dataId;
-                $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
-                $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
+                // $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                $scope.request.query += 'attributeSetName=' + $routeParams.attributeSetName;
 
                 if ($scope.refParentId && $scope.refParentType) {
                     $scope.refDataModel = {
@@ -52,7 +52,7 @@ app.controller('MixAttributeSetDataController',
                 $rootScope.preview('post', item, item.title, 'modal-lg');
             };
             $scope.edit = function (data) {
-                $scope.goToPath('/portal/attribute-set-data/details?dataId=' + data.id + '&attributeSetId=' + $scope.attributeSetId)
+                $scope.goToPath('/portal/attribute-set-data/details?dataId=' + data.id + '&attributeSetName=' + $scope.attributeSetName)
             };
             $scope.remove = function (data) {
                 $rootScope.showConfirm($scope, 'removeConfirmed', [data.id], null, 'Remove', 'Deleted data will not able to recover, are you sure you want to delete this item?');
@@ -74,7 +74,7 @@ app.controller('MixAttributeSetDataController',
                 }
             };
             $scope.import = async function () {
-                if($scope.validateDataFile()){                    
+                if ($scope.validateDataFile()) {
                     $rootScope.isBusy = true;
                     var form = document.getElementById('frm-import');
                     var result = await service.import($scope.attributeSetName, form['data'].files[0]);
@@ -90,13 +90,13 @@ app.controller('MixAttributeSetDataController',
                     }
                 }
             };
-            $scope.validateDataFile = function (){
+            $scope.validateDataFile = function () {
                 if (!$scope.importFile.file) {
                     $rootScope.showMessage('Please choose data file', 'danger');
                     return false;
                 } else {
                     return true;
-                }                
+                }
             };
             $scope.sendMail = function (data) {
                 var email = '';
@@ -138,9 +138,9 @@ app.controller('MixAttributeSetDataController',
                 if (file !== undefined && file !== null) {
                     $scope.importFile.folder = 'imports';
                     $scope.importFile.title = $scope.attributeSetName;
-                    $scope.importFile.description = $scope.attributeSetName+ '\'s data';
+                    $scope.importFile.description = $scope.attributeSetName + '\'s data';
                     $scope.importFile.file = file;
-    
+
                     // if (ctrl.auto=='true') {
                     //     ctrl.uploadFile(file);
                     // }
@@ -162,7 +162,9 @@ app.controller('MixAttributeSetDataController',
                     $scope.request.toDate = d.toISOString();
                 }
                 $scope.request.query = '';
-                $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                if ($routeParams.attributeSetId) {
+                    $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                }
                 $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
                 if ($scope.filterType) {
                     $scope.request.query += '&filterType=' + $scope.filterType;
@@ -219,7 +221,9 @@ app.controller('MixAttributeSetDataController',
                     $scope.request.toDate = d.toISOString();
                 }
                 $scope.request.query = '';
-                $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                if ($routeParams.attributeSetId) {
+                    $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                }
                 $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
                 if ($scope.filterType) {
                     $scope.request.query += '&filterType=' + $scope.filterType;
@@ -242,4 +246,4 @@ app.controller('MixAttributeSetDataController',
                     $scope.$apply();
                 }
             };
-}]);
+        }]);

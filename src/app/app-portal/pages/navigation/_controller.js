@@ -82,7 +82,7 @@ app.controller('NavigationController',
                 var id = $routeParams.id || $scope.defaultId;
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
-                var resp = await service.getSingle('portal', [id, $scope.attributeSetId, $scope.attributeSetName]);
+                var resp = await service.getSingle('portal', [id, $scope.attributeSetName]);
                 if (resp) {
                     $scope.activedData = resp;
                     $scope.activedData.parentType = $scope.parentType;
