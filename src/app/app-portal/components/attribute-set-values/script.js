@@ -4,6 +4,7 @@ modules.component('attributeSetValues', {
         header: '=',
         data: '=',
         canDrag: '=',
+        attributeSetName: '=?',
         queries: '=?',
         filterType: '=?',
         selectedList: '=',
@@ -14,20 +15,25 @@ modules.component('attributeSetValues', {
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
-        function ($rootScope, $scope, dataService) {
+    controller: ['$rootScope', '$scope','AttributeSetService', 'AttributeSetDataService',
+        function ($rootScope, $scope, setService, dataService) {
             var ctrl = this;
             ctrl.actions = ['Delete', 'SendMail'];
             ctrl.filterTypes = ['contain', 'equal'];
             ctrl.fields = [];
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.$onInit = function(){
+            ctrl.$onInit = async function(){
                 if(!ctrl.selectedList){
                     ctrl.selectedList = {
                         action: 'Delete',
                         data: []
                     };
+                }
+                var getAttrSet = await setService.getSingle('portal', ['by-name', ctrl.attributeSetName]);
+                if(getAttrSet){
+                    ctrl.fields = getAttrSet.fields;
+                    $scope.$apply();
                 }
                 // if(ctrl.data[0] && ctrl.data[0].fields){
                 //     ctrl.fields = angular.copy(ctrl.data[0].fields);

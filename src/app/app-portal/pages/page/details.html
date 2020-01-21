@@ -120,24 +120,22 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
                                 </div>
-                                <select class="custom-select">
-                                    <option selected>Choose...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <select class="custom-select"
+                                    ng-options="item as item.fileName for item in activedData.templates track by item.id"
+                                    ng-model="activedData.view"></select>                                
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id" parent-type="'3'"
-                    type="''" attribute-set-name="'sys_category'" select-callback="updateSysCategories(data)"
-                    field-display="'title'" selected-list="selectedCategories"></modal-nav-metas>
-                    
-                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'2'" type="''"
-                    attribute-set-name="'sys_tag'" select-callback="updateSysTags(data)" field-display="'title'"
-                    selected-list="selectedTags"></modal-nav-metas>
+                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+                    parent-type="'3'" type="''" attribute-set-name="'sys_category'"
+                    select-callback="updateSysCategories(data)" field-display="'title'"
+                    selected-list="selectedCategories"></modal-nav-metas>
+
+                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'" select-callback="updateSysTags(data)"
+                    field-display="'title'" selected-list="selectedTags"></modal-nav-metas>
 
                 <cultures is-clone="activedData.isClone" data="activedData.cultures"></cultures>
                 <!-- <navs data="activedData.positionNavs" prefix="'pos'"></navs> -->

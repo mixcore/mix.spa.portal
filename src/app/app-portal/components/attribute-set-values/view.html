@@ -1,7 +1,7 @@
 <div class="card border-left-0 border-bottom-0 border-right-0">
-    <div class="card-header py-1" ng-if="$ctrl.data.length">
+    <div class="card-header py-1">
         <span ng-bind="$ctrl.header"></span>
-        <div class="row" ng-if="$ctrl.data[0]">
+        <div class="row">
             <div class="col-md-1">
                 <input type="checkbox" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.selectedList.isSelectAll)" />

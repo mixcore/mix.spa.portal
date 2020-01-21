@@ -5,6 +5,8 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
         service, pagePostService, pagePageService, urlAliasService) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
         $scope.request.query = 'level=0';
+        $scope.pageType = '';
+        $scope.pageTypes = $rootScope.globalSettings.pageTypes;
         $scope.selectedCategories = [];
         $scope.selectedTags = [];
         $scope.pageData = {
@@ -72,16 +74,20 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
-        }
+        };
+        $scope.selPageType = function(){
+            $scope.request.query = 'level=0&pageType=' + $scope.pageType;
+            $scope.getList();
+        };
         $scope.goUp = async function (items, index) {
             items[index].priority -= 1;
             items[index - 1].priority += 1;
-        }
+        };
 
         $scope.goDown = async function (items, index) {
             items[index].priority += 1;
             items[index - 1].priority -= 1;
-        }
+        };
 
         $scope.updatePagePage = async function (items) {
             $rootScope.isBusy = true;
