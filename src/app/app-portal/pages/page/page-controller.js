@@ -75,7 +75,7 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                 $scope.$apply();
             }
         };
-        $scope.selPageType = function(){
+        $scope.selPageType = function () {
             $scope.request.query = 'level=0&pageType=' + $scope.pageType;
             $scope.getList();
         };
@@ -102,14 +102,28 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
-        }
+        };
         // $scope.saveSuccessCallback = function () {
         //     $location.url($scope.referrerUrl);
         // }
+        $scope.validate = async function () {
 
-        $scope.addAlias = async function () {
+            // Add default alias if create new page
+            if (!$scope.activedData.id && !$scope.activedData.urlAliases.length) {
+                // Ex: en-us/page-seo-name
+                // await $scope.addAlias($scope.activedData.specificulture + '/' + $scope.activedData.seoName);
+                return true;
+            }
+            else{
+                return true;
+            }
+        };
+        $scope.addAlias = async function (alias) {
             var getAlias = await urlAliasService.getSingle();
             if (getAlias.isSucceed) {
+                if (alias) {
+                    getAlias.data.alias = alias;
+                }
                 $scope.activedData.urlAliases.push(getAlias.data);
                 $rootScope.isBusy = false;
                 $scope.$apply();

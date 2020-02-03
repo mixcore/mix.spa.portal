@@ -145,13 +145,13 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
         }
     }
 
-    $scope.save = async function (data) {
-        $rootScope.isBusy = true;
+    $scope.save = async function () {
         if($scope.validate){
-            $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope)
+            $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope);
         }
+        $rootScope.isBusy = true;
         if($scope.isValid){
-            var resp = await service.save(data);
+            var resp = await service.save($scope.activedData);
             if (resp && resp.isSucceed) {
                 $scope.activedData = resp.data;
                 $rootScope.showMessage('success', 'success');
