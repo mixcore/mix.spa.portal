@@ -4,8 +4,9 @@
             <div class="card-body">
                 <filter-list request="request" callback="getList(pageIndex)" create-url="'/portal/page/create'"
                     create-text="'Create Page'"></filter-list>
-                <select ng-change="selPageType()" ng-model="pageType">
-                    <option>All</option>
+
+                <select ng-change="selPageType()" ng-model="pageType" class="custom-select col-2">
+                    <!-- <option selected="select">Select Type</option> -->
                     <option ng-repeat="item in pageTypes track by $index" value="{{$index}}">{{item}}
                     </option>
                 </select>
