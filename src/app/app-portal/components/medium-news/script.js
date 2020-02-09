@@ -8,7 +8,7 @@
       ctrl.init = function () {
         var req= {
           method: 'GET',
-          url: 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore'
+          url: 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore?t=' + Math.floor(Date.now() / 1000)
         };
         ctrl.getMediumApiResult(req);
       };
