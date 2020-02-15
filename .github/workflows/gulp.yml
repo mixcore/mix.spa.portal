@@ -52,4 +52,4 @@ jobs:
         # Where to place the files in your ftp
         into: /mixcore.org/dev/
         # Remove existing file inside FTP destination folder
-        cleanupExisting: true
+        cleanupExisting: false
