@@ -45,4 +45,3 @@ jobs:
         port: 2121
         local_dir: /dist/Mix.Cms.Web/
         remote_dir: /mixcore.org/dev/
-        
