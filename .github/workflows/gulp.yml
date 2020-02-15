@@ -1,7 +1,7 @@
 name: Node CI
 
 on: [push]
- 
+
 jobs:
   build:
 
@@ -40,11 +40,11 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       with:
         # FTP server name (you may need to specify a port)
-        ftp_server: ${{ secrets.FTP_Server }}
+        ftp_server: "${{ secrets.FTP_Server }}"
         # FTP account username
-        ftp_username: ${{ secrets.FTP_Username }}
+        ftp_username: "${{ secrets.FTP_Username }}"
         # FTP account password
-        ftp_password: ${{ secrets.FTP_Password }}
+        ftp_password: "${{ secrets.FTP_Password }}"
         # Protocol used to deploy (ftp or sftp)
         # method: # optional, default is ftp
         # The port used to connect to server
