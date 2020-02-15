@@ -40,19 +40,19 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@2.0.0
       with:
         # FTP server name (you may need to specify a port)
-        ftp_server: "${{ secrets.FTP_Server }}"
+        ftp_server: ${{ secrets.FTP_Server }}
         # FTP account username
-        ftp_username: "${{ secrets.FTP_Username }}"
+        ftp_username: ${{ secrets.FTP_Username }}
         # FTP account password
-        ftp_password: "${{ secrets.FTP_Password }}"
+        ftp_password: ${{ secrets.FTP_Password }}
         # Protocol used to deploy (ftp or sftp)
         # method: # optional, default is ftp
         # The port used to connect to server
         port: 2121 # optional, default is 21
         # The local folder to copy, defaults to root project folder
-        local_dir: "/dist/Mix.Cms.Web/" # optional, default is 
+        local_dir: /dist/Mix.Cms.Web/ # optional, default is 
         # The remote folder to copy to, deafults to root FTP folder (I recommend you configure this on your server side instead of here)
-        remote_dir: "/mixcore.org/dev/" # optional, default is 
+        remote_dir: /mixcore.org/dev/ # optional, default is 
         # Passes through options into lftp
         # ARGS: # optional, default is 
         
