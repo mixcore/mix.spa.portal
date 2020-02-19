@@ -6,22 +6,21 @@
       var ctrl = this;
       ctrl.items = [];
       ctrl.init = function () {
-        var req= {
+        var req = {
           method: 'GET',
-          url: 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore'
+          url: 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore?t=' + Math.floor(Date.now() / 1000)
         };
         ctrl.getMediumApiResult(req);
       };
 
       ctrl.getMediumApiResult = async function (req) {
         return $http(req).then(function (resp) {
-          if(resp.status == '200')
-          {
-              ctrl.items = resp.data.items;
+          if (resp.status == '200') {
+            ctrl.items = resp.data.items;
           }
-          else{
+          else {
             console.log(resp);
- 
+
           }
         },
           function (error) {

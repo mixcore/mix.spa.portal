@@ -36,4 +36,20 @@ jobs:
       run: |
         curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core/dispatches --data '{"event_type": "build_application"}'
 
-        
+    - name: dist-to-ft
+      uses: isthatcentered/dist-to-ftp@v1
+      with:
+        # Ftp user
+        user: ${{ secrets.FTP_USERNAME }}
+        # Ftp password
+        password: ${{ secrets.FTP_PASSWORD }}
+        # FTP port
+        port: 2121
+        # FTP host url
+        host: ${{ secrets.FTP_SERVER }}
+        # Path to your build folder (usually ./dist or ./public)
+        path: ./dist/Mix.Cms.Web/wwwroot/
+        # Where to place the files in your ftp
+        into: /mixcore.org/dev/wwwroot/
+        # Remove existing file inside FTP destination folder
+        cleanupExisting: false
