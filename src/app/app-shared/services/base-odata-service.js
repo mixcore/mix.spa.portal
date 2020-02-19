@@ -17,7 +17,7 @@ app.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonService',
         var _getSingle = async function (viewType, params = []) {
             var url = this.prefixUrl + '/' + viewType;
             for (let i = 0; i < params.length; i++) {
-                if (params[i] && params[i] != null) {
+                if (params[i] != undefined && params[i] != null) {
                     url += '/' + params[i];
                 }
             }

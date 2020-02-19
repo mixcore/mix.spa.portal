@@ -91,7 +91,7 @@ paths.framework = {
         paths.scriptLib + "angularjs/**/*.js",
         paths.scriptLib + "jquery/jquery.min.js",
         paths.scriptLib + "jquery/jquery-ui.min.js",
-        // paths.scriptLib + "jquery/jquery.qrcode.min.js",
+        paths.scriptLib + "jquery/jquery.qrcode.min.js",
         paths.scriptLib + "bootstrap/popper.min.js",
         paths.scriptLib + "bootstrap/bootstrap.min.js",
         paths.scriptLib + "lazysizes-5.2.0/lazysizes.min.js",
@@ -394,6 +394,7 @@ gulp.task('watch', function () {
     gulp.watch('./src/app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
     gulp.watch('./src/app/app-shared/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
+    gulp.watch('./src/lib/**/*.js', gulp.series('min:framework'));
     gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
 });
 
