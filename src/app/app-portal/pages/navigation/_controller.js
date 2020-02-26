@@ -2,11 +2,12 @@
 app.controller('NavigationController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'NavigationService', 'RelatedAttributeSetDataService', 'CommonService',
+        'MixAttributeSetDataService', 'RelatedAttributeSetDataService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, navService, commonService) {
-            BaseODataCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.defaultId = 'default';
+            $scope.queries = {};
             $scope.parentId = null;
             $scope.parentType = null;
             $scope.cates = ['Site', 'System'];
@@ -39,8 +40,8 @@ app.controller('NavigationController',
                     navService.save('portal', $scope.refDataModel).then(resp => {
                         if (resp.isSucceed) {
                             $rootScope.isBusy = false;
-                            if ($scope.refParentId) {
-                                $location.url('/portal/navigation/details?dataId=' + $scope.refParentId);
+                            if ($scope.parentId) {
+                                $location.url('/portal/navigation/details?dataId=' + $scope.parentId);
                             }
                             else {
                                 $location.url('/portal/navigation/list?attributeSetId=' + $scope.activedData.attributeSetId);
@@ -54,25 +55,61 @@ app.controller('NavigationController',
                     });
                 }
             };
-            $scope.getList = async function (page = 0) {
-                $rootScope.isBusy = true;
-                $scope.attributeSetId = $routeParams.attributeSetId;
-                $scope.attributeSetName = $routeParams.attributeSetName;
-                if (page != undefined) {
-                    $scope.request.pageIndex = page;
+            $scope.getList = async function (pageIndex) {
+                if (pageIndex !== undefined) {
+                    $scope.request.pageIndex = pageIndex;
                 }
-                var type = $routeParams.type;
-                var parentId = $routeParams.parentId;
-                var response = await service.getList('read', $scope.request, $scope.attributeSetId, $scope.attributeSetName, type, parentId);
-                $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
-                if (response) {
-                    $scope.data = response;
-                    $scope.count([$routeParams.attributeSetName]);
+                if ($scope.request.fromDate !== null) {
+                    var d = new Date($scope.request.fromDate);
+                    $scope.request.fromDate = d.toISOString();
+                }
+                if ($scope.request.toDate !== null) {
+                    var d = new Date($scope.request.toDate);
+                    $scope.request.toDate = d.toISOString();
+                }
+                $scope.request.query = '';
+                if ($routeParams.attributeSetId) {
+                    $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                }
+                $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
+                if ($scope.filterType) {
+                    $scope.request.query += '&filterType=' + $scope.filterType;
+                }
+                Object.keys($scope.queries).forEach(e => {
+                    if ($scope.queries[e]) {
+                        $scope.request.query += '&' + e + '=' + $scope.queries[e];
+                    }
+                });
+                $rootScope.isBusy = true;
+                var resp = await service.getList($scope.request);
+                if (resp && resp.isSucceed) {
+
+                    $scope.data = resp.data;
+                    $.each($scope.data.items, function (i, data) {
+
+                        $.each($scope.activedDatas, function (i, e) {
+                            if (e.dataId === data.id) {
+                                data.isHidden = true;
+                            }
+                        });
+                    });
+                    if ($scope.getListSuccessCallback) {
+                        $scope.getListSuccessCallback();
+                    }
+                    $("html, body").animate({ "scrollTop": "0px" }, 500);
+                    if (!resp.data || !resp.data.items.length) {
+                        $scope.queries = {};
+                    }
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                }
-                else {
-                    $rootScope.showErrors('Failed');
+                } else {
+                    if (resp) {
+                        $rootScope.showErrors(resp.errors);
+                    }
+                    if ($scope.getListFailCallback) {
+                        $scope.getListFailCallback();
+                    }
+                    $scope.queries = {};
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }

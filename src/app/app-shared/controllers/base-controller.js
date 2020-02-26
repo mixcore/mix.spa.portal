@@ -145,12 +145,13 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
         }
     }
 
-    $scope.save = async function () {
-        if($scope.validate){
+    $scope.save = async function (data) {
+        if ($scope.validate) {
             $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope);
         }
         $rootScope.isBusy = true;
-        if($scope.isValid){
+        $scope.activedData = data || $scope.activedData;
+        if ($scope.isValid) {
             var resp = await service.save($scope.activedData);
             if (resp && resp.isSucceed) {
                 $scope.activedData = resp.data;
@@ -159,10 +160,12 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
                 if ($scope.saveSuccessCallback) {
                     $rootScope.executeFunctionByName('saveSuccessCallback', $scope.saveSuccessCallbackArgs, $scope);
                 }
-                $rootScope.isBusy = false;
-                $scope.$apply();
+                else {
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
             } else {
-                if($scope.saveFailCallback){
+                if ($scope.saveFailCallback) {
                     $rootScope.executeFunctionByName('saveFailCallback', $scope.saveSuccessCallbackArgs, $scope)
                 }
                 if (resp) {
@@ -172,7 +175,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
                 $scope.$apply();
             }
         }
-        else{
+        else {
             $rootScope.showErrors(['invalid model']);
             $rootScope.isBusy = false;
             $scope.$apply();
