@@ -53,3 +53,19 @@ jobs:
         into: /mixcore.org/dev/wwwroot/
         # Remove existing file inside FTP destination folder
         cleanupExisting: false
+        
+        
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@3.0.0
+      with:
+        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+        ftp-server: ${{ secrets.FTP_SERVER }}
+        # FTP account username
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        # FTP account password
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        # The local folder to copy, defaults to root project folder
+        local-dir: './dist/Mix.Cms.Web/wwwroot/' # optional
+        remoteDir: '/mixcore.org/dev/wwwroot/'
+        # Passes through options into git-ftp
+        # git-ftp-args: # optional
