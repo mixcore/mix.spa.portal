@@ -49,4 +49,4 @@ jobs:
         # local-dir: dist/Mix.Cms.Web/wwwroot/ # optional
         # remoteDir: /mixcore.org/dev/wwwroot/
         # Passes through options into git-ftp
-        git-ftp-args: --syncroot dist/Mix.Cms.Web/wwwroot/ --remote-root /mixcore.org/dev/wwwroot/ # optional
+        git-ftp-args: --syncroot dist/Mix.Cms.Web/wwwroot/ --remote-root /mixcore.org/dev/wwwroot/ --verbose # optional
