@@ -23,8 +23,8 @@ var dest = '.';//For publish folder use "./bin/Release/PublishOutput/";
 //C:\\Git\\GitHub\\Queen-Beauty\\QueenBeauty\\
 
 var paths = {
-    //webroot: "./dist/Mix.Cms.Web/wwwroot/",
-    webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", 
+    //webroot: "./dist/Mix.Cms.Web/wwwroot/", // Use for current repo dist
+    webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", // Use for mix.core repo
     webapp: "./src/app/", //app
     libs:   "./src/lib/",
     scriptLib: "./src/lib/", //app
@@ -109,32 +109,7 @@ paths.shared = {
 };
 
 
-paths.appCss = {
-    src: [
-        paths.webapp + "app-shared/**/*.css",
-        paths.webapp + "app-portal/**/*.css",
-        paths.webapp + "app-client/**/*.css",
-        paths.webapp + "app-init/**/*.css"//,
-        //paths.scriptLib + "**/*.css"
-    ],
-    dest: paths.webroot + "css/app-vendor.min.css"
-};
 
-paths.appInitCss = {
-    src: [
-        paths.webapp + "app-init/**/*.css"
-    ],
-    dest: paths.webroot + "css/app-init.min.css"
-};
-
-
-paths.sharedCss = {
-    src: [
-        "./lib/shared/**/*.css",
-        "./lib/shared/**/*.*.css"
-    ],
-    dest: paths.webroot + "css/shared.min.css"
-};
 
 
 gulp.task("min:initApp", function (cb) {
@@ -191,25 +166,54 @@ gulp.task("min:shared", function (cb) {
         .pipe(gulp.dest(dest));
 });
 
+
+paths.appCss = {
+    src: [
+        paths.webapp + "app-shared/**/*.css",
+        paths.webapp + "app-portal/**/*.css",
+        paths.webapp + "app-client/**/*.css",
+        paths.webapp + "app-init/**/*.css"//,
+        //paths.scriptLib + "**/*.css"
+    ],
+    dest: paths.webroot + "css/app-vendor.min.css"
+};
+
+
 gulp.task("min:appCss", function (cb) {
     return gulp.src(paths.appCss.src, { base: "." })
         .pipe(concat(paths.appCss.dest))
         .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
+paths.appInitCss = {
+    src: [
+        paths.webapp + "app-init/**/*.css"
+    ],
+    dest: paths.webroot + "css/app-init.min.css"
+};
 gulp.task("min:appInitCss", function (cb) {
     return gulp.src(paths.appInitCss.src, { base: "." })
         .pipe(concat(paths.appInitCss.dest))
         .pipe(cssmin(paths.appInitCss))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
 
+paths.sharedCss = {
+    src: [
+        "./src/lib/shared/**/*.css",
+        "./src/lib/shared/**/*.*.css"
+    ],
+    dest: paths.webroot + "css/shared.min.css"
+};
 gulp.task("min:sharedCss", function (cb) {
     return gulp.src(paths.sharedCss.src, { base: "." })
         .pipe(concat(paths.sharedCss.dest))
         .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
