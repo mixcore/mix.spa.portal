@@ -2,10 +2,10 @@
     <div class="card-header py-1" ng-if="$ctrl.data.length">
         <span ng-bind="$ctrl.header"></span>
         <div class="row" ng-if="$ctrl.data[0]">
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
                 <input type="checkbox" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.selectedList.isSelectAll)" />
-            </div>
+            </div> -->
             <div ng-repeat="col in $ctrl.data[0].fields | orderBy:'priority' track by $index" ng-if="$index < 4 && col.dataType != 23"
                 class="col-md-2" ng-if="">                
                 <div class="input-group input-group-xs">
@@ -40,13 +40,13 @@
                 dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedItem === item}"
                 class="border-bottom attr-set-value-item">
                 <dnd-nodrag class="row">
-                    <div  class="col-md-1 form-inline">
+                    <!-- <div  class="col-md-1 form-inline">
                         <small dnd-handle class="fa fa-grip-vertical text-black-50 mr-2" style="cursor:grab;"></small>
                         <small class="d-none">
                             <input class="ml-1 border-0 p-0 text-center text-black-50" style="width: 25px;"
                                 ng-model="item.priority" />
                         </small>
-                    </div>
+                    </div> -->
                     <div ng-if="$index < 4 && val.dataType != 23" ng-repeat="val in item.values | orderBy: 'priority' track by $index"
                         class="col-md-2 py-2">
                         <attribute-value-preview data="val"></attribute-value-preview>
