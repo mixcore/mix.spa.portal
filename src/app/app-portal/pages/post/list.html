@@ -17,8 +17,8 @@
                         <tr>
                             <th ng-if="!canDrag" scope="col" width="15px">
                             </th>
-                            <th ng-if="!canDrag" scope="col" width="15px">
-                            </th>
+                            <!-- <th ng-if="!canDrag" scope="col" width="15px">
+                            </th> -->
                             <th scope="col" width="15px">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input"
@@ -50,7 +50,7 @@
                             <td ng-if="!canDrag" style="cursor:grab;" class="drag-header align-middle small">
                                 <small class="fa fa-grip-vertical text-black-50"></small>
                             </td>
-                            <td ng-if="!canDrag" class="align-middle">
+                            <!-- <td ng-if="!canDrag" class="align-middle">
                                 <div class="btn-group-vertical" role="group" aria-label="Basic example">
                                     <button ng-click="goUp(item.childs, $index)" type="button" title="Move up"
                                         class="btn  btn-xs py-0 border-bottom"><span
@@ -58,7 +58,7 @@
                                     <button ng-click="goDown(item.childs, $index)" type="button" title="Move down"
                                         class="btn  btn-xs py-0"><span class="fa fa-sort-down small"></span></button>
                                 </div>
-                            </td>
+                            </td> -->
                             <td>
                                 <input type="checkbox" ng-model="item.isSelected"
                                     ng-change="select(item.id, item.isSelected)" />
