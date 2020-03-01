@@ -16,10 +16,10 @@
                     dnd-disable-if="canDrag" cellspacing="0" ng-init="getList()">
                     <thead class="thead-light">
                         <tr>
-                            <th ng-if="!canDrag" scope="col" width="15px">
+                            <!-- <th ng-if="!canDrag" scope="col" width="15px">
                             </th>
                             <th ng-if="!canDrag" scope="col" width="15px">
-                            </th>
+                            </th> -->
                             <th scope="col" width="15px">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input"
@@ -48,7 +48,7 @@
                         dnd-selected="selected = item" dnd-moved="updateInfos($index)"
                         ng-class="{'selected': selected === item}" class="border-top">
                         <tr class="" sort-model="category" sort-model-id="{{item.id}}">
-                            <td ng-if="!canDrag" style="cursor:grab;" class="drag-header align-middle small">
+                            <!-- <td ng-if="!canDrag" style="cursor:grab;" class="drag-header align-middle small">
                                 <small class="fa fa-grip-vertical text-black-50"></small>
                             </td>
                             <td ng-if="!canDrag" class="align-middle">
@@ -59,7 +59,7 @@
                                     <button ng-click="goDown(item.childs, $index)" type="button" title="Move down"
                                         class="btn  btn-xs py-0"><span class="fa fa-sort-down small"></span></button>
                                 </div>
-                            </td>
+                            </td> -->
                             <td class="align-middle ">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="customCheck_{{item.id}}"
@@ -210,11 +210,11 @@
             </div>
             <div class="card-footer">
                 <div class="row">
-                    <div class="col-6">
+                    <!-- <div class="col-6">
                         <small ng-if="canDrag" class="text-info"
                             ng-bind="translate('warning_can_not_drag_drop',true, 'Note: Drag Drop only allow when order by priority asc')"></small>
-                    </div>
-                    <div class="col-6">
+                    </div> -->
+                    <div class="col-12">
                         <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
                             ul-class="pagination justify-content-end m-0" a-class="page-link"
                             paging-action="getList(page-1)" scroll-top="true">
