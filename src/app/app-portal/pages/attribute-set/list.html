@@ -8,8 +8,8 @@
                 <table class="table table-sm table-hover mb-0" cellspacing="0" ng-init="getList()">
                     <thead class="thead-light">
                         <tr>
-                            <th scope="col" style="width: 3%;">
-                            </th>
+                            <!-- <th scope="col" style="width: 3%;">
+                            </th> -->
                             <th scope="col" style="width: 4%;">
                                 <input type="checkbox" ng-model="selectedList.isSelectAll"
                                     ng-change="selectAll(selectedList.isSelectAll)" />
@@ -33,9 +33,9 @@
                     <tbody class="sortable">
                         <tr ng-repeat="item in data track by $index" class="sortable-item" sort-model="attribute-set"
                             sort-model-id="{{item.id}}">
-                            <td style="cursor:move;" class="drag-header">
+                            <!-- <td style="cursor:move;" class="drag-header">
                                 <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
-                            </td>
+                            </td> -->
                             <td>
                                 <input type="checkbox" ng-model="item.isSelected"
                                     ng-change="select(item.id, item.isSelected)" />
