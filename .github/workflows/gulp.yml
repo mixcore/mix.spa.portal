@@ -36,20 +36,17 @@ jobs:
       run: |
         curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core/dispatches --data '{"event_type": "build_application"}'
 
-    - name: dist-to-ft
-      uses: isthatcentered/dist-to-ftp@v1
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@3.0.0
       with:
-        # Ftp user
-        user: ${{ secrets.FTP_USERNAME }}
-        # Ftp password
-        password: ${{ secrets.FTP_PASSWORD }}
-        # FTP port
-        port: 2121
-        # FTP host url
-        host: ${{ secrets.FTP_SERVER }}
-        # Path to your build folder (usually ./dist or ./public)
-        path: ./dist/Mix.Cms.Web/wwwroot/
-        # Where to place the files in your ftp
-        into: /mixcore.org/dev/wwwroot/
-        # Remove existing file inside FTP destination folder
-        cleanupExisting: false
+        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+        ftp-server: ftp://115.79.139.90:2121/ #${{ secrets.FTP_SERVER }}
+        # FTP account username
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        # FTP account password
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        # The local folder to copy, defaults to root project folder
+        # local-dir: dist/Mix.Cms.Web/wwwroot/ # optional
+        # remoteDir: /mixcore.org/dev/wwwroot/
+        # Passes through options into git-ftp
+        git-ftp-args: --syncroot dist/Mix.Cms.Web/wwwroot/ --remote-root /mixcore.org/dev/wwwroot/ --verbose # optional

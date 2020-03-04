@@ -23,8 +23,8 @@ var dest = '.';//For publish folder use "./bin/Release/PublishOutput/";
 //C:\\Git\\GitHub\\Queen-Beauty\\QueenBeauty\\
 
 var paths = {
-    webroot: "./dist/Mix.Cms.Web/wwwroot/",
-    //webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", 
+    webroot: "./dist/Mix.Cms.Web/wwwroot/", // Use for current repo dist
+    //webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", // Use for mix.core repo
     webapp: "./src/app/", //app
     libs:   "./src/lib/",
     scriptLib: "./src/lib/", //app
@@ -91,7 +91,7 @@ paths.framework = {
         paths.scriptLib + "angularjs/**/*.js",
         paths.scriptLib + "jquery/jquery.min.js",
         paths.scriptLib + "jquery/jquery-ui.min.js",
-        // paths.scriptLib + "jquery/jquery.qrcode.min.js",
+        paths.scriptLib + "jquery/jquery.qrcode.min.js",
         paths.scriptLib + "bootstrap/popper.min.js",
         paths.scriptLib + "bootstrap/bootstrap.min.js",
         paths.scriptLib + "lazysizes-5.2.0/lazysizes.min.js",
@@ -109,32 +109,7 @@ paths.shared = {
 };
 
 
-paths.appCss = {
-    src: [
-        paths.webapp + "app-shared/**/*.css",
-        paths.webapp + "app-portal/**/*.css",
-        paths.webapp + "app-client/**/*.css",
-        paths.webapp + "app-init/**/*.css"//,
-        //paths.scriptLib + "**/*.css"
-    ],
-    dest: paths.webroot + "css/app-vendor.min.css"
-};
 
-paths.appInitCss = {
-    src: [
-        paths.webapp + "app-init/**/*.css"
-    ],
-    dest: paths.webroot + "css/app-init.min.css"
-};
-
-
-paths.sharedCss = {
-    src: [
-        "./lib/shared/**/*.css",
-        "./lib/shared/**/*.*.css"
-    ],
-    dest: paths.webroot + "css/shared.min.css"
-};
 
 
 gulp.task("min:initApp", function (cb) {
@@ -191,25 +166,54 @@ gulp.task("min:shared", function (cb) {
         .pipe(gulp.dest(dest));
 });
 
+
+paths.appCss = {
+    src: [
+        paths.webapp + "app-shared/**/*.css",
+        paths.webapp + "app-portal/**/*.css",
+        paths.webapp + "app-client/**/*.css",
+        paths.webapp + "app-init/**/*.css"//,
+        //paths.scriptLib + "**/*.css"
+    ],
+    dest: paths.webroot + "css/app-vendor.min.css"
+};
+
+
 gulp.task("min:appCss", function (cb) {
     return gulp.src(paths.appCss.src, { base: "." })
         .pipe(concat(paths.appCss.dest))
         .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
+paths.appInitCss = {
+    src: [
+        paths.webapp + "app-init/**/*.css"
+    ],
+    dest: paths.webroot + "css/app-init.min.css"
+};
 gulp.task("min:appInitCss", function (cb) {
     return gulp.src(paths.appInitCss.src, { base: "." })
         .pipe(concat(paths.appInitCss.dest))
         .pipe(cssmin(paths.appInitCss))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
 
+paths.sharedCss = {
+    src: [
+        "./src/lib/shared/**/*.css",
+        "./src/lib/shared/**/*.*.css"
+    ],
+    dest: paths.webroot + "css/shared.min.css"
+};
 gulp.task("min:sharedCss", function (cb) {
     return gulp.src(paths.sharedCss.src, { base: "." })
         .pipe(concat(paths.sharedCss.dest))
         .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
 });
 
@@ -394,6 +398,7 @@ gulp.task('watch', function () {
     gulp.watch('./src/app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
     gulp.watch('./src/app/app-shared/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
+    gulp.watch('./src/lib/**/*.js', gulp.series('min:framework'));
     gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
 });
 
