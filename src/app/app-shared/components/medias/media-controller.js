@@ -106,7 +106,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             var resp = await service.cloneMedia(id);
             if (resp && resp.isSucceed) {
                 $scope.activedMedia = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();
                 //$location.path('/portal/media/details/' + resp.data.id);

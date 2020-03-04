@@ -52,8 +52,6 @@ app.controller('ModulePostController',
                 }
             };
 
-            $scope.saveSuccessCallback = function () {
-            }
             $scope.removeCallback = function () {
             }
 

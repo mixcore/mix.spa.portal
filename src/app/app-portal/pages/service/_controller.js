@@ -10,16 +10,18 @@ app.controller('ServiceController',
             $scope.parentId = null;
             $scope.parentType = null;
             $scope.cates = ['Site', 'System'];
-            $scope.others=[];
-            $scope.settings = $rootScope.globalSettings;            
+            $scope.others = [];
+            $scope.settings = $rootScope.globalSettings;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
-            $scope.init= async function(){
+            $scope.init = async function () {
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
                 $scope.dataId = $routeParams.dataId;
-                
+
             };
             $scope.saveSuccessCallback = function () {
+                $rootScope.isBusy = false;
+                $scope.$apply();
                 // if($scope.parentId){
                 //     $location.url('/portal/attribute-set-data/details?dataId='+ $scope.parentId);
                 // }
@@ -70,9 +72,9 @@ app.controller('ServiceController',
                 item.editUrl = '/portal/post/details/' + item.id;
                 $rootScope.preview('post', item, item.title, 'modal-lg');
             };
-            $scope.edit= function(data){
-                $scope.goToPath('/portal/attribute-set-data/details?dataId='+ data.id +'&attributeSetId=' + $scope.attributeSetId)
-            };  
+            $scope.edit = function (data) {
+                $scope.goToPath('/portal/attribute-set-data/details?dataId=' + data.id + '&attributeSetId=' + $scope.attributeSetId)
+            };
             $scope.remove = function (data) {
                 $rootScope.showConfirm($scope, 'removeConfirmed', [data.id], null, 'Remove', 'Deleted data will not able to recover, are you sure you want to delete this item?');
             };
@@ -93,7 +95,7 @@ app.controller('ServiceController',
                 }
             };
 
-            $scope.saveOthers = async function(){                
+            $scope.saveOthers = async function () {
                 var response = await service.saveList($scope.others);
                 if (response.isSucceed) {
                     $scope.getList();

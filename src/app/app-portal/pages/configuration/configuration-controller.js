@@ -8,6 +8,8 @@ app.controller('ConfigurationController',
             $scope.saveSuccessCallback = function () {
                 commonService.initAllSettings().then(function () {
                     $location.url($scope.referrerUrl);
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
                 });
             }
             $scope.removeCallback = function () {

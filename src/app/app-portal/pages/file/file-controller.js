@@ -105,7 +105,7 @@ app.controller('FileController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
             var resp = await fileServices.saveFile(file);
             if (resp && resp.isSucceed) {
                 $scope.activedFile = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }

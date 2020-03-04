@@ -72,7 +72,7 @@ modules.component('jsonBuilder', {
                     var resp = await fileService.saveFile(ctrl.file);
                     if (resp && resp.isSucceed) {
                         $scope.activedFile = resp.data;
-                        $rootScope.showMessage('Thành công', 'success');
+                        $rootScope.showMessage('Update successfully!', 'success');
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     }

@@ -52,11 +52,6 @@ app.controller('PagePostController',
                 }
             };
 
-            $scope.saveSuccessCallback = function () {
-            }
-            $scope.removeCallback = function () {
-            }
-
             $scope.saveOthers = async function(){                
                 var response = await service.saveList($scope.others);
                 if (response.isSucceed) {

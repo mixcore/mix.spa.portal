@@ -139,7 +139,7 @@ app.controller('SharedModuleDataController', ['$scope', '$rootScope', 'ngAppSett
             var resp = await moduleDataService.saveModuleData($scope.activedModuleData);
             if (resp && resp.isSucceed) {
                 $scope.activedModuleData = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.initModuleForm($scope.name);
                 $rootScope.isBusy = false;

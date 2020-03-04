@@ -110,7 +110,7 @@ app.controller('JsonDataController',
             var resp = await service.saveFile(file);
             if (resp && resp.isSucceed) {
                 $scope.activedFile = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }

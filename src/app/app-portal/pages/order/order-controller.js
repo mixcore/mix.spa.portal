@@ -102,7 +102,7 @@ app.controller('OrderController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             var resp = await orderServices.saveOrder(order);
             if (resp && resp.isSucceed) {
                 $scope.activedOrder = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();
                 //$location.path('/portal/order/details/' + resp.data.id);

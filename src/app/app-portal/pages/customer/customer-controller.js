@@ -96,7 +96,7 @@ app.controller('CustomerController', ['$scope', '$rootScope', 'ngAppSettings', '
             var resp = await customerServices.saveCustomer(customer);
             if (resp && resp.isSucceed) {
                 $scope.activedCustomer = resp.data;
-                $rootScope.showMessage('Thành công', 'success');
+                $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();
                 //$location.path('/portal/customer/details/' + resp.data.id);

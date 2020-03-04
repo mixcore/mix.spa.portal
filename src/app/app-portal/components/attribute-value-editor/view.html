@@ -255,6 +255,10 @@
             <!-- <pre>{{$ctrl.attributeValue | json}}</pre> -->
 
         </div>
+        <div class="text-muted" ng-switch-when="24">
+            <!--Text-->
+            <qr-code model="$ctrl.attributeValue.stringValue"></qr-code>            
+        </div>
     </div>
 </div>
 <!-- TODO: Only allow stringValue -->

@@ -15,7 +15,7 @@ modules.component('rolePageNav', {
         //    //$rootScope.isBusy = true;
         //    //var resp = await roleServices.updatePermission(permission);
         //    //if (resp && resp.isSucceed) {
-        //    //    $rootScope.showMessage('Thành công', 'success');
+        //    //    $rootScope.showMessage('Update successfully!', 'success');
         //    //    $rootScope.isBusy = false;
         //    //    $scope.$apply();
         //    //}

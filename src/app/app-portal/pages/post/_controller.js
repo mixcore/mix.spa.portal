@@ -65,6 +65,8 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                     $rootScope.decryptAttributeSet(nav.attributeSet.attributes, nav.attributeSet.postData.items);
                 }
             });
+            $rootScope.isBusy = false;
+            $scope.$apply();
         };
         $scope.getSingleSuccessCallback = function () {
             var moduleId = $routeParams.module_id;

@@ -139,7 +139,7 @@ app.controller('NavigationController',
                 $rootScope.preview('post', item, item.title, 'modal-lg');
             };
             $scope.edit = function (data) {
-                $scope.goToPath('/portal/navigation/details?dataId=' + data.id + '&attributeSetId=' + $scope.attributeSetId + '&attributeSetName=' + $scope.attributeSetName);
+                $scope.goToPath('/portal/navigation/details?dataId=' + data.id + '&attributeSetId=' + data.attributeSetId + '&attributeSetName=' + data.attributeSetName);
             };
             $scope.remove = function (data) {
                 $rootScope.showConfirm($scope, 'removeConfirmed', [data.id], null, 'Remove', 'Deleted data will not able to recover, are you sure you want to delete this item?');

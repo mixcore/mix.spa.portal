@@ -48,11 +48,6 @@ app.controller('UrlAliasController',
                 }
             };
 
-            $scope.saveSuccessCallback = function () {
-            }
-            $scope.removeCallback = function () {
-            }
-
             $scope.updateInfos = async function (index) {
                 $scope.data.items.splice(index, 1);
                 $rootScope.isBusy = true;

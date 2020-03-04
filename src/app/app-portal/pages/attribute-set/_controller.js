@@ -18,8 +18,6 @@ app.controller('AttributeSetController', [
             }
             $scope.$apply();
         }
-        $scope.saveSuccessCallback = function () {
-            // $location.url($scope.referrerUrl);
-        };
+        
     }
 ]);
