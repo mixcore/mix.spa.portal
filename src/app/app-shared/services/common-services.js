@@ -284,6 +284,78 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                     }
                 });
         };
+        
+        var _getRestApiResult = async function (req, serviceBase) {
+            if (!authService.authentication) {
+                await authService.fillAuthData();
+            }
+            if (authService.authentication) {
+                req.Authorization = authService.authentication.token;
+            }
+
+            var serviceUrl = appSettings.serviceBase + '/api/' + appSettings.apiVersion;
+            if (serviceBase || req.serviceBase) {
+                serviceUrl = (serviceBase || req.serviceBase) + '/api/' + appSettings.apiVersion;
+            }
+
+            req.url = serviceUrl + req.url;
+            if (!req.headers) {
+                req.headers = {
+                    'Content-Type': 'application/json'
+                };
+            }
+            req.headers.Authorization = 'Bearer ' + req.Authorization || '';
+            return $http(req).then(function (resp) {
+                if (req.url.indexOf('settings') == -1 &&
+                    (!$rootScope.settings ||
+                        $rootScope.settings.lastUpdateConfiguration < resp.data.lastUpdateConfiguration)
+                ) {
+                    _initAllSettings();
+                }
+
+                return { isSucceed: true, data: resp.data};
+            },
+                function (error) {
+                    if (error.status === 401) {
+                        //Try again with new token from previous Request (optional)                
+                        return authService.refreshToken(authService.authentication.refresh_token).then(function () {
+                            req.headers.Authorization = 'Bearer ' + authService.authentication.token;
+                            return $http(req).then(function (results) {
+                                return { isSucceed: true, data: results.data};
+                            }, function (err) {
+
+                                authService.logOut();
+                                authService.authentication.token = null;
+                                authService.authentication.refresh_token = null;
+                                authService.referredUrl = $location.$$url;
+                                window.top.location.href = '/security/login';
+                            });
+                        }, function (err) {
+
+                            var t = { isSucceed: false, status: err.status, errors: [err] };
+
+                            authService.logOut();
+                            authService.authentication.token = null;
+                            authService.authentication.refresh_token = null;
+                            authService.referredUrl = $location.$$url;
+                            window.top.location.href = '/security/login';
+                            return t;
+                        }
+                        );
+                    }
+                    else if (error.status === 200 || error.status === 204 || error.status === 205) {
+                        return { isSucceed: false, status: err.status, errors: [error.statusText || error.status] };                        
+                    }
+                    else {
+                        if (error.data) {
+                            return { isSucceed: false, errors: [error.data] };
+                        }
+                        else {
+                            return { isSucceed: false, errors: [error.statusText || error.status] };
+                        }
+                    }
+                });
+        };
 
         var _getAnonymousApiResult = async function (req) {
             $rootScope.isBusy = true;
@@ -301,6 +373,7 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
         };
         adminCommonFactory.sendMail = _sendMail;
         adminCommonFactory.getApiResult = _getApiResult;
+        adminCommonFactory.getRestApiResult = _getRestApiResult;
         adminCommonFactory.getAnonymousApiResult = _getAnonymousApiResult;
         adminCommonFactory.getSettings = _getSettings;
         adminCommonFactory.setSettings = _setSettings;

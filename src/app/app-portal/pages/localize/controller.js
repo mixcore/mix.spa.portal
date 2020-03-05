@@ -1,10 +1,11 @@
 ﻿'use strict';
-app.controller('LanguageController',
-    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'LanguageService', 'CommonService',
+app.controller('LocalizeController',
+    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'LocalizeService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, commonService) {
-            BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.cates = ngAppSettings.enums.language_types;
             $scope.settings = $rootScope.globalSettings;
+            $scope.defaultId = 'default';
             $scope.languageFile = {
                 file: null,
                 fullPath: '',
@@ -24,7 +25,7 @@ app.controller('LanguageController',
             }
             $scope.removeCallback = function () {
                 commonService.initAllSettings().then(function () {
-                    $location.url($scope.referrerUrl);
+                    // $location.url($scope.referrerUrl);
                 });
             }
             $scope.generateDefault = function (text, cate) {
