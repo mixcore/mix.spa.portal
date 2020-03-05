@@ -123,7 +123,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService',
                         if (result != '') {
                             result += '&';
                         }
-                        result += req[key];
+                        result += `${key}=${req[key]}`;
                     }
                 }
                 return result;
