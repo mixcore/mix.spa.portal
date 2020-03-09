@@ -23,7 +23,7 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             frm.append('assets', form['assets'].files[0]);
             frm.append('theme', form['theme'].files[0]);
             // Adding one more key to FormData object
-            frm.append('model', angular.toJson(activedData));
+            frm.append('model', angular.toJson(activedData || $scope.activedData));
 
             var response = await service.ajaxSubmitForm(frm, url);
             if (response.isSucceed) {
