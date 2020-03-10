@@ -16,11 +16,11 @@
         <div class="form-group">
             <label class="control-label">Type</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-toggle="buttons">
-                <label ng-repeat="type in $ctrl.settings.attributeSetTypes track by $index" ng-switch="type"
-                    ng-class="{active: $index === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
-                    ng-click="$ctrl.model.type=$index;">
-                    <input ng-model="$ctrl.model.type" type="radio" value="{{$index}}" class="custom-control-input"
-                        id="model_type_{{$index}}">
+                <label ng-repeat="type in $ctrl.settings.attributeSetTypes track by $index" ng-switch="type.name"
+                    ng-class="{active: type.value === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
+                    ng-click="$ctrl.model.type=type.value;">
+                    <input ng-model="$ctrl.model.type" type="radio" value="{{type.value}}" class="custom-control-input"
+                        id="model_type_{{type.value}}">
                     <span ng-switch-when="System" class="" title="{{type}}"><i class="fas fa-cog"></i> System</span>
                     <span ng-switch-when="Set" class="" title="{{type}}"><i class="fas fa-database"></i> Data Set</span>
                     <span ng-switch-when="Page" class="" title="{{type}}"><i class="far fa-file"></i> Page</span>

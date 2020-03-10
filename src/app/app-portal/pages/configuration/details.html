@@ -27,7 +27,7 @@
                                             <select ng-change="initEditors()" class="form-control mr-2"
                                                 ng-model="activedData.property.dataType">
                                                 <option ng-repeat="item in settings.dataTypes track by $index"
-                                                    ng-value="$index">{{item}}</option>
+                                                    ng-value="item.value">{{item.name}}</option>
                                             </select>
                                         </div>
                                     </div>

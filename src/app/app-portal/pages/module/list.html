@@ -8,7 +8,7 @@
                 <select class="form-control btn custom-select custom-select-sm col-2 mt-3" ng-model="type"
                     ng-change="getListByType(pageIndex)">
                     <option value="-1">All</option>
-                    <option ng-repeat="type in settings.moduleTypes track by $index" ng-value="$index">{{type}}</option>
+                    <option ng-repeat="type in settings.moduleTypes track by $index" ng-value="type.value">{{type}}</option>
                 </select>
 
                 <select class="form-control btn custom-select custom-select-sm col-2 mt-3"
