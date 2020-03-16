@@ -27,7 +27,7 @@
   animation: spin 2s linear infinite;
 } */
 
-.spinner {
+.mix-loader-container .spinner {
   margin: 100px auto;
   width: 40px;
   height: 40px;
@@ -38,7 +38,7 @@
   animation: sk-rotate 2.0s infinite linear;
 }
 
-.dot1, .dot2 {
+.mix-loader-container .dot1,.mix-loader-container  .dot2 {
   width: 60%;
   height: 60%;
   display: inline-block;
@@ -51,7 +51,7 @@
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
 
-.dot2 {
+.mix-loader-container .dot2 {
   top: auto;
   bottom: 0;
   -webkit-animation-delay: -1.0s;

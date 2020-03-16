@@ -20,9 +20,9 @@ app.controller('LoginController', [ '$rootScope', '$scope', '$routeParams', '$lo
     });
     $scope.login = async function () {
         // console.log('test');
-        if (authService.referredUrl.indexOf('security') > 0) {
-            authService.referredUrl = "/portal";
-        }
+        // if (authService.referredUrl.includes('security')) {
+        //     authService.referredUrl = "/portal";
+        // }
         var result = await authService.login($scope.loginData);
         if (result) {
             $rootScope.isBusy = false;

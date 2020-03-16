@@ -7,7 +7,7 @@
 
                 <select ng-change="selPageType()" ng-model="pageType" class="custom-select col-2">
                     <!-- <option selected="select">Select Type</option> -->
-                    <option ng-repeat="item in pageTypes track by $index" value="{{$index}}">{{item}}
+                    <option ng-repeat="item in pageTypes track by $index" value="{{item.value}}">{{item.name}}
                     </option>
                 </select>
 

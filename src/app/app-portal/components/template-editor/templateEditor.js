@@ -25,6 +25,9 @@
                 ctrl.template.id = 0;
             }
             ctrl.init = async function(){
+                if(!ctrl.template && ctrl.templates){
+                    ctrl.template = ctrl.templates[0];
+                }
                 if(ctrl.folderType && !ctrl.folderType){
                     var themeId = globalSettingsService.get('themeId');
                     var resp = await service.getSingle(['portal', themeId, ctrl.folderType]);

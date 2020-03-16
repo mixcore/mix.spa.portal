@@ -6,6 +6,7 @@
                 localStorageService, translatorService, moduleDataService) {
                 $scope.lang = '';
                 $scope.isInit = false;
+                $scope.isLoaded = false;
                 $scope.mediaFile = {
                     file: null,
                     fullPath: '',
@@ -75,7 +76,7 @@
                         id: id
                     };
                     $rootScope.preview('module-data', obj, null, 'modal-lg');
-                }
+                };
 
                 $scope.initModuleForm = async function (name, successCallback, failCallback) {
                     var resp = null;
@@ -146,16 +147,16 @@
                         method: 'share',
                         href: url,
                     }, function (response) { });
-                }
+                };
                 $scope.shareTwitter = function (url, content) {
                     var text = encodeURIComponent(content);
                     var shareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + text;
                     var win = window.open(shareUrl, 'ShareOnTwitter', getWindowOptions());
                     win.opener = null; // 2
-                }
+                };
                 $scope.saveShoppingCart = function () {
                     localStorageService.set('shoppingCart', $scope.cartData);
-                }
+                };
 
                 var getWindowOptions = function () {
                     var width = 500;
@@ -170,6 +171,9 @@
                         'left=' + left,
                         'top=' + top,
                     ].join();
+                };
+                window.load = function(){
+                    $scope.$apply($scope.isLoaded = true);
                 };
             }]);
 
