@@ -1,4 +1,4 @@
-<form ng-class="{'submitted': submitted}" ng-submit="$ctrl.submit()">
+<form ng-class="{'submitted': submitted}" ng-init="$ctrl.loadData()" ng-submit="$ctrl.submit()">
     <actions back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
     <div class="card">
         <h6 class="card-header position-sticky" style="top: 3.90rem; z-index: 12;">

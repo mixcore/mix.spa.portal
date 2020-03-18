@@ -7,8 +7,8 @@ modules.component('attributeValueEditor', {
         parentId: '=?',
         isShowTitle: '=?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RelatedAttributeSetDataService', 'AttributeSetDataService', 
-        function ($rootScope, $scope, ngAppSettings,$location, navService,dataService) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$filter', 'RelatedAttributeSetDataService', 'AttributeSetDataService', 
+        function ($rootScope, $scope, ngAppSettings,$filter, navService,dataService) {
         var ctrl = this;
         ctrl.goToPath = $rootScope.goToPath;
         ctrl.icons = ngAppSettings.icons;
@@ -41,7 +41,8 @@ modules.component('attributeValueEditor', {
                     case 2:
                     case 3:                        
                         if (ctrl.attributeValue.dateTimeValue) {
-                            ctrl.attributeValue.dateObj = new Date(ctrl.attributeValue.dateTimeValue);
+                            var local = $filter('utcToLocalTime')(ctrl.attributeValue.dateTimeValue);
+                            ctrl.attributeValue.dateObj = new Date(local);
                             $scope.$apply();
                         }
                         break;

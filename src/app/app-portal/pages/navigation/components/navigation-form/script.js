@@ -15,7 +15,7 @@ modules.component('navigationForm', {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
-            ctrl.defaultData = null;
+            ctrl.defaultData = null;            
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {                
@@ -27,10 +27,10 @@ modules.component('navigationForm', {
                     If input is data id => load ctrl.attrData from service and handle it independently
                     Else modify input ctrl.attrData
                 */
-                $rootScope.isBusy = true;                
+                $rootScope.isBusy = true;
                 if (ctrl.attrDataId) {
                     ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
-                    if (ctrl.attrData) {
+                    if (ctrl.attrData) {                        
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     } else {
@@ -42,14 +42,19 @@ modules.component('navigationForm', {
                     }
 
                 }
-                else {
-                    
-                    if (!ctrl.attrData) {                        
-                        ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
-                    }
-                    $rootScope.isBusy = false;
-                    $scope.$apply();
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                if(ctrl.defaultData){
+                    ctrl.defaultData.attreSetId = ctrl.attreSetId;
+                    ctrl.defaultData.attrSetName = ctrl.attrSetName;
+                    ctrl.defaultData.parentId = ctrl.parentId;
+                    ctrl.defaultData.parentType = ctrl.parentType;
                 }
+
+                if (!ctrl.attrData) {
+                    ctrl.attrData = angular.copy(ctrl.defaultData);
+                }
+                $rootScope.isBusy = false;
+                $scope.$apply();
             };
             ctrl.loadSelected = function(data, type){
                 if(data){

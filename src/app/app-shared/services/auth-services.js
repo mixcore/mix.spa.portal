@@ -89,11 +89,15 @@ app.factory('AuthService',
                     this.authentication = _authentication;
                     _initSettings().then(function () {
                         if ($routeParams.ReturnUrl) {
-                            window.location.href = $routeParams.ReturnUrl;
+                            setTimeout(() => {
+                                window.location.href = $routeParams.ReturnUrl;                                
+                            }, 200);
 
                         }
                         else if (document.referrer && document.referrer.indexOf('init') === -1) {
-                            window.location.href = document.referrer;
+                            setTimeout(() => {
+                                window.location.href = document.referrer;                                
+                            }, 200);
                         } else {
                             window.location.href = '/';
                         }

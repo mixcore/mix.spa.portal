@@ -18,9 +18,9 @@ modules.component('attributeSetForm', {
             ctrl.defaultData = null;
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.$onInit = async function () {
-                ctrl.loadData();
-            };
+            // ctrl.$onInit = async function () {
+            //     ctrl.loadData();
+            // };
             ctrl.loadData = async function () {
 
                 /*
@@ -28,12 +28,9 @@ modules.component('attributeSetForm', {
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
                 if (ctrl.attrDataId) {
                     ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
-                    if (ctrl.attrData) {
-                        ctrl.defaultData.attributeSetId = ctrl.attrData.attributeSetId;
-                        ctrl.defaultData.attributeSetName = ctrl.attrData.attributeSetName;
+                    if (ctrl.attrData) {                        
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     } else {
@@ -45,13 +42,19 @@ modules.component('attributeSetForm', {
                     }
 
                 }
-                else {
-                    if (!ctrl.attrData) {
-                        ctrl.attrData = angular.copy(ctrl.defaultData);
-                    }
-                    $rootScope.isBusy = false;
-                    $scope.$apply();
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                if(ctrl.defaultData){
+                    ctrl.defaultData.attreSetId = ctrl.attreSetId;
+                    ctrl.defaultData.attrSetName = ctrl.attrSetName;
+                    ctrl.defaultData.parentId = ctrl.parentId;
+                    ctrl.defaultData.parentType = ctrl.parentType;
                 }
+
+                if (!ctrl.attrData) {
+                    ctrl.attrData = angular.copy(ctrl.defaultData);
+                }
+                $rootScope.isBusy = false;
+                $scope.$apply();
             };
             ctrl.reload = async function () {
                 ctrl.attrData = angular.copy(ctrl.defaultData);

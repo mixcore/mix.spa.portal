@@ -17,7 +17,9 @@ app.controller('NavigationController',
             $scope.init = async function () {
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
-                $scope.dataId = $routeParams.dataId;
+                if ($routeParams.dataId != $scope.defaultId) {
+                    $scope.dataId = $routeParams.dataId;
+                }
                 $scope.parentId = $routeParams.parentId;
                 $scope.parentType = $routeParams.parentType;
                 // $scope.refParentId = $routeParams.refParentId;
@@ -30,30 +32,14 @@ app.controller('NavigationController',
                 }
             };
             $scope.saveSuccessCallback = function () {
-                if ($scope.refDataModel) {
-                    $scope.refDataModel.id = $scope.activedData.id;
-                    $scope.refDataModel.attributeSetId = $scope.activedData.attributeSetId;
-                    $scope.refDataModel.attributeSetName = $scope.activedData.attributeSetName;
-                    $scope.refDataModel.specificulture = $scope.activedData.specificulture;
-                    $scope.refDataModel.data = $scope.activedData;
-                    $rootScope.isBusy = true;
-                    navService.save('portal', $scope.refDataModel).then(resp => {
-                        if (resp.isSucceed) {
-                            $rootScope.isBusy = false;
-                            if ($scope.parentId) {
-                                $location.url('/portal/navigation/details?dataId=' + $scope.parentId);
-                            }
-                            else {
-                                $location.url('/portal/navigation/list?attributeSetId=' + $scope.activedData.attributeSetId);
-                            }
-                            $scope.$apply();
-                        } else {
-                            $rootScope.showMessage('failed');
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        }
-                    });
+                $rootScope.isBusy = false;
+                if ($scope.parentId) {
+                    $location.url('/portal/navigation/details?dataId=' + $scope.parentId);
                 }
+                else {
+                    $location.url('/portal/navigation/list?attributeSetId=' + $scope.activedData.attributeSetId);
+                }
+                $scope.$apply();
             };
             $scope.getList = async function (pageIndex) {
                 if (pageIndex !== undefined) {

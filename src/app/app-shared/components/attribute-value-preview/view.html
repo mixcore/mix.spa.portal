@@ -4,7 +4,8 @@
         </p>
     </div>
     <div ng-switch-when="1">
-        <span ng-bind="$ctrl.data.stringValue">
+        <span ng-bind="$ctrl.data.dateTimeValue | utcToLocal:'d.M.yyyy h:mm a'">
+            
         </span>
     </div>
     <div ng-switch-when="16">

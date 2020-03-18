@@ -47,6 +47,7 @@ modules.component('attributeSetNavs', {
                         if(!e){
                             e = angular.copy(ctrl.defaultData);
                             e.id = element.id;
+                            e.specificulture = navService.lang;
                             e.data = element;
                             e.isActived = false;
                             ctrl.data.push(e);

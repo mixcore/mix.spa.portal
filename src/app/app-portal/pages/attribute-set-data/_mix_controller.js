@@ -7,6 +7,7 @@ app.controller('MixAttributeSetDataController',
             $scope.settings = $rootScope.globalSettings;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
             $scope.filterType = 'contain';
+            $scope.defaultId = 'default';
             $scope.importFile = {
                 file: null,
                 fullPath: '',
@@ -19,7 +20,9 @@ app.controller('MixAttributeSetDataController',
                 $scope.attributeSetName = $routeParams.attributeSetName;
                 $scope.refParentId = $routeParams.refParentId;
                 $scope.refParentType = $routeParams.refParentType;
-                $scope.dataId = $routeParams.dataId;
+                if($routeParams.dataId!= $scope.defaultId){
+                    $scope.dataId = $routeParams.dataId;
+                }
                 // $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
                 $scope.request.query += 'attributeSetName=' + $routeParams.attributeSetName;
 
@@ -30,23 +33,24 @@ app.controller('MixAttributeSetDataController',
                     };
                 }
             };
-            $scope.saveSuccessCallback = function () {
-                if ($scope.refDataModel) {
-                    $scope.refDataModel.id = $scope.activedData.id;
-                    $scope.refDataModel.data = $scope.activedData.data;
-                    $rootScope.isBusy = true;
-                    navService.save('portal', $scope.refDataModel).then(resp => {
-                        if (resp.isSucceed) {
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        } else {
-                            $rootScope.showMessage('failed');
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        }
-                    });
-                }
-            }
+            
+            // $scope.saveSuccessCallback = function () {
+                // if ($scope.refDataModel) {
+                //     $scope.refDataModel.id = $scope.activedData.id;
+                //     $scope.refDataModel.data = $scope.activedData.data;
+                    // $rootScope.isBusy = true;
+                    // navService.save('portal', $scope.refDataModel).then(resp => {
+                    //     if (resp.isSucceed) {
+                    //         $rootScope.isBusy = false;
+                    //         $scope.$apply();
+                    //     } else {
+                    //         $rootScope.showMessage('failed');
+                    //         $rootScope.isBusy = false;
+                    //         $scope.$apply();
+                    //     }
+                    // });
+                // }
+            // };
             $scope.preview = function (item) {
                 item.editUrl = '/portal/post/details/' + item.id;
                 $rootScope.preview('post', item, item.title, 'modal-lg');
