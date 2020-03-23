@@ -2,7 +2,7 @@
 'use strict';
 app.factory('RelatedAttributeSetDataService', ['$rootScope', 'CommonService', 'BaseODataService',
     function ($rootScope, commonService, baseService) {
-        var serviceFactory = angular.copy(baseService);
+        var serviceFactory = Object.create(baseService);
         serviceFactory.init('related-attribute-set-data');
 
         var _getList = async function (viewType, objData,attributeSetId,parentType, parentId) {

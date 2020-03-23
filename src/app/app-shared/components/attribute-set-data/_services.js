@@ -1,7 +1,7 @@
 ﻿'use strict';
 app.factory('AttributeSetDataService', ['$rootScope', 'CommonService', 'BaseODataService',
     function ($rootScope, commonService, baseService) {
-        var serviceFactory = angular.copy(baseService);
+        var serviceFactory = Object.create(baseService);
         serviceFactory.init('attribute-set-data');
 
         var _getList = async function (viewType, objData, attributeSetId, attributeSetName, parentType, parentId) {

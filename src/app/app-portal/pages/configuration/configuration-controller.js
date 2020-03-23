@@ -7,7 +7,7 @@ app.controller('ConfigurationController',
             $scope.settings = $rootScope.globalSettings;
             $scope.saveSuccessCallback = function () {
                 commonService.initAllSettings().then(function () {
-                    $location.url($scope.referrerUrl);
+                    // $location.url($scope.referrerUrl);
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 });

@@ -192,9 +192,11 @@
         </div>
         <div class="text-muted" ng-switch-when="17">
             <!--Color-->
-            <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="color"
+            <input class="form-control form-control-sm col-6 {{$ctrl.inputClass}}" type="color"
                 value="{{$ctrl.attributeValue.stringValue}}" ng-model="$ctrl.attributeValue.stringValue"
                 placeholder="{{$ctrl.attributeValue.field.title}}">
+            <input class="form-control form-control-sm  col-6 {{$ctrl.inputClass}}" type="text"
+                ng-model="$ctrl.attributeValue.stringValue" placeholder="{{$ctrl.attributeValue.field.title}}">
         </div>
         <div class="text-muted" ng-switch-when="18">
             <!--Boolean-->

@@ -1,7 +1,7 @@
 ﻿'use strict';
 app.factory('LocalizeService', ['BaseRestService','CommonService', function (baseService, commonService) {
 
-    var serviceFactory = angular.copy(baseService);
+    var serviceFactory = Object.create(baseService);
     serviceFactory.init('language');
 
     var _uploadLanguage = async function (languageFile) {

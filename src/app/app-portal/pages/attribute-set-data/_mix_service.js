@@ -1,7 +1,7 @@
 'use strict';
 app.factory('MixAttributeSetDataService', ['BaseService','CommonService', function (baseService, commonService) {
 
-    var serviceFactory = angular.copy(baseService);
+    var serviceFactory = Object.create(baseService);
     serviceFactory.init('attribute-set-data');
     var _saveByName = async function (name, objData) {
         var url = this.prefixUrl + '/save/' + name;

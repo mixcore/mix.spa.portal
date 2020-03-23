@@ -85,9 +85,11 @@
             <custom-image header="'Image'" type="'ModuleDatas'" folder="'ModuleDatas'" src-url="$ctrl.data.value"
                 src="$ctrl.data.value" auto="'true'"></custom-image>
         </div>
-        <div ng-switch-when="17">
+        <div ng-switch-when="17" class="row">
             <!--Color-->
-            <input class="form-control form-control-sm{{$ctrl.inputClass}}" type="color" ng-model="$ctrl.data.value"
+            <input class="form-control form-control-sm col-6 {{$ctrl.inputClass}}" type="color" ng-model="$ctrl.data.value"
+                placeholder="{{$ctrl.fieldTitle}}">
+            <input class="form-control form-control-sm col-6 {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.fieldTitle}}">
         </div>
         <div ng-switch-when="18">

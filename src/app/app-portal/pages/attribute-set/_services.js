@@ -1,7 +1,7 @@
 ﻿'use strict';
-app.factory('AttributeSetService', ['BaseODataService',
+app.factory('AttributeSetService', ['BaseService',
     function (baseService) {
-        var serviceFactory = angular.copy(baseService);
+        var serviceFactory = Object.create(baseService);
         serviceFactory.init('attribute-set', true);
         // Define more service methods here
     return serviceFactory;
