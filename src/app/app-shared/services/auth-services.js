@@ -91,7 +91,7 @@ app.factory('AuthService',
                         if ($routeParams.ReturnUrl) {
                             setTimeout(() => {
                                 window.location.href = $routeParams.ReturnUrl;                                
-                            }, 200);
+                            }, 1000);
 
                         }
                         else if (document.referrer && document.referrer.indexOf('init') === -1) {

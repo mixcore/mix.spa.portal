@@ -66,7 +66,7 @@ paths.clientApp = {
     src: [
         paths.webapp + "app-client/app.js",
         paths.webapp + "app-client/app-client-controller.js",
-        paths.webapp + "app-client/components/**/script.js"
+        paths.webapp + "app-client/components/**/*.js"
     ],
     dest: paths.webroot + "js/app-client.min.js"
 };

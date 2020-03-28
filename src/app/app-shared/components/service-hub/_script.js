@@ -31,7 +31,7 @@
             ctrl.user.connection.name = Math.random() * 100;
             ctrl.user.connection.id = 'abc';
             ctrl.user.connection.avatar = '';
-            ctrl.startConnection('ServiceHub', ctrl.join);            
+            ctrl.startConnection('serviceHub', ctrl.join);            
         };
         ctrl.logout = function () {
             FB.logout(function(response) {
@@ -56,11 +56,13 @@
             });
         };
         ctrl.join = function () {
+            // var obj = {name: 'tinku', message: 'test'};
+            // ctrl.connection.invoke("SendMessage", JSON.stringify(obj) ).catch(err => console.error(err.toString()));
             ctrl.request.action = "join_group";
             ctrl.request.uid = ctrl.user.connection.id;
             ctrl.request.data = ctrl.user.connection;
             ctrl.message.connection = ctrl.user.connection;
-            ctrl.connection.invoke('handleRequest', ctrl.request);
+            ctrl.connection.invoke('HandleRequest', JSON.stringify(ctrl.request));
 
         };
         ctrl.toggle = function(){
@@ -68,11 +70,12 @@
         }
         ctrl.toggleContact = function(){
             ctrl.hideContact = !ctrl.hideContact;
-        }
+        };
         ctrl.sendMessage = function () {
             // if (ctrl.user.loggedIn) {
                 ctrl.request.data = ctrl.message;
-                ctrl.connection.invoke('sendMessage', ctrl.request);
+                ctrl.request.action = "send_message";
+                ctrl.connection.invoke('sendMessage', JSON.stringify(ctrl.request));
                 ctrl.message.content = '';         
             // }
         };
@@ -94,6 +97,9 @@
 
                 case 'MemberOffline':
                     ctrl.removeMember(msg.data);
+                    break;
+                case 'Error':
+                    console.error(msg.data)
                     break;
 
             }
