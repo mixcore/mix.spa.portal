@@ -397,7 +397,7 @@ gulp.task('watch', function () {
     gulp.watch('./src/app/**/**/*.html', gulp.series('min:views'));
     gulp.watch('./src/app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
     gulp.watch('./src/app/app-shared/**/*.js', gulp.series('min:sharedApp'));
-    gulp.watch('./src/app/app-client/**/*.js', gulp.series('min:clientApp'));
+    gulp.watch('./src/app/app-client/**/*.js', gulp.series('min:clientApp', 'min:clientAppRequired'));
     gulp.watch('./src/app/app-security/**/*.js', gulp.series('min:securityApp'));
     gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/lib/**/*.js', gulp.series('min:framework'));

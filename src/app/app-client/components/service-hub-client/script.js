@@ -1,8 +1,6 @@
 ﻿modules.component('serviceHubClient', {
     templateUrl: '/app/app-client/components/service-hub-client/view.html',
     bindings: {
-        hubName: '=?',
-        attrSetId: '=?',
         attrSetName: '=?'
     },
     controller: ['$rootScope', '$scope', 'AttributeSetDataRestService',
@@ -30,10 +28,8 @@
             };
             ctrl.init = function () {
                 ctrl.attrSetId = ctrl.attrSetId || 0;
-                ctrl.user.connection.name = Math.random() * 100;
-                ctrl.user.connection.id = 'abc';
-                ctrl.user.connection.avatar = '';
-                ctrl.startConnection('serviceHub', ctrl.join);
+                ctrl.request.room = ctrl.attrSetName;
+                ctrl.startConnection('serviceHub', ctrl.checkLoginStatus);
                 ctrl.loadData();
             };
             ctrl.loadData = async function () {
@@ -70,29 +66,7 @@
                     ctrl.members.push(member);
                 }
                 $scope.$apply();
-            };
-            ctrl.logout = function () {
-                FB.logout(function (response) {
-                    // user is now logged out
-                    ctrl.user.loggedIn = false;
-                });
-            };
-            ctrl.login = function () {
-                FB.login(function (response) {
-                    if (response.authResponse) {
-                        FB.api('/me', function (response) {
-
-                            ctrl.user.info.name = response.name;
-                            ctrl.user.info.id = response.id;
-                            ctrl.user.info.avatar = '//graph.facebook.com/' + response.id + '/picture?width=32&height=32';
-                            ctrl.join();
-                            $scope.$apply();
-                        });
-                    } else {
-                        console.log('User cancelled login or did not fully authorize.');
-                    }
-                });
-            };
+            };           
             ctrl.join = function () {
                 // var obj = {name: 'tinku', message: 'test'};
                 // ctrl.connection.invoke("SendMessage", JSON.stringify(obj) ).catch(err => console.error(err.toString()));
@@ -112,7 +86,7 @@
                 });
                 
                 $scope.$apply();
-            }
+            };
             ctrl.receiveMessage = function (msg) {
                 switch (msg.responseKey) {
                     case 'NewMember':
@@ -148,9 +122,10 @@
                         // request, and the time the access token 
                         // and signed request each expire.
                         FB.api('/me', function (response) {
-                            ctrl.user.info.name = response.name;
-                            ctrl.user.info.id = response.id;
-                            ctrl.user.info.avatar = '//graph.facebook.com/' + response.id + '/picture?width=32&height=32';
+                            ctrl.user.connection.name = response.name;
+                            ctrl.user.connection.id = response.id;
+                            ctrl.user.connection.avatar = '//graph.facebook.com/' + response.id + '/picture?width=32&height=32';
+                            ctrl.loggedIn = true;
                             ctrl.join();
                             $scope.$apply();
                         });
@@ -173,6 +148,27 @@
                     }
                 });
             };
+            ctrl.logout = function () {
+                FB.logout(function (response) {
+                    // user is now logged out
+                    ctrl.user.loggedIn = false;
+                });
+            };
+            ctrl.login = function () {
+                FB.login(function (response) {
+                    if (response.authResponse) {
+                        FB.api('/me', function (response) {
 
+                            ctrl.user.info.name = response.name;
+                            ctrl.user.info.id = response.id;
+                            ctrl.user.info.avatar = '//graph.facebook.com/' + response.id + '/picture?width=32&height=32';
+                            ctrl.join();
+                            $scope.$apply();
+                        });
+                    } else {
+                        console.log('User cancelled login or did not fully authorize.');
+                    }
+                });
+            };
         }]
 });

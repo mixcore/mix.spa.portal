@@ -10,8 +10,9 @@
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-10">
-            <form ng-class="{'submitted': submitted}" ng-if="$ctrl.attrData" ng-submit="$ctrl.submit()">
+        <div class="col-md-8">
+            <div ng-show="!$ctrl.user.loggedIn" class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false"></div>
+            <form  ng-show="$ctrl.user.loggedIn" ng-class="{'submitted': submitted}" ng-if="$ctrl.attrData" ng-submit="$ctrl.submit()">
                 <div class="card">
                     <div id="attributeSetId_{{$ctrl.attrData.attributeSetId}}" class="card-body show">
                         <div class="row">
@@ -33,7 +34,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <ul>
                 <li ng-repeat="m in $ctrl.members">
                     <img imageonload ng-src="{{m.avatar}}" /> <span ng-bind="m.name"></span>
