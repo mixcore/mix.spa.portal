@@ -501,7 +501,19 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseODataService'
                 }
             });
         };
-
+        $rootScope.testJSON = function (obj) { 
+            if(typeof obj === "object" && obj !== null){
+                return obj;
+            }
+            if (typeof obj !== "string") { 
+                return false; 
+            } 
+            try {
+                return  JSON.parse(obj); 
+            } catch (error) { 
+                return false; 
+            } 
+        };
         $rootScope.getODataService = function(modelName, isGlobal)
         {
             var serviceFactory = angular.copy(baseODataService);

@@ -1,5 +1,5 @@
 'use strict';
-app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService',
+app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', 'localStorageService',
     function ($rootScope, $routeParams, commonService) {
         var serviceFactory = {};
         var _init = function (modelName, isGlobal) {

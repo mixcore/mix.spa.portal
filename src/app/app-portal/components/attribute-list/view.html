@@ -103,7 +103,7 @@
                             </label>
                         </div>
                         <div class="scustom-control custom-switch mx-2">
-                            <input type="checkbox" class="custom-control-input" ng-click="col.isRegex = !col.isRegex"
+                            <input type="checkbox" class="custom-control-input" ng-model="col.isRegex"
                                 id="{{'regex_' + $index}}">
                             <label class="custom-control-label" for="{{'regex_' + $index}}">
                                 Regex
@@ -112,7 +112,7 @@
                     </div>
                 </div>
 
-                <div class="row form-group" ng-show="col.isRegex">
+                <div class="row form-group" ng-show="col.isRegex && col.showAdvanced">
                     <div class="col-md-1"></div>
                     <div class="col">
                         <input type="text" class="col form-control form-control-sm" ng-model="col.regex"
