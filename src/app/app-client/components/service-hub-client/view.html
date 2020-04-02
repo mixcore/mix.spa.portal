@@ -7,7 +7,7 @@
                 </div>
 
                 <div class="col-sm-12" ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
-                    <mix-field-preview model="msg.data[field.name]" field="field"></mix-field-preview>                    
+                    <mix-field-preview model="msg.data[field.name]" field="field"></mix-field-preview>
                 </div>
 
             </li>
@@ -23,7 +23,8 @@
                 <div class="card">
                     <div id="attributeSetId_{{$ctrl.attrData.attributeSetId}}" class="card-body show">
                         <div class="row">
-                            <div class="col-sm-12">                                
+                            <div class="col-md-12"><input type="checkbox" ng-model="$ctrl.request.isSave">Save Data</div>
+                            <div class="col-sm-12">
                                 <div ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
                                     <mix-field-editor model="$ctrl.attrData" field="field"></mix-field-editor>
                                 </div>

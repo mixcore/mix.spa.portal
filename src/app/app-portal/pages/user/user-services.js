@@ -56,12 +56,9 @@ app.factory('UserServices', ['$http', 'CommonService', 'ngAppSettings'
         return await commonService.getApiResult(req)
     };
     
-    var _getMyProfile = async function (id, viewType) {
+    var _getMyProfile = async function () {
         var apiUrl = '/account/';
         var url = apiUrl + 'my-profile';
-        if (id) {
-            url += '/' + id;
-        }
         var req = {
             method: 'GET',
             url: url

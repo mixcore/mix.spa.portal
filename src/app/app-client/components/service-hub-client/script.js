@@ -37,7 +37,7 @@
             ctrl.attrSetId = ctrl.attrSetId || 0;
             ctrl.request.specificulture = service.lang;
             ctrl.request.room = ctrl.attrSetName;
-            ctrl.request.isSave = ctrl.isSave || false;
+            ctrl.request.isSave = ctrl.isSave == 'true' || false;
             ctrl.startConnection('serviceHub', ctrl.checkLoginStatus);
         };
         ctrl.loadData = async function () {

@@ -43,7 +43,7 @@ modules.component('attributeSetValues', {
                 if (item.isSelected) {
                     var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
                     if (!current) {
-                        ctrl.selectedList.push(item);
+                        ctrl.selectedList.data.push(item);
                     }
                 }
                 else {
@@ -51,11 +51,11 @@ modules.component('attributeSetValues', {
                 }
             };
             ctrl.selectAll = function (isSelected) {
-                ctrl.selectedList = [];
+                ctrl.selectedList.data = [];
                 angular.forEach(ctrl.data, function (e) {
                     e.isSelected = isSelected;
                     if (isSelected) {
-                        ctrl.selectedList.push(e.id);
+                        ctrl.selectedList.data.push(e.id);
                     }
                 });
 

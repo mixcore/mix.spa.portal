@@ -6,11 +6,8 @@
                     <img ng-if="msg.connection" ng-src="{{msg.connection.avatar}}" alt="">
                 </div>
 
-                <div class="col-sm-12" ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
-                    <mix-field-preview ng-if="field.name!='data_type' && field.name!='message'"
-                        model="msg.data[field.name]" field="field"></mix-field-preview>
-                    <mix-field-preview ng-if="field.name!='data_type' && field.name=='message'"
-                        model="msg.data[field.name]" field="msg.msgField"></mix-field-preview>
+                <div class="col-sm-3" ng-if="$index < 4" ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
+                    <mix-field-preview model="msg.data[field.name]" field="field"></mix-field-preview>
                 </div>
 
             </li>
@@ -28,18 +25,8 @@
                         <div class="row">
                             <div class="col-md-12"><input type="checkbox" ng-model="$ctrl.request.isSave">Save Data</div>
                             <div class="col-sm-12">
-                                <select class="form-control form-control-sm" ng-model="$ctrl.msgField.dataType"
-                                    ng-change="$ctrl.updateDataType()">
-                                    <option ng-repeat="item in $ctrl.settings.dataTypes track by $index"
-                                        ng-value="item.value">
-                                        {{item.name}}
-                                    </option>
-                                </select>
                                 <div ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
-                                    <mix-field-editor ng-if="field.name!='data_type' && field.name=='message'"
-                                        model="$ctrl.attrData" field="$ctrl.msgField"></mix-field-editor>
-                                    <mix-field-editor ng-if="field.name!='data_type' && field.name!='message'"
-                                        model="$ctrl.attrData" field="field"></mix-field-editor>
+                                    <mix-field-editor model="$ctrl.attrData" field="field"></mix-field-editor>
                                 </div>
                             </div>
                             <div class="col-sm-12">

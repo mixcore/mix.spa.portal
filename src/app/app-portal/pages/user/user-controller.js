@@ -52,9 +52,8 @@ app.controller('UserController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
         };
         
         $scope.loadMyProfile = async function () {
-            $rootScope.isBusy = true;
-            var id = $routeParams.id;
-            var response = await userServices.getMyProfile(id, 'portal');
+            $rootScope.isBusy = true;            
+            var response = await userServices.getMyProfile();
             if (response.isSucceed) {
                 $scope.activedUser = response.data;
                 $rootScope.isBusy = false;
