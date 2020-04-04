@@ -158,12 +158,12 @@ app.controller('MixAttributeSetDataController',
                     $scope.request.pageIndex = pageIndex;
                 }
                 if ($scope.request.fromDate !== null) {
-                    var d = new Date($scope.request.fromDate);
-                    $scope.request.fromDate = d.toISOString();
+                    var df = new Date($scope.request.fromDate);
+                    $scope.request.fromDate = df.toISOString();
                 }
                 if ($scope.request.toDate !== null) {
-                    var d = new Date($scope.request.toDate);
-                    $scope.request.toDate = d.toISOString();
+                    var dt = new Date($scope.request.toDate);
+                    $scope.request.toDate = dt.toISOString();
                 }
                 $scope.request.query = '';
                 if ($routeParams.attributeSetId) {
@@ -181,9 +181,8 @@ app.controller('MixAttributeSetDataController',
                 $rootScope.isBusy = true;
                 var resp = await service.getList($scope.request);
                 if (resp && resp.isSucceed) {
-
-                    $scope.data = resp.data;
-                    $.each($scope.data.items, function (i, data) {
+                    $scope.datas = resp.data;
+                    $.each($scope.datas.items, function (i, data) {
 
                         $.each($scope.activedDatas, function (i, e) {
                             if (e.dataId === data.id) {

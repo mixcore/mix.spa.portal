@@ -59,6 +59,12 @@
                 </div>
             </div>
 
+            <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+                parent-type="'4'" type="''" attribute-set-name="'sys_category'" field-display="'title'"
+                selected-list="activedData.sysCategories"></modal-nav-metas>
+            <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'4'"
+                type="''" attribute-set-name="'sys_tag'" field-display="'title'" selected-list="activedData.sysTags">
+            </modal-nav-metas>
 
             <tabs-v ng-if="activedData" select-callback="selectPane(pane)" class="mb-4">
                 <pane-v header="Feature Img">

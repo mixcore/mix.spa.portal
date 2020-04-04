@@ -14,6 +14,17 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
                     $scope.contentUrl = '/portal/module/data/' + $scope.activedData.id;
                 }
             }
+            if ($scope.activedData.sysCategories) {
+                angular.forEach($scope.activedData.sysCategories, function (e) {
+                    e.data.data.isActived = true;
+                });
+            }
+
+            if ($scope.activedData.sysTags) {
+                angular.forEach($scope.activedData.sysTags, function (e) {
+                    e.data.data.isActived = true;
+                });
+            }
         };
         $scope.getListByType = async function (pageIndex) {
             $scope.request.query = '?type=' + $scope.type;

@@ -39,16 +39,11 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             };
             return await commonService.getRestApiResult(req);
         };
-        var _getList = async function (objData, params = []) {
+        var _getList = async function (objData) {
 
             var data = serviceFactory.parseQuery(objData);
             var url = this.prefixUrl;
-            for (let i = 0; i < params.length; i++) {
-                if (params[i] != null) {
-                    url += '/' + params[i];
-                }
-            }
-
+            
             if (data) {
                 url += '?';
                 url = url.concat(data);

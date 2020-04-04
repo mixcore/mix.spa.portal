@@ -6,16 +6,18 @@ modules.component('attributeSetNavs', {
         onUpdate:'&?',
         onDelete:'&?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RelatedAttributeSetService', 'AttributeSetService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RelatedAttributeSetService', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, ngAppSettings, navService, setService) {
             var ctrl = this;
             ctrl.data = [];
             ctrl.selected = {};
             ctrl.defaultData = null;
             ctrl.navRequest = angular.copy(ngAppSettings.request);            
-            ctrl.setRequest = angular.copy(ngAppSettings.request);            
+            ctrl.setRequest = angular.copy(ngAppSettings.request);   
+                     
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = function(){
+                ctrl.setRequest.type = ctrl.parentType;
                 navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 0]).then(resp=>{
                     ctrl.defaultData = resp;
                     ctrl.loadData();
@@ -37,11 +39,10 @@ modules.component('attributeSetNavs', {
                         $rootScope.showErrors('Failed');
                     }
                 }
-                ctrl.setRequest.filter = 'type eq ' + ctrl.parentType;
-                var setResult = await setService.getList('portal', ctrl.setRequest);
+                var setResult = await setService.getList(ctrl.setRequest);
                 if (setResult) 
                 {
-                    angular.forEach(setResult, element => {
+                    angular.forEach(setResult.items, element => {
                         
                         var e = $rootScope.findObjectByKey(ctrl.data, 'id', element.id);
                         if(!e){

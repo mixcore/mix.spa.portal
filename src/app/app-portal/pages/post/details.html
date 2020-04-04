@@ -57,29 +57,13 @@
                     </div>
                 </div>
 
-                <modal-nav-metas 
-                    ng-if="activedData.sysCategories"
-                    header="'Categories'" 
-                    parent-id="activedData.id"
-                    parent-type="'2'"
-                    type="''"
-                    attribute-set-name="'sys_category'" 
-                    select-callback="updateSysCategories(data)" 
+                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_category'"
                     field-display="'title'"
-                    selected-list="selectedCategories"
-                    ></modal-nav-metas>
-                    
-                <modal-nav-metas 
-                    ng-if="activedData.sysTags"
-                    header="'Tags'" 
-                    parent-id="activedData.id"
-                    parent-type="'2'"
-                    type="''"
-                    attribute-set-name="'sys_tag'" 
-                    select-callback="updateSysTags(data)" 
-                    field-display="'title'"
-                    selected-list="selectedTags"
-                    ></modal-nav-metas>
+                    selected-list="activedData.sysCategories"></modal-nav-metas>
+                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'"
+                    field-display="'title'" selected-list="activedData.sysTags"></modal-nav-metas>
 
                 <cultures is-clone="activedData.isClone" data="activedData.cultures"></cultures>
                 <div class="card mb-4">
@@ -97,7 +81,7 @@
                             remove-callback="removeAliasCallback(index)"></url-alias>
                     </div>
                 </div>
-<!-- 
+                <!-- 
                 <collape-container title="'URL alias'" actived-data="activedData" add-callback="addAlias()">
                     <pane-collape>
                         <url-alias ng-repeat="alias in activedData.urlAliases" index="$index" url-alias="alias"

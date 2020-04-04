@@ -15,8 +15,8 @@ modules.component('attributeSetValues', {
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope','AttributeSetService', 'AttributeSetDataService',
-        function ($rootScope, $scope, setService, dataService) {
+    controller: ['$rootScope', '$scope','AttributeFieldClientRestService', 'AttributeSetDataService',
+        function ($rootScope, $scope, fieldService, dataService) {
             var ctrl = this;
             ctrl.actions = ['Delete', 'SendMail'];
             ctrl.filterTypes = ['contain', 'equal'];
@@ -30,10 +30,9 @@ modules.component('attributeSetValues', {
                         data: []
                     };
                 }
-                var getAttrSet = await setService.getSingle('portal', ['by-name', ctrl.attributeSetName]);
-                if(getAttrSet){
-                    ctrl.fields = getAttrSet.fields;
-                    $scope.$apply();
+                var getFields = await fieldService.initData(ctrl.attributeSetName);
+                if (getFields.isSucceed) {
+                    ctrl.fields = getFields.data;
                 }
                 // if(ctrl.data[0] && ctrl.data[0].fields){
                 //     ctrl.fields = angular.copy(ctrl.data[0].fields);

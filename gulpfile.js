@@ -171,6 +171,7 @@ paths.appCss = {
     src: [
         paths.webapp + "app-shared/**/*.css",
         paths.webapp + "app-portal/**/*.css",
+        paths.webapp + "app-security/**/*.css",
         paths.webapp + "app-client/**/*.css",
         paths.webapp + "app-init/**/*.css"//,
         //paths.scriptLib + "**/*.css"

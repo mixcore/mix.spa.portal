@@ -65,6 +65,7 @@
                     ctrl.data = response.data;
                     ctrl.navs = [];
                     angular.forEach(response.data.items, function (e) {
+                        // Not show data if there's in selected list
                         e.disabled = $rootScope.findObjectByKey(ctrl.selectedList, 'id', e.id) != null;
                     });
                     $rootScope.isBusy = false;
@@ -77,21 +78,23 @@
                 }
             };
             ctrl.select = function (data) {
+                var nav = {
+                    specificulture: data.specificulture,
+                    attributesetName: ctrl.attributeSetName,
+                    parentId: ctrl.parentId,
+                    parentType: ctrl.parentType,
+                    id: data.id,
+                    data: {data: data}
+                };
                 if (data.isActived) {
                     if (ctrl.parentId) {
-                        var nav = {
-                            specificulture: data.specificulture,
-                            attributesetName: ctrl.attributeSetName,
-                            parentId: ctrl.parentId,
-                            parentType: ctrl.parentType,
-                            id: data.id
-                        };
+                        
                         navService.save('portal', nav).then(resp => {
                             if (resp.isSucceed) {
                                 var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', data.id);
                                 if (!current) {
                                     data.disabled = true;
-                                    ctrl.selectedList.push(data);
+                                    ctrl.selectedList.push(nav);
                                 }
                                 $rootScope.showMessage('success', 'success');
                                 $rootScope.isBusy = false;
@@ -107,7 +110,7 @@
                         var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', data.id);
                         if (!current) {
                             data.disabled = true;
-                            ctrl.selectedList.push(data);
+                            ctrl.selectedList.push(nav);
                         }
 
                     }
@@ -143,7 +146,7 @@
 
                 }
                 if (ctrl.selectCallback) {
-                    ctrl.selectCallback({ data: data });
+                    ctrl.selectCallback({ data: nav });
                 }
             };
             ctrl.createData = function () {
@@ -157,12 +160,12 @@
                     service.saveByName(ctrl.attributeSetName, data).then(resp => {
                         if (resp.isSucceed) {
                             resp.data.isActived = true;
-                            ctrl.data.items.push(resp.data);
+                            ctrl.data.items.push(resp.data.data);
                             // $rootScope.showMessage('success', 'success');
                             // $rootScope.isBusy = false;                        
                             // $scope.$apply();
     
-                            ctrl.select(resp.data);
+                            ctrl.select(resp.data.data);
                         } else {
                             $rootScope.showErrors(resp.errors);
                             $rootScope.isBusy = false;
