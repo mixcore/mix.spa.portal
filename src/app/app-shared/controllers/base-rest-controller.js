@@ -145,10 +145,10 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
                 resp = await service.create($scope.activedData);
             }
             else{
-                resp = await service.update($scope.activedData);
+                resp = await service.update($scope.activedData.id, $scope.activedData);
             }
             if (resp.isSucceed) {
-                $scope.activedData = resp.data;
+                // $scope.activedData = resp.data;
                 $rootScope.showMessage('success', 'success');
 
                 if ($scope.saveSuccessCallback) {

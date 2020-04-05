@@ -4,7 +4,7 @@
         <div ng-if="folderType">
             <div class="row mb-3">
                 <div class="col-12">
-                    <filter-list request="request" callback="getList(pageIndex)"></filter-list>
+                    <filter-list request="request" hide-status="'true'" callback="getList(pageIndex)"></filter-list>
                 </div>
             </div>
 
@@ -94,6 +94,9 @@
                                     <a href="/portal/template/details/{{themeId}}/{{folderType}}/{{item.id}}"
                                         class="btn btn-link">
                                         <span class="fas fa-pen text-primary"></span>
+                                    </a>
+                                    <a class="btn btn-link" ng-click="copy(item.id)">
+                                        <span class="fas fa-copy text-primary"></span>
                                     </a>
                                     <a ng-click="remove(item.id);" class="btn btn-link">
                                         <span class="fas fa-trash-alt text-danger"></span>

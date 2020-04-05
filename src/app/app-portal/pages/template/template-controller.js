@@ -1,7 +1,7 @@
 'use strict';
 app.controller('TemplateController', ['$scope', '$rootScope', '$routeParams', '$location', 'ngAppSettings', 'TemplateService',
     function ($scope, $rootScope, $routeParams, $location, ngAppSettings, service) {
-        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
         $scope.folderTypes = [
             'Masters',
             'Layouts',
@@ -14,7 +14,7 @@ app.controller('TemplateController', ['$scope', '$rootScope', '$routeParams', '$
             'Widgets',
         ];
         $scope.activedPane = null;
-        $scope.selectPane=function(pane){
+        $scope.selectPane = function (pane) {
             $scope.activedPane = pane;
         }
         $scope.loadFolder = function (d) {
@@ -31,7 +31,7 @@ app.controller('TemplateController', ['$scope', '$rootScope', '$routeParams', '$
             $scope.folderType = $routeParams.folderType;// ? $routeParams.folderType : 'Masters';
             var themeId = $routeParams.themeId;
             $scope.listUrl = '/portal/template/list/' + themeId + '?folderType=' + encodeURIComponent($scope.folderType);
-            var resp = await service.getSingle(['portal', themeId, $scope.folderType, id]);
+            var resp = await service.getSingle([id]);
             if (resp && resp.isSucceed) {
                 $scope.activedData = resp.data;
                 $rootScope.isBusy = false;
@@ -43,21 +43,38 @@ app.controller('TemplateController', ['$scope', '$rootScope', '$routeParams', '$
                 $scope.$apply();
             }
         };
+        $scope.copy = async function (id) {
+            $rootScope.isBusy = true;
+            $scope.folderType = $routeParams.folderType;// ? $routeParams.folderType : 'Masters';
+            var themeId = $routeParams.themeId;
+            $scope.listUrl = '/portal/template/list/' + themeId + '?folderType=' + encodeURIComponent($scope.folderType);
+            var resp = await service.copy(id);
+            if (resp && resp.isSucceed) {
+                $location.url(`/portal/template/details/${themeId}/${$scope.folderType}/${resp.data.id}`);
+                $scope.$apply();
+            }
+            else {
+                if (resp) { $rootScope.showErrors(resp.errors); }
+                $rootScope.isBusy = false;
+                $scope.$apply();
+            }
+        };
         $scope.getList = async function (pageIndex, themeId) {
-            $scope.themeId = themeId || $routeParams.themeId;
-            $scope.request.key = $routeParams.folderType;
+            $scope.request.themeId = themeId || $routeParams.themeId;
+            $scope.request.folderType = $routeParams.folderType;
+            $scope.request.status = null;
             $scope.folderType = $routeParams.folderType;
             if ($scope.folderType) {
                 if (pageIndex !== undefined) {
                     $scope.request.pageIndex = pageIndex;
                 }
                 if ($scope.request.fromDate !== null) {
-                    var d = new Date($scope.request.fromDate);
-                    $scope.request.fromDate = d.toISOString();
+                    var df = new Date($scope.request.fromDate);
+                    $scope.request.fromDate = df.toISOString();
                 }
                 if ($scope.request.toDate !== null) {
-                    var d = new Date($scope.request.toDate);
-                    $scope.request.toDate = d.toISOString();
+                    var dt = new Date($scope.request.toDate);
+                    $scope.request.toDate = dt.toISOString();
                 }
                 var resp = await service.getList($scope.request, [$scope.themeId]);
                 if (resp && resp.isSucceed) {

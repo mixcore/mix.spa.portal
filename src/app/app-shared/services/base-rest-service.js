@@ -79,12 +79,22 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             return await commonService.getRestApiResult(req);
         };
 
-        var _update = async function (objData) {
-            var url = this.prefixUrl;
+        var _update = async function (id, objData) {
+            var url = this.prefixUrl+ '/' + id;
             var req = {
                 method: 'PUT',
                 url: url,
-                data: JSON.stringify(objData)
+                data: objData
+            };
+            return await commonService.getRestApiResult(req);
+        };
+        
+        var _patch = async function (id, objData) {
+            var url = this.prefixUrl+ '/' + id;
+            var req = {
+                method: 'PATCH',
+                url: url,
+                data: objData
             };
             return await commonService.getRestApiResult(req);
         };

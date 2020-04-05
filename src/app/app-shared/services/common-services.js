@@ -344,7 +344,7 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                         );
                     }
                     else if (error.status === 200 || error.status === 204 || error.status === 205) {
-                        return { isSucceed: false, status: err.status, errors: [error.statusText || error.status] };                        
+                        return { isSucceed: true, status: err.status, errors: [error.statusText || error.status] };                        
                     }
                     else {
                         if (error.data) {
