@@ -1,8 +1,8 @@
 modules.component('menuItemForm', {
     templateUrl: '/app/app-portal/pages/navigation/components/menu-item-form/view.html',
     bindings: {
-        attrSetId: '=',
-        attrSetName: '=',
+        attributeSetId: '=',
+        attributeSetName: '=',
         attrDataId: '=?',
         attrData: '=?',
         parentType: '=?', // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -19,7 +19,7 @@ modules.component('menuItemForm', {
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                 ctrl.loadData();
             };
             ctrl.loadData = async function () {
@@ -30,7 +30,7 @@ modules.component('menuItemForm', {
                 */
                 $rootScope.isBusy = true;
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
+                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
                     if (ctrl.attrData) {
                         ctrl.defaultData.attributeSetId = ctrl.attrData.attributeSetId;
                         ctrl.defaultData.attributeSetName = ctrl.attrData.attributeSetName;
@@ -86,7 +86,7 @@ modules.component('menuItemForm', {
                     }
                     else {
                         ctrl.isBusy = false;
-                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                         $scope.$apply();
                     }
                 }

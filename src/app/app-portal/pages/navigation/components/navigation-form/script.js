@@ -1,8 +1,8 @@
 modules.component('navigationForm', {
     templateUrl: '/app/app-portal/pages/navigation/components/navigation-form/view.html',
     bindings: {
-        attrSetId: '=',
-        attrSetName: '=',
+        attributeSetId: '=',
+        attributeSetName: '=',
         attrDataId: '=?',
         attrData: '=?',
         parentType: '=?', // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -29,7 +29,7 @@ modules.component('navigationForm', {
                 */
                 $rootScope.isBusy = true;
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
+                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
                     if (ctrl.attrData) {                        
                         $rootScope.isBusy = false;
                         $scope.$apply();
@@ -42,10 +42,10 @@ modules.component('navigationForm', {
                     }
 
                 }
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                 if(ctrl.defaultData){
                     ctrl.defaultData.attreSetId = ctrl.attreSetId;
-                    ctrl.defaultData.attrSetName = ctrl.attrSetName;
+                    ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
                     ctrl.defaultData.parentId = ctrl.parentId;
                     ctrl.defaultData.parentType = ctrl.parentType;
                 }
@@ -88,7 +88,7 @@ modules.component('navigationForm', {
                     }
                     else {
                         ctrl.isBusy = false;
-                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                         $scope.$apply();
                     }
                 }

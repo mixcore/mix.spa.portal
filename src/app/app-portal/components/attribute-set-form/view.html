@@ -3,11 +3,15 @@
     <div class="card">
         <h6 class="card-header position-sticky" style="top: 3.90rem; z-index: 12;">
             <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"
-                ng-if="$ctrl.isBusy"></span> {{$ctrl.attrSetName}}'s Data
+                ng-if="$ctrl.isBusy"></span> {{$ctrl.attributeSetName}}'s Data
             <a class="btn btn-link text-primary btn-sm float-right py-0" data-toggle="collapse"
                 data-target="#attributeSetId_{{$ctrl.attrData.attributeSetId}}" role="button" aria-expanded="true"
                 aria-controls="attributeSetId_{{$ctrl.attrData.attributeSetId}} collapse">
                 <span class="far fa-minus-square text-primary"></span> Show/Hide</a>
+            <button type="button" data-toggle="modal" data-target="#modal-data-filter" class="btn btn-sm btn-link py-0 float-right"
+                ng-disabled="$ctrl.isBusy">
+                <i class="fas fa-folder"></i> Browse Data
+            </button>
             <button type="button" ng-click="$ctrl.reload()" class="btn btn-sm btn-link py-0 float-right"
                 ng-disabled="$ctrl.isBusy">
                 <i class="fas fa-plus"></i> Create blank
@@ -38,3 +42,4 @@
         </div>
     </div>
 </form>
+<attribute-set-data-filter callback="$ctrl.loadSelected()" attribute-set-name="$ctrl.attributeSetName" selected-list="$ctrl.selectedList"></attribute-set-data-filter>

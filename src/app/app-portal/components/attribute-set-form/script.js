@@ -1,8 +1,8 @@
 modules.component('attributeSetForm', {
     templateUrl: '/app/app-portal/components/attribute-set-form/view.html',
     bindings: {
-        attrSetId: '=',
-        attrSetName: '=',
+        attributeSetId: '=',
+        attributeSetName: '=',
         attrDataId: '=?',
         attrData: '=?',
         parentType: '=?', // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -29,7 +29,7 @@ modules.component('attributeSetForm', {
                 */
                 $rootScope.isBusy = true;
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
+                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
                     if (ctrl.attrData) {                        
                         $rootScope.isBusy = false;
                         $scope.$apply();
@@ -42,10 +42,10 @@ modules.component('attributeSetForm', {
                     }
 
                 }
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                 if(ctrl.defaultData){
-                    ctrl.defaultData.attreSetId = ctrl.attreSetId;
-                    ctrl.defaultData.attrSetName = ctrl.attrSetName;
+                    ctrl.defaultData.attributeSetId = ctrl.attributeSetId;
+                    ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
                     ctrl.defaultData.parentId = ctrl.parentId;
                     ctrl.defaultData.parentType = ctrl.parentType;
                 }
@@ -58,6 +58,16 @@ modules.component('attributeSetForm', {
             };
             ctrl.reload = async function () {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
+            };
+            ctrl.loadSelected = function(){
+                if(ctrl.selectedList.data.length){
+                    ctrl.attrData = ctrl.selectedList.data[0];
+                    ctrl.attrData.attributeSetId = ctrl.attributeSetId;
+                    ctrl.attrData.attributeSetName = ctrl.attributeSetName;
+                    ctrl.attrData.parentId = ctrl.parentId;
+                    ctrl.attrData.parentType = ctrl.parentType;
+                }
+                console.log(ctrl.selectedList);
             };
             ctrl.submit = async function () {
                 angular.forEach(ctrl.attrData.values, function (e) {
@@ -79,7 +89,7 @@ modules.component('attributeSetForm', {
                     }
                     else {
                         ctrl.isBusy = false;
-                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                         $scope.$apply();
                     }
                 }

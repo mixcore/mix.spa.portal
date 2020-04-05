@@ -8,6 +8,7 @@ modules.component('attributeSetValues', {
         queries: '=?',
         filterType: '=?',
         selectedList: '=',
+        selectSingle: '=?',
         columns: '=?',
         onFilterList: '&?',
         onApplyList: '&?',
@@ -40,9 +41,15 @@ modules.component('attributeSetValues', {
             };
             ctrl.select = function (item) {
                 if (item.isSelected) {
-                    var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
-                    if (!current) {
+                    if(ctrl.selectSingle=='true'){
+                        ctrl.selectedList.data = [];
                         ctrl.selectedList.data.push(item);
+                    }
+                    else{
+                        var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
+                        if (!current) {
+                            ctrl.selectedList.data.push(item);
+                        }
                     }
                 }
                 else {

@@ -1,8 +1,8 @@
 modules.component('attributeSetFormDefault', {
     templateUrl: '/app/app-portal/components/attribute-set-form-default/view.html',
     bindings: {
-        attrSetId: '=',
-        attrSetName: '=',
+        attributeSetId: '=',
+        attributeSetName: '=',
         attrDataId: '=?',
         attrData: '=?',
         parentType: '=?', // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -18,7 +18,7 @@ modules.component('attributeSetFormDefault', {
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                 ctrl.loadData();
             };
             ctrl.loadData = async function () {                
@@ -28,7 +28,7 @@ modules.component('attributeSetFormDefault', {
                 */
                 $rootScope.isBusy = true;
                 if(ctrl.attrDataId){
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
+                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
                     if (ctrl.attrData) {
                         $rootScope.isBusy = false;
                         $scope.$apply();
@@ -68,7 +68,7 @@ modules.component('attributeSetFormDefault', {
                         $scope.$apply();
                     }
                     else{
-                        ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                        ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                         $scope.$apply();
                     }
                 }

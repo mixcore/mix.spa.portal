@@ -33,7 +33,12 @@ app.controller('MixAttributeSetDataController',
                     };
                 }
             };
-            
+            $scope.selectData = function(){
+                if($scope.selectedList.data.length){
+                    $scope.activedData = $scope.selectedList.data[0];
+                    console.log($scope.activedData);
+                }
+            };
             // $scope.saveSuccessCallback = function () {
                 // if ($scope.refDataModel) {
                 //     $scope.refDataModel.id = $scope.activedData.id;

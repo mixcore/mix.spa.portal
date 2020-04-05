@@ -1,7 +1,7 @@
 ﻿modules.component('serviceHubPortal', {
     templateUrl: '/app/app-portal/components/service-hub-portal/view.html',
     bindings: {
-        attrSetName: '=',
+        attributeSetName: '=',
         isSave: '=?'
     },
     controller: ['$rootScope', '$scope', 'AttributeFieldClientRestService', 'AttributeSetDataRestService', 'UserServices',
@@ -34,9 +34,9 @@
                 isSave: false
             };
             ctrl.init = function () {
-                ctrl.attrSetId = ctrl.attrSetId || 0;
+                ctrl.attributeSetId = ctrl.attributeSetId || 0;
                 ctrl.request.specificulture = service.lang;
-                ctrl.request.room = ctrl.attrSetName;
+                ctrl.request.room = ctrl.attributeSetName;
                 ctrl.request.isSave = ctrl.isSave == 'true' || false;
                 ctrl.startConnection('serviceHub', ctrl.checkLoginStatus);
             };
@@ -47,7 +47,7 @@
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
-                var getDefault = await service.initData(ctrl.attrSetName);
+                var getDefault = await service.initData(ctrl.attributeSetName);
                 if (getDefault.isSucceed) {
                     ctrl.defaultData = getDefault.data;
                     ctrl.defaultData.data.user_name = ctrl.user.connection.name;
@@ -57,7 +57,7 @@
                     ctrl.attrData = angular.copy(ctrl.defaultData);
                     $rootScope.isBusy = false;
                 }
-                var getFields = await fieldService.initData(ctrl.attrSetName);
+                var getFields = await fieldService.initData(ctrl.attributeSetName);
                 if (getFields.isSucceed) {
                     ctrl.fields = getFields.data;
                 }
