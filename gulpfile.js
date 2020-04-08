@@ -172,17 +172,29 @@ paths.appCss = {
         paths.webapp + "app-shared/**/*.css",
         paths.webapp + "app-portal/**/*.css",
         paths.webapp + "app-security/**/*.css",
-        paths.webapp + "app-client/**/*.css",
         paths.webapp + "app-init/**/*.css"//,
         //paths.scriptLib + "**/*.css"
     ],
     dest: paths.webroot + "css/app-vendor.min.css"
+};
+paths.appClientCss = {
+    src: [
+        paths.webapp + "app-client/**/*.css",
+    ],
+    dest: paths.webroot + "css/app-client.min.css"
 };
 
 
 gulp.task("min:appCss", function (cb) {
     return gulp.src(paths.appCss.src, { base: "." })
         .pipe(concat(paths.appCss.dest))
+        .pipe(cssmin(paths.appCssOptions))
+        .pipe(header('/* ' + (Date()) + ' */'))
+        .pipe(gulp.dest(dest));
+});
+gulp.task("min:appClientCss", function (cb) {
+    return gulp.src(paths.appClientCss.src, { base: "." })
+        .pipe(concat(paths.appClientCss.dest))
         .pipe(cssmin(paths.appCssOptions))
         .pipe(header('/* ' + (Date()) + ' */'))
         .pipe(gulp.dest(dest));
@@ -386,14 +398,14 @@ gulp.task("clean:sharedCss", function (cb) {
 gulp.task("clean:css", gulp.series("clean:appCss", "clean:appInitCss", "clean:portalCss", "clean:sharedCss"));
 gulp.task("clean:js", gulp.series("clean:framework", "clean:portal", "clean:shared", "clean:portalApp", "clean:portalAppRequired", "clean:clientApp", "clean:clientAppRequired", "clean:sharedApp", "clean:initApp", "clean:securityApp"));
 gulp.task("min:js", gulp.series("min:portalApp", "min:portalAppRequired", "min:initApp", "min:securityApp", "min:clientApp", "min:clientAppRequired", "min:sharedApp", "min:shared", "min:portal", "min:framework"));
-gulp.task("min:css", gulp.series('min:appCss', "min:appInitCss", 'min:portalCss', 'min:sharedCss'));
+gulp.task("min:css", gulp.series('min:appCss', 'min:appClientCss', "min:appInitCss", 'min:portalCss', 'min:sharedCss'));
 
 ////////////////////////////////////
 //         BUILD & WATCH          //
 ////////////////////////////////////
 
 gulp.task("build", gulp.series('clean:js', 'min:js', 'min:css', "min:views"));
-gulp.task("buildp", gulp.series('min:portalApp', 'min:appCss', 'min:portalCss', "min:views"));
+gulp.task("buildp", gulp.series('min:portalApp', 'min:appCss', 'min:appClientCss','min:portalCss', "min:views"));
 gulp.task('watch', function () {
     gulp.watch('./src/app/**/**/*.html', gulp.series('min:views'));
     gulp.watch('./src/app/app-portal/**/*.js', gulp.series('min:portalApp', 'min:portalAppRequired'));
@@ -402,7 +414,7 @@ gulp.task('watch', function () {
     gulp.watch('./src/app/app-security/**/*.js', gulp.series('min:securityApp'));
     gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/lib/**/*.js', gulp.series('min:framework'));
-    gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appInitCss'));
+    gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appClientCss', 'min:appInitCss'));
 });
 
 // [Watch Portal] View & Portal's js & CSS > gulp watch:html
