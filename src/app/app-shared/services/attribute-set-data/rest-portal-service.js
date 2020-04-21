@@ -1,8 +1,8 @@
 'use strict';
-app.factory('AttributeSetDataRestService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
+app.factory('RestAttributeSetDataPortalService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
 
-    var serviceFactory = Object.create(baseService);
-    serviceFactory.init('attribute-set-data/client');
+    var serviceFactory = angular.copy(baseService);
+    serviceFactory.init('attribute-set-data/portal');
     var _initData = async function (attrSetName) {
         var url = this.prefixUrl + '/init/' + attrSetName;
         var req = {

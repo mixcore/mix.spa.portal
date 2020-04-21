@@ -7,6 +7,7 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
             providers: [
                 { text: 'Microsoft SQL Server', value: 'MSSQL', port: null, img: '/assets/img/mssql.jpg' },
                 { text: 'MySQL Server', value: 'MySQL', port:'3306', img: '/assets/img/mysql.jpg' }
+                // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/assets/img/mysql.jpg' }
             ],
             cultures: []
         };
@@ -83,5 +84,5 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
                 $scope.$apply();       
             }  
            
-        }
+        };
     }]);

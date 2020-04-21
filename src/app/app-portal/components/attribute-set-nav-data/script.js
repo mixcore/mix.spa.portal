@@ -7,7 +7,7 @@ modules.component('attributeSetNavData', {
         onUpdate:'&?',
         onDelete:'&?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RelatedAttributeSetDataService', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, ngAppSettings, navService, dataService) {
             var ctrl = this;
             ctrl.data = [];
@@ -50,7 +50,7 @@ modules.component('attributeSetNavData', {
             ctrl.saveData = function(data){            
                 $rootScope.isBusy = true;
                 ctrl.selected.data = data;
-                dataService.save('portal', data).then(resp=>{
+                dataService.save(data).then(resp=>{
                     if(resp.isSucceed){
                         ctrl.selected.id = resp.data.id;
                         ctrl.selected.attributeSetId = resp.data.attributeSetId;

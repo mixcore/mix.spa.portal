@@ -7,7 +7,7 @@ modules.component('mixValueEditor', {
         stringValue: '=',
         type: '='
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'AttributeSetDataService', 
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RestAttributeSetDataPortalService', 
         function ($rootScope, $scope, ngAppSettings,$location, dataService) {
         var ctrl = this;
         ctrl.icons = ngAppSettings.icons;
@@ -35,7 +35,11 @@ modules.component('mixValueEditor', {
 
                     case 23: // reference
                         if(ctrl.referenceId){
-                            dataService.getList('read', ctrl.refRequest, ctrl.referenceId, ctrl.parentType, ctrl.parentId).then(resp=>{
+                            ctrl.refRequest.attributeSetId = ctrl.referenceId;
+                            ctrl.refRequest.parentType = ctrl.parentType;
+                            ctrl.refRequest.parentId = ctrl.parentId;
+
+                            dataService.getList(ctrl.refRequest).then(resp=>{
                                 if (resp) {
                                     ctrl.refData = resp;
                                     $rootScope.isBusy = false;

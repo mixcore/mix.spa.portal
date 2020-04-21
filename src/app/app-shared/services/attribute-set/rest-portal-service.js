@@ -2,7 +2,7 @@
 app.factory('RestAttributeSetPortalService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
 
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init('attribute-set/portal');
+    serviceFactory.init('attribute-set/portal', true);
     return serviceFactory;
 
 }]);

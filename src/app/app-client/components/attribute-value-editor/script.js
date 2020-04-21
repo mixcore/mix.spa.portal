@@ -7,8 +7,8 @@ modules.component('attributeValueEditor', {
         parentId: '=?',
         isShowTitle: '=?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RelatedAttributeSetDataService', 'AttributeSetDataService', 
-        function ($rootScope, $scope, ngAppSettings,$location, navService,dataService) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetDataPortalService', 
+        function ($rootScope, $scope, ngAppSettings,$location, navService, dataService) {
         var ctrl = this;
         ctrl.goToPath = $rootScope.goToPath;
         ctrl.icons = ngAppSettings.icons;
@@ -48,7 +48,7 @@ modules.component('attributeValueEditor', {
                     case 23: // reference
                         if(ctrl.attributeValue.field.referenceId && ctrl.parentId){
                             ctrl.attributeValue.integerValue = ctrl.attributeValue.field.referenceId;
-                            navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default', ctrl.attributeValue.field.referenceId]).then(resp=>{
+                            navService.getSingle(['default']).then(resp=>{
                                 ctrl.defaultDataModel = resp;
                                 ctrl.defaultDataModel.attributeSetId = ctrl.attributeValue.field.referenceId;
                                 ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
@@ -157,11 +157,11 @@ modules.component('attributeValueEditor', {
         ctrl.saveRefData = function(data){            
             $rootScope.isBusy = true;
             ctrl.refDataModel.data = data;
-            dataService.save('portal', data).then(resp=>{
+            dataService.save(data).then(resp=>{
                 if(resp.isSucceed){
                     ctrl.refDataModel.id = resp.data.id;
                     ctrl.refDataModel.data = resp.data;
-                    navService.save('portal', ctrl.refDataModel).then(resp=>{
+                    navService.save(ctrl.refDataModel).then(resp=>{
                         if(resp.isSucceed){
                             var tmp = $rootScope.findObjectByKey(ctrl.refData, ['parentId', 'parentType', 'id'], 
                                 [resp.data.parentId, resp.data.parentType, resp.data.id]);

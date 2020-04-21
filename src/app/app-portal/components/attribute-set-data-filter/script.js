@@ -10,7 +10,7 @@
         callback: '&?',
         save: '&?'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'MixAttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, ngAppSettings, dataService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);

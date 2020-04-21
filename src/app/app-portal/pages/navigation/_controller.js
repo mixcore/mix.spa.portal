@@ -2,10 +2,10 @@
 app.controller('NavigationController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'MixAttributeSetDataService', 'RelatedAttributeSetDataService', 'CommonService',
+        'MixRestAttributeSetPortalService', 'RestRelatedAttributeSetPortalService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, navService, commonService) {
-            BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.defaultId = 'default';
             $scope.queries = {};
             $scope.parentId = null;
@@ -15,15 +15,16 @@ app.controller('NavigationController',
             $scope.settings = $rootScope.globalSettings;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
             $scope.init = async function () {
+                
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
+                $scope.parentId = $routeParams.refParentId;
+                $scope.parentType = $routeParams.refParentType;
+                $scope.request.attributeSetName = $routeParams.attributeSetName;
+                
                 if ($routeParams.dataId != $scope.defaultId) {
                     $scope.dataId = $routeParams.dataId;
                 }
-                $scope.parentId = $routeParams.parentId;
-                $scope.parentType = $routeParams.parentType;
-                // $scope.refParentId = $routeParams.refParentId;
-                // $scope.refParentType = $routeParams.refParentType;
                 if ($scope.parentId && $scope.parentType) {
                     $scope.refDataModel = {
                         parentId: $scope.parentId,
@@ -42,6 +43,8 @@ app.controller('NavigationController',
                 $scope.$apply();
             };
             $scope.getList = async function (pageIndex) {
+                $scope.attributeSetId = $routeParams.attributeSetId;
+                $scope.attributeSetName = $routeParams.attributeSetName;
                 if (pageIndex !== undefined) {
                     $scope.request.pageIndex = pageIndex;
                 }
@@ -105,16 +108,23 @@ app.controller('NavigationController',
                 var id = $routeParams.id || $scope.defaultId;
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
-                var resp = await service.getSingle('portal', [id, $scope.attributeSetName]);
-                if (resp) {
-                    $scope.activedData = resp;
+                var resp = null;
+                if(id){
+                    resp = await service.getSingle([id]);
+                }
+                else{
+                    resp = await service.initData($scope.attributeSetName);
+                }
+                
+                if (resp.isSucceed) {
+                    $scope.activedData = resp.data;
                     $scope.activedData.parentType = $scope.parentType;
                     $scope.activedData.parentId = $scope.parentId;
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {
                     if (resp) {
-                        $rootScope.showErrors('Failed');
+                        $rootScope.showErrors(resp.errors);
                     }
                     $rootScope.isBusy = false;
                     $scope.$apply();

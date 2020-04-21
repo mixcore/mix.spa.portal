@@ -16,24 +16,24 @@ app.controller('Step3Controller', ['$scope', '$rootScope',
                 $(".option").removeClass("active");
                 $(this).addClass("active");
             });
-            $("#theme-1").change(function () {
-                $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme1.png')";
-            });
-            $("#theme-2").change(function () {
-                $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme2.png')";
-            });
-            $("#theme-3").change(function () {
-                $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/right-bg.png')";
-            });
-            $("input:checkbox").click(function () {
-                if ($(this).is(":checked")) {
-                    var group = "input:checkbox[name='" + $(this).attr("name") + "']";
-                    $(group).prop("checked", false);
-                    $(this).prop("checked", true);
-                } else {
-                    $(this).prop("checked", false);
-                }
-            });
+            // $("#theme-1").change(function () {
+            //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme1.png')";
+            // });
+            // $("#theme-2").change(function () {
+            //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme2.png')";
+            // });
+            // $("#theme-3").change(function () {
+            //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/right-bg.png')";
+            // });
+            // $("input:checkbox").click(function () {
+            //     if ($(this).is(":checked")) {
+            //         var group = "input:checkbox[name='" + $(this).attr("name") + "']";
+            //         $(group).prop("checked", false);
+            //         $(this).prop("checked", true);
+            //     } else {
+            //         $(this).prop("checked", false);
+            //     }
+            // });
         };
         $scope.submit = async function () {
             $rootScope.isBusy = true;

@@ -1,5 +1,5 @@
 'use strict';
-app.factory('MixAttributeSetDataService', ['BaseService','CommonService', function (baseService, commonService) {
+app.factory('MixRestAttributeSetPortalService', ['BaseService','CommonService', function (baseService, commonService) {
 
     var serviceFactory = Object.create(baseService);
     serviceFactory.init('attribute-set-data');

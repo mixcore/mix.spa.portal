@@ -7,7 +7,7 @@ modules.component('menuItemEditor', {
         parentId: '=?',
         isShowTitle: '=?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RelatedAttributeSetDataService', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$location', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, ngAppSettings, $location, navService, dataService) {
             var ctrl = this;
             ctrl.icons = ngAppSettings.icons;
@@ -48,7 +48,10 @@ modules.component('menuItemEditor', {
                         case 23: // reference
                             if (ctrl.attributeValue.field.referenceId && ctrl.parentId) {
                                 ctrl.attributeValue.integerValue = ctrl.attributeValue.field.referenceId;
-                                navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default', ctrl.attributeValue.field.referenceId]).then(resp => {
+                                navService.getSingle(['default']).then(resp => {
+                                    resp.parentId = ctrl.parentId;
+                                    resp.parentType=  ctrl.parentType;
+                                    resp.attributeSetid =  ctrl.attributeValue.field.referenceId;
                                     ctrl.defaultDataModel = resp;
                                     ctrl.defaultDataModel.attributeSetId = ctrl.attributeValue.field.referenceId;
                                     ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
@@ -133,7 +136,7 @@ modules.component('menuItemEditor', {
                     ctrl.attributeValue.field.referenceId, ctrl.parentType, ctrl.parentId)
                     .then(resp => {
                         if (resp) {
-                            ctrl.refData = resp;
+                            ctrl.refData = resp.data;
                             $rootScope.isBusy = false;
                             $scope.$apply();
                         } else {

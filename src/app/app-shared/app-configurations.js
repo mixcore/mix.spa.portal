@@ -18,6 +18,16 @@ app.constant('ngAppSettings', {
         key: '',
         query: ''
     },
+    restRequest: {
+        pageSize: '20',
+        pageIndex: 0,
+        status: '2',
+        orderBy: 'CreatedDateTime',
+        direction: '1',
+        fromDate: null,
+        toDate: null,
+        keyword: '',
+    },
     privacies: [
         'VND',
         'USD'
@@ -84,8 +94,8 @@ app.constant('ngAppSettings', {
     ]
     , icons: []
 });
-app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseODataService', 'CommonService', 'AuthService', 'TranslatorService',
-    function ($http, $rootScope, ngAppSettings, $location, baseODataService, commonService, authService, translatorService,
+app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
+    function ($http, $rootScope, ngAppSettings, $location, baseRestService, commonService, authService, translatorService,
     ) {
         $rootScope.currentContext = $rootScope;
         $rootScope.isBusy = false;
@@ -514,10 +524,10 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseODataService'
                 return false; 
             } 
         };
-        $rootScope.getODataService = function(modelName, isGlobal)
+        $rootScope.getRestService = function(modelName, isGlobal, lang)
         {
-            var serviceFactory = angular.copy(baseODataService);
-            serviceFactory.init(modelName, isGlobal);
+            var serviceFactory = angular.copy(baseRestService);
+            serviceFactory.init(modelName, isGlobal, lang);
             return serviceFactory;            
         };
 

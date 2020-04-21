@@ -6,7 +6,7 @@ modules.component('attributeSetNavs', {
         onUpdate:'&?',
         onDelete:'&?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RelatedAttributeSetService', 'RestAttributeSetPortalService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, ngAppSettings, navService, setService) {
             var ctrl = this;
             ctrl.data = [];
@@ -18,7 +18,9 @@ modules.component('attributeSetNavs', {
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = function(){
                 ctrl.setRequest.type = ctrl.parentType;
-                navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 0]).then(resp=>{
+                navService.getSingle([0]).then(resp=>{
+                    resp.parentId = ctrl.parentId;
+                    resp.parentType = ctrl.parentType;
                     ctrl.defaultData = resp;
                     ctrl.loadData();
                 });
@@ -27,16 +29,18 @@ modules.component('attributeSetNavs', {
             ctrl.selectPane = function(pane){
             };
             ctrl.loadData = async function(){
-                var resp = await navService.getList('portal', ctrl.navRequest, ctrl.parentType, ctrl.parentId);
+                ctrl.navRequest.parentType = ctrl.parentType;
+                ctrl.navRequest.parentId = ctrl.parentId;
+                var resp = await navService.getList(ctrl.navRequest);
                 if (resp) 
                 {
-                    angular.forEach(resp, e => {
+                    angular.forEach(resp.data.items, e => {
                         e.isActived = true;
                         ctrl.data.push(e);
                     });
                 } else {
                     if (resp) {
-                        $rootScope.showErrors('Failed');
+                        $rootScope.showErrors(resp.errors);
                     }
                 }
                 var setResult = await setService.getList(ctrl.setRequest);

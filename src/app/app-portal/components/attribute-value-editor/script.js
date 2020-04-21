@@ -7,8 +7,8 @@ modules.component('attributeValueEditor', {
         parentId: '=?',
         isShowTitle: '=?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$filter', 'RelatedAttributeSetDataService', 'AttributeSetDataService', 
-        function ($rootScope, $scope, ngAppSettings,$filter, navService,dataService) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$filter', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetDataPortalService', 
+        function ($rootScope, $scope, ngAppSettings,$filter, navService, dataService) {
         var ctrl = this;
         ctrl.goToPath = $rootScope.goToPath;
         ctrl.icons = ngAppSettings.icons;
@@ -158,11 +158,11 @@ modules.component('attributeValueEditor', {
         ctrl.saveRefData = function(data){            
             $rootScope.isBusy = true;
             ctrl.refDataModel.data = data;
-            dataService.save('portal', data).then(resp=>{
+            dataService.save(data).then(resp=>{
                 if(resp.isSucceed){
                     ctrl.refDataModel.id = resp.data.id;
                     ctrl.refDataModel.data = resp.data;
-                    navService.save('portal', ctrl.refDataModel).then(resp=>{
+                    navService.save(ctrl.refDataModel).then(resp=>{
                         if(resp.isSucceed){
                             var tmp = $rootScope.findObjectByKey(ctrl.refData, ['parentId', 'parentType', 'id'], 
                                 [resp.data.parentId, resp.data.parentType, resp.data.id]);

@@ -1,8 +1,8 @@
 'use strict';
 app.controller('MixAttributeSetDataController',
-    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'MixAttributeSetDataService', 'RelatedAttributeSetDataService',
+    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'RestAttributeSetDataPortalService', 'RestRelatedAttributeDataPortalService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, navService) {
-            BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.queries = {};
             $scope.settings = $rootScope.globalSettings;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
@@ -20,11 +20,10 @@ app.controller('MixAttributeSetDataController',
                 $scope.attributeSetName = $routeParams.attributeSetName;
                 $scope.refParentId = $routeParams.refParentId;
                 $scope.refParentType = $routeParams.refParentType;
-                if($routeParams.dataId!= $scope.defaultId){
+                $scope.request.attributeSetName = $routeParams.attributeSetName;
+                if ($routeParams.dataId != $scope.defaultId) {
                     $scope.dataId = $routeParams.dataId;
                 }
-                // $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
-                $scope.request.query += 'attributeSetName=' + $routeParams.attributeSetName;
 
                 if ($scope.refParentId && $scope.refParentType) {
                     $scope.refDataModel = {
@@ -33,28 +32,27 @@ app.controller('MixAttributeSetDataController',
                     };
                 }
             };
-            $scope.selectData = function(){
-                if($scope.selectedList.data.length){
+            $scope.selectData = function () {
+                if ($scope.selectedList.data.length) {
                     $scope.activedData = $scope.selectedList.data[0];
-                    console.log($scope.activedData);
                 }
             };
             // $scope.saveSuccessCallback = function () {
-                // if ($scope.refDataModel) {
-                //     $scope.refDataModel.id = $scope.activedData.id;
-                //     $scope.refDataModel.data = $scope.activedData.data;
-                    // $rootScope.isBusy = true;
-                    // navService.save('portal', $scope.refDataModel).then(resp => {
-                    //     if (resp.isSucceed) {
-                    //         $rootScope.isBusy = false;
-                    //         $scope.$apply();
-                    //     } else {
-                    //         $rootScope.showMessage('failed');
-                    //         $rootScope.isBusy = false;
-                    //         $scope.$apply();
-                    //     }
-                    // });
-                // }
+            // if ($scope.refDataModel) {
+            //     $scope.refDataModel.id = $scope.activedData.id;
+            //     $scope.refDataModel.data = $scope.activedData.data;
+            // $rootScope.isBusy = true;
+            // navService.save('portal', $scope.refDataModel).then(resp => {
+            //     if (resp.isSucceed) {
+            //         $rootScope.isBusy = false;
+            //         $scope.$apply();
+            //     } else {
+            //         $rootScope.showMessage('failed');
+            //         $rootScope.isBusy = false;
+            //         $scope.$apply();
+            //     }
+            // });
+            // }
             // };
             $scope.preview = function (item) {
                 item.editUrl = '/portal/post/details/' + item.id;
@@ -172,15 +170,13 @@ app.controller('MixAttributeSetDataController',
                 }
                 $scope.request.query = '';
                 if ($routeParams.attributeSetId) {
-                    $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                    $scope.request.attributeSetId = $routeParams.attributeSetId;
                 }
-                $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
-                if ($scope.filterType) {
-                    $scope.request.query += '&filterType=' + $scope.filterType;
-                }
+                $scope.request.attributeSetName = $routeParams.attributeSetName;
+                $scope.request.filterType = $routeParams.filterType;
                 Object.keys($scope.queries).forEach(e => {
                     if ($scope.queries[e]) {
-                        $scope.request.query += '&' + e + '=' + $scope.queries[e];
+                        $scope.request[e] = $scope.queries[e];
                     }
                 });
                 $rootScope.isBusy = true;

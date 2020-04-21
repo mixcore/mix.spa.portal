@@ -4,7 +4,7 @@
         attrSetName: '=',
         isSave: '=?'
     },
-    controller: ['$rootScope', '$scope', 'AttributeFieldClientRestService', 'AttributeSetDataRestService',
+    controller: ['$rootScope', '$scope', 'RestAttributeFieldClientService', 'RestAttributeSetDataClientService',
         function ($rootScope, $scope, fieldService, service) {
             var ctrl = this;
             BaseHub.call(this, ctrl);

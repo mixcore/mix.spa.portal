@@ -16,7 +16,7 @@ modules.component('attributeSetValues', {
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope','AttributeFieldClientRestService', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope','RestAttributeFieldClientService', 'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, fieldService, dataService) {
             var ctrl = this;
             ctrl.actions = ['Delete', 'SendMail'];

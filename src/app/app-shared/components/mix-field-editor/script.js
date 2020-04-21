@@ -6,9 +6,11 @@ modules.component('mixFieldEditor', {
         field:'=',
         isShowTitle: '=?',
         inputClass: '=?',
+        createUrl: '=?',
+        updateUrl: '=?'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$filter',
-        function ($rootScope, $scope, ngAppSettings,$filter) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$filter', 'RestRelatedAttributeDataPortalService',
+        function ($rootScope, $scope, ngAppSettings,$filter, navService) {
         var ctrl = this;
         ctrl.icons = ngAppSettings.icons;        
         ctrl.refData = null;
@@ -18,11 +20,16 @@ modules.component('mixFieldEditor', {
             id: null,
             data: null
         };
+        
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
         ctrl.previousId = null;
         ctrl.$onInit = function () {
-            ctrl.initData();
-
+            if(!ctrl.createUrl){
+                ctrl.createUrl = '/portal/attribute-set-data/create';
+            }
+            if(!ctrl.updateUrl){
+                ctrl.updateUrl = '/portal/attribute-set-data/details';
+            }
         };
         ctrl.initData = async function(){
             setTimeout(() => {                                
@@ -37,11 +44,13 @@ modules.component('mixFieldEditor', {
                         }
                         break;
                     case 23: // reference
-                        // if(ctrl.field.referenceId && ctrl.parentId){
+                        // if(ctrl.field.referenceId && ctrl.model.id){
                         //     ctrl.model.data[ctrl.field.name] = ctrl.field.referenceId;
-                        //     navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default', ctrl.attributeValue.field.referenceId]).then(resp=>{
+                        //     navService.getSingle(['default']).then(resp=>{
+                        //         resp.attributeSetId = ctrl.field.referenceId;
+                        //         resp.parentId = ctrl.parentId;
+                        //         resp.parentType = ctrl.parentType;
                         //         ctrl.defaultDataModel = resp;
-                        //         ctrl.defaultDataModel.attributeSetId = ctrl.attributeValue.field.referenceId;
                         //         ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                         //     });
                         //     ctrl.loadRefData();
@@ -89,5 +98,6 @@ modules.component('mixFieldEditor', {
                     break;
             }
         };
+        
     }]
 });

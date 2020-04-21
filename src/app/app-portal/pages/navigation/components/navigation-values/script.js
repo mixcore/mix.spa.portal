@@ -14,7 +14,7 @@ modules.component('navigationValues', {
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, dataService) {
             var ctrl = this;
             ctrl.selectedList = {

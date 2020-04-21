@@ -1,7 +1,12 @@
 <div class="card mb-4">
     <h6 class="card-header">
         <span ng-bind="$ctrl.header"></span>
-        <button class="btn btn-link text-primary btn-sm float-right py-0 collapsed" type="button" data-toggle="collapse" data-target="#{{$ctrl.header}}-tab" aria-controls="seo-tab-content" aria-expanded="false" aria-label="Toggle navigation"><i class="far fa-minus-square text-primary"></i> Collapse</button>
+        <div ng-show="$ctrl.isBusy" class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <button class="btn btn-link text-primary btn-sm float-right py-0 collapsed" type="button" data-toggle="collapse"
+            data-target="#{{$ctrl.header}}-tab" aria-controls="seo-tab-content" aria-expanded="false"
+            aria-label="Toggle navigation"><i class="far fa-minus-square text-primary"></i> Collapse</button>
     </h6>
     <div id="{{$ctrl.header}}-tab" class="card-body collapse" ng-init="$ctrl.loadData()">
         <div class="row">
@@ -13,13 +18,15 @@
         </div>
         <div class="row">
             <div class="col-12" ng-repeat="item in $ctrl.selectedList">
-                <checkbox-switch data="item.data.data" callback="$ctrl.select(data)" description="item.data.data[$ctrl.fieldDisplay]">
-                </checkbox-switch>
+                <checkbox-switch data="item" callback="$ctrl.select(data)"
+                    description="item.attributeData.obj[$ctrl.fieldDisplay]">
+                </checkbox-switch>                
             </div>
         </div>
-        <div class="row">            
+        <div class="row">
             <div class="col-12" ng-repeat="item in $ctrl.data.items| filter:$ctrl.newTitle" ng-hide="item.disabled">
-                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item[$ctrl.fieldDisplay]">
+                <checkbox-switch data="item" callback="$ctrl.select(item)"
+                    description="item.attributeData.obj[$ctrl.fieldDisplay]">
                 </checkbox-switch>
             </div>
         </div>

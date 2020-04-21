@@ -2,27 +2,30 @@
 app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', 'localStorageService',
     function ($rootScope, $routeParams, commonService) {
         var serviceFactory = {};
-        var _init = function (modelName, isGlobal) {
+        var _init = function (modelName, isGlobal, lang) {
             this.modelName = modelName;
             if (!isGlobal && isGlobal != 'true') {
-                this.lang = $rootScope.settings.lang;
-                this.prefixUrl = '/rest/' + this.lang + '/' + modelName;
+                if($rootScope.settings || lang){
+                    this.lang = lang || $rootScope.settings.lang;
+                    this.prefixUrl = '/rest/' + this.lang + '/' + modelName;
+                }
             }
             else {
                 this.prefixUrl = '/rest/' + modelName;
             }
         };
 
-        var _getSingle = async function (params = []) {
+        var _getSingle = async function (params = [], queries) {
             var url = this.prefixUrl;
             for (let i = 0; i < params.length; i++) {
                 if (params[i] != undefined && params[i] != null) {
                     url += '/' + params[i];
                 }
             }
+            var querystring = _parseQuery(queries);
             var req = {
                 method: 'GET',
-                url: url
+                url: `${url}?${querystring}`
             };
             return await commonService.getRestApiResult(req);
         };
@@ -43,7 +46,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
 
             var data = serviceFactory.parseQuery(objData);
             var url = this.prefixUrl;
-            
+
             if (data) {
                 url += '?';
                 url = url.concat(data);
@@ -68,7 +71,15 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             };
             return await commonService.getRestApiResult(req);
         };
+        var _save = async function (objData) {
+            if (objData.id == 0 || objData.id == null) {
+                return await this.create(objData);
+            }
+            else {
+                return await this.update(objData.id, objData);
+            }
 
+        };
         var _create = async function (objData) {
             var url = this.prefixUrl;
             var req = {
@@ -80,29 +91,20 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
         };
 
         var _update = async function (id, objData) {
-            var url = this.prefixUrl+ '/' + id;
+            var url = this.prefixUrl + '/' + id;
             var req = {
                 method: 'PUT',
-                url: url,
-                data: objData
-            };
-            return await commonService.getRestApiResult(req);
-        };
-        
-        var _patch = async function (id, objData) {
-            var url = this.prefixUrl+ '/' + id;
-            var req = {
-                method: 'PATCH',
                 url: url,
                 data: objData
             };
             return await commonService.getRestApiResult(req);
         };
 
-        var _saveFields = async function (viewType, id, objData) {
+
+        var _saveFields = async function (id, objData) {
             var url = this.prefixUrl + '/' + id;
             var req = {
-                method: 'PUT',
+                method: 'PATCH',
                 url: url,
                 data: JSON.stringify(objData)
             };
@@ -146,6 +148,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
         serviceFactory.getList = _getList;
         serviceFactory.create = _create;
         serviceFactory.update = _update;
+        serviceFactory.save = _save;
         serviceFactory.saveFields = _saveFields;
         serviceFactory.delete = _delete;
         serviceFactory.ajaxSubmitForm = _ajaxSubmitForm;

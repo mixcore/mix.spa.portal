@@ -2,8 +2,9 @@
     'use strict';
     app.controller('AppClientController',
         ['$rootScope', '$scope', 'GlobalSettingsService', 'CommonService', 'AuthService', 'localStorageService', 'TranslatorService', 'SharedModuleDataService',
+            'RestAttributeSetDataClientService',
             function ($rootScope, $scope, globalSettingsService, commonService, authService,
-                localStorageService, translatorService, moduleDataService) {
+                localStorageService, translatorService, moduleDataService, attrDataService) {
                 $scope.lang = '';
                 $scope.isInit = false;
                 $scope.isLoaded = false;
@@ -22,6 +23,7 @@
                 $rootScope.globalSettingsService = globalSettingsService;
                 $scope.changeLang = $rootScope.changeLang;
                 $scope.init = function (lang) {
+                    attrDataService.init(attrDataService.modelName, false, lang);
                     if (!$rootScope.isBusy) {
                         $rootScope.isBusy = true;
                         // globalSettingsService.fillGlobalSettings().then(function (response) {
@@ -109,6 +111,10 @@
                             $scope.$apply();
                         }
                     }, 500);
+                };
+
+                $scope.initAttributeSetForm = async function(formName){
+                    return await attrDataService.initData(formName).data;
                 };
                
                 $scope.saveModuleData = async function () {

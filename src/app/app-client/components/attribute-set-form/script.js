@@ -10,7 +10,7 @@ modules.component('attributeSetForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'RestAttributeSetDataClientService',
         function ($rootScope, $scope, service) {
             var ctrl = this;
             ctrl.isBusy = false;
@@ -28,9 +28,10 @@ modules.component('attributeSetForm', {
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+                ctrl.defaultData = await service.initData(ctrl.attrSetName);
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attrSetId, ctrl.attrSetName]);
+                    var getData = await service.getSingle([ctrl.attrDataId]);
+                    ctrl.attrDataId = getData.data;
                     if (ctrl.attrData) {
                         ctrl.defaultData.attributeSetId = ctrl.attrData.attributeSetId;
                         ctrl.defaultData.attributeSetName = ctrl.attrData.attributeSetName;

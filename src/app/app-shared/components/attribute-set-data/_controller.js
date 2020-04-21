@@ -2,7 +2,7 @@
 app.controller('AttributeSetDataController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'AttributeSetDataService', 'RelatedAttributeSetDataService', 'CommonService',
+        'RestAttributeSetPortalService', 'RestRelatedAttributeSetPortalService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, navService, commonService) {
             BaseODataCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

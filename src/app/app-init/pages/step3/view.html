@@ -6,8 +6,14 @@
     <hr>
     <div class="">
         <form id="frm-theme">
-
-            <div class="options">
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input ng-model="data.isCreateDefault" class="custom-control-input" type="checkbox" required>
+                    <span class="custom-control-label">
+                        Create Default Theme.</span>
+                </label>                
+            </div>
+            <div class="options" ng-show="data.isCreateDefault">
 
                 <div class="option active" style="--optionBackground:url(../assets/img/bgs/thumb_theme1.jpg);">
                     <label for="theme-1">
@@ -16,7 +22,7 @@
                             <!-- <i class="fas fa-walking"></i> -->
                             <div class="round">
                                 <input class="preventUncheck" type="checkbox" id="theme-1"
-                                    ng-model="data.isCreateDefault" checked name="themes[1][]" />
+                                    checked name="themes[1][]" />
                                 <label ng-if="!data.is1Selected" for="theme-1"></label>
                                 <label ng-if="data.is1Selected" ng-click="submit()" for="theme-1"></label>
                             </div>

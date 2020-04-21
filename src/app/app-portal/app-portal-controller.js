@@ -31,7 +31,7 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
                         $scope.portalThemeSettings = $rootScope.globalSettings.portalThemeSettings;
                         authService.fillAuthData().then(function (response) {
                             $rootScope.authentication = authService.authentication;
-                            $scope.isAuth = authService.authentication.isAuth;
+                            $scope.isAuth = authService.authentication!=null && authService.authentication.isAuth;
                             if (authService.authentication && authService.authentication.isAuth) {
                                 $scope.isAdmin = authService.authentication.isAdmin;
                                 if (!$scope.isAdmin) {

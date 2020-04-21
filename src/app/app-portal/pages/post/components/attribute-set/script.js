@@ -6,7 +6,7 @@ app.component('postAttributeSet', {
         parentType: '=?',
         parentId: '=?',
     },
-    controller: ['$rootScope', '$scope', 'RelatedAttributeSetDataService', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, navService, dataService) {
             var ctrl = this;
             ctrl.dataTypes = $rootScope.globalSettings.dataTypes;            

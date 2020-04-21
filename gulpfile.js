@@ -412,6 +412,7 @@ gulp.task('watch', function () {
     gulp.watch('./src/app/app-shared/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/app/app-client/**/*.js', gulp.series('min:clientApp', 'min:clientAppRequired'));
     gulp.watch('./src/app/app-security/**/*.js', gulp.series('min:securityApp'));
+    gulp.watch('./src/app/app-init/**/*.js', gulp.series('min:initApp'));
     gulp.watch('./src/app/app-/**/*.js', gulp.series('min:sharedApp'));
     gulp.watch('./src/lib/**/*.js', gulp.series('min:framework'));
     gulp.watch('./src/app/**/**/*.css', gulp.series('min:appCss', 'min:appClientCss', 'min:appInitCss'));

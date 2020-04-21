@@ -1,7 +1,15 @@
 'use strict';
 function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
 
-    $scope.request = angular.copy(ngAppSettings.request);
+    $scope.request = {
+        pageSize: '20',
+        pageIndex: 0,
+        status: '2',
+        orderBy: 'CreatedDateTime',
+        direction: '1',
+        fromDate: null,
+        toDate: null,
+    };
     $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
     $scope.activedData = null;
     $scope.defaultId = 0;

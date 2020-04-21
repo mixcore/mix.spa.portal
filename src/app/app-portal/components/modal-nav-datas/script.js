@@ -11,7 +11,7 @@
         selectCallback: '&',
         save: '&'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'MixAttributeSetDataService', 'RelatedAttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestAttributeSetDataPortalService', 'RestRelatedAttributeSetPortalService',
         function ($rootScope, $scope, ngAppSettings, service, navService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
@@ -92,7 +92,7 @@
                             parentType: ctrl.parentType,
                             id: data.id
                         }
-                        navService.save('portal', nav).then(resp => {
+                        navService.save(nav).then(resp => {
                             if (resp.isSucceed) {
                                 var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', data.id);
                                 if (!current) {

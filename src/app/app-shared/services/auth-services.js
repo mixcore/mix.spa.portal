@@ -300,7 +300,7 @@ app.factory('AuthService',
                     return resp.data;
                 },
                     function (error) {
-                        var t = { isSucceed: false, errors: [error.statusText] };
+                        var t = { isSucceed: false, errors: error.data.errors || [error.statusText] };
                         return t;
                     });
             };

@@ -2,7 +2,7 @@
 app.controller('ServiceController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'AttributeSetDataService', 'CommonService',
+        'RestAttributeSetPortalService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, commonService) {
             BaseODataCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

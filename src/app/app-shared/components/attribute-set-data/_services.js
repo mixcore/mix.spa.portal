@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('AttributeSetDataService', ['$rootScope', 'CommonService', 'BaseODataService',
+app.factory('RestAttributeSetPortalService', ['$rootScope', 'CommonService', 'BaseRestService',
     function ($rootScope, commonService, baseService) {
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('attribute-set-data');

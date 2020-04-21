@@ -21,14 +21,14 @@
             ctrl.selected = [];
             
             ctrl.init = function(){                
-                ctrl.service = $rootScope.getODataService(ctrl.modelName, ctrl.isGlobal);
+                ctrl.service = $rootScope.getRestService(ctrl.modelName +'/portal', ctrl.isGlobal);
                 ctrl.prefix = 'modal_navs_' + ctrl.modelName;
                 ctrl.cols = ctrl.selects.split(',');
                 ctrl.getList();
             };
             ctrl.count = async function () {
                 $rootScope.isBusy = true;
-                var resp = await ctrl.service.count(ctrl.viewType);
+                var resp = await ctrl.service.count();
                 if (resp) {
                     ctrl.request.totalItems = resp;
                     $rootScope.isBusy = false;
@@ -53,7 +53,7 @@
                     var d = new Date(ctrl.request.toDate);
                     ctrl.request.toDate = d.toISOString();
                 }
-                var resp = await ctrl.service.getList(ctrl.viewType, ctrl.request);
+                var resp = await ctrl.service.getList(ctrl.request);
                 if (resp) {            
                     ctrl.data = resp;
                     ctrl.count();

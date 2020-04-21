@@ -1,7 +1,7 @@
 ﻿'use strict';
 app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$location', '$routeParams',
-    'ModuleService', 'SharedModuleDataService', 'RelatedAttributeSetDataService',
-    function ($scope, $rootScope, ngAppSettings, $location, $routeParams, moduleServices, moduleDataService, relatedAttributeSetDataService) {
+    'ModuleService', 'SharedModuleDataService', 'RestRelatedAttributeSetPortalService',
+    function ($scope, $rootScope, ngAppSettings, $location, $routeParams, moduleServices, moduleDataService, RestRelatedAttributeSetPortalService) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, moduleServices, 'product');
         $scope.contentUrl = '';
         $scope.getSingleSuccessCallback = function () {
@@ -16,13 +16,13 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
             }
             if ($scope.activedData.sysCategories) {
                 angular.forEach($scope.activedData.sysCategories, function (e) {
-                    e.data.data.isActived = true;
+                    e.attributeData.obj.isActived = true;
                 });
             }
 
             if ($scope.activedData.sysTags) {
                 angular.forEach($scope.activedData.sysTags, function (e) {
-                    e.data.data.isActived = true;
+                    e.attributeData.obj.isActived = true;
                 });
             }
         };
@@ -204,7 +204,7 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
             $rootScope.showConfirm($scope, 'removeAttributeConfirmed', [attr, index], null, 'Remove Field', 'Deleted data will not able to recover, are you sure you want to delete this item?');
         };
         $scope.removeAttributeConfirmed = function (attr, index) {
-            relatedAttributeSetDataService.delete([])
+            RestRelatedAttributeSetPortalService.delete([])
             $scope.activedData.attributeData.data.values.splice(index, 1);
         };
     }]);

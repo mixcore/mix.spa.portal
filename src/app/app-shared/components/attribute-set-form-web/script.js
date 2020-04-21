@@ -10,7 +10,7 @@
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
+    controller: ['$rootScope', '$scope', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, service) {
             var ctrl = this;
             ctrl.isBusy = false;

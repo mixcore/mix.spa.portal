@@ -10,16 +10,23 @@ modules.component('menuItemForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
-        function ($rootScope, $scope, service) {
+    controller: ['$rootScope', '$scope', 'RestAttributeSetDataPortalService','RestAttributeFieldClientService',
+        function ($rootScope, $scope, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
+            ctrl.fields = [];
             ctrl.defaultData = null;
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
+                var getDefault = await service.initData(ctrl.attributeSetName);
+                ctrl.defaultData = getDefault.data;
+                var getFields = await fieldService.initData(ctrl.attributeSetName);
+                if (getFields.isSucceed) {
+                    ctrl.fields = getFields.data;
+                    $scope.$apply();
+                }
                 ctrl.loadData();
             };
             ctrl.loadData = async function () {
@@ -30,7 +37,8 @@ modules.component('menuItemForm', {
                 */
                 $rootScope.isBusy = true;
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
+                    var getData = await service.getSingle([ctrl.attrDataId]);
+                    ctrl.attrData = getData.data;
                     if (ctrl.attrData) {
                         ctrl.defaultData.attributeSetId = ctrl.attrData.attributeSetId;
                         ctrl.defaultData.attributeSetName = ctrl.attrData.attributeSetName;

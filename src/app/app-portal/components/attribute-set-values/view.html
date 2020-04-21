@@ -48,9 +48,9 @@
                                 ng-model="item.priority" />
                         </small>
                     </div>
-                    <div ng-if="$index < 3" ng-repeat="val in item.values | orderBy: 'priority' track by $index"
+                    <div ng-if="$index < 3" ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
                         class="col-md-2 py-2">
-                        <attribute-value-preview data="val"></attribute-value-preview>
+                        <mix-field-preview model="item.data[field.name]" field="field"></mix-field-preview>
                     </div>
                     <!-- <div class="col-md-2">
                         <small class="text-black-50 align-middle" ng-bind="item.createdBy">

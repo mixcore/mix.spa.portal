@@ -3,6 +3,7 @@ modules.component('attributeSetForm', {
     bindings: {
         attributeSetId: '=',
         attributeSetName: '=',
+        fields: '=?',
         attrDataId: '=?',
         attrData: '=?',
         parentType: '=?', // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -10,11 +11,12 @@ modules.component('attributeSetForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'AttributeSetDataService',
-        function ($rootScope, $scope, service) {
+    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldClientService',
+        function ($rootScope, $scope, $routeParams, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
+
             ctrl.defaultData = null;
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
@@ -28,9 +30,14 @@ modules.component('attributeSetForm', {
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
+
                 if (ctrl.attrDataId) {
-                    ctrl.attrData = await service.getSingle('portal', [ctrl.attrDataId, ctrl.attributeSetId, ctrl.attributeSetName]);
-                    if (ctrl.attrData) {                        
+                    var getData = await service.getSingle([ctrl.attrDataId]);
+                    ctrl.attrData = getData.data;
+                    if (ctrl.attrData) {
+                        ctrl.attributeSetId = ctrl.attrData.attributeSetId;
+                        ctrl.attributeSetName = ctrl.attrData.attributeSetName;
+                        await ctrl.loadDefaultModel();
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     } else {
@@ -42,9 +49,32 @@ modules.component('attributeSetForm', {
                     }
 
                 }
-                ctrl.defaultData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
-                if(ctrl.defaultData){
-                    ctrl.defaultData.attributeSetId = ctrl.attributeSetId;
+                if (ctrl.attributeSetName || ctrl.attributeSetId) {
+                    await ctrl.loadDefaultModel();
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
+
+
+            };
+            ctrl.loadDefaultModel = async function () {
+                if ($routeParams.parentId) {
+                    ctrl.parentId = $routeParams.parentId;
+                }
+                if ($routeParams.parentType) {
+                    ctrl.parentType = $routeParams.parentType;
+                }
+                if (!ctrl.fields) {
+                    var getFields = await fieldService.initData(ctrl.attributeSetName || ctrl.attributeSetId);
+                    if (getFields.isSucceed) {
+                        ctrl.fields = getFields.data;
+                        $scope.$apply();
+                    }
+                }
+                var getDefault = await service.initData(ctrl.attributeSetName || ctrl.attributeSetId);
+                ctrl.defaultData = getDefault.data;
+                if (ctrl.defaultData) {
+                    ctrl.defaultData.attributeSetId = ctrl.attributeSetId || 0;
                     ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
                     ctrl.defaultData.parentId = ctrl.parentId;
                     ctrl.defaultData.parentType = ctrl.parentType;
@@ -53,64 +83,79 @@ modules.component('attributeSetForm', {
                 if (!ctrl.attrData) {
                     ctrl.attrData = angular.copy(ctrl.defaultData);
                 }
-                $rootScope.isBusy = false;
-                $scope.$apply();
             };
+
             ctrl.reload = async function () {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
-            ctrl.loadSelected = function(){
-                if(ctrl.selectedList.data.length){
+            ctrl.loadSelected = function () {
+                if (ctrl.selectedList.data.length) {
                     ctrl.attrData = ctrl.selectedList.data[0];
                     ctrl.attrData.attributeSetId = ctrl.attributeSetId;
                     ctrl.attrData.attributeSetName = ctrl.attributeSetName;
                     ctrl.attrData.parentId = ctrl.parentId;
                     ctrl.attrData.parentType = ctrl.parentType;
                 }
-                console.log(ctrl.selectedList);
             };
             ctrl.submit = async function () {
-                angular.forEach(ctrl.attrData.values, function (e) {
-                    //Encrypt field before send
-                    if (e.field && e.field.isEncrypt) {
-                        var encryptData = $rootScope.encrypt(e.stringValue);
-                        e.encryptKey = encryptData.key;
-                        e.encryptValue = encryptData.data;
-                        e.stringValue = null;
-                    }
-                });
-                if (ctrl.saveData) {
-                    ctrl.isBusy = true;
-                    var result = await ctrl.saveData({ data: ctrl.attrData });
-                    if (result && result.isSucceed) {
-                        ctrl.isBusy = false;
-                        ctrl.attrData = result.data;
-                        $scope.$apply();
+                if (ctrl.validate()) {
+                    if (ctrl.saveData) {
+                        ctrl.isBusy = true;
+                        var result = await ctrl.saveData({ data: ctrl.attrData });
+                        if (result && result.isSucceed) {
+                            ctrl.isBusy = false;
+                            ctrl.attrData = result.data;
+                            $scope.$apply();
+                        }
+                        else {
+                            ctrl.isBusy = false;
+                            // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
+                            $scope.$apply();
+                        }
                     }
                     else {
-                        ctrl.isBusy = false;
-                        // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
-                        $scope.$apply();
-                    }
-                }
-                else {
 
-                    ctrl.isBusy = true;
-                    var saveResult = await service.save(ctrl.attrData);
-                    if (saveResult.isSucceed) {
+                        ctrl.isBusy = true;
 
-                        ctrl.isBusy = false;
-                    } else {
-                        ctrl.isBusy = false;
-                        if (saveResult) {
-                            $rootScope.showErrors(saveResult.errors);
+                        var saveResult = null;
+                        if (ctrl.attrData.id) {
+                            saveResult = await service.update(ctrl.attrData);
                         }
-                        $scope.$apply();
-                    }
+                        else {
+                            saveResult = await service.create(ctrl.attrData);
+                        }
+                        if (saveResult.isSucceed) {
+                            ctrl.isBusy = false;
+                            $scope.$apply();
+                        } else {
+                            ctrl.isBusy = false;
+                            if (saveResult) {
+                                $rootScope.showErrors(saveResult.errors);
+                            }
+                            $scope.$apply();
+                        }
 
+                    }
                 }
             };
+            ctrl.validate = function () {
+                var isValid = true;
+                ctrl.errors = [];
+                angular.forEach(ctrl.fields, function (field) {
+                    if (field.regex) {
+                        var regex = RegExp(field.regex, 'g');
+                        isValid = regex.test(ctrl.attrData.data[field.name]);
+                        if (!isValid) {
+                            ctrl.errors.push(`${field.name} is not match Regex`);
+                        }
+                    }
+                    if (isValid && field.isEncrypt) {
+                        ctrl.attrData.data[field.name] = $rootScope.encrypt(ctrl.attrData.data[field.name]);
+                    }
 
+                });
+                return isValid;
+            };
             ctrl.filterData = function (attributeName) {
                 if (ctrl.attrData) {
                     var attr = $rootScope.findObjectByKey(ctrl.attrData.data, 'attributeFieldName', attributeName);
