@@ -27,6 +27,7 @@ var paths = {
     webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", // Use for mix.core repo
     webapp: "./src/app/", //app
     libs:   "./src/lib/",
+    nodeModules:   "./node_modules/",
     scriptLib: "./src/lib/", //app
     styleLib: "./src/lib/", //app
     jsObtions: {},
@@ -52,6 +53,8 @@ paths.initApp = {
 
 paths.securityApp = {
     src: [
+        `${paths.nodeModules}jquery/dist/*.min.js`,
+        `${paths.nodeModules}jquery-ui/dist/*.min.js`,
         paths.webapp + "app-security/app.js",
         paths.webapp + "app-security/app.route.js",
         paths.webapp + "app-security/pages/**/*.js"
@@ -88,14 +91,15 @@ paths.sharedApp = {
 
 paths.framework = {
     src: [
-        paths.scriptLib + "angularjs/**/*.js",
-        paths.scriptLib + "jquery/jquery.min.js",
-        paths.scriptLib + "jquery/jquery-ui.min.js",
-        paths.scriptLib + "jquery/jquery.qrcode.min.js",
-        paths.scriptLib + "bootstrap/popper.min.js",
-        paths.scriptLib + "bootstrap/bootstrap.min.js",
-        paths.scriptLib + "lazysizes-5.2.0/lazysizes.min.js",
-        paths.scriptLib + "clipboard.js-2.0.4/clipboard.min.js"
+        `${paths.scriptLib}angularjs/**/*.js`,
+        `${paths.nodeModules}angular-material/**/*.min.js`,
+        `${paths.scriptLib}jquery/jquery.min.js`,
+        `${paths.scriptLib}jquery/jquery-ui.min.js`,
+        `${paths.scriptLib}jquery/jquery.qrcode.min.js`,
+        `${paths.scriptLib}bootstrap/popper.min.js`,
+        `${paths.scriptLib}bootstrap/bootstrap.min.js`,
+        `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
+        `${paths.scriptLib}clipboard.js-2.0.4/clipboard.min.js`
     ],
     dest: paths.webroot + "js/framework.min.js"
 };

@@ -12,4 +12,4 @@ ng-class="{'submitted': submitted}" ng-submit="$ctrl.submit()"
         </span>
     </button>
 </form>
-<p class="h6" ng-if="$ctrl.msg.text" style="color: {{$ctrl.msg.color}};">{{$ctrl.msg.text}}</p>
+<p class="h6" ng-if="$ctrl.msg.text" style="color: {{$ctrl.msg.color}};">{{translate($ctrl.msg.text)}}</p>
