@@ -1,8 +1,8 @@
 'use strict';
-app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', '$location'
-    , 'CommonService', 'AuthService', 'TranslatorService', 'GlobalSettingsService', 'RoleService',
-    function ($rootScope, $scope, ngAppSettings, $location
-        , commonService, authService, translatorService, globalSettingsService, roleServices) {
+app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', '$location', 
+            'CommonService', 'AuthService', 'TranslatorService', 'GlobalSettingsService', 'RoleService',
+    function ($rootScope, $scope, ngAppSettings, $location,
+            commonService, authService, translatorService, globalSettingsService, roleServices) {
         $scope.isInit = false;
         $scope.pageTagName = '';
         $scope.pageTagTypeName = '';
@@ -13,8 +13,7 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
         $scope.lang = null;
         $scope.settings = {};
         $scope.portalThemeSettings = {};
-        $scope.init = function () {
-            
+        $scope.init = function () {           
             new ClipboardJS('.btn-clipboard');
 
             if (!$rootScope.isBusy) {
@@ -31,7 +30,7 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
                         $scope.portalThemeSettings = $rootScope.globalSettings.portalThemeSettings;
                         authService.fillAuthData().then(function (response) {
                             $rootScope.authentication = authService.authentication;
-                            $scope.isAuth = authService.authentication!=null && authService.authentication.isAuth;
+                            $scope.isAuth = authService.authentication != null && authService.authentication.isAuth;
                             if (authService.authentication && authService.authentication.isAuth) {
                                 $scope.isAdmin = authService.authentication.isAdmin;
                                 if (!$scope.isAdmin) {
@@ -50,7 +49,7 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
                                 }
                             }
                             else {
-                                window.top.location.href = '/security/login';
+                                 window.top.location.href = '/security/login';
                             }
                         });
                         $rootScope.isInit = true;
@@ -64,10 +63,10 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
                     }
                 });
             }
-        };
-        $scope.alert = function(message) {
+        };        
+        $scope.alert = function (message) {
             ons.notification.alert(message);
-          };
+        };
         $scope.prettyJsonObj = function (obj) {
             return JSON.stringify(obj, null, '\t');
         }

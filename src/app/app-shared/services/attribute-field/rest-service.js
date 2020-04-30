@@ -1,8 +1,8 @@
 'use strict';
-app.factory('RestAttributeFieldClientService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
+app.factory('RestAttributeFieldPortalService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
 
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init('attribute-field/client');
+    serviceFactory.init('attribute-field/portal');
     var _initData = async function (attrSetName) {
         var url = this.prefixUrl + '/init/' + attrSetName;
         var req = {

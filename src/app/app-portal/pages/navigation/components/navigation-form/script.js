@@ -11,7 +11,7 @@ modules.component('navigationForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
         function ($rootScope, $scope, $routeParams, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;

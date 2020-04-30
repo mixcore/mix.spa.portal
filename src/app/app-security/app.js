@@ -1,4 +1,4 @@
 'use strict';
 var app = angular.module('MixPortal',
-    ['ngRoute', 'ngFileUpload', 'LocalStorageModule','components']);
+    ['ngRoute', 'ngFileUpload', 'LocalStorageModule', 'ngMaterial','components']);
     var modules = angular.module('components', []);

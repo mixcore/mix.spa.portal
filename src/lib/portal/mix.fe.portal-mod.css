@@ -10951,7 +10951,7 @@ a.text-dark:hover, a.text-dark:focus {
       position: -webkit-sticky;
       position: sticky;
       top: 4rem;
-      z-index: 1000;
+      z-index: 70;
       height: calc(100vh - 4rem);
     }
   }

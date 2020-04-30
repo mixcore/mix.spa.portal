@@ -12,7 +12,7 @@
         selectCallback: '&',
         save: '&'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', 'ngAppSettings', 'RestAttributeSetDataPortalService', 'RestRelatedAttributeDataPortalService', 'RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', '$routeParams', 'ngAppSettings', 'RestAttributeSetDataPortalService', 'RestRelatedAttributeDataPortalService', 'RestAttributeFieldPortalService',
         function ($rootScope, $scope, $routeParams, ngAppSettings, dataService, navService, fieldService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);

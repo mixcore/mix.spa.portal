@@ -94,8 +94,8 @@ app.constant('ngAppSettings', {
     ]
     , icons: []
 });
-app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
-    function ($http, $rootScope, ngAppSettings, $location, baseRestService, commonService, authService, translatorService,
+app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
+    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, baseRestService, commonService, authService, translatorService,
     ) {
         $rootScope.currentContext = $rootScope;
         $rootScope.isBusy = false;
@@ -529,6 +529,17 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService',
             var serviceFactory = angular.copy(baseRestService);
             serviceFactory.init(modelName, isGlobal, lang);
             return serviceFactory;            
+        };
+        $rootScope.showLogin = function (ev) {
+            $rootScope.isBusy = false;
+            $mdDialog.show({
+                templateUrl: '/app/app-shared/components/login-popup/view.html',
+                controller: 'LoginPopupController',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            });
         };
 
     }]);

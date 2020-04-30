@@ -90,17 +90,72 @@ app.factory('AuthService',
                     _initSettings().then(function () {
                         if ($routeParams.ReturnUrl) {
                             setTimeout(() => {
-                                window.location.href = $routeParams.ReturnUrl;                                
+                                window.location.href = $routeParams.ReturnUrl;
                             }, 1000);
 
                         }
                         else if (document.referrer && document.referrer.indexOf('init') === -1) {
                             setTimeout(() => {
-                                window.location.href = document.referrer;                                
+                                window.location.href = document.referrer;
                             }, 200);
                         } else {
                             window.location.href = '/';
                         }
+                    });
+
+                } else {
+                    $rootScope.isBusy = false;
+                    $rootScope.showErrors(resp.errors);
+                }
+                return resp;
+            };
+
+            var _loginPopup = async function (loginData) {
+                var data = {
+                    UserName: loginData.userName,
+                    Password: loginData.password,
+                    RememberMe: loginData.rememberMe,
+                    Email: '',
+                    ReturnUrl: ''
+                };
+                var apiUrl = '/account/login';
+                var req = {
+                    method: 'POST',
+                    url: apiUrl,
+                    data: JSON.stringify(data)
+                };
+                var resp = await _getApiResult(req);
+
+                if (resp.isSucceed) {
+                    data = resp.data;
+                    var authData = {
+                        userRoles: data.userData.userRoles,
+                        token: data.access_token, userName: data.userData.firstName, roleNames: data.userData.roles,
+                        avatar: data.userData.avatar, refresh_token: data.refresh_token, userId: data.userData.id
+                    };
+                    var encrypted = $rootScope.encrypt(JSON.stringify(authData));
+                    localStorageService.set('authorizationData', encrypted);
+                    _authentication = {
+                        isAuth: true,
+                        userName: data.userData.NickName,
+                        userId: data.userData.id,
+                        roleNames: data.userData.roles,
+                        token: data.access_token,
+                        useRefreshTokens: loginData.rememberme,
+                        avatar: data.userData.avatar,
+                        refresh_token: data.refresh_token,
+                        referredUrl: '/'
+                    };
+                    angular.forEach(data.userData.roles, function (value, key) {
+                        if (value.role.name === 'SuperAdmin'
+                            //|| value.role.name === 'Admin'
+                        ) {
+                            _authentication.isAdmin = true;
+                        }
+                    });
+                    this.authentication = _authentication;
+                    _initSettings().then(function () {
+                        return resp;
                     });
 
                 } else {
@@ -121,7 +176,7 @@ app.factory('AuthService',
                 if (resp.isSucceed) {
                     localStorageService.remove('authorizationData');
                     _authentication = null;
-                    window.top.location.href = '/security/login';
+                    // window.top.location.href = '/security/login';
                 }
 
 
@@ -211,34 +266,41 @@ app.factory('AuthService',
             };
 
             var _refreshToken = function (id) {
-                var deferred = $q.defer();
-                var url = appSettings.serviceBase + '/api/' + appSettings.apiVersion + '/account/refresh-token/' + id;
-                $http.get(url).then(function (response) {
-                    var data = response.data.data;
+                if (id) {
+                    var deferred = $q.defer();
+                    var url = appSettings.serviceBase + '/api/' + appSettings.apiVersion + '/account/refresh-token/' + id;
+                    $http.get(url).then(function (response) {
+                        var data = response.data.data;
 
-                    if (data) {
-                        var authData = {
-                            userRoles: data.userData.userRoles,
-                            token: data.access_token, userName: data.userData.firstName, roleNames: data.userData.roles,
-                            avatar: data.userData.avatar, refresh_token: data.refresh_token, userId: data.userData.id
-                        };
-                        var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-                        localStorageService.set('authorizationData', encrypted);
-                        authData.token = data.access_token;
-                        authData.refresh_token = data.refresh_token;
-                        _authentication.token = data.access_token;
-                        _authentication.refresh_token = data.refresh_token;
-                        if (!$rootScope.globalSettings.lastUpdateConfiguration || $rootScope.globalSettings.lastUpdateConfiguration < data.lastUpdateConfiguration) {
-                            _initSettings();
+                        if (data) {
+                            var authData = {
+                                userRoles: data.userData.userRoles,
+                                token: data.access_token, userName: data.userData.firstName, roleNames: data.userData.roles,
+                                avatar: data.userData.avatar, refresh_token: data.refresh_token, userId: data.userData.id
+                            };
+                            var encrypted = $rootScope.encrypt(JSON.stringify(authData));
+                            localStorageService.set('authorizationData', encrypted);
+                            authData.token = data.access_token;
+                            authData.refresh_token = data.refresh_token;
+                            _authentication.token = data.access_token;
+                            _authentication.refresh_token = data.refresh_token;
+                            if (!$rootScope.globalSettings.lastUpdateConfiguration || $rootScope.globalSettings.lastUpdateConfiguration < data.lastUpdateConfiguration) {
+                                _initSettings();
+                            }
                         }
-                    }
 
-                    deferred.resolve(response);
+                        deferred.resolve(response);
 
-                }, function (error) {
+                    }, function (error) {
+                        _logOut();
+                        deferred.reject(error);
+                    });
+
+                }
+                else {
                     _logOut();
                     deferred.reject(error);
-                });
+                }
                 return deferred.promise;
             };
 
@@ -308,8 +370,9 @@ app.factory('AuthService',
             authServiceFactory.saveRegistration = _saveRegistration;
             authServiceFactory.forgotPassword = _forgotPassword;
             authServiceFactory.resetPassword = _resetPassword;
-            authServiceFactory.login = _login;
             authServiceFactory.initSettings = _initSettings;
+            authServiceFactory.login = _login;
+            authServiceFactory.loginPopup = _loginPopup;
             authServiceFactory.logOut = _logOut;
             authServiceFactory.referredUrl = _referredUrl;
             authServiceFactory.fillAuthData = _fillAuthData;

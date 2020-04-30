@@ -1,7 +1,7 @@
 ﻿'use strict';
 app.controller('AttributeSetController', [
     '$scope', '$rootScope', '$location',
-    'ngAppSettings', '$routeParams', 'RestAttributeFieldClientService', 'AttributeSetService',      
+    'ngAppSettings', '$routeParams', 'RestAttributeFieldPortalService', 'RestAttributeSetPortalService',      
     function ($scope, $rootScope, $location, 
         ngAppSettings, $routeParams, attributeFieldService, service) {
         BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
@@ -11,7 +11,7 @@ app.controller('AttributeSetController', [
         $scope.orders = [{ title: 'Id', value: 'id' }, { title: 'Name', value: 'name' }, { title: 'Created Date', value: 'createdDateTime' }];
         $scope.request.orderBy = 'createdDateTime';
         $scope.getSingleSuccessCallback = async function () {
-            var getDefaultAttr = await attributeFieldService.getSingle([0]);
+            var getDefaultAttr = await attributeFieldService.getDefault();
             if (getDefaultAttr.isSucceed) {
                 $scope.defaultAttr = getDefaultAttr.data;
                 $scope.defaultAttr.options = [];

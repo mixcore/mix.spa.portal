@@ -6,6 +6,7 @@
         attributeSetId: '=?',
         selectedList: '=',
         initData: '=?',
+        fields: '=?',
         selected: '=',
         callback: '&?',
         save: '&?'
@@ -28,7 +29,7 @@
                 }
             };
             ctrl.loadData = async function (pageIndex) {
-                $rootScope.isBusy = true;
+                ctrl.isBusy = true;
                 ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
                 if (pageIndex !== undefined) {
@@ -42,28 +43,23 @@
                     var dt = new Date(ctrl.request.toDate);
                     ctrl.request.toDate = dt.toISOString();
                 }
-                ctrl.request.query = '';
                 if (ctrl.attributeSetId) {
-                    ctrl.request.query = 'attributeSetId=' + ctrl.attributeSetId;
+                    ctrl.request.attributeSetId = ctrl.attributeSetId;
                 }
-                ctrl.request.query += '&attributeSetName=' + ctrl.attributeSetName;
+                ctrl.request.attributeSetName = ctrl.attributeSetName;
                 if (ctrl.filterType) {
-                    ctrl.request.query += '&filterType=' + ctrl.filterType;
+                    ctrl.request.filterType = ctrl.filterType;
                 }
-                // Object.keys(ctrl.queries).forEach(e => {
-                //     if (ctrl.queries[e]) {
-                //         ctrl.request.query += '&' + e + '=' + ctrl.queries[e];
-                //     }
-                // });
+                
                 var response = await dataService.getList(ctrl.request);
                 if (response.isSucceed) {
                     ctrl.data = response.data;
-                    $rootScope.isBusy = false;
+                    ctrl.isBusy = false;
                     $scope.$apply();
                 }
                 else {
                     $rootScope.showErrors(response.errors);
-                    $rootScope.isBusy = false;
+                    ctrl.isBusy = false;
                     $scope.$apply();
                 }
             };

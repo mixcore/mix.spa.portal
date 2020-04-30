@@ -42,9 +42,36 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
 
     $scope.getSingle = async function (params = []) {
         $rootScope.isBusy = true;
-        var id = $routeParams.id || $scope.defaultId;
-        params.splice(0, 0, id);
-        var resp = await service.getSingle([id]);
+        var id = $routeParams.id;
+        if(!id){
+            return await this.getDefault();
+        }
+        else{
+            params.splice(0, 0, id);
+            var resp = await service.getSingle([id]);
+            if (resp.isSucceed) {
+                $scope.activedData = resp.data;
+                if ($scope.getSingleSuccessCallback) {
+                    $scope.getSingleSuccessCallback();
+                }
+                $rootScope.isBusy = false;
+                $scope.$apply();
+            } else {
+                if (resp) {
+                    $rootScope.showErrors(resp.errors);
+                }
+                if ($scope.getSingleFailCallback) {
+                    $scope.getSingleFailCallback();
+                }
+                $rootScope.isBusy = false;
+                $scope.$apply();
+            }
+        }        
+    };
+    
+    $scope.getDefault = async function (params = []) {
+        $rootScope.isBusy = true;
+        var resp = await service.getDefault();
         if (resp.isSucceed) {
             $scope.activedData = resp.data;
             if ($scope.getSingleSuccessCallback) {
@@ -64,22 +91,6 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
         }
     };
 
-    $scope.count = async function (params = []) {
-        $rootScope.isBusy = true;
-        var resp = await service.count(params);
-        if (resp.isSucceed) {
-            $scope.request.totalItems = resp.data;
-            $rootScope.isBusy = false;
-            $scope.$apply();
-        } else {
-            if (resp) {
-                $rootScope.showErrors(resp.errors || ['Failed']);
-            }
-            $rootScope.isBusy = false;
-            $scope.$apply();
-        }
-    };
-
     $scope.getList = async function (pageIndex, params = []) {
         $rootScope.isBusy = true;
         if (pageIndex !== undefined) {
@@ -90,13 +101,12 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
             $scope.request.fromDate = d.toISOString();
         }
         if ($scope.request.toDate !== null) {
-            var d = new Date($scope.request.toDate);
-            $scope.request.toDate = d.toISOString();
+            var dt = new Date($scope.request.toDate);
+            $scope.request.toDate = dt.toISOString();
         }
         var resp = await service.getList($scope.request, params);
         if (resp.isSucceed) {
             $scope.data = resp.data;
-            $scope.count(params);
             $.each($scope.data, function (i, data) {
                 $.each($scope.activedDatas, function (i, e) {
                     if (e.dataId === data.id) {

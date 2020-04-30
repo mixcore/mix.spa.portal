@@ -1,12 +1,12 @@
 modules.component('attributeList', {
     templateUrl: '/app/app-portal/components/attribute-list/view.html',
-    controller: ['$rootScope', '$scope', 'RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', 'RestAttributeFieldPortalService',
         function ($rootScope, $scope, service) {
             var ctrl = this;
             ctrl.selectedCol = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                var getDefaultAttr = await service.getSingle([0]);
+                var getDefaultAttr = await service.getDefault();
                 if (getDefaultAttr.isSucceed) {
                     ctrl.defaultAttr = getDefaultAttr.data;
                     ctrl.defaultAttr.options = [];

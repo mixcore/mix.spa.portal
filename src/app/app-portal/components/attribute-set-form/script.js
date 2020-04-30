@@ -11,7 +11,8 @@ modules.component('attributeSetForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 
+            'RestAttributeFieldPortalService',
         function ($rootScope, $scope, $routeParams, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
@@ -30,26 +31,28 @@ modules.component('attributeSetForm', {
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
-
+                
                 if (ctrl.attrDataId) {
                     var getData = await service.getSingle([ctrl.attrDataId]);
                     ctrl.attrData = getData.data;
                     if (ctrl.attrData) {
+                        ctrl.attrData.parentId = ctrl.parentId;
+                        ctrl.attrData.parentType = ctrl.parentType;
                         ctrl.attributeSetId = ctrl.attrData.attributeSetId;
                         ctrl.attributeSetName = ctrl.attrData.attributeSetName;
                         await ctrl.loadDefaultModel();
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     } else {
-                        if (ctrl.attrData) {
-                            $rootScope.showErrors('Failed');
+                        if (getData) {
+                            $rootScope.showErrors(getData.errors);
                         }
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     }
 
                 }
-                if (ctrl.attributeSetName || ctrl.attributeSetId) {
+                if ((ctrl.attributeSetName || ctrl.attributeSetId) && !ctrl.defaultData) {
                     await ctrl.loadDefaultModel();
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -63,6 +66,12 @@ modules.component('attributeSetForm', {
                 }
                 if ($routeParams.parentType) {
                     ctrl.parentType = $routeParams.parentType;
+                }
+                if(ctrl.parentType){
+                    ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
+                }
+                else{
+                    ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
                 }
                 if (!ctrl.fields) {
                     var getFields = await fieldService.initData(ctrl.attributeSetName || ctrl.attributeSetId);
@@ -117,15 +126,11 @@ modules.component('attributeSetForm', {
 
                         ctrl.isBusy = true;
 
-                        var saveResult = null;
-                        if (ctrl.attrData.id) {
-                            saveResult = await service.update(ctrl.attrData);
-                        }
-                        else {
-                            saveResult = await service.create(ctrl.attrData);
-                        }
+                        var saveResult = await service.save(ctrl.attrData);
                         if (saveResult.isSucceed) {
+                            ctrl.attrData.id = saveResult.data.id;
                             ctrl.isBusy = false;
+                            $rootScope.showMessage('success');
                             $scope.$apply();
                         } else {
                             ctrl.isBusy = false;

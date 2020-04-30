@@ -18,7 +18,7 @@ modules.component('attributeSetNavs', {
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = function(){
                 ctrl.setRequest.type = ctrl.parentType;
-                navService.getSingle([0]).then(resp=>{
+                navService.getDefault().then(resp=>{
                     resp.parentId = ctrl.parentId;
                     resp.parentType = ctrl.parentType;
                     ctrl.defaultData = resp;

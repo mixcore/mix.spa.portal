@@ -29,6 +29,16 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             };
             return await commonService.getRestApiResult(req);
         };
+        
+        var _getDefault = async function (queriesObj) {
+            var url = `${this.prefixUrl}/default`;
+            var querystring = _parseQuery(queriesObj);
+            var req = {
+                method: 'GET',
+                url: `${url}?${querystring}`
+            };
+            return await commonService.getRestApiResult(req);
+        };
         var _count = async function (params = []) {
             var url = this.prefixUrl + '/count';
             for (let i = 0; i < params.length; i++) {
@@ -144,6 +154,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
         serviceFactory.prefixUrl = '';
         serviceFactory.init = _init;
         serviceFactory.count = _count;
+        serviceFactory.getDefault = _getDefault;
         serviceFactory.getSingle = _getSingle;
         serviceFactory.getList = _getList;
         serviceFactory.create = _create;

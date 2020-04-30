@@ -37,15 +37,15 @@ modules.component('mixFieldEditor', {
                     case 1:
                     case 2:
                     case 3:                        
-                        if (ctrl.model.data[ctrl.field.name]) {
-                            var local = $filter('utcToLocalTime')(ctrl.model.data[ctrl.field.name]);
-                            ctrl.model.data[ctrl.field.name] = new Date(local);
+                        if (ctrl.model[ctrl.field.name]) {
+                            var local = $filter('utcToLocalTime')(ctrl.model[ctrl.field.name]);
+                            ctrl.model[ctrl.field.name] = new Date(local);
                             $scope.$apply();
                         }
                         break;
                     case 23: // reference
                         // if(ctrl.field.referenceId && ctrl.model.id){
-                        //     ctrl.model.data[ctrl.field.name] = ctrl.field.referenceId;
+                        //     ctrl.model[ctrl.field.name] = ctrl.field.referenceId;
                         //     navService.getSingle(['default']).then(resp=>{
                         //         resp.attributeSetId = ctrl.field.referenceId;
                         //         resp.parentId = ctrl.parentId;
@@ -58,13 +58,13 @@ modules.component('mixFieldEditor', {
                         break;
                     default:
                         
-                        if (ctrl.field && ctrl.field.isEncrypt && ctrl.model.data[ctrl.field.name]) {
+                        if (ctrl.field && ctrl.field.isEncrypt && ctrl.model[ctrl.field.name]) {
                             var encryptedData = {
                             };
                             ctrl.attributeValue.stringValue = $rootScope.decrypt(encryptedData);
                         }
-                        if (ctrl.field && !ctrl.model.data[ctrl.field.name]) {
-                            ctrl.model.data[ctrl.field.name] = ctrl.field.defaultValue;
+                        if (ctrl.field && !ctrl.model[ctrl.field.name]) {
+                            ctrl.model[ctrl.field.name] = ctrl.field.defaultValue;
                             $scope.$apply();
                         }
                         break;
@@ -77,23 +77,23 @@ modules.component('mixFieldEditor', {
                 case 2:
                 case 3:
                     if (ctrl.field.defaultValue) {
-                        ctrl.model.data[ctrl.field.name] = new Date(ctrl.attributeValue.field.defaultValue);
+                        ctrl.model[ctrl.field.name] = new Date(ctrl.attributeValue.field.defaultValue);
                     }
                     break;
                 case 6:
                     if (ctrl.field.defaultValue) {
-                        ctrl.model.data[ctrl.field.name] = parseFloat(ctrl.attributeValue.field.defaultValue);
+                        ctrl.model[ctrl.field.name] = parseFloat(ctrl.attributeValue.field.defaultValue);
                     }
                     break;
                 case 18:
                     if (ctrl.field.defaultValue) {
-                        ctrl.model.data[ctrl.field.name] = ctrl.attributeValue.field.defaultValue =='true';
+                        ctrl.model[ctrl.field.name] = ctrl.attributeValue.field.defaultValue =='true';
                     }
                     break;
 
                 default:
                     if (ctrl.field.defaultValue) {
-                        ctrl.model.data[ctrl.field.name] = ctrl.field.defaultValue;
+                        ctrl.model[ctrl.field.name] = ctrl.field.defaultValue;
                     }
                     break;
             }

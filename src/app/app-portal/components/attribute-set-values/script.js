@@ -5,47 +5,47 @@ modules.component('attributeSetValues', {
         data: '=',
         canDrag: '=',
         attributeSetName: '=?',
+        attributeSetId: '=?',
         queries: '=?',
         filterType: '=?',
         selectedList: '=',
         selectSingle: '=?',
-        columns: '=?',
+        fields: '=?',
         onFilterList: '&?',
         onApplyList: '&?',
         onSendMail: '&?',
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope','RestAttributeFieldClientService', 'RestAttributeSetDataPortalService',
+    controller: ['$rootScope', '$scope', 'RestAttributeFieldPortalService', 'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, fieldService, dataService) {
             var ctrl = this;
             ctrl.actions = ['Delete', 'SendMail'];
             ctrl.filterTypes = ['contain', 'equal'];
-            ctrl.fields = [];
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.$onInit = async function(){
-                if(!ctrl.selectedList){
+            ctrl.$onInit = async function () {
+                if (!ctrl.selectedList) {
                     ctrl.selectedList = {
                         action: 'Delete',
                         data: []
                     };
                 }
-                var getFields = await fieldService.initData(ctrl.attributeSetName);
-                if (getFields.isSucceed) {
-                    ctrl.fields = getFields.data;
+                if (!ctrl.fields) {
+                    var getFields = await fieldService.initData(ctrl.attributeSetName || ctrl.attributeSetId);
+                    if (getFields.isSucceed) {
+                        ctrl.fields = getFields.data;
+                        $scope.$apply();
+                    }
                 }
-                // if(ctrl.data[0] && ctrl.data[0].fields){
-                //     ctrl.fields = angular.copy(ctrl.data[0].fields);
-                // }
             };
             ctrl.select = function (item) {
                 if (item.isSelected) {
-                    if(ctrl.selectSingle=='true'){
+                    if (ctrl.selectSingle == 'true') {
                         ctrl.selectedList.data = [];
                         ctrl.selectedList.data.push(item);
                     }
-                    else{
+                    else {
                         var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
                         if (!current) {
                             ctrl.selectedList.data.push(item);

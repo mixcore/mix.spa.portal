@@ -18,17 +18,17 @@ app.controller('MixAttributeSetDataController',
             $scope.init = async function () {
                 $scope.attributeSetId = $routeParams.attributeSetId;
                 $scope.attributeSetName = $routeParams.attributeSetName;
-                $scope.refParentId = $routeParams.refParentId;
-                $scope.refParentType = $routeParams.refParentType;
+                $scope.parentId = $routeParams.parentId;
+                $scope.parentType = $routeParams.parentType;
                 $scope.request.attributeSetName = $routeParams.attributeSetName;
                 if ($routeParams.dataId != $scope.defaultId) {
                     $scope.dataId = $routeParams.dataId;
                 }
 
-                if ($scope.refParentId && $scope.refParentType) {
+                if ($scope.parentId && $scope.parentType) {
                     $scope.refDataModel = {
-                        parentId: $scope.refParentId,
-                        parentType: $scope.refParentType
+                        parentId: $scope.parentId,
+                        parentType: $scope.parentType
                     };
                 }
             };

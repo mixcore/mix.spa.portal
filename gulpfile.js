@@ -91,13 +91,15 @@ paths.sharedApp = {
 
 paths.framework = {
     src: [
+        `${paths.nodeModules}angular/angular.min.js`,
+        `${paths.nodeModules}angular-route/angular-route.min.js`,
+        `${paths.nodeModules}angular-animate/angular-animate.min.js`,
+        `${paths.nodeModules}angular-sanitize/angular-sanitize.min.js`,
+        `${paths.nodeModules}angular-aria/angular-aria.min.js`,
+        `${paths.nodeModules}angular-messages/angular-messages.min.js`,
+        `${paths.nodeModules}angular-material/angular-material.min.js`,        
+        `${paths.nodeModules}angular-local-storage/dist/angular-local-storage.min.js`,
         `${paths.scriptLib}angularjs/**/*.js`,
-        `${paths.nodeModules}angular-material/**/*.min.js`,
-        `${paths.scriptLib}jquery/jquery.min.js`,
-        `${paths.scriptLib}jquery/jquery-ui.min.js`,
-        `${paths.scriptLib}jquery/jquery.qrcode.min.js`,
-        `${paths.scriptLib}bootstrap/popper.min.js`,
-        `${paths.scriptLib}bootstrap/bootstrap.min.js`,
         `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
         `${paths.scriptLib}clipboard.js-2.0.4/clipboard.min.js`
     ],
@@ -263,6 +265,11 @@ gulp.task("min:views", function (cb) {
 // JS
 paths.portal = {
     src: [
+        `${paths.scriptLib}jquery/jquery.min.js`,
+        `${paths.scriptLib}jquery/jquery-ui.min.js`,
+        `${paths.scriptLib}jquery/jquery.qrcode.min.js`,
+        `${paths.scriptLib}bootstrap/popper.min.js`,
+        `${paths.scriptLib}bootstrap/bootstrap.min.js`,
         paths.scriptLib + "portal/**/*.js",
         paths.scriptLib + "portal/**/*.*.js"
     ],
@@ -329,7 +336,8 @@ gulp.task("min:portalAppRequired", function (cb) {
 paths.portalCss = {
     src: [
         paths.libs + "portal/**/*.css",
-        paths.libs + "portal/**/*.*.css"
+        paths.libs + "portal/**/*.*.css",
+        `${paths.nodeModules}angular-material/angular-material.min.css`,
     ],
     dest: paths.webroot + "css/portal.min.css"
 };

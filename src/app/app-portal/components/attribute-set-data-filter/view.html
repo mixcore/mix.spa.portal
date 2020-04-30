@@ -22,8 +22,11 @@
                     </div>
                     <attribute-set-values 
                         header="''" data="$ctrl.data.items"
+                        fields="$ctrl.fields"
                         selected-list="$ctrl.selectedList" select-single="'true'"
-                        attribute-set-name="$ctrl.attributeSetName">
+                        attribute-set-name="$ctrl.attributeSetName"
+                        attribute-set-id="$ctrl.attributeSetId"
+                        >
                     </attribute-set-values>
                 </div>
             </div>
@@ -36,13 +39,6 @@
                 <a class="btn btn-primary text-white btn-sm" ng-click="$ctrl.onClose()" data-dismiss="modal" aria-label="Close">
                     Select & Close
                 </a>
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                        <a class="btn btn-secondary text-white" data-dismiss="modal" aria-label="Close">
-                            Close
-                        </a>
-                    </div>
-                </div> -->
             </div>
         </div>
         <!-- /.modal-content -->

@@ -10,7 +10,7 @@ modules.component('menuItemForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'RestAttributeSetDataPortalService','RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', 'RestAttributeSetDataPortalService','RestAttributeFieldPortalService',
         function ($rootScope, $scope, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;

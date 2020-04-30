@@ -35,7 +35,7 @@
                 </div>
                 <div ng-if="$index < 3" ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
                     class="col-md-3 py-2">                    
-                    <mix-field-preview model="item.data.data[field.name]" field="field"></mix-field-preview>
+                    <mix-field-preview model="item.attributeData.obj[field.name]" field="field"></mix-field-preview>
                 </div>
                 <div class="col text-right">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">

@@ -26,21 +26,7 @@
                 ctrl.cols = ctrl.selects.split(',');
                 ctrl.getList();
             };
-            ctrl.count = async function () {
-                $rootScope.isBusy = true;
-                var resp = await ctrl.service.count();
-                if (resp) {
-                    ctrl.request.totalItems = resp;
-                    $rootScope.isBusy = false;
-                    $scope.$apply();
-                } else {
-                    if (resp) {
-                        $rootScope.showErrors('Failed');
-                    }
-                    $rootScope.isBusy = false;
-                    $scope.$apply();
-                }
-            };
+            
             ctrl.getList = async function (pageIndex) {
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
@@ -54,10 +40,9 @@
                     ctrl.request.toDate = d.toISOString();
                 }
                 var resp = await ctrl.service.getList(ctrl.request);
-                if (resp) {            
-                    ctrl.data = resp;
-                    ctrl.count();
-                    $.each(ctrl.data, function (i, data) {
+                if (resp.isSucceed) {            
+                    ctrl.data = resp.data;
+                    $.each(ctrl.data.items, function (i, data) {
                         $.each(ctrl.activedDatas, function (i, e) {
                             if (e.dataId === data.id) {
                                 data.isHidden = true;
@@ -68,7 +53,7 @@
                     $scope.$apply();
                 } else {
                     if (resp) {
-                        $rootScope.showErrors('Failed');
+                        $rootScope.showErrors(resp.errors);
                     }
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -115,20 +100,20 @@
             //     }
             // }
             ctrl.selectAll = function(isSelectAll){
-                angular.forEach(ctrl.data, element => {
+                angular.forEach(ctrl.data.items, element => {
                     element.isActived = isSelectAll;
                 });
             };
             ctrl.selectChange = function(item){
                 if(ctrl.isSingle == 'true' && item.isActived){
-                    angular.forEach(ctrl.data, element => {
+                    angular.forEach(ctrl.data.items, element => {
                         element.isActived = false;
                     }); 
                     item.isActived = true;
                 }
             };
             ctrl.saveSelected = function(){
-                ctrl.selected = $rootScope.filterArray(ctrl.data, ['isActived'], [true]);
+                ctrl.selected = $rootScope.filterArray(ctrl.data.items, ['isActived'], [true]);
                 if(ctrl.save){
                     ctrl.save({selected: ctrl.selected});
                 }

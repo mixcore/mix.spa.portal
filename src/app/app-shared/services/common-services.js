@@ -254,7 +254,8 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                                 authService.authentication.token = null;
                                 authService.authentication.refresh_token = null;
                                 authService.referredUrl = $location.$$url;
-                                window.top.location.href = '/security/login';
+                                $rootScope.showLogin();
+                                // window.top.location.href = '/security/login';
                             });
                         }, function (err) {
 
@@ -264,14 +265,16 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                             authService.authentication.token = null;
                             authService.authentication.refresh_token = null;
                             authService.referredUrl = $location.$$url;
-                            window.top.location.href = '/security/login';
+                            $rootScope.showLogin();
+                            // window.top.location.href = '/security/login';
                             return t;
                         }
                         );
                     }
                     else if (error.status === 403) {
                         var t = { isSucceed: false, errors: ['Forbidden'] };
-                        window.top.location.href = '/security/login';
+                        $rootScope.showLogin();
+                        // window.top.location.href = '/security/login';
                         return t;
                     }
                     else {
@@ -284,7 +287,7 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                     }
                 });
         };
-        
+
         var _getRestApiResult = async function (req, serviceBase) {
             if (!authService.authentication) {
                 await authService.fillAuthData();
@@ -313,7 +316,7 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                     _initAllSettings();
                 }
 
-                return { isSucceed: true, data: resp.data};
+                return { isSucceed: true, data: resp.data };
             },
                 function (error) {
                     if (error.status === 401) {
@@ -321,14 +324,15 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                         return authService.refreshToken(authService.authentication.refresh_token).then(function () {
                             req.headers.Authorization = 'Bearer ' + authService.authentication.token;
                             return $http(req).then(function (results) {
-                                return { isSucceed: true, data: results.data};
+                                return { isSucceed: true, data: results.data };
                             }, function (err) {
 
                                 authService.logOut();
                                 authService.authentication.token = null;
                                 authService.authentication.refresh_token = null;
                                 authService.referredUrl = $location.$$url;
-                                window.top.location.href = '/security/login';
+                                $rootScope.showLogin();
+                                // window.top.location.href = '/security/login';
                             });
                         }, function (err) {
 
@@ -338,13 +342,14 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                             authService.authentication.token = null;
                             authService.authentication.refresh_token = null;
                             authService.referredUrl = $location.$$url;
-                            window.top.location.href = '/security/login';
+                            $rootScope.showLogin();
+                            // window.top.location.href = '/security/login';
                             return t;
                         }
                         );
                     }
                     else if (error.status === 200 || error.status === 204 || error.status === 205) {
-                        return { isSucceed: true, status: err.status, errors: [error.statusText || error.status] };                        
+                        return { isSucceed: true, status: err.status, errors: [error.statusText || error.status] };
                     }
                     else {
                         if (error.data) {

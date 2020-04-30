@@ -13,7 +13,7 @@ modules.component('attributeSetNavValues', {
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeDataPortalService', 'RestAttributeFieldClientService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeDataPortalService', 'RestAttributeFieldPortalService',
         function ($rootScope, $scope, ngAppSettings, navService, fieldService) {
             var ctrl = this;
             ctrl.selectedProp = null;
@@ -94,7 +94,7 @@ modules.component('attributeSetNavValues', {
                     });
             }
             ctrl.updateData = function (nav) {
-                $rootScope.goToPath(`${ctrl.updateUrl}?dataId=${nav.data.id}&attributeSetId=${nav.data.attributeSetId}&parentId=${ctrl.parentId}&parentType=1`)
+                $rootScope.goToPath(`${ctrl.updateUrl}?dataId=${nav.dataId}&attributeSetId=${nav.attributeSetId}&parentId=${ctrl.parentId}&parentType=1`)
                 // ctrl.refDataModel = nav;
                 // var e = $(".pane-form-" + ctrl.attributeValue.field.referenceId)[0];
                 // angular.element(e).triggerHandler('click');
