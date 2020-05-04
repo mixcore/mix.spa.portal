@@ -2,7 +2,7 @@
 app.factory('TemplateService', ['BaseRestService', 'CommonService',
     function (baseService, commonService) {
         var serviceFactory = Object.create(baseService);
-        serviceFactory.init('template/portal');
+        serviceFactory.init('template/portal', true);
         var _copy = async function (id) {
             var url = this.prefixUrl + '/copy/' + id;
             var req = {

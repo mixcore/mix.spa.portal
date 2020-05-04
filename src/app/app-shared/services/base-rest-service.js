@@ -30,6 +30,21 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             return await commonService.getRestApiResult(req);
         };
         
+        var _clearCache = async function (params = [], queries) {
+            var url = this.prefixUrl;
+            for (let i = 0; i < params.length; i++) {
+                if (params[i] != undefined && params[i] != null) {
+                    url += '/remove-cache/' + params[i];
+                }
+            }
+            var querystring = _parseQuery(queries);
+            var req = {
+                method: 'GET',
+                url: `${url}?${querystring}`
+            };
+            return await commonService.getRestApiResult(req);
+        };
+        
         var _getDefault = async function (queriesObj) {
             var url = `${this.prefixUrl}/default`;
             var querystring = _parseQuery(queriesObj);
@@ -154,6 +169,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
         serviceFactory.prefixUrl = '';
         serviceFactory.init = _init;
         serviceFactory.count = _count;
+        serviceFactory.clearCache = _clearCache;
         serviceFactory.getDefault = _getDefault;
         serviceFactory.getSingle = _getSingle;
         serviceFactory.getList = _getList;

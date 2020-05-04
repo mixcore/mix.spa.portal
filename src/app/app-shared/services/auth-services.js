@@ -266,8 +266,8 @@ app.factory('AuthService',
             };
 
             var _refreshToken = function (id) {
+                var deferred = $q.defer();
                 if (id) {
-                    var deferred = $q.defer();
                     var url = appSettings.serviceBase + '/api/' + appSettings.apiVersion + '/account/refresh-token/' + id;
                     $http.get(url).then(function (response) {
                         var data = response.data.data;
@@ -299,7 +299,7 @@ app.factory('AuthService',
                 }
                 else {
                     _logOut();
-                    deferred.reject(error);
+                    deferred.reject();
                 }
                 return deferred.promise;
             };

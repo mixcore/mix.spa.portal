@@ -84,7 +84,8 @@ paths.clientAppRequired = {
 paths.sharedApp = {
     src: [
         paths.webapp + "app-shared/**/*.js",
-        paths.webapp + "app-shared/**/*.*.js"
+        paths.webapp + "app-shared/**/*.*.js",
+        `${paths.nodeModules}/html2canvas/dist/html2canvas.min.js`
     ],
     dest: paths.webroot + "js/app-shared.min.js"
 };
@@ -97,11 +98,11 @@ paths.framework = {
         `${paths.nodeModules}angular-sanitize/angular-sanitize.min.js`,
         `${paths.nodeModules}angular-aria/angular-aria.min.js`,
         `${paths.nodeModules}angular-messages/angular-messages.min.js`,
-        `${paths.nodeModules}angular-material/angular-material.min.js`,        
+        // `${paths.nodeModules}angular-material/angular-material.min.js`,        
         `${paths.nodeModules}angular-local-storage/dist/angular-local-storage.min.js`,
-        `${paths.scriptLib}angularjs/**/*.js`,
-        `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
-        `${paths.scriptLib}clipboard.js-2.0.4/clipboard.min.js`
+        // `${paths.scriptLib}angularjs/**/*.js`,
+        // `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
+        // `${paths.scriptLib}clipboard.js-2.0.4/clipboard.min.js`
     ],
     dest: paths.webroot + "js/framework.min.js"
 };
@@ -185,7 +186,7 @@ paths.appCss = {
 };
 paths.appClientCss = {
     src: [
-        paths.webapp + "app-client/**/*.css",
+        paths.webapp + "app-client/components/**/*.css",
     ],
     dest: paths.webroot + "css/app-client.min.css"
 };

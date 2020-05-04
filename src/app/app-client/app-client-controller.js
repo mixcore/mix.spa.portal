@@ -8,6 +8,7 @@
                 $scope.lang = '';
                 $scope.isInit = false;
                 $scope.isLoaded = false;
+                $rootScope.user = null;
                 $scope.mediaFile = {
                     file: null,
                     fullPath: '',
@@ -60,7 +61,7 @@
                     $(document).on('click', 'a', function(e){                        
                         var href = $(this).attr('href');
                         var target = $(this).attr('target');
-                        if(href && href.indexOf('#') !== 0 && target!='_blank'){
+                        if(!$(this).hasClass('each-portfolio') && href && href.indexOf('#') !== 0 && target!='_blank'){
                             e.preventDefault();                            
                             $scope.$apply($scope.isBusy = true);
                             setTimeout(() => {

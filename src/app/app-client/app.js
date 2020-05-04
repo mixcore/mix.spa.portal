@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('MixClient', ['ngRoute', 'LocalStorageModule', 'components', 'ngFileUpload', 'angularCroppie', 
-    'cart', 'ngSanitize']);
+    'cart', 'ngSanitize', 'ngMaterial']);
 var serviceBase = '';
 var modules = angular.module('components', []);
 var cart = angular.module('cart', []);

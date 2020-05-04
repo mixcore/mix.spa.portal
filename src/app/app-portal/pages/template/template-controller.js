@@ -27,20 +27,37 @@ app.controller('TemplateController', ['$scope', '$rootScope', '$routeParams', '$
         }
         $scope.getSingle = async function () {
             $rootScope.isBusy = true;
-            var id = $routeParams.id || 0;
+            var id = $routeParams.id;
             $scope.folderType = $routeParams.folderType;// ? $routeParams.folderType : 'Masters';
             var themeId = $routeParams.themeId;
             $scope.listUrl = '/portal/template/list/' + themeId + '?folderType=' + encodeURIComponent($scope.folderType);
-            var resp = await service.getSingle([id], {folderType: $scope.folderType, themeId: themeId});
-            if (resp && resp.isSucceed) {
-                $scope.activedData = resp.data;
-                $rootScope.isBusy = false;
-                $scope.$apply();
+            if (id) {
+                var resp = await service.getSingle([id], { folderType: $scope.folderType, themeId: themeId });
+                if (resp && resp.isSucceed) {
+                    $scope.activedData = resp.data;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
+                else {
+                    if (resp) { $rootScope.showErrors(resp.errors); }
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
             }
             else {
-                if (resp) { $rootScope.showErrors(resp.errors); }
-                $rootScope.isBusy = false;
-                $scope.$apply();
+                var resp = await service.getDefault();
+                if (resp && resp.isSucceed) {
+                    resp.data.themeId = themeId;
+                    resp.data.folderType = $scope.folderType;
+                    $scope.activedData = resp.data;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
+                else {
+                    if (resp) { $rootScope.showErrors(resp.errors); }
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
             }
         };
         $scope.copy = async function (id) {

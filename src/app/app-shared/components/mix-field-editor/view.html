@@ -6,7 +6,7 @@
 <div ng-if="$ctrl.model && !$ctrl.field.isSelect" ng-init="$ctrl.initData()"
     class="form-group row">
     <div class="col-3">
-        <h6 class="control-label m-0" ng-if="$ctrl.isShowTitle=='true'"
+        <h6 class="control-label m-0"
             ng-bind="$ctrl.field.title || $ctrl.field.name"></h6>
         <div ng-switch="$ctrl.field.dataType">
             <small class="text-muted" ng-switch-when="0">

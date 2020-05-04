@@ -20,7 +20,7 @@
     float: left;
     display: none;
     font-size: 24px;
-    margin: 7px !important;
+    margin: 7px;
     color: #EC173A;
 }
 
@@ -105,9 +105,4 @@
 /* alertify styles */
 .alertify-cover {
     background: rgba(0,0,0,.8);
-}
-
-input[type='text'] {
-    padding: 10px !important;
-    height: auto !important;
 }

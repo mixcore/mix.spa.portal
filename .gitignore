@@ -238,3 +238,4 @@ ModelManifest.xml
 .paket/paket.exe
 # FAKE - F# Make
 .fake/
+/src/app/app-client/components/customs

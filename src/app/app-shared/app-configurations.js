@@ -543,6 +543,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         };
 
     }]);
-if ($.trumbowyg) {
+
+if(document.getElementsByTagName('trumbowyg').length){//  ($.trumbowyg) {
     $.trumbowyg.svgPath = '/assets/icons.svg';
 }

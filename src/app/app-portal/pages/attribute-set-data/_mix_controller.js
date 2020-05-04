@@ -173,7 +173,7 @@ app.controller('MixAttributeSetDataController',
                     $scope.request.attributeSetId = $routeParams.attributeSetId;
                 }
                 $scope.request.attributeSetName = $routeParams.attributeSetName;
-                $scope.request.filterType = $routeParams.filterType;
+                $scope.request.filterType = $routeParams.filterType || 'contain';
                 Object.keys($scope.queries).forEach(e => {
                     if ($scope.queries[e]) {
                         $scope.request[e] = $scope.queries[e];

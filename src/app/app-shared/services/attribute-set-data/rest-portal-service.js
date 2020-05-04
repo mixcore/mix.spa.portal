@@ -11,7 +11,25 @@ app.factory('RestAttributeSetDataPortalService', ['BaseRestService', 'CommonServ
         };
         return await commonService.getRestApiResult(req);
     };
+
+    var _export = async function (objData) {
+
+        var data = serviceFactory.parseQuery(objData);
+        var url = this.prefixUrl;
+
+        if (data) {
+            url += '/export?';
+            url = url.concat(data);
+        }
+        var req = {
+            method: 'GET',
+            url: url
+        };
+        return await commonService.getRestApiResult(req);
+    };
+
     serviceFactory.initData = _initData;
+    serviceFactory.export = _export;
     return serviceFactory;
 
 }]);
