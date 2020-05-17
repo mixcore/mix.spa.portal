@@ -10,25 +10,25 @@ app.controller('PermissionController',
                     title: 'Keyword',
                     name: 'textKeyword',
                     filter: true,
-                    type: 0 // string - ngAppSettings.dataTypes[0]
+                    type: 'string'
                 },
                 {
                     title: 'Default',
                     name: 'textDefault',
                     filter: true,
-                    type: 0// string - ngAppSettings.dataTypes[0]
+                    type: 'string'
                 },
                 {
                     title: 'Url',
                     name: 'url',
                     filter: true,
-                    type: 0 // string - ngAppSettings.dataTypes[0]
+                    type: 'string'
                 },
                 {
                     title: 'Created Date',
                     name: 'createdDateTime',
                     filter: true,
-                    type: 0 // string - ngAppSettings.dataTypes[0]
+                    type: 'string'
                 },
             ];
             $scope.initCurrentPath = async function(){

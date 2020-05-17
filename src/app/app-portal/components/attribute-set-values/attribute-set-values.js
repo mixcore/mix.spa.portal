@@ -1,37 +1,59 @@
-modules.component('navigationValues', {
-    templateUrl: '/app/app-portal/pages/navigation/components/navigation-values/view.html?v=2',
+modules.component('attributeSetValues', {
+    templateUrl: '/app/app-portal/components/attribute-set-values/attribute-set-values.html?v=2',
     bindings: {
         header: '=',
         data: '=',
         canDrag: '=',
+        attributeSetName: '=?',
+        attributeSetId: '=?',
         queries: '=?',
         filterType: '=?',
         selectedList: '=',
-        columns: '=?',
+        selectSingle: '=?',
+        fields: '=?',
         onFilterList: '&?',
         onApplyList: '&?',
         onSendMail: '&?',
         onUpdate: '&?',
         onDelete: '&?',
     },
-    controller: ['$rootScope', '$scope', 'RestAttributeSetPortalService',
-        function ($rootScope, $scope, dataService) {
+    controller: ['$rootScope', '$scope', 'RestAttributeFieldPortalService', 'RestAttributeSetDataPortalService',
+        function ($rootScope, $scope, fieldService, dataService) {
             var ctrl = this;
-            ctrl.selectedList = {
-                action: 'Delete',
-                data: []
-            };
             ctrl.actions = ['Delete', 'SendMail'];
             ctrl.filterTypes = ['contain', 'equal'];
-
-            ctrl.selectedProp = null;            
+            ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.select = function (id, isSelected) {
-                if (isSelected) {
-                    ctrl.selectedList.data.push(id);
+            ctrl.$onInit = async function () {
+                if (!ctrl.selectedList) {
+                    ctrl.selectedList = {
+                        action: 'Delete',
+                        data: []
+                    };
+                }
+                if (!ctrl.fields) {
+                    var getFields = await fieldService.initData(ctrl.attributeSetName || ctrl.attributeSetId);
+                    if (getFields.isSucceed) {
+                        ctrl.fields = getFields.data;
+                        $scope.$apply();
+                    }
+                }
+            };
+            ctrl.select = function (item) {
+                if (item.isSelected) {
+                    if (ctrl.selectSingle == 'true') {
+                        ctrl.selectedList.data = [];
+                        ctrl.selectedList.data.push(item);
+                    }
+                    else {
+                        var current = $rootScope.findObjectByKey(ctrl.selectedList, 'id', item.id);
+                        if (!current) {
+                            ctrl.selectedList.data.push(item);
+                        }
+                    }
                 }
                 else {
-                    $rootScope.removeObject(ctrl.selectedList.data, id);
+                    $rootScope.removeObject(ctrl.selectedList, item.id);
                 }
             };
             ctrl.selectAll = function (isSelected) {
@@ -47,7 +69,7 @@ modules.component('navigationValues', {
             ctrl.filter = function () {
             };
             ctrl.sendMail = async function (data) {
-                ctrl.onSendMail({data: data});
+                ctrl.onSendMail({ data: data });
             };
             ctrl.apply = async function () {
                 ctrl.onApplyList();

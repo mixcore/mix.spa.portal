@@ -6,19 +6,19 @@ app.component('pageGeneral', {
         ctrl.dataTypes = [
             {
                 title: 'String',
-                value:0
+                value:'text'
             },
             {
                 title: 'Int',
-                value: 1
+                value: 'int'
             },
             {
                 title: 'Image',
-                value: 2
+                value: 'image'
             },
             {
                 title: 'Boolean',
-                value: 7
+                value: 'boolean'
             }
         ];
         ctrl.configurations = {

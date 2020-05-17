@@ -37,16 +37,16 @@ modules.component('attributeValueEditor', {
                     ctrl.initDefaultValue();
                 }
                 switch (ctrl.attributeValue.dataType) {
-                    case 1:
-                    case 2:
-                    case 3:                        
+                    case 'datetime':
+                    case 'date':
+                    case 'time':                        
                         if (ctrl.attributeValue.dateTimeValue) {
                             var local = $filter('utcToLocalTime')(ctrl.attributeValue.dateTimeValue);
                             ctrl.attributeValue.dateObj = new Date(local);
                             $scope.$apply();
                         }
                         break;
-                    case 23: // reference
+                    case 'reference': // reference
                         if(ctrl.attributeValue.field.referenceId && ctrl.parentId){
                             ctrl.attributeValue.integerValue = ctrl.attributeValue.field.referenceId;
                             navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default', ctrl.attributeValue.field.referenceId]).then(resp=>{
@@ -76,21 +76,21 @@ modules.component('attributeValueEditor', {
         };
         ctrl.initDefaultValue = async function () {
             switch (ctrl.attributeValue.dataType) {
-                case 1:
-                case 2:
-                case 3:
+                case 'datetime':
+                case 'date':
+                case 'time':
                     if (ctrl.attributeValue.field.defaultValue) {
                         ctrl.attributeValue.dateObj = new Date(ctrl.attributeValue.field.defaultValue);
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.field.defaultValue;
                     }
                     break;
-                case 6:
+                case 'double':
                     if (ctrl.attributeValue.field.defaultValue) {
                         ctrl.attributeValue.doubleValue = parseFloat(ctrl.attributeValue.field.defaultValue);
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.field.defaultValue;
                     }
                     break;
-                case 18:
+                case 'boolean':
                     if (ctrl.attributeValue.field.defaultValue) {
                         ctrl.attributeValue.booleanValue = ctrl.attributeValue.field.defaultValue =='true';
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.field.defaultValue;
@@ -106,20 +106,20 @@ modules.component('attributeValueEditor', {
         };
         ctrl.updateStringValue = async function (dataType) {
             switch (dataType) {
-                case 1:
-                case 2:
-                case 3:
+                case 'datetime':
+                case 'date':
+                case 'time':
                     if (ctrl.attributeValue.dateObj) {
                         ctrl.attributeValue.dateTimeValue = ctrl.attributeValue.dateObj.toISOString();
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.dateTimeValue;
                     }
                     break;
-                case 6:
+                case 'double':
                     if (ctrl.attributeValue.doubleValue) {
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.doubleValue.toString();
                     }
                     break;
-                case 18:
+                case 'boolean':
                     if (ctrl.attributeValue.booleanValue != null) {
                         ctrl.attributeValue.stringValue = ctrl.attributeValue.booleanValue.toString();
                     }

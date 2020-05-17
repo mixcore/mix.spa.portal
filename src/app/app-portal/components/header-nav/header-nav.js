@@ -27,6 +27,7 @@
                 };
                 ctrl.logOut = function () {
                     $rootScope.logOut();
+                    window.top.location = "/security/login";
                 };
                 ctrl.addFavorite = function () {
                     $('#dlg-favorite').modal('show');

@@ -8,13 +8,13 @@ app.controller('ModalPostController', [
                 title: 'Title',
                 name: 'title',
                 filter: true,
-                type: 0 // string - ngAppSettings.dataTypes[7]
+                type: 'string'
             },           
             {
                 title: 'Url',
                 name: 'imageUrl',
                 filter: true,
-                type: 16 // string - ngAppSettings.dataTypes[7]
+                type: 'upload'
             },
         ];
     }

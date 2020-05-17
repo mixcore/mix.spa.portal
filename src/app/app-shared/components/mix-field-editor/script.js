@@ -34,16 +34,16 @@ modules.component('mixFieldEditor', {
         ctrl.initData = async function(){
             setTimeout(() => {                                
                 switch (ctrl.field.dataType) {
-                    case 1:
-                    case 2:
-                    case 3:                        
+                    case 'datetime':
+                    case 'date':
+                    case 'time':
                         if (ctrl.model[ctrl.field.name]) {
                             var local = $filter('utcToLocalTime')(ctrl.model[ctrl.field.name]);
                             ctrl.model[ctrl.field.name] = new Date(local);
                             $scope.$apply();
                         }
                         break;
-                    case 23: // reference
+                    case 'reference': // reference
                         // if(ctrl.field.referenceId && ctrl.model.id){
                         //     ctrl.model[ctrl.field.name] = ctrl.field.referenceId;
                         //     navService.getSingle(['default']).then(resp=>{
@@ -73,19 +73,19 @@ modules.component('mixFieldEditor', {
         };
         ctrl.initDefaultValue = async function () {
             switch (ctrl.field.dataType) {
-                case 1:
-                case 2:
-                case 3:
+                case 'datetime':
+                case 'date':
+                case 'time':
                     if (ctrl.field.defaultValue) {
                         ctrl.model[ctrl.field.name] = new Date(ctrl.attributeValue.field.defaultValue);
                     }
                     break;
-                case 6:
+                case 'double':
                     if (ctrl.field.defaultValue) {
                         ctrl.model[ctrl.field.name] = parseFloat(ctrl.attributeValue.field.defaultValue);
                     }
                     break;
-                case 18:
+                case 'boolean':
                     if (ctrl.field.defaultValue) {
                         ctrl.model[ctrl.field.name] = ctrl.attributeValue.field.defaultValue =='true';
                     }

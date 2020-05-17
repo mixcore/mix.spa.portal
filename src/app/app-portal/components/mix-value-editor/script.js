@@ -19,21 +19,21 @@ modules.component('mixValueEditor', {
         ctrl.initData = async function(){
             setTimeout(() => {
                 switch (ctrl.type) {
-                    case 1:
-                    case 2:
-                    case 3:
+                    case 'datetime':
+                    case 'date':
+                    case 'time':
                         if (ctrl.stringValue) {
                             ctrl.dateObj = new Date(ctrl.stringValue);
                             $scope.$apply();
                         }
                         break;
-                    case 18:
+                    case 'boolean':
                         if (ctrl.stringValue) {
                             ctrl.booleanValue = ctrl.stringValue =='true';
                         }
                         break;
 
-                    case 23: // reference
+                    case 'reference': // reference
                         if(ctrl.referenceId){
                             ctrl.refRequest.attributeSetId = ctrl.referenceId;
                             ctrl.refRequest.parentType = ctrl.parentType;
@@ -68,9 +68,9 @@ modules.component('mixValueEditor', {
         };
         ctrl.updateStringValue = async function (dataType) {
             switch (dataType) {
-                case 1:
-                case 2:
-                case 3:
+                case 'datetime':
+                case 'date':
+                case 'time':
                     if (ctrl.dateObj!=null) {
                         ctrl.stringValue = ctrl.dateObj.toISOString();
                     }
@@ -78,10 +78,10 @@ modules.component('mixValueEditor', {
                         ctrl.stringValue = null;
                     }
                     break;
-                case 6:
+                case 'double':
                     // ctrl.stringValue = ctrl.doubleValue;
                     break;
-                case 18:
+                case 'boolean':
                     // ctrl.stringValue = ctrl.booleanValue;
                     break;
 

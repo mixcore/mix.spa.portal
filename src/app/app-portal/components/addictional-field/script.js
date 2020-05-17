@@ -35,7 +35,7 @@ modules.component('addictionalField', {
                         //reset field option
                         ctrl.field.title = '';
                         ctrl.field.name = '';
-                        ctrl.field.dataType = 7;
+                        ctrl.field.dataType = 'text';
                     }
                 }
                 else {

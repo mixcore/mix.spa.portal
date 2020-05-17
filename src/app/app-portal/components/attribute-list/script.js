@@ -43,38 +43,38 @@ modules.component('attributeList', {
                     label.setAttribute('ng-bind', '{{data.title}}');
 
                     switch (e.dataType) {
-                        case 1:
+                        case 'datetime':
                             el = document.createElement('input');
                             el.setAttribute('type', 'datetime-local');
                             break;
 
-                        case 2:
+                        case 'date':
                             el = document.createElement('input');
                             el.setAttribute('type', 'date');
                             break;
 
-                        case 3:
+                        case 'time':
                             el = document.createElement('input');
                             el.setAttribute('type', 'time');
                             break;
 
-                        case 5:
+                        case 'phonenumber':
                             el = document.createElement('input');
                             el.setAttribute('type', 'tel');
                             break;
 
-                        case 6:
+                        case 'number':
                             el = document.createElement('input');
                             el.setAttribute('type', 'number');
                             break;
 
-                        case 8:
+                        case 'html':
                             el = document.createElement('trumbowyg');
                             el.setAttribute('options', '{}');
                             el.setAttribute('type', 'number');
                             break;
 
-                        case 9:
+                        case 'textarea':
                             el = document.createElement('textarea');
                             break;
 

@@ -2,7 +2,7 @@
 app.controller('NavigationController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'MixRestAttributeSetPortalService', 'RestRelatedAttributeSetPortalService', 'CommonService',
+        'RestAttributeSetDataPortalService', 'RestRelatedAttributeSetPortalService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, navService, commonService) {
             BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

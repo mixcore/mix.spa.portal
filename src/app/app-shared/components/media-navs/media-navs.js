@@ -8,7 +8,7 @@ app.component('mediaNavs', {
         ctrl.request = {
             pageSize: '10',
             pageIndex: 0,
-            status: '2',
+            status: 'Published',
             orderBy: 'CreatedDateTime',
             direction: '1',
             fromDate: null,

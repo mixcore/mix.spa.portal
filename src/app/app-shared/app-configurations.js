@@ -9,7 +9,7 @@ app.constant('ngAppSettings', {
     request: {
         pageSize: '20',
         pageIndex: 0,
-        status: '2',
+        status: 'Published',
         orderBy: 'CreatedDateTime',
         direction: '1',
         fromDate: null,
@@ -21,7 +21,7 @@ app.constant('ngAppSettings', {
     restRequest: {
         pageSize: '20',
         pageIndex: 0,
-        status: '2',
+        status: 'Published',
         orderBy: 'CreatedDateTime',
         direction: '1',
         fromDate: null,
@@ -39,22 +39,19 @@ app.constant('ngAppSettings', {
         '15',
         '20'
     ],
-    directions: [
-        {
-            value: '0',
+    directions: [{
+            value: 'Asc',
             title: 'Asc'
         },
         {
-            value: '1',
+            value: 'Desc',
             title: 'Desc'
         }
     ],
-    orders: [
-        {
+    orders: [{
             value: 'CreatedDateTime',
             title: 'Created Date'
-        }
-        ,
+        },
         {
             value: 'Priority',
             title: 'Priority'
@@ -72,31 +69,112 @@ app.constant('ngAppSettings', {
         'Draft',
         'Schedule'
     ],
-    dataTypes: [
-        { title: 'Custom', value: 0 },
-        { title: 'DateTime', value: 1 },
-        { title: 'Date', value: 2 },
-        { title: 'Time', value: 3 },
-        { title: 'Duration', value: 4 },
-        { title: 'PhoneNumber', value: 5 },
-        { title: 'Currency', value: 6 },
-        { title: 'Text', value: 7 },
-        { title: 'Html', value: 8 },
-        { title: 'MultilineText', value: 9 },
-        { title: 'EmailAddress', value: 10 },
-        { title: 'Password', value: 11 },
-        { title: 'Url', value: 12 },
-        { title: 'ImageUrl', value: 13 },
-        { title: 'CreditCard', value: 14 },
-        { title: 'PostalCode', value: 15 },
-        { title: 'Upload', value: 16 },
+    dataTypes: [{
+            title: 'Custom',
+            value: 'Custom'
+        },
+        {
+            title: 'DateTime',
+            value: 'DateTime'
+        },
+        {
+            title: 'Date',
+            value: 'Date'
+        },
+        {
+            title: 'Time',
+            value: 'Time'
+        },
+        {
+            title: 'Duration',
+            value: 'Duration'
+        },
+        {
+            title: 'Phone Number',
+            value: 'PhoneNumber'
+        },
+        {
+            title: 'Currency',
+            value: 'Currency'
+        },
+        {
+            title: 'Text',
+            value: 'Text'
+        },
+        {
+            title: 'Html',
+            value: 'Html'
+        },
+        {
+            title: 'Multiline Text',
+            value: 'MultilineText'
+        },
+        {
+            title: 'Email Address',
+            value: 'EmailAddress'
+        },
+        {
+            title: 'Password',
+            value: 'Password'
+        },
+        {
+            title: 'Url',
+            value: 'Url'
+        },
+        {
+            title: 'Image Url',
+            value: 'ImageUrl'
+        },
+        {
+            title: 'Credit Card',
+            value: 'CreditCard'
+        },
+        {
+            title: 'PostalCode',
+            value: 'PostalCode'
+        },
+        {
+            title: 'Upload',
+            value: 'Upload'
+        },
+        {
+            title: 'Color',
+            value: 'Color'
+        },
+        {
+            title: 'Boolean',
+            value: 'Boolean'
+        },
+        {
+            title: 'Icon',
+            value: 'Icon'
+        },
+        {
+            title: 'Video Youtube',
+            value: 'VideoYoutube'
+        },
+        {
+            title: 'Tui Editor',
+            value: 'TuiEditor'
+        },
+        {
+            title: 'Integer',
+            value: 'Integer'
+        },
+        {
+            title: 'QR Code',
+            value: 'QRCode'
+        },
+        {
+            title: 'Reference',
+            value: 'Reference'
+        }
 
-    ]
-    , icons: []
+    ],
+    icons: []
 });
 app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
-    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, baseRestService, commonService, authService, translatorService,
-    ) {
+    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, baseRestService, commonService, authService, translatorService, ) {
         $rootScope.currentContext = $rootScope;
         $rootScope.isBusy = false;
         $rootScope.translator = translatorService;
@@ -151,7 +229,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         $rootScope.generatePhone = function (src) {
             return src.replace(/^([0-9]{3})([0-9]{3})([0-9]{4})$/, '($1) $2-$3');
         }
-        $rootScope.parseUnsignString = function(str) {
+        $rootScope.parseUnsignString = function (str) {
             str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
             str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
             str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
@@ -169,7 +247,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
             return str;
         }
         $rootScope.logOut = function () {
-            authService.logOut();            
+            authService.logOut();
         };
 
         $rootScope.updateSettings = function () {
@@ -192,8 +270,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
             }
         };
 
-        $rootScope.showConfirm = function (context, okFuncName, okArgs, cancelFuncName, title, msg
-            , cancelArgs, lblOK, lblCancel) {
+        $rootScope.showConfirm = function (context, okFuncName, okArgs, cancelFuncName, title, msg, cancelArgs, lblOK, lblCancel) {
             $rootScope.confirmMessage = {
                 title: title,
                 content: msg,
@@ -205,7 +282,16 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 lblOK: lblOK ? lblOK : 'OK',
                 lblCancel: lblCancel ? lblCancel : 'Cancel'
             };
-            $('#dlg-confirm-msg').modal('show');
+
+            var parentEl = angular.element(document.body);
+            $mdDialog.show({
+                parent: parentEl,
+                templateUrl: '/app/app-shared/components/modal-confirm/modal-confirm.html',
+                controller: ModalConfirmController,
+                locals: {
+                    message: $rootScope.confirmMessage
+                }
+            });
         };
 
         $rootScope.preview = function (type, data, title, size, objClass) {
@@ -227,8 +313,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                     var editor = ace.edit(e);
                     if (container.hasClass('json')) {
                         editor.session.setMode("ace/mode/json");
-                    }
-                    else {
+                    } else {
                         editor.session.setMode("ace/mode/razor");
                     }
                     editor.setTheme("ace/theme/chrome");
@@ -252,8 +337,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 $.each(errors, function (i, e) {
                     $rootScope.showMessage(e, 'danger');
                 });
-            }
-            else {
+            } else {
                 $rootScope.showMessage('Server Errors', 'danger');
             }
         };
@@ -262,8 +346,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
             if (data) {
                 if (max < data.length) {
                     return data.replace(/[+]/g, ' ').substr(0, max) + ' ...';
-                }
-                else {
+                } else {
                     return data.replace(/[+]/g, ' ');
                 }
             }
@@ -276,13 +359,13 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 message: $rootScope.translate(content)
 
             }, {
-                    type: type,
-                    timer: 2000,
-                    placement: {
-                        from: from,
-                        align: align
-                    }
-                });
+                type: type,
+                timer: 2000,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
         };
         $rootScope.encrypt = function (message) {
             var keySize = 256;
@@ -328,13 +411,15 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 options);
             return decrypted.toString(CryptoJS.enc.Utf8);
         }
-        
+
         $rootScope.ajaxSubmitForm = async function (form, url) {
             var req = {
                 serviceBase: this.serviceBase,
                 method: 'POST',
                 url: url,
-                headers: { 'Content-Type': undefined },
+                headers: {
+                    'Content-Type': undefined
+                },
                 contentType: false, // Not to set any content header
                 processData: false, // Not to process data
                 data: form
@@ -345,8 +430,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         $rootScope.translate = function (keyword, isWrap, defaultText) {
             if ($rootScope.globalSettings && ($rootScope.translator)) {
                 return $rootScope.translator.get(keyword, isWrap, defaultText) || keyword;
-            }
-            else {
+            } else {
                 return keyword || defaultText;
             }
         };
@@ -354,8 +438,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         $rootScope.getConfiguration = function (keyword, isWrap, defaultText) {
             if ($rootScope.globalSettings && ($rootScope.globalSettingsService || $rootScope.isBusy)) {
                 return $rootScope.globalSettingsService.get(keyword, isWrap, defaultText);
-            }
-            else {
+            } else {
                 return keyword || defaultText;
             }
         };
@@ -367,8 +450,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                         $rootScope.waitForInit(functionName, args, scope);
                     }, 200);
                 }
-            }
-            else {
+            } else {
                 $rootScope.executeFunctionByName(functionName, args, scope);
             }
         }
@@ -379,9 +461,9 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 $rootScope.errors = [];
             }
         });
-        $rootScope.generateUUID = function() { // Public Domain/MIT
+        $rootScope.generateUUID = function () { // Public Domain/MIT
             var d = new Date().getTime();
-            if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+            if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
                 d += performance.now(); //use high-precision timer if available
             }
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -400,60 +482,60 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                         break;
                     }
                 }
-                if(matched){
+                if (matched) {
                     result.push(array[i]);
                 }
             }
             return result;
         };
         $rootScope.findObjectByKey = function (array, key, value) {
-            if(Array.isArray(key)){
+            if (Array.isArray(key)) {
                 for (var i = 0; i < array.length; i++) {
                     var isMatch = true;
-                    angular.forEach(key, function(e,j){
+                    angular.forEach(key, function (e, j) {
                         isMatch = array[i][key[j]] == value[j];
                     });
-                    if(isMatch){
+                    if (isMatch) {
                         return array[i];
                     }
                 }
-            }else{
+            } else {
                 for (var i = 0; i < array.length; i++) {
                     if (array[i][key] == value) {
                         return array[i];
                     }
                 }
-            }            
+            }
             return null;
         }
         $rootScope.removeObjectByKey = function (array, key, value) {
-            if(Array.isArray(key)){
+            if (Array.isArray(key)) {
                 for (var i = 0; i < array.length; i++) {
                     var isMatch = true;
-                    angular.forEach(key, function(e,j){
+                    angular.forEach(key, function (e, j) {
                         isMatch = array[i][key[j]] == value[j];
                     });
-                    if(isMatch){
-                        array.splice(i,1);
+                    if (isMatch) {
+                        array.splice(i, 1);
                         break;
                     }
                 }
-            }else{
+            } else {
                 for (var i = 0; i < array.length; i++) {
                     if (array[i][key] == value) {
-                        array.splice(i,1);
+                        array.splice(i, 1);
                         break;
                     }
                 }
             }
             for (var i = 0; i < array.length; i++) {
                 if (array[i][key] == value) {
-                    array.splice(i,1);
+                    array.splice(i, 1);
                     break;
                 }
             }
         }
-        
+
         $rootScope.changeLang = async function (lang) {
             var url = await translatorService.translateUrl(lang);
             translatorService.translateUrl(lang);
@@ -463,7 +545,10 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         $rootScope.upload = function (file, url) {
             Upload.upload({
                 url: 'upload/url',
-                data: { file: file, 'username': $scope.username }
+                data: {
+                    file: file,
+                    'username': $scope.username
+                }
             }).then(function (resp) {
                 console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
             }, function (resp) {
@@ -473,19 +558,19 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };
-        $rootScope.goToSiteUrl = function(url){
+        $rootScope.goToSiteUrl = function (url) {
             window.top.location = url;
         };
-        $rootScope.goToPath = function(url){
+        $rootScope.goToPath = function (url) {
             $rootScope.isBusy = true;
             $location.url(url);
         };
-        $rootScope.encryptAttributeSet = function(attributes, data){
-            angular.forEach(attributes, function(attr){
-                if(attr.isEncrypt){
-                    angular.forEach(data, function(item){
+        $rootScope.encryptAttributeSet = function (attributes, data) {
+            angular.forEach(attributes, function (attr) {
+                if (attr.isEncrypt) {
+                    angular.forEach(data, function (item) {
                         var fieldData = $rootScope.findObjectByKey(item.data, 'attributeName', attr.name);
-                        if(fieldData){
+                        if (fieldData) {
                             var encryptedData = $rootScope.encrypt(fieldData.stringValue);
                             fieldData.encryptValue = encryptedData.data;
                             fieldData.encryptKey = encryptedData.key;
@@ -495,40 +580,39 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
                 }
             });
         };
-        $rootScope.decryptAttributeSet = function(attributes, data){
-            angular.forEach(attributes, function(attr){
-                if(attr.isEncrypt){
-                    angular.forEach(data, function(item){
+        $rootScope.decryptAttributeSet = function (attributes, data) {
+            angular.forEach(attributes, function (attr) {
+                if (attr.isEncrypt) {
+                    angular.forEach(data, function (item) {
                         var fieldData = $rootScope.findObjectByKey(item.data, 'attributeName', attr.name);
-                        if(fieldData){
+                        if (fieldData) {
                             var encryptedData = {
                                 key: fieldData.encryptKey,
                                 data: fieldData.encryptValue
                             };
-                            fieldData.stringValue =  $rootScope.decrypt(encryptedData);;
+                            fieldData.stringValue = $rootScope.decrypt(encryptedData);;
                         }
                     });
                 }
             });
         };
-        $rootScope.testJSON = function (obj) { 
-            if(typeof obj === "object" && obj !== null){
+        $rootScope.testJSON = function (obj) {
+            if (typeof obj === "object" && obj !== null) {
                 return obj;
             }
-            if (typeof obj !== "string") { 
-                return false; 
-            } 
+            if (typeof obj !== "string") {
+                return false;
+            }
             try {
-                return  JSON.parse(obj); 
-            } catch (error) { 
-                return false; 
-            } 
+                return JSON.parse(obj);
+            } catch (error) {
+                return false;
+            }
         };
-        $rootScope.getRestService = function(modelName, isGlobal, lang)
-        {
+        $rootScope.getRestService = function (modelName, isGlobal, lang) {
             var serviceFactory = angular.copy(baseRestService);
             serviceFactory.init(modelName, isGlobal, lang);
-            return serviceFactory;            
+            return serviceFactory;
         };
         $rootScope.showLogin = function (ev) {
             $rootScope.isBusy = false;
@@ -542,8 +626,9 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
             });
         };
 
-    }]);
+    }
+]);
 
-if(document.getElementsByTagName('trumbowyg').length){//  ($.trumbowyg) {
+if (document.getElementsByTagName('trumbowyg').length) { //  ($.trumbowyg) {
     $.trumbowyg.svgPath = '/assets/icons.svg';
 }

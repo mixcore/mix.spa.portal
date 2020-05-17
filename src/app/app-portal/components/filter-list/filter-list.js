@@ -21,7 +21,7 @@ modules.component('filterList', {
             }
             angular.forEach(statuses, function(val,i){
                 ctrl.statuses.push({
-                    value:i,
+                    value:val,
                     title:val
                 });
             });

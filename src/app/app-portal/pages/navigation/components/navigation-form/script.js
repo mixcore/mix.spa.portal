@@ -11,8 +11,8 @@ modules.component('navigationForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
-        function ($rootScope, $scope, $routeParams, service, fieldService) {
+    controller: ['$rootScope', '$scope', '$routeParams', '$mdDialog', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
+        function ($rootScope, $scope, $routeParams,  $mdDialog, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
@@ -90,12 +90,22 @@ modules.component('navigationForm', {
             ctrl.reload = async function () {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
-            ctrl.loadSelected = function (data, type) {
+            ctrl.showContentFilter = function($event) {
+                var parentEl = angular.element(document.body);
+                $mdDialog.show({
+                  parent: parentEl,
+                  targetEvent: $event,
+                  templateUrl: '/app/app-portal/components/modal-content-filter/modal-content-filter.html',
+                  controller: ModalContentFilterController,
+                  locals: { callback: ctrl.loadSelected }
+               });
+             }
+            ctrl.loadSelected = function (data) {
                 if (data) {
-                    ctrl.attrData.data.id = data.id;
-                    ctrl.attrData.data.title = data.title;
-                    ctrl.attrData.data.type = type;
-                    ctrl.attrData.data.uri = data.detailsUrl;
+                    ctrl.attrData.obj.id = data.nav.id;
+                    ctrl.attrData.obj.title = data.nav.title;
+                    ctrl.attrData.obj.type = data.type;
+                    ctrl.attrData.obj.uri = data.nav.detailsUrl;
                 }
             };
             ctrl.submit = async function () {

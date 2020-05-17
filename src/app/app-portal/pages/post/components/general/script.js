@@ -13,7 +13,7 @@ app.component('postGeneral', {
                 title: '',
                 name: '',
                 value: null,
-                dataType: '7'
+                dataType: 'text'
             });
         };        
     }],

@@ -1,13 +1,14 @@
 <div class="card border-left-0 border-bottom-0 border-right-0">
-    <div class="card-header py-1">
+    <div class="card-header py-1" ng-if="$ctrl.data.length">
         <span ng-bind="$ctrl.header"></span>
         <div class="row">
-            <div class="col-md-1">
+            <!-- <div class="col-md-1">
                 <input type="checkbox" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.selectedList.isSelectAll)" />
-            </div>
-            <div ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index" ng-if="$index < 3"
-                class="col-md-2">
+            </div> -->
+            <div ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index" 
+                ng-if="$index < 4 && col.dataType != 'Reference'"
+                class="col-md-2" ng-if="">                
                 <div class="input-group input-group-xs">
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-search"></i></div>
@@ -40,27 +41,26 @@
                 dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedItem === item}"
                 class="border-bottom attr-set-value-item">
                 <dnd-nodrag class="row">
-                    <div class="col-md- form-inline">
+                    <!-- <div  class="col-md-1 form-inline">
                         <small dnd-handle class="fa fa-grip-vertical text-black-50 mr-2" style="cursor:grab;"></small>
-                        <input type="checkbox" ng-model="item.isSelected" ng-change="$ctrl.select(item)" />
-                        <small>
+                        <small class="d-none">
                             <input class="ml-1 border-0 p-0 text-center text-black-50" style="width: 25px;"
                                 ng-model="item.priority" />
                         </small>
-                    </div>
-                    <div ng-if="$index < 3" ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
+                    </div> -->
+                    <div ng-if="$index < 4 && field.dataType != 'Reference'" ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
                         class="col-md-2 py-2">
                         <mix-field-preview model="item.obj[field.name]" field="field"></mix-field-preview>
                     </div>
                     <!-- <div class="col-md-2">
-                        <small class="text-black-50 align-middle" ng-bind="item.createdBy">
-                        </small>
-                    </div> -->
-                    <div class="col-md-2">
+                                <small class="text-black-50 align-middle" ng-bind="item.createdBy">
+                                </small>
+                            </div> -->
+                    <div class="col-md-2">                        
                         <small class="text-black-50 align-middle" ng-bind="item.createdDateTime | utcToLocal">
                         </small>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col">
                         <div class="btn-group btn-group-sm float-right">
                             <!-- <a ng-click="$ctrl.sendMail(item)" class="btn btn-link text-primary">
                                         <span class="fa fa-envelope"></span>

@@ -11,7 +11,7 @@ app.filter('utcToLocal', FilterUtcDate)
         request: {
             pageSize: '20',
             pageIndex: 0,
-            status: '2',
+            status: 'Published',
             orderBy: 'CreatedDateTime',
             direction: '1',
             fromDate: null,

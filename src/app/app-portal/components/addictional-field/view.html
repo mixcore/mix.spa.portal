@@ -39,12 +39,12 @@
                         </select>
                     </div>
                     <div class="form-groupx col-md-3">
-                        <div class="" ng-if="col.field.dataType != 23">
+                        <div class="" ng-if="col.field.dataType != 'reference'">
                             <small class="control-label">Value</small>
                             <mix-value-editor string-value="col.field.defaultValue" type="col.field.dataType">
                             </mix-value-editor>
                         </div>
-                        <div ng-if="col.field.dataType == 23">
+                        <div ng-if="col.field.dataType == 'reference'">
                             <small>
                                 Attribute
                                 [ <a ng-click="$ctrl.showReferences(col)" class="btn-link text-primary">Select</a> ]
@@ -98,6 +98,13 @@
                             <input type="checkbox" class="custom-control-input" ng-model="col.field.isSelect"
                                 id="{{'select_' + $index}}">
                             <label class="custom-control-label" for="{{'select_' + $index}}">
+                                Select
+                            </label>
+                        </div>
+                        <div class="scustom-control custom-switch mx-2">
+                            <input type="checkbox" class="custom-control-input" ng-model="col.field.isMultiple"
+                                id="{{'multiple_' + $index}}">
+                            <label class="custom-control-label" for="{{'multiple_' + $index}}">
                                 Select
                             </label>
                         </div>
