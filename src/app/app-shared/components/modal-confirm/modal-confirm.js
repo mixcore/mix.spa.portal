@@ -1,10 +1,10 @@
-﻿modules.component('modalConfirm', {
-    templateUrl: '/app/app-shared/components/modal-confirm/modal-confirm.html',
-    controller: ModalConfirmController,
-    bindings: {
-        message: '='
-    }
-});
+﻿// modules.component('modalConfirm', {
+//     templateUrl: '/app/app-shared/components/modal-confirm/modal-confirm.html',
+//     controller: ModalConfirmController,
+//     bindings: {
+//         message: '='
+//     }
+// });
 function ModalConfirmController ($rootScope, $scope, $mdDialog, message) {
     $scope.message = message;
     $scope.executeFunctionByName = async function (functionName, args, context) {
