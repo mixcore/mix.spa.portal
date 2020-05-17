@@ -22,13 +22,19 @@
             ctrl.initModuleForm = async function () {
                 var resp = null;
                 if (!$rootScope.isInit) {
-                    setTimeout(function () { ctrl.initModuleForm(); }, 500);
+                    setTimeout(function () {
+                        ctrl.initModuleForm();
+                    }, 500);
                 } else {
                     if (!ctrl.moduleId) {
                         resp = await moduleDataService.initModuleForm(ctrl.name);
-                    }
-                    else {
-                        resp = await moduleDataService.getSingle([ctrl.d]);
+                    } else {
+                        if (ctrl.d) {
+                            resp = await moduleDataService.getSingle([ctrl.d]);
+                        }
+                        else{
+                            resp = await moduleDataService.initForm(ctrl.moduleId);
+                        }
                     }
                     if (resp && resp.isSucceed) {
                         ctrl.data = resp.data;
@@ -37,9 +43,10 @@
                         ctrl.data.categoryId = ctrl.categoryId;
                         $rootScope.isBusy = false;
                         $scope.$apply();
-                    }
-                    else {
-                        if (resp) { $rootScope.showErrors(resp.errors); }
+                    } else {
+                        if (resp) {
+                            $rootScope.showErrors(resp.errors);
+                        }
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     }
@@ -55,25 +62,22 @@
                     //$rootScope.initEditor();
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                }
-                else {
+                } else {
                     $rootScope.showErrors(response.errors);
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }
             };
-            ctrl.submitFormData = async function(){
-                if($('.g-recaptcha').length>0)
-                {
-                    
-                }
-                else{
+            ctrl.submitFormData = async function () {
+                if ($('.g-recaptcha').length > 0) {
+
+                } else {
                     ctrl.saveModuleData();
                 }
             }
             ctrl.saveModuleData = async function () {
                 var form = $('#module-' + ctrl.data.moduleId);
-                
+
                 $.each(ctrl.data.dataProperties, function (i, e) {
                     switch (e.dataType) {
                         case 5:
@@ -86,33 +90,34 @@
                 });
                 var resp = await moduleDataService.save(ctrl.data);
                 if (resp && resp.isSucceed) {
-                    ctrl.data = resp.data;                    
+                    ctrl.data = resp.data;
                     if (ctrl.saveSuccessCallback) {
-                        ctrl.saveSuccessCallback({ data: ctrl.data });
-                    }
-                    else {
+                        ctrl.saveSuccessCallback({
+                            data: ctrl.data
+                        });
+                    } else {
                         var msg = $rootScope.translate('success');
                         $rootScope.showMessage(msg, 'success');
                         ctrl.initModuleForm();
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     }
-                }
-                else {
-                    if (resp) { 
+                } else {
+                    if (resp) {
                         // if(ctrl.failedCallback){
                         //     ctrl.failedCallback({ response: resp });
                         // }
                         // else{
                         //     $rootScope.showErrors(resp.errors);     
                         // }                        
-                        $rootScope.showErrors(resp.errors);     
+                        $rootScope.showErrors(resp.errors);
                     }
-                    
+
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }
             };
 
-        }]   
+        }
+    ]
 });
