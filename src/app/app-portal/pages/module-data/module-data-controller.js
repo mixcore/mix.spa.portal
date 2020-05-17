@@ -51,7 +51,7 @@ app.controller('ModuleDataController',
                 $scope.request.module_id = $scope.moduleId;
                 var response = await service.export($scope.request);
                 if (response.isSucceed) {
-                    $scope.data = response.data;
+                    window.top.location = response.data;
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {
