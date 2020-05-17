@@ -1,8 +1,8 @@
 ﻿'use strict';
 app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter',
-    'ngAppSettings', '$routeParams', 'PostService', 'UrlAliasService', 'AttributeSetService',
+    'ngAppSettings', '$routeParams', 'PostRestService', 'UrlAliasService', 'AttributeSetService',
     function ($scope, $rootScope, $location, $filter, ngAppSettings, $routeParams, service, urlAliasService, attributeSetService) {
-        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
         $scope.selectedCategories = [];
         $scope.selectedTags = [];
 

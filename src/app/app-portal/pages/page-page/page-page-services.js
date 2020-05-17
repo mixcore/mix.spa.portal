@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('PagePageService', ['$rootScope', 'CommonService', 'BaseService',
+app.factory('PagePageRestService', ['$rootScope', 'CommonService', 'BaseService',
     function ($rootScope, commonService, baseService) {
 
         var serviceFactory = Object.create(baseService);

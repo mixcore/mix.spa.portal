@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('ModulePostController',
-    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'ModulePostService', 'CommonService',
+    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'ModulePostRestService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, commonService) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.cates = ['Site', 'System'];

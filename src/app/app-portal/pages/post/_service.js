@@ -1,8 +1,8 @@
 ﻿'use strict';
-app.factory('PostService', ['BaseService',
+app.factory('PostRestService', ['BaseRestService',
     function (baseService) {
         var serviceFactory = Object.create(baseService);
-        serviceFactory.init('post');
+        serviceFactory.init('post/portal');
         // Define more service methods here
     return serviceFactory;
 }]);
