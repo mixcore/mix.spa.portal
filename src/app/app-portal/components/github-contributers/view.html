@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         <a ng-repeat="item in $ctrl.items" href="{{item.html_url}}" target="_blank">
-            <img src="{{item.avatar_url}}" alt="{{item.login}}"
+            <img ng-src="{{item.avatar_url}}" alt="{{item.login}}"
                 class="md-avatar img-thumbnail rounded-circle"
                 style="vertical-align: middle;width: 40px;height: 40px;">
         </a>

@@ -1,6 +1,20 @@
 ﻿modules.component('moduleForm', {
     templateUrl: '/app/app-shared/components/module-form/view.html',
-    controller: ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$timeout', '$location', 'AuthService', 'SharedModuleDataService',
+    bindings: {
+        moduleId: '=',
+        categoryId: '=',
+        productId: '=',
+        postId: '=',
+        d: '=',
+        title: '=',
+        name: '=',
+        submitText: '=',
+        isShowTitle: '=',
+        backUrl: '=?',
+        saveCallback: '&?',
+        failedCallback: '&?',
+    },
+    controller: ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$timeout', '$location', 'AuthService', 'ModuleDataRestService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $timeout, $location, authService, moduleDataService) {
             var ctrl = this;
             $rootScope.isBusy = false;
@@ -14,7 +28,7 @@
                         resp = await moduleDataService.initModuleForm(ctrl.name);
                     }
                     else {
-                        resp = await moduleDataService.getModuleData(ctrl.moduleId, ctrl.d, 'portal');
+                        resp = await moduleDataService.getSingle([ctrl.d]);
                     }
                     if (resp && resp.isSucceed) {
                         ctrl.data = resp.data;
@@ -70,7 +84,7 @@
                             break;
                     }
                 });
-                var resp = await moduleDataService.saveModuleData(ctrl.data);
+                var resp = await moduleDataService.save(ctrl.data);
                 if (resp && resp.isSucceed) {
                     ctrl.data = resp.data;                    
                     if (ctrl.saveSuccessCallback) {
@@ -100,19 +114,5 @@
                 }
             };
 
-        }],
-    bindings: {
-        moduleId: '=',
-        categoryId: '=',
-        productId: '=',
-        postId: '=',
-        d: '=',
-        title: '=',
-        name: '=',
-        submitText: '=',
-        isShowTitle: '=',
-        backUrl: '=',
-        saveCallback: '&?',
-        failedCallback: '&?',
-    }
+        }]   
 });

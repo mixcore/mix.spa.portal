@@ -1,9 +1,10 @@
 ﻿modules.component('mixModuleDataTable', {
     templateUrl: '/app/app-shared/components/mix-module-data-table/mix-module-data-table.html',
     controller: ['$rootScope', '$scope', '$location', 'ngAppSettings', function ($rootScope, $scope, $location, ngAppSettings) {
-        var ctrl = this;
+        var ctrl = this;        
         ctrl.colWidth = 3;
         ctrl.init = function () {
+            ctrl.editUrl = '/portal/module-data/details/' + ctrl.moduleId;
             if(ctrl.data.items.length)
             {
                 ctrl.min = ctrl.data.items[0].priority;
@@ -31,7 +32,7 @@
             //console.log('insert ', index, item, external, type);
         }
         ctrl.delete = function (id) {
-            ctrl.onDelete({ id: id,moduleId: ctrl.moduleId });
+            ctrl.onDelete({ id: id });
         };
         ctrl.goTo = function (id) {
             $location.path(ctrl.editUrl + '/' + id);

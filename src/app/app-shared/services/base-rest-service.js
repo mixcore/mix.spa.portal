@@ -82,6 +82,22 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
             };
             return await commonService.getRestApiResult(req);
         };
+        
+        var _export = async function (objData) {
+
+            var data = serviceFactory.parseQuery(objData);
+            var url = this.prefixUrl + '/export';
+
+            if (data) {
+                url += '?';
+                url = url.concat(data);
+            }
+            var req = {
+                method: 'GET',
+                url: url
+            };
+            return await commonService.getRestApiResult(req);
+        };
 
         var _delete = async function (params = []) {
             var url = this.prefixUrl;
@@ -173,6 +189,7 @@ app.factory('BaseRestService', ['$rootScope', '$routeParams', 'CommonService', '
         serviceFactory.getDefault = _getDefault;
         serviceFactory.getSingle = _getSingle;
         serviceFactory.getList = _getList;
+        serviceFactory.export = _export;
         serviceFactory.create = _create;
         serviceFactory.update = _update;
         serviceFactory.save = _save;

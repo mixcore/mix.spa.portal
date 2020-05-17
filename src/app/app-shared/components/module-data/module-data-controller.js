@@ -74,7 +74,7 @@ app.controller('SharedModuleDataController', ['$scope', '$rootScope', 'ngAppSett
 
         $scope.loadParams = async function () {
             $scope.dataId = $routeParams.id;
-            $scope.backUrl = '/portal/module/data/' + $routeParams.moduleId;
+            $scope.backUrl = '/portal/module-data/list/' + $routeParams.moduleId;
             $scope.moduleId = $routeParams.moduleId;
         };
 

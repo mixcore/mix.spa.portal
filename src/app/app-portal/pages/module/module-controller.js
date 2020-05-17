@@ -50,7 +50,7 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
             $rootScope.isBusy = true;
             var id = $routeParams.id;
             $scope.dataColumns = [];
-            var response = await moduleServices.getSingle([id, 'mvc']);
+            var response = await moduleServices.getSingle([id]);
             if (response.isSucceed) {
 
                 $scope.activedData = response.data;
