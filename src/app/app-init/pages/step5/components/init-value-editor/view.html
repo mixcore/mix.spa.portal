@@ -1,6 +1,6 @@
 <div class="form-group">
     <label class="control-label" ng-if="$ctrl.isShowTitle" ng-bind="$ctrl.title"></label>
-    <div ng-switch="$ctrl.data.dataType">
+    <div ng-switch="$ctrl.data.dataType.toLowerCase()">
         <div ng-switch-default>
             <!--custom-->
             <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.data.value"
@@ -25,12 +25,12 @@
             <!--Html-->
             <trumbowyg class="trumbowyg-dark" options="{}" ng-model="$ctrl.data.value"></trumbowyg>
         </div>
-        <div ng-switch-when="textarea">
+        <div ng-switch-when="multilinetext">
             <!--TextArea-->
             <textarea class="form-control form-control-sm {{$ctrl.inputClass}}" rows="5" ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.title}}"></textarea>
         </div>
-        <div ng-switch-when="email">
+        <div ng-switch-when="emailadress">
             <!--Email-->
             <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="email" ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.title}}">
@@ -52,12 +52,9 @@
         </div>
         <div ng-switch-when="upload">
             <!--upload-->
-            <div class="input-group">
-                <input type="file" ngf-select="$ctrl.selectFile($file, $invalidFiles)" data-file="file.file"
-                    accept="image/*">
-                <img imageonload src="{{$ctrl.data.value}}" 
-                    style="width:80px" class="ml-auto mr-auto">
-            </div>
+            <custom-image header="''" type="'Module Data'" folder="'Module Data'"
+                src-url="$ctrl.data.value" src="$ctrl.data.value" auto="'true'">
+            </custom-image>
         </div>
         <div ng-switch-when="color">
             <!--Color-->

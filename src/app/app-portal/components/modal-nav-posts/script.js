@@ -7,7 +7,7 @@
         selected:'=',
         save: '&'
     },    
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostRestService',
         function ($rootScope, $scope, ngAppSettings, postService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);            

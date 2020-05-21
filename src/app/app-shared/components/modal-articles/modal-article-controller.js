@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('ModalPostController', [
-    '$scope', '$rootScope', '$location', 'ngAppSettings', '$routeParams', 'PostService',
+    '$scope', '$rootScope', '$location', 'ngAppSettings', '$routeParams', 'PostRestService',
     function (
         $scope, $rootScope, $location, ngAppSettings, $routeParams, service) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

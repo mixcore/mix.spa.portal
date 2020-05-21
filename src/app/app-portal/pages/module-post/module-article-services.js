@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('ModulePostService', ['$rootScope', 'CommonService', 'BaseService',
+app.factory('ModulePostRestService', ['$rootScope', 'CommonService', 'BaseService',
     function ($rootScope, commonService, baseService) {
 
         var serviceFactory = Object.create(baseService);

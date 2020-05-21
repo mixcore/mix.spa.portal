@@ -1,28 +1,18 @@
 ﻿'use strict';
-app.factory('ModuleDataService', ['$rootScope', 'CommonService', 'BaseService',
-    function ($rootScope, commonService, baseService) {
-
+app.factory('ModuleDataRestService', ['BaseRestService', 'CommonService',
+    function (baseService, commonService) {
         var serviceFactory = Object.create(baseService);
-        serviceFactory.init('module-data');
-        var _delete = async function(moduleId, dataId){
-            var url = this.prefixUrl + '/delete/' + moduleId+'/'+dataId;
+        serviceFactory.init('module-data/portal');
+        // Define more service methods here
+        
+        var _initForm = async function(moduleId){
+            var url = `${this.prefixUrl}/init-form/${moduleId}`;
             var req = {
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req);
-        }
-        var _updateInfos = async function (modules) {
-
-            var req = {
-                method: 'POST',
-                url: this.prefixUrl + '/update-infos',
-                data: JSON.stringify(modules)
-            };
-            return await commonService.getApiResult(req);
+            return await commonService.getRestApiResult(req);
         };
-        serviceFactory.delete = _delete;
-        serviceFactory.updateInfos = _updateInfos;
+        serviceFactory.initForm = _initForm;
         return serviceFactory;
-
     }]);

@@ -6,7 +6,6 @@
                 <input type="checkbox" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.selectedList.isSelectAll)" />
             </div>
-            {{$ctrl.fields}}
             <div ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index" ng-if="$index < 3"
                 class="col-md-2">
                 <div class="input-group input-group-xs">

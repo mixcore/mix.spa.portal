@@ -1,9 +1,9 @@
 ﻿'use strict';
-app.factory('PageService', ['$rootScope', 'CommonService', 'BaseService',
+app.factory('PageRestService', ['$rootScope', 'CommonService', 'BaseRestService',
     function ($rootScope, commonService, baseService) {
 
         var serviceFactory = Object.create(baseService);
-        serviceFactory.init('page');
+        serviceFactory.init('page/portal');
         var _updateInfos = async function (pages) {
 
             var req = {

@@ -10,10 +10,10 @@
     controller: ModalContentFilterController
 });
 
-function ModalContentFilterController($rootScope, $scope, $mdDialog, ngAppSettings, PostService, PageService, callback) {
+function ModalContentFilterController($rootScope, $scope, $mdDialog, ngAppSettings, PostRestService, PageRestService, callback) {
     $scope.callback = callback;
-    const postService = PostService;
-    const pageService = PageService;
+    const postService = PostRestService;
+    const pageService = PageRestService;
     $scope.request = angular.copy(ngAppSettings.request);
     $scope.types = ['Page', 'Post'];
     $scope.type = 'Page';

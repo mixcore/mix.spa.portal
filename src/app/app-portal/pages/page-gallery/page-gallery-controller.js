@@ -2,7 +2,7 @@
 app.controller('PageGalleryController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'PageGalleryService', 'PostService', 'CommonService',
+        'PageGalleryService', 'PostRestService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, postService, commonService) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

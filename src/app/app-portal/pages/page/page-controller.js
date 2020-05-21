@@ -1,9 +1,9 @@
 ﻿'use strict';
 app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$location', '$routeParams',
-    'PageService', 'PagePostService', 'PagePageService', 'UrlAliasService',
+    'PageRestService', 'PagePostRestService', 'PagePageRestService', 'UrlAliasService',
     function ($scope, $rootScope, ngAppSettings, $location, $routeParams,
-        service, pagePostService, pagePageService, urlAliasService) {
-        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        service, pagePostRestService, pagePageRestService, urlAliasService) {
+        BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
         $scope.request.query = 'level=0';
         $scope.pageType = '';
         $scope.pageTypes = $rootScope.globalSettings.pageTypes;
@@ -20,7 +20,7 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
             $rootScope.isBusy = true;
             var id = $routeParams.id;
             $scope.postRequest.query += '&page_id=' + id;
-            var response = await pagePostService.getList($scope.postRequest);
+            var response = await pagePostRestService.getList($scope.postRequest);
             if (response.isSucceed) {
                 $scope.pageData.posts = response.data;
                 $rootScope.isBusy = false;
@@ -91,7 +91,7 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
 
         $scope.updatePagePage = async function (items) {
             $rootScope.isBusy = true;
-            var resp = await pagePageService.updateInfos(items);
+            var resp = await pagePageRestService.updateInfos(items);
             if (resp && resp.isSucceed) {
                 $scope.activedPage = resp.data;
                 $rootScope.showMessage('success', 'success');

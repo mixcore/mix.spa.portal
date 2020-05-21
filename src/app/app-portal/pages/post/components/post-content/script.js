@@ -4,7 +4,7 @@ app.component('postContent', {
     bindings: {
         model: '='
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostRestService',
         function ($rootScope, $scope, ngAppSettings, service) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);

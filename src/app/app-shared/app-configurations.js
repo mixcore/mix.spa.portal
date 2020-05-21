@@ -173,8 +173,8 @@ app.constant('ngAppSettings', {
     ],
     icons: []
 });
-app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
-    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, baseRestService, commonService, authService, translatorService, ) {
+app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', '$mdToast', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
+    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, $mdToast, baseRestService, commonService, authService, translatorService, ) {
         $rootScope.currentContext = $rootScope;
         $rootScope.isBusy = false;
         $rootScope.translator = translatorService;
@@ -354,18 +354,20 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
         $rootScope.showMessage = function (content, type) {
             var from = 'bottom';
             var align = 'right';
-            $.notify({
-                icon: "fas fa-bell",
-                message: $rootScope.translate(content)
+            //Highlight classes are md-primary, md-warn, and md-accent
+            $mdToast.show($mdToast.simple().textContent(content));
+            // $.notify({
+            //     icon: "fas fa-bell",
+            //     message: $rootScope.translate(content)
 
-            }, {
-                type: type,
-                timer: 2000,
-                placement: {
-                    from: from,
-                    align: align
-                }
-            });
+            // }, {
+            //     type: type,
+            //     timer: 2000,
+            //     placement: {
+            //         from: from,
+            //         align: align
+            //     }
+            // });
         };
         $rootScope.encrypt = function (message) {
             var keySize = 256;
@@ -629,6 +631,6 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', 'Base
     }
 ]);
 
-if (document.getElementsByTagName('trumbowyg').length) { //  ($.trumbowyg) {
-    $.trumbowyg.svgPath = '/assets/icons.svg';
-}
+// if (document.getElementsByTagName('trumbowyg').length) { //  ($.trumbowyg) {
+//     $.trumbowyg.svgPath = '/assets/icons.svg';
+// }

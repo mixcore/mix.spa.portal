@@ -1,8 +1,8 @@
 ﻿'use strict';
 app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$location', '$routeParams',
-    'ModuleService', 'SharedModuleDataService', 'RestRelatedAttributeSetPortalService',
+    'ModuleRestService', 'SharedModuleDataService', 'RestRelatedAttributeSetPortalService',
     function ($scope, $rootScope, ngAppSettings, $location, $routeParams, moduleServices, moduleDataService, RestRelatedAttributeSetPortalService) {
-        BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, moduleServices, 'product');
+        BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, moduleServices, 'product');
         $scope.contentUrl = '';
         $scope.getSingleSuccessCallback = function () {
             if ($scope.activedData.id > 0) {
@@ -50,7 +50,7 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
             $rootScope.isBusy = true;
             var id = $routeParams.id;
             $scope.dataColumns = [];
-            var response = await moduleServices.getSingle([id, 'mvc']);
+            var response = await moduleServices.getSingle([id]);
             if (response.isSucceed) {
 
                 $scope.activedData = response.data;
@@ -182,7 +182,7 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
             $rootScope.isBusy = true;
             var id = $routeParams.id;
             $scope.postRequest.query += '&page_id=' + id;
-            var response = await pagePostService.getList($scope.postRequest);
+            var response = await pagePostRestService.getList($scope.postRequest);
             if (response.isSucceed) {
                 $scope.pageData.posts = response.data;
                 $rootScope.isBusy = false;

@@ -1,6 +1,6 @@
 ﻿'use strict';
 app.controller('SocialFeedController',
-    ['$rootScope', '$scope', '$http', 'PostService',
+    ['$rootScope', '$scope', '$http', 'PostRestService',
         function ($rootScope, $scope, $http, postService) {
             $scope.types = [
                 'Facebook',

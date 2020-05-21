@@ -7,7 +7,7 @@
         selected:'=',
         save: '&'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PageService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PageRestService',
         function ($rootScope, $scope, ngAppSettings, pageService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);            

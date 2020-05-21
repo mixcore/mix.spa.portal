@@ -7,8 +7,6 @@ app.component('pageType', {
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
         ctrl.settings = $rootScope.globalSettings;
-        ctrl.$onInit = function(){
-            ctrl.model = parseInt(ctrl.model);
-        }
+        
     }],    
 });

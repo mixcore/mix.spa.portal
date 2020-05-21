@@ -1,6 +1,6 @@
 ﻿
 modules.component('moduleDataPreview', {
-    templateUrl: '/app/app-shared/components/module-data-preview/view.html',
+    templateUrl: '/app/app-shared/components/module-data-preview/module-data-preview.html',
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
     }

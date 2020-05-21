@@ -2,7 +2,7 @@
 app.controller('PagePositionController',
     [
         '$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location',
-        'PagePositionService', 'PostService', 'CommonService',
+        'PagePositionService', 'PostRestService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location,
             service, postService, commonService) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);

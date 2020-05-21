@@ -99,11 +99,11 @@
                                     <!--<a href="{{item.detailsUrl}}" target="_blank" class="btn btn-link">
                                             <span class="fas fa-eye text-primary"></span>
                                         </a>-->
-                                    <a ng-if="item.type==2" href="/portal/module-post/list/{{item.id}}"
+                                    <a ng-if="item.type=='ListPost'" href="/portal/module-post/list/{{item.id}}"
                                         class="btn btn-link">
                                         <span class="fas fa-bars text-primary"></span>
                                     </a>
-                                    <a ng-if="item.type==1" href="/portal/module/data/{{item.id}}" class="btn btn-link">
+                                    <a ng-if="item.type=='Data'" href="/portal/module-data/list/{{item.id}}" class="btn btn-link">
                                         <span class="fas fa-database text-primary"></span>
                                     </a>
                                     <a ng-click="remove(item.id);" class="btn btn-link">
