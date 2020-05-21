@@ -21,7 +21,9 @@ modules.component('attributeList', {
             };
             ctrl.removeAttribute = function (attr, index) {
                 ctrl.fields.splice(index, 1);
-                ctrl.removeAttributes.push(attr);
+                if (attr.id > 0) {
+                    ctrl.removeAttributes.push(attr);
+                }
             };
             ctrl.addOption = function (col, index) {
                 var val = $('#option_' + index).val();
@@ -104,8 +106,7 @@ modules.component('attributeList', {
             ctrl.updateOrders = function (index) {
                 if (index > ctrl.dragStartIndex) {
                     ctrl.fields.splice(ctrl.dragStartIndex, 1);
-                }
-                else {
+                } else {
                     ctrl.fields.splice(ctrl.dragStartIndex + 1, 1);
                 }
                 angular.forEach(ctrl.fields, function (e, i) {
@@ -126,7 +127,8 @@ modules.component('attributeList', {
                 }
                 $('#modal-navs').modal('hide');
             };
-        }],
+        }
+    ],
     bindings: {
         header: '=',
         fields: '=',
