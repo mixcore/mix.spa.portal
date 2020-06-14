@@ -4,6 +4,8 @@ app.controller('MixAttributeSetDataController',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, navService) {
             BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.queries = {};
+            $scope.data = {};
+            $scope.exportAll = true;
             $scope.settings = $rootScope.globalSettings;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
             $scope.filterType = 'contain';
@@ -54,6 +56,7 @@ app.controller('MixAttributeSetDataController',
             // });
             // }
             // };
+            
             $scope.preview = function (item) {
                 item.editUrl = '/portal/post/details/' + item.id;
                 $rootScope.preview('post', item, item.title, 'modal-lg');
@@ -73,8 +76,7 @@ app.controller('MixAttributeSetDataController',
                         $rootScope.executeFunctionByName('removeCallback', $scope.removeCallbackArgs, $scope)
                     }
                     $scope.getList();
-                }
-                else {
+                } else {
                     $rootScope.showMessage('failed');
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -89,8 +91,7 @@ app.controller('MixAttributeSetDataController',
                         $rootScope.showMessage('success', 'success');
                         $rootScope.isBusy = false;
                         $scope.getList(0);
-                    }
-                    else {
+                    } else {
                         $rootScope.showMessage('failed');
                         $rootScope.isBusy = false;
                         $scope.$apply();
@@ -122,8 +123,7 @@ app.controller('MixAttributeSetDataController',
                     $rootScope.showMessage('success', 'success');
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                }
-                else {
+                } else {
                     $rootScope.showMessage('failed');
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -134,8 +134,7 @@ app.controller('MixAttributeSetDataController',
                 if (response.isSucceed) {
                     $scope.getList();
                     $scope.$apply();
-                }
-                else {
+                } else {
                     $rootScope.showErrors(response.errors);
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -168,7 +167,7 @@ app.controller('MixAttributeSetDataController',
                     var dt = new Date($scope.request.toDate);
                     $scope.request.toDate = dt.toISOString();
                 }
-                $scope.request.query = '';
+                var query = {};
                 if ($routeParams.attributeSetId) {
                     $scope.request.attributeSetId = $routeParams.attributeSetId;
                 }
@@ -176,16 +175,17 @@ app.controller('MixAttributeSetDataController',
                 $scope.request.filterType = $routeParams.filterType || 'contain';
                 Object.keys($scope.queries).forEach(e => {
                     if ($scope.queries[e]) {
-                        $scope.request[e] = $scope.queries[e];
+                        query[e] = $scope.queries[e];
                     }
                 });
+                $scope.request.query = JSON.stringify(query);
                 $rootScope.isBusy = true;
                 var resp = await service.getList($scope.request);
                 if (resp && resp.isSucceed) {
-                    $scope.datas = resp.data;
-                    $.each($scope.datas.items, function (i, data) {
+                    $scope.data = resp.data;
+                    $.each($scope.data.items, function (i, data) {
 
-                        $.each($scope.activedDatas, function (i, e) {
+                        $.each($scope.activeddata, function (i, e) {
                             if (e.dataId === data.id) {
                                 data.isHidden = true;
                             }
@@ -194,7 +194,9 @@ app.controller('MixAttributeSetDataController',
                     if ($scope.getListSuccessCallback) {
                         $scope.getListSuccessCallback();
                     }
-                    $("html, body").animate({ "scrollTop": "0px" }, 500);
+                    $("html, body").animate({
+                        "scrollTop": "0px"
+                    }, 500);
                     if (!resp.data || !resp.data.items.length) {
                         $scope.queries = {};
                     }
@@ -212,42 +214,54 @@ app.controller('MixAttributeSetDataController',
                     $scope.$apply();
                 }
             };
-            $scope.export = async function (pageIndex) {
+            $scope.export = async function (pageIndex, exportAll) {
                 if (pageIndex !== undefined) {
                     $scope.request.pageIndex = pageIndex;
                 }
                 if ($scope.request.fromDate !== null) {
-                    var d = new Date($scope.request.fromDate);
-                    $scope.request.fromDate = d.toISOString();
+                    var df = new Date($scope.request.fromDate);
+                    $scope.request.fromDate = df.toISOString();
                 }
                 if ($scope.request.toDate !== null) {
-                    var d = new Date($scope.request.toDate);
-                    $scope.request.toDate = d.toISOString();
+                    var dt = new Date($scope.request.toDate);
+                    $scope.request.toDate = dt.toISOString();
                 }
-                $scope.request.query = '';
+                var query = {};
                 if ($routeParams.attributeSetId) {
-                    $scope.request.query = 'attributeSetId=' + $routeParams.attributeSetId;
+                    $scope.request.attributeSetId = $routeParams.attributeSetId;
                 }
-                $scope.request.query += '&attributeSetName=' + $routeParams.attributeSetName;
-                if ($scope.filterType) {
-                    $scope.request.query += '&filterType=' + $scope.filterType;
-                }
+                $scope.request.attributeSetName = $routeParams.attributeSetName;
+                $scope.request.filterType = $routeParams.filterType || 'contain';
                 Object.keys($scope.queries).forEach(e => {
                     if ($scope.queries[e]) {
-                        $scope.request.query += '&' + e + '=' + $scope.queries[e];
+                        query[e] = $scope.queries[e];
                     }
                 });
+                $scope.request.query = JSON.stringify(query);
+                var request = angular.copy($scope.request);
+                $scope.exportAll = $scope.exportAll;
+                if(exportAll){
+                    request.pageSize = 10000;
+                    request.pageIndex = 0;
+                }
                 $rootScope.isBusy = true;
-                var resp = await service.export($scope.request);
+                var resp = await service.export(request);
                 if (resp && resp.isSucceed) {
-
-                    window.top.location = resp.data;
+                    if (resp.data) {
+                        window.top.location = resp.data;
+                    }
+                    else{
+                        $rootScope.showMessage('Nothing to export');
+                    }
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {
-                    if (resp) { $rootScope.showErrors(resp.errors); }
+                    if (resp) {
+                        $rootScope.showErrors(resp.errors);
+                    }
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }
             };
-        }]);
+        }
+    ]);

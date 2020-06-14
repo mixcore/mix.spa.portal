@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="card-body py-1">
-
+        
         <div class="py-2" role="alert" ng-if="!$ctrl.data || !$ctrl.data.length">
             <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No data has been created for this attribute
             yet!
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <div class="card-footer form-inline" ng-if="$ctrl.data.length">
+    <!-- <div class="card-footer form-inline" ng-if="$ctrl.data.length">
         <div class="form-group">
             <select class="form-control btn custom-select custom-select-sm mr-2" ng-model="$ctrl.selectedList.action">
                 <option ng-repeat="item in $ctrl.actions" ng-value="item">{{item}}</option>
@@ -87,5 +87,5 @@
                 ng-if="$ctrl.selectedList.data.length > 0 && $ctrl.selectedList.action"
                 ng-click="$ctrl.apply()">Apply</button>
         </div>
-    </div>
+    </div> -->
 </div>
