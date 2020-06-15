@@ -16,7 +16,7 @@ app.constant('ngAppSettings', {
         toDate: null,
         keyword: '',
         key: '',
-        query: ''
+        query: '{}'
     },
     restRequest: {
         pageSize: '20',
