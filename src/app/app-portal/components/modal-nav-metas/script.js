@@ -79,7 +79,7 @@
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
             ctrl.loadData = async function (pageIndex) {
-                ctrl.request.query = '';
+                ctrl.request.query = '{}';
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
                 }

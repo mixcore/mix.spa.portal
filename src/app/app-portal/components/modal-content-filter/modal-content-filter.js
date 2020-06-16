@@ -10,7 +10,7 @@
     controller: ModalContentFilterController
 });
 
-function ModalContentFilterController($rootScope, $scope, $mdDialog, ngAppSettings, PostRestService, PageRestService, callback) {
+function ModalContentFilterController($rootScope, $scope, $element, ngAppSettings, PostRestService, PageRestService, callback) {
     $scope.callback = callback;
     const postService = PostRestService;
     const pageService = PageRestService;
@@ -30,7 +30,7 @@ function ModalContentFilterController($rootScope, $scope, $mdDialog, ngAppSettin
         }
     };
     $scope.closeDialog = function () {
-        $mdDialog.hide();
+        $($element).modal('hide');
     };
     $scope.loadData = async function (pageIndex) {
         $rootScope.isBusy = true;

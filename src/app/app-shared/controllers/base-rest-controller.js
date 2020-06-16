@@ -6,7 +6,7 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
         pageIndex: 0,
         status: 'Published',
         orderBy: 'CreatedDateTime',
-        direction: '1',
+        direction: 'Desc',
         fromDate: null,
         toDate: null,
     };

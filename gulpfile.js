@@ -98,7 +98,6 @@ paths.framework = {
         `${paths.nodeModules}angular-sanitize/angular-sanitize.min.js`,
         `${paths.nodeModules}angular-aria/angular-aria.min.js`,
         `${paths.nodeModules}angular-messages/angular-messages.min.js`,
-        `${paths.nodeModules}angular-material/angular-material.min.js`,
         `${paths.nodeModules}angular-local-storage/dist/angular-local-storage.min.js`,
         `${paths.scriptLib}angularjs/**/*.min.js`,
         // `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
@@ -278,6 +277,9 @@ paths.appPortal = {
 };
 paths.appPortalRequired = {
     src: [
+        `${paths.nodeModules}jquery/dist/jquery.min.js`,
+        `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
+        `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
         paths.scriptLib + "portal/prism/prism.min.js",
         paths.scriptLib + "portal/Trumbowyg/**/*.*.js",
         paths.webapp + "app-portal/shared/**/*.js"
@@ -313,9 +315,9 @@ gulp.task("min:portalAppRequired", function (cb) {
 // CSS
 paths.portalCss = {
     src: [
+        `${paths.nodeModules}bootstrap/dist/css/bootstrap.min.css`,
         paths.libs + "portal/**/*.css",
         paths.libs + "portal/**/*.*.css",
-        `${paths.nodeModules}angular-material/angular-material.min.css`,
     ],
     dest: paths.webroot + "css/portal.min.css"
 };

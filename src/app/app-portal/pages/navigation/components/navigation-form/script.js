@@ -11,8 +11,8 @@ modules.component('navigationForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', '$mdDialog', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
-        function ($rootScope, $scope, $routeParams,  $mdDialog, service, fieldService) {
+    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
+        function ($rootScope, $scope, $routeParams,  service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
@@ -91,14 +91,7 @@ modules.component('navigationForm', {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
             ctrl.showContentFilter = function($event) {
-                var parentEl = angular.element(document.body);
-                $mdDialog.show({
-                  parent: parentEl,
-                  targetEvent: $event,
-                  templateUrl: '/app/app-portal/components/modal-content-filter/modal-content-filter.html',
-                  controller: ModalContentFilterController,
-                  locals: { callback: ctrl.loadSelected }
-               });
+                $rootScope.showContentFilter({callback: ctrl.loadSelected});                
              }
             ctrl.loadSelected = function (data) {
                 if (data) {

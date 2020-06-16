@@ -13,12 +13,12 @@ app.filter('utcToLocal', FilterUtcDate)
             pageIndex: 0,
             status: 'Published',
             orderBy: 'CreatedDateTime',
-            direction: '1',
+            direction: 'Desc',
             fromDate: null,
             toDate: null,
             keyword: '',
             key: '',
-            query: ''
+            query: '{}'
         },
         privacies: [
             'VND',

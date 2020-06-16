@@ -11,7 +11,7 @@ app.constant('ngAppSettings', {
         pageIndex: 0,
         status: 'Published',
         orderBy: 'CreatedDateTime',
-        direction: '1',
+        direction: 'Desc',
         fromDate: null,
         toDate: null,
         keyword: '',
@@ -23,10 +23,11 @@ app.constant('ngAppSettings', {
         pageIndex: 0,
         status: 'Published',
         orderBy: 'CreatedDateTime',
-        direction: '1',
+        direction: 'Desc',
         fromDate: null,
         toDate: null,
         keyword: '',
+        query: '{}'
     },
     privacies: [
         'VND',
@@ -173,8 +174,8 @@ app.constant('ngAppSettings', {
     ],
     icons: []
 });
-app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', '$mdToast', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
-    function ($http, $rootScope, ngAppSettings, $location, $mdDialog, $mdToast, baseRestService, commonService, authService, translatorService, ) {
+app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService', 'CommonService', 'AuthService', 'TranslatorService',
+    function ($http, $rootScope, ngAppSettings, $location, baseRestService, commonService, authService, translatorService, ) {
         $rootScope.currentContext = $rootScope;
         $rootScope.isBusy = false;
         $rootScope.translator = translatorService;
@@ -283,15 +284,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', '$mdT
                 lblCancel: lblCancel ? lblCancel : 'Cancel'
             };
 
-            var parentEl = angular.element(document.body);
-            $mdDialog.show({
-                parent: parentEl,
-                templateUrl: '/app/app-shared/components/modal-confirm/modal-confirm.html',
-                controller: ModalConfirmController,
-                locals: {
-                    message: $rootScope.confirmMessage
-                }
-            });
+            $('#dlg-confirm-msg').modal('show');
         };
 
         $rootScope.preview = function (type, data, title, size, objClass) {
@@ -354,20 +347,18 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', '$mdT
         $rootScope.showMessage = function (content, type) {
             var from = 'bottom';
             var align = 'right';
-            //Highlight classes are md-primary, md-warn, and md-accent
-            $mdToast.show($mdToast.simple().textContent(content));
-            // $.notify({
-            //     icon: "fas fa-bell",
-            //     message: $rootScope.translate(content)
+            $.notify({
+                icon: "fas fa-bell",
+                message: $rootScope.translate(content)
 
-            // }, {
-            //     type: type,
-            //     timer: 2000,
-            //     placement: {
-            //         from: from,
-            //         align: align
-            //     }
-            // });
+            }, {
+                type: type,
+                timer: 2000,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
         };
         $rootScope.encrypt = function (message) {
             var keySize = 256;
@@ -618,16 +609,12 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', '$mdDialog', '$mdT
         };
         $rootScope.showLogin = function (ev) {
             $rootScope.isBusy = false;
-            $mdDialog.show({
-                templateUrl: '/app/app-shared/components/login-popup/view.html',
-                controller: 'LoginPopupController',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            });
+            $('#login-popup').modal('show');
         };
-
+        $rootScope.showContentFilter = function(callback){
+            $rootScope.contentFilterCallback = callback;
+            $('#modal-content-filter').modal('show');
+        }
     }
 ]);
 

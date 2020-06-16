@@ -4,8 +4,8 @@ app.component('loginPopup', {
     controller: 'LoginPopupController'
 });
 
-app.controller('LoginPopupController', ['$scope', '$rootScope', '$mdDialog', 'AuthService', 
-    function LoginPopupController($scope, $rootScope, $mdDialog, authService) {
+app.controller('LoginPopupController', ['$scope', '$rootScope', 'AuthService', 
+    function LoginPopupController($scope, $rootScope, authService) {
     $scope.loginData = {
         userName: "",
         password: "",
@@ -16,11 +16,11 @@ app.controller('LoginPopupController', ['$scope', '$rootScope', '$mdDialog', 'Au
         if (result) {
             $rootScope.isBusy = false;
             $scope.message = result.errors[0];
-            $mdDialog.cancel();
+            $('#login-popup').modal('hide');
             $scope.$apply();
         }
     };
     $scope.closeDialog = function() {
-      $mdDialog.hide();
+        $('#login-popup').modal('hide');
     };
   }]);
