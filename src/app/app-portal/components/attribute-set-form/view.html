@@ -23,7 +23,7 @@
                 class="btn btn-sm btn-link btn-round pull-right float-right mr-2 py-0 " ng-disabled="$ctrl.isBusy">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     ng-if="$ctrl.isBusy"></span>
-                <i class="fas fa-save" ng-if="!$ctrl.isBusy"></i> Save current</button>
+                <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current</button>
         </h6>
         <div id="attributeSetId_{{$ctrl.attrData.attributeSetId}}" class="card-body show">
             <div class="row">
@@ -40,7 +40,7 @@
                 ng-disabled="$ctrl.isBusy">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     ng-if="$ctrl.isBusy"></span>
-                <i class="fas fa-save" ng-if="!$ctrl.isBusy"></i> Save current</button>
+                <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current</button>
         </div>
     </div>
 </form>

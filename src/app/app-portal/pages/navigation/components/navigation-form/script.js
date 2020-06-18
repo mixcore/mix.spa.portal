@@ -55,7 +55,6 @@ modules.component('navigationForm', {
                 if(ctrl.attributeSetName || ctrl.attributeSetId){
                     await ctrl.loadDefaultModel();
                     $rootScope.isBusy = false;
-                    $scope.$apply();
                 }
                
                 
@@ -91,14 +90,14 @@ modules.component('navigationForm', {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
             ctrl.showContentFilter = function($event) {
-                $rootScope.showContentFilter({callback: ctrl.loadSelected});                
+                $rootScope.showContentFilter(ctrl.loadSelected);   
              }
             ctrl.loadSelected = function (data) {
                 if (data) {
-                    ctrl.attrData.obj.id = data.nav.id;
-                    ctrl.attrData.obj.title = data.nav.title;
+                    ctrl.attrData.obj.id = data.id;
+                    ctrl.attrData.obj.title = data.title;
                     ctrl.attrData.obj.type = data.type;
-                    ctrl.attrData.obj.uri = data.nav.detailsUrl;
+                    ctrl.attrData.obj.uri = data.detailsUrl;
                 }
             };
             ctrl.submit = async function () {
