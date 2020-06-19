@@ -5,8 +5,8 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
         var rand = Math.floor(Math.random() * 10000) + 1;
         $scope.settings = {
             providers: [
-                { text: 'Microsoft SQL Server', value: 'MSSQL', port: null, img: '/assets/img/mssql.jpg' },
-                { text: 'MySQL Server', value: 'MySQL', port:'3306', img: '/assets/img/mysql.jpg' }
+                { text: 'MySQL Server', value: 'MySQL', port:'3306', img: '/assets/img/mysql.jpg' },
+                { text: 'Microsoft SQL Server', value: 'MSSQL', port: null, img: '/assets/img/mssql.jpg' }
                 // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/assets/img/mysql.jpg' }
             ],
             cultures: []
@@ -35,7 +35,7 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
             $scope.initCmsModel.isUseLocal = type;
         };
         $scope.initCmsModel = {
-            isUseLocal: true,
+            isUseLocal: false,
             localDbConnectionString: '',
             sqliteDbConnectionString: '',
             localDbConnectionString: 'Server=(localdb)\\MSSQLLocalDB;Initial Catalog=' + rand + '-mix-cms.db;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True',
