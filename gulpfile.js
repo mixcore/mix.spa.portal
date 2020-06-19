@@ -42,7 +42,7 @@ var browserSync = require('browser-sync').create();
 
 paths.initApp = {
     src: [
-        `${paths.nodeModules}jquery/dist/jquery.min.js`,
+        // `${paths.nodeModules}jquery/dist/jquery.min.js`,
         paths.webapp + "app-init/app.js",
         paths.webapp + "app-init/app.route.js",
         paths.webapp + "app-init/pages/**/*.js"
