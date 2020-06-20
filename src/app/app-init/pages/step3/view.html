@@ -3,7 +3,7 @@
 </div> -->
 <div ng-init="init()">
     <h1 class="lead">You can start <strong>Mixcore CMS</strong> with our default beautiful themes. </h1>
-    <hr>
+    <!-- <hr> -->
     <div class="">
         <form id="frm-theme">
             <div class="form-group">
@@ -12,16 +12,38 @@
                     <span class="custom-control-label">
                         Create Default Theme.</span>
                 </label>                 -->
-                <span class="custom-control-label">
-                        Create Default Theme.</span>
+                <!-- <span class="custom-control-label">
+                    Select Default Theme.</span> -->
             </div>
-            <div class="options" ng-show="data.isCreateDefault">
+            <div class="form-group">
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio_theme-blank" name="themes[1][]" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio_theme-blank">Blank</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio_theme-cleanblog" name="themes[1][]" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="customRadio_theme-cleanblog">Clean Blog</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio_theme-shardsui" name="themes[1][]" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio_theme-shardsui">Shards UI</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio_theme-spavue" name="themes[1][]" class="custom-control-input">
+                    <label class="custom-control-label" for="customRadio_theme-spavue">SPA Application (Vue JS)</label>
+                </div>
+            </div>
+            <label for="">Or use your own time</label>
+            <div class="form-group">
+                <api-file form-name="'theme'" class="input-group" posted-file="theme"></api-file>
+                <small class="form-text text-muted">Theme list <a target="_blank" href="https://github.com/mixcore/awesome-mixcore#themes">here</a>.</small>
+            </div>
+            <!-- <div class="options" ng-show="data.isCreateDefault">
 
                 <div class="option active" style="--optionBackground:url(../assets/img/bgs/thumb_theme1.jpg);">
                     <label for="theme-1">
                         <div class="shadow"></div>
                         <div class="label">
-                            <!-- <i class="fas fa-walking"></i> -->
                             <div class="round">
                                 <input class="preventUncheck" type="checkbox" id="theme-1"
                                     checked name="themes[1][]" />
@@ -80,14 +102,14 @@
                     </label>
                 </div>
 
-            </div>
+            </div> -->
             <hr>
             <div class="text-right mt-4">
                 <!-- <div class="text-center form-footer">
                     <button ng-click="submit()" class="btn btn-primary mt-4">Create and Login</button>
                 </div> -->
-                <button class="btn btn-primary" style="min-width:200px" ng-click="submit()">Create and Login to Portal <i
-                        class="fa fa-angle-right"></i></button>
+                <button class="btn btn-primary" style="min-width:200px" ng-click="submit()">Create and Login to Portal
+                    <i class="fa fa-angle-right"></i></button>
                 <!-- <button type="button" class="btn btn-link" ng-click="advanceSetup()">Advance Setup <i
                         class="fa fa-angle-right" style="font-size: 19px;"></i></button> -->
             </div>
