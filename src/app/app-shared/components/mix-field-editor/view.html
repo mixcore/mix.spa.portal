@@ -3,7 +3,7 @@
         <span class="sr-only">Loading...</span>
     </div>        
 </div>
-<div ng-if="$ctrl.model && !$ctrl.field.isSelect" ng-init="$ctrl.initData()"
+<div ng-if="$ctrl.model && $ctrl.field && !$ctrl.field.isSelect" ng-init="$ctrl.initData()"
     class="form-group row">
     <div class="col-3">
         <h6 class="control-label m-0"

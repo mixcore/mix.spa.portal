@@ -467,16 +467,18 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService',
         };
         $rootScope.filterArray = function (array, keys, values) {
             var result = [];
-            for (var i = 0; i < array.length; i++) {
-                var matched = true;
-                for (var j = 0; j < keys.length; j++) {
-                    if (array[i][keys[j]] !== values[j]) {
-                        matched = false;
-                        break;
+            if (array) {
+                for (var i = 0; i < array.length; i++) {
+                    var matched = true;
+                    for (var j = 0; j < keys.length; j++) {
+                        if (array[i][keys[j]] !== values[j]) {
+                            matched = false;
+                            break;
+                        }
                     }
-                }
-                if (matched) {
-                    result.push(array[i]);
+                    if (matched) {
+                        result.push(array[i]);
+                    }
                 }
             }
             return result;
@@ -611,7 +613,7 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService',
             $rootScope.isBusy = false;
             $('#login-popup').modal('show');
         };
-        $rootScope.showContentFilter = function(callback){
+        $rootScope.showContentFilter = function (callback) {
             $rootScope.contentFilterCallback = callback;
             $('#modal-content-filter').modal('show');
         }

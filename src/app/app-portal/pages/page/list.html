@@ -5,11 +5,10 @@
                 <filter-list request="request" callback="getList(pageIndex)" create-url="'/portal/page/create'"
                     create-text="'Create Page'"></filter-list>
 
-                <select ng-change="selPageType()" ng-model="pageType" class="custom-select col-2">
-                    <!-- <option selected="select">Select Type</option> -->
+                <!-- <select ng-change="selPageType()" ng-model="pageType" class="custom-select col-2">
                     <option ng-repeat="item in pageTypes track by $index" value="{{item.value}}">{{item.name}}
                     </option>
-                </select>
+                </select> -->
 
                 <hr>
                 <table id="list-page" class="table table-sm table-hover mb-0" dnd-list="data.items"

@@ -259,14 +259,13 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                             });
                         }, function (err) {
 
-                            var t = { isSucceed: false, errors: [err.status] };
+                            var t = { isSucceed: false };
 
                             authService.logOut();
                             authService.authentication.token = null;
                             authService.authentication.refresh_token = null;
                             authService.referredUrl = $location.$$url;
-                            $rootScope.showLogin();
-                            // window.top.location.href = '/security/login';
+                            window.top.location.href = '/security/login';
                             return t;
                         }
                         );
