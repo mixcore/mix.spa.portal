@@ -33,7 +33,6 @@
 
                     <div ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
                         <div ng-if="$ctrl.attrData && field" ng-switch="field.name">
-                            {{$ctrl.attrData}}
                             <div class="text-muted" ng-switch-when="menu_items">
                                 <mix-field-editor create-url="'/portal/navigation/create'" update-url="'/portal/navigation/details'" model="$ctrl.attrData"
                                     field="field"></mix-field-editor>

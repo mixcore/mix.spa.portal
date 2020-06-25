@@ -27,7 +27,7 @@
                 ng-change="$ctrl.updateStringValue($ctrl.attributeValue.dataType)" type="time"
                 ng-model="$ctrl.attributeValue.dateObj" placeholder="{{$ctrl.attributeValue.field.title}}">
         </div>
-        <div class="text-muted" ng-switch-when="7">
+        <div class="text-muted" ng-switch-when="text">
             <!--Text-->
             <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="text"
                 ng-model="$ctrl.attributeValue.stringValue" placeholder="{{$ctrl.attributeValue.field.title}}">

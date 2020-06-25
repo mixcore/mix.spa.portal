@@ -4,21 +4,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <filter-list request="$ctrl.request" callback="$ctrl.loadData(pageIndex)"></filter-list>
-                <div class="row">
-                    <div class="col-12">
-                        <select class="form-control col-md-3 form-control-sm" ng-model="type" ng-change="$ctrl.loadData(0)">
-                            <option ng-repeat="item in $ctrl.types track by $index" value="{{item}}">
-                                {{item}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+                <select class="form-control form-control-sm col-3 mx-3" ng-model="$ctrl.type" ng-change="$ctrl.loadData(0)">
+                    <option ng-repeat="item in $ctrl.types track by $index" value="{{item}}">
+                        {{item}}
+                    </option>
+                </select>
             </div>
             <div class="modal-body">
                 <div class="" ng-if="$ctrl.data.items.length>0">
 
                     <ul class="p-0 m-0">
-                        <li ng-repeat="nav in $ctrl.data.items" class="container border-left-0 border-right-0 py-1 rounded-0"
+                        <li ng-repeat="nav in $ctrl.data.items"
+                            class="container border-left-0 border-right-0 py-1 rounded-0"
                             ng-class="{'selected': selected === nav.isActive}">
                             <div class="row">
                                 <!-- <div class="drag-header" style="cursor:grab; width: 15px;">
@@ -40,9 +37,9 @@
                         </li>
                     </ul>
                 </div>
-                <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize" total="$ctrl.data.totalItems"
-                    ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="$ctrl.loadData(page-1)"
-                    scroll-top="true">
+                <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize"
+                    total="$ctrl.data.totalItems" ul-class="pagination justify-content-end m-0" a-class="page-link"
+                    paging-action="$ctrl.loadData(page-1)" scroll-top="true">
                 </paging>
             </div>
             <div class="modal-footer">

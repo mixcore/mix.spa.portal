@@ -105,7 +105,7 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
             $scope.request.toDate = dt.toISOString();
         }
         var resp = await service.getList($scope.request, params);
-        if (resp.isSucceed) {
+        if (resp && resp.isSucceed) {
             $scope.data = resp.data;
             $.each($scope.data, function (i, data) {
                 $.each($scope.activedDatas, function (i, e) {

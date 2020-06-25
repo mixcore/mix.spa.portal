@@ -11,7 +11,7 @@ modules.component('propertiesStructure', {
                 defaultValue: null,
                 options: [],
                 priority: 0,
-                dataType: 7,
+                dataType: 'Text',
                 isGroupBy: false,
                 isSelect: false,
                 isDisplay: true,

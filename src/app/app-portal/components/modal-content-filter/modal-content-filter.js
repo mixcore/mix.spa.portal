@@ -7,11 +7,13 @@
         callback: '&?',
         save: '&?'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostRestService', 'PageRestService',
-        function ($rootScope, $scope, ngAppSettings, postService, pageService) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 
+            'PostRestService', 'PageRestService', 'ModuleRestService',
+        function ($rootScope, $scope, ngAppSettings, postService, pageService, moduleService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
-            ctrl.types = ['Page', 'Post'];
+            ctrl.types = ['Page', 'Post', 'Module'];
+            ctrl.moduleId = null;
             ctrl.type = 'Page';
             ctrl.navs = [];
             ctrl.data = {
@@ -23,17 +25,17 @@
                     if (ctrl.initData) {
                         ctrl.data = ctrl.initData;
                     } else {
-                        if(!ctrl.data.items.length){
+                        if (!ctrl.data.items.length) {
                             ctrl.loadData();
                         }
-                    }    
+                    }
                 });
             };
             ctrl.closeDialog = function () {
                 $('#modal-content-filter').modal('hide');
             };
             ctrl.loadData = async function (pageIndex) {
-                $rootScope.isBusy = true;
+                
                 ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
                 if (pageIndex !== undefined) {
@@ -50,28 +52,13 @@
 
                 switch (ctrl.type) {
                     case 'Page':
-                        var response = await pageService.getList(ctrl.request);
-                        if (response.isSucceed) {
-                            ctrl.data = response.data;
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        } else {
-                            $rootScope.showErrors(response.errors);
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        }
+                        ctrl.loadPages();
                         break;
                     case 'Post':
-                        var response = await postService.getList(ctrl.request);
-                        if (response.isSucceed) {
-                            ctrl.data = response.data;
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        } else {
-                            $rootScope.showErrors(response.errors);
-                            $rootScope.isBusy = false;
-                            $scope.$apply();
-                        }
+                        ctrl.loadPosts();
+                        break;
+                    case 'Module':
+                        ctrl.loadModules();
                         break;
                 }
             };
@@ -86,6 +73,45 @@
                     case 'Module':
                         ctrl.goToPath(`/portal/module/details/${nav.id}`);
                         break;
+                }
+            }
+            ctrl.loadModules = async function () {
+                $rootScope.isBusy = true;
+                var response = await moduleService.getList(ctrl.request);
+                if (response.isSucceed) {
+                    ctrl.data = response.data;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                } else {
+                    $rootScope.showErrors(response.errors);
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
+            }
+            ctrl.loadPosts = async function () {
+                $rootScope.isBusy = true;
+                var response = await postService.getList(ctrl.request);
+                if (response.isSucceed) {
+                    ctrl.data = response.data;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                } else {
+                    $rootScope.showErrors(response.errors);
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                }
+            }
+            ctrl.loadPages = async function () {
+                $rootScope.isBusy = true;
+                var response = await pageService.getList(ctrl.request);
+                if (response.isSucceed) {
+                    ctrl.data = response.data;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
+                } else {
+                    $rootScope.showErrors(response.errors);
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
                 }
             }
             ctrl.select = function (nav) {
