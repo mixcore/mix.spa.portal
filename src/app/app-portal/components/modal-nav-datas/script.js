@@ -67,7 +67,7 @@
                         //     postId: e.id,
                         //     image: e.thumbnailUrl,
                         //     specificulture: e.specificulture,
-                        //     status: 2,
+                        //     status: 'Published',
                         //     isActived: false
                         // };
                         // item[ctrl.srcField] = ctrl.srcId;

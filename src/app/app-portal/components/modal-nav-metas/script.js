@@ -45,7 +45,7 @@
                     parentType: ctrl.parentType,
                     attributeSetId: ctrl.attributeSetId,
                     attributeSetName: ctrl.attributeSetName,
-                    status: 2,
+                    status: 'Published',
                     attributeData: null
                 };
                 if ($routeParams.parentId) {

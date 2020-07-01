@@ -38,7 +38,7 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                         isActived: false,
                         sourceId: $scope.activedData.id,
                         specificulture: $scope.activedData.specificulture,
-                        status: 2
+                        status: 'Published'
                     };
                     $scope.activedData.postNavs.push(obj);
                 });

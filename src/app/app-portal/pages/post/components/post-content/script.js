@@ -53,7 +53,7 @@ app.component('postContent', {
                             isActived: existed !== null,
                             sourceId: ctrl.model.id,
                             specificulture: ctrl.model.specificulture,
-                            status: 2
+                            status: 'Published'
                         };
 
                         ctrl.relatedData.items.push(obj);
