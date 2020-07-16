@@ -98,6 +98,19 @@ modules.component('propertiesStructure', {
                     ctrl.columns.splice(index, 1);
                 }
             }
+            ctrl.dragStart = function (index) {
+                ctrl.dragStartIndex = index;
+            };
+            ctrl.updateOrders = function (index) {
+                if (index > ctrl.dragStartIndex) {
+                    ctrl.columns.splice(ctrl.dragStartIndex, 1);
+                } else {
+                    ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
+                }
+                angular.forEach(ctrl.columns, function (e, i) {
+                    e.priority = i;
+                });
+            };
         }],
     bindings: {
         header: '=',

@@ -11,7 +11,8 @@
             <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No field has been created for this attribute
             yet!
         </div>
-        <div dnd-list="$ctrl.fields" dnd-inserted="$ctrl.updateOrders(index)" 
+        <div dnd-list="$ctrl.fields" 
+            dnd-inserted="$ctrl.updateOrders(index)" 
             ng-if="$ctrl.fields.length">
             <div ng-repeat="col in $ctrl.fields track by $index" 
                 dnd-draggable="col" dnd-type="'col'"

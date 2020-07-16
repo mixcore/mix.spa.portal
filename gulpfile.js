@@ -106,7 +106,7 @@ paths.framework = {
         `${paths.nodeModules}angular-aria/angular-aria.min.js`,
         `${paths.nodeModules}angular-messages/angular-messages.min.js`,
         `${paths.nodeModules}angular-local-storage/dist/angular-local-storage.min.js`,
-        `${paths.scriptLib}angularjs/**/*.min.js`,
+        `${paths.scriptLib}angularjs/**/*.min.js`
         // `${paths.scriptLib}lazysizes-5.2.0/lazysizes.min.js`,
         // `${paths.scriptLib}clipboard.js-2.0.4/clipboard.min.js`
     ],

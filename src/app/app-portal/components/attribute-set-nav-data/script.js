@@ -7,31 +7,34 @@ modules.component('attributeSetNavData', {
         onUpdate:'&?',
         onDelete:'&?',
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetDataPortalService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RestRelatedAttributeDataPortalService', 
+            'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, ngAppSettings, navService, dataService) {
             var ctrl = this;
-            ctrl.data = [];
+            ctrl.data = null;
             ctrl.selected = null;
             ctrl.navRequest = angular.copy(ngAppSettings.request);            
             ctrl.setRequest = angular.copy(ngAppSettings.request);            
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = function(){
-                navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default']).then(resp=>{
-                    ctrl.defaultData = resp;
+                navService.getDefault([ctrl.parentId, ctrl.parentType, 'default']).then(resp=>{
+                    ctrl.defaultData = resp.data;
+                    ctrl.defaultData.parentId = ctrl.parentId;
+                    ctrl.defaultData.parentType = ctrl.parentType;
                     ctrl.selected = angular.copy(ctrl.defaultData);
                     ctrl.loadData();
                 });
-                
+                ctrl.navRequest.parentType = ctrl.parentType;
+                ctrl.navRequest.parentId = ctrl.parentId;
             };
             ctrl.selectPane = function(pane){
             };
             ctrl.loadData = function(){
-                navService.getList('portal', ctrl.navRequest, 
-                    ctrl.nav.data.id, ctrl.parentType, ctrl.parentId)
+                navService.getList(ctrl.navRequest)
                     .then(resp=>{
                     if (resp) 
                     {
-                        ctrl.data = resp;
+                        ctrl.data = resp.data;
                         $scope.$apply();
                     } else {
                         if (resp) {
@@ -52,19 +55,20 @@ modules.component('attributeSetNavData', {
                 ctrl.selected.data = data;
                 dataService.save(data).then(resp=>{
                     if(resp.isSucceed){
-                        ctrl.selected.id = resp.data.id;
+                        ctrl.selected.dataId = resp.data.id;
                         ctrl.selected.attributeSetId = resp.data.attributeSetId;
-                        ctrl.selected.data = resp.data;
-                        navService.save('portal', ctrl.selected).then(resp=>{
+                        ctrl.selected.attributeSetName = resp.data.attributeSetName;
+                        ctrl.selected.attributeData = resp.data;
+                        navService.save(ctrl.selected).then(resp=>{
                             if(resp.isSucceed){
                                 var tmp = $rootScope.findObjectByKey(ctrl.data, ['parentId', 'parentType', 'id'], 
                                     [resp.data.parentId, resp.data.parentType, resp.data.id]);
                                 if(!tmp){
-                                    ctrl.data.push(resp.data);
+                                    ctrl.data.items.push(resp.data);
                                     var e = $(".pane-data-" + ctrl.nav.data.id)[0];
                                     angular.element(e).triggerHandler('click');
                                 }
-                                ctrl.selected = angular.copy(ctrl.defaultData);
+                                ctrl.selected = angular.copy(ctrl.defautData);
                                 $rootScope.isBusy = false;
                                 $scope.$apply();
                             }else{
@@ -87,7 +91,7 @@ modules.component('attributeSetNavData', {
             };
             ctrl.removeDataConfirmed = async function(nav){
                 $rootScope.isBusy = true;
-                var result = await navService.delete([nav.parentId, nav.parentType, nav.id]);
+                var result = await navService.delete([nav.id]);
                 if (result.isSucceed) {
                     $rootScope.removeObjectByKey(ctrl.data, 'id', nav.id);
                     $rootScope.isBusy = false;

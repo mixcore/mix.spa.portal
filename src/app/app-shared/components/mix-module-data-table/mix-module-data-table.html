@@ -15,7 +15,7 @@
                 <div class="col-1">
                     <!-- <small class="fa fa-grip-vertical text-black-50 align-middle"></small> -->
                 </div>
-                <div scope="col" class="col-sm-2" ng-repeat="col in $ctrl.columns track by $index">
+                <div scope="col" ng-if="$index < 3" class="col-sm-2" ng-repeat="col in $ctrl.columns track by $index">
                     <strong ng-bind="col.title">
                     </strong>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="col-1 drag-header" style="cursor:grab;">
                     <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
                 </div>
-                <div class="col-2 small" ng-repeat="col in $ctrl.columns track by $index" style="overflow:hidden">
+                <div class="col-2 small" ng-if="$index < 3" ng-repeat="col in $ctrl.columns track by $index" style="overflow:hidden">
                     <module-data-preview data="nav.jItem[col.name]" width="50" class="mb-0"></module-data-preview>
                 </div>
                 <div class="col-2">

@@ -611,7 +611,8 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService',
         };
         $rootScope.showLogin = function (ev) {
             $rootScope.isBusy = false;
-            $('#login-popup').modal('show');
+            window.top.location.href = '/security/login';
+            // $('#login-popup').modal('show');
         };
         $rootScope.showContentFilter = function (callback) {
             $rootScope.contentFilterCallback = callback;

@@ -19,6 +19,8 @@ modules.component('attributeSetNavValues', {
             ctrl.selectedProp = null;
             ctrl.request = angular.copy(ngAppSettings.restRequest);
             ctrl.request.orderBy = 'priority';
+            ctrl.request.query = '{}';
+
             ctrl.request.direction = 0;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
@@ -76,7 +78,7 @@ modules.component('attributeSetNavValues', {
                 ctrl.request.attributeSetId = ctrl.attributeSetId || 0;
                 ctrl.request.attributeSetName = ctrl.attributeSetName || null;
                 ctrl.request.parentId = ctrl.parentId;
-                ctrl.request.parentType = 1;
+                ctrl.request.parentType = ctrl.parentType;
                 navService.getList(ctrl.request)
                     .then(resp => {
                         if (resp) {

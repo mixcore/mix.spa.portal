@@ -335,7 +335,7 @@ app.factory('CommonService', ['$location', '$http', '$rootScope', 'AuthService',
                             });
                         }, function (err) {
 
-                            var t = { isSucceed: false, status: err.status, errors: [err] };
+                            var t = { isSucceed: false };
 
                             authService.logOut();
                             authService.authentication.token = null;
