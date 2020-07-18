@@ -1,6 +1,6 @@
 ﻿
 modules.component('attributeValueEditor', {
-    templateUrl: '/app/app-client/components/attribute-value-editor/view.html',
+    templateUrl: '/app/app-portal/components/attribute-value-editor/view.html',
     bindings: {
         attributeValue: '=?',
         parentType: '=?',

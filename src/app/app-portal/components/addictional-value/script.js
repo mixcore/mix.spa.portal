@@ -3,11 +3,9 @@ modules.component('addictionalValue', {
     bindings: {                
         model: '='
     },
-    controller: ['$rootScope', '$scope', 'BaseService',
-        function ($rootScope, $scope, baseService ) {
+    controller: ['$rootScope', '$scope', 'RestAttributeValuePortalService',
+        function ($rootScope, $scope, valueService ) {
             var ctrl = this;
-            var valueService = angular.copy(baseService);
-            valueService.init('attribute-set-value');
             ctrl.value = {};
             ctrl.field = { dataType: 'Text' };
             ctrl.selectedCol = null;

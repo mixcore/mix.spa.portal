@@ -9,7 +9,7 @@ modules.component('addictionalField', {
             var valueService = angular.copy(baseService);
             valueService.init('attribute-set-value');
             ctrl.value = {};
-            ctrl.field = { dataType: 7 };
+            ctrl.field = { dataType: 'Text' };
             ctrl.selectedCol = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
