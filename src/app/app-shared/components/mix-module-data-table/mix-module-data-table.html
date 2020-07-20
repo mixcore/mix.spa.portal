@@ -37,7 +37,7 @@
                 <div class="col-1 drag-header" style="cursor:grab;">
                     <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
                 </div>
-                <div class="col-2 small" ng-if="$index < 3" ng-repeat="col in $ctrl.columns track by $index" style="overflow:hidden">
+                <div class="col-2 small preview-container" ng-if="$index < 3" ng-repeat="col in $ctrl.columns track by $index">
                     <module-data-preview data="nav.jItem[col.name]" width="50" class="mb-0"></module-data-preview>
                 </div>
                 <div class="col-2">

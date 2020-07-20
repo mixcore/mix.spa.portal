@@ -1,6 +1,6 @@
 <div class="row pb-1">
     <h6 ng-if="$ctrl.header" class="col-3">{{$ctrl.header}}:</h6>
-    <div ng-switch="$ctrl.data.dataType.toLowerCase()" class="col-9">
+    <div ng-switch="$ctrl.data.dataType.toLowerCase()" class="col-9 preview-container">
         <div ng-switch-default>
             <p ng-bind="$ctrl.data.value">
             </p>

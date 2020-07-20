@@ -1,6 +1,7 @@
 ﻿modules.component('mixModuleDataTable', {
     templateUrl: '/app/app-shared/components/mix-module-data-table/mix-module-data-table.html',
-    controller: ['$rootScope', '$scope', '$location', 'ngAppSettings', function ($rootScope, $scope, $location, ngAppSettings) {
+    controller: ['$rootScope', '$scope', '$location', 'ngAppSettings', 'SharedModuleDataService',
+        function ($rootScope, $scope, $location, ngAppSettings, dataService) {
         var ctrl = this;        
         ctrl.colWidth = 3;
         ctrl.init = function () {
@@ -22,9 +23,23 @@
             for (var i = 0; i < items.length; i++) {
                 items[i].priority = ctrl.min + i;
             }
-            ctrl.onUpdateInfos({ items: items });
+            ctrl.updateDataInfos(items);
         };
-        
+        ctrl.updateDataInfos = async function (items) {
+            $rootScope.isBusy = true;
+            var resp = await dataService.updateInfos(items);
+            if (resp && resp.isSucceed) {
+                $scope.activedPage = resp.data;
+                $rootScope.showMessage('success', 'success');
+                $rootScope.isBusy = false;
+                $scope.$apply();
+            }
+            else {
+                if (resp) { $rootScope.showErrors(resp.errors); }
+                $rootScope.isBusy = false;
+                $scope.$apply();
+            }
+        };
         ctrl.dragoverCallback = function (index, item, external, type) {
             //console.log('drop ', index, item, external, type);
         }
@@ -56,7 +71,7 @@
         editUrl: '=',
         columns: '=',
         onDelete: '&',
-        onUpdateInfos: '&',
+        // onUpdateInfos: '&',
         onUpdateChildInfos: '&',
     }
 });

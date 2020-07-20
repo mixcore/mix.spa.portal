@@ -113,7 +113,9 @@
                     </a>
                 </div>
                 <div class="col-md-12">                    
-                    <attribute-set-nav-values attribute-set-id="$ctrl.field.referenceId" parent-id="$ctrl.model.id"
+                    <attribute-set-nav-values attribute-set-id="$ctrl.field.referenceId" 
+                        parent-id="$ctrl.model.id"
+                        parent-type="'Set'"
                         create-url="$ctrl.createUrl" update-url="$ctrl.updateUrl"
                         on-update="$ctrl.updateRefData(data)"
                         on-delete="$ctrl.removeRefData(data)">
