@@ -7,7 +7,7 @@
                 <filter-list request="request" callback="getList(pageIndex)"></filter-list>
             </div>
             <div class="col-md-12 text-right">
-                <a href="/portal/post/create?page_id={{pageId}}" class="btn btn-sm btn-primary">
+                <a href="/portal/post/create?page_ids={{pageId}}" class="btn btn-sm btn-primary">
                     <i class="fas fa-plus"></i> Create new post
                 </a>
                 <a href="#" data-toggle="modal" data-target="#modal-nav-posts-{{pageId}}" class="btn btn-sm btn-primary">
@@ -86,7 +86,7 @@
                                 <span class="fas fa-eye"></span>
                             </a>
 
-                            <a ng-click="remove(item.pageId,item.postId);" class="btn btn-link text-danger">
+                            <a ng-click="remove(item.id);" class="btn btn-link text-danger">
                                 <span class="fas fa-trash-alt"></span>
                             </a>
                         </div>

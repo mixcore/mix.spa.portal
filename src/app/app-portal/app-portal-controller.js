@@ -36,14 +36,13 @@ app.controller('AppPortalController', ['$rootScope', '$scope', 'ngAppSettings', 
                                 if (!$scope.isAdmin) {
 
                                     roleServices.getPermissions().then(function (response) {
-
                                         if (response && response.isSucceed) {
 
                                             $scope.isInit = true;
                                             $rootScope.isInit = true;
                                             $scope.roles = response.data;
                                             $rootScope.isBusy = false;
-                                            // $scope.$apply();
+                                            $scope.$apply();
                                         }
                                     });
                                 }

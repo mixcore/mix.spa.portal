@@ -36,9 +36,9 @@ app.controller('PagePostController',
                 $rootScope.showConfirm($scope, 'removeConfirmed', [pageId, postId], null, 'Remove', 'Deleted data will not able to recover, are you sure you want to delete this item?');
             };
 
-            $scope.removeConfirmed = async function (pageId, postId) {
+            $scope.removeConfirmed = async function (id) {
                 $rootScope.isBusy = true;
-                var result = await service.delete(pageId, postId);
+                var result = await service.delete(id);
                 if (result.isSucceed) {
                     if ($scope.removeCallback) {
                         $rootScope.executeFunctionByName('removeCallback', $scope.removeCallbackArgs, $scope)

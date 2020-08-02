@@ -3,6 +3,8 @@ app.controller('ModuleDataController',
     ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'ModuleDataRestService', 'ModuleRestService', 'CommonService',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, moduleService, commonService) {
             BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            $scope.request.orderBy = 'Priority';
+            $scope.request.direction = 'Asc';
             $scope.cates = ['Site', 'System'];
             $scope.others = [];
             $scope.settings = $rootScope.globalSettings;

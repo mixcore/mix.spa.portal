@@ -41,14 +41,14 @@
                         </select>
                     </div>
                     <div class="form-groupx col-md-4">
-                        <div class="" ng-if="col.dataType != 'reference'">
+                        <div class="" ng-if="col.dataType != 'Reference'">
                             <small class="control-label">Value</small>
                             <input ng-model="col.defaultValue" placeholder="Default Value"
                                 class="form-control form-control-sm">
                             <!-- <mix-value-editor string-value="col.defaultValue" type="col.dataType">
                             </mix-value-editor> -->
                         </div>
-                        <div ng-if="col.dataType == 'reference'">
+                        <div ng-if="col.dataType == 'Reference'">
                             <small>
                                 Attribute
                                 [ <a ng-click="$ctrl.showReferences(col)" class="btn-link text-primary">Select</a> ]

@@ -61,7 +61,6 @@ paths.initApp = {
 
 paths.securityApp = {
     src: [
-        `${paths.nodeModules}jquery/dist/jquery.min.js`,
         paths.webapp + "app-security/app.js",
         paths.webapp + "app-security/app.route.js",
         paths.webapp + "app-security/pages/**/*.js"

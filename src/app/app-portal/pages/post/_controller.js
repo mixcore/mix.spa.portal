@@ -44,8 +44,7 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                 });
                 $rootScope.isBusy = false;
                 $scope.$apply();
-            }
-            else {
+            } else {
                 $rootScope.showErrors(getData.errors);
                 $rootScope.isBusy = false;
                 $scope.$apply();
@@ -69,18 +68,22 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
             $scope.$apply();
         };
         $scope.getSingleSuccessCallback = function () {
-            var moduleId = $routeParams.module_id;
-            var pageId = $routeParams.page_id;
-            if (moduleId) {
-                var moduleNav = $rootScope.findObjectByKey($scope.activedData.modules, 'moduleId', moduleId);
-                if (moduleNav) {
-                    moduleNav.isActived = true;
+            var moduleIds = $routeParams.module_ids;
+            var pageIds = $routeParams.page_ids;
+            if (moduleIds) {
+                for (var moduleId of moduleIds.split(',')) {
+                    var moduleNav = $rootScope.findObjectByKey($scope.activedData.modules, 'moduleId', moduleId);
+                    if (moduleNav) {
+                        moduleNav.isActived = true;
+                    }
                 }
             }
-            if (pageId) {
-                var pageNav = $rootScope.findObjectByKey($scope.activedData.categories, 'pageId', pageId);
-                if (pageNav) {
-                    pageNav.isActived = true;
+            if (pageIds) {
+                for (var pageId of pageIds.split(',')) {
+                    var pageNav = $rootScope.findObjectByKey($scope.activedData.categories, 'pageId', pageId);
+                    if (pageNav) {
+                        pageNav.isActived = true;
+                    }
                 }
             }
             if ($routeParams.attr_set_ids) {
@@ -133,8 +136,7 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                 $scope.activedData.urlAliases.push(getAlias.data);
                 $rootScope.isBusy = false;
                 $scope.$apply();
-            }
-            else {
+            } else {
                 $rootScope.showErrors(getAlias.errors);
                 $rootScope.isBusy = false;
                 $scope.$apply();

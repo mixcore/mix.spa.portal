@@ -90,6 +90,14 @@
 
                     </div>
                 </div>
+                <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_category'"
+                    field-display="'title'"
+                    selected-list="activedData.sysCategories"></modal-nav-metas>
+                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'"
+                    field-display="'title'" selected-list="activedData.sysTags"></modal-nav-metas>
+
                 <custom-image header="'Image'" type="'Posts'" folder="activedData.seoName" src-url="activedData.imageUrl"
                     src="activedData.image" auto="'true'"></custom-image>
                 <custom-image header="'Thumnail'" type="'Posts'" folder="activedData.seoName" src-url="activedData.thumbnailUrl"
