@@ -54,16 +54,26 @@
                                 <input ng-model="activedData.createdBy" class="form-control" readonly="readonly">
                             </div>
                         </div>
+                        <div class="form-group mb-0">
+                            <label class="control-label">Template</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
+                                </div>
+                                <select class="custom-select"
+                                    ng-options="item as item.fileName for item in activedData.templates track by item.id"
+                                    ng-model="activedData.view"></select>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
-                    parent-type="'2'" type="''" attribute-set-name="'sys_category'"
-                    field-display="'title'"
-                    selected-list="activedData.sysCategories"></modal-nav-metas>
-                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id"
-                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'"
-                    field-display="'title'" selected-list="activedData.sysTags"></modal-nav-metas>
+                    is-open="'show'" parent-type="'2'" type="''" attribute-set-name="'sys_category'"
+                    field-display="'title'" selected-list="activedData.sysCategories"></modal-nav-metas>
+                <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" is-open="'show'"
+                    parent-type="'2'" type="''" attribute-set-name="'sys_tag'" field-display="'title'"
+                    selected-list="activedData.sysTags"></modal-nav-metas>
 
                 <cultures is-clone="activedData.isClone" data="activedData.cultures"></cultures>
                 <div class="card mb-4">
@@ -77,8 +87,8 @@
 
                     </h6>
                     <div id="slug-tab" class="card-body collapse">
-                        <url-alias ng-repeat="alias in activedData.urlAliases" index="$index" url-alias="alias"
-                            remove-callback="removeAliasCallback(index)"></url-alias>
+                        <url-alias ng-repeat="alias in activedData.urlAliases" ng-if="alias" index="$index"
+                            url-alias="alias" remove-callback="removeAliasCallback(index)"></url-alias>
                     </div>
                 </div>
                 <!-- 
@@ -101,8 +111,6 @@
                             src-url="activedData.thumbnailUrl" src="activedData.thumbnail" auto="'true'"></custom-image>
                     </pane-v>
                 </tabs-v>
-
-
             </section>
         </div>
     </form>

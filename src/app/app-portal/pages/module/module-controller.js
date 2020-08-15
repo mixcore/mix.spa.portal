@@ -25,6 +25,10 @@ app.controller('ModuleController', ['$scope', '$rootScope', 'ngAppSettings', '$l
                     e.attributeData.obj.isActived = true;
                 });
             }
+            
+            if($routeParams.template){
+                $scope.activedData.view = $rootScope.findObjectByKey($scope.activedData.templates, 'fileName', $routeParams.template)
+            }
         };
         $scope.getListByType = async function (pageIndex) {
             $scope.request.query = '?type=' + $scope.type;

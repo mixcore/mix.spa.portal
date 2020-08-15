@@ -47,7 +47,9 @@ app.controller('PageController', ['$scope', '$rootScope', 'ngAppSettings', '$loc
                     $scope.selectedCategories.push(e.attributeData.obj);
                 });
             }
-
+            if($routeParams.template){
+                $scope.activedData.view = $rootScope.findObjectByKey($scope.activedData.templates, 'fileName', $routeParams.template)
+            }
         }
         $scope.getListSuccessCallback = function () {
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';

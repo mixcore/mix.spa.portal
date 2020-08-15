@@ -12,6 +12,7 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
     };
     $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
     $scope.activedData = null;
+    $scope.isScrollTop = true;
     $scope.defaultId = 0;
     $scope.data = null;
     $scope.isInit = false;
@@ -117,7 +118,9 @@ function BaseRestCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) 
             if ($scope.getListSuccessCallback) {
                 $scope.getListSuccessCallback();
             }
-            $("html, body").animate({ "scrollTop": "0px" }, 500);
+            if($scope.isScrollTop){
+                $("html, body").animate({ "scrollTop": "0px" }, 500);
+            }
             $rootScope.isBusy = false;
             $scope.$apply();
         } else {

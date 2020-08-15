@@ -1,39 +1,16 @@
 ﻿'use strict';
 app.controller('PermissionController',
-    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 'PermissionService', 'CommonService',
-        function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service, commonService) {
-            BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
-            $scope.request.query = "level=0";
-            $scope.miOptions=ngAppSettings.miIcons;
-            $scope.columns = [
-                {
-                    title: 'Keyword',
-                    name: 'textKeyword',
-                    filter: true,
-                    type: 'string'
-                },
-                {
-                    title: 'Default',
-                    name: 'textDefault',
-                    filter: true,
-                    type: 'string'
-                },
-                {
-                    title: 'Url',
-                    name: 'url',
-                    filter: true,
-                    type: 'string'
-                },
-                {
-                    title: 'Created Date',
-                    name: 'createdDateTime',
-                    filter: true,
-                    type: 'string'
-                },
-            ];
+    ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$location', 
+        'CommonService', 'PermissionService', 'RestPortalPageNavigationService',
+    function ($scope, $rootScope, ngAppSettings, $routeParams, $location, 
+        commonService, service, navService) {
+            BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+            $scope.request.level = 0;
+            $scope.miOptions = ngAppSettings.miIcons;
+           
             $scope.initCurrentPath = async function(){
                 
-                var resp = await service.getSingle([null, 'portal']);
+                var resp = await service.getDefault();
                 if (resp && resp.isSucceed) { 
                     $scope.activedData = resp.data;
                     $scope.activedData.url = $location.path();
@@ -52,6 +29,16 @@ app.controller('PermissionController',
                 }
                 
             };
+            $scope.getSingleSuccessCallback = async () =>{
+                $scope.request.level = 0;
+                $scope.request.pageSize = 5;
+                $scope.isScrollTop = false;
+                await $scope.getList();
+                $scope.getListSuccessCallback = async ()=>{
+                    $scope.request.keyword = '';
+                    $scope.$apply();
+                }
+            }
             $scope.saveSuccessCallback = function(){
                 $scope.getSingle();                
             }

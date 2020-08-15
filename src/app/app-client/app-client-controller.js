@@ -24,6 +24,15 @@
                 $rootScope.globalSettingsService = globalSettingsService;
                 $scope.changeLang = $rootScope.changeLang;
                 $scope.init = function (lang) {
+                    jQuery(document).on('click', 'a', function(e){                        
+                        var href = jQuery(this).attr('href');
+                        var target = jQuery(this).attr('target');
+                        if(href && href.indexOf('javascript') == -1 && href.indexOf('#') !== 0 && target !== '_blank' && target !== window.location.href){
+                            e.preventDefault();                            
+                            $scope.$apply($scope.isBusy = true);
+                            window.open(href, target || '_top');
+                        }
+                    });
                     attrDataService.init(attrDataService.modelName, false, lang);
                     if (!$rootScope.isBusy) {
                         $rootScope.isBusy = true;
@@ -184,5 +193,5 @@
                 };
             }]);
 
-
+        
 })(window.angular);

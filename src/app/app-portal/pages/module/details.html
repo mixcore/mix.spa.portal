@@ -55,7 +55,17 @@
                             <input ng-model="activedData.createdBy" class="form-control" readonly="readonly">
                         </div>
                     </div>
-
+                    <div class="form-group mb-0">
+                        <label class="control-label">Template</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
+                            </div>
+                            <select class="custom-select"
+                                ng-options="item as item.fileName for item in activedData.templates track by item.id"
+                                ng-model="activedData.view"></select>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -111,7 +111,9 @@ app.controller('PostController', ['$scope', '$rootScope', '$location', '$filter'
                     $scope.selectedCategories.push(e.attributeData.obj);
                 });
             }
-
+            if($routeParams.template){
+                $scope.activedData.view = $rootScope.findObjectByKey($scope.activedData.templates, 'fileName', $routeParams.template)
+            }
             $scope.activedData.publishedDateTime = $filter('utcToLocalTime')($scope.activedData.publishedDateTime);
         }
         $scope.generateSeo = function () {

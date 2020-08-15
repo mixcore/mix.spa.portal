@@ -7,10 +7,12 @@ app.controller('PagePostController',
             service, postService, commonService) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.cates = ['Site', 'System'];
-            $scope.others=[];
+            $scope.others = [];
             $scope.settings = $rootScope.globalSettings;
-            $scope.pageId = $routeParams.id;
+            $scope.pageId =  $routeParams.page_ids || $routeParams.id;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
+            $scope.createUrl = $routeParams.post_type === 'gallery' ? '/portal/post/create-gallery' : '/portal/post/create';
+            $scope.updateUrl = $routeParams.post_type === 'gallery' ? '/portal/post/gallery-details' : '/portal/post/details';
             $scope.getList = async function () {
                 $rootScope.isBusy = true;
                 var id = $routeParams.id;
@@ -21,8 +23,7 @@ app.controller('PagePostController',
                     $scope.data = response.data;
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                }
-                else {
+                } else {
                     $rootScope.showErrors(response.errors);
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -44,21 +45,19 @@ app.controller('PagePostController',
                         $rootScope.executeFunctionByName('removeCallback', $scope.removeCallbackArgs, $scope)
                     }
                     $scope.getList();
-                }
-                else {
+                } else {
                     $rootScope.showMessage('failed');
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }
             };
 
-            $scope.saveOthers = async function(){                
+            $scope.saveOthers = async function () {
                 var response = await service.saveList($scope.others);
                 if (response.isSucceed) {
                     $scope.getList();
                     $scope.$apply();
-                }
-                else {
+                } else {
                     $rootScope.showErrors(response.errors);
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -67,7 +66,7 @@ app.controller('PagePostController',
             $scope.updateInfos = async function (index) {
                 $scope.data.items.splice(index, 1);
                 $rootScope.isBusy = true;
-                var startIndex = $scope.data.items[0].priority-1;
+                var startIndex = $scope.data.items[0].priority - 1;
                 for (var i = 0; i < $scope.data.items.length; i++) {
                     $scope.data.items[i].priority = startIndex + i + 1;
                 }
@@ -77,11 +76,13 @@ app.controller('PagePostController',
                     $rootScope.showMessage('success', 'success');
                     $rootScope.isBusy = false;
                     $scope.$apply();
-                }
-                else {
-                    if (resp) { $rootScope.showErrors(resp.errors); }
+                } else {
+                    if (resp) {
+                        $rootScope.showErrors(resp.errors);
+                    }
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }
             }
-        }]);
+        }
+    ]);

@@ -347,18 +347,22 @@ app.run(['$http', '$rootScope', 'ngAppSettings', '$location', 'BaseRestService',
         $rootScope.showMessage = function (content, type) {
             var from = 'bottom';
             var align = 'right';
-            $.notify({
-                icon: "fas fa-bell",
-                message: $rootScope.translate(content)
+            if ($ && $.notify) {
+                $.notify({
+                    icon: "fas fa-bell",
+                    message: $rootScope.translate(content)
 
-            }, {
-                type: type,
-                timer: 2000,
-                placement: {
-                    from: from,
-                    align: align
-                }
-            });
+                }, {
+                    type: type,
+                    timer: 2000,
+                    placement: {
+                        from: from,
+                        align: align
+                    }
+                });
+            } else {
+                alert(content);
+            }
         };
         $rootScope.encrypt = function (message) {
             var keySize = 256;
