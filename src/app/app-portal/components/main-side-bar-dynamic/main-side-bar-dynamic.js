@@ -1,16 +1,40 @@
-﻿modules.component('mainSideBarDynamic', {
-    templateUrl: '/app/app-portal/components/main-side-bar-dynamic/main-side-bar-dynamic.html',
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 'RoleService', 'TranslatorService', function ($rootScope, $scope, ngAppSettings, roleServices, translatorService) {
-        var ctrl = this;
-        ctrl.init = function () {
+﻿modules.component("mainSideBarDynamic", {
+  templateUrl:
+    "/app/app-portal/components/main-side-bar-dynamic/main-side-bar-dynamic.html",
+  controller: [
+    "$rootScope",
+    "$scope",
+    "ngAppSettings",
+    "RoleService",
+    "TranslatorService",
+    "AuthService",
+    function (
+      $rootScope,
+      $scope,
+      ngAppSettings,
+      roleServices,
+      translatorService,
+      authService
+    ) {
+      var ctrl = this;
+      ctrl.init = function () {
+        roleServices.getPermissions().then(function (response) {
+          if (response && response.isSucceed) {
+            ctrl.isInit = true;
+            ctrl.roles = response.data;
             if (ctrl.roles) {
-                ctrl.role = ctrl.roles[0];
-            }    
-        };
-    }],
-    bindings: {
-        roles: '=',
-        activedRole: '=',
-        translate: '&'
-    }
+              ctrl.role = ctrl.roles[0];
+            }
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          }
+        });
+      };
+    },
+  ],
+  bindings: {
+    roles: "=",
+    activedRole: "=",
+    translate: "&",
+  },
 });

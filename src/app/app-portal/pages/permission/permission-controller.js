@@ -29,16 +29,6 @@ app.controller('PermissionController',
                 }
                 
             };
-            $scope.getSingleSuccessCallback = async () =>{
-                $scope.request.level = 0;
-                $scope.request.pageSize = 5;
-                $scope.isScrollTop = false;
-                await $scope.getList();
-                $scope.getListSuccessCallback = async ()=>{
-                    $scope.request.keyword = '';
-                    $scope.$apply();
-                }
-            }
             $scope.saveSuccessCallback = function(){
                 $scope.getSingle();                
             }
