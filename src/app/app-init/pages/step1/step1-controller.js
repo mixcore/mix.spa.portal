@@ -81,7 +81,6 @@ app.controller('Step1Controller', ['$scope', '$rootScope', 'ngAppSettings', '$ti
             else {
                 $rootScope.showErrors(["Site name is required"]); 
                 $rootScope.isBusy = false;   
-                $scope.$apply();       
             }  
            
         };
