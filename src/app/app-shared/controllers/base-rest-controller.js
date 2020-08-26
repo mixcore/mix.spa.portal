@@ -185,7 +185,7 @@ function BaseRestCtrl(
         resp = await service.update($scope.activedData.id, $scope.activedData);
       }
       if (resp.isSucceed) {
-        // $scope.activedData = resp.data;
+        $scope.activedData = resp.data;
         $rootScope.showMessage("success", "success");
 
         if ($scope.saveSuccessCallback) {
