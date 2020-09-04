@@ -105,7 +105,7 @@ app.controller("PostController", [
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.activedData.id) {
-        $scope.activedData.detailsUrl = `/portal/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
+        $scope.activedData.detailsUrl = `/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
       }
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {

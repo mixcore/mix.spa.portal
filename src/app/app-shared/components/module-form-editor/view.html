@@ -4,8 +4,7 @@
     ng-if="$ctrl.isShowTitle=='true'"
     ng-bind="$ctrl.fieldTitle"
   ></label>
-
-  <div ng-switch="$ctrl.data.dataType.toLowerCase()">
+  <div ng-if="$ctrl.data" ng-switch="$ctrl.datatype.toLowerCase()">
     <div ng-switch-default>
       <!--custom-->
       <input
