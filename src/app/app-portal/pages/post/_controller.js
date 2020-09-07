@@ -101,7 +101,7 @@ app.controller("PostController", [
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-    $scope.getSingleSuccessCallback = function () {
+    $scope.getSingleSuccessCallback = function () {      
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.activedData.id) {

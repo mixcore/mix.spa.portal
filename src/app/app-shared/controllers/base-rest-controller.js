@@ -272,7 +272,19 @@ function BaseRestCtrl(
       $scope.$apply();
     }
   };
-
+  $scope.clearCache = async function () {
+    if ($scope.activedData) {
+      $rootScope.isBusy = true;
+      var resp = await service.clearCache([$scope.activedData.id]);
+      if (resp.isSucceed) {
+        $rootScope.showMessage("success", "success");
+      } else {
+        $rootScope.showErrors(resp.errors);
+      }
+      $rootScope.isBusy = false;
+      $scope.$apply();
+    }
+  };
   $scope.shortString = function (msg, max) {
     if (msg) {
       var data = decodeURIComponent(msg);
