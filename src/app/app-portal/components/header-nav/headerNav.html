@@ -76,16 +76,13 @@
     <li class="nav-item dropdown mr-2">
       <!-- <div class="language-switcher portal"></div> -->
       <a
-        class="nav-link p-2"
-        href="#"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="true"
+        class="btn nav-link p-2"
+        ng-click="$ctrl.showLanguages = !$ctrl.showLanguages"
       >
         <span class="flag-icon {{$ctrl.settings.langIcon}}"></span>
       </a>
-      <div class="dropdown-menu dropdown-menu-right">
+      <div class="dropdown-menu dropdown-menu-right"
+        ng-class="{show: $ctrl.showLanguages}">
         <a
           class="dropdown-item"
           href=""
