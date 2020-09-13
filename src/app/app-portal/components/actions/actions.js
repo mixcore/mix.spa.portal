@@ -6,7 +6,7 @@
     "$location",
     function ($rootScope, $scope, $location) {
       var ctrl = this;
-      ctrl.translate = $rootScope.translate;
+      ctrl.visible = $rootScope.visible;
       ctrl.back = function () {
         ctrl.backUrl = ctrl.backUrl || "/admin";
         $location.url(ctrl.backUrl);

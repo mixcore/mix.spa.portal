@@ -173,6 +173,13 @@ modules.component("attributeSetNavValues", {
           $scope.$apply();
         }
       };
+      ctrl.view = function (item) {
+        var obj = {
+          fields: ctrl.fields,
+          item: item,
+        };
+        $rootScope.preview("attribute-set-data", obj, null, "modal-lg");
+      };
     },
   ],
 });
