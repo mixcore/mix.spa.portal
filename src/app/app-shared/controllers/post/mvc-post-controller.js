@@ -1,18 +1,18 @@
 "use strict";
-app.controller("MvcModuleDataController", [
+app.controller("MvcPostController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",
   "$routeParams",
   "$location",
-  "RestMvcModuleDataService",
+  "BaseService",
   function (
     $scope,
     $rootScope,
     ngAppSettings,
     $routeParams,
     $location,
-    service
+    baseService
   ) {
     BaseRestCtrl.call(
       this,
@@ -22,6 +22,7 @@ app.controller("MvcModuleDataController", [
       ngAppSettings,
       service
     );
+    $scope.service = null;
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
     $scope.settings = $rootScope.globalSettings;
@@ -30,39 +31,21 @@ app.controller("MvcModuleDataController", [
     $scope.allData = [];
     $scope.editDataUrl = null;
     $scope.canLoadMore = false;
-    $scope.init = async function (moduleId, pageSize) {
-      $scope.moduleId = moduleId;
+    $scope.init = async function (type, parentId, pageSize) {
+      $scope.parentId = parentId; // page / post
+      $scope.service = Object.create(baseService);
+      if(type.toLowerCase() === 'page'){
+        $scope.service.init('page-post/mvc');
+      }
+      else if(type.toLowerCase() === 'page'){
+        $scope.service.init('module-post/mvc');
+      }
+
       $scope.request.module_id = $scope.moduleId;
       $scope.request.pageSize = pageSize ?? $scope.request.pageSize;
       $scope.loadMore(0);
     };
 
-    $scope.getSingle = async function () {
-      $rootScope.isBusy = true;
-      var resp = await service.getSingle($scope.id, "mvc");
-      if (resp && resp.isSucceed) {
-        $scope.activedModuleData = resp.data;
-        $rootScope.initEditor();
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        if (resp) {
-          $rootScope.showErrors(resp.errors);
-        }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
-    };
-    $scope.activeItem = function(arr, item){
-        angular.forEach(arr, function(e){
-            if(e.id!=item.id){
-                e.expanded = false;
-            }
-            else{
-              e.expanded = !e.expanded
-            }
-        })
-    }
     $scope.loadMore = async function (pageIndex) {
       $scope.request.pageIndex = pageIndex ?? $scope.request.pageIndex + 1;
       $rootScope.isBusy = true;
@@ -70,7 +53,7 @@ app.controller("MvcModuleDataController", [
       if (response.isSucceed) {
         $scope.allData = $scope.allData.concat(response.data.items);
         $rootScope.isBusy = false;
-        $scope.canLoadMore = response.data.totalItems > $scope.allData.length;
+        $scope.canLoadMore = response.data.totalItems > (response.data.page * response.data.pageSize);
         $scope.$apply();
       } else {
         $rootScope.showErrors(response.errors);
