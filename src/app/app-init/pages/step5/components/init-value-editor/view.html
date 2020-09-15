@@ -13,14 +13,38 @@
         </div>
         <div ng-switch-when="date">
             <!--date-->
-            <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.data.value"
+            <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="date" 
+            ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.title}}">
         </div>
         <div ng-switch-when="time">
             <!--time-->
-            <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.data.value"
+            <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="time" 
+            ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.title}}">
         </div>
+        <div ng-switch-when="phonenumber">
+      <!--phonenumber-->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        type="tel"
+        ng-model="$ctrl.data.value"
+        placeholder="{{$ctrl.title}}"
+      />
+    </div>
+    <div ng-switch-when="integer|double|currency">
+      <!-- Number -->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        type="number"
+        ng-model="$ctrl.data.value"
+        placeholder="{{$ctrl.title}}"
+      />
+      <label
+        class="control-label"
+        ng-bind="$ctrl.data.value | currency:''"
+      ></label>
+    </div>
         <div ng-switch-when="html">
             <!--Html-->
             <trumbowyg options="{}" ng-model="$ctrl.data.value"></trumbowyg>
@@ -45,11 +69,6 @@
             <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="url" ng-model="$ctrl.data.value"
                 placeholder="{{$ctrl.title}}">
         </div>
-        <div ng-switch-when="url">
-            <!--ImageUrl-->
-            <input placeholder="{{$ctrl.title}}" class="form-control form-control-sm {{$ctrl.inputClass}}" type="url"
-                ng-model="$ctrl.data.value" placeholder="{{$ctrl.title}}">
-        </div>
         <div ng-switch-when="upload">
             <!--upload-->
             <custom-image header="''" type="'Module Data'" folder="'Module Data'"
@@ -63,7 +82,6 @@
         </div>
         <div ng-switch-when="boolean">
             <!--Boolean-->
-
             <input class="{{$ctrl.inputClass}}" type="checkbox" placeholder="{{$ctrl.title}}"
                 ng-model="$ctrl.data.value" ng-checked="$ctrl.data.value=='true'">
         </div>

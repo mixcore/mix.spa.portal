@@ -167,6 +167,10 @@
         ng-model="$ctrl.attributeValue.integerValue"
         placeholder="{{$ctrl.attributeValue.field.title}}"
       />
+      <label
+        class="control-label"
+        ng-bind="$ctrl.attributeValue.integerValue | currency:'':0"
+      ></label>
     </div>
     <div class="text-muted" ng-switch-when="double">
       <!-- Number -->
@@ -176,6 +180,24 @@
         ng-model="$ctrl.attributeValue.doubleValue"
         placeholder="{{$ctrl.attributeValue.field.title}}"
       />
+       <label
+        class="control-label"
+        ng-bind="$ctrl.attributeValue.doubleValue | currency:''"
+      ></label>
+    </div>
+    <div ng-switch-when="currency">
+      <!--Currency-->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        ng-change="$ctrl.updateStringValue($ctrl.type)"
+        type="number"
+        ng-model="$ctrl.doubleValue"
+        placeholder="{{$ctrl.title}}"
+      />
+      <label
+        class="control-label"
+        ng-bind="$ctrl.doubleValue | currency:''"
+      ></label>
     </div>
     <div class="text-muted" ng-switch-when="qrcode">
       <!--Text-->

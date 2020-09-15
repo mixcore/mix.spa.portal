@@ -65,6 +65,19 @@
         placeholder="{{$ctrl.translate($ctrl.field.title)}}"
       />
     </div>
+    <div ng-switch-when="integer|double|currency">
+      <!-- Number -->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        type="number"
+        ng-model="$ctrl.model.obj[$ctrl.field.name]"
+        placeholder="{{$ctrl.title}}"
+      />
+      <label
+        class="control-label"
+        ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"
+      ></label>
+    </div>
     <div class="text-muted" ng-switch-when="html">
       <!--Html-->
       <trumbowyg
@@ -160,15 +173,6 @@
     </div>
     <div class="text-muted" ng-switch-when="tuieditor">
       <tui-editor content="$ctrl.model.obj[$ctrl.field.name]"></tui-editor>
-    </div>
-    <div class="text-muted" ng-switch-when="number">
-      <!-- Number -->
-      <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
-        type="number"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
-      />
     </div>
     <div class="text-muted" ng-switch-when="reference">
       <!-- Referrence -->

@@ -42,15 +42,19 @@
 </div>
 <tabs-v select-callback="selectPane(pane)" class="">
     <pane-v header="Modules Layout">
-        <template-editor folder-type="'Modules'" template="$ctrl.model.view" templates="$ctrl.model.templates">
+        <template-editor folder-type="'Modules'" template="$ctrl.model.view" 
+            templates="$ctrl.model.templates"
+            enable-rename="'true'">
         </template-editor>
     </pane-v>
     <pane-v header="Form Layout">
-        <template-editor folder-type="'Forms'" template="$ctrl.model.formView" templates="$ctrl.model.forms">
+        <template-editor folder-type="'Forms'" template="$ctrl.model.formView" templates="$ctrl.model.forms"
+            enable-rename="'true'">
         </template-editor>
     </pane-v>
     <pane-v header="eDM Layout">
-        <template-editor folder-type="'Edms'" hide-css="'true'" hide-js="'true'" template="$ctrl.model.edmView" templates="$ctrl.model.edms">
+        <template-editor folder-type="'Edms'" hide-css="'true'" hide-js="'true'" template="$ctrl.model.edmView" templates="$ctrl.model.edms"
+            enable-rename="'true'">
         </template-editor>
     </pane-v>
 </tabs-v>

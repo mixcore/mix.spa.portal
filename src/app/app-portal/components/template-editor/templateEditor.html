@@ -36,7 +36,7 @@
             class="form-control sel-filename"
             ng-change="$ctrl.new()"
             type="text"
-            ng-disabled="$ctrl.template.id"
+            ng-disabled="$ctrl.template.id && !$ctrl.enableRename"
             ng-model="$ctrl.template.fileName"
             value="{{$ctrl.template.fileName}}"
             placeholder="Input template name here..."

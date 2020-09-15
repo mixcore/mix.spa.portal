@@ -9,6 +9,28 @@
     <div ng-switch-when="date">
       <span ng-bind="$ctrl.model | utcToLocal:'dd-MM-yyyy'"> </span>
     </div>
+    <div class="text-muted" ng-switch-when="phonenumber">
+      <!--phonenumber-->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        type="tel"
+        ng-model="$ctrl.model"
+        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+      />
+    </div>
+    <div ng-switch-when="integer|double|currency">
+      <!-- Number -->
+      <input
+        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        type="number"
+        ng-model="$ctrl.model"
+        placeholder="{{$ctrl.title}}"
+      />
+      <label
+        class="control-label"
+        ng-bind="$ctrl.model | currency:''"
+      ></label>
+    </div>
     <div ng-switch-when="upload">
       <preview-image img-height="25" img-src="$ctrl.model"></preview-image>
     </div>
