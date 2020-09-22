@@ -17,9 +17,29 @@
     function ($rootScope, $scope, ngAppSettings, $filter, navService) {
       var ctrl = this;
       ctrl.icons = ngAppSettings.icons;
+      ctrl.previousValue = null;
       ctrl.translate = (keyword, isWrap, defaultText) => {
         return $rootScope.translate(keyword, isWrap, defaultText);
       };
+      ctrl.$doCheck = function () {
+        // Generate seo string if create new or not exist
+        if (
+          ctrl.model &&
+          (!ctrl.model.id || !ctrl.model.obj["seo_url"]) &&
+          ctrl.field.name == "title"
+        ) {
+          if (
+            ctrl.model.obj[ctrl.field.name] &&
+            ctrl.previousValue !== ctrl.model.obj[ctrl.field.name]
+          ) {
+            ctrl.previousValue = ctrl.model.obj[ctrl.field.name];
+            ctrl.model.obj["seo_url"] = $rootScope.generateKeyword(
+              ctrl.model.obj[ctrl.field.name],
+              "-"
+            );
+          }
+        }
+      }.bind(ctrl);
       ctrl.refData = null;
       ctrl.defaultDataModel = null;
 

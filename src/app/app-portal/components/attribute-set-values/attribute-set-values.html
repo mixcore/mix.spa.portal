@@ -111,11 +111,16 @@
               <!-- <a ng-click="$ctrl.sendMail(item)" class="btn btn-link text-primary">
                                         <span class="fa fa-envelope"></span>
                                     </a> -->
-              <a
-                class="btn btn-link text-primary"
-                ng-click="$ctrl.view(item)"
-              >
+              <a class="btn btn-link text-primary" ng-click="$ctrl.view(item)">
                 <span class="fa fa-eye"></span
+              ></a>
+              <a
+                ng-if="item.detailsUrl"
+                class="btn btn-link text-primary"
+                target="_blank"
+                href="{{item.detailsUrl}}"
+              >
+                <span class="fa fa-link"></span
               ></a>
               <a
                 ng-click="$ctrl.update(item)"

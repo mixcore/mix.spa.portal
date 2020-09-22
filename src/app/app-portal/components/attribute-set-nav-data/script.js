@@ -13,7 +13,7 @@ modules.component('attributeSetNavData', {
             var ctrl = this;
             ctrl.data = null;
             ctrl.selected = null;
-            ctrl.navRequest = angular.copy(ngAppSettings.request);            
+            ctrl.navRequest = angular.copy(ngAppSettings.request);
             ctrl.setRequest = angular.copy(ngAppSettings.request);            
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = function(){
