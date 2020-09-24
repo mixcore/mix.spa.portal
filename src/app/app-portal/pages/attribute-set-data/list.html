@@ -64,7 +64,10 @@
                                 <em> Total: <span ng-bind="data.totalItems" class="text-muted"></span></em>
                             </div>
                         </div>
-                        <attribute-set-values on-update="edit(data)" on-delete="remove(data)" can-drag="canDrag"
+                        <attribute-set-values 
+                            on-duplicate="duplicate(data)" 
+                            on-update="edit(data)" 
+                            on-delete="remove(data)" can-drag="canDrag"
                             on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
                             on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"
                             attribute-set-name="attributeSetName" queries="queries">

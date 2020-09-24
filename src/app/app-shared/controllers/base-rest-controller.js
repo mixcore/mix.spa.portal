@@ -45,6 +45,26 @@ function BaseRestCtrl(
     $scope.referrerUrl = `/portal/${service.modelName}/list`; // document.referrer.substr(document.referrer.indexOf('/portal'));
   }
 
+  $scope.duplicate = async function (id) {
+    $rootScope.isBusy = true;
+    if (!id) {
+      return await this.getDefault();
+    } else {
+      var resp = await service.duplicate([id]);
+      if (resp.isSucceed) {
+        $scope.goToDetail(resp.data.id);
+      } else {
+        if (resp) {
+          $rootScope.showErrors(resp.errors);
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    }
+  };
+  $scope.goToDetail = function (id) {
+    window.location.href = `/portal/${service.modelName}/details/${id}`;
+  };
   $scope.getSingle = async function (params = []) {
     $rootScope.isBusy = true;
     var id = $routeParams.id;

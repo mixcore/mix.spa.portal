@@ -16,6 +16,7 @@ modules.component("attributeSetValues", {
     onApplyList: "&?",
     onSendMail: "&?",
     onUpdate: "&?",
+    onDuplicate: "&?",
     onDelete: "&?",
   },
   controller: [
@@ -80,6 +81,10 @@ modules.component("attributeSetValues", {
       };
       ctrl.apply = async function () {
         ctrl.onApplyList();
+      };
+
+      ctrl.duplicate = function (data) {
+        ctrl.onDuplicate({ data: data });
       };
 
       ctrl.update = function (data) {
