@@ -9,7 +9,12 @@
           create-text="'Create Post'"
         >
         </filter-list>
-
+        <select
+          class="custom-select custom-select-sm col-2"
+          ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
+          ng-change="getList()"
+          ng-model="request.type"
+        ></select>
         <select
           class="custom-select custom-select-sm col-2"
           ng-model="selectedList.action"
@@ -64,7 +69,7 @@
             </tr>
           </thead>
 
-          <tbody class="sortable" ng-init="getList()">
+          <tbody class="sortable" ng-init="initList()">
             <tr
               ng-repeat="item in data.items track by $index"
               class="sortable-item"

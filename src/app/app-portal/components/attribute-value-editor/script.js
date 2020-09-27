@@ -48,7 +48,7 @@
           if (!ctrl.attributeValue.id) {
             ctrl.initDefaultValue();
           }
-          switch (ctrl.attributeValue.dataType) {
+          switch (ctrl.attributeValue.dataType.toLowerCase()) {
             case "datetime":
             case "date":
             case "time":
@@ -69,7 +69,7 @@
                     ctrl.attributeValue.field.referenceId;
                   ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 });
-                ctrl.loadRefData();
+                // ctrl.loadRefData();
               }
               break;
             default:
@@ -138,7 +138,7 @@
         }
       };
       ctrl.updateStringValue = async function (dataType) {
-        switch (dataType) {
+        switch (dataType.toLowerCase()) {
           case "datetime":
           case "date":
           case "time":
@@ -163,30 +163,25 @@
             break;
         }
       };
-      ctrl.loadRefData = function () {
-        navService
-          .getList(
-            "portal",
-            ctrl.refRequest,
-            ctrl.attributeValue.field.referenceId,
-            ctrl.parentType,
-            ctrl.parentId
-          )
-          .then((resp) => {
-            if (resp) {
-              ctrl.refData = resp;
-              $rootScope.isBusy = false;
-              $scope.$apply();
-            } else {
-              if (resp) {
-                $rootScope.showErrors("Failed");
-              }
-              ctrl.refData = [];
-              $rootScope.isBusy = false;
-              $scope.$apply();
-            }
-          });
-      };
+      // ctrl.loadRefData = function () {
+      //   ctrl.refRequest.attributeSetId = ctrl.attributeValue.field.referenceId;
+      //   ctrl.refRequest.parentType = ctrl.parentType;
+      //   ctrl.refRequest.parentId = ctrl.parentId;
+      //   navService.getList(ctrl.refRequest).then((resp) => {
+      //     if (resp) {
+      //       ctrl.refData = resp;
+      //       $rootScope.isBusy = false;
+      //       $scope.$apply();
+      //     } else {
+      //       if (resp) {
+      //         $rootScope.showErrors("Failed");
+      //       }
+      //       ctrl.refData = [];
+      //       $rootScope.isBusy = false;
+      //       $scope.$apply();
+      //     }
+      //   });
+      // };
       ctrl.updateRefData = function (nav) {
         ctrl.goToPath(`/portal/attribute-set-data/details?dataId=${nav.data.id}
                 &attributeSetId=${nav.data.attributeSetId}

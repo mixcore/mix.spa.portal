@@ -11,8 +11,16 @@ app.controller("AttributeSetFormController", [
     $scope.formName = null;
     $scope.navRequest = angular.copy(ngAppSettings.request);
     $scope.successMsg = "Thành công";
-    $scope.init = async function (formName, parentId, parentType, successMsg) {
-      $scope.successMsg = successMsg;
+    $scope.init = async function (
+      formName,
+      parentId,
+      parentType,
+      successHandler,
+      failHandler
+    ) {
+      $scope.successMsg = "Thành công";
+      $scope.successHandler = successHandler;
+      $scope.failHandler = failHandler;
       $scope.formName = formName;
       $scope.navRequest.attributeSetName = formName;
       $scope.navRequest.parentType = parentType;
@@ -44,22 +52,30 @@ app.controller("AttributeSetFormController", [
     };
     $scope.submit = async (data) => {
       $rootScope.isBusy = true;
-      var save = await dataService.save(data);
-      if (save.isSucceed) {
-        $rootScope.showMessage("Thông báo", $scope.successMsg || "Thành công");
+      var saveResult = await dataService.save(data);
+      if (saveResult.isSucceed) {
+        if ($scope.successHandler) {
+          $rootScope.executeFunctionByName($scope.successHandler, [saveResult]);
+        } else {
+          alert($scope.successMsg);
+        }
         $scope.formData = angular.copy($scope.defaultData);
         $rootScope.isBusy = false;
         $scope.loadData();
         $scope.$apply();
       } else {
-        if (save.errors && save.errors.length) {
+        if (saveResult.errors && saveResult.errors.length) {
           let errMsg = "Vui lòng thực hiện lại";
-          if (save.errors[0].indexOf("is existed")) {
-            errMsg = save.errors[0]
+          if (saveResult.errors[0].indexOf("is existed")) {
+            errMsg = saveResult.errors[0]
               .toString()
               .replace("is existed", "đã tồn tại");
           }
-          window.showMessage("Lỗi", errMsg);
+          if ($scope.successHandler) {
+            $rootScope.executeFunctionByName($scope.failHandler, [saveResult]);
+          } else {
+            alert(errMsg);
+          }
         }
         $rootScope.isBusy = false;
         $scope.$apply();

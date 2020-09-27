@@ -52,7 +52,7 @@ function BaseRestCtrl(
     } else {
       var resp = await service.duplicate([id]);
       if (resp.isSucceed) {
-        $scope.goToDetail(resp.data.id);
+        $scope.goToDetail(resp.data.id, "post");
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);
@@ -62,8 +62,8 @@ function BaseRestCtrl(
       }
     }
   };
-  $scope.goToDetail = function (id) {
-    window.location.href = `/portal/${service.modelName}/details/${id}`;
+  $scope.goToDetail = function (id, type) {
+    window.location.href = `/portal/${type}/details/${id}`;
   };
   $scope.getSingle = async function (params = []) {
     $rootScope.isBusy = true;
@@ -93,7 +93,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.getDefault = async function (params = []) {
+  $scope.getDefault = async function () {
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
     if (resp.isSucceed) {

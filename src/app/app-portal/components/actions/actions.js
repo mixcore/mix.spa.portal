@@ -14,12 +14,15 @@
       ctrl.$onInit = function () {
         console.log(ctrl.clearCache);
       };
+      ctrl.clearCache = function () {
+        ctrl.onClearCache();
+      };
     },
   ],
   bindings: {
     previewUrl: "=",
     backUrl: "=",
     contentUrl: "=",
-    clearCache: "&",
+    onClearCache: "&?",
   },
 });

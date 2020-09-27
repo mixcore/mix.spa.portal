@@ -180,7 +180,7 @@
         ng-model="$ctrl.attributeValue.doubleValue"
         placeholder="{{$ctrl.attributeValue.field.title}}"
       />
-       <label
+      <label
         class="control-label"
         ng-bind="$ctrl.attributeValue.doubleValue | currency:''"
       ></label>
@@ -229,7 +229,6 @@
             parent-type="$ctrl.parentType"
             on-update="$ctrl.updateRefData(data)"
             on-delete="$ctrl.removeRefData(data)"
-            data="$ctrl.refData"
           >
           </attribute-set-nav-values>
         </div>

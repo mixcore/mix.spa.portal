@@ -9,6 +9,7 @@ app.controller("PostController", [
   "PostRestService",
   "UrlAliasService",
   "AttributeSetService",
+  "RestAttributeSetDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -18,7 +19,8 @@ app.controller("PostController", [
     $routeParams,
     service,
     urlAliasService,
-    attributeSetService
+    attributeSetService,
+    attributeSetDataService
   ) {
     BaseRestCtrl.call(
       this,
@@ -30,12 +32,67 @@ app.controller("PostController", [
     );
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
+    $scope.postTypes = [];
+    $scope.type = {
+      obj: {
+        title: "All",
+        attribute_set_name: "",
+      },
+    };
+    $scope.postTypeRequest = angular.copy(ngAppSettings.request);
+    $scope.postTypeRequest.attributeSetName = "post_type";
+    $scope.initList = async function () {
+      if ($routeParams.type) {
+        $scope.request.type = $routeParams.type;
+      }
+      $scope.loadPostTypes();
+      $scope.getList();
+    };
+    $scope.loadPostTypes = async function () {
+      $scope.postTypes.push($scope.type);
 
+      let getTypes = await attributeSetDataService.getList(
+        $scope.postTypeRequest
+      );
+      if (getTypes.isSucceed) {
+        $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
+        $scope.$apply();
+      }
+    };
+    $scope.getDefault = async function (type = null) {
+      $rootScope.isBusy = true;
+      type = type ?? $routeParams.type;
+      var resp = await service.getDefault({
+        type: type ?? "",
+        template: $routeParams.template ?? "",
+      });
+      if (resp.isSucceed) {
+        $scope.activedData = resp.data;
+        if ($scope.getSingleSuccessCallback) {
+          $scope.getSingleSuccessCallback();
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      } else {
+        if (resp) {
+          $rootScope.showErrors(resp.errors);
+        }
+        if ($scope.getSingleFailCallback) {
+          $scope.getSingleFailCallback();
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
-
+    $scope.onSelectType = function () {
+      if (!$scope.activedData || !$scope.activedData.id) {
+        $scope.getDefault($scope.request.type);
+      }
+    };
     // $scope.saveSuccessCallback = function () {
     //     $location.url($scope.referrerUrl);
     // }
@@ -101,7 +158,7 @@ app.controller("PostController", [
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-    $scope.getSingleSuccessCallback = function () {      
+    $scope.getSingleSuccessCallback = function () {
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.activedData.id) {

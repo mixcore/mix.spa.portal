@@ -270,7 +270,7 @@ app.run([
     $rootScope.executeFunctionByName = async function (
       functionName,
       args,
-      context
+      context = window
     ) {
       if (functionName !== null) {
         var namespaces = functionName.split(".");
@@ -522,20 +522,22 @@ app.run([
       return result;
     };
     $rootScope.findObjectByKey = function (array, key, value) {
-      if (Array.isArray(key)) {
-        for (var i = 0; i < array.length; i++) {
-          var isMatch = true;
-          angular.forEach(key, function (e, j) {
-            isMatch = array[i][key[j]] == value[j];
-          });
-          if (isMatch) {
-            return array[i];
+      if (array) {
+        if (Array.isArray(key)) {
+          for (var i = 0; i < array.length; i++) {
+            var isMatch = true;
+            angular.forEach(key, function (e, j) {
+              isMatch = array[i][key[j]] == value[j];
+            });
+            if (isMatch) {
+              return array[i];
+            }
           }
-        }
-      } else {
-        for (var i = 0; i < array.length; i++) {
-          if (array[i][key] == value) {
-            return array[i];
+        } else {
+          for (var i = 0; i < array.length; i++) {
+            if (array[i][key] == value) {
+              return array[i];
+            }
           }
         }
       }
