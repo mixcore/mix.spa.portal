@@ -12,7 +12,7 @@
         $location.url(ctrl.backUrl);
       };
       ctrl.$onInit = function () {
-        console.log(ctrl.clearCache);
+        ctrl.isAdmin = $rootScope.isAdmin;
       };
       ctrl.clearCache = function () {
         ctrl.onClearCache();

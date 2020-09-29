@@ -1,9 +1,11 @@
 <!-- Main content -->
 <section class="" ng-init="getSingle()">
   <form ng-class="{'submitted': submitted}" ng-submit="save()">
-    <div class="row" ng-init="loadPostTypes()">
+    <div class="row">
       <section class="col-sm-8 pr-3">
         <select
+          ng-if="isAdmin"
+          ng-init="loadPostTypes()"
           class="custom-select"
           ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
           ng-change="onSelectType()"

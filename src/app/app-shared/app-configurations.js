@@ -670,8 +670,8 @@ app.run([
     };
     $rootScope.showLogin = function (ev) {
       $rootScope.isBusy = false;
-      window.top.location.href = "/security/login";
-      // $('#login-popup').modal('show');
+      // window.top.location.href = "/security/login";
+      $("#login-popup").modal("show");
     };
     $rootScope.showContentFilter = function (callback) {
       $rootScope.contentFilterCallback = callback;
