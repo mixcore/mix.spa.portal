@@ -29,8 +29,8 @@ app.controller("MixAttributeSetDataController", [
     $scope.data = {};
     $scope.exportAll = true;
     $scope.settings = $rootScope.globalSettings;
-    $scope.canDrag =
-      $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
+    $scope.request.orderBy = "Priority";
+    $scope.request.direction = "Asc";
     $scope.filterType = "contain";
     $scope.defaultId = "default";
     $scope.importFile = {

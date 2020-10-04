@@ -51,21 +51,20 @@
 
     <div
       dnd-list="$ctrl.data"
-      dnd-inserted="$ctrl.updateOrders(index)"
+      dnd-inserted="$ctrl.updateOrders(index, $ctrl.data)"
       ng-if="$ctrl.data.length"
     >
       <div
         ng-repeat="item in $ctrl.data track by $index"
         dnd-draggable="item"
-        dnd-type="'item'"
-        dnd-effect-allowed="copyMove"
+        dnd-effect-allowed="move"
         dnd-selected="$ctrl.selectedItem = item"
-        dnd-disable-if="$crl.canDrag"
+        dnd-disable-if="!$ctrl.canDrag"
         dnd-dragstart="$ctrl.dragStart($index)"
         ng-class="{'selected': $ctrl.selectedItem === item}"
         class="border-bottom attr-set-value-item"
       >
-        <dnd-nodrag class="row">
+        <div class="row">
           <div class="col-md- form-inline">
             <small
               dnd-handle
@@ -140,7 +139,7 @@
               </a>
             </div>
           </div>
-        </dnd-nodrag>
+        </div>
       </div>
     </div>
   </div>

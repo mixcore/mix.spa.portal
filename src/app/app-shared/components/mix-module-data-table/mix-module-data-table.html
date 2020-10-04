@@ -48,9 +48,9 @@
       ng-repeat="nav in $ctrl.data.items"
       class="col-sm-12 dnd-item border-left-0 border-right-0 rounded-0"
       dnd-draggable="nav"
-      dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)"
       dnd-effect-allowed="move"
       dnd-selected="$ctrl.selected = nav"
+      dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)"
       ng-class="{'selected': $ctrl.selected === nav}"
     >
       <div class="row">

@@ -104,18 +104,51 @@ modules.component("attributeSetValues", {
       };
 
       ctrl.dragStart = function (index) {
+        ctrl.min = ctrl.data[0].priority;
         ctrl.dragStartIndex = index;
       };
-      ctrl.updateOrders = function (index) {
-        if (index > ctrl.dragStartIndex) {
-          ctrl.data.splice(ctrl.dragStartIndex, 1);
-        } else {
-          ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
+      ctrl.updateOrders = function (index, items) {
+        for (var i = 0; i < items.length; i++) {
+          items[i].priority = ctrl.min + i + 1;
         }
-        angular.forEach(ctrl.data, function (e, i) {
-          e.priority = i;
+        items.splice(ctrl.dragStartIndex, 1);
+        ctrl.updateDataInfos(items);
+      };
+      ctrl.updateDataInfos = async function (items) {
+        angular.forEach(items, async function (e) {
+          var resp = await dataService.saveFields(e.id, {
+            priority: e.priority,
+          });
+          if (resp && resp.isSucceed) {
+            $scope.activedPage = resp.data;
+          } else {
+            if (resp) {
+              $rootScope.showErrors(resp.errors);
+            }
+          }
         });
       };
+      // ctrl.updateOrders = function (index) {
+      //   if (index > ctrl.dragStartIndex) {
+      //     ctrl.data.splice(ctrl.dragStartIndex, 1);
+      //   } else {
+      //     ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
+      //   }
+      //   // angular.forEach(ctrl.data, async function (e, i) {
+      //   //   e.priority = ctrl.min + i;
+      //   //   var resp = await dataService.saveFields(e.id, {
+      //   //     priority: e.priority,
+      //   //   });
+      //   //   if (resp && resp.isSucceed) {
+      //   //     $scope.activedPage = resp.data;
+      //   //     $scope.$apply();
+      //   //   } else {
+      //   //     if (resp) {
+      //   //       $rootScope.showErrors(resp.errors);
+      //   //     }
+      //   //   }
+      //   // });
+      // };
 
       ctrl.view = function (item) {
         var obj = {

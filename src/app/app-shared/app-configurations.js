@@ -677,6 +677,13 @@ app.run([
       $rootScope.contentFilterCallback = callback;
       $("#modal-content-filter").modal("show");
     };
+
+    $rootScope.updateOrders = function (index, minIndex, items) {
+      items.splice(index, 1);
+      for (var i = 0; i < items.length; i++) {
+        items[i].priority = minIndex + i;
+      }
+    };
   },
 ]);
 

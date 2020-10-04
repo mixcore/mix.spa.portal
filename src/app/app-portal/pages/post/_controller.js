@@ -31,6 +31,7 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.postTypes = [];
@@ -42,21 +43,24 @@ app.controller("PostController", [
     };
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.attributeSetName = "post_type";
+    $scope.postTypeRequest.orderBy = "Priority";
+    $scope.postTypeRequest.direction = "Asc";
     $scope.initList = async function () {
       if ($routeParams.type) {
         $scope.request.type = $routeParams.type;
       }
+      $scope.pageName = "postList";
       $scope.loadPostTypes();
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
       $scope.postTypes.push($scope.type);
-
       let getTypes = await attributeSetDataService.getList(
         $scope.postTypeRequest
       );
       if (getTypes.isSucceed) {
         $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
+        $scope.request.type = $routeParams.type;
         $scope.$apply();
       }
     };
@@ -90,8 +94,12 @@ app.controller("PostController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {
+      $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
       if (!$scope.activedData || !$scope.activedData.id) {
         $scope.getDefault($scope.request.type);
+      }
+      if ($scope.pageName == "postList") {
+        $scope.getList();
       }
     };
     // $scope.saveSuccessCallback = function () {
