@@ -22,6 +22,7 @@ app.controller("ModuleDataController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service
@@ -77,7 +78,7 @@ app.controller("ModuleDataController", [
       $scope.request.module_id = $scope.moduleId;
       var response = await service.export($scope.request);
       if (response.isSucceed) {
-        window.top.location = response.data;
+        window.top.location = response.data.webPath;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

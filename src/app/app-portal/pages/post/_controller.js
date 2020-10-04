@@ -26,6 +26,7 @@ app.controller("PostController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service

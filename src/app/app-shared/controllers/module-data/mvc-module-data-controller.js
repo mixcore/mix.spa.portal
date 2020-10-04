@@ -18,6 +18,7 @@ app.controller("MvcModuleDataController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service

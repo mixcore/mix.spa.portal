@@ -18,6 +18,7 @@ app.controller("TemplateController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service

@@ -4,7 +4,7 @@ app.controller('AttributeSetController', [
     'ngAppSettings', '$routeParams', 'RestAttributeFieldPortalService', 'RestAttributeSetPortalService',      
     function ($scope, $rootScope, $location, 
         ngAppSettings, $routeParams, attributeFieldService, service) {
-        BaseRestCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
+        BaseRestCtrl.call(this, $scope, $rootScope, $location, $routeParams, ngAppSettings, service);
         $scope.defaultAttr = null;
         $scope.actions= ['Delete'];
         // $scope.request.selects = 'id,title,name,createdDateTime';

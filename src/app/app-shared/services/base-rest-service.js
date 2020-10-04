@@ -19,7 +19,7 @@ app.factory("BaseRestService", [
     };
 
     var _duplicate = async function (params = [], queries) {
-      var url = this.prefixUrl + '/duplicate';
+      var url = this.prefixUrl + "/duplicate";
       for (let i = 0; i < params.length; i++) {
         if (params[i] != undefined && params[i] != null) {
           url += "/" + params[i];
@@ -165,6 +165,16 @@ app.factory("BaseRestService", [
       return await commonService.getRestApiResult(req);
     };
 
+    var _applyList = async function (objData) {
+      var url = this.prefixUrl + "/list-action";
+      var req = {
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objData),
+      };
+      return await commonService.getRestApiResult(req);
+    };
+
     var _ajaxSubmitForm = async function (form, url) {
       var req = {
         method: "POST",
@@ -198,6 +208,7 @@ app.factory("BaseRestService", [
     serviceFactory.init = _init;
     serviceFactory.count = _count;
     serviceFactory.duplicate = _duplicate;
+    serviceFactory.applyList = _applyList;
     serviceFactory.clearCache = _clearCache;
     serviceFactory.getDefault = _getDefault;
     serviceFactory.getSingle = _getSingle;

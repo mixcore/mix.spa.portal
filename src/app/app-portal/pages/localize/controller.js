@@ -20,6 +20,7 @@ app.controller("LocalizeController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service

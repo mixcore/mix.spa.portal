@@ -8,6 +8,7 @@ modules.component("attributeSetNavValues", {
     fields: "=?",
     header: "=",
     data: "=?",
+    maxCol: "=?",
     createUrl: "=?",
     updateUrl: "=?",
     onUpdate: "&?",
@@ -29,6 +30,7 @@ modules.component("attributeSetNavValues", {
       ctrl.request.direction = 0;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
+        ctrl.maxCol = ctrl.maxCol || 3;
         if (!ctrl.createUrl) {
           ctrl.createUrl = "/portal/attribute-set-data/create";
         }

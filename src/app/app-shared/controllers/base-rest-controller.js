@@ -2,6 +2,7 @@
 function BaseRestCtrl(
   $scope,
   $rootScope,
+  $location,
   $routeParams,
   ngAppSettings,
   service
@@ -42,7 +43,10 @@ function BaseRestCtrl(
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
   } else {
-    $scope.referrerUrl = `/portal/${service.modelName}/list`; // document.referrer.substr(document.referrer.indexOf('/portal'));
+    $scope.referrerUrl = `/portal/${service.modelName.substr(
+      0,
+      service.modelName.indexOf("/")
+    )}/list`; // document.referrer);
   }
 
   $scope.duplicate = async function (id) {
@@ -63,7 +67,8 @@ function BaseRestCtrl(
     }
   };
   $scope.goToDetail = function (id, type) {
-    window.location.href = `/portal/${type}/details/${id}`;
+    const url = `/portal/${type}/details/${id}`;
+    window.location.href = url;
   };
   $scope.getSingle = async function (params = []) {
     $rootScope.isBusy = true;
@@ -248,7 +253,7 @@ function BaseRestCtrl(
   };
   $scope.selectAll = function (isSelected) {
     $scope.selectedList.data = [];
-    angular.forEach($scope.data, function (e) {
+    angular.forEach($scope.data.items, function (e) {
       e.isSelected = isSelected;
       if (isSelected) {
         $scope.selectedList.data.push(e.id);
@@ -268,20 +273,20 @@ function BaseRestCtrl(
 
   $scope.applyListConfirmed = async function () {
     $rootScope.isBusy = true;
-    var resp = await service.applyList("read", $scope.selectedList);
+    var resp = await service.applyList($scope.selectedList);
     if (resp && resp.isSucceed) {
-      $scope.activedData = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
+        case "Export":
+          window.top.location = resp.data.data.webPath;
+          $rootScope.isBusy = false;
+          $scope.$apply();
+          break;
         case "Delete":
+        default:
           $scope.selectedList.isSelectAll = false;
           $scope.selectedList.data = [];
           $scope.getList();
-          break;
-        case "Export":
-          window.open(resp.data.webPath, "_blank");
-          $rootScope.isBusy = false;
-          $scope.$apply();
           break;
       }
     } else {

@@ -13,7 +13,7 @@
       <div class="col-md-1"></div>
       <small
         ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index"
-        ng-if="$index < 3"
+        ng-if="$index < $ctrl.maxCol"
         ng-bind="col.title"
         class="col-md-3"
       ></small>
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div
-          ng-if="$index < 3"
+          ng-if="$index < $ctrl.maxCol"
           ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
           class="col-md-3 py-2"
         >

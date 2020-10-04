@@ -18,6 +18,7 @@ app.controller("MvcPostController", [
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service
