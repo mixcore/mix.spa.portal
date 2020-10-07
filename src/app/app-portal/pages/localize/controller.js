@@ -41,6 +41,10 @@ app.controller("LocalizeController", [
       $scope.settings = $rootScope.globalSettings;
       $scope.cate = $scope.cates[0];
     });
+    $scope.getSingleSuccessCallback = function () {
+      $scope.activedData.category = "Site";
+      $scope.activedData.property.dataType = "Text";
+    };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {
         $location.url($scope.referrerUrl || "/portal/localize/list");

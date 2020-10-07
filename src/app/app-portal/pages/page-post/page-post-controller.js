@@ -30,7 +30,9 @@ app.controller("PagePostController", [
     $scope.others = [];
     $scope.settings = $rootScope.globalSettings;
     $scope.pageId = $routeParams.id;
+    $scope.type = $routeParams.type;
     $scope.pageIds = $routeParams.page_ids || $routeParams.id;
+    $scope.moduleIds = $routeParams.module_ids;
     $scope.canDrag =
       $scope.request.orderBy === "Priority" &&
       $scope.request.direction === "Asc";

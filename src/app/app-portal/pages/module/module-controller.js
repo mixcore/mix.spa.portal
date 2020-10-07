@@ -22,8 +22,8 @@ app.controller("ModuleController", [
       this,
       $scope,
       $rootScope,
-      $routeParams,
       $location,
+      $routeParams,
       ngAppSettings,
       moduleServices,
       "product"

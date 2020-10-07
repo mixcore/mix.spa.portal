@@ -668,8 +668,11 @@ app.run([
       serviceFactory.init(modelName, isGlobal, lang);
       return serviceFactory;
     };
-    $rootScope.showLogin = function (ev) {
+    $rootScope.showLogin = function (req, type = null) {
       $rootScope.isBusy = false;
+      $rootScope.loginCallbackRequest = req;
+      $rootScope.loginCallbackType = type;
+
       // window.top.location.href = "/security/login";
       $("#login-popup").modal("show");
     };
