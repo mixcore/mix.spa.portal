@@ -16,19 +16,22 @@ app.controller("ConfigurationController", [
     service,
     commonService
   ) {
-    BaseCtrl.call(
+    BaseRestCtrl.call(
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service
     );
     $scope.cates = ngAppSettings.enums.configuration_types;
     $scope.settings = $rootScope.globalSettings;
+    $scope.request.category = $routeParams.category || "";
     $scope.getSingleSuccessCallback = function () {
-      $scope.activedData.category = "Site";
-      $scope.activedData.property.dataType = "Text";
+      if (!$scope.activedData.category) {
+        $scope.activedData.category = "Site";
+      }
     };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {

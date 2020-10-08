@@ -43,7 +43,6 @@ app.controller("LocalizeController", [
     });
     $scope.getSingleSuccessCallback = function () {
       $scope.activedData.category = "Site";
-      $scope.activedData.property.dataType = "Text";
     };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {
