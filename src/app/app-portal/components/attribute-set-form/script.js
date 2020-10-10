@@ -163,14 +163,17 @@ modules.component("attributeSetForm", {
         angular.forEach(ctrl.fields, function (field) {
           if (field.regex) {
             var regex = RegExp(field.regex, "g");
-            isValid = regex.test(ctrl.attrData.data[field.name]);
+            isValid = regex.test(ctrl.attrData.obj[field.name]);
             if (!isValid) {
               ctrl.errors.push(`${field.name} is not match Regex`);
             }
           }
+          if (!isValid) {
+            $rootScope.showErrors(ctrl.errors);
+          }
           if (isValid && field.isEncrypt) {
-            ctrl.attrData.data[field.name] = $rootScope.encrypt(
-              ctrl.attrData.data[field.name]
+            ctrl.attrData.obj[field.name] = $rootScope.encrypt(
+              ctrl.attrData.obj[field.name]
             );
           }
         });
@@ -179,7 +182,7 @@ modules.component("attributeSetForm", {
       ctrl.filterData = function (attributeName) {
         if (ctrl.attrData) {
           var attr = $rootScope.findObjectByKey(
-            ctrl.attrData.data,
+            ctrl.attrData.obj,
             "attributeFieldName",
             attributeName
           );
@@ -191,7 +194,7 @@ modules.component("attributeSetForm", {
                 attributeName
               )
             );
-            ctrl.attrData.data.push(attr);
+            ctrl.attrData.obj.push(attr);
           }
           return attr;
         }

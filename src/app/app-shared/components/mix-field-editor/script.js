@@ -39,6 +39,18 @@
             );
           }
         }
+        // check encrypt data
+        if (
+          ctrl.model &&
+          ctrl.field &&
+          ctrl.field.isEncrypt &&
+          ctrl.model.obj[ctrl.field.name] &&
+          $rootScope.testJSON(ctrl.model.obj[ctrl.field.name])
+        ) {
+          ctrl.model.obj[ctrl.field.name] = ctrl.parseEncryptedData(
+            ctrl.model.obj[ctrl.field.name]
+          );
+        }
       }.bind(ctrl);
       ctrl.refData = null;
       ctrl.defaultDataModel = null;
@@ -86,16 +98,6 @@
               // }
               break;
             default:
-              if (
-                ctrl.field &&
-                ctrl.field.isEncrypt &&
-                ctrl.model[ctrl.field.name]
-              ) {
-                var encryptedData = {};
-                ctrl.attributeValue.stringValue = $rootScope.decrypt(
-                  encryptedData
-                );
-              }
               if (ctrl.field && !ctrl.model[ctrl.field.name]) {
                 ctrl.model[ctrl.field.name] = ctrl.field.defaultValue;
                 $scope.$apply();
@@ -103,6 +105,10 @@
               break;
           }
         }, 200);
+      };
+      ctrl.parseEncryptedData = function (data) {
+        var encryptedData = $rootScope.testJSON(data);
+        return $rootScope.decrypt(encryptedData);
       };
       ctrl.initDefaultValue = async function () {
         switch (ctrl.field.dataType) {

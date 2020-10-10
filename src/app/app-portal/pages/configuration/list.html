@@ -12,13 +12,13 @@
             <thead class="thead-light">
               <tr>
                 <th scope="col" width="20%">
+                  Description
+                </th>
+                <th scope="col" width="20%">
                   Setting Key
                 </th>
                 <th scope="col" width="20%">
                   Value
-                </th>
-                <th scope="col" width="20%">
-                  Description
                 </th>
                 <th scope="col" width="5%">
                   Category
@@ -37,6 +37,11 @@
                 sort-model-id="{{item.id}}"
               >
                 <td>
+                  <small class="text-black-50"
+                    ><span ng-bind="item.description"></span
+                  ></small>
+                </td>
+                <td>
                   <small><span ng-bind="item.keyword"></span></small>
                 </td>
                 <td>
@@ -46,11 +51,6 @@
                       width="50"
                     ></module-data-preview>
                   </small>
-                </td>
-                <td>
-                  <small class="text-black-50"
-                    ><span ng-bind="item.description"></span
-                  ></small>
                 </td>
                 <td>
                   <small class="text-black-50"
@@ -71,7 +71,7 @@
                     </a>
                     <a
                       href="#"
-                      ng-click="remove(item.keyword);"
+                      ng-click="remove(item.id);"
                       class="btn btn-link text-danger"
                     >
                       <span class="fas fa-trash-alt"></span>
