@@ -37,7 +37,7 @@ app.controller("LocalizeController", [
     };
     $scope.dataTypes = $rootScope.globalSettings.dataTypes;
     $scope.$on("$viewContentLoaded", function () {
-      $scope.cates = ngAppSettings.enums.language_types;
+      $scope.cates = ngAppSettings.enums.language_cates;
       $scope.settings = $rootScope.globalSettings;
       $scope.cate = $scope.cates[0];
     });

@@ -4,7 +4,7 @@ app.controller('StoreController',
         function ($scope, $rootScope, ngAppSettings, $routeParams, $location, service) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.request.key = 'service.store';
-            $scope.cates = ngAppSettings.enums.configuration_types;
+            $scope.cates = ngAppSettings.enums.configuration_cates;
             $scope.settings = $rootScope.globalSettings;
             // $scope.items = [];
             // $scope.init = function () {

@@ -25,7 +25,7 @@ app.controller("ConfigurationController", [
       ngAppSettings,
       service
     );
-    $scope.cates = ngAppSettings.enums.configuration_types;
+    $scope.cates = ngAppSettings.enums.configuration_cates;
     $scope.settings = $rootScope.globalSettings;
     $scope.request.category = $routeParams.category || "";
     $scope.getSingleSuccessCallback = function () {
