@@ -11,8 +11,8 @@ modules.component('navigationForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', '$routeParams', '$mdDialog', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
-        function ($rootScope, $scope, $routeParams,  $mdDialog, service, fieldService) {
+    controller: ['$rootScope', '$scope', '$routeParams', 'RestAttributeSetDataPortalService', 'RestAttributeFieldPortalService',
+        function ($rootScope, $scope, $routeParams, service, fieldService) {
             var ctrl = this;
             ctrl.isBusy = false;
             ctrl.attributes = [];
@@ -33,7 +33,7 @@ modules.component('navigationForm', {
                     Else modify input ctrl.attrData
                 */
                 $rootScope.isBusy = true;
-                
+
                 if (ctrl.attrDataId) {
                     var getData = await service.getSingle([ctrl.attrDataId]);
                     ctrl.attrData = getData.data;
@@ -52,19 +52,18 @@ modules.component('navigationForm', {
                     }
 
                 }
-                if(ctrl.attributeSetName || ctrl.attributeSetId){
+                if (ctrl.attributeSetName || ctrl.attributeSetId) {
                     await ctrl.loadDefaultModel();
                     $rootScope.isBusy = false;
-                    $scope.$apply();
                 }
-               
-                
+
+
             };
-            ctrl.loadDefaultModel = async function(){
-                if($routeParams.parentId){
+            ctrl.loadDefaultModel = async function () {
+                if ($routeParams.parentId) {
                     ctrl.parentId = $routeParams.parentId;
                 }
-                if($routeParams.parentType){
+                if ($routeParams.parentType) {
                     ctrl.parentType = $routeParams.parentType;
                 }
                 if (!ctrl.fields) {
@@ -81,50 +80,47 @@ modules.component('navigationForm', {
                     ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
                     ctrl.defaultData.parentId = ctrl.parentId;
                     ctrl.defaultData.parentType = ctrl.parentType;
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
                 }
 
                 if (!ctrl.attrData) {
                     ctrl.attrData = angular.copy(ctrl.defaultData);
+                    $rootScope.isBusy = false;
+                    $scope.$apply();
                 }
             };
             ctrl.reload = async function () {
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
-            ctrl.showContentFilter = function($event) {
-                var parentEl = angular.element(document.body);
-                $mdDialog.show({
-                  parent: parentEl,
-                  targetEvent: $event,
-                  templateUrl: '/app/app-portal/components/modal-content-filter/modal-content-filter.html',
-                  controller: ModalContentFilterController,
-                  locals: { callback: ctrl.loadSelected }
-               });
-             }
+            ctrl.showContentFilter = function ($event) {
+                $rootScope.showContentFilter(ctrl.loadSelected);
+            }
             ctrl.loadSelected = function (data) {
                 if (data) {
-                    ctrl.attrData.obj.id = data.nav.id;
-                    ctrl.attrData.obj.title = data.nav.title;
+                    ctrl.attrData.obj.id = data.id;
+                    ctrl.attrData.obj.title = data.title;
                     ctrl.attrData.obj.type = data.type;
-                    ctrl.attrData.obj.uri = data.nav.detailsUrl;
+                    ctrl.attrData.obj.uri = data.detailsUrl;
                 }
             };
             ctrl.submit = async function () {
                 if (ctrl.validate()) {
                     if (ctrl.saveData) {
                         ctrl.isBusy = true;
-                        var result = await ctrl.saveData({ data: ctrl.attrData });
+                        var result = await ctrl.saveData({
+                            data: ctrl.attrData
+                        });
                         if (result && result.isSucceed) {
                             ctrl.isBusy = false;
                             ctrl.attrData = result.data;
                             $scope.$apply();
-                        }
-                        else {
+                        } else {
                             ctrl.isBusy = false;
                             // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attributeSetId, ctrl.attributeSetName]);
                             $scope.$apply();
                         }
-                    }
-                    else {
+                    } else {
 
                         ctrl.isBusy = true;
 
@@ -172,5 +168,6 @@ modules.component('navigationForm', {
                     return attr;
                 }
             };
-        }]
+        }
+    ]
 });

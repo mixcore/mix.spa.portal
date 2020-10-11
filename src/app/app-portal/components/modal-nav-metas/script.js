@@ -8,6 +8,7 @@
         parentType: '=?',
         type: '=?',
         fieldDisplay: '=?',
+        isOpen: '=?',
         selectedList: '=?',
         selectCallback: '&',
         save: '&'
@@ -45,7 +46,7 @@
                     parentType: ctrl.parentType,
                     attributeSetId: ctrl.attributeSetId,
                     attributeSetName: ctrl.attributeSetName,
-                    status: 2,
+                    status: 'Published',
                     attributeData: null
                 };
                 if ($routeParams.parentId) {
@@ -66,8 +67,8 @@
                 if (ctrl.defaultData) {
                     ctrl.defaultData.attributeSetId = ctrl.attributeSetId || 0;
                     ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
-                    ctrl.defaultData.parentId = ctrl.parentId;
-                    ctrl.defaultData.parentType = ctrl.parentType;
+                    // ctrl.defaultData.parentId = ctrl.parentId;
+                    // ctrl.defaultData.parentType = ctrl.parentType;
                 }
 
                 if (!ctrl.attrData) {
@@ -79,7 +80,7 @@
                 ctrl.attrData = angular.copy(ctrl.defaultData);
             };
             ctrl.loadData = async function (pageIndex) {
-                ctrl.request.query = '';
+                ctrl.request.query = '{}';
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
                 }
@@ -209,6 +210,8 @@
                 var tmp = $rootScope.findObjectByKey(ctrl.data.items, 'title', ctrl.newTitle);
                 if (!tmp) {
                     ctrl.isBusy = true;
+                    ctrl.attrData.parentId = 0;
+                    ctrl.attrData.parentType = '2';
                     ctrl.attrData.obj.title = ctrl.newTitle;
                     ctrl.attrData.obj.slug = $rootScope.generateKeyword(ctrl.newTitle, '-');
                     ctrl.attrData.obj.type = ctrl.type;
@@ -221,9 +224,10 @@
                             resp.data.isActived = true;         
                             ctrl.select(resp.data);
                             ctrl.isBusy = false;
+                            $scope.$apply();
                         } else {
                             $rootScope.showErrors(resp.errors);
-                            ctrl.isBusy = true;
+                            ctrl.isBusy = false;
                             $scope.$apply();
                         }
                     });

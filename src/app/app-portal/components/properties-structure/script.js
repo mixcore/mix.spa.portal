@@ -11,7 +11,7 @@ modules.component('propertiesStructure', {
                 defaultValue: null,
                 options: [],
                 priority: 0,
-                dataType: 7,
+                dataType: 'Text',
                 isGroupBy: false,
                 isSelect: false,
                 isDisplay: true,
@@ -98,6 +98,19 @@ modules.component('propertiesStructure', {
                     ctrl.columns.splice(index, 1);
                 }
             }
+            ctrl.dragStart = function (index) {
+                ctrl.dragStartIndex = index;
+            };
+            ctrl.updateOrders = function (index) {
+                if (index > ctrl.dragStartIndex) {
+                    ctrl.columns.splice(ctrl.dragStartIndex, 1);
+                } else {
+                    ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
+                }
+                angular.forEach(ctrl.columns, function (e, i) {
+                    e.priority = i;
+                });
+            };
         }],
     bindings: {
         header: '=',

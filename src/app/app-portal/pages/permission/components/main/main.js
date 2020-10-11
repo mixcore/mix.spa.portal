@@ -9,7 +9,7 @@ app.component('permissionMain', {
             ctrl.page.type = $index;
         };
         ctrl.generateKeyword = function (text) {
-            if (!$routeParams.id) {
+            if (!$routeParams.id && text) {
                 ctrl.page.textKeyword = 'portal_' + text.replace(/[^a-zA-Z0-9]+/g, '_')
                     .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
                     .replace(/([a-z])([A-Z])/g, '$1-$2')

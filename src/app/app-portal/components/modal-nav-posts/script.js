@@ -38,7 +38,7 @@
                             image: e.thumbnailUrl,
                             specificulture: e.specificulture,
                             post: e,
-                            status: 2,
+                            status: 'Published',
                             isActived: false
                         };
                         item[ctrl.srcField] = ctrl.srcId;

@@ -6,7 +6,7 @@ app.controller('MixNavigationController', ['$scope', '$rootScope', 'ngAppSetting
         $scope.activedData = {
             title: '',
             description: '',
-            status: 2,
+            status: 'Published',
             mediaFile: {
                 file: null,
                 fullPath: '',

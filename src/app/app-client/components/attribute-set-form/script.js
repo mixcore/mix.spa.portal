@@ -10,7 +10,7 @@ modules.component('attributeSetForm', {
         defaultId: '=',
         saveData: '&?'
     },
-    controller: ['$rootScope', '$scope', 'RestAttributeSetDataClientService',
+    controller: ['$rootScope', '$scope', 'RestAttributeSetDataPortalService',
         function ($rootScope, $scope, service) {
             var ctrl = this;
             ctrl.isBusy = false;
@@ -19,7 +19,7 @@ modules.component('attributeSetForm', {
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                ctrl.loadData();
+                // ctrl.loadData();
             };
             ctrl.loadData = async function () {
 

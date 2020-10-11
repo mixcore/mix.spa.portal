@@ -31,7 +31,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-if="isAdmin">
+                                <div class="form-group">
                                     <label class="control-label">Keyword</label>
                                     <input type="text" required class="form-control" ng-model="activedData.keyword">
                                 </div>
@@ -39,6 +39,11 @@
                                     <label class="control-label">Value</label>
                                     <module-form-editor data="activedData.property" field-title="activedData.title" input-class="mr-2">
                                 </div>                                
+                                <div class="form-group">
+                                    <label class="control-label">Default</label>
+                                    <input type="text" required class="form-control" ng-model="activedData.defaultValue">
+                                </div>
+                                
                                 <div class="form-group" ng-if="isAdmin">
                                     <label class="control-label">Description</label>
                                     <textarea type="text" class="form-control"

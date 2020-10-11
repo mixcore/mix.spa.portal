@@ -5,7 +5,7 @@ app.component('postAdvanced', {
         model: '='
     },
     controller: ['$rootScope', '$scope',
-        function ($rootScope, $scope, attributeSetService) {
+        function ($rootScope, $scope) {
             var ctrl = this;
             ctrl.translate = $rootScope.translate;    
             ctrl.$onInit = function(){

@@ -15,8 +15,8 @@
             </div>
         </div>
     </div>
-    <div class="list-icon border w-100 mx-3">
-        <a class="dropdown-item btn px-2" ng-repeat="ico in $ctrl.options| filter:$ctrl.searchText"
+    <div class="list-icon border w-100 mx-3" ng-scroll="$ctrl.showMore()">
+        <a class="dropdown-item btn px-2" ng-repeat="ico in $ctrl.options | filter:$ctrl.searchText| limitTo : $ctrl.limitTo"
             ng-click="$ctrl.select(ico)">
             <i class="{{ico.class}} pr-2"></i>
             <small>{{ico.title}}</small>

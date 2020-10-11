@@ -4,7 +4,7 @@ app.controller('Step3Controller', ['$scope', '$rootScope',
     function ($scope, $rootScope, commonService, authService, service) {
         var rand = Math.random();
         $scope.data = {
-            isCreateDefault: false,
+            isCreateDefault: true,
             theme: null,
         };
         $scope.init = async function () {

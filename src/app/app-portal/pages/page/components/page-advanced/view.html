@@ -1,15 +1,19 @@
 <div class="row">
-    <div class="tab-pane fade active show col-lg-12">
-        <page-type class="mb-4" ng-if="$ctrl.model" model="$ctrl.model.type"></page-type>
-    </div>
+  <div class="tab-pane fade active show col-lg-12">
+    <page-type
+      class="mb-4"
+      ng-if="$ctrl.model"
+      model="$ctrl.model.type"
+    ></page-type>
+  </div>
 </div>
 
 <div class="row">
-    <div class="tab-pane fade active show col-lg-12">
-        <addictional-field model="$ctrl.model"></addictional-field>
-    </div>
+  <div class="tab-pane fade active show col-lg-12">
+    <addictional-field model="$ctrl.model"></addictional-field>
+  </div>
 </div>
-<div class="tab-pane fade active show" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
+<!-- <div class="tab-pane fade active show" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
     <div class="card mb-4">
         <h6 class="card-header">
             Add-in Attributes
@@ -24,15 +28,29 @@
                 continues
                 with attributtes section!
             </div>
-            <attribute-set-navs ng-if="$ctrl.model.id" parent-id="$ctrl.model.id" parent-type="3">
+            <attribute-set-navs ng-if="$ctrl.model.id" 
+                attribute-set-navs="$ctrl.model.attributeSetNavs" parent-id="$ctrl.model.id" parent-type="'Page'">
             </attribute-set-navs>
         </div>
     </div>
 </div>
-
-<template-editor class="mb-4" is-readonly="'false'" folder-type="'Pages'" line-count="'20'"
-    template="$ctrl.model.view" templates="$ctrl.model.templates">
+ -->
+<template-editor
+  class="mb-4"
+  is-readonly="'false'"
+  folder-type="'Pages'"
+  line-count="'20'"
+  template="$ctrl.model.view"
+  templates="$ctrl.model.templates"
+  enable-rename="'true'"
+>
 </template-editor>
-<template-editor is-readonly="'false'" folder-type="'Masters'" line-count="'20'"
-    template="$ctrl.model.master" templates="$ctrl.model.masters">
+<template-editor
+  is-readonly="'false'"
+  folder-type="'Masters'"
+  line-count="'20'"
+  template="$ctrl.model.master"
+  templates="$ctrl.model.masters"
+  enable-rename="'true'"
+>
 </template-editor>

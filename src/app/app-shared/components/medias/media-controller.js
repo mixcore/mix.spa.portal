@@ -6,7 +6,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
         $scope.activedData = {
             title: '',
             description: '',
-            status: 2,
+            status: 'Published',
             mediaFile: {
                 file: null,
                 fullPath: '',
@@ -121,7 +121,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             $scope.activedData = {
                 title: '',
                 description: '',
-                status: 2,
+                status: 'Published',
                 mediaFile: {
                     file: null,
                     fullPath: '',

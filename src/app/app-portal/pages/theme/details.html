@@ -38,11 +38,16 @@
                         </div>
                         <hr>
                         <div class="">
+                        <div class="custom-control custom-switch" ng-show="!theme">
+                                <input type="checkbox" class="custom-control-input" ng-model="activedData.isCloneFromCurrentTheme"
+                                    id="isCloneFromCurrentTheme">
+                                <label class="custom-control-label" for="isCloneFromCurrentTheme">Clone Template from current theme!</label>
+                            </div>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" ng-model="activedData.isActived"
                                     id="isActived">
                                 <label class="custom-control-label" for="isActived">Activate this theme for your site!</label>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>

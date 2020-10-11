@@ -30,7 +30,8 @@
             };
             ctrl.loadData = async function (pageIndex) {
                 ctrl.isBusy = true;
-                ctrl.request.query = ctrl.query + ctrl.srcId;
+                
+                // ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;

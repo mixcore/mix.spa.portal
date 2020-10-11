@@ -1,0 +1,24 @@
+main-side-bar-dynamic {
+  .sw-sidebar {
+    .sw-toc-item {
+      position: relative;
+      .sw-toc-link {
+        .sw-toc-link {
+          padding-left: 0;
+        }
+      }
+      .btn-group {
+        right: 20px;
+        opacity: 1;
+      }
+    }
+    ul {
+      padding-left: 15px;
+    }
+    .sw-toc-sub-link {
+      .btn-group {
+        padding: 2px 0;
+      }
+    }
+  }
+}

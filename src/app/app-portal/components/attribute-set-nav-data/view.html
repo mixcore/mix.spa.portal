@@ -1,7 +1,10 @@
 <tabs-v select-callback="$ctrl.selectPane(pane)">
     <pane-v id="pane-data-{{$ctrl.nav.data.id}}" header="Data" class="">
         <div class="card-body">
-            <attribute-set-nav-values on-update="$ctrl.updateData(data)" on-delete="$ctrl.removeData(data)"
+            <attribute-set-nav-values 
+                on-update="$ctrl.updateData(data)" on-delete="$ctrl.removeData(data)"
+                attribute-set-id="$ctrl.nav.data.id" attribute-set-name="$ctrl.nav.data.name"
+                parent-id="$ctrl.parentId" parent-type="$ctrl.parentType"
                 data="$ctrl.data" class="card-body">
             </attribute-set-nav-values>
         </div>

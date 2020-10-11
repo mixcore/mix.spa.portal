@@ -2,7 +2,8 @@
 app.component('pageAdvanced', {
     templateUrl: '/app/app-portal/pages/page/components/page-advanced/view.html',
     bindings: {
-        model: '='
+        model: '=',
+        attributeSets: '=?'
     },
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {

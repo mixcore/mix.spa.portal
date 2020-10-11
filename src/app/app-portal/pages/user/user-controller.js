@@ -6,7 +6,7 @@ app.controller('UserController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
             pageIndex: 0,
             status: 'Published',
             orderBy: 'CreatedDateTime',
-            direction: '1',
+            direction: 'Desc',
             fromDate: null,
             toDate: null,
             keyword: ''
@@ -116,7 +116,7 @@ app.controller('UserController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
             $rootScope.isBusy = true;
             var resp = await userServices.saveUser(user);
             if (resp && resp.isSucceed) {
-                //$scope.activedUser = resp.data;
+                $scope.activedUser = resp.data;
                 $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
                 $scope.$apply();

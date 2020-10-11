@@ -1,3 +1,10 @@
-#modal-posts img {
-    height: 30px;
+#modal-content-filter {
+
+    @media (min-width: 992px) {
+        .modal-lg,
+        .modal-xl {
+            max-width: 80vw;
+        }
+    }
+
 }

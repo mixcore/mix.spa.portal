@@ -16,7 +16,7 @@
                 class="btn btn-sm btn-link btn-round pull-right float-right mr-2 py-0 " ng-disabled="$ctrl.isBusy">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     ng-if="$ctrl.isBusy"></span>
-                <i class="fas fa-save" ng-if="!$ctrl.isBusy"></i> Save current</button>
+                <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current</button>
             <div class="card-header text-right" ng-if="$ctrl.attrData.attributeSetId==1">
                 <a href="/portal/navigation/details?dataId={{$ctrl.parentId}}" class="btn bnt-sm btn-primary px-3">
                     <i class="fas fa-chevron-left"></i> Back
@@ -55,8 +55,8 @@
                 ng-disabled="$ctrl.isBusy">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
                     ng-if="$ctrl.isBusy"></span>
-                <i class="fas fa-save" ng-if="!$ctrl.isBusy"></i> Save current</button>
+                <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current</button>
         </div>
     </div>
 </form>
-<content-filter ng-if="$ctrl.attrData" callback="$ctrl.loadSelected(nav,type)"></content-filter>
+<modal-content-filter ng-if="$ctrl.attrData" callback="$ctrl.loadSelected(nav,type)"></modal-content-filter>

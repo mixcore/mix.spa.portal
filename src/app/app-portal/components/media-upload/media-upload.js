@@ -7,7 +7,7 @@ modules.component('mediaUpload', {
             ctrl.activedData = {
                 title: '',
                 description: '',
-                status: 2,
+                status: 'Published',
                 mediaFile: {
                     file: null,
                     fullPath: '',
