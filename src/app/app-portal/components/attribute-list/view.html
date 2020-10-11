@@ -1,14 +1,14 @@
 <div class="card mb-4">
     <div class="card-header position-sticky" style="top: 3.90rem; z-index: 12;">
-        <h6>Fields
+        <h6>Columns
             <span ng-bind="$ctrl.title"></span>
             <a ng-click="$ctrl.addAttr()" class="btn btn-link btn-sm float-right text-primary"><span
-                    class="fas fa-plus"></span> Create field</a>
+                    class="fas fa-plus"></span> Create Column</a>
         </h6>
     </div>
     <div class="card-body">
         <div class="alert alert-warning mb-0" role="alert" ng-if="!$ctrl.fields || !$ctrl.fields.length">
-            <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No field has been created for this attribute
+            <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No column has been created for this table
             yet!
         </div>
         <div dnd-list="$ctrl.fields" 
@@ -26,7 +26,7 @@
                         <small class="fa fa-grip-vertical text-black-50 align-middle" style="cursor: grab"></small>
                     </div>
                     <div class="form-groupx col-md-4">
-                        <small class="control-label">Field: <span class="text-black-50"
+                        <small class="control-label">Column: <span class="text-black-50"
                                 ng-bind="col.name"></span></small>
                         <input ng-model="col.title" placeholder="Title" ng-change="$ctrl.generateName(col)"
                             class="form-control form-control-sm">
@@ -50,12 +50,11 @@
                         </div>
                         <div ng-if="col.dataType == 'Reference'">
                             <small>
-                                Attribute
-                                [ <a ng-click="$ctrl.showReferences(col)" class="btn-link text-primary">Select</a> ]
+                                [ <a ng-click="$ctrl.showReferences(col)" class="btn-link text-primary">+ Select</a> ] Table
                             </small> <br />
                             <a ng-if="col.referenceId" href="/portal/attribute-set/details/{{col.referenceId}}"
                                 class="btn btn-link"><small>
-                                    <span class="fas fa-pen text-primary"></span> Edit attribute
+                                    <span class="fas fa-pen text-primary"></span> Edit linked table
                                     {{col.reference.title}}</small>
                             </a>
                         </div>

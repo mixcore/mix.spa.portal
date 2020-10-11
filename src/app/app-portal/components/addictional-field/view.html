@@ -1,6 +1,6 @@
 <div class="card mb-4">
   <h6 class="card-header">
-    Default Attributes
+    Additional Data Columns
     <a
       class="btn-link text-primary btn-sm float-right py-0"
       data-toggle="collapse"
@@ -19,7 +19,7 @@
       ng-if="!$ctrl.model.attributeData.data.values || !$ctrl.model.attributeData.data.values.length"
     >
       <em class="fas fa-exclamation-triangle text-warning mr-3"></em> No field
-      has been created for this attribute yet!
+      has been created for this table yet!
     </div>
     <div
       dnd-list="$ctrl.model.attributeData.data.values"
@@ -45,7 +45,7 @@
           </div>
           <div class="form-groupx col-md-4">
             <small class="control-label"
-              >Field:
+              >Column:
               <span class="text-black-50" ng-bind="col.field.name"></span
             ></small>
             <input
@@ -95,7 +95,7 @@
                 href="/portal/attribute-set/details/{{col.field.referenceId}}"
                 class="btn btn-link"
                 ><small>
-                  <span class="fas fa-pen text-primary"></span> Edit attribute
+                  <span class="fas fa-pen text-primary"></span> Edit table
                   {{col.field.reference.title}}</small
                 >
               </a>
@@ -345,7 +345,7 @@
                 </div> -->
       <div class="form-groupx col-md-7">
         <small class="control-label"
-          >Extra custtom field:
+          >Column:
           <span class="text-black-50" ng-bind="$ctrl.field.name"></span
         ></small>
         <input
@@ -375,7 +375,7 @@
         <a
           ng-click="$ctrl.addAttr()"
           class="btn btn-link btn-sm float-right text-primary"
-          ><span class="fas fa-plus"></span> Add field</a
+          ><span class="fas fa-plus"></span> Add column</a
         >
       </div>
     </div>

@@ -3,7 +3,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <filter-list request="request" orders="orders" callback="getList(pageIndex)"
-                    create-url="'/portal/attribute-set/create'" create-text="'Create Attribute'"></filter-list>
+                    create-url="'/portal/attribute-set/create'" create-text="'Create Table'"></filter-list>
                 <hr>
                 <table class="table table-sm table-hover mb-0" cellspacing="0" ng-init="getList()">
                     <thead class="thead-light">
@@ -15,7 +15,7 @@
                                     ng-change="selectAll(selectedList.isSelectAll)" />
                             </th>
                             <th scope="col" style="width: 25%;">
-                                Attribute
+                                Table Title
                             </th>
                             <th scope="col" width="20%">
                                 Name
@@ -61,7 +61,7 @@
                                 aria-expanded="false" aria-controls="attribute-childs">
                                 <i class="fas fa-folder"></i>
                             </a> -->
-                                    <a href="/portal/attribute-set/details/{{item.id}}" title="Edit Attribute"
+                                    <a href="/portal/attribute-set/details/{{item.id}}" title="Edit table"
                                         class="btn btn-link text-primary">
                                         <span class="fas fa-pen"></span>
                                     </a>

@@ -3,14 +3,6 @@
   <form ng-class="{'submitted': submitted}" ng-submit="save()">
     <div class="row">
       <section class="col-sm-8 pr-3">
-        <select
-          ng-if="isAdmin"
-          ng-init="loadPostTypes()"
-          class="custom-select"
-          ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
-          ng-change="onSelectType()"
-          ng-model="request.type"
-        ></select>
         <tabs-v class="mb-3">
           <pane-v header="Content">
             <post-content model="activedData"></post-content>
@@ -104,7 +96,7 @@
                 />
               </div>
             </div>
-            <div class="form-group mb-0">
+            <div class="form-group">
               <label class="control-label">Author</label>
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -119,6 +111,19 @@
                 />
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="control-label">Post type</label>
+            <select
+            ng-if="isAdmin"
+            ng-init="loadPostTypes()"
+            class="custom-select"
+            ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
+            ng-change="onSelectType()"
+            ng-model="request.type"
+          ></select>
+            </div>
+
             <div class="form-group mb-0">
               <label class="control-label">Template</label>
               <div class="input-group">
