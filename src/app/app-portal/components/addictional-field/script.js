@@ -40,7 +40,7 @@ modules.component("addictionalField", {
             ctrl.field.dataType = "text";
           }
         } else {
-          $rootScope.showErrors(["Please Add Field Name"]);
+          $rootScope.showErrors(["Please add column Name"]);
         }
       };
 
