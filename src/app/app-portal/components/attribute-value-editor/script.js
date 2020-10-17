@@ -63,12 +63,12 @@
               if (ctrl.attributeValue.field.referenceId && ctrl.parentId) {
                 ctrl.attributeValue.integerValue =
                   ctrl.attributeValue.field.referenceId;
-                navService.getSingle(["default"]).then((resp) => {
-                  ctrl.defaultDataModel = resp;
-                  ctrl.defaultDataModel.attributeSetId =
-                    ctrl.attributeValue.field.referenceId;
-                  ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
-                });
+                // navService.getSingle(["default"]).then((resp) => {
+                //   ctrl.defaultDataModel = resp;
+                //   ctrl.defaultDataModel.attributeSetId =
+                //     ctrl.attributeValue.field.referenceId;
+                //   ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
+                // });
                 // ctrl.loadRefData();
               }
               break;
@@ -163,25 +163,7 @@
             break;
         }
       };
-      // ctrl.loadRefData = function () {
-      //   ctrl.refRequest.attributeSetId = ctrl.attributeValue.field.referenceId;
-      //   ctrl.refRequest.parentType = ctrl.parentType;
-      //   ctrl.refRequest.parentId = ctrl.parentId;
-      //   navService.getList(ctrl.refRequest).then((resp) => {
-      //     if (resp) {
-      //       ctrl.refData = resp;
-      //       $rootScope.isBusy = false;
-      //       $scope.$apply();
-      //     } else {
-      //       if (resp) {
-      //         $rootScope.showErrors("Failed");
-      //       }
-      //       ctrl.refData = [];
-      //       $rootScope.isBusy = false;
-      //       $scope.$apply();
-      //     }
-      //   });
-      // };
+      
       ctrl.updateRefData = function (nav) {
         ctrl.goToPath(`/portal/attribute-set-data/details?dataId=${nav.data.id}
                 &attributeSetId=${nav.data.attributeSetId}
@@ -192,43 +174,7 @@
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/attribute-set-data/details?dataId='+ item.id +'&attributeSetId=' + item.attributeSetId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
-      ctrl.saveRefData = function (data) {
-        $rootScope.isBusy = true;
-        ctrl.refDataModel.data = data;
-        dataService.save(data).then((resp) => {
-          if (resp.isSucceed) {
-            ctrl.refDataModel.id = resp.data.id;
-            ctrl.refDataModel.data = resp.data;
-            navService.save(ctrl.refDataModel).then((resp) => {
-              if (resp.isSucceed) {
-                var tmp = $rootScope.findObjectByKey(
-                  ctrl.refData,
-                  ["parentId", "parentType", "id"],
-                  [resp.data.parentId, resp.data.parentType, resp.data.id]
-                );
-                if (!tmp) {
-                  ctrl.refData.push(resp.data);
-                }
-                ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
-                var e = $(
-                  ".pane-data-" + ctrl.attributeValue.field.referenceId
-                )[0];
-                angular.element(e).triggerHandler("click");
-                $rootScope.isBusy = false;
-                $scope.$apply();
-              } else {
-                $rootScope.showMessage("failed");
-                $rootScope.isBusy = false;
-                $scope.$apply();
-              }
-            });
-          } else {
-            $rootScope.showMessage("failed");
-            $rootScope.isBusy = false;
-            $scope.$apply();
-          }
-        });
-      };
+      
       ctrl.removeRefData = async function (nav) {
         $rootScope.showConfirm(
           ctrl,

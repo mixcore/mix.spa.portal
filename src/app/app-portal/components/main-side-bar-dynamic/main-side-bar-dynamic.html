@@ -16,7 +16,7 @@
     id="sw-docs-nav"
     data-children=".sw-toc-item"
   >
-    <li ng-repeat="permission in $ctrl.role.permissions ">
+    <li ng-repeat="permission in $ctrl.role.permissions | orderBy: 'priority' ">
       <main-side-bar-item-dynamic
         item="permission"
         icon-size="'mi-lg'"
