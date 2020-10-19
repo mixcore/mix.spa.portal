@@ -52,22 +52,24 @@ app.controller("PermissionController", [
       $scope.getSingle();
     };
 
-    $scope.updateInfos = async function (items) {
-      $rootScope.isBusy = true;
-      var resp = await service.updateInfos(items);
-      if (resp && resp.isSucceed) {
-        $scope.activedPage = resp.data;
-        $rootScope.showMessage("success", "success");
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        if (resp) {
-          $rootScope.showErrors(resp.errors);
-        }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
+    $scope.dragStart = function (index) {
+      $scope.minPriority = $scope.data.items[0].priority;
+      $scope.dragStartIndex = index;
     };
+    $scope.updateOrders = function (index) {
+        if (index > $scope.dragStartIndex) {
+          $scope.data.items.splice($scope.dragStartIndex, 1);
+        } else {
+          $scope.data.items.splice($scope.dragStartIndex + 1, 1);
+        }
+        angular.forEach($scope.data.items, function (e, i) {
+          e.priority = $scope.minPriority + i;
+          service.saveFields(e.id, { priority: e.priority }).then((resp) => {
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          });
+        });
+      };
 
     $scope.updateChildInfos = async function (items) {
       $rootScope.isBusy = true;

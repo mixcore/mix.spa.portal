@@ -8,7 +8,6 @@ app.controller("PostController", [
   "$routeParams",
   "PostRestService",
   "UrlAliasService",
-  "AttributeSetService",
   "RestAttributeSetDataPortalService",
   function (
     $scope,
@@ -18,8 +17,7 @@ app.controller("PostController", [
     ngAppSettings,
     $routeParams,
     service,
-    urlAliasService,
-    attributeSetService,
+    urlAliasService,    
     attributeSetDataService
   ) {
     BaseRestCtrl.call(
@@ -197,18 +195,6 @@ app.controller("PostController", [
           }
         }
       }
-      if ($routeParams.attr_set_ids) {
-        var req = angular.copy(ngAppSettings.request);
-        req.query = "attr_set_ids=" + $routeParams.attr_set_ids;
-        var getData = attributeSetService.getList(req);
-        if (getData.isSucceed) {
-          angular.forEach(getData.data.items, function (e) {
-            e.isActived = true;
-          });
-          $scope.activedData.attributeSetNavs = getData.data;
-        }
-      }
-
       if ($scope.activedData.sysCategories) {
         angular.forEach($scope.activedData.sysCategories, function (e) {
           e.attributeData.obj.isActived = true;
