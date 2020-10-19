@@ -15,10 +15,14 @@ app.controller("AttributeSetFormController", [
       formName,
       parentId,
       parentType,
+      validateHandler,
+      loadingHandler,
       successHandler,
       failHandler
     ) {
       $scope.successMsg = "Thành công";
+      $scope.validateHandler = validateHandler;
+      $scope.loadingHandler = loadingHandler;
       $scope.successHandler = successHandler;
       $scope.failHandler = failHandler;
       $scope.formName = formName;
@@ -51,34 +55,39 @@ app.controller("AttributeSetFormController", [
       });
     };
     $scope.submit = async (data) => {
-      $rootScope.isBusy = true;
-      var saveResult = await dataService.save(data);
-      if (saveResult.isSucceed) {
-        if ($scope.successHandler) {
-          $rootScope.executeFunctionByName($scope.successHandler, [saveResult]);
-        } else {
-          alert($scope.successMsg);
-        }
-        $scope.formData = angular.copy($scope.defaultData);
-        $rootScope.isBusy = false;
-        $scope.loadData();
-        $scope.$apply();
-      } else {
-        if (saveResult.errors && saveResult.errors.length) {
-          let errMsg = "Vui lòng thực hiện lại";
-          if (saveResult.errors[0].indexOf("is existed")) {
-            errMsg = saveResult.errors[0]
-              .toString()
-              .replace("is existed", "đã tồn tại");
-          }
+      $rootScope.isBusy = true;      
+      if($scope.loadingHandler){
+        $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
+      }
+      if(!$scope.validateHandler || $rootScope.executeFunctionByName($scope.validateHandler, [data])){        
+        var saveResult = await dataService.save(data);
+        if (saveResult.isSucceed) {
           if ($scope.successHandler) {
-            $rootScope.executeFunctionByName($scope.failHandler, [saveResult]);
+            $rootScope.executeFunctionByName($scope.successHandler, [saveResult]);
           } else {
-            alert(errMsg);
+            alert($scope.successMsg);
           }
+          $scope.formData = angular.copy($scope.defaultData);
+          $rootScope.isBusy = false;
+          $scope.loadData();
+          if($scope.loadingHandler){
+            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
+          }
+          $scope.$apply();
+        } else {
+          if (saveResult.errors && saveResult.errors.length) {
+            if ($scope.failHandler) {
+              $rootScope.executeFunctionByName($scope.failHandler, [data, saveResult]);
+            } else {
+              alert(errMsg);
+            }
+          }
+          if($scope.loadingHandler){
+            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
+          }
+          $rootScope.isBusy = false;
+          $scope.$apply();
         }
-        $rootScope.isBusy = false;
-        $scope.$apply();
       }
     };
   },

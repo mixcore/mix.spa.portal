@@ -114,14 +114,13 @@
 
             <div class="form-group">
               <label class="control-label">Post type</label>
-            <select
-            ng-if="isAdmin"
-            ng-init="loadPostTypes()"
-            class="custom-select"
-            ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
-            ng-change="onSelectType()"
-            ng-model="request.type"
-          ></select>
+              <select
+                ng-init="loadPostTypes()"
+                class="custom-select"
+                ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
+                ng-change="onSelectType()"
+                ng-model="request.type"
+              ></select>
             </div>
 
             <div class="form-group mb-0">
