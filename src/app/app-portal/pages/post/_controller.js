@@ -17,7 +17,7 @@ app.controller("PostController", [
     ngAppSettings,
     $routeParams,
     service,
-    urlAliasService,    
+    urlAliasService,
     attributeSetDataService
   ) {
     BaseRestCtrl.call(
@@ -43,10 +43,8 @@ app.controller("PostController", [
     $scope.postTypeRequest.attributeSetName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
+    $scope.request.type = "";
     $scope.initList = async function () {
-      if ($routeParams.type) {
-        $scope.request.type = $routeParams.type;
-      }
       $scope.pageName = "postList";
       $scope.loadPostTypes();
       $scope.getList();
@@ -58,7 +56,9 @@ app.controller("PostController", [
       );
       if (getTypes.isSucceed) {
         $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
-        $scope.request.type = $routeParams.type;
+        if ($routeParams.type) {
+          $scope.request.type = $routeParams.type;
+        }
         $scope.$apply();
       }
     };
