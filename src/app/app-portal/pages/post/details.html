@@ -119,7 +119,7 @@
                 class="custom-select"
                 ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
                 ng-change="onSelectType()"
-                ng-model="request.type"
+                ng-model="activedData.type"
               ></select>
             </div>
 
