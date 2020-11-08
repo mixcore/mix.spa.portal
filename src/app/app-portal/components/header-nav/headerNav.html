@@ -39,6 +39,7 @@
     ng-if="$ctrl.settings"
   >
     <li class="nav-item mr-2 text-center">
+      {{$ctrl.isAdmin}}
       <a
         class="nav-link p-2"
         href="#"
@@ -49,11 +50,16 @@
       </a>
     </li>
     <li class="nav-item mr-2">
-      <a class="nav-link p-2" href="#" ng-click="$ctrl.addFavorite()">
-        <i class="mi mi-FavoriteList"></i>
+      <a class="nav-link p-2" href="#" ng-click="$ctrl.addPermission()">
+        <i class="mi mi-Permissions"></i>
       </a>
     </li>
     <li class="nav-item mr-2">
+      <a class="nav-link p-2" href="#" ng-click="$ctrl.addBookmark()">
+        <i class="mi mi-FavoriteList"></i>
+      </a>
+    </li>
+    <!-- <li class="nav-item mr-2">
       <a
         class="nav-link p-2"
         href="#"
@@ -62,7 +68,7 @@
       >
         <i class="mi mi-CheckList"></i>
       </a>
-    </li>
+    </li> -->
     <li class="nav-item mr-2">
       <a
         class="nav-link p-2"
@@ -81,8 +87,10 @@
       >
         <span class="flag-icon {{$ctrl.settings.langIcon}}"></span>
       </a>
-      <div class="dropdown-menu dropdown-menu-right"
-        ng-class="{show: $ctrl.showLanguages}">
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        ng-class="{show: $ctrl.showLanguages}"
+      >
         <a
           class="dropdown-item"
           href=""

@@ -200,6 +200,30 @@
               </label>
             </div>
           </div>
+          <div class="row form-group" ng-show="col.field.dataType=='Upload'">
+            <div class="custom-control custom-switch mx-2">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                ng-model="col.field.upload.isCrop"
+                id="{{'isEncrypt_' + $index}}"
+              />
+              <label
+                class="custom-control-label"
+                for="{{'isEncrypt_' + $index}}"
+              >
+                Encrypt
+              </label>
+            </div>
+            <div class="col-md-3">
+              <span>Width</span>
+              <input
+                type="text"
+                ng-model="col.field.upload.width"
+                class="sm-control"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="row form-group" ng-show="col.field.isRegex">
@@ -345,8 +369,7 @@
                 </div> -->
       <div class="form-groupx col-md-7">
         <small class="control-label"
-          >Column:
-          <span class="text-black-50" ng-bind="$ctrl.field.name"></span
+          >Column: <span class="text-black-50" ng-bind="$ctrl.field.name"></span
         ></small>
         <input
           ng-model="$ctrl.field.title"
