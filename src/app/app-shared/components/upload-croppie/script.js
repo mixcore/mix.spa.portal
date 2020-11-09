@@ -8,7 +8,7 @@
     h: "=?",
     w: "=?",
     isCrop: "=?",
-    frameUrl: "=",
+    frameUrl: "=?",
     type: "=",
     folder: "=",
     auto: "=",
@@ -18,12 +18,13 @@
   controller: [
     "$rootScope",
     "$scope",
+    "$modal",
     "$http",
     "ngAppSettings",
-    function ($rootScope, $scope, $http, ngAppSettings) {
+    function ($rootScope, $scope, $modal, $http, ngAppSettings) {
       var ctrl = this;
       ctrl.options = {
-        boundary: { width: 250, height: 250 },
+        boundary: { height: 250 },
         render: { width: 1000, height: 1000 },
         output: { width: 1000, height: 1000 },
       };
@@ -35,7 +36,7 @@
       ctrl.image_placeholder = "/assets/img/image_placeholder.jpg";
       // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
       ctrl.$onInit = function () {
-        ctrl.loadBoundary();
+        ctrl.loadViewport();
         ctrl.srcUrl = ctrl.srcUrl || ctrl.image_placeholder;
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()
@@ -51,18 +52,7 @@
           ctrl.frame = ctrl.loadImage(frameUrl);
         }
         if (ctrl.isImage) {
-          var ext = ctrl.srcUrl.substring(ctrl.srcUrl.lastIndexOf(".") + 1);
-          $http({
-            method: "GET",
-            url: ctrl.srcUrl,
-            responseType: "arraybuffer",
-          }).then(function (resp) {
-            ctrl.cropped.source =
-              "data:image/" +
-              ext +
-              ";base64," +
-              ctrl._arrayBufferToBase64(resp.data);
-          });
+          ctrl.loadBase64(ctrl.srcUrl);
         }
         // Assign blob to component when selecting a image
       };
@@ -73,35 +63,13 @@
             .toLowerCase()
             .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
           if (ctrl.isImage) {
-            var ext = ctrl.srcUrl.substring(ctrl.srcUrl.lastIndexOf(".") + 1);
-            $http({
-              method: "GET",
-              url: ctrl.srcUrl,
-              responseType: "arraybuffer",
-            }).then(function (resp) {
-              ctrl.cropped.source =
-                "data:image/" +
-                ext +
-                ";base64," +
-                ctrl._arrayBufferToBase64(resp.data);
-              ctrl.combineImage();
-              $scope.$apply();
-            });
+            ctrl.loadBase64(ctrl.srcUrl);
           }
         }
       }.bind(ctrl);
-      ctrl.loadBoundary = function () {
-        if (ctrl.w && ctrl.h) {
-          ctrl.options.output.width = ctrl.w;
-          ctrl.options.output.height = ctrl.h;
-          ctrl.rto = ctrl.w / ctrl.h;
-          ctrl.options.boundary.width = ctrl.options.boundary.height * ctrl.rto;
-        }
-        // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
-      };
       ctrl.combineImage = function () {
-        setTimeout(() => {
-          ctrl.canvas = document.getElementById(`canvas-${ctrl.id}`);
+        ctrl.canvas = document.getElementById(`canvas-${ctrl.id}`);
+        if (ctrl.canvas) {
           var img = document.getElementById("croppie-src");
           var w = ctrl.options.boundary.width;
           var h = ctrl.options.boundary.height;
@@ -123,7 +91,7 @@
               "image/octet-stream"
             );
           });
-        }, 200);
+        }
       };
       ctrl.saveCanvas = function () {
         var link = document.createElement("a");
@@ -143,12 +111,17 @@
           url: url,
           responseType: "arraybuffer",
         }).then(function (resp) {
-          return (
-            "data:image/" +
-            ext +
-            ";base64," +
-            ctrl._arrayBufferToBase64(resp.data)
-          );
+          var base64 = `data:image/${ext};base64,${ctrl._arrayBufferToBase64(
+            resp.data
+          )}`;
+          var image = new Image();
+          image.src = base64;
+          image.onload = function () {
+            // access image size here
+            ctrl.loadImageSize(this.width, this.height);
+          };
+          ctrl.cropped.source = base64;
+          return base64;
         });
       };
       ctrl.loadImage = function (src) {
@@ -232,15 +205,24 @@
       };
       ctrl.loadImageSize = function (w, h) {
         var rto = w / h;
+        // ctrl.options.boundary.width = ctrl.options.boundary.height * rto;
         ctrl.options.render.width = ctrl.options.render.height * rto;
         if (!ctrl.rto) {
           ctrl.rto = rto;
           ctrl.w = w;
           ctrl.h = h;
-          ctrl.loadBoundary();
+          ctrl.loadViewport();
         }
         $scope.$apply();
         ctrl.image_placeholder = `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
+      };
+      ctrl.loadViewport = function () {
+        if (ctrl.w && ctrl.h) {
+          ctrl.rto = ctrl.w / ctrl.h;
+          ctrl.options.viewport.height = ctrl.h;
+          ctrl.options.viewport.width = ctrl.options.viewport.height * ctrl.rto;
+        }
+        // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
       };
     },
   ],
