@@ -25,13 +25,9 @@
     },
   };
   ctrl.image_placeholder = "/assets/img/image_placeholder.jpg";
+  ctrl.options = null;
   // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
   ctrl.init = function () {
-    ctrl.options = {
-      viewport: { height: 250 },
-      render: { height: ctrl.h, width: ctrl.w },
-      output: { height: ctrl.h, width: ctrl.w },
-    };
     ctrl.srcUrl = ctrl.srcUrl || ctrl.image_placeholder;
     ctrl.maxHeight = ctrl.maxHeight || "2000px";
     ctrl.id = Math.floor(Math.random() * 100);
@@ -43,6 +39,7 @@
     if (ctrl.frameUrl) {
       ctrl.frame = ctrl.loadImage(frameUrl);
     }
+
     if (ctrl.srcUrl) {
       ctrl.loadBase64(ctrl.srcUrl);
     }
@@ -50,12 +47,13 @@
     if (ctrl.file) {
       setTimeout(() => {
         ctrl.selectFile(ctrl.file);
-      }, 200);
+      });
     }
+
     // Assign blob to component when selecting a image
   };
 
-  ctrl.$doCheck = function () {
+  ctrl.loadFromUrl = function () {
     if (ctrl.src !== ctrl.srcUrl && ctrl.srcUrl != ctrl.image_placeholder) {
       ctrl.src = ctrl.srcUrl;
       ctrl.isImage = ctrl.srcUrl
@@ -65,7 +63,7 @@
         ctrl.loadBase64(ctrl.srcUrl);
       }
     }
-  }.bind(ctrl);
+  };
 
   ctrl.ok = async function () {
     ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
@@ -115,34 +113,6 @@
       $scope.$apply();
     }, "image/png");
   };
-  ctrl.loadBase64 = function (url) {
-    var ext = url.substring(url.lastIndexOf(".") + 1);
-    $http({
-      method: "GET",
-      url: url,
-      responseType: "arraybuffer",
-    }).then(function (resp) {
-      var base64 = `data:image/${ext};base64,${ctrl._arrayBufferToBase64(
-        resp.data
-      )}`;
-      var image = new Image();
-      image.src = base64;
-      image.onload = function () {
-        // access image size here
-        ctrl.loadImageSize(this.width, this.height);
-        ctrl.cropped.source = base64;
-        $scope.$apply();
-      };
-      return base64;
-    });
-  };
-  ctrl.loadImage = function (src) {
-    // http://www.thefutureoftheweb.com/blog/image-onload-isnt-being-called
-    var img = new Image();
-    // img.onload = onload;
-    img.src = src;
-    return img;
-  };
   ctrl._arrayBufferToBase64 = function (buffer) {
     var binary = "";
     var bytes = new Uint8Array(buffer);
@@ -173,7 +143,27 @@
       // }
     }
   };
-
+  ctrl.loadBase64 = function (url) {
+    var ext = url.substring(url.lastIndexOf(".") + 1);
+    $http({
+      method: "GET",
+      url: url,
+      responseType: "arraybuffer",
+    }).then(function (resp) {
+      var base64 = `data:image/${ext};base64,${ctrl._arrayBufferToBase64(
+        resp.data
+      )}`;
+      var image = new Image();
+      image.src = base64;
+      image.onload = function () {
+        // access image size here
+        ctrl.loadImageSize(this.width, this.height);
+        ctrl.cropped.source = base64;
+        $scope.$apply();
+      };
+      return base64;
+    });
+  };
   ctrl.getBase64 = function (file) {
     if (file !== null) {
       $rootScope.isBusy = true;
@@ -198,11 +188,9 @@
           // access image size here
           ctrl.loadImageSize(this.width, this.height);
           ctrl.cropped.source = reader.result;
+          $rootScope.isBusy = false;
           $scope.$apply();
         };
-
-        $rootScope.isBusy = false;
-        $scope.$apply();
       };
       reader.onerror = function (error) {
         $rootScope.isBusy = false;
@@ -218,19 +206,21 @@
     ctrl.h = ctrl.h || h;
     ctrl.rto = ctrl.rto || rto;
     ctrl.options = {
-      viewport: { height: 250, width: 250 * ctrl.rto },
-      render: { height: ctrl.h, width: ctrl.h * ctrl.rto },
+      boundary: { height: 250, width: 250 * rto },
+      render: { height: 250, width: 250 * rto },
       output: { height: ctrl.h, width: ctrl.h * ctrl.rto },
-      boundary: { height: ctrl.h, width: ctrl.h * rto },
     };
-    // ctrl.loadViewport();
+    ctrl.loadViewport();
     // ctrl.image_placeholder = `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
   };
   ctrl.loadViewport = function () {
     if (ctrl.w && ctrl.h) {
       ctrl.rto = ctrl.w / ctrl.h;
-      ctrl.options.viewport.height = ctrl.h;
-      ctrl.options.viewport.width = ctrl.options.viewport.height * ctrl.rto;
+      const h = 150;
+      ctrl.options.viewport = {
+        height: h,
+        width: h * ctrl.rto,
+      };
     }
     // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
   };

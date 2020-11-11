@@ -14,6 +14,7 @@
           ng-model="$ctrl.srcUrl"
           class="form-control hidden"
           placeholder="https://your-image-url..."
+          ng-change="$ctrl.loadFromUrl()"
         />
       </div>
       <div class="input-group">
@@ -36,10 +37,7 @@
     <div class="row">
       <!-- Croppie needs a container -> using 'boundary' option -->
 
-      <div
-        class="col-sm-12"
-        ng-if="$ctrl.options.boundary && $ctrl.cropped.source"
-      >
+      <div class="col-sm-12" ng-if="$ctrl.options && $ctrl.cropped.source">
         <croppie
           ng-if="$ctrl.cropped.source"
           src="$ctrl.cropped.source"
