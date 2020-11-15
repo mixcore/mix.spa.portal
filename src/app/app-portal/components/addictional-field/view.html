@@ -121,83 +121,91 @@
           </div>
         </div>
 
-        <div class="row my-2" ng-show="col.field.showAdvanced">
-          <div class="col-md-1"></div>
-          <div class="col-md form-check-inline px-2">
-            <div class="custom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-model="col.field.isEncrypt"
-                id="{{'isEncrypt_' + $index}}"
-              />
-              <label
-                class="custom-control-label"
-                for="{{'isEncrypt_' + $index}}"
-              >
-                Encrypt
-              </label>
-            </div>
-            <div class="scustom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-model="col.field.isUnique"
-                id="{{'unique_' + $index}}"
-              />
-              <label class="custom-control-label" for="{{'unique_' + $index}}">
-                Unique
-              </label>
-            </div>
-            <div class="scustom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-model="col.field.isRequire"
-                id="{{'required_' + $index}}"
-              />
-              <label
-                class="custom-control-label"
-                for="{{'required_' + $index}}"
-              >
-                Required
-              </label>
-            </div>
-            <div class="scustom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-model="col.field.isSelect"
-                id="{{'select_' + $index}}"
-              />
-              <label class="custom-control-label" for="{{'select_' + $index}}">
-                Select
-              </label>
-            </div>
-            <div class="scustom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-model="col.field.isMultiple"
-                id="{{'multiple_' + $index}}"
-              />
-              <label
-                class="custom-control-label"
-                for="{{'multiple_' + $index}}"
-              >
-                Select
-              </label>
-            </div>
-            <div class="scustom-control custom-switch mx-2">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                ng-click="col.field.isRegex = !col.field.isRegex"
-                id="{{'regex_' + $index}}"
-              />
-              <label class="custom-control-label" for="{{'regex_' + $index}}">
-                Regex
-              </label>
+        <div class="my-2" ng-show="col.field.showAdvanced">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md form-check-inline px-2">
+              <div class="custom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-model="col.field.isEncrypt"
+                  id="{{'isEncrypt_' + $index}}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="{{'isEncrypt_' + $index}}"
+                >
+                  Encrypt
+                </label>
+              </div>
+              <div class="scustom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-model="col.field.isUnique"
+                  id="{{'unique_' + $index}}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="{{'unique_' + $index}}"
+                >
+                  Unique
+                </label>
+              </div>
+              <div class="scustom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-model="col.field.isRequire"
+                  id="{{'required_' + $index}}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="{{'required_' + $index}}"
+                >
+                  Required
+                </label>
+              </div>
+              <div class="scustom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-model="col.field.isSelect"
+                  id="{{'select_' + $index}}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="{{'select_' + $index}}"
+                >
+                  Select
+                </label>
+              </div>
+              <div class="scustom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-model="col.field.isMultiple"
+                  id="{{'multiple_' + $index}}"
+                />
+                <label
+                  class="custom-control-label"
+                  for="{{'multiple_' + $index}}"
+                >
+                  Select
+                </label>
+              </div>
+              <div class="scustom-control custom-switch mx-2">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  ng-click="col.field.isRegex = !col.field.isRegex"
+                  id="{{'regex_' + $index}}"
+                />
+                <label class="custom-control-label" for="{{'regex_' + $index}}">
+                  Regex
+                </label>
+              </div>
             </div>
           </div>
           <div class="row form-group" ng-show="col.field.dataType=='Upload'">
@@ -205,21 +213,26 @@
               <input
                 type="checkbox"
                 class="custom-control-input"
-                ng-model="col.field.upload.isCrop"
-                id="{{'isEncrypt_' + $index}}"
+                ng-model="col.field.fieldConfigurations.upload.isCrop"
+                id="{{'isCrop_' + $index}}"
               />
-              <label
-                class="custom-control-label"
-                for="{{'isEncrypt_' + $index}}"
-              >
-                Encrypt
+              <label class="custom-control-label" for="{{'isCrop_' + $index}}">
+                Crop
               </label>
             </div>
             <div class="col-md-3">
               <span>Width</span>
               <input
-                type="text"
-                ng-model="col.field.upload.width"
+                type="number"
+                ng-model="col.field.fieldConfigurations.upload.width"
+                class="sm-control"
+              />
+            </div>
+            <div class="col-md-3">
+              <span>Height</span>
+              <input
+                type="number"
+                ng-model="col.field.fieldConfigurations.upload.height"
                 class="sm-control"
               />
             </div>

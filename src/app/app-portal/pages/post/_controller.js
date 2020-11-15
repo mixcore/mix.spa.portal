@@ -17,7 +17,7 @@ app.controller("PostController", [
     ngAppSettings,
     $routeParams,
     service,
-    urlAliasService,    
+    urlAliasService,
     attributeSetDataService
   ) {
     BaseRestCtrl.call(
@@ -46,6 +46,9 @@ app.controller("PostController", [
     $scope.initList = async function () {
       if ($routeParams.type) {
         $scope.request.type = $routeParams.type;
+      }
+      if ($routeParams.template) {
+        $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
       }
       $scope.pageName = "postList";
       $scope.loadPostTypes();
@@ -93,6 +96,9 @@ app.controller("PostController", [
     };
     $scope.onSelectType = function () {
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
+      if ($routeParams.template) {
+        $scope.createUrl += `&template=${$routeParams.template}`;
+      }
       if (!$scope.activedData || !$scope.activedData.id) {
         $scope.getDefault($scope.request.type);
       }

@@ -54,8 +54,8 @@
         };
       };
       ctrl.openCroppie = function (file) {
-        const w = ctrl.w;
-        const h = ctrl.h;
+        const w = parseInt(ctrl.w);
+        const h = parseInt(ctrl.h);
         const rto = ctrl.w / ctrl.h;
 
         var modalInstance = $uibModal.open({
