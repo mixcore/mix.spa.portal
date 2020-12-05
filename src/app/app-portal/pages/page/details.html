@@ -5,7 +5,10 @@
       <section class="col-sm-8 pr-3">
         <tabs-v class="mb-3">
           <pane-v header="Content">
-            <page-content model="activedData"></page-content>
+            <page-content
+              model="activedData"
+              addictional-data="addictionalData"
+            ></page-content>
           </pane-v>
           <pane-v header="Advanced" ng-if="isAdmin">
             <page-advanced model="activedData"></page-advanced>

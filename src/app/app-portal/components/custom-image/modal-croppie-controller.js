@@ -201,13 +201,14 @@
     }
   };
   ctrl.loadImageSize = function (w, h) {
+    const max = 350;
     var rto = w / h;
     ctrl.w = ctrl.w || w;
     ctrl.h = ctrl.h || h;
     ctrl.rto = ctrl.rto || rto;
     ctrl.options = {
-      boundary: { height: 250, width: 250 * rto },
-      render: { height: 250, width: 250 * rto },
+      boundary: { height: max, width: max * rto },
+      render: { height: max, width: max * rto },
       output: { height: ctrl.h, width: ctrl.h * ctrl.rto },
     };
     ctrl.loadViewport();
@@ -216,10 +217,15 @@
   ctrl.loadViewport = function () {
     if (ctrl.w && ctrl.h) {
       ctrl.rto = ctrl.w / ctrl.h;
-      const h = 150;
+      let h = 150;
+      let w = h * ctrl.rto;
+      if (w > ctrl.options.boundary.width) {
+        w = ctrl.options.boundary.width;
+        h = w / ctrl.rto;
+      }
       ctrl.options.viewport = {
         height: h,
-        width: h * ctrl.rto,
+        width: w,
       };
     }
     // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;

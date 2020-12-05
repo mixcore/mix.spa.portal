@@ -9,6 +9,8 @@ modules.component("attributeSetForm", {
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     parentId: "=?",
     defaultId: "=",
+    backUrl: "=?",
+    hideAction: "=?",
     saveData: "&?",
   },
   controller: [
@@ -70,22 +72,24 @@ modules.component("attributeSetForm", {
         if ($routeParams.parentType) {
           ctrl.parentType = $routeParams.parentType;
         }
-        if (ctrl.parentType) {
-          switch (ctrl.parentType) {
-            case "Post":
-            case "Page":
-            case "Module":
-              ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                ctrl.parentId
-              }`;
-              break;
+        if (!ctrl.backUrl) {
+          if (ctrl.parentType) {
+            switch (ctrl.parentType) {
+              case "Post":
+              case "Page":
+              case "Module":
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                  ctrl.parentId
+                }`;
+                break;
 
-            default:
-              ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
-              break;
+              default:
+                ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
+                break;
+            }
+          } else {
+            ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
           }
-        } else {
-          ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
         }
         if (!ctrl.fields) {
           var getFields = await fieldService.initData(

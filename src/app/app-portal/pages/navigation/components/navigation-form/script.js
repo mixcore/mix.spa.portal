@@ -29,6 +29,7 @@ modules.component("navigationForm", {
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
+
       // ctrl.$onInit = async function () {
       //     ctrl.loadData();
       // };
@@ -46,6 +47,7 @@ modules.component("navigationForm", {
             ctrl.attributeSetId = ctrl.attrData.attributeSetId;
             ctrl.attributeSetName = ctrl.attrData.attributeSetName;
             await ctrl.loadDefaultModel();
+            ctrl.createMenuUrl = `/portal/navigation/create?attributeSetId=1&dataId=default&parentId=${ctrl.attrData.id}&parentType=1`;
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {

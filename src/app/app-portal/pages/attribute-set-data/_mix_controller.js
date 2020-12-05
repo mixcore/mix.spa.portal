@@ -46,6 +46,7 @@ app.controller("MixAttributeSetDataController", [
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.attributeSetName = $routeParams.attributeSetName;
+      $scope.backUrl = $routeParams.backUrl;
       if ($routeParams.dataId != $scope.defaultId) {
         $scope.dataId = $routeParams.dataId;
       }

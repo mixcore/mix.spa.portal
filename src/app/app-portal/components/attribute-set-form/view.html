@@ -3,18 +3,25 @@
   ng-init="$ctrl.loadData()"
   ng-submit="$ctrl.submit()"
 >
-  <actions back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
+  <actions
+    ng-if="!$ctrl.hideAction"
+    back-url="$ctrl.backUrl"
+    ng-if="$ctrl.backUrl"
+  ></actions>
   <div class="card">
-    <h6 class="card-header position-sticky" style="top: 3.9rem; z-index: 12;">
+    <h6
+      ng-if="!$ctrl.hideAction"
+      class="card-header position-sticky"
+      style="top: 3.9rem; z-index: 12;"
+    >
       <span
         class="spinner-border spinner-border-sm text-primary"
         role="status"
         aria-hidden="true"
         ng-if="$ctrl.isBusy"
       ></span>
-      <span ng-if="$ctrl.attributeSetName"
-        >{{$ctrl.attributeSetName}}'s Data </span
-      >
+      <!-- <span ng-if="$ctrl.attributeSetName"
+        >{{$ctrl.attributeSetName}}'s Data </span> -->
 
       <a
         class="btn btn-link text-primary btn-sm float-right py-0"

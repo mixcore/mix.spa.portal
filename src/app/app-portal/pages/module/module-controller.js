@@ -8,6 +8,7 @@ app.controller("ModuleController", [
   "ModuleRestService",
   "SharedModuleDataService",
   "RestRelatedAttributeSetPortalService",
+  "RestAttributeSetDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -16,7 +17,8 @@ app.controller("ModuleController", [
     $routeParams,
     moduleServices,
     moduleDataService,
-    RestRelatedAttributeSetPortalService
+    RestRelatedAttributeSetPortalService,
+    dataService
   ) {
     BaseRestCtrl.call(
       this,
@@ -30,6 +32,8 @@ app.controller("ModuleController", [
     );
     $scope.contentUrl = "";
     $scope.getSingleSuccessCallback = function () {
+      $scope.loadAddictionalData();
+
       if ($scope.activedData.id > 0) {
         // module => list post or list product
         if ($scope.activedData.type == 2 || $scope.activedData.type == 6) {
@@ -253,6 +257,18 @@ app.controller("ModuleController", [
     $scope.removeAttributeConfirmed = function (attr, index) {
       RestRelatedAttributeSetPortalService.delete([]);
       $scope.activedData.attributeData.data.values.splice(index, 1);
+    };
+    $scope.loadAddictionalData = async function () {
+      const obj = {
+        parentType: "Module",
+        parentId: $scope.activedData.id,
+        databaseName: "sys_additional_field_module",
+      };
+      const getData = await dataService.getAddictionalData(obj);
+      if (getData.isSucceed) {
+        $scope.addictionalData = getData.data;
+        $scope.$apply();
+      }
     };
   },
 ]);

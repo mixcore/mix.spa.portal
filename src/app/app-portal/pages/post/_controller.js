@@ -18,7 +18,7 @@ app.controller("PostController", [
     $routeParams,
     service,
     urlAliasService,
-    attributeSetDataService
+    dataService
   ) {
     BaseRestCtrl.call(
       this,
@@ -29,6 +29,7 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    $scope.addictionalData = null;
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
@@ -39,14 +40,13 @@ app.controller("PostController", [
         attribute_set_name: "",
       },
     };
+
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.attributeSetName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
+
     $scope.initList = async function () {
-      if ($routeParams.type) {
-        $scope.request.type = $routeParams.type;
-      }
       if ($routeParams.template) {
         $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
       }
@@ -56,12 +56,10 @@ app.controller("PostController", [
     };
     $scope.loadPostTypes = async function () {
       $scope.postTypes.push($scope.type);
-      let getTypes = await attributeSetDataService.getList(
-        $scope.postTypeRequest
-      );
+      let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
         $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
-        $scope.request.type = $routeParams.type;
+        $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
     };
@@ -106,9 +104,6 @@ app.controller("PostController", [
         $scope.getList();
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    //     $location.url($scope.referrerUrl);
-    // }
 
     $scope.getListRelated = async function (pageIndex) {
       if (pageIndex !== undefined) {
@@ -159,24 +154,31 @@ app.controller("PostController", [
         }
       });
     };
-    $scope.saveSuccessCallback = function () {
-      angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
-        if (nav.isActived) {
-          $rootScope.decryptAttributeSet(
-            nav.attributeSet.attributes,
-            nav.attributeSet.postData.items
-          );
+    $scope.saveSuccessCallback = async function () {
+      if ($scope.addictionalData) {
+        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentType = "Post";
+        var saveData = await dataService.save($scope.addictionalData);
+        if (saveData.isSucceed) {
+          if ($location.path() == "/portal/post/create") {
+            $scope.goToDetail($scope.activedData.id, "post");
+          } else {
+            $scope.addictionalData = saveData.data;
+          }
         }
-      });
+      }
       $rootScope.isBusy = false;
       $scope.$apply();
     };
     $scope.getSingleSuccessCallback = function () {
+      $scope.imgW = ngAppSettings.settings.post_image_width;
+      $scope.imgH = ngAppSettings.settings.post_image_height;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.activedData.id) {
         $scope.activedData.detailsUrl = `/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
       }
+      $scope.loadAddictionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
           var moduleNav = $rootScope.findObjectByKey(
@@ -224,6 +226,19 @@ app.controller("PostController", [
       $scope.activedData.publishedDateTime = $filter("utcToLocalTime")(
         $scope.activedData.publishedDateTime
       );
+    };
+
+    $scope.loadAddictionalData = async function () {
+      const obj = {
+        parentType: "Post",
+        parentId: $scope.activedData.id,
+        databaseName: $scope.activedData.type,
+      };
+      const getData = await dataService.getAddictionalData(obj);
+      if (getData.isSucceed) {
+        $scope.addictionalData = getData.data;
+        $scope.$apply();
+      }
     };
     $scope.generateSeo = function () {
       if ($scope.activedData) {
