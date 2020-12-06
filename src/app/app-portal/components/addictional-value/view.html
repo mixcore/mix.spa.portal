@@ -1,4 +1,4 @@
-<div class="card" ng-if="$ctrl.attributeData">
+<div class="card" ng-if="$ctrl.addictionalData">
   <div class="card-header">
     Custom Data Columns
   </div>
@@ -6,9 +6,10 @@
     <attribute-set-form
       hide-action="'true'"
       attribute-set-name="$ctrl.databaseName"
-      attr-data="$ctrl.attributeData"
+      attr-data="$ctrl.addictionalData"
       parent-id="$ctrl.parentId"
       parent-type="$ctrl.parentType"
+      fields="$ctrl.addictionalData.fields"
     >
     </attribute-set-form>
   </div>

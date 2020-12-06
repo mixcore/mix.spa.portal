@@ -221,9 +221,26 @@ app.controller("ModuleController", [
         $scope.$apply();
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    //     $location.url($scope.referrerUrl);
-    // }
+    $scope.saveSuccessCallback = async function () {
+      if ($scope.addictionalData) {
+        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentType = "Module";
+        var saveData = await dataService.saveAddictionalData(
+          $scope.addictionalData
+        );
+        if (saveData.isSucceed) {
+          if ($location.path() == "/portal/module/create") {
+            $scope.goToDetail($scope.activedData.id, "module");
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          } else {
+            $scope.addictionalData = saveData.data;
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          }
+        }
+      }
+    };
     $scope.loadPosts = async function () {
       $rootScope.isBusy = true;
       var id = $routeParams.id;
@@ -267,6 +284,7 @@ app.controller("ModuleController", [
       const getData = await dataService.getAddictionalData(obj);
       if (getData.isSucceed) {
         $scope.addictionalData = getData.data;
+        $rootScope.isBusy = false;
         $scope.$apply();
       }
     };

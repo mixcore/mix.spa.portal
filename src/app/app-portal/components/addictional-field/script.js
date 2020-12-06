@@ -2,37 +2,36 @@ modules.component("addictionalField", {
   templateUrl: "/app/app-portal/components/addictional-field/view.html",
   bindings: {
     model: "=",
+    addictionalData: "=",
   },
   controller: [
     "$rootScope",
     "$scope",
-    "RestAttributeValuePortalService",
-    function ($rootScope, $scope, valueService) {
+    "RestAttributeFieldPortalService",
+    function ($rootScope, $scope, fieldService) {
       var ctrl = this;
       ctrl.value = {};
-      ctrl.field = { dataType: 7 };
+      ctrl.field = {
+        dataType: "Text",
+        attributeSetName: "sys_additional_field",
+        attributeSetId: 6,
+      };
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = function () {
         if (ctrl.field.name) {
           var current = $rootScope.findObjectByKey(
-            ctrl.model.attributeData.data.values,
-            "attributeFieldName",
+            ctrl.addictionalData.fields,
+            "name",
             ctrl.field.name
           );
           if (current) {
             $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
           } else {
             var t = angular.copy(ctrl.field);
-            var value = {};
-            t.priority = ctrl.model.attributeData.data.values.length + 1;
-
-            value.attributeFieldName = ctrl.field.name;
-            value.dataType = ctrl.field.dataType;
-            value.priority = t.priority;
-            value.field = t;
-            ctrl.model.attributeData.data.values.push(value);
+            t.priority = ctrl.addictionalData.fields.length + 1;
+            ctrl.addictionalData.fields.push(t);
 
             //reset field option
             ctrl.field.title = "";
@@ -86,9 +85,9 @@ modules.component("addictionalField", {
       ctrl.removeAttributeConfirmed = async function (val, index) {
         if (val.id) {
           $rootScope.isBusy = true;
-          var result = await valueService.delete([val.id]);
+          var result = await fieldService.delete([val.id]);
           if (result.isSucceed) {
-            ctrl.model.attributeData.data.values.splice(index, 1);
+            ctrl.addictionalData.fields.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -97,7 +96,7 @@ modules.component("addictionalField", {
             $scope.$apply();
           }
         } else {
-          ctrl.model.attributeData.data.values.splice(index, 1);
+          ctrl.addictionalData.data.values.splice(index, 1);
         }
       };
     },

@@ -11,7 +11,10 @@
             ></page-content>
           </pane-v>
           <pane-v header="Advanced" ng-if="isAdmin">
-            <page-advanced model="activedData"></page-advanced>
+            <page-advanced
+              model="activedData"
+              addictional-data="addictionalData"
+            ></page-advanced>
           </pane-v>
         </tabs-v>
       </section>

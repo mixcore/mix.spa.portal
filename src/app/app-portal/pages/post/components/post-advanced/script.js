@@ -1,17 +1,18 @@
-﻿
-app.component('postAdvanced', {
-    templateUrl: '/app/app-portal/pages/post/components/post-advanced/view.html',
-    bindings: {
-        model: '='
+﻿app.component("postAdvanced", {
+  templateUrl: "/app/app-portal/pages/post/components/post-advanced/view.html",
+  bindings: {
+    model: "=",
+    addictionalData: "=",
+  },
+  controller: [
+    "$rootScope",
+    "$scope",
+    function ($rootScope, $scope) {
+      var ctrl = this;
+      ctrl.translate = $rootScope.translate;
+      ctrl.$onInit = function () {
+        ctrl.isAdmin = $rootScope.isAdmin;
+      };
     },
-    controller: ['$rootScope', '$scope',
-        function ($rootScope, $scope) {
-            var ctrl = this;
-            ctrl.translate = $rootScope.translate;    
-            ctrl.$onInit = function(){
-                ctrl.isAdmin = $rootScope.isAdmin;
-            };
-                  
-        }
-    ]    
+  ],
 });

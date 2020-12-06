@@ -5,6 +5,17 @@ app.factory("RestAttributeSetDataPortalService", [
   function (baseService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("attribute-set-data/portal");
+
+    var _saveAddictionalData = async function (objData) {
+      var url = this.prefixUrl + "/save-addictional-data";
+      var req = {
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objData),
+      };
+      return await commonService.getRestApiResult(req);
+    };
+
     var _getAddictionalData = async function (data) {
       var url = this.prefixUrl + "/addictional-data";
       var queries = serviceFactory.parseQuery(data);
@@ -45,6 +56,7 @@ app.factory("RestAttributeSetDataPortalService", [
 
     serviceFactory.initData = _initData;
     serviceFactory.getAddictionalData = _getAddictionalData;
+    serviceFactory.saveAddictionalData = _saveAddictionalData;
     serviceFactory.export = _export;
     return serviceFactory;
   },
