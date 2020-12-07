@@ -35,7 +35,7 @@ modules.component("attributeSetForm", {
                     If input is data id => load ctrl.attrData from service and handle it independently
                     Else modify input ctrl.attrData
                 */
-        $rootScope.isBusy = true;
+        ctrl.isBusy = true;
 
         if (ctrl.attrDataId) {
           var getData = await service.getSingle([ctrl.attrDataId]);
@@ -46,13 +46,13 @@ modules.component("attributeSetForm", {
             ctrl.attributeSetId = ctrl.attrData.attributeSetId;
             ctrl.attributeSetName = ctrl.attrData.attributeSetName;
             await ctrl.loadDefaultModel();
-            $rootScope.isBusy = false;
+            ctrl.isBusy = false;
             $scope.$apply();
           } else {
             if (getData) {
               $rootScope.showErrors(getData.errors);
             }
-            $rootScope.isBusy = false;
+            ctrl.isBusy = false;
             $scope.$apply();
           }
         }
@@ -61,7 +61,7 @@ modules.component("attributeSetForm", {
           !ctrl.defaultData
         ) {
           await ctrl.loadDefaultModel();
-          $rootScope.isBusy = false;
+          ctrl.isBusy = false;
           $scope.$apply();
         }
       };

@@ -29,12 +29,17 @@ app.controller("PermissionController", [
     );
     $scope.request.level = 0;
     $scope.miOptions = ngAppSettings.miIcons;
+    $scope.initDialog = function () {
+      $("#dlg-permission").on("shown.bs.modal", function () {
+        $scope.initCurrentPath();
+      });
+    };
 
     $scope.initCurrentPath = async function () {
       var resp = await service.getDefault();
       if (resp && resp.isSucceed) {
         $scope.activedData = resp.data;
-        $scope.activedData.url = $location.path();
+        $scope.activedData.url = $location.url();
         $rootScope.isBusy = false;
         $scope.$applyAsync();
       } else {
@@ -57,19 +62,19 @@ app.controller("PermissionController", [
       $scope.dragStartIndex = index;
     };
     $scope.updateOrders = function (index) {
-        if (index > $scope.dragStartIndex) {
-          $scope.data.items.splice($scope.dragStartIndex, 1);
-        } else {
-          $scope.data.items.splice($scope.dragStartIndex + 1, 1);
-        }
-        angular.forEach($scope.data.items, function (e, i) {
-          e.priority = $scope.minPriority + i;
-          service.saveFields(e.id, { priority: e.priority }).then((resp) => {
-            $rootScope.isBusy = false;
-            $scope.$apply();
-          });
+      if (index > $scope.dragStartIndex) {
+        $scope.data.items.splice($scope.dragStartIndex, 1);
+      } else {
+        $scope.data.items.splice($scope.dragStartIndex + 1, 1);
+      }
+      angular.forEach($scope.data.items, function (e, i) {
+        e.priority = $scope.minPriority + i;
+        service.saveFields(e.id, { priority: e.priority }).then((resp) => {
+          $rootScope.isBusy = false;
+          $scope.$apply();
         });
-      };
+      });
+    };
 
     $scope.updateChildInfos = async function (items) {
       $rootScope.isBusy = true;
