@@ -149,8 +149,9 @@
       };
       ctrl.media = null;
 
-      ctrl.selectFile = function (file, errFiles) {
-        if (file !== undefined && file !== null) {
+      ctrl.selectFile = function (files) {
+        if (files !== undefined && files !== null && files.length > 0) {
+          const file = files[0];
           ctrl.mediaFile.folder = ctrl.folder ? ctrl.folder : "Media";
           ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
           ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";

@@ -72,7 +72,7 @@
       ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.$onInit = function () {
-        if (!ctrl.createUrl && ctrl.field.referenceId) {
+        if (!ctrl.createUrl && ctrl.model && ctrl.field.referenceId) {
           ctrl.createUrl = `/portal/attribute-set-data/create?attributeSetId=${
             ctrl.field.referenceId
           }&dataId=default&parentId=${

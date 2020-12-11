@@ -16,10 +16,18 @@ modules.component("attributeSetForm", {
   controller: [
     "$rootScope",
     "$scope",
+    "$location",
     "$routeParams",
     "RestAttributeSetDataPortalService",
     "RestAttributeFieldPortalService",
-    function ($rootScope, $scope, $routeParams, service, fieldService) {
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      $routeParams,
+      service,
+      fieldService
+    ) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -150,6 +158,12 @@ modules.component("attributeSetForm", {
               ctrl.attrData.id = saveResult.data.id;
               ctrl.isBusy = false;
               $rootScope.showMessage("success");
+              if ($location.path() == "/portal/attribute-set-data/create") {
+                const url =
+                  ctrl.backUrl ||
+                  `/portal/attribute-set-data/details?dataId=${ctrl.attrData.id}`;
+                $location.url(url);
+              }
               $scope.$apply();
             } else {
               ctrl.isBusy = false;

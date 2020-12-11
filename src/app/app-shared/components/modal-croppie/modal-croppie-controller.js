@@ -46,8 +46,8 @@
 
     if (ctrl.file) {
       setTimeout(() => {
-        ctrl.selectFile(ctrl.file);
-      });
+        ctrl.selectFile([ctrl.file]);
+      }, 500);
     }
 
     // Assign blob to component when selecting a image
@@ -123,8 +123,9 @@
     return window.btoa(binary);
   };
 
-  ctrl.selectFile = function (file, errFiles) {
-    if (file !== undefined && file !== null) {
+  ctrl.selectFile = function (files) {
+    if (files !== undefined && files !== null && files.length > 0) {
+      const file = files[0];
       ctrl.media.folder = ctrl.folder ? ctrl.folder : "Media";
       ctrl.media.title = ctrl.title ? ctrl.title : file.name;
       ctrl.media.description = ctrl.description ? ctrl.description : "";
@@ -201,14 +202,14 @@
     }
   };
   ctrl.loadImageSize = function (w, h) {
-    const max = 350;
+    const maxW = 250;
     var rto = w / h;
     ctrl.w = ctrl.w || w;
     ctrl.h = ctrl.h || h;
     ctrl.rto = ctrl.rto || rto;
     ctrl.options = {
-      boundary: { height: max, width: max * rto },
-      render: { height: max, width: max * rto },
+      boundary: { height: maxW / rto, width: maxW },
+      render: { height: maxW / rto, width: maxW },
       output: { height: ctrl.h, width: ctrl.h * ctrl.rto },
     };
     ctrl.loadViewport();
@@ -217,7 +218,7 @@
   ctrl.loadViewport = function () {
     if (ctrl.w && ctrl.h) {
       ctrl.rto = ctrl.w / ctrl.h;
-      let h = 150;
+      let h = ctrl.h * 0.6;
       let w = h * ctrl.rto;
       if (w > ctrl.options.boundary.width) {
         w = ctrl.options.boundary.width;

@@ -19,8 +19,8 @@
           accept="image/*"
           type="file"
           name="pic-{{$ctrl.id}}"
-          ngf-select="$ctrl.selectFile($file, $invalidFiles)"
-          data-file="file.file"
+          ngf-select="$ctrl.selectFile($files)"
+          data-files="file.files"
           class="hidden"
         />
         <label class="custom-file-label" for="{{$ctrl.id}}"
