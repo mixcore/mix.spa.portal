@@ -32,7 +32,8 @@
                                 <div class="custom-file">
                                     <input id="inp-import-data" type="file" name="data"
                                         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                        ngf-select="selectImportFile($file, $invalidFiles)" data-file="file.file"
+                                        ngf-select="selectImportFile($files)" 
+                                        data-files="file.files"
                                         class="custom-file-input">
                                     <label class="custom-file-label" for="inp-import-data">Choose file</label>
                                 </div>
@@ -42,18 +43,6 @@
                                         <i class="fas fa-upload"></i> Import</label>
                                 </div>
                             </div>
-                            <!-- <div class="custom-file">
-                                <input id="inp-import-data" type="file" name="data"
-                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                    ngf-select="selectImportFile($file, $invalidFiles)" data-file="file.file"
-                                    class="custom-file-input">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-
-                            </div>
-                            <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
-                                class="btn btn-sm btn-primary text-white ">
-                                <i class="fas fa-upload"></i> Import</label>
-                            </a> -->
                         </form>
 
                     </div>

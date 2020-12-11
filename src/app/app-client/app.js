@@ -1,10 +1,19 @@
-'use strict';
+"use strict";
 
-var app = angular.module('MixClient', ['ngRoute', 'LocalStorageModule', 'components', 'ngFileUpload', 'angularCroppie', 
-    'cart', 'ngSanitize']);
-var serviceBase = '';
-var modules = angular.module('components', []);
-var cart = angular.module('cart', []);
+var app = angular.module("MixClient", [
+  "ngRoute",
+  "LocalStorageModule",
+  "components",
+  "ngFileUpload",
+  "angularCroppie",
+  "ui.bootstrap",
+  "cart",
+  "ngSanitize",
+]);
+
+var serviceBase = "";
+var modules = angular.module("components", []);
+var cart = angular.module("cart", []);
 
 // This is the "Offline page" service worker
 // Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
