@@ -56,7 +56,7 @@ app.controller("Step3Controller", [
         $scope.activedData = response.data;
         authService.initSettings().then(function () {
           $rootScope.isBusy = false;
-          $rootScope.goToPath("/portal");
+          $rootScope.goToSiteUrl("/portal");
           $scope.$apply();
         });
       } else {

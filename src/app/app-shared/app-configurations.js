@@ -608,7 +608,6 @@ app.run([
       window.top.location = url;
     };
     $rootScope.goToPath = function (url) {
-      $rootScope.isBusy = true;
       $location.url(url.trim());
     };
     $rootScope.encryptAttributeSet = function (attributes, data) {
