@@ -34,7 +34,7 @@ app.controller("MvcModuleDataController", [
     $scope.init = async function (moduleId, pageSize) {
       $scope.moduleId = moduleId;
       $scope.request.module_id = $scope.moduleId;
-      $scope.request.pageSize = pageSize ?? $scope.request.pageSize;
+      $scope.request.pageSize = pageSize || $scope.request.pageSize;
       $scope.loadMore(0);
     };
 
@@ -54,18 +54,17 @@ app.controller("MvcModuleDataController", [
         $scope.$apply();
       }
     };
-    $scope.activeItem = function(arr, item){
-        angular.forEach(arr, function(e){
-            if(e.id!=item.id){
-                e.expanded = false;
-            }
-            else{
-              e.expanded = !e.expanded
-            }
-        })
-    }
+    $scope.activeItem = function (arr, item) {
+      angular.forEach(arr, function (e) {
+        if (e.id != item.id) {
+          e.expanded = false;
+        } else {
+          e.expanded = !e.expanded;
+        }
+      });
+    };
     $scope.loadMore = async function (pageIndex) {
-      $scope.request.pageIndex = pageIndex ?? $scope.request.pageIndex + 1;
+      $scope.request.pageIndex = pageIndex || $scope.request.pageIndex + 1;
       $rootScope.isBusy = true;
       var response = await service.getList($scope.request);
       if (response.isSucceed) {

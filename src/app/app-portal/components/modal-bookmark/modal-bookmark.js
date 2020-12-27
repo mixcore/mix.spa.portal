@@ -31,7 +31,7 @@
         $("#dlg-bookmark").modal("hide");
       };
       ctrl.getCurrentUrl = function (url) {
-        url = url ?? $location.url();
+        url = url || $location.url();
         ctrl.model.url = url;
         ctrl.model.title = url;
       };

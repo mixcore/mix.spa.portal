@@ -65,10 +65,10 @@ app.controller("PostController", [
     };
     $scope.getDefault = async function (type = null) {
       $rootScope.isBusy = true;
-      type = type ?? $routeParams.type;
+      type = type || $routeParams.type;
       var resp = await service.getDefault({
-        type: type ?? "",
-        template: $routeParams.template ?? "",
+        type: type || "",
+        template: $routeParams.template || "",
       });
       if (resp.isSucceed) {
         $scope.activedData = resp.data;
