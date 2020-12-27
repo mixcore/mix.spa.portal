@@ -29,7 +29,7 @@ app.controller('Step2Controller',
                     var result = await authService.login(loginData);
                     if (result) {
                         $rootScope.isBusy = false;
-                        $location.url('/init/step3');
+                        $rootScope.goToPath("/init/step3");
                         $scope.$apply();
                     }
                     else{
