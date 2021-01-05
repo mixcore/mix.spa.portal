@@ -29,21 +29,24 @@ app.controller("PagePostController", [
     $scope.cates = ["Site", "System"];
     $scope.others = [];
     $scope.settings = $rootScope.globalSettings;
-    $scope.pageId = $routeParams.id;
-    $scope.type = $routeParams.type;
-    $scope.pageIds = $routeParams.page_ids || $routeParams.id;
-    $scope.moduleIds = $routeParams.module_ids;
-    $scope.canDrag =
-      $scope.request.orderBy === "Priority" &&
-      $scope.request.direction === "Asc";
-    $scope.createUrl =
-      $routeParams.post_type === "gallery"
-        ? "/portal/post/create-gallery"
-        : "/portal/post/create";
-    $scope.updateUrl =
-      $routeParams.post_type === "gallery"
-        ? "/portal/post/gallery-details"
-        : "/portal/post/details";
+    $scope.init = function () {
+      $scope.pageId = $routeParams.id;
+      $scope.type = $routeParams.type;
+      $scope.template = $routeParams.template || "";
+      $scope.pageIds = $routeParams.page_ids || $routeParams.id;
+      $scope.moduleIds = $routeParams.module_ids || "";
+      $scope.canDrag =
+        $scope.request.orderBy === "Priority" &&
+        $scope.request.direction === "Asc";
+      $scope.createUrl =
+        $routeParams.post_type === "gallery"
+          ? "/portal/post/create-gallery"
+          : `/portal/post/create?page_ids=${$scope.pageIds}&module_ids=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
+      $scope.updateUrl =
+        $routeParams.post_type === "gallery"
+          ? "/portal/post/gallery-details"
+          : "/portal/post/details";
+    };
     $scope.getList = async function () {
       $rootScope.isBusy = true;
       var id = $routeParams.id;

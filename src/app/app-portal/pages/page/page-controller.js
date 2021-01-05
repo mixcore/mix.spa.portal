@@ -9,6 +9,7 @@ app.controller("PageController", [
   "PagePostRestService",
   "PagePageRestService",
   "UrlAliasService",
+  "RestAttributeSetDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -18,7 +19,8 @@ app.controller("PageController", [
     service,
     pagePostRestService,
     pagePageRestService,
-    urlAliasService
+    urlAliasService,
+    dataService
   ) {
     BaseRestCtrl.call(
       this,
@@ -58,6 +60,8 @@ app.controller("PageController", [
       }
     };
     $scope.getSingleSuccessCallback = function () {
+      $scope.loadAddictionalData();
+
       if ($scope.activedData.sysCategories) {
         angular.forEach($scope.activedData.sysCategories, function (e) {
           e.attributeData.obj.isActived = true;
@@ -83,6 +87,18 @@ app.controller("PageController", [
       $scope.canDrag =
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
+    };
+    $scope.loadAddictionalData = async function () {
+      const obj = {
+        parentType: "Page",
+        parentId: $scope.activedData.id,
+        databaseName: "sys_additional_field_page",
+      };
+      const getData = await dataService.getAddictionalData(obj);
+      if (getData.isSucceed) {
+        $scope.addictionalData = getData.data;
+        $scope.$apply();
+      }
     };
     $scope.showChilds = function (id) {
       $("#childs-" + id).toggleClass("collapse");
@@ -137,9 +153,22 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    //     $location.url($scope.referrerUrl);
-    // }
+    $scope.saveSuccessCallback = async function () {
+      if ($scope.addictionalData) {
+        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentType = "Page";
+        var saveData = await dataService.save($scope.addictionalData);
+        if (saveData.isSucceed) {
+          if ($location.path() == "/portal/page/create") {
+            $scope.goToDetail($scope.activedData.id, "page");
+          } else {
+            $scope.addictionalData = saveData.data;
+          }
+        }
+      }
+      $rootScope.isBusy = false;
+      $scope.$apply();
+    };
     $scope.validate = async function () {
       // Add default alias if create new page
       if (!$scope.activedData.id && !$scope.activedData.urlAliases.length) {

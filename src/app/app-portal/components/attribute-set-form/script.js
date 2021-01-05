@@ -9,15 +9,25 @@ modules.component("attributeSetForm", {
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     parentId: "=?",
     defaultId: "=",
+    backUrl: "=?",
+    hideAction: "=?",
     saveData: "&?",
   },
   controller: [
     "$rootScope",
     "$scope",
+    "$location",
     "$routeParams",
     "RestAttributeSetDataPortalService",
     "RestAttributeFieldPortalService",
-    function ($rootScope, $scope, $routeParams, service, fieldService) {
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      $routeParams,
+      service,
+      fieldService
+    ) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -33,7 +43,7 @@ modules.component("attributeSetForm", {
                     If input is data id => load ctrl.attrData from service and handle it independently
                     Else modify input ctrl.attrData
                 */
-        $rootScope.isBusy = true;
+        ctrl.isBusy = true;
 
         if (ctrl.attrDataId) {
           var getData = await service.getSingle([ctrl.attrDataId]);
@@ -44,13 +54,13 @@ modules.component("attributeSetForm", {
             ctrl.attributeSetId = ctrl.attrData.attributeSetId;
             ctrl.attributeSetName = ctrl.attrData.attributeSetName;
             await ctrl.loadDefaultModel();
-            $rootScope.isBusy = false;
+            ctrl.isBusy = false;
             $scope.$apply();
           } else {
             if (getData) {
               $rootScope.showErrors(getData.errors);
             }
-            $rootScope.isBusy = false;
+            ctrl.isBusy = false;
             $scope.$apply();
           }
         }
@@ -59,7 +69,7 @@ modules.component("attributeSetForm", {
           !ctrl.defaultData
         ) {
           await ctrl.loadDefaultModel();
-          $rootScope.isBusy = false;
+          ctrl.isBusy = false;
           $scope.$apply();
         }
       };
@@ -70,22 +80,24 @@ modules.component("attributeSetForm", {
         if ($routeParams.parentType) {
           ctrl.parentType = $routeParams.parentType;
         }
-        if (ctrl.parentType) {
-          switch (ctrl.parentType) {
-            case "Post":
-            case "Page":
-            case "Module":
-              ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                ctrl.parentId
-              }`;
-              break;
+        if (!ctrl.backUrl) {
+          if (ctrl.parentType) {
+            switch (ctrl.parentType) {
+              case "Post":
+              case "Page":
+              case "Module":
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                  ctrl.parentId
+                }`;
+                break;
 
-            default:
-              ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
-              break;
+              default:
+                ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
+                break;
+            }
+          } else {
+            ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
           }
-        } else {
-          ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
         }
         if (!ctrl.fields) {
           var getFields = await fieldService.initData(
@@ -146,6 +158,12 @@ modules.component("attributeSetForm", {
               ctrl.attrData.id = saveResult.data.id;
               ctrl.isBusy = false;
               $rootScope.showMessage("success");
+              if ($location.path() == "/portal/attribute-set-data/create") {
+                const url =
+                  ctrl.backUrl ||
+                  `/portal/attribute-set-data/details?dataId=${ctrl.attrData.id}`;
+                $location.url(url);
+              }
               $scope.$apply();
             } else {
               ctrl.isBusy = false;

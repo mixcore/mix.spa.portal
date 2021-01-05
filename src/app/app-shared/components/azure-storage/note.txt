@@ -1,0 +1,3 @@
+https://medium.com/@shubhamgautam1/how-to-upload-image-to-azure-blob-using-pure-javascript-will-see-implementation-in-react-js-also-8844d3043562
+https://docs.microsoft.com/en-us/azure/storage/blobs/quickstart-blobs-javascript-browser
+https://github.com/Azure-Samples/azure-sdk-for-js-storage-blob-upload-download

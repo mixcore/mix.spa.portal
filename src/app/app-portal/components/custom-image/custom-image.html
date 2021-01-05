@@ -1,6 +1,5 @@
 <div class="" ng-init="$ctrl.init()">
     <div class="mb-3">
-        {{$ctrl.header}}
         <!-- <a class="btn btn-link text-primary btn-sm float-right py-0" data-toggle="modal"
             data-target="#modal-files-search-{{$ctrl.id}}">
             <i class="fa fa-folder-open"></i> Browse
@@ -19,8 +18,10 @@
         <div class="input-group">
             <div class="custom-file">
                 <!-- <input type="file" class="custom-file-input" id="customFile"> -->
-                <input id="{{$ctrl.id}}" type="file" name="pic" ngf-select="$ctrl.selectFile($file, $invalidFiles)"
-                    data-file="file.file" class="position-absolute hidden">
+                <input id="{{$ctrl.id}}" type="file" name="pic" 
+                    data-files="file.files"
+                    ngf-select="$ctrl.selectFile($files)"
+                    class="position-absolute hidden">
                 <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>
             </div>
         </div>

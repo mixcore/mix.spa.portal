@@ -18,7 +18,7 @@ app.controller("PostController", [
     $routeParams,
     service,
     urlAliasService,
-    attributeSetDataService
+    dataService
   ) {
     BaseRestCtrl.call(
       this,
@@ -29,45 +29,45 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    $scope.addictionalData = null;
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
-    $scope.postTypes = [];
-    $scope.type = {
-      obj: {
+    $scope.postTypes = [
+      {
         title: "All",
         attribute_set_name: "",
-      },
-    };
+      }
+    ];
+
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.attributeSetName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
-    $scope.request.type = "";
+
     $scope.initList = async function () {
+      if ($routeParams.template) {
+        $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
+      }
       $scope.pageName = "postList";
       $scope.loadPostTypes();
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
-      $scope.postTypes.push($scope.type);
-      let getTypes = await attributeSetDataService.getList(
-        $scope.postTypeRequest
-      );
+      let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
-        if ($routeParams.type) {
-          $scope.request.type = $routeParams.type;
-        }
+        $scope.postTypes =  $scope.postTypes.concat(getTypes.data.items.map(m=> m.obj));
+        $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.activedData.type);
+        $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
     };
     $scope.getDefault = async function (type = null) {
       $rootScope.isBusy = true;
-      type = type ?? $routeParams.type;
+      type = type || $routeParams.type;
       var resp = await service.getDefault({
-        type: type ?? "",
-        template: $routeParams.template ?? "",
+        type: type || "",
+        template: $routeParams.template || "",
       });
       if (resp.isSucceed) {
         $scope.activedData = resp.data;
@@ -92,7 +92,11 @@ app.controller("PostController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {
+      $scope.activedData.type = $scope.postType.attribute_set_name;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
+      if ($routeParams.template) {
+        $scope.createUrl += `&template=${$routeParams.template}`;
+      }
       if (!$scope.activedData || !$scope.activedData.id) {
         $scope.getDefault($scope.request.type);
       }
@@ -100,9 +104,6 @@ app.controller("PostController", [
         $scope.getList();
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    //     $location.url($scope.referrerUrl);
-    // }
 
     $scope.getListRelated = async function (pageIndex) {
       if (pageIndex !== undefined) {
@@ -153,24 +154,32 @@ app.controller("PostController", [
         }
       });
     };
-    $scope.saveSuccessCallback = function () {
-      angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
-        if (nav.isActived) {
-          $rootScope.decryptAttributeSet(
-            nav.attributeSet.attributes,
-            nav.attributeSet.postData.items
-          );
+    $scope.saveSuccessCallback = async function () {
+      if ($scope.addictionalData) {
+        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentType = "Post";
+        var saveData = await dataService.save($scope.addictionalData);
+        if (saveData.isSucceed) {
+          if ($location.path() == "/portal/post/create") {
+            $scope.goToDetail($scope.activedData.id, "post");
+          } else {
+            $scope.addictionalData = saveData.data;
+          }
         }
-      });
+      }
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-    $scope.getSingleSuccessCallback = function () {
+    $scope.getSingleSuccessCallback = async function () {
+      $scope.imgW = ngAppSettings.settings.post_image_width;
+      $scope.imgH = ngAppSettings.settings.post_image_height;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.activedData.id) {
         $scope.activedData.detailsUrl = `/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
       }
+      await $scope.loadPostTypes()
+      $scope.loadAddictionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
           var moduleNav = $rootScope.findObjectByKey(
@@ -218,6 +227,19 @@ app.controller("PostController", [
       $scope.activedData.publishedDateTime = $filter("utcToLocalTime")(
         $scope.activedData.publishedDateTime
       );
+    };
+
+    $scope.loadAddictionalData = async function () {
+      const obj = {
+        parentType: "Post",
+        parentId: $scope.activedData.id,
+        databaseName: $scope.activedData.type,
+      };
+      const getData = await dataService.getAddictionalData(obj);
+      if (getData.isSucceed) {
+        $scope.addictionalData = getData.data;
+        $scope.$apply();
+      }
     };
     $scope.generateSeo = function () {
       if ($scope.activedData) {

@@ -238,9 +238,7 @@ app.factory("CommonService", [
       }
     };
     var _getApiResult = async function (req, serviceBase) {
-      // if (!authService.authentication) {
       await authService.fillAuthData();
-      // }
       if (authService.authentication) {
         req.Authorization = authService.authentication.token;
       }

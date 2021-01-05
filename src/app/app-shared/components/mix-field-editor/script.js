@@ -7,14 +7,23 @@
     inputClass: "=?",
     createUrl: "=?",
     updateUrl: "=?",
+    backUrl: "=?",
   },
   controller: [
     "$rootScope",
     "$scope",
+    "$location",
     "ngAppSettings",
     "$filter",
     "RestRelatedAttributeDataPortalService",
-    function ($rootScope, $scope, ngAppSettings, $filter, navService) {
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      ngAppSettings,
+      $filter,
+      navService
+    ) {
       var ctrl = this;
       ctrl.icons = ngAppSettings.icons;
       ctrl.previousValue = null;
@@ -63,8 +72,12 @@
       ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.$onInit = function () {
-        if (!ctrl.createUrl) {
-          ctrl.createUrl = "/portal/attribute-set-data/create";
+        if (!ctrl.createUrl && ctrl.model && ctrl.field.referenceId) {
+          ctrl.createUrl = `/portal/attribute-set-data/create?attributeSetId=${
+            ctrl.field.referenceId
+          }&dataId=default&parentId=${
+            ctrl.model.id
+          }&parentType=1&backUrl=${$location.url()}`;
         }
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/attribute-set-data/details";

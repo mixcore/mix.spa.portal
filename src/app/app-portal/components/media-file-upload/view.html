@@ -18,9 +18,11 @@
         </div>
         <div class="input-group">
             <div class="custom-file">
-                <input id="{{$ctrl.id}}" type="file" name="pic" ngf-select="$ctrl.selectFile($file, $invalidFiles)"
+                <input id="{{$ctrl.id}}" type="file" name="pic" 
                     accept="{{$ctrl.accept}}"
-                    data-file="file.file" class="position-absolute hidden">
+                    ngf-select="$ctrl.selectFile($files)"
+                    data-files="file.files" 
+                    class="position-absolute hidden">
                 <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>
             </div>
         </div>

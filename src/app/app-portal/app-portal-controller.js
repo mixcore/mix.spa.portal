@@ -43,6 +43,7 @@ app.controller("AppPortalController", [
           ngAppSettings.enums = resp.data;
         });
         commonService.fillAllSettings($scope.lang).then(function (response) {
+          ngAppSettings.settings = $rootScope.settings.data;
           if ($rootScope.globalSettings) {
             $scope.portalThemeSettings =
               $rootScope.globalSettings.portalThemeSettings;

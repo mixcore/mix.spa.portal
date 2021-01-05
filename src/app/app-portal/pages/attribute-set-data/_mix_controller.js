@@ -46,6 +46,7 @@ app.controller("MixAttributeSetDataController", [
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.attributeSetName = $routeParams.attributeSetName;
+      $scope.backUrl = $routeParams.backUrl;
       if ($routeParams.dataId != $scope.defaultId) {
         $scope.dataId = $routeParams.dataId;
       }
@@ -62,35 +63,18 @@ app.controller("MixAttributeSetDataController", [
         $scope.activedData = $scope.selectedList.data[0];
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    // if ($scope.refDataModel) {
-    //     $scope.refDataModel.id = $scope.activedData.id;
-    //     $scope.refDataModel.data = $scope.activedData.data;
-    // $rootScope.isBusy = true;
-    // navService.save('portal', $scope.refDataModel).then(resp => {
-    //     if (resp.isSucceed) {
-    //         $rootScope.isBusy = false;
-    //         $scope.$apply();
-    //     } else {
-    //         $rootScope.showMessage('failed');
-    //         $rootScope.isBusy = false;
-    //         $scope.$apply();
-    //     }
-    // });
-    // }
-    // };
+    $scope.saveSuccessCallback = function () {
+      if ($location.path() == "/portal/attribute-set-data/create") {
+        $scope.goToDetail($scope.activedData.id, "attribute-set-data");
+      }
+    };
 
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.edit = function (data) {
-      $scope.goToPath(
-        "/portal/attribute-set-data/details?dataId=" +
-          data.id +
-          "&attributeSetName=" +
-          $scope.attributeSetName
-      );
+      $scope.goToPath("/portal/attribute-set-data/details?dataId=" + data.id);
     };
     $scope.remove = function (data) {
       $rootScope.showConfirm(
@@ -189,8 +173,9 @@ app.controller("MixAttributeSetDataController", [
         $scope.$apply();
       }
     };
-    $scope.selectImportFile = function (file, errFiles) {
-      if (file !== undefined && file !== null) {
+    $scope.selectImportFile = function (files) {
+      if (files !== undefined && files !== null && files.length > 0) {
+        const file = files[0];
         $scope.importFile.folder = "imports";
         $scope.importFile.title = $scope.attributeSetName;
         $scope.importFile.description = $scope.attributeSetName + "'s data";
