@@ -74,7 +74,7 @@
           </h6>
           <div class="card-body">
             <statuses status="activedData.status"></statuses>
-            <div class="form-group" ng-if="activedData.status == 4">
+            <div class="form-group" ng-if="activedData.status == 'Schedule'">
               <label class="control-label">Published Date Time</label>
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
@@ -124,12 +124,10 @@
 
             <div class="form-group">
               <label class="control-label">Post type</label>
-              <select
-                ng-init="loadPostTypes()"
-                class="custom-select"
-                ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
+              <select class="custom-select"
+                ng-options="item as item.title for item in postTypes track by item.id"
                 ng-change="onSelectType()"
-                ng-model="activedData.type"
+                ng-model="postType"
               ></select>
             </div>
 

@@ -33,13 +33,12 @@ app.controller("PostController", [
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
-    $scope.postTypes = [];
-    $scope.type = {
-      obj: {
+    $scope.postTypes = [
+      {
         title: "All",
         attribute_set_name: "",
-      },
-    };
+      }
+    ];
 
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.attributeSetName = "post_type";
@@ -55,10 +54,10 @@ app.controller("PostController", [
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
-      $scope.postTypes.push($scope.type);
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes.concat(getTypes.data.items);
+        $scope.postTypes =  $scope.postTypes.concat(getTypes.data.items.map(m=> m.obj));
+        $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.activedData.type);
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
@@ -93,6 +92,7 @@ app.controller("PostController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {
+      $scope.activedData.type = $scope.postType.attribute_set_name;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
@@ -170,7 +170,7 @@ app.controller("PostController", [
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-    $scope.getSingleSuccessCallback = function () {
+    $scope.getSingleSuccessCallback = async function () {
       $scope.imgW = ngAppSettings.settings.post_image_width;
       $scope.imgH = ngAppSettings.settings.post_image_height;
       var moduleIds = $routeParams.module_ids;
@@ -178,6 +178,7 @@ app.controller("PostController", [
       if ($scope.activedData.id) {
         $scope.activedData.detailsUrl = `/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
       }
+      await $scope.loadPostTypes()
       $scope.loadAddictionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
