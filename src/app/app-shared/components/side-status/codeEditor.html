@@ -1,14 +1,14 @@
-<div class="form-group">
+<div class="mb-3">
     <div class="input-group mb-3" ng-controller="PortalTemplateController as master">
-        <select class="btn btn-outline-secondary custom-select col-sm-4" ng-model="master.activedTemplate" ng-init="master.templates = master.loadTemplates(-1, 'layout', 'Masters')" ng-options="item as item.fileName for item in master.templates track by item.id" ng-change="master.updateEditors()"></select>
+        <select class="btn btn-outline-secondary form-select col-sm-4" ng-model="master.activedTemplate" ng-init="master.templates = master.loadTemplates(-1, 'layout', 'Masters')" ng-options="item as item.fileName for item in master.templates track by item.id" ng-change="master.updateEditors()"></select>
         <input class="form-control sel-filename" type="text" id="Layout" name="Layout" value="{{master.activedTemplate.fileName}}" placeholder="_BlankLayout">
     </div>
 </div>
 <div ng-controller="PortalTemplateController as layout">
-    <div class="form-group">
+    <div class="mb-3">
         <h6>Layout</h6>
         <div class="input-group mb-3">
-            <select class="btn btn-outline-secondary custom-select col-sm-4" ng-model="layout.activedTemplate" ng-init="layout.templates = layout.loadTemplates($ctrl.template.id, '', $ctrl.template.folderType)" ng-options="item as item.fileName for item in layout.templates track by item.id" ng-change="layout.updateEditors()"></select>
+            <select class="btn btn-outline-secondary form-select col-sm-4" ng-model="layout.activedTemplate" ng-init="layout.templates = layout.loadTemplates($ctrl.template.id, '', $ctrl.template.folderType)" ng-options="item as item.fileName for item in layout.templates track by item.id" ng-change="layout.updateEditors()"></select>
 
             <input class="form-control sel-filename" type="text" ng-model="$ctrl.template.fileName" value="{{layout.activedTemplate.fileName}}" placeholder="Input template name here...">
             <input class="template-id" type="hidden" ng-model="$ctrl.template.id" value="{{layout.activedTemplate.id}}">

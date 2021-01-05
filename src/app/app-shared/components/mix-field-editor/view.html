@@ -6,7 +6,7 @@
 <div
   ng-if="$ctrl.model && $ctrl.field && !$ctrl.field.isSelect"
   ng-init="$ctrl.initData()"
-  class="form-group row"
+  class="mb-3 row"
 >
   <div class="col-3">
     <h6
@@ -215,7 +215,7 @@
 <div
   ng-if="$ctrl.model && $ctrl.field.isSelect"
   ng-init="$ctrl.initData()"
-  class="form-group row"
+  class="mb-3 row"
 >
   <div class="col-3">
     <h6
@@ -227,7 +227,7 @@
   <div class="col-9">
     <select
       ng-if="$ctrl.field.dataType!='icon'"
-      class="btn custom-select form-control"
+      class="btn form-select form-control"
       ng-model="$ctrl.model.obj[$ctrl.field.name]"
     >
       <option

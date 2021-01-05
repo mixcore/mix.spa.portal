@@ -23,7 +23,7 @@
                                     </div>
                                     <small class="text-muted">{{post.properties.download_count}} download</small>
                                 </div>
-                                <div class="col-7 justify-content-end text-right p-0">
+                                <div class="col-7 justify-content-end text-end p-0">
                                     <a target="_blank" href="{{post.properties.external_preview_url}}" class="btn btn-sm btn-outline-secondary mr-1">Preview</a>
                                     <button type="button" class="btn btn-sm btn-outline-primary"><i
                                             class="fas fa-cloud-download-alt"></i></button>
@@ -46,7 +46,7 @@
                             </h6>
 
                             <div class="d-flex justify-content-between">
-                                <div class="col-12 justify-content-end text-right p-0">
+                                <div class="col-12 justify-content-end text-end p-0">
                                     <!-- <button type="button" class="btn btn-sm btn-outline-secondary mr-1">Preview</button> -->
                                     <a href="{{item.fullPath}}" type="button" class="btn btn-sm btn-outline-primary"><i
                                         class="fas fa-pen"></i></a>
@@ -65,37 +65,37 @@
                     Filter
                 </h6>
                 <div class="card-body">
-                    <!-- <div class="form-group btn-group btn-group-sm d-flex" role="group" aria-label="Basic example">
+                    <!-- <div class="mb-3 btn-group btn-group-sm d-flex" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-outline-primary small"><i class="mi mi-Layout mi-fw"></i></button>
                         <button type="button" class="btn btn-outline-primary small"><i class="mi mi-Puzzle mi-fw"></i></button>
                         <button type="button" class="btn btn-outline-primary small"><i class="mi mi-ResolutionLegacy mi-fw"></i></button>
                         <button type="button" class="btn btn-outline-primary small">...</button>
                     </div> -->
-                    <div class="form-group input-group input-group-sm flex-nowrap">
+                    <div class="mb-3 input-group input-group-sm flex-nowrap">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
                         </div>
                         <input type="text" class="form-control" placeholder="Search keywords..." aria-label="Username"
                             aria-describedby="addon-wrapping">
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="customRange1">Sort by</label>
-                        <select class="custom-select custom-select-sm">
+                        <select class="form-select form-select-sm">
                             <option selected>Select sort by:</option>
                             <option value="1">Newest</option>
                             <option value="2">Oldest</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="customRange1">Categories</label>
-                        <select class="custom-select custom-select-sm">
+                        <select class="form-select form-select-sm">
                             <option selected>Select category:</option>
                             <option value="1">All</option>
                             <option value="2">Blog</option>
                             <option value="3">Website</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="customRange1">Date range</label>
                         <div class="input-group input-group-sm">
                             <input type="date"

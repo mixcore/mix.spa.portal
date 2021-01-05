@@ -1,4 +1,4 @@
-<div ng-if="!$ctrl.attributeValue.field.isSelect" class="form-group row">
+<div ng-if="!$ctrl.attributeValue.field.isSelect" class="mb-3 row">
   <div class="col-3">
     <h6
       class="control-label m-0"
@@ -240,7 +240,7 @@
   </div>
 </div>
 <!-- TODO: Only allow stringValue -->
-<div ng-if="$ctrl.attributeValue.field.isSelect" class="form-group row">
+<div ng-if="$ctrl.attributeValue.field.isSelect" class="mb-3 row">
   <div class="col-3">
     <h6
       class="control-label"
@@ -251,7 +251,7 @@
   <div class="col-9">
     <select
       ng-if="$ctrl.attributeValue.dataType!='icon'"
-      class="btn custom-select form-control"
+      class="btn form-select form-control"
       ng-model="$ctrl.attributeValue.stringValue"
     >
       <option

@@ -2,7 +2,7 @@
     <h6 class="card-header">
         Page types {{$ctrl.model}}
     </h6>
-    <div class="card-body collapse show">
+    <div class="card-body collapse-x show">
         <div class="custom-control custom-switch custom-control-inline col-3"
             ng-repeat="type in $ctrl.settings.pageTypes track by $index" ng-switch="type.name"
             ng-class="{active: type.value === $ctrl.model}" ng-click="$ctrl.model=type.value;">

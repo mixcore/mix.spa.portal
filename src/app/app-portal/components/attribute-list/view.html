@@ -34,14 +34,14 @@
         ng-class="{'selected': $ctrl.selectedCol === col}"
         class=""
       >
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-1">
             <small
               class="fa fa-grip-vertical text-black-50 align-middle"
               style="cursor: grab;"
             ></small>
           </div>
-          <div class="form-groupx col-md-4">
+          <div class="mb-3x col-md-4">
             <small class="control-label"
               >Column: <span class="text-black-50" ng-bind="col.name"></span
             ></small>
@@ -52,7 +52,7 @@
               class="form-control form-control-sm"
             />
           </div>
-          <div class="form-groupx col-md-2">
+          <div class="mb-3x col-md-2">
             <small class="control-label">Type</small>
             <select
               class="form-control form-control-sm"
@@ -67,7 +67,7 @@
               </option>
             </select>
           </div>
-          <div class="form-groupx col-md-4">
+          <div class="mb-3x col-md-4">
             <div class="" ng-if="col.dataType != 'Reference'">
               <small class="control-label">Value</small>
               <input
@@ -193,7 +193,7 @@
               </div>
             </div>
           </div>
-          <div class="row form-group" ng-show="col.dataType == 'Upload'">
+          <div class="row mb-3" ng-show="col.dataType == 'Upload'">
             <div class="custom-control custom-switch mx-2">
               <input
                 type="checkbox"
@@ -224,7 +224,7 @@
           </div>
         </div>
 
-        <div class="row form-group" ng-show="col.isRegex && col.showAdvanced">
+        <div class="row mb-3" ng-show="col.isRegex && col.showAdvanced">
           <div class="col-md-1"></div>
           <div class="col">
             <input
@@ -239,7 +239,7 @@
           <div class="row mb-2">
             <div class="col-md-1"></div>
             <div class="col">
-              <div class="form-group">
+              <div class="mb-3">
                 <input
                   type="text"
                   class="form-control form-control-sm"
@@ -250,17 +250,17 @@
               </div>
 
               <div
-                class="form-row"
+                class="row"
                 ng-repeat="opt in col.options track by $index"
               >
-                <div class="form-groupx col-md pl-4">
+                <div class="mb-3x col-md pl-4">
                   <input
                     type="text"
                     class="form-control form-control-sm"
                     ng-model="col.options[$index].value"
                   />
                 </div>
-                <!-- <div class="form-groupx col-md-3">
+                <!-- <div class="mb-3x col-md-3">
 
                                     <select class="form-control form-control-sm"
                                         ng-model="col.options[$index].dataType">
@@ -270,7 +270,7 @@
                                         </option>
                                     </select>
                                 </div> -->
-                <div class="form-groupx col-md-1">
+                <div class="mb-3x col-md-1">
                   <a class="btn btn-sm" ng-click="col.options.splice($index,1)">
                     <span class="fas fa-trash-alt text-danger"></span>
                   </a>

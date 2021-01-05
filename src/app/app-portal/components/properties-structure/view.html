@@ -11,7 +11,7 @@
                 class="fas fa-plus text-primary"></span> Add Attr</button>
         <!-- <a ng-click="$ctrl.generateForm()" class="btn btn-primary btn-sm float-right text-white mr-2">Generate Form</a> -->
     </h6>
-    <div id="module-attr-table" class="card-body collapse">
+    <div id="module-attr-table" class="card-body collapse-x">
         <table class="table table-sm" id="Table">
             <thead class="thead-light">
                 <tr>
@@ -85,7 +85,7 @@
                                                 <h1 ng-bind="col.name"></h1>
                                                 <input type="text" id="option_{{$index}}" ng-enter="addOption(col,$index)" placeholder="fill then enter to add options" class="form-control">
                                             </div> -->
-                            <div class="form-group row mb-0">
+                            <div class="mb-3 row mb-0">
                                 <label for="staticEmail" class="col-sm-3 col-form-label" ng-bind="col.title"></label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control form-control-sm" id="option_{{$index}}"

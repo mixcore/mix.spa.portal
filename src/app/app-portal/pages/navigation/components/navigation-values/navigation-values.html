@@ -21,7 +21,7 @@
             <small class="col-md-2">Created Date</small>
             <div class="col-md-1">
                 <div class="input-group input-group-xs">
-                    <select class="custom-select custom-select-sm mr-2" ng-model="$ctrl.filterType">
+                    <select class="form-select form-select-sm mr-2" ng-model="$ctrl.filterType">
                         <option ng-repeat="item in $ctrl.filterTypes" ng-value="item">{{item}}</option>
                     </select>
                 </div>
@@ -79,8 +79,8 @@
         </div>
     </div>
     <div class="card-footer form-inline" ng-if="$ctrl.data.length">
-        <div class="form-group">
-            <select class="form-control btn custom-select custom-select-sm mr-2" ng-model="$ctrl.selectedList.action">
+        <div class="mb-3">
+            <select class="form-control btn form-select form-select-sm mr-2" ng-model="$ctrl.selectedList.action">
                 <option ng-repeat="item in $ctrl.actions" ng-value="item">{{item}}</option>
             </select>
             <button type="button" class="btn btn-sm btn-primary"

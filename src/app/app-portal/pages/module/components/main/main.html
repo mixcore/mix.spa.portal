@@ -5,15 +5,15 @@
             role="button" aria-expanded="true" aria-controls="ModuleBody">
             <span class="far fa-minus-square text-primary"></span> Show/Hide</a>
     </h6>
-    <div id="ModuleBody" class="card-body collapse show">
-        <div class="form-group">
+    <div id="ModuleBody" class="card-body collapse-x show">
+        <div class="mb-3">
             <label>Title</label>
             <input type="text" class="form-control" ng-model="$ctrl.module.title" ng-blur="$ctrl.gennerateName()"
                 placeholder="Your module title here..." required>
         </div>
         <div class="row">
             <div class="col-10">
-                <div class="form-group mb-0">
+                <div class="mb-3 mb-0">
                     <label>System Name</label>
                     <input type="text" class="form-control" ng-model="$ctrl.module.name">
                     <small class="form-text text-muted">This system name is using within the template code.</small>
@@ -21,13 +21,13 @@
             </div>
             <div class="col">
 
-                <div class="form-group">
+                <div class="mb-3">
                     <label>Page Size</label>
                     <input type="number" class="form-control" ng-model="$ctrl.module.pageSize">
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <trumbowyg options="{}" ng-model="$ctrl.module.description"></trumbowyg>
         </div>        
     </div>

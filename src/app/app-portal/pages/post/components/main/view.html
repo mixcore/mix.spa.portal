@@ -12,8 +12,8 @@
       <span class="far fa-minus-square text-primary"></span> Show/Hide</a
     >
   </h6>
-  <div id="PostBody" class="card-body collapse show">
-    <div class="form-group">
+  <div id="PostBody" class="card-body collapse-x show">
+    <div class="mb-3">
       <label>Title:</label>
       <input
         type="text"
@@ -24,7 +24,7 @@
         required
       />
     </div>
-    <div class="form-group">
+    <div class="mb-3">
       <label>Friendly Url</label>
       <input
         type="text"
@@ -34,7 +34,7 @@
         required
       />
     </div>
-    <div class="form-group">
+    <div class="mb-3">
       <label>Excerpt</label>
       <textarea
         class="form-control"
@@ -49,7 +49,7 @@
                         options="{}">
                       </trumbowyg> -->
     </div>
-    <div class="form-group mb-0">
+    <div class="mb-3 mb-0">
       <!-- <label>Body content</label> -->
       <trumbowyg
         ng-model="$ctrl.post.content"

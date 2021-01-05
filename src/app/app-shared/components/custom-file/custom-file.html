@@ -1,10 +1,10 @@
-<div class="form-row" ng-init="$ctrl.init()">
+<div class="row" ng-init="$ctrl.init()">
   <input
     type="hidden"
     value="{{$ctrl.type}}/{{$ctrl.folder}}"
     class="folder-val"
   />
-  <div class="form-group col-md-5">
+  <div class="mb-3 col-md-5">
     <input
       type="text"
       placeholder="https://your-image-url..."
@@ -13,7 +13,7 @@
       class="form-control"
     />
   </div>
-  <div class="form-group col-md-4">
+  <div class="mb-3 col-md-4">
     <div class="custom-file">
       <!-- <input type="file" class="custom-file-input" id="customFile"> -->
       <input
@@ -30,7 +30,7 @@
       >
     </div>
   </div>
-  <div class="form-group col-md-3">
+  <div class="mb-3 col-md-3">
     <button
       type="button"
       ng-click="$ctrl.save({activedData: $ctrl.data})"

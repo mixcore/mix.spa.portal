@@ -5,7 +5,7 @@
             <actions back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
             <content-filter ng-if="$ctrl.attrData" callback="$ctrl.loadSelected(nav,type)"></content-filter>
             <div class="card mb-4">
-                <div class="card-header text-right" ng-if="$ctrl.attributeSetName=='sys_menu_item'">
+                <div class="card-header text-end" ng-if="$ctrl.attributeSetName=='sys_menu_item'">
                     <a href="/portal/navigation/details?dataId={{$ctrl.parentId}}" class="btn bnt-sm btn-primary px-3">
                         <i class="fas fa-chevron-left"></i> Back
                     </a>
@@ -44,7 +44,7 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-12 text-right">
+                        <div class="col-sm-12 text-end">
                             <button type="button" ng-click="$ctrl.submit()"
                                 class="btn btn-primary btn-round pull-right px-5"><i class="fas fa-save"></i> Save
                                 menu</button>

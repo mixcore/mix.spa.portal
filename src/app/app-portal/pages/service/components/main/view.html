@@ -3,7 +3,7 @@
         Create Service
     </h6>
     <div class="card-body">
-        <div class="row form-group">
+        <div class="row mb-3">
             <div class="col">
                 <label>Title</label>
                 <input type="text" class="form-control" ng-model="$ctrl.model.title" ng-blur="$ctrl.gennerateName()">
@@ -13,7 +13,7 @@
                 <input type="text" class="form-control" ng-model="$ctrl.model.name">
             </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label class="control-label">Type</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-toggle="buttons">
                 <label ng-repeat="type in $ctrl.settings.serviceTypes track by $index" ng-switch="type"
@@ -31,7 +31,7 @@
                 </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <label>Description</label>
             <textarea class="form-control" ng-model="$ctrl.model.description"></textarea>
         </div>

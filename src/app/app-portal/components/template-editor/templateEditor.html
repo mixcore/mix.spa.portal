@@ -22,12 +22,12 @@
     </h6>
     <div
       id="quick-{{$ctrl.folderType}}-layout-editor"
-      class="card-body collapse"
+      class="card-body collapse-x"
     >
-      <div class="form-group">
+      <div class="mb-3">
         <div class="input-group mb-3">
           <select
-            class="btn btn-outline-secondary custom-select col-sm-4"
+            class="btn btn-outline-secondary form-select col-sm-4"
             ng-options="item as item.fileName for item in $ctrl.templates track by item.id"
             ng-model="$ctrl.template"
             ng-change="$ctrl.selectTemplate($ctrl.template)"

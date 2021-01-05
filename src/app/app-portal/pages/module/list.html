@@ -10,7 +10,7 @@
         ></filter-list>
 
         <select
-          class="form-control btn custom-select custom-select-sm col-2 mt-3"
+          class="form-control btn form-select form-select-sm col-2 mt-3"
           ng-model="type"
           ng-change="getListByType(pageIndex)"
         >
@@ -23,7 +23,7 @@
         </select>
 
         <select
-          class="form-control btn custom-select custom-select-sm col-2 mt-3"
+          class="form-control btn form-select form-select-sm col-2 mt-3"
           ng-model="selectedList.action"
         >
           <option ng-repeat="item in actions" ng-value="item">{{item}}</option>

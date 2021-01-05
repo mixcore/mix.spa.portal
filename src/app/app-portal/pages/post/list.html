@@ -10,13 +10,13 @@
         >
         </filter-list>
         <select
-          class="custom-select custom-select-sm col-2"
+          class="form-select form-select-sm col-2"
           ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
           ng-change="onSelectType();"
           ng-model="request.type"
         ></select>
         <select
-          class="custom-select custom-select-sm col-2"
+          class="form-select form-select-sm col-2"
           ng-model="selectedList.action"
         >
           <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
