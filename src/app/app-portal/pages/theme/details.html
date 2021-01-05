@@ -11,26 +11,26 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="mb-3">
-                            <label>Theme title</label><br />
+                            <label class="form-label">Theme title</label><br />
                             <input type="text" ng-model="activedData.title" ng-change="generateSEO()"
                                 class="form-control" placeholder="Enter your theme name here...">
                         </div>
 
                         <div class="mb-3">
-                            <label>Preview URL</label><br />
+                            <label class="form-label">Preview URL</label><br />
                             <input type="text" ng-model="activedData.previewUrl" class="form-control"
                                 placeholder="Preview Url">
                         </div>
                         <div class="row">
                             <div class="col">
                                 <div class="mb-3">
-                                    <label>Asset</label>
+                                    <label class="form-label">Asset</label>
                                     <api-file form-name="'assets'" class="custom-file" posted-file="asset"></api-file>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="mb-3">
-                                    <label>Import Theme</label><br />
+                                    <label class="form-label">Import Theme</label><br />
                                     {{theme.name}}
                                     <api-file form-name="'theme'" class="custom-file" posted-file="theme"></api-file>
                                 </div>
@@ -38,13 +38,13 @@
                         </div>
                         <hr>
                         <div class="">
-                        <div class="custom-control custom-switch" ng-show="!theme">
-                                <input type="checkbox" class="custom-control-input" ng-model="activedData.isCloneFromCurrentTheme"
+                        <div class="form-check form-switch" ng-show="!theme">
+                                <input type="checkbox" class="form-check-input" ng-model="activedData.isCloneFromCurrentTheme"
                                     id="isCloneFromCurrentTheme">
                                 <label class="custom-control-label" for="isCloneFromCurrentTheme">Clone Template from current theme!</label>
                             </div>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" ng-model="activedData.isActived"
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" ng-model="activedData.isActived"
                                     id="isActived">
                                 <label class="custom-control-label" for="isActived">Activate this theme for your site!</label>
                             </div>                            

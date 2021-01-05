@@ -11,9 +11,9 @@
                        class="item-priority d-none form-control form-control-sm d"/>
             </div>-->
             <div class="col-7">
-                <div class="custom-control custom-switch">
+                <div class="form-check form-switch">
                     <input type="checkbox" ng-change="$ctrl.callback({nav: nav})" ng-model="nav.isActived"
-                        id="{{$ctrl.prefix}}_{{$index}}" class="custom-control-input">
+                        id="{{$ctrl.prefix}}_{{$index}}" class="form-check-input">
                     <label class="custom-control-label align-middle" for="{{$ctrl.prefix}}_{{$index}}"
                         ng-bind="$ctrl.getTitle(nav)">
                 </div>

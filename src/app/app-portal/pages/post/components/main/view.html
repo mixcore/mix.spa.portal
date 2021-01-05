@@ -1,8 +1,8 @@
 <div class="card mb-4" ng-if="$ctrl.post!=null">
-  <h6 class="card-header position-sticky position-sticky-under-navbar">
+  <h6 class="card-header ">
     Post Content
     <a
-      class="btn-link text-primary btn-sm float-right py-0"
+      class="btn-link text-primary btn-sm float-end py-0"
       data-toggle="collapse"
       data-target="#PostBody"
       role="button"
@@ -14,7 +14,7 @@
   </h6>
   <div id="PostBody" class="card-body collapse-x show">
     <div class="mb-3">
-      <label>Title:</label>
+      <label class="form-label">Title:</label>
       <input
         type="text"
         class="form-control"
@@ -25,7 +25,7 @@
       />
     </div>
     <div class="mb-3">
-      <label>Friendly Url</label>
+      <label class="form-label">Friendly Url</label>
       <input
         type="text"
         class="form-control"
@@ -35,7 +35,7 @@
       />
     </div>
     <div class="mb-3">
-      <label>Excerpt</label>
+      <label class="form-label">Excerpt</label>
       <textarea
         class="form-control"
         ng-model="$ctrl.post.excerpt"
@@ -50,7 +50,7 @@
                       </trumbowyg> -->
     </div>
     <div class="mb-3 mb-0">
-      <!-- <label>Body content</label> -->
+      <!-- <label class="form-label">Body content</label> -->
       <trumbowyg
         ng-model="$ctrl.post.content"
         removeformat-pasted="'true'"

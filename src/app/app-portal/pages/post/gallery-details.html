@@ -8,12 +8,12 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <label>Title</label>
+                            <label class="form-label">Title</label>
                             <input type="text" class="form-control form-control-lg" ng-model="activedData.title"
                                 ng-blur="$ctrl.generateSEO()">
                         </div>
                         <div class="mb-3">
-                            <label>Excerpt</label>
+                            <label class="form-label">Excerpt</label>
                             <textarea class="form-control form-control-lg"
                                 ng-model="activedData.excerpt">{{activedData.excerpt}}</textarea>
                         </div>
@@ -115,11 +115,11 @@
                     selected-list="activedData.sysTags"></modal-nav-metas>
                 <div class="card mb-4">
                     <h6 class="card-header position-sticky position-sticky-under-actionbar">URL Alias
-                        <button class="btn btn-link text-primary btn-sm float-right py-0" type="button"
+                        <button class="btn btn-link text-primary btn-sm float-end py-0" type="button"
                             data-toggle="collapse" data-target="#slug-tab" aria-controls="slug-tab"
                             aria-expanded="false" aria-label="Toggle navigation"><span
                                 class="far fa-minus-square text-primary"></span> Show/Hide</button>
-                        <button class="btn btn-link text-primary btn-sm float-right py-0" type="button"
+                        <button class="btn btn-link text-primary btn-sm float-end py-0" type="button"
                             ng-click="addAlias()"><span class="fas fa-plus text-primary"></span> Add slugs</button>
 
                     </h6>

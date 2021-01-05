@@ -3,11 +3,11 @@
         <div ng-init="getSingle()" class="row">
             <div class="col-md-12">
                 <div class="mb-3">
-                    <label>Title</label>
+                    <label class="form-label">Title</label>
                     <input type="text" class="form-control" ng-model="activedData.title" ng-blur="$ctrl.generateSEO()">
                 </div>
                 <div class="mb-3">
-                    <label>Excerpt</label>
+                    <label class="form-label">Excerpt</label>
                     <textarea class="form-control" ng-model="activedData.description">{{activedData.excerpt}}</textarea>
                 </div>
                 <custom-file header="''" folder="'Medias'" media-file="activedData.mediaFile" data="activedData"
@@ -80,7 +80,7 @@
                         </small>
                     </td>
                     <td>
-                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                        <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
                             <a href="/portal/media/details/{{item.id}}" class="btn btn-link">
                                 <span class="fa fa-pen text-primary"></span>
                             </a>

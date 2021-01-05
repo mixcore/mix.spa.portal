@@ -2,16 +2,16 @@
 <section>
     <div class="row">
         <div class="col-md-6">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isSelectAll"
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.exportData.modules)"
                     id="switchSelectAllModules" />
                 <label class="custom-control-label" for="switchSelectAllModules">Select all modules</label>
             </div>            
         </div>
         <div class="col-md-6">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isExportData"
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectedList.isExportData"
                     ng-change="$ctrl.selectAll($ctrl.exportData.modules)"
                     id="switchSelectAllModuleData" />
                 <label class="custom-control-label" for="switchSelectAllModuleData">With Data</label>

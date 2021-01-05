@@ -28,7 +28,7 @@
 
 
 <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false"
-    data-bs-target="#{{$ctrl.item.title}}" aria-controls="contents-collapse"><span class="{{$ctrl.item.icon}} mi-lg mi-fw me-2"></span> <span ng-bind-html="$ctrl.translate($ctrl.item.title)"></span>
+    data-bs-target="#{{$ctrl.item.title}}" aria-controls="contents-collapse" ng-if="!$ctrl.item.isHiden"><span class="{{$ctrl.item.icon}} mi-lg mi-fw me-2"></span> <span ng-bind-html="$ctrl.translate($ctrl.item.title)"></span>
 
     <span class="btn-group btn-group-sm" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length>0">
         <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus" href="{{m.path}}">

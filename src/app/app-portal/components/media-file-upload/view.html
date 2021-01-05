@@ -1,11 +1,11 @@
 <div class="" ng-init="$ctrl.init()">
     <div class="mb-3">
         {{$ctrl.header}}
-        <a class="btn btn-link text-primary btn-sm float-right py-0" data-toggle="modal"
+        <a class="btn btn-link text-primary btn-sm float-end py-0" data-toggle="modal"
             data-target="#modal-files-search-{{$ctrl.id}}">
             <i class="fa fa-folder-open"></i> Browse
         </a>
-        <a class="btn btn-link text-primary btn-sm float-right py-0"
+        <a class="btn btn-link text-primary btn-sm float-end py-0"
             ng-click="$ctrl.isShowBrowser = !$ctrl.isShowBrowser"><i class="fa fa-file-upload"></i> Upload</a>
     </div>
     <div ng-show="$ctrl.isShowBrowser" class="mb-3">

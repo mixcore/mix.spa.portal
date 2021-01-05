@@ -5,11 +5,11 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="col">
-                <label>Title</label>
+                <label class="form-label">Title</label>
                 <input type="text" class="form-control" ng-model="$ctrl.model.title" ng-blur="$ctrl.gennerateName()">
             </div>
             <div class="col">
-                <label>Name</label>
+                <label class="form-label">Name</label>
                 <input type="text" class="form-control" ng-model="$ctrl.model.name">
             </div>
         </div>
@@ -19,7 +19,7 @@
                 <label ng-repeat="type in $ctrl.settings.serviceTypes track by $index" ng-switch="type"
                     ng-class="{active: $index === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
                     ng-click="$ctrl.model.type=$index;">
-                    <input ng-model="$ctrl.model.type" type="radio" value="{{$index}}" class="custom-control-input"
+                    <input ng-model="$ctrl.model.type" type="radio" value="{{$index}}" class="form-check-input"
                         id="model_type_{{$index}}">
                     <span ng-switch-when="System" class="" title="{{type}}"><i class="fas fa-cog"></i> System</span>
                     <span ng-switch-when="Page" class="" title="{{type}}"><i class="far fa-file"></i> Page</span>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <label>Description</label>
+            <label class="form-label">Description</label>
             <textarea class="form-control" ng-model="$ctrl.model.description"></textarea>
         </div>
     </div>

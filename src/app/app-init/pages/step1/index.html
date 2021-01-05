@@ -5,13 +5,13 @@
     <!-- <hr> -->
     <div class="intruction-labels mb-5">
         <div class="mb-3">
-            <label>
+            <label class="form-label">
                 Your site title
             </label>
             <input type="text" ng-model="initCmsModel.siteName" class="form-control" required placeholder="My Best Site Ever! - Mixcore CMS" value="My Best Site Ever! - Mixcore CMS">
         </div>
         <div class="mb-5">
-            <label>
+            <label class="form-label">
                 Your 1st culture & language
             </label>
             <select id="inputState" class="form-select"
@@ -23,7 +23,7 @@
         <div class="mb-3">
             <h6 class="text-primary">
                 Database Configuration
-                <!-- <div class="float-right">
+                <!-- <div class="float-end">
                     <div class="btn-group  pl-sm-0" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-primary active" ng-click="initCmsModel.isUseLocal=!initCmsModel.isUseLocal" ng-class="{ 'active' : !initCmsModel.isUseLocal }">Remote</button>
                         <button type="button" class="btn btn-primary" ng-click="initCmsModel.isUseLocal=!initCmsModel.isUseLocal" ng-class="{ 'active' : initCmsModel.isUseLocal }">Local</button>
@@ -43,7 +43,7 @@
 
         </div>
         <div class="mb-3" ng-show="!initCmsModel.isUseLocal">
-            <label>Server type</label>
+            <label class="form-label">Server type</label>
             <select class="form-select" ng-options="item as item.text for item in settings.providers"
                 ng-model="dbProvider" ng-change="updateDbProvider()">
             </select>

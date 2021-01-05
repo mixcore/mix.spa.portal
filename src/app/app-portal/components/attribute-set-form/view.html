@@ -24,14 +24,14 @@
         >{{$ctrl.attributeSetName}}'s Data </span> -->
 
       <a
-        class="btn btn-link text-primary btn-sm float-right py-0"
+        class="btn btn-link text-primary btn-sm float-end py-0"
         ng-if="$ctrl.backUrl"
         href="{{$ctrl.backUrl}}"
       >
         <i class="fas fa-return"></i> Back
       </a>
       <a
-        class="btn btn-link text-primary btn-sm float-right py-0"
+        class="btn btn-link text-primary btn-sm float-end py-0"
         expanded="true"
         aria-controls="attributeSetId_{{$ctrl.attrData.attributeSetId}} collapse"
       >
@@ -42,7 +42,7 @@
         type="button"
         data-toggle="modal"
         data-target="#modal-data-filter"
-        class="btn btn-sm btn-link py-0 float-right"
+        class="btn btn-sm btn-link py-0 float-end"
         ng-disabled="$ctrl.isBusy"
       >
         <i class="fas fa-folder"></i> Browse Data
@@ -50,7 +50,7 @@
       <button
         type="button"
         ng-click="$ctrl.reload()"
-        class="btn btn-sm btn-link py-0 float-right"
+        class="btn btn-sm btn-link py-0 float-end"
         ng-disabled="$ctrl.isBusy"
       >
         <i class="fas fa-plus"></i> Create blank
@@ -58,7 +58,7 @@
       <button
         type="button"
         ng-click="$ctrl.submit()"
-        class="btn btn-sm btn-link btn-round pull-right float-right mr-2 py-0"
+        class="btn btn-sm btn-link btn-round pull-right float-end mr-2 py-0"
         ng-disabled="$ctrl.isBusy"
       >
         <span
@@ -92,7 +92,7 @@
       <button
         type="button"
         ng-click="$ctrl.submit()"
-        class="btn btn-sm btn-primary btn-round float-right px-4"
+        class="btn btn-sm btn-primary btn-round float-end px-4"
         ng-disabled="$ctrl.isBusy"
       >
         <span

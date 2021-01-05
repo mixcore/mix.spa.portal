@@ -1,20 +1,20 @@
 <div class="card mb-4">
-    <h6 class="card-header position-sticky position-sticky-under-navbar">
+    <h6 class="card-header ">
         Module Content
-        <a class="btn-link text-primary btn-sm float-right py-0" data-toggle="collapse" data-target="#ModuleBody"
+        <a class="btn-link text-primary btn-sm float-end py-0" data-toggle="collapse" data-target="#ModuleBody"
             role="button" aria-expanded="true" aria-controls="ModuleBody">
             <span class="far fa-minus-square text-primary"></span> Show/Hide</a>
     </h6>
     <div id="ModuleBody" class="card-body collapse-x show">
         <div class="mb-3">
-            <label>Title</label>
+            <label class="form-label">Title</label>
             <input type="text" class="form-control" ng-model="$ctrl.module.title" ng-blur="$ctrl.gennerateName()"
                 placeholder="Your module title here..." required>
         </div>
         <div class="row">
             <div class="col-10">
                 <div class="mb-3 mb-0">
-                    <label>System Name</label>
+                    <label class="form-label">System Name</label>
                     <input type="text" class="form-control" ng-model="$ctrl.module.name">
                     <small class="form-text text-muted">This system name is using within the template code.</small>
                 </div>
@@ -22,7 +22,7 @@
             <div class="col">
 
                 <div class="mb-3">
-                    <label>Page Size</label>
+                    <label class="form-label">Page Size</label>
                     <input type="number" class="form-control" ng-model="$ctrl.module.pageSize">
                 </div>
             </div>

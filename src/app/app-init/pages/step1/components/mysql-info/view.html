@@ -1,11 +1,11 @@
 <div class="row">
     <div class="mb-3 col-8">
-        <label>Server name or IP</label>
+        <label class="form-label">Server name or IP</label>
         <input type="text" ng-model="$ctrl.initCmsModel.databaseServer" class="form-control"
             placeholder="Domain, IP or Docker service IP" required>
     </div>
     <div class="mb-3 col-4">
-        <label>Port</label>
+        <label class="form-label">Port</label>
         <input type="text" ng-model="$ctrl.initCmsModel.databasePort" class="form-control"
             placeholder="3306" required>
     </div>
@@ -13,16 +13,16 @@
 
 
 <div class="mb-3">
-        <label>Database name</label>
+        <label class="form-label">Database name</label>
         <input ng-model="$ctrl.initCmsModel.databaseName" class="form-control" placeholder="mixcore" required>
     </div>
 <div class="row">
     <div class="mb-3 col-6">
-        <label>DB username</label>
+        <label class="form-label">DB username</label>
         <input ng-model="$ctrl.initCmsModel.databaseUser" class="form-control" placeholder="root" required>
     </div>
     <div class="mb-3 col-6">
-        <label>DB password</label>
+        <label class="form-label">DB password</label>
         <input ng-model="$ctrl.initCmsModel.databasePassword" type="password" class="form-control"
             placeholder="P@ssw0rd" required>
     </div>
