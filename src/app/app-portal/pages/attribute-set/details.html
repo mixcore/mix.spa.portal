@@ -1,8 +1,12 @@
-<section class="bd-cheatsheet container-fluid bg-white d-grid">
-    <aside class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2">
+<aside class="bd-sidebar sub-sidebar">
+    <nav class="bd-links p-3" aria-label="Docs navigation">
         <actions preview-url="activedData.detailsUrl" content-url="contentUrl" back-url="referrerUrl"></actions>
         <statuses status="activedData.status"></statuses>
-    </aside>
+    </nav>
+</aside>
+
+<!-- ----------------------------------------------------------- -->
+<div class="content-body py-3 px-5">
 
     <section class="" ng-init="getSingle()">
         <h3>Create Database</h3>
@@ -22,7 +26,7 @@
 
                     <attribute-set-main model="activedData">
                     </attribute-set-main>
-                    <div  class="mb-5"></div>
+                    <div class="mb-5"></div>
 
                     <!-- app-portal/components/attribute-list -->
                     <attribute-list header="'Attributes'" fields="activedData.fields"
@@ -31,7 +35,7 @@
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
-                    
+
                     <attribute-set-edm model="activedData">
                     </attribute-set-edm>
 
@@ -53,4 +57,4 @@
 
         </form>
     </section>
-</section>
+</div>

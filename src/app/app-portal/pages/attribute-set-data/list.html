@@ -1,40 +1,6 @@
-<section class="bd-cheatsheet container-fluid bg-white d-grid" ng-init="init()">
-    <div class="row">
-        <div class="col-12">
-            <h3>[{{attributeSetName}}] data </h3>
-            <p class="text-subtitle text-muted">This list is show all of the data according to
-                <strong>[{{attributeSetName}}]</strong> database.
-            </p>
-            <div class="row">
-                <div class="col">
-
-                </div>
-            </div>
-
-            <div ng-init="getList()" class="col-md-12 mb-5">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <em> Total: <span ng-bind="data.totalItems" class="text-muted"></span></em>
-                    </div>
-                </div>
-                <attribute-set-values on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"
-                    can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
-                    on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
-                    on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"
-                    attribute-set-name="attributeSetName" queries="queries">
-                </attribute-set-values>
-            </div>
-
-
-            <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-                ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
-                scroll-top="true">
-            </paging>
-
-
-        </div>
-    </div>
-    <div class="row">
+<aside class="bd-sidebar sub-sidebar">
+    <nav class="bd-links p-3" aria-label="Docs navigation">
+        
         <div class="btn-group mb-3" role="group" aria-label="Basic example">
 
             <a href="/portal/attribute-set/list" class="btn btn-primary float-end px-4">
@@ -115,16 +81,61 @@
                                     <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
                                         class="btn btn-outline-secondary text-white">
                                         <i class="fas fa-upload"></i> Import</label>
-                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+    </nav>
+  </aside>
+  
+  <!-- ----------------------------------------------------------- -->
+  
+<div class="content-body py-3 px-5">
+    <div class="row" ng-init="init()">
+        <div class="col-12">
+            <h3>[{{attributeSetName}}] data </h3>
+            <p class="text-subtitle text-muted">This list is show all of the data according to
+                <strong>[{{attributeSetName}}]</strong> database.
+            </p>
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+
+            <div ng-init="getList()" class="col-md-12 mb-5">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <em> Total: <span ng-bind="data.totalItems" class="text-muted"></span></em>
+                    </div>
+                </div>
+                <attribute-set-values on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"
+                    can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
+                    on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
+                    on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"
+                    attribute-set-name="attributeSetName" queries="queries">
+                </attribute-set-values>
+            </div>
+
+
+            <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+                ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+                scroll-top="true">
+            </paging>
+
+
+        </div>
+    </div>
+</div>
+<!-- 
+<section class="bd-cheatsheet container-fluid bg-white d-grid" >
+    
+    <div class="row">
     </div>
 
-</section>
+</section> -->
 
 
 <!-- 
