@@ -48,7 +48,8 @@
           $("#dlg-bookmark").modal("show");
         };
         ctrl.toggleSidebar = function () {
-          $("#sidebar").toggleClass("active");
+          $(".main-sidebar").toggle();
+          $(".sub-sidebar").toggle();
           // $('.navbar-brand').toggle();
         };
         ctrl.generateSitemap = async function () {
