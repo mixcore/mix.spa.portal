@@ -1,22 +1,21 @@
 <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3" aria-label="Docs navigation">
-        
-        <div class="btn-group mb-3" role="group" aria-label="Basic example">
 
-            <a href="/portal/attribute-set/list" class="btn btn-primary float-end px-4">
-                <i class="fas fa-list"></i> Table List
+        <div class="btn-group mb-3 w-100" role="group" aria-label="Basic example">
+
+            <a href="/portal/attribute-set/list" class="btn btn-outline-primary px-4">
+                <i class="fas fa-list"></i> List
             </a>
-            <a href="/portal/attribute-set/details/{{attributeSetId}}"
-                class="btn btn-primary float-end px-4 mr-2">
-                <i class="fas fa-pen"></i> Edit Table
+            <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-outline-primary px-4 mr-2">
+                <i class="fas fa-pen"></i> Config
             </a>
-    
+
             <a href="/portal/attribute-set-data/create?attributeSetId={{attributeSetId}}&attributeSetName={{attributeSetName}}&dataId=default"
-                class="btn btn-primary float-end px-4 mr-2">
-                <i class="fas fa-plus"></i> Add Data
+                class="btn btn-outline-primary px-4 mr-2">
+                <i class="fas fa-plus"></i> Data
             </a>
         </div>
-    
+
         <div class="accordion accordion-flush" id="accordionFlushExample" ng-init="$ctrl.init()">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
@@ -28,9 +27,8 @@
                 <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-    
-                        <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2" request="request"
-                            callback="getList(pageIndex)"></filter-list>
+                        <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
+                            request="request" callback="getList(pageIndex)"></filter-list>
                     </div>
                 </div>
             </div>
@@ -44,17 +42,17 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-    
+
                         <a ng-click="export(request.pageIndex, exportAll)"
                             class="btn btn-sm btn-primary text-white float-end px-4 mr-2">
                             <i class="fas fa-download"></i> Export data
                         </a>
-    
+
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox"  ng-model="exportAll" id="export-all">
+                            <input class="form-check-input" type="checkbox" ng-model="exportAll" id="export-all">
                             <label class="form-check-label" for="export-all">Export all</label>
                         </div>
-    <!--                     
+                        <!--                     
                         <input type="checkbox" ng-model="exportAll" id="export-all">
                         <label for="export-all">Export All</label> -->
                     </div>
@@ -70,17 +68,17 @@
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        
-                        
+
+
                         <form action="" id="frm-import" class="">
                             <div class="input-group">
-                                    <input id="inp-import-data" type="file" name="data"
-                                        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                        ngf-select="selectImportFile($files)" data-files="file.files"
-                                        class="form-control"  aria-label="Upload">
-                                    <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
-                                        class="btn btn-outline-secondary text-white">
-                                        <i class="fas fa-upload"></i> Import</label>
+                                <input id="inp-import-data" type="file" name="data"
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                    ngf-select="selectImportFile($files)" data-files="file.files" class="form-control"
+                                    aria-label="Upload">
+                                <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
+                                    class="btn btn-outline-secondary text-white">
+                                    <i class="fas fa-upload"></i> Import</label>
                             </div>
                         </form>
                     </div>
@@ -88,27 +86,22 @@
             </div>
         </div>
     </nav>
-  </aside>
-  
-  <!-- ----------------------------------------------------------- -->
-  
+</aside>
+
+<!-- ----------------------------------------------------------- -->
+
 <div class="content-body py-3 px-5">
     <div class="row" ng-init="init()">
-        <div class="col-12">
+        <div class="col-12" ng-init="getList()">
             <h3>[{{attributeSetName}}] data </h3>
-            <p class="text-subtitle text-muted">This list is show all of the data according to
+            <p class="text-subtitle text-muted">This list is show all of the total <span ng-bind="data.totalItems" class="text-muted"></span> items existing in
                 <strong>[{{attributeSetName}}]</strong> database.
             </p>
-            <div class="row">
-                <div class="col">
 
-                </div>
-            </div>
-
-            <div ng-init="getList()" class="col-md-12 mb-5">
+            <div class="mb-5">
                 <div class="row">
                     <div class="col-sm-12">
-                        <em> Total: <span ng-bind="data.totalItems" class="text-muted"></span></em>
+                        <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
                     </div>
                 </div>
                 <attribute-set-values on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"

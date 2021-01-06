@@ -1,4 +1,4 @@
-<div class="row pb-1" ng-if="$ctrl.model">
+<div class="row" ng-if="$ctrl.model">
   <div ng-switch="$ctrl.field.dataType.toLowerCase()" class="col-9">
     <div ng-switch-default>
       <p ng-bind="$ctrl.model"></p>
@@ -28,11 +28,7 @@
       <input class="form-control" type="checkbox" ng-model="$ctrl.model" />
     </div>
     <div ng-switch-when="videoyoutube">
-      <iframe
-        frameborder="0"
-        allowfullscreen=""
-        ng-src="{{$ctrl.model}}"
-      ></iframe>
+      <iframe frameborder="0" allowfullscreen="" ng-src="{{$ctrl.model}}"></iframe>
     </div>
     <div ng-switch-when="tuieditor">
       <div ng-bind-html="$ctrl.model | markdown"></div>
@@ -43,15 +39,7 @@
     </div>
   </div>
   <div class="col-9" ng-if="$ctrl.field.isEncrypt && $ctrl.encryptedData">
-    <a
-      class="btn btn-info text-white"
-      ng-click="$ctrl.showDecrypt = !$ctrl.showDecrypt"
-      >Decrypt</a
-    >
-    <p
-      ng-if="$ctrl.showDecrypt"
-      class="text-info"
-      ng-bind="$ctrl.decrypted"
-    ></p>
+    <a class="btn btn-info text-white" ng-click="$ctrl.showDecrypt = !$ctrl.showDecrypt">Decrypt</a>
+    <p ng-if="$ctrl.showDecrypt" class="text-info" ng-bind="$ctrl.decrypted"></p>
   </div>
 </div>
