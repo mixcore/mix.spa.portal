@@ -18,8 +18,8 @@
       <!-- <small class="col-md-2">Author</small> -->
       <label class="col-md-2">Created Date</label>
       <div class="col-md-3">
-        <div class="input-group input-group-xs">
-          <select class="form-select form-select-sm mr-2" ng-model="$ctrl.filterType">
+        <div class="input-group input-group-sm">
+          <select class="form-select form-select-sm me-2" ng-model="$ctrl.filterType">
             <option ng-repeat="item in $ctrl.filterTypes" ng-value="item">{{item}}</option>
           </select>
         </div>
@@ -29,7 +29,7 @@
   <div class="card">
   <div class="card-body py-1">
     <div class="py-2" role="alert" ng-if="!$ctrl.data || !$ctrl.data.length">
-      <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No data has been created for this table yet!
+      <i class="fas fa-exclamation-triangle text-warning me-3"></i> No data has been created for this table yet!
     </div>
 
     <div dnd-list="$ctrl.data" dnd-inserted="$ctrl.updateOrders(index, $ctrl.data)" ng-if="$ctrl.data.length">
@@ -38,7 +38,7 @@
         ng-class="{'selected': $ctrl.selectedItem === item}" class="border-bottom attr-set-value-item">
         <div class="row">
           <div class="col-md-1 form-inline">
-            <small dnd-handle class="fa fa-grip-vertical text-black-50 mr-2" style="cursor: grab;"></small>
+            <small dnd-handle class="fa fa-grip-vertical text-black-50 me-2" style="cursor: grab;"></small>
             <input type="checkbox" ng-model="item.isSelected" ng-change="$ctrl.select(item)" />
             <small>
               <input class="ml-1 border-0 p-0 text-center text-black-50" style="width: 25px;"
@@ -84,7 +84,7 @@
 </div>
   <!-- <div class="card-footer form-inline" ng-if="$ctrl.data.length">
         <div class="mb-3">
-            <select class="form-control btn form-select form-select-sm mr-2" ng-model="$ctrl.selectedList.action">
+            <select class="form-control form-select form-select-sm me-2" ng-model="$ctrl.selectedList.action">
                 <option ng-repeat="item in $ctrl.actions" ng-value="item">{{item}}</option>
             </select>
             <button type="button" class="btn btn-sm btn-primary"

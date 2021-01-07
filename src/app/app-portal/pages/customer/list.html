@@ -33,7 +33,7 @@
             </thead>
 
             <tbody class="sortable" ng-repeat="item in data.items track by $index">
-                <tr class="sortable-item" sort-model="customer" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-page{{item.id}}-childs"
+                <tr class="sortable-item" sort-model="customer" sort-model-id="{{item.id}}" data-bs-toggle="collapse" href="#collapse-page{{item.id}}-childs"
                     role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
                     <td>
                         {{item.firstName}}

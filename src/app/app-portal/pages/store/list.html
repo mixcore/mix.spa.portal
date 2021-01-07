@@ -8,7 +8,9 @@
                         <div class="card-body">
                             <h6 class="small mb-4">{{post.title}}
                                 <br />
-                                <small class="text-muted">by <b><a href="{{post.properties.author_url}}" target="_blank">{{post.properties.author_name}}</a></b> in <b>{{post.properties.category}}</b></small>
+                                <small class="text-muted">by <b><a href="{{post.properties.author_url}}"
+                                            target="_blank">{{post.properties.author_name}}</a></b> in
+                                    <b>{{post.properties.category}}</b></small>
                             </h6>
 
                             <div class="d-flex justify-content-left">
@@ -18,13 +20,16 @@
                                 <div class="col-5 p-0">
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
-                                            style="width: {{post.properties.avg_rating}}%" aria-valuenow="{{post.properties.avg_rating}}" aria-valuemin="0" aria-valuemax="100">
+                                            style="width: {{post.properties.avg_rating}}%"
+                                            aria-valuenow="{{post.properties.avg_rating}}" aria-valuemin="0"
+                                            aria-valuemax="100">
                                         </div>
                                     </div>
                                     <small class="text-muted">{{post.properties.download_count}} download</small>
                                 </div>
                                 <div class="col-7 justify-content-end text-end p-0">
-                                    <a target="_blank" href="{{post.properties.external_preview_url}}" class="btn btn-sm btn-outline-secondary mr-1">Preview</a>
+                                    <a target="_blank" href="{{post.properties.external_preview_url}}"
+                                        class="btn btn-sm btn-outline-secondary mr-1">Preview</a>
                                     <button type="button" class="btn btn-sm btn-outline-primary"><i
                                             class="fas fa-cloud-download-alt"></i></button>
                                 </div>
@@ -144,9 +149,7 @@
                         <button type="button" class="btn btn-outline-primary small">...</button>
                     </div> -->
                     <div class="mb-3 input-group input-group-sm flex-nowrap">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
-                        </div>
+                        <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
                         <input type="text" class="form-control" placeholder="Search keywords..." aria-label="Username"
                             aria-describedby="addon-wrapping">
                     </div>

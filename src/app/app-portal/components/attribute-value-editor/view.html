@@ -212,14 +212,14 @@
                 <i class="fas fa-plus"></i> Add
             </a> -->
       <div class="alert alert-warning" role="alert" ng-if="!$ctrl.parentId">
-        <i class="fas fa-exclamation-triangle mr-3"></i> Please save the current
+        <i class="fas fa-exclamation-triangle me-3"></i> Please save the current
         item to initialization a parent ID before input it child's data!
       </div>
       <div class="row" ng-if="$ctrl.parentId">
         <div class="col-md-12">
           <a
             href="/portal/attribute-set-data/create?attributeSetId={{$ctrl.attributeValue.field.referenceId}}&dataId=default&parentId={{$ctrl.parentId}}&parentType={{$ctrl.parentType}}"
-            class="btn btn-sm btn-primary float-end px-4 mr-2"
+            class="btn btn-sm btn-primary float-end px-4 me-2"
           >
             <i class="fas fa-plus"></i> Create data
           </a>
@@ -251,7 +251,7 @@
   <div class="col-9">
     <select
       ng-if="$ctrl.attributeValue.dataType!='icon'"
-      class="btn form-select form-control"
+      class="form-select form-control"
       ng-model="$ctrl.attributeValue.stringValue"
     >
       <option

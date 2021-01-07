@@ -23,19 +23,24 @@
                             <span class="oi oi-move"></span>
                         </td>
                         <td>
-                            <input type="text" name="ProductNavs[{{$index}}].Priority" value="{{item.priority}}" class="item-priority form-control form-control-sm d-inline" style="width:40px;">
+                            <input type="text" name="ProductNavs[{{$index}}].Priority" value="{{item.priority}}"
+                                class="item-priority form-control form-control-sm d-inline" style="width:40px;">
                         </td>
                         <td>
                             {{item.relatedProduct.title}}
                         </td>
                         <td>
-                            <a href="#" ng-if="item.relatedProduct.image!=''" data-toggle="modal" data-target=".image-preview-modal-lg" data-imgsrc="{{item.relatedProduct.image}}">
-                                <img class="" ng-src="{{item.relatedProduct.image}}" alt="{{item.relatedProduct.title}}" style="max-height: 50px;">
+                            <a href="#" ng-if="item.relatedProduct.image!=''" data-bs-toggle="modal"
+                                data-bs-target=".image-preview-modal-lg" data-imgsrc="{{item.relatedProduct.image}}">
+                                <img class="" ng-src="{{item.relatedProduct.image}}" alt="{{item.relatedProduct.title}}"
+                                    style="max-height: 50px;">
                             </a>
                         </td>
                         <td style="position:relative">
                             <span class="switch switch-sm" style="position: absolute;top: 10px;">
-                                <input type="checkbox" class="switch" data-val="{{item.isActived}}" id="ProductNavs_{{item.relatedProductId}}" name="ProductNavs[{{$index}}].IsActived" ng-model="item.isActived" value="{{item.isActived}}">
+                                <input type="checkbox" class="switch" data-val="{{item.isActived}}"
+                                    id="ProductNavs_{{item.relatedProductId}}" name="ProductNavs[{{$index}}].IsActived"
+                                    ng-model="item.isActived" value="{{item.isActived}}">
                                 <label class="switch" for="ProductNavs_{{item.relatedProductId}}">
                                 </label>
                             </span>
@@ -44,18 +49,21 @@
                 </tbody>
             </table>
         </div>
-    </div><!--activeProducts-->
+    </div>
+    <!--activeProducts-->
 
     <h6>List items</h6>
     <div class="row">
         <div class="col-md-8">
             <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group mr-2">
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".upload-image-modal-lg"><i class="mi mi-Add"></i></button>
+                <div class="btn-group me-2">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target=".upload-image-modal-lg"><i class="mi mi-Add"></i></button>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Button group with nested dropdown">
+                <div class="btn-group me-2" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             All media types
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -69,9 +77,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn-group mr-2" role="group" aria-label="Button group with nested dropdown">
+                <div class="btn-group me-2" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             All times
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -85,10 +94,9 @@
         </div>
         <div class="col-md-4">
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <div class="input-group-text" id="btnGroupAddon"><i class="mi mi-Search" style="top:0;"></i></div>
-                </div>
-                <input type="text" class="form-control" placeholder="Search media items..." aria-label="Search media items..." aria-describedby="btnGroupAddon">
+                <div class="input-group-text" id="btnGroupAddon"><i class="mi mi-Search" style="top:0;"></i></div>
+                <input type="text" class="form-control" placeholder="Search media items..."
+                    aria-label="Search media items..." aria-describedby="btnGroupAddon">
             </div>
         </div>
     </div>
@@ -103,7 +111,8 @@
                 </tr>
             </thead>
             <tbody class="sortable">
-                <tr class="sortable-item module-column" ng-repeat="product in $ctrl.list.items" ng-hide="product.isHidden">
+                <tr class="sortable-item module-column" ng-repeat="product in $ctrl.list.items"
+                    ng-hide="product.isHidden">
 
                     <td>
                         <small>{{product.title}}</small>
@@ -113,7 +122,8 @@
                     </td>
                     <td>
                         <span class="switch switch-sm">
-                            <input type="checkbox" class="switch" id="ProductNavs_{{product.id}}" ng-model="product.isActived" ng-change="$ctrl.activeProduct(product)">
+                            <input type="checkbox" class="switch" id="ProductNavs_{{product.id}}"
+                                ng-model="product.isActived" ng-change="$ctrl.activeProduct(product)">
                             <label class="switch" for="ProductNavs_{{product.id}}">
                             </label>
                         </span>

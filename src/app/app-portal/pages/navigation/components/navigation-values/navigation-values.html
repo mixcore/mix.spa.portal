@@ -9,10 +9,8 @@
             <div ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index" 
                 ng-if="$index < 4 && col.dataType != 'Reference'"
                 class="col-md-2" ng-if="">                
-                <div class="input-group input-group-xs">
-                    <div class="input-group-prepend">
+                <div class="input-group input-group-sm">
                         <div class="input-group-text"><i class="fas fa-search"></i></div>
-                    </div>
                     <input type="text" class="form-control" placeholder="{{col.title}}"
                         ng-model="$ctrl.queries[col.name]" ng-enter="$ctrl.onFilterList()" />
                 </div>
@@ -20,8 +18,8 @@
             <!-- <small class="col-md-2">Author</small> -->
             <small class="col-md-2">Created Date</small>
             <div class="col-md-1">
-                <div class="input-group input-group-xs">
-                    <select class="form-select form-select-sm mr-2" ng-model="$ctrl.filterType">
+                <div class="input-group input-group-sm">
+                    <select class="form-select form-select-sm me-2" ng-model="$ctrl.filterType">
                         <option ng-repeat="item in $ctrl.filterTypes" ng-value="item">{{item}}</option>
                     </select>
                 </div>
@@ -31,7 +29,7 @@
     <div class="card-body py-1">
 
         <div class="py-2" role="alert" ng-if="!$ctrl.data || !$ctrl.data.length">
-            <i class="fas fa-exclamation-triangle text-warning mr-3"></i> No data has been created for this attribute
+            <i class="fas fa-exclamation-triangle text-warning me-3"></i> No data has been created for this attribute
             yet!
         </div>
 
@@ -42,7 +40,7 @@
                 class="border-bottom attr-set-value-item">
                 <dnd-nodrag class="row">
                     <!-- <div  class="col-md-1 form-inline">
-                        <small dnd-handle class="fa fa-grip-vertical text-black-50 mr-2" style="cursor:grab;"></small>
+                        <small dnd-handle class="fa fa-grip-vertical text-black-50 me-2" style="cursor:grab;"></small>
                         <small class="d-none">
                             <input class="ml-1 border-0 p-0 text-center text-black-50" style="width: 25px;"
                                 ng-model="item.priority" />
@@ -80,7 +78,7 @@
     </div>
     <div class="card-footer form-inline" ng-if="$ctrl.data.length">
         <div class="mb-3">
-            <select class="form-control btn form-select form-select-sm mr-2" ng-model="$ctrl.selectedList.action">
+            <select class="form-control form-select form-select-sm me-2" ng-model="$ctrl.selectedList.action">
                 <option ng-repeat="item in $ctrl.actions" ng-value="item">{{item}}</option>
             </select>
             <button type="button" class="btn btn-sm btn-primary"

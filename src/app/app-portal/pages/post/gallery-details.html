@@ -65,10 +65,8 @@
                         <div class="mb-3" ng-if="activedData.status == 4">
                             <label class="control-label">Published Date Time</label>
                             <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i
                                             class="mi mi-Calendar"></i></span>
-                                </div>
                                 <input value="{{activedData.publishedDateTime}}"
                                     ng-model="activedData.publishedDateTime" type="datetime-local" class="form-control">
                             </div>
@@ -76,10 +74,8 @@
                         <div class="mb-3">
                             <label class="control-label">Created Date Time</label>
                             <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i
                                             class="mi mi-Calendar"></i></span>
-                                </div>
                                 <input ng-model="activedData.createdDateTime" type="text" class="form-control"
                                     readonly="readonly">
                             </div>
@@ -87,19 +83,15 @@
                         <div class="mb-3">
                             <label class="control-label">Author</label>
                             <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i
                                             class="mi mi-Contact"></i></span>
-                                </div>
                                 <input ng-model="activedData.createdBy" class="form-control" readonly="readonly">
                             </div>
                         </div>
                         <div class="mb-3 mb-0">
                             <label class="control-label">Template</label>
                             <div class="input-group">
-                                <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
-                                </div>
                                 <select class="form-select"
                                     ng-options="item as item.fileName for item in activedData.templates track by item.id"
                                     ng-model="activedData.view"></select>
@@ -116,7 +108,7 @@
                 <div class="card mb-4">
                     <h6 class="card-header position-sticky position-sticky-under-actionbar">URL Alias
                         <button class="btn btn-link text-primary btn-sm float-end py-0" type="button"
-                            data-toggle="collapse" data-target="#slug-tab" aria-controls="slug-tab"
+                            data-bs-toggle="collapse" data-bs-target="#slug-tab" aria-controls="slug-tab"
                             aria-expanded="false" aria-label="Toggle navigation"><span
                                 class="far fa-minus-square text-primary"></span> Show/Hide</button>
                         <button class="btn btn-link text-primary btn-sm float-end py-0" type="button"

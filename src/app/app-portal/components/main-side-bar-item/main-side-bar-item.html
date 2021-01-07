@@ -4,13 +4,13 @@
             <a ng-repeat="m in $ctrl.item.subMenus" href="{{m.path}}" class="btn btn-primary">
                 <span class="{{m.icon}} text-white"></span>
             </a>
-            <a href="#" class="btn btn-primary" data-toggle="collapse" data-target="#{{$ctrl.item.title}}" role="button"
+            <a href="#" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#{{$ctrl.item.title}}" role="button"
                 aria-expanded="false" aria-controls="{{$ctrl.item.title}}">
                 <span class="mi-ChevronRightSmall mi text-white"></span>
             </a>
         </div>
     </div>
-    <div class="sw-toc-link mt-1 mb-1" data-toggle="collapse" data-target="#{{$ctrl.item.title}}" role="button"
+    <div class="sw-toc-link mt-1 mb-1" data-bs-toggle="collapse" data-bs-target="#{{$ctrl.item.title}}" role="button"
         aria-expanded="false" aria-controls="{{$ctrl.item.title}}" ng-if="!$ctrl.item.isHiden">
         <i class="{{$ctrl.item.icon}} mi-lg mi-fw text-primary"></i>
         <a href="{{$ctrl.item.path}}" class="text" ng-bind-html="$ctrl.translate($ctrl.item.title)"></a>
@@ -29,9 +29,14 @@
 
 <button class="btn d-inline-flex align-items-center collapsed w-100" data-bs-toggle="collapse" aria-expanded="false"
     data-bs-target="#{{$ctrl.item.title}}" aria-controls="contents-collapse" ng-if="!$ctrl.item.isHiden"><span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3"></span> <span ng-bind-html="$ctrl.translate($ctrl.item.title)"></span>
-    <span class="btn-group btn-group-sm position-absolute end-0 d-none" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length>0">
+    <span class="btn-group btn-group-sm position-absolute end-0 d-none me-4" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length>0">
         <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus" href="{{m.path}}">
-            <span class="{{m.icon}}"></i>
+            <span class="{{m.icon}}"></span>
+        </a>
+    </span>
+    <span class="btn-group btn-group-sm position-absolute end-0 me-4" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length==0">
+        <a class="btn btn-light" href="{{$ctrl.item.path}}">
+            <span class="{{$ctrl.item.icon}}"></span>
         </a>
     </span>
 </button>

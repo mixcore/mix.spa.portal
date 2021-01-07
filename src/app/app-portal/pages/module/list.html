@@ -4,13 +4,13 @@
     <filter-list request="request" callback="getList(pageIndex)" create-url="'/portal/module/create'"
       create-text="'Create Module'"></filter-list>
 
-    <select class="form-control btn form-select form-select-sm col-2 mt-3" ng-model="type"
+    <select class="form-control form-select form-select-sm col-2 mt-3" ng-model="type"
       ng-change="getListByType(pageIndex)">
       <option value="-1">All</option>
       <option ng-repeat="type in settings.moduleTypes track by $index" ng-value="type.value">{{type}}</option>
     </select>
 
-    <select class="form-control btn form-select form-select-sm col-2 mt-3" ng-model="selectedList.action">
+    <select class="form-control form-select form-select-sm col-2 mt-3" ng-model="selectedList.action">
       <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
     </select>
 

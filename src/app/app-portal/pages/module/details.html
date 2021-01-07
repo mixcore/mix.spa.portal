@@ -1,6 +1,6 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3" aria-label="Docs navigation">
-    
+
     <actions on-clear-cache="clearCache()" preview-url="activedData.detailsUrl" back-url="'/portal/module/list'">
     </actions>
 
@@ -14,9 +14,7 @@
         <div class="mb-3" ng-if="activedData.status == 4">
           <label class="control-label">Published Date Time</label>
           <div class="input-group input-group-sm">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-            </div>
+            <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
             <input value="{{activedData.publishedDateTime}}" ng-model="activedData.publishedDateTime"
               type="datetime-local" class="form-control" />
           </div>
@@ -24,9 +22,7 @@
         <div class="mb-3">
           <label class="control-label">Created Date Time</label>
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-            </div>
+            <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
             <input ng-model="activedData.createdDateTime" type="text" class="form-control" readonly="readonly" />
           </div>
         </div>
@@ -34,18 +30,14 @@
         <div class="mb-3 mb-0">
           <label class="control-label">Author</label>
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>
-            </div>
+            <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>
             <input ng-model="activedData.createdBy" class="form-control" readonly="readonly" />
           </div>
         </div>
         <div class="mb-3 mb-0">
           <label class="control-label">Template</label>
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
-            </div>
+            <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
             <select class="form-select"
               ng-options="item as item.fileName for item in activedData.templates track by item.id"
               ng-model="activedData.view"></select>
@@ -57,8 +49,8 @@
     <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
       parent-type="'4'" type="''" attribute-set-name="'sys_category'" field-display="'title'"
       selected-list="activedData.sysCategories"></modal-nav-metas>
-    <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'4'"
-      type="''" attribute-set-name="'sys_tag'" field-display="'title'" selected-list="activedData.sysTags">
+    <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'4'" type="''"
+      attribute-set-name="'sys_tag'" field-display="'title'" selected-list="activedData.sysTags">
     </modal-nav-metas>
 
     <tabs-v ng-if="activedData" select-callback="selectPane(pane)" class="mb-4">
@@ -69,9 +61,9 @@
         </custom-image>
       </pane-v>
       <pane-v header="Thumbnail Img">
-        <custom-image header="'Thumnail upload'" type="'Modules'" folder="activedData.seoName"
-          title="activedData.title" description="activedData.description" src-url="activedData.thumbnail"
-          src="activedData.thumbnail" auto="'true'">
+        <custom-image header="'Thumnail upload'" type="'Modules'" folder="activedData.seoName" title="activedData.title"
+          description="activedData.description" src-url="activedData.thumbnail" src="activedData.thumbnail"
+          auto="'true'">
         </custom-image>
       </pane-v>
     </tabs-v>

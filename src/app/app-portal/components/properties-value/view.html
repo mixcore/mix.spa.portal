@@ -1,7 +1,7 @@
 <h6 class="card-header">
     <span ng-bind="$ctrl.title"></span>
     <!-- <a ng-click="$ctrl.addAttr()" class="btn btn-primary btn-sm float-end text-white">Add New</a> -->
-    <!-- <a ng-click="$ctrl.generateForm()" class="btn btn-primary btn-sm float-end text-white mr-2">Generate Form</a> -->
+    <!-- <a ng-click="$ctrl.generateForm()" class="btn btn-primary btn-sm float-end text-white me-2">Generate Form</a> -->
 </h6>
 <table class="table table-sm" id="Table">
     <thead class="thead-light">
@@ -30,7 +30,7 @@
                     <label class="control-label" ng-if="$ctrl.isShowTitle" ng-bind="prop.title"></label>                                    
                     <mix-select-icons ng-if="prop.dataType=='icon'" options="prop.options" data="prop.value"></mix-select-icons>
                     
-                    <select ng-if="prop.dataType!='icon'" class="btn form-select form-control" ng-model="prop.value">
+                    <select ng-if="prop.dataType!='icon'" class="form-select form-control" ng-model="prop.value">
                         <option ng-repeat="item in prop.options track by $index" ng-value="item">{{item}}</option>
                     </select>
                     <br/>                    

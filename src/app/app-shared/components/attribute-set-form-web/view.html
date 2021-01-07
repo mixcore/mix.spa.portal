@@ -16,7 +16,7 @@
                                     <label class="control-label" ng-if="$ctrl.isShowTitle" ng-bind="prop.title"></label>                                    
                                     <!-- <mix-select-icons ng-if="prop.dataType=='icon'" options="prop.options" data="$ctrl.data.jItem[prop.name]['value']"></mix-select-icons> -->
                                     
-                                    <select ng-if="prop.dataType!='icon'" class="btn form-select form-control" ng-model="$ctrl.data.jItem[prop.name]['value']">
+                                    <select ng-if="prop.dataType!='icon'" class="form-select form-control" ng-model="$ctrl.data.jItem[prop.name]['value']">
                                         <option ng-repeat="item in prop.options track by $index" ng-value="item">{{item}}</option>
                                     </select>
                                     <!-- <br/><br/>

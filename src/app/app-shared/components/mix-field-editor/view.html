@@ -179,14 +179,14 @@
     <div class="text-muted" ng-switch-when="reference">
       <!-- Referrence -->
       <div class="alert alert-warning" role="alert" ng-if="!$ctrl.model.id">
-        <i class="fas fa-exclamation-triangle mr-3"></i> Please save the current
+        <i class="fas fa-exclamation-triangle me-3"></i> Please save the current
         item to initialization a parent ID before input it child's data!
       </div>
       <div class="row" ng-if="$ctrl.model.id">
         <div class="col-md-12">
           <a
             href="{{$ctrl.createUrl}}"
-            class="btn btn-sm btn-primary float-end px-4 mr-2"
+            class="btn btn-sm btn-primary float-end px-4 me-2"
           >
             <i class="fas fa-plus"></i> Create data
           </a>
@@ -227,7 +227,7 @@
   <div class="col-9">
     <select
       ng-if="$ctrl.field.dataType!='icon'"
-      class="btn form-select form-control"
+      class="form-select form-control"
       ng-model="$ctrl.model.obj[$ctrl.field.name]"
     >
       <option

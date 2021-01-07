@@ -1,8 +1,8 @@
 <div class="" ng-init="$ctrl.init()">
     <div class="mb-3">
         {{$ctrl.header}}
-        <a class="btn btn-link text-primary btn-sm float-end py-0" data-toggle="modal"
-            data-target="#modal-files-search-{{$ctrl.id}}">
+        <a class="btn btn-link text-primary btn-sm float-end py-0" data-bs-toggle="modal"
+            data-bs-target="#modal-files-search-{{$ctrl.id}}">
             <i class="fa fa-folder-open"></i> Browse
         </a>
         <a class="btn btn-link text-primary btn-sm float-end py-0"
@@ -10,19 +10,14 @@
     </div>
     <div ng-show="$ctrl.isShowBrowser" class="mb-3">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">URL</span>
-            </div>
+            <span class="input-group-text">URL</span>
             <input type="text" onclick="this.select()" ng-model="$ctrl.srcUrl" class="form-control"
                 placeholder="https://your-image-url...">
         </div>
         <div class="input-group">
             <div class="custom-file">
-                <input id="{{$ctrl.id}}" type="file" name="pic" 
-                    accept="{{$ctrl.accept}}"
-                    ngf-select="$ctrl.selectFile($files)"
-                    data-files="file.files" 
-                    class="position-absolute hidden">
+                <input id="{{$ctrl.id}}" type="file" name="pic" accept="{{$ctrl.accept}}"
+                    ngf-select="$ctrl.selectFile($files)" data-files="file.files" class="position-absolute hidden">
                 <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>
             </div>
         </div>

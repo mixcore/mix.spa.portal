@@ -26,8 +26,8 @@
         <button
         type="button"
         id="sidebarCollapse"
-        data-toggle="collapse"
-        data-target="#sw-docs-nav"
+        data-bs-toggle="collapse"
+        data-bs-target="#sw-docs-nav"
         aria-controls="sw-docs-nav"
         class="btn btn-link"
         ng-click="$ctrl.toggleSidebar()"
@@ -43,48 +43,48 @@
     class="navbar-nav flex-row ml-md-auto d-none d-md-flex"
     ng-if="$ctrl.settings"
   >
-    <li class="nav-item mr-2 text-center">
+    <li class="nav-item me-2 text-center">
       {{$ctrl.isAdmin}}
       <a
         class="nav-link p-2"
         href="#"
-        data-toggle="modal"
-        data-target="#dlg-portal-theme-settings"
+        data-bs-toggle="modal"
+        data-bs-target="#dlg-portal-theme-settings"
       >
         <i class="mi mi-Personalize"></i>
       </a>
     </li>
-    <li class="nav-item mr-2">
+    <li class="nav-item me-2">
       <a class="nav-link p-2" href="#" ng-click="$ctrl.addPermission()">
         <i class="mi mi-Permissions"></i>
       </a>
     </li>
-    <li class="nav-item mr-2">
+    <li class="nav-item me-2">
       <a class="nav-link p-2" href="#" ng-click="$ctrl.addBookmark()">
         <i class="mi mi-FavoriteList"></i>
       </a>
     </li>
-    <!-- <li class="nav-item mr-2">
+    <!-- <li class="nav-item me-2">
       <a
         class="nav-link p-2"
         href="#"
-        data-toggle="modal"
-        data-target="#modal-hub-messages"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-hub-messages"
       >
         <i class="mi mi-CheckList"></i>
       </a>
     </li> -->
-    <li class="nav-item mr-2">
+    <li class="nav-item me-2">
       <a
         class="nav-link p-2"
         href="#"
-        data-toggle="modal"
-        data-target="#modal-files"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-files"
       >
         <i class="mi mi-Media"></i>
       </a>
     </li>
-    <li class="nav-item dropdown mr-2">
+    <li class="nav-item dropdown me-2">
       <!-- <div class="language-switcher portal"></div> -->
       <a
         class="btn nav-link p-2"
@@ -109,7 +109,7 @@
       </div>
     </li>
 
-    <li class="nav-item mr-2">
+    <li class="nav-item me-2">
       <a
         class="nav-link p-2 text-danger"
         href="#"
