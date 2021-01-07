@@ -2,7 +2,7 @@
   <nav class="bd-links p-3" aria-label="Docs navigation">
     <actions on-clear-cache="clearCache()" preview-url="activedData.detailsUrl" back-url="'/portal/page/list'">
     </actions>
-
+    <div class="mb-3"></div>
     <div class="accordion accordion-flush" id="accordionFlushExample">
       <div class="accordion-item">
         <h2 class="accordion-header" id="flush-headingOne">
@@ -94,12 +94,63 @@
           </div>
         </div>
       </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-heading-urlalias">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapse-urlalias" aria-expanded="false" aria-controls="flush-collapse-urlalias">
+            URL alias
+          </button>
+        </h2>
+        <div id="flush-collapse-urlalias" class="accordion-collapse collapse" aria-labelledby="flush-heading-urlalias"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+
+            <button class="btn btn-link text-primary btn-sm py-0" type="button" ng-click="addAlias()">
+              <span class="fas fa-plus text-primary"></span> Add slugs
+            </button>
+            <url-alias ng-repeat="alias in activedData.urlAliases" index="$index" url-alias="alias"
+              remove-callback="removeAliasCallback(index)"></url-alias>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-heading-categories">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapse-categories" aria-expanded="false" aria-controls="flush-collapse-categories">
+            Categories
+          </button>
+        </h2>
+        <div id="flush-collapse-categories" class="accordion-collapse collapse" aria-labelledby="flush-heading-categories"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
+            parent-type="'3'" type="''" attribute-set-name="'sys_category'" field-display="'title'"
+            selected-list="activedData.sysCategories"></modal-nav-metas>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-heading-tags">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#flush-collapse-tags" aria-expanded="false" aria-controls="flush-collapse-tags">
+            Tags
+          </button>
+        </h2>
+        <div id="flush-collapse-tags" class="accordion-collapse collapse" aria-labelledby="flush-heading-tags"
+          data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            
+    <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'3'" type="''"
+    attribute-set-name="'sys_tag'" field-display="'title'" selected-list="activedData.sysTags"></modal-nav-metas>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card mb-4">
+    <!-- <div class="card mb-4">
       <h6 class="card-header position-sticky position-sticky-under-actionbar">
         Info
       </h6>
-    </div>
+    </div> -->
 
     <!-- Categories -->
     <!-- <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
@@ -111,14 +162,10 @@
               parent-type="'2'" type="''" attribute-set-name="'sys_tag'" select-callback="updateSysTags(data)"
               field-display="'title'" selected-list="selectedTags"></modal-nav-metas> -->
 
-    <modal-nav-metas ng-if="activedData.sysCategories" header="'Categories'" parent-id="activedData.id"
-      parent-type="'3'" type="''" attribute-set-name="'sys_category'" field-display="'title'"
-      selected-list="activedData.sysCategories"></modal-nav-metas>
-    <modal-nav-metas ng-if="activedData.sysTags" header="'Tags'" parent-id="activedData.id" parent-type="'3'" type="''"
-      attribute-set-name="'sys_tag'" field-display="'title'" selected-list="activedData.sysTags"></modal-nav-metas>
+    
 
     <!-- <navs data="activedData.positionNavs" prefix="'pos'"></navs> -->
-    <div class="card mb-4">
+    <!-- <div class="card mb-4">
       <h6 class="card-header position-sticky position-sticky-under-actionbar">
         URL Alias
         <button class="btn btn-link text-primary btn-sm float-end py-0" type="button" data-bs-toggle="collapse"
@@ -133,7 +180,7 @@
         <url-alias ng-repeat="alias in activedData.urlAliases" index="$index" url-alias="alias"
           remove-callback="removeAliasCallback(index)"></url-alias>
       </div>
-    </div>
+    </div> -->
   </nav>
 </aside>
 

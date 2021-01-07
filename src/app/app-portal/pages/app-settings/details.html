@@ -16,8 +16,11 @@
         <form ng-if="appSettings" ng-class="{'submitted': submitted}" ng-submit="saveAppSettings(appSettings)"
             autocomplete="new-password">
             <tabs-h>
-                <div class="mb-3">
-                    <actions preview-url="appSettings.fullPath" back-url="'/portal/configuration/list'"></actions>
+                <div class="row mb-3">
+                    <div class="col"></div>
+                    <div class="col-4">
+                        <actions preview-url="appSettings.fullPath" back-url="'/portal/configuration/list'"></actions>
+                    </div>
                 </div>
                 <pane-h header="General" class="">
                     <div class="">
