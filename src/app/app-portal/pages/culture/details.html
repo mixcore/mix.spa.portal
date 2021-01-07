@@ -1,6 +1,6 @@
 <!-- Main content -->
 <section class="" ng-init="getSingle()">
-    <form ng-class="{'submitted': submitted}" ng-submit="save()" ng-if="activedData">
+    <form ng-class="{'submitted': submitted}" ng-submit="save()" ng-if="viewModel">
 
         <actions back-url="'/portal/language/list'"></actions>
         <div class="row justify-content-md-center">
@@ -14,32 +14,32 @@
                                 ng-model="selected" ng-change="changeData(selected)"></select>
                         </div>
                         <div class="mb-3">
-                            <input type="text" ng-model="activedData.alias" class="form-control form-control-lg"
+                            <input type="text" ng-model="viewModel.alias" class="form-control form-control-lg"
                                 placeholder="Enter your culture alias here...">
                         </div>
                         <div class="mb-3">
-                            <input type="text" ng-model="activedData.fullName" class="form-control form-control-lg"
+                            <input type="text" ng-model="viewModel.fullName" class="form-control form-control-lg"
                                 placeholder="Enter your culture name here...">
                         </div>
                         <div class="mb-3">
-                            <input type="text" ng-model="activedData.specificulture" class="form-control form-control-lg"
+                            <input type="text" ng-model="viewModel.specificulture" class="form-control form-control-lg"
                                 placeholder="Enter your culture specificulture here...">
                         </div>
                         <div class="mb-3">
-                            <input type="text" ng-model="activedData.lcid" class="form-control form-control-lg"
+                            <input type="text" ng-model="viewModel.lcid" class="form-control form-control-lg"
                                 placeholder="Enter your culture lcid here...">
                         </div>
                         <div class="mb-3">
-                            <textarea type="text" ng-model="activedData.description" class="form-control form-control-lg"
+                            <textarea type="text" ng-model="viewModel.description" class="form-control form-control-lg"
                                 placeholder="Description"></textarea>
                         </div>
                         <div class="mb-3">
                             <!-- <label class="control-label">Icon</label> -->
                             <a class="nav-link p-2 text-center" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="flag-icon {{activedData.icon}}" style="width: 130px; line-height: 100px;"></span>
+                                <span class="flag-icon {{viewModel.icon}}" style="width: 130px; line-height: 100px;"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="sw-versions">
-                                <a class="dropdown-item" ng-repeat="item in icons" ng-class="{active: activedData.icon === item}"
+                                <a class="dropdown-item" ng-repeat="item in icons" ng-class="{active: viewModel.icon === item}"
                                     href="#" ng-click="changeIcon(item);">
                                     <span class="flag-icon {{item}}"></span>
                                 </a>

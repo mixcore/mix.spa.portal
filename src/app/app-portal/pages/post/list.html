@@ -3,7 +3,7 @@
     <filter-list request="request" callback="getList(pageIndex)" create-url="createUrl" create-text="'Create Post'">
     </filter-list>
     <select class="form-select my-3"
-      ng-options="item.obj.attribute_set_name as item.obj.title for item in postTypes track by item.id"
+      ng-options="item.attribute_set_name as item.title for item in postTypes track by item.id"
       ng-change="onSelectType();" ng-model="request.type"></select>
     <select class="form-select mb-3" ng-model="selectedList.action">
       <option ng-repeat="item in actions" ng-value="item">{{item}}</option>

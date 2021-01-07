@@ -33,7 +33,7 @@ modules.component('propertiesStructure', {
             ctrl.generateForm = function(){
                 var formHtml = document.createElement('module-form');
                 formHtml.setAttribute('class','row');
-                angular.forEach(ctrl.activedData.columns, function(e,i){
+                angular.forEach(ctrl.viewModel.columns, function(e,i){
                     var el;
                     var label = document.createElement('label');
                     label.setAttribute('class', 'control-label');
@@ -87,7 +87,7 @@ modules.component('propertiesStructure', {
                     formHtml.appendChild(el);      
                     
                 });
-                ctrl.activedData.formView.content = formHtml.innerHTML;
+                ctrl.viewModel.formView.content = formHtml.innerHTML;
             };
     
             ctrl.generateName = function (col) {

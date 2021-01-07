@@ -10,16 +10,16 @@ app.component('postAttributeSet', {
         function ($rootScope, $scope, navService, dataService) {
             var ctrl = this;
             ctrl.dataTypes = $rootScope.globalSettings.dataTypes;            
-            ctrl.activedData = null;
+            ctrl.viewModel = null;
             ctrl.defaultData = null;
             ctrl.$onInit = async function () {
                 navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default']).then(resp=>{
                     ctrl.defaultData = resp;
-                    ctrl.activedData = angular.copy(ctrl.defaultData);
+                    ctrl.viewModel = angular.copy(ctrl.defaultData);
                 });
             };
             ctrl.update = function (nav) {
-                ctrl.activedData = nav;
+                ctrl.viewModel = nav;
                 var e = $(".pane-form-" + ctrl.set.attributeSet.id)[0];
                 angular.element(e).triggerHandler('click');
             };
@@ -65,12 +65,12 @@ app.component('postAttributeSet', {
 
             ctrl.saveData = async function (data) {                
                 $rootScope.isBusy = true;
-                ctrl.activedData.data = data;
+                ctrl.viewModel.data = data;
                 dataService.save('portal', data).then(resp=>{
                     if(resp.isSucceed){
-                        ctrl.activedData.id = resp.data.id;
-                        ctrl.activedData.data = resp.data;
-                        navService.save('portal', ctrl.activedData).then(resp=>{
+                        ctrl.viewModel.id = resp.data.id;
+                        ctrl.viewModel.data = resp.data;
+                        navService.save('portal', ctrl.viewModel).then(resp=>{
                             if(resp.isSucceed){
                                 var tmp = $rootScope.findObjectByKey(ctrl.set.attributeSet.postData.items, ['parentId', 'parentType', 'id'], 
                                     [resp.data.parentId, resp.data.parentType, resp.data.id]);
@@ -79,7 +79,7 @@ app.component('postAttributeSet', {
                                     var e = $(".pane-data-" + ctrl.set.attributeSet.id)[0];
                                     angular.element(e).triggerHandler('click');
                                 }
-                                ctrl.activedData = angular.copy(ctrl.defaultData);
+                                ctrl.viewModel = angular.copy(ctrl.defaultData);
                                 $rootScope.isBusy = false;
                                 $scope.$apply();
                             }else{

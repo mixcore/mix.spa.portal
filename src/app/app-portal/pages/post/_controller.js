@@ -56,8 +56,8 @@ app.controller("PostController", [
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes =  $scope.postTypes.concat(getTypes.data.items.map(m=> m.obj));
-        $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.activedData.type);
+        $scope.postTypes =  $scope.postTypes.concat(getTypes.data.items.map(m => m.obj));
+        $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.request.type);
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
@@ -70,7 +70,7 @@ app.controller("PostController", [
         template: $routeParams.template || "",
       });
       if (resp.isSucceed) {
-        $scope.activedData = resp.data;
+        $scope.viewModel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
@@ -92,12 +92,12 @@ app.controller("PostController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {
-      $scope.activedData.type = $scope.postType.attribute_set_name;
+      $scope.viewModel.type = $scope.postType.attribute_set_name;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
       }
-      if (!$scope.activedData || !$scope.activedData.id) {
+      if (!$scope.viewModel || !$scope.viewModel.id) {
         $scope.getDefault($scope.request.type);
       }
       if ($scope.pageName == "postList") {
@@ -119,8 +119,8 @@ app.controller("PostController", [
       }
       var resp = await service.getList($scope.request);
       if (resp && resp.isSucceed) {
-        $scope.activedData.postNavs = $rootScope.filterArray(
-          $scope.activedData.postNavs,
+        $scope.viewModel.postNavs = $rootScope.filterArray(
+          $scope.viewModel.postNavs,
           ["isActived"],
           [true]
         );
@@ -130,11 +130,11 @@ app.controller("PostController", [
             destinationId: element.id,
             image: element.image,
             isActived: false,
-            sourceId: $scope.activedData.id,
-            specificulture: $scope.activedData.specificulture,
+            sourceId: $scope.viewModel.id,
+            specificulture: $scope.viewModel.specificulture,
             status: "Published",
           };
-          $scope.activedData.postNavs.push(obj);
+          $scope.viewModel.postNavs.push(obj);
         });
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -145,7 +145,7 @@ app.controller("PostController", [
       }
     };
     $scope.saveFailCallback = function () {
-      angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
+      angular.forEach($scope.viewModel.attributeSetNavs, function (nav) {
         if (nav.isActived) {
           $rootScope.decryptAttributeSet(
             nav.attributeSet.attributes,
@@ -156,12 +156,12 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.addictionalData) {
-        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentId = $scope.viewModel.id;
         $scope.addictionalData.parentType = "Post";
         var saveData = await dataService.save($scope.addictionalData);
         if (saveData.isSucceed) {
           if ($location.path() == "/portal/post/create") {
-            $scope.goToDetail($scope.activedData.id, "post");
+            $scope.goToDetail($scope.viewModel.id, "post");
           } else {
             $scope.addictionalData = saveData.data;
           }
@@ -173,17 +173,18 @@ app.controller("PostController", [
     $scope.getSingleSuccessCallback = async function () {
       $scope.imgW = ngAppSettings.settings.post_image_width;
       $scope.imgH = ngAppSettings.settings.post_image_height;
+      $scope.request.type = $scope.viewModel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
-      if ($scope.activedData.id) {
-        $scope.activedData.detailsUrl = `/post/${$scope.activedData.specificulture}/${$scope.activedData.id}/${$scope.activedData.seoName}`;
+      if ($scope.viewModel.id) {
+        $scope.viewModel.detailsUrl = `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${$scope.viewModel.seoName}`;
       }
       await $scope.loadPostTypes()
       $scope.loadAddictionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
           var moduleNav = $rootScope.findObjectByKey(
-            $scope.activedData.modules,
+            $scope.viewModel.modules,
             "moduleId",
             moduleId
           );
@@ -195,7 +196,7 @@ app.controller("PostController", [
       if (pageIds) {
         for (var pageId of pageIds.split(",")) {
           var pageNav = $rootScope.findObjectByKey(
-            $scope.activedData.categories,
+            $scope.viewModel.categories,
             "pageId",
             pageId
           );
@@ -204,36 +205,36 @@ app.controller("PostController", [
           }
         }
       }
-      if ($scope.activedData.sysCategories) {
-        angular.forEach($scope.activedData.sysCategories, function (e) {
+      if ($scope.viewModel.sysCategories) {
+        angular.forEach($scope.viewModel.sysCategories, function (e) {
           e.attributeData.obj.isActived = true;
           $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
 
-      if ($scope.activedData.sysTags) {
-        angular.forEach($scope.activedData.sysTags, function (e) {
+      if ($scope.viewModel.sysTags) {
+        angular.forEach($scope.viewModel.sysTags, function (e) {
           e.attributeData.obj.isActived = true;
           $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
       if ($routeParams.template) {
-        $scope.activedData.view = $rootScope.findObjectByKey(
-          $scope.activedData.templates,
+        $scope.viewModel.view = $rootScope.findObjectByKey(
+          $scope.viewModel.templates,
           "fileName",
           $routeParams.template
         );
       }
-      $scope.activedData.publishedDateTime = $filter("utcToLocalTime")(
-        $scope.activedData.publishedDateTime
+      $scope.viewModel.publishedDateTime = $filter("utcToLocalTime")(
+        $scope.viewModel.publishedDateTime
       );
     };
 
     $scope.loadAddictionalData = async function () {
       const obj = {
         parentType: "Post",
-        parentId: $scope.activedData.id,
-        databaseName: $scope.activedData.type,
+        parentId: $scope.viewModel.id,
+        databaseName: $scope.viewModel.type,
       };
       const getData = await dataService.getAddictionalData(obj);
       if (getData.isSucceed) {
@@ -242,40 +243,40 @@ app.controller("PostController", [
       }
     };
     $scope.generateSeo = function () {
-      if ($scope.activedData) {
+      if ($scope.viewModel) {
         if (
-          $scope.activedData.seoName === null ||
-          $scope.activedData.seoName === ""
+          $scope.viewModel.seoName === null ||
+          $scope.viewModel.seoName === ""
         ) {
-          $scope.activedData.seoName = $rootScope.generateKeyword(
-            $scope.activedData.title,
+          $scope.viewModel.seoName = $rootScope.generateKeyword(
+            $scope.viewModel.title,
             "-"
           );
         }
         if (
-          $scope.activedData.seoTitle === null ||
-          $scope.activedData.seoTitle === ""
+          $scope.viewModel.seoTitle === null ||
+          $scope.viewModel.seoTitle === ""
         ) {
-          $scope.activedData.seoTitle = $scope.activedData.title;
+          $scope.viewModel.seoTitle = $scope.viewModel.title;
         }
         if (
-          $scope.activedData.seoDescription === null ||
-          $scope.activedData.seoDescription === ""
+          $scope.viewModel.seoDescription === null ||
+          $scope.viewModel.seoDescription === ""
         ) {
-          $scope.activedData.seoDescription = $scope.activedData.excerpt;
+          $scope.viewModel.seoDescription = $scope.viewModel.excerpt;
         }
         if (
-          $scope.activedData.seoKeywords === null ||
-          $scope.activedData.seoKeywords === ""
+          $scope.viewModel.seoKeywords === null ||
+          $scope.viewModel.seoKeywords === ""
         ) {
-          $scope.activedData.seoKeywords = $scope.activedData.title;
+          $scope.viewModel.seoKeywords = $scope.viewModel.title;
         }
       }
     };
     $scope.addAlias = async function () {
       var getAlias = await urlAliasService.getSingle();
       if (getAlias.isSucceed) {
-        $scope.activedData.urlAliases.push(getAlias.data);
+        $scope.viewModel.urlAliases.push(getAlias.data);
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
@@ -286,7 +287,7 @@ app.controller("PostController", [
     };
 
     $scope.removeAliasCallback = async function (index) {
-      $scope.activedData.urlAliases.splice(index, 1);
+      $scope.viewModel.urlAliases.splice(index, 1);
       $scope.$apply();
     };
 
@@ -295,14 +296,14 @@ app.controller("PostController", [
       angular.forEach($scope.selectedCategories, function (e) {
         // add if not exist in sysCategories
         var current = $rootScope.findObjectByKey(
-          $scope.activedData.sysCategories,
+          $scope.viewModel.sysCategories,
           "id",
           e.id
         );
         if (!current) {
-          $scope.activedData.sysCategories.push({
+          $scope.viewModel.sysCategories.push({
             id: e.id,
-            parentId: $scope.activedData.id,
+            parentId: $scope.viewModel.id,
             attributeSetName: "sys_category",
           });
         }
@@ -313,21 +314,21 @@ app.controller("PostController", [
       angular.forEach($scope.selectedTags, function (e) {
         // add if not exist in sysCategories
         var current = $rootScope.findObjectByKey(
-          $scope.activedData.sysTags,
+          $scope.viewModel.sysTags,
           "id",
           e.id
         );
         if (!current) {
-          $scope.activedData.sysCategories.push({
+          $scope.viewModel.sysCategories.push({
             id: e.id,
-            parentId: $scope.activedData.id,
+            parentId: $scope.viewModel.id,
             attributeSetName: "sys_tag",
           });
         }
       });
     };
     $scope.validate = function () {
-      angular.forEach($scope.activedData.attributeSetNavs, function (nav) {
+      angular.forEach($scope.viewModel.attributeSetNavs, function (nav) {
         if (nav.isActived) {
           $rootScope.encryptAttributeSet(
             nav.attributeSet.attributes,

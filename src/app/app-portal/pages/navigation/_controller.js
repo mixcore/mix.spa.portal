@@ -60,7 +60,7 @@ app.controller("NavigationController", [
       } else {
         $location.url(
           "/portal/navigation/list?attributeSetId=" +
-            $scope.activedData.attributeSetId
+            $scope.viewModel.attributeSetId
         );
       }
       $scope.$apply();
@@ -98,7 +98,7 @@ app.controller("NavigationController", [
       if (resp && resp.isSucceed) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
-          $.each($scope.activedDatas, function (i, e) {
+          $.each($scope.viewModels, function (i, e) {
             if (e.dataId === data.id) {
               data.isHidden = true;
             }
@@ -138,9 +138,9 @@ app.controller("NavigationController", [
       }
 
       if (resp.isSucceed) {
-        $scope.activedData = resp.data;
-        $scope.activedData.parentType = $scope.parentType;
-        $scope.activedData.parentId = $scope.parentId;
+        $scope.viewModel = resp.data;
+        $scope.viewModel.parentType = $scope.parentType;
+        $scope.viewModel.parentId = $scope.parentId;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

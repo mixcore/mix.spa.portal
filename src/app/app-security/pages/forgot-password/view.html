@@ -9,14 +9,14 @@
                 <div class="mb-3 mb-5">
                     <label class="form-label">Input your email address to receive the email retset password instruction!</label>
 
-                    <input class="form-control" placeholder="Email" ng-model="activedData.email" required=""
+                    <input class="form-control" placeholder="Email" ng-model="viewModel.email" required=""
                         autofocus="" ng-enter="submit()">
 
                 </div>
                 <!-- <hr> -->
                 <div class="form-footer text-center">
                     <button ng-click="submit()" type="button" class="btn btn-primary btn-block"
-                        ng-disabled="!activedData.email">
+                        ng-disabled="!viewModel.email">
                         Submit
                     </button>
                     <p class="text-danger" ng-bind="error">

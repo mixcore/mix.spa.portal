@@ -29,8 +29,8 @@ app.controller("ConfigurationController", [
     $scope.settings = $rootScope.globalSettings;
     $scope.request.category = $routeParams.category || "";
     $scope.getSingleSuccessCallback = function () {
-      if (!$scope.activedData.category) {
-        $scope.activedData.category = "Site";
+      if (!$scope.viewModel.category) {
+        $scope.viewModel.category = "Site";
       }
     };
     $scope.saveSuccessCallback = function () {

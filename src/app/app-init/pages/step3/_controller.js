@@ -53,7 +53,7 @@ app.controller("Step3Controller", [
 
       var response = await service.ajaxSubmitForm(frm, url);
       if (response.isSucceed) {
-        $scope.activedData = response.data;
+        $scope.viewModel = response.data;
         authService.initSettings().then(function () {
           $rootScope.isBusy = false;
           $rootScope.goToSiteUrl("/portal");

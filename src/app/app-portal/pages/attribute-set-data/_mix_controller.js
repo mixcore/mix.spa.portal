@@ -60,12 +60,12 @@ app.controller("MixAttributeSetDataController", [
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
-        $scope.activedData = $scope.selectedList.data[0];
+        $scope.viewModel = $scope.selectedList.data[0];
       }
     };
     $scope.saveSuccessCallback = function () {
       if ($location.path() == "/portal/attribute-set-data/create") {
-        $scope.goToDetail($scope.activedData.id, "attribute-set-data");
+        $scope.goToDetail($scope.viewModel.id, "attribute-set-data");
       }
     };
 
