@@ -5,14 +5,14 @@
       <tabs-v class="mb-3">
         <pane-v header="Standard">
           <module-content
-            model="activedData"
+            model="viewModel"
             addictional-data="addictionalData"
           >
           </module-content>
         </pane-v>
         <pane-v header="Advanced">
           <module-advanced
-            model="activedData"
+            model="viewModel"
             addictional-data="addictionalData"
           >
           </module-advanced>
@@ -22,22 +22,22 @@
     <section class="col-sm-4 pl-3">
       <actions
         on-clear-cache="clearCache()"
-        preview-url="activedData.detailsUrl"
+        preview-url="viewModel.detailsUrl"
         back-url="'/portal/module/list'"
       >
       </actions>
 
       <cultures
-        is-clone="activedData.isClone"
-        data="activedData.cultures"
+        is-clone="viewModel.isClone"
+        data="viewModel.cultures"
       ></cultures>
       <div class="card mb-4">
         <h6 class="card-header position-sticky position-sticky-under-actionbar">
           Info
         </h6>
         <div class="card-body">
-          <statuses status="activedData.status"></statuses>
-          <div class="form-group" ng-if="activedData.status == 4">
+          <statuses status="viewModel.status"></statuses>
+          <div class="form-group" ng-if="viewModel.status == 4">
             <label class="control-label">Published Date Time</label>
             <div class="input-group input-group-sm">
               <div class="input-group-prepend">
@@ -46,8 +46,8 @@
                 ></span>
               </div>
               <input
-                value="{{activedData.publishedDateTime}}"
-                ng-model="activedData.publishedDateTime"
+                value="{{viewModel.publishedDateTime}}"
+                ng-model="viewModel.publishedDateTime"
                 type="datetime-local"
                 class="form-control"
               />
@@ -62,7 +62,7 @@
                 ></span>
               </div>
               <input
-                ng-model="activedData.createdDateTime"
+                ng-model="viewModel.createdDateTime"
                 type="text"
                 class="form-control"
                 readonly="readonly"
@@ -79,7 +79,7 @@
                 ></span>
               </div>
               <input
-                ng-model="activedData.createdBy"
+                ng-model="viewModel.createdBy"
                 class="form-control"
                 readonly="readonly"
               />
@@ -95,8 +95,8 @@
               </div>
               <select
                 class="custom-select"
-                ng-options="item as item.fileName for item in activedData.templates track by item.id"
-                ng-model="activedData.view"
+                ng-options="item as item.fileName for item in viewModel.templates track by item.id"
+                ng-model="viewModel.view"
               ></select>
             </div>
           </div>
@@ -104,29 +104,29 @@
       </div>
 
       <modal-nav-metas
-        ng-if="activedData.sysCategories"
+        ng-if="viewModel.sysCategories"
         header="'Categories'"
-        parent-id="activedData.id"
+        parent-id="viewModel.id"
         parent-type="'4'"
         type="''"
         attribute-set-name="'sys_category'"
         field-display="'title'"
-        selected-list="activedData.sysCategories"
+        selected-list="viewModel.sysCategories"
       ></modal-nav-metas>
       <modal-nav-metas
-        ng-if="activedData.sysTags"
+        ng-if="viewModel.sysTags"
         header="'Tags'"
-        parent-id="activedData.id"
+        parent-id="viewModel.id"
         parent-type="'4'"
         type="''"
         attribute-set-name="'sys_tag'"
         field-display="'title'"
-        selected-list="activedData.sysTags"
+        selected-list="viewModel.sysTags"
       >
       </modal-nav-metas>
 
       <tabs-v
-        ng-if="activedData"
+        ng-if="viewModel"
         select-callback="selectPane(pane)"
         class="mb-4"
       >
@@ -134,11 +134,11 @@
           <custom-image
             header="'Feature upload'"
             type="'Modules'"
-            folder="activedData.seoName"
-            src-url="activedData.image"
-            title="activedData.title"
-            description="activedData.description"
-            src="activedData.image"
+            folder="viewModel.seoName"
+            src-url="viewModel.image"
+            title="viewModel.title"
+            description="viewModel.description"
+            src="viewModel.image"
             auto="'true'"
           >
           </custom-image>
@@ -147,11 +147,11 @@
           <custom-image
             header="'Thumnail upload'"
             type="'Modules'"
-            folder="activedData.seoName"
-            title="activedData.title"
-            description="activedData.description"
-            src-url="activedData.thumbnail"
-            src="activedData.thumbnail"
+            folder="viewModel.seoName"
+            title="viewModel.title"
+            description="viewModel.description"
+            src-url="viewModel.thumbnail"
+            src="viewModel.thumbnail"
             auto="'true'"
           >
           </custom-image>

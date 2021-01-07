@@ -31,7 +31,7 @@ app.controller("LoginPopupController", [
           if ($rootScope.loginCallbackType == "rest") {
             commonService.getRestApiResult($rootScope.loginCallbackRequest);
           } else {
-            commonService.getRestResult($rootScope.loginCallbackRequest);
+            commonService.getRestApiResult($rootScope.loginCallbackRequest);
           }
           $rootScope.loginCallbackRequest = null;
           $rootScope.loginCallbackType = null;

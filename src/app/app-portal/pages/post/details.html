@@ -6,13 +6,13 @@
         <tabs-v class="mb-3">
           <pane-v header="Content">
             <post-content
-              model="activedData"
+              model="viewModel"
               addictional-data="addictionalData"
             ></post-content>
           </pane-v>
           <pane-v header="Advanced">
             <post-advanced
-              model="activedData"
+              model="viewModel"
               addictional-data="addictionalData"
             ></post-advanced>
           </pane-v>
@@ -21,19 +21,19 @@
       <section class="col-sm-4 pl-3" style="padding-left: 0;">
         <actions
           on-clear-cache="clearCache()"
-          preview-url="activedData.detailsUrl"
+          preview-url="viewModel.detailsUrl"
           back-url="referrerUrl"
         ></actions>
         <!-- 
-                <collape-container title="'URL alias'" actived-data="activedData" add-callback="addAlias()">
+                <collape-container title="'URL alias'" actived-data="viewModel" add-callback="addAlias()">
                     <pane-collape>
-                        <url-alias ng-repeat="alias in activedData.urlAliases" index="$index" url-alias="alias"
+                        <url-alias ng-repeat="alias in viewModel.urlAliases" index="$index" url-alias="alias"
                             remove-callback="removeAliasCallback(index)"></url-alias>
                     </pane-collape>
                 </collape-container> -->
 
         <tabs-v
-          ng-if="activedData"
+          ng-if="viewModel"
           select-callback="selectPane(pane)"
           class="mb-4"
         >
@@ -43,11 +43,11 @@
               h="imgH"
               header="'Feature Upload'"
               type="'Posts'"
-              folder="activedData.seoName"
-              header="activedData.title"
-              description="activedData.excerpt"
-              src-url="activedData.imageUrl"
-              src="activedData.image"
+              folder="viewModel.seoName"
+              header="viewModel.title"
+              description="viewModel.excerpt"
+              src-url="viewModel.imageUrl"
+              src="viewModel.image"
               auto="'true'"
             ></custom-image>
           </pane-v>
@@ -57,11 +57,11 @@
               h="imgH"
               header="'Thumbnail Upload'"
               type="'Posts'"
-              folder="activedData.seoName"
-              title="activedData.title"
-              description="activedData.excerpt"
-              src-url="activedData.thumbnailUrl"
-              src="activedData.thumbnail"
+              folder="viewModel.seoName"
+              title="viewModel.title"
+              description="viewModel.excerpt"
+              src-url="viewModel.thumbnailUrl"
+              src="viewModel.thumbnail"
               auto="'true'"
             ></custom-image>
           </pane-v>
@@ -73,8 +73,8 @@
             Info
           </h6>
           <div class="card-body">
-            <statuses status="activedData.status"></statuses>
-            <div class="form-group" ng-if="activedData.status == 'Schedule'">
+            <statuses status="viewModel.status"></statuses>
+            <div class="form-group" ng-if="viewModel.status == 'Schedule'">
               <label class="control-label">Published Date Time</label>
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
@@ -83,8 +83,8 @@
                   </span>
                 </div>
                 <input
-                  value="{{activedData.publishedDateTime}}"
-                  ng-model="activedData.publishedDateTime"
+                  value="{{viewModel.publishedDateTime}}"
+                  ng-model="viewModel.publishedDateTime"
                   type="datetime-local"
                   class="form-control"
                 />
@@ -99,7 +99,7 @@
                   ></span>
                 </div>
                 <input
-                  ng-model="activedData.createdDateTime"
+                  ng-model="viewModel.createdDateTime"
                   type="text"
                   class="form-control"
                   readonly="readonly"
@@ -115,7 +115,7 @@
                   ></span>
                 </div>
                 <input
-                  ng-model="activedData.createdBy"
+                  ng-model="viewModel.createdBy"
                   class="form-control"
                   readonly="readonly"
                 />
@@ -141,8 +141,8 @@
                 </div>
                 <select
                   class="custom-select"
-                  ng-options="item as item.fileName for item in activedData.templates track by item.id"
-                  ng-model="activedData.view"
+                  ng-options="item as item.fileName for item in viewModel.templates track by item.id"
+                  ng-model="viewModel.view"
                 ></select>
               </div>
             </div>
@@ -150,31 +150,31 @@
         </div>
 
         <modal-nav-metas
-          ng-if="activedData.sysCategories"
+          ng-if="viewModel.sysCategories"
           header="'Categories'"
-          parent-id="activedData.id"
+          parent-id="viewModel.id"
           is-open="'show'"
           parent-type="'2'"
           type="''"
           attribute-set-name="'sys_category'"
           field-display="'title'"
-          selected-list="activedData.sysCategories"
+          selected-list="viewModel.sysCategories"
         ></modal-nav-metas>
         <modal-nav-metas
-          ng-if="activedData.sysTags"
+          ng-if="viewModel.sysTags"
           header="'Tags'"
-          parent-id="activedData.id"
+          parent-id="viewModel.id"
           is-open="'show'"
           parent-type="'2'"
           type="''"
           attribute-set-name="'sys_tag'"
           field-display="'title'"
-          selected-list="activedData.sysTags"
+          selected-list="viewModel.sysTags"
         ></modal-nav-metas>
 
         <cultures
-          is-clone="activedData.isClone"
-          data="activedData.cultures"
+          is-clone="viewModel.isClone"
+          data="viewModel.cultures"
         ></cultures>
         <div class="card mb-4">
           <h6
@@ -202,7 +202,7 @@
           </h6>
           <div id="slug-tab" class="card-body collapse">
             <url-alias
-              ng-repeat="alias in activedData.urlAliases"
+              ng-repeat="alias in viewModel.urlAliases"
               ng-if="alias"
               index="$index"
               url-alias="alias"

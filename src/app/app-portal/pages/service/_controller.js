@@ -26,7 +26,7 @@ app.controller('ServiceController',
                 //     $location.url('/portal/attribute-set-data/details?dataId='+ $scope.parentId);
                 // }
                 // else{
-                //     $location.url('/portal/attribute-set-data/list?attributeSetId='+ $scope.activedData.attributeSetId);                    
+                //     $location.url('/portal/attribute-set-data/list?attributeSetId='+ $scope.viewModel.attributeSetId);                    
                 // }
             };
             $scope.getList = async function () {
@@ -55,9 +55,9 @@ app.controller('ServiceController',
                 $scope.attributeSetName = $routeParams.attributeSetName;
                 var resp = await service.getSingle('portal', [id, $scope.attributeSetId, $scope.attributeSetName]);
                 if (resp) {
-                    $scope.activedData = resp;
-                    $scope.activedData.parentType = $scope.parentType;
-                    $scope.activedData.parentId = $scope.parentId;
+                    $scope.viewModel = resp;
+                    $scope.viewModel.parentType = $scope.parentType;
+                    $scope.viewModel.parentId = $scope.parentId;
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {

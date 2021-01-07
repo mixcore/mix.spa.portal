@@ -120,9 +120,9 @@ app.controller('CultureController', ['$scope', '$rootScope', 'ngAppSettings', '$
         }
         $scope.changeData = function (selected) {
             if (selected) {
-                $scope.activedData.specificulture = selected.specificulture;
-                $scope.activedData.fullName = selected.fullName;
-                $scope.activedData.icon = selected.icon;
+                $scope.viewModel.specificulture = selected.specificulture;
+                $scope.viewModel.fullName = selected.fullName;
+                $scope.viewModel.icon = selected.icon;
             }
         }
     }]);

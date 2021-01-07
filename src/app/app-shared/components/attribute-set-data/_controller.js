@@ -35,11 +35,11 @@ app.controller('AttributeSetDataController',
             };
             $scope.saveSuccessCallback = function () {
                 if ($scope.refDataModel) {
-                    $scope.refDataModel.id = $scope.activedData.id;
-                    $scope.refDataModel.attributeSetId = $scope.activedData.attributeSetId;
-                    $scope.refDataModel.attributeSetName = $scope.activedData.attributeSetName;
-                    $scope.refDataModel.specificulture = $scope.activedData.specificulture;
-                    $scope.refDataModel.data = $scope.activedData;
+                    $scope.refDataModel.id = $scope.viewModel.id;
+                    $scope.refDataModel.attributeSetId = $scope.viewModel.attributeSetId;
+                    $scope.refDataModel.attributeSetName = $scope.viewModel.attributeSetName;
+                    $scope.refDataModel.specificulture = $scope.viewModel.specificulture;
+                    $scope.refDataModel.data = $scope.viewModel;
                     $rootScope.isBusy = true;
                     navService.save('portal', $scope.refDataModel).then(resp => {
                         if (resp.isSucceed) {
@@ -109,9 +109,9 @@ app.controller('AttributeSetDataController',
                 $scope.attributeSetName = $routeParams.attributeSetName;
                 var resp = await service.getSingle('portal', [id, $scope.attributeSetId, $scope.attributeSetName]);
                 if (resp) {
-                    $scope.activedData = resp;
-                    $scope.activedData.parentType = $scope.parentType;
-                    $scope.activedData.parentId = $scope.parentId;
+                    $scope.viewModel = resp;
+                    $scope.viewModel.parentType = $scope.parentType;
+                    $scope.viewModel.parentId = $scope.parentId;
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {

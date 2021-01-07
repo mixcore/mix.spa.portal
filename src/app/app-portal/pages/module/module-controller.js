@@ -34,30 +34,30 @@ app.controller("ModuleController", [
     $scope.getSingleSuccessCallback = function () {
       $scope.loadAddictionalData();
 
-      if ($scope.activedData.id > 0) {
+      if ($scope.viewModel.id > 0) {
         // module => list post or list product
-        if ($scope.activedData.type == 2 || $scope.activedData.type == 6) {
+        if ($scope.viewModel.type == 2 || $scope.viewModel.type == 6) {
           $scope.contentUrl =
-            "/portal/module-post/list/" + $scope.activedData.id;
+            "/portal/module-post/list/" + $scope.viewModel.id;
         } else {
-          $scope.contentUrl = "/portal/module/data/" + $scope.activedData.id;
+          $scope.contentUrl = "/portal/module/data/" + $scope.viewModel.id;
         }
       }
-      if ($scope.activedData.sysCategories) {
-        angular.forEach($scope.activedData.sysCategories, function (e) {
+      if ($scope.viewModel.sysCategories) {
+        angular.forEach($scope.viewModel.sysCategories, function (e) {
           e.attributeData.obj.isActived = true;
         });
       }
 
-      if ($scope.activedData.sysTags) {
-        angular.forEach($scope.activedData.sysTags, function (e) {
+      if ($scope.viewModel.sysTags) {
+        angular.forEach($scope.viewModel.sysTags, function (e) {
           e.attributeData.obj.isActived = true;
         });
       }
 
       if ($routeParams.template) {
-        $scope.activedData.view = $rootScope.findObjectByKey(
-          $scope.activedData.templates,
+        $scope.viewModel.view = $rootScope.findObjectByKey(
+          $scope.viewModel.templates,
           "fileName",
           $routeParams.template
         );
@@ -80,7 +80,7 @@ app.controller("ModuleController", [
     $scope.type = "-1";
 
     $scope.settings = $rootScope.globalSettings;
-    $scope.activedData = null;
+    $scope.viewModel = null;
     $scope.editDataUrl = "";
 
     $scope.loadModuleDatas = async function () {
@@ -89,11 +89,11 @@ app.controller("ModuleController", [
       $scope.dataColumns = [];
       var response = await moduleServices.getSingle([id]);
       if (response.isSucceed) {
-        $scope.activedData = response.data;
+        $scope.viewModel = response.data;
         $scope.editDataUrl =
-          "/portal/module-data/details/" + $scope.activedData.id;
+          "/portal/module-data/details/" + $scope.viewModel.id;
         $scope.loadMoreModuleDatas();
-        angular.forEach($scope.activedData.columns, function (e, i) {
+        angular.forEach($scope.viewModel.columns, function (e, i) {
           if (e.isDisplay) {
             $scope.dataColumns.push({
               title: e.title,
@@ -113,7 +113,7 @@ app.controller("ModuleController", [
     };
 
     $scope.loadMoreModuleDatas = async function (pageIndex) {
-      $scope.request.query = "&module_id=" + $scope.activedData.id;
+      $scope.request.query = "&module_id=" + $scope.viewModel.id;
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
@@ -128,7 +128,7 @@ app.controller("ModuleController", [
       $rootScope.isBusy = true;
       var resp = await moduleDataService.getModuleDatas($scope.request);
       if (resp && resp.isSucceed) {
-        $scope.activedData.data = resp.data;
+        $scope.viewModel.data = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
@@ -140,7 +140,7 @@ app.controller("ModuleController", [
       }
     };
     $scope.exportModuleData = async function (pageIndex) {
-      $scope.request.query = "&module_id=" + $scope.activedData.id;
+      $scope.request.query = "&module_id=" + $scope.viewModel.id;
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
@@ -168,7 +168,7 @@ app.controller("ModuleController", [
     };
 
     $scope.removeData = function (id) {
-      if ($scope.activedData) {
+      if ($scope.viewModel) {
         $rootScope.showConfirm(
           $scope,
           "removeDataConfirmed",
@@ -223,14 +223,14 @@ app.controller("ModuleController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.addictionalData) {
-        $scope.addictionalData.parentId = $scope.activedData.id;
+        $scope.addictionalData.parentId = $scope.viewModel.id;
         $scope.addictionalData.parentType = "Module";
         var saveData = await dataService.saveAddictionalData(
           $scope.addictionalData
         );
         if (saveData.isSucceed) {
           if ($location.path() == "/portal/module/create") {
-            $scope.goToDetail($scope.activedData.id, "module");
+            $scope.goToDetail($scope.viewModel.id, "module");
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -273,12 +273,12 @@ app.controller("ModuleController", [
     };
     $scope.removeAttributeConfirmed = function (attr, index) {
       RestRelatedAttributeSetPortalService.delete([]);
-      $scope.activedData.attributeData.data.values.splice(index, 1);
+      $scope.viewModel.attributeData.data.values.splice(index, 1);
     };
     $scope.loadAddictionalData = async function () {
       const obj = {
         parentType: "Module",
-        parentId: $scope.activedData.id,
+        parentId: $scope.viewModel.id,
         databaseName: "sys_additional_field_module",
       };
       const getData = await dataService.getAddictionalData(obj);

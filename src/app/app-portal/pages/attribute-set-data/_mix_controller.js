@@ -60,12 +60,12 @@ app.controller("MixAttributeSetDataController", [
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
-        $scope.activedData = $scope.selectedList.data[0];
+        $scope.viewModel = $scope.selectedList.data[0];
       }
     };
     $scope.saveSuccessCallback = function () {
       if ($location.path() == "/portal/attribute-set-data/create") {
-        $scope.goToDetail($scope.activedData.id, "attribute-set-data");
+        $scope.goToDetail($scope.viewModel.id, "attribute-set-data");
       }
     };
 
@@ -218,7 +218,7 @@ app.controller("MixAttributeSetDataController", [
       if (resp && resp.isSucceed) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
-          $.each($scope.activeddata, function (i, e) {
+          $.each($scope.viewModel, function (i, e) {
             if (e.dataId === data.id) {
               data.isHidden = true;
             }

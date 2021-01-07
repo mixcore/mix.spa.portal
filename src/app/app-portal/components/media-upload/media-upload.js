@@ -4,7 +4,7 @@ modules.component('mediaUpload', {
     controller: ['$scope', '$rootScope', 'MediaService', 'CommonService',
         function ($scope, $rootScope, service, commonService) {
             var ctrl = this;
-            ctrl.activedData = {
+            ctrl.viewModel = {
                 title: '',
                 description: '',
                 status: 'Published',
@@ -23,7 +23,7 @@ modules.component('mediaUpload', {
                 $rootScope.isBusy = true;
                 var resp = await service.save(data);
                 if (resp && resp.isSucceed) {
-                    $scope.activedData = resp.data;
+                    $scope.viewModel = resp.data;
                     $rootScope.showMessage('success', 'success');
                     $rootScope.isBusy = false;
                     if(ctrl.onUpdate){

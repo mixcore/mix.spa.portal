@@ -13,7 +13,7 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             $scope.assets = null;
             $scope.theme = null;
         }
-        $scope.save = async function (activedData) {
+        $scope.save = async function (viewModel) {
             var form = document.getElementById('frm-theme');
             var frm = new FormData();
             var url = service.prefixUrl + '/save';
@@ -23,11 +23,11 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             frm.append('assets', form['assets'].files[0]);
             frm.append('theme', form['theme'].files[0]);
             // Adding one more key to FormData object
-            frm.append('model', angular.toJson(activedData || $scope.activedData));
+            frm.append('model', angular.toJson(viewModel || $scope.viewModel));
 
             var response = await service.ajaxSubmitForm(frm, url);
             if (response.isSucceed) {
-                $scope.activedData = response.data;
+                $scope.viewModel = response.data;
                 $rootScope.isBusy = false;
                 $location.url($scope.referrerUrl);
                 $scope.$apply();
@@ -42,7 +42,7 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             $rootScope.isBusy = true;
             var response = await service.syncTemplates(id);
             if (response.isSucceed) {
-                $scope.activedData = response.data;
+                $scope.viewModel = response.data;
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
@@ -98,6 +98,6 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
         };
 
         $scope.generateSEO = function () {
-            $scope.activedData.name = $rootScope.generateKeyword($scope.activedData.title, '-');
+            $scope.viewModel.name = $rootScope.generateKeyword($scope.viewModel.title, '-');
         };
     }]);
