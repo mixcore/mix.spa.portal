@@ -2,7 +2,7 @@ modules.component('tclLogin', {
     binding: {
         user: '='
     },
-    templateUrl: '/app/app-client/components/customs/login/view.html',
+    templateUrl: '/mix-app/views/app-client/components/customs/login/view.html',
     controller: ['$scope', '$rootScope', 'RestAttributeSetDataClientService',
         function ($scope, $rootScope, service) {
             var ctrl = this;

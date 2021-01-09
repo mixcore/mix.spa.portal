@@ -1,5 +1,5 @@
 ﻿modules.component("actions", {
-  templateUrl: "/app/app-portal/components/actions/actions.html",
+  templateUrl: "/mix-app/views/app-portal/components/actions/actions.html",
   controller: [
     "$rootScope",
     "$scope",

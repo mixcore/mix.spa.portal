@@ -1,5 +1,5 @@
 ﻿app.component("modalCroppie", {
-  templateUrl: "/app/app-portal/components/modal-croppie/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/modal-croppie/view.html",
   bidings: {
     resolve: "<",
     close: "&",

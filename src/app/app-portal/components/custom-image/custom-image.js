@@ -1,5 +1,5 @@
 ﻿modules.component("customImage", {
-  templateUrl: "/app/app-portal/components/custom-image/custom-image.html",
+  templateUrl: "/mix-app/views/app-portal/components/custom-image/custom-image.html",
   bindings: {
     header: "=?",
     description: "=?",
@@ -61,7 +61,7 @@
         var modalInstance = $uibModal.open({
           animation: true,
           windowClass: "show",
-          templateUrl: "/app/app-shared/components/modal-croppie/croppie.html",
+          templateUrl: "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
           controller: "ModalCroppieController",
           controllerAs: "$ctrl",
           size: "lg",

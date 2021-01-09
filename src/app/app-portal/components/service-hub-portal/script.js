@@ -1,5 +1,5 @@
 ﻿modules.component('serviceHubPortal', {
-    templateUrl: '/app/app-portal/components/service-hub-portal/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/service-hub-portal/view.html',
     bindings: {
         attributeSetName: '=',
         isSave: '=?'

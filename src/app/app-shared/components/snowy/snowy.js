@@ -1,5 +1,5 @@
 ﻿modules.component('snowy', {
-    templateUrl: '/app/app-shared/components/snowy/index.html',
+    templateUrl: '/mix-app/views/app-shared/components/snowy/index.html',
     controller: ['$scope', function ($scope) {
         var ctrl = this;
         this.init = function () {

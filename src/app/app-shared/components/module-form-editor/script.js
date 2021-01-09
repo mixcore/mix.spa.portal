@@ -1,5 +1,5 @@
 ﻿modules.component("moduleFormEditor", {
-  templateUrl: "/app/app-shared/components/module-form-editor/view.html",
+  templateUrl: "/mix-app/views/app-shared/components/module-form-editor/view.html",
   controller: [
     "$rootScope",
     "$scope",

@@ -1,5 +1,5 @@
 ﻿app.component('permissionPlugPlay', {
-    templateUrl: '/app/app-portal/pages/permission/components/plug-play/plug-play.html',
+    templateUrl: '/mix-app/views/app-portal/pages/permission/components/plug-play/plug-play.html',
     bindings: {
         page: '=',
         prefixParent: '=',

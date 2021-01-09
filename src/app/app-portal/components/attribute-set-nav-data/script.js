@@ -1,5 +1,5 @@
 modules.component('attributeSetNavData', {
-    templateUrl: '/app/app-portal/components/attribute-set-nav-data/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/attribute-set-nav-data/view.html',
     bindings: {
         nav:'=',
         parentId:'=',

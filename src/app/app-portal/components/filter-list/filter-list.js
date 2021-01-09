@@ -1,6 +1,6 @@
 ﻿
 modules.component('filterList', {
-    templateUrl: '/app/app-portal/components/filter-list/filter-list.html',
+    templateUrl: '/mix-app/views/app-portal/components/filter-list/filter-list.html',
     controller: ['$scope', '$rootScope', 'ngAppSettings', function ($scope, $rootScope, ngAppSettings) {
         var ctrl = this;
         ctrl.dateRange = {

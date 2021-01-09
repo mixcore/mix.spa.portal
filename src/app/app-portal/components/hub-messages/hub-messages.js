@@ -1,6 +1,6 @@
 ﻿
 modules.component('hubMessages', {
-    templateUrl: '/app/app-portal/components/hub-messages/hub-messages.html',
+    templateUrl: '/mix-app/views/app-portal/components/hub-messages/hub-messages.html',
     controller: 'HubMessagesController',
     bindings: {
         

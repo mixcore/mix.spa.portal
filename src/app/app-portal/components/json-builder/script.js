@@ -1,6 +1,6 @@
 ﻿
 modules.component('jsonBuilder', {
-    templateUrl: '/app/app-portal/components/json-builder/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/json-builder/view.html',
     bindings: {
         'data': '=?', // json obj (ex: { field1: 'some val' })
         'folder': '=?', // filepath (ex: 'data/jsonfile.json')

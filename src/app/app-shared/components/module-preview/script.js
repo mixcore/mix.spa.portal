@@ -1,6 +1,6 @@
 ﻿
 modules.component('modulePreview', {
-    templateUrl: '/app/app-shared/components/module-preview/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/module-preview/view.html',
     controller: ['$scope', '$rootScope', 'SharedModuleDataService',
         function ($scope, $rootScope, moduleDataService) {
             var ctrl = this;

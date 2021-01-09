@@ -1,5 +1,5 @@
 ﻿// modules.component('modalConfirm', {
-//     templateUrl: '/app/app-shared/components/modal-confirm/modal-confirm.html',
+//     templateUrl: '/mix-app/views/app-shared/components/modal-confirm/modal-confirm.html',
 //     controller: ModalConfirmController,
 //     bindings: {
 //         message: '='

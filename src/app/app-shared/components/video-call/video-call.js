@@ -1,5 +1,5 @@
 ﻿modules.component('videoCall', {
-    templateUrl: '/app/app-shared/components/video-call/index.html',
+    templateUrl: '/mix-app/views/app-shared/components/video-call/index.html',
     controller: [
         function () {
             var ctrl = this;

@@ -1,6 +1,6 @@
 ﻿
 modules.component('jumbotrons', {
-    templateUrl: '/app/app-portal/components/jumbotrons/jumbotrons.html',
+    templateUrl: '/mix-app/views/app-portal/components/jumbotrons/jumbotrons.html',
     controller: ['$rootScope', '$scope', '$location', function ($rootScope, $scope, $location) {
         var ctrl = this;
         ctrl.translate = function (keyword) {

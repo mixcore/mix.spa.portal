@@ -1,5 +1,5 @@
 modules.component('propertiesStructure', {
-    templateUrl: '/app/app-portal/components/properties-structure/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/properties-structure/view.html',
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {
             var ctrl = this;

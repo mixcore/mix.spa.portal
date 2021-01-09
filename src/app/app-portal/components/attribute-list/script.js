@@ -1,5 +1,5 @@
 modules.component("attributeList", {
-  templateUrl: "/app/app-portal/components/attribute-list/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/attribute-list/view.html",
   controller: [
     "$rootScope",
     "$scope",

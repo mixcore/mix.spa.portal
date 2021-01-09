@@ -1,6 +1,6 @@
 ﻿
 modules.component('portalMenus', {
-    templateUrl: '/app/app-portal/pages/app-settings/components/portal-menus/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/app-settings/components/portal-menus/view.html',
     bindings: {
         'data': '=',
         'allowedTypes': '='

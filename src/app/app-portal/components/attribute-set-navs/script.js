@@ -1,5 +1,5 @@
 modules.component("attributeSetNavs", {
-  templateUrl: "/app/app-portal/components/attribute-set-navs/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/attribute-set-navs/view.html",
   bindings: {
     parentId: "=",
     parentType: "=",

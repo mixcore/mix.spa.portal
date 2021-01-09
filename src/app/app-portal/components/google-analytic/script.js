@@ -1,5 +1,5 @@
 ﻿modules.component('googleAnalytic', {
-  templateUrl: '/app/app-portal/components/google-analytic/view.html',
+  templateUrl: '/mix-app/views/app-portal/components/google-analytic/view.html',
   controller: [
     '$rootScope', 'CommonService',
     function ($rootScope, commonService) {

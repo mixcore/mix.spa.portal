@@ -1,6 +1,6 @@
 ﻿
 modules.component('fbSend', {
-    templateUrl: '/app/app-client/components/fb-send/fb-send.html',
+    templateUrl: '/mix-app/views/app-client/components/fb-send/fb-send.html',
     controller: ['$location', function ($location) {
         var ctrl = this;
         ctrl.href = ctrl.href || window.top.location.href;

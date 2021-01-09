@@ -1,5 +1,5 @@
 ﻿modules.component('tuiEditor', {
-    templateUrl: '/app/app-shared/components/tui-editor/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/tui-editor/view.html',
     controller: ['$rootScope', '$scope','$element', 'ngAppSettings',
         function ($rootScope, $scope, $element, ngAppSettings) {
             var ctrl = this;

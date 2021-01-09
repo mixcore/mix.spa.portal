@@ -1,5 +1,5 @@
 ﻿modules.component('attributeSetFormWeb', {
-    templateUrl: '/app/app-shared/components/attribute-set-form-web/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/attribute-set-form-web/view.html',
     bindings: {
         attrSetId: '=',
         attrSetName: '=',

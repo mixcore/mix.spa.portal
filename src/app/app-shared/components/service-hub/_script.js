@@ -1,5 +1,5 @@
 ﻿modules.component('serviceHub', {
-    templateUrl: '/app/app-shared/components/service-hub/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/service-hub/view.html',
     bindings: {
         hubName: '='
     },

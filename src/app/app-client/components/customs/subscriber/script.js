@@ -2,7 +2,7 @@ modules.component('haiyenSubscriber',{
     binding:{
 
     },
-    templateUrl: '/app/app-client/components/customs/subscriber/view.html',
+    templateUrl: '/mix-app/views/app-client/components/customs/subscriber/view.html',
     controller: [ '$scope', '$rootScope', 'RestAttributeSetDataClientService',
         function($scope, $rootScope, service){
             var ctrl = this;

@@ -1,5 +1,5 @@
 ﻿modules.component("mediaFileUpload", {
-  templateUrl: "/app/app-portal/components/media-file-upload/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/media-file-upload/view.html",
   bindings: {
     header: "=?",
     description: "=?",

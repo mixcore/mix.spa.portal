@@ -1,6 +1,6 @@
 ﻿
 modules.component('urlAlias', {
-    templateUrl: '/app/app-portal/components/url-alias/url-alias.html',
+    templateUrl: '/mix-app/views/app-portal/components/url-alias/url-alias.html',
     controller: ['$rootScope', '$scope', 'UrlAliasService',
         function ($rootScope, $scope, service) {
             var ctrl = this;

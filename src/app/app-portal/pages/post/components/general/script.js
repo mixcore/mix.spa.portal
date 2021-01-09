@@ -1,6 +1,6 @@
 ﻿
 app.component('postGeneral', {
-    templateUrl: '/app/app-portal/pages/post/components/general/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/post/components/general/view.html',
     controller: ['$rootScope', 'ngAppSettings', function ($rootScope, ngAppSettings) {
         var ctrl = this;
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;

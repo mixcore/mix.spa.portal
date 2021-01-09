@@ -1,5 +1,5 @@
 ﻿app.component("postContent", {
-  templateUrl: "/app/app-portal/pages/post/components/post-content/view.html",
+  templateUrl: "/mix-app/views/app-portal/pages/post/components/post-content/view.html",
   bindings: {
     model: "=",
     addictionalData: "=",

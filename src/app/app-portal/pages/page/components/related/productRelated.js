@@ -1,6 +1,6 @@
 ﻿
 app.component('productRelated', {
-    templateUrl: '/app/app-portal/pages/product/components/related/productRelated.html',
+    templateUrl: '/mix-app/views/app-portal/pages/product/components/related/productRelated.html',
     controller: function () {
         var ctrl = this;
         ctrl.activeProduct = function (pr) {

@@ -66,6 +66,7 @@ function BaseRestCtrl(
       }
     }
   };
+
   $scope.goToDetail = function (id, type) {
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
@@ -248,6 +249,7 @@ function BaseRestCtrl(
       $scope.removeObject($scope.selectedList.data, id);
     }
   };
+
   $scope.selectAll = function (isSelected) {
     $scope.selectedList.data = [];
     angular.forEach($scope.data.items, function (e) {
@@ -257,6 +259,7 @@ function BaseRestCtrl(
       }
     });
   };
+  
   $scope.applyList = async function () {
     $rootScope.showConfirm(
       $scope,

@@ -1,5 +1,5 @@
 modules.component('menuItemForm', {
-    templateUrl: '/app/app-portal/pages/navigation/components/menu-item-form/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/navigation/components/menu-item-form/view.html',
     bindings: {
         attributeSetId: '=',
         attributeSetName: '=',

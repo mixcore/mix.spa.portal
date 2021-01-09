@@ -1,5 +1,5 @@
 ﻿modules.component('mixDataTable', {
-    templateUrl: '/app/app-shared/components/mix-data-table/mix-data-table.html',
+    templateUrl: '/mix-app/views/app-shared/components/mix-data-table/mix-data-table.html',
     controller: ['$rootScope', '$scope', '$location', 'ngAppSettings', function ($rootScope, $scope, $location, ngAppSettings) {
         var ctrl = this;
         ctrl.colWidth = 3;

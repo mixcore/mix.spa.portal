@@ -1,6 +1,6 @@
 ﻿
 app.component('themeExportPages', {
-    templateUrl: '/app/app-portal/pages/theme/components/theme-export-pages/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/theme/components/theme-export-pages/view.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', function ($rootScope, $scope) {
         var ctrl = this;
         ctrl.updatePageExport = function () {

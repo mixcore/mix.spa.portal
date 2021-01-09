@@ -1,5 +1,5 @@
 ﻿app.component("loginPopup", {
-  templateUrl: "/app/app-shared/components/login-popup/view.html",
+  templateUrl: "/mix-app/views/app-shared/components/login-popup/view.html",
   controller: "LoginPopupController",
 });
 

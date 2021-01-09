@@ -1,5 +1,5 @@
 ﻿modules.component("attributeValuePreview", {
-  templateUrl: "/app/app-shared/components/attribute-value-preview/view.html",
+  templateUrl: "/mix-app/views/app-shared/components/attribute-value-preview/view.html",
   controller: [
     "$rootScope",
     function ($rootScope) {

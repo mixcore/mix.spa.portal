@@ -1,5 +1,5 @@
 ﻿modules.component("uploadCroppie", {
-  templateUrl: "/app/app-shared/components/upload-croppie/view.html?v=1",
+  templateUrl: "/mix-app/views/app-shared/components/upload-croppie/view.html?v=1",
   bindings: {
     header: "=",
     description: "=",

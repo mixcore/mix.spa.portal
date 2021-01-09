@@ -1,5 +1,5 @@
 ﻿modules.component('navs', {
-    templateUrl: '/app/app-portal/components/navigations/navigations.html',
+    templateUrl: '/mix-app/views/app-portal/components/navigations/navigations.html',
     bindings: {
         prefix: '=',
         detailsUrl: '=',
