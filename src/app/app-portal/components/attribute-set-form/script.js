@@ -35,9 +35,9 @@ modules.component("attributeSetForm", {
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
-      // ctrl.$onInit = async function () {
-      //     ctrl.loadData();
-      // };
+      ctrl.$onInit = async function () {
+          ctrl.loadData();
+      };
       ctrl.loadData = async function () {
         /*
                     If input is data id => load ctrl.attrData from service and handle it independently

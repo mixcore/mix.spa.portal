@@ -6,7 +6,7 @@ app.controller("MixAttributeSetDataController", [
   "$routeParams",
   "$location",
   "RestAttributeSetDataPortalService",
-  "RestRelatedAttributeDataPortalService",
+  "RestAttributeFieldPortalService",
   function (
     $scope,
     $rootScope,
@@ -14,7 +14,7 @@ app.controller("MixAttributeSetDataController", [
     $routeParams,
     $location,
     service,
-    navService
+    fieldService
   ) {
     BaseRestCtrl.call(
       this,
@@ -57,7 +57,19 @@ app.controller("MixAttributeSetDataController", [
           parentType: $scope.parentType,
         };
       }
+
+      $scope.loadFields();
     };
+
+    $scope.loadFields = async function () {
+      var getFields = await fieldService.initData(
+        $scope.attributeSetName || $scope.attributeSetId
+      );
+      if (getFields.isSucceed) {
+        $scope.fields = getFields.data;
+        $scope.$apply();
+      }
+    }
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
         $scope.viewModel = $scope.selectedList.data[0];

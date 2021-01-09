@@ -29,6 +29,13 @@
                     <div class="accordion-body">
                         <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
                             request="request" callback="getList(pageIndex)"></filter-list>
+                            
+                    <div ng-if="fields" ng-repeat="field in fields">
+                        <pre>{{field.name}}</pre>
+                        <input ng-model="queries[field.name]" ng-enter="getList()">
+                        <!-- <mix-field-editor model="queries" field="field"></mix-field-editor> -->
+                    </div>
+                            
                     </div>
                 </div>
             </div>

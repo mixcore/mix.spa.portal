@@ -30,12 +30,12 @@
 <div class="btn sidebar-menu-item-main d-inline-flex align-items-center collapsed w-100" data-bs-toggle="collapse" aria-expanded="false"
     data-bs-target="#{{$ctrl.item.title}}" aria-controls="contents-collapse" ng-if="!$ctrl.item.isHiden">
     <span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span> <span ng-bind-html="$ctrl.translate($ctrl.item.title)"></span>
-    <span class="btn-group btn-group-sm position-absolute end-0 d-none me-4" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length>0">
+    <span class="btn-group btn-group-sm position-absolute end-0 d-none" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length>0">
         <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus" href="{{m.path}}">
             <span class="{{m.icon}}"></span>
         </a>
     </span>
-    <span class="btn-group btn-group-sm position-absolute end-0 me-4" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length==0">
+    <span class="btn-group btn-group-sm position-absolute end-0" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.subMenus.length==0">
         <a class="btn btn-light" href="{{$ctrl.item.path}}">
             <span class="{{$ctrl.item.icon}}"></span>
         </a>
