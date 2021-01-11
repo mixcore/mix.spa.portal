@@ -6,12 +6,12 @@
             <a href="/portal/attribute-set/list" class="btn btn-outline-primary px-4">
                 <i class="fas fa-list"></i> List
             </a>
-            <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-outline-primary px-4 me-2">
+            <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-outline-primary px-4">
                 <i class="fas fa-pen"></i> Config
             </a>
 
             <a href="/portal/attribute-set-data/create?attributeSetId={{attributeSetId}}&attributeSetName={{attributeSetName}}&dataId=default"
-                class="btn btn-outline-primary px-4 me-2">
+                class="btn btn-outline-primary px-4">
                 <i class="fas fa-plus"></i> Data
             </a>
         </div>
@@ -29,13 +29,13 @@
                     <div class="accordion-body">
                         <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
                             request="request" callback="getList(pageIndex)"></filter-list>
-                            
-                    <div ng-if="fields" ng-repeat="field in fields">
-                        <pre>{{field.name}}</pre>
-                        <input ng-model="queries[field.name]" ng-enter="getList()">
-                        <!-- <mix-field-editor model="queries" field="field"></mix-field-editor> -->
-                    </div>
-                            
+
+                        <div ng-if="fields" ng-repeat="field in fields" class="mb-3">
+                            <label class="form-label">{{field.name}}</label>
+                            <input ng-model="queries[field.name]" ng-enter="getList()" class="form-control">
+                            <!-- <mix-field-editor model="queries" field="field"></mix-field-editor> -->
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -101,7 +101,8 @@
     <div class="row" ng-init="init()">
         <div class="col-12" ng-init="getList()">
             <h3>[{{attributeSetName}}] data </h3>
-            <p class="text-subtitle text-muted">This list is show all of the total <span ng-bind="data.totalItems" class="text-muted"></span> items existing in
+            <p class="text-subtitle text-muted">This list is show all of the total <span ng-bind="data.totalItems"
+                    class="text-muted"></span> items existing in
                 <strong>[{{attributeSetName}}]</strong> database.
             </p>
 

@@ -3,7 +3,8 @@
     <h6 class="m-0">
       Entity
       <span ng-bind="$ctrl.title"></span>
-      <a data-bs-toggle="collapse" href=".column-configuration" role="button" aria-expanded="false" aria-controls="column-configuration" class="btn btn-link text-primary btn-sm float-end py-0"><span
+      <a data-bs-toggle="collapse" href=".column-configuration" role="button" aria-expanded="false"
+        aria-controls="column-configuration" class="btn btn-link text-primary btn-sm float-end py-0"><span
           class="fas fa-minus-square"></span>
         Show / Hide data</a>
       <a ng-click="$ctrl.addAttr()" class="btn btn-link text-primary btn-sm float-end py-0"><span
@@ -83,26 +84,26 @@
                   Encrypt
                 </label>
               </div>
-              <div class="sform-check form-switch mx-2 float-start">
+              <div class="form-check form-switch mx-2 float-start">
                 <input type="checkbox" class="form-check-input" ng-model="col.isUnique" id="{{'unique_' + $index}}" />
                 <label class="form-check-label" for="{{'unique_' + $index}}">
                   Unique
                 </label>
               </div>
-              <div class="sform-check form-switch mx-2 float-start">
+              <div class="form-check form-switch mx-2 float-start">
                 <input type="checkbox" class="form-check-input" ng-model="col.isRequire"
                   id="{{'required_' + $index}}" />
                 <label class="form-check-label" for="{{'required_' + $index}}">
                   Mandatory
                 </label>
               </div>
-              <div class="sform-check form-switch mx-2 float-start">
+              <div class="form-check form-switch mx-2 float-start">
                 <input type="checkbox" class="form-check-input" ng-model="col.isSelect" id="{{'select_' + $index}}" />
                 <label class="form-check-label" for="{{'select_' + $index}}">
                   Default values
                 </label>
               </div>
-              <div class="sform-check form-switch mx-2 float-start">
+              <div class="form-check form-switch mx-2 float-start">
                 <input type="checkbox" class="form-check-input" ng-model="col.isRegex" id="{{'regex_' + $index}}" />
                 <label class="form-check-label" for="{{'regex_' + $index}}">
                   Validation
@@ -128,7 +129,7 @@
             </div>
           </div>
         </div>
-        <div class="column-configuration collapse">
+        <div class="column-configuration">
           <div class="row mb-2" ng-show="col.isRegex && col.showAdvanced">
             <div style="width: 5%;"></div>
             <div class="col-10">
@@ -145,7 +146,8 @@
               <div class="col-10">
                 <div class="input-group mb-3">
                   <span class="input-group-text">Input option value</span>
-                  <input type="text" class="form-control form-control-sm" id="option_{{$index}}" ng-enter="$ctrl.addOption(col,$index)"
+                  <input type="text" class="form-control form-control-sm" id="option_{{$index}}"
+                    ng-enter="$ctrl.addOption(col,$index)"
                     placeholder="Please type in the value then enter to add to option list..." />
                 </div>
 
@@ -172,7 +174,7 @@
               </div>
             </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
 
