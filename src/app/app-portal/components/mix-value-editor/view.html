@@ -1,6 +1,6 @@
 <div ng-if="!$ctrl.isSelect" class="mb-3" ng-init="$ctrl.initData()">
   <label
-    class="control-label"
+    class="form-label"
     ng-if="$ctrl.isShowTitle=='true'"
     ng-bind="$ctrl.title"
   ></label>
@@ -71,7 +71,7 @@
         placeholder="{{$ctrl.title}}"
       />
       <label
-        class="control-label"
+        class="form-label"
         ng-bind="$ctrl.doubleValue | currency:''"
       ></label>
     </div>
@@ -224,7 +224,7 @@
 </div>
 <div ng-if="$ctrl.isSelect" class="mb-3">
   <label
-    class="control-label"
+    class="form-label"
     ng-if="$ctrl.isShowTitle"
     ng-bind="$ctrl.title"
   ></label>

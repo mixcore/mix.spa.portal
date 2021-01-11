@@ -1,19 +1,18 @@
 <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3" aria-label="Docs navigation">
-
         <div class="btn-group mb-3 w-100" role="group" aria-label="Basic example">
 
-            <a href="/portal/attribute-set/list" class="btn btn-outline-primary px-4">
-                <i class="fas fa-list"></i> List
-            </a>
-            <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-outline-primary px-4">
-                <i class="fas fa-pen"></i> Config
-            </a>
-
             <a href="/portal/attribute-set-data/create?attributeSetId={{attributeSetId}}&attributeSetName={{attributeSetName}}&dataId=default"
-                class="btn btn-outline-primary px-4">
+                class="btn btn-outline-primary">
                 <i class="fas fa-plus"></i> Data
             </a>
+            <a href="/portal/attribute-set/list" class="btn btn-outline-primary">
+                <i class="fas fa-list"></i> List
+            </a>
+            <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-outline-primary">
+                <i class="fas fa-tools"></i> Config
+            </a>
+
         </div>
 
         <div class="accordion accordion-flush" id="accordionFlushExample" ng-init="$ctrl.init()">
@@ -31,7 +30,7 @@
                             request="request" callback="getList(pageIndex)"></filter-list>
 
                         <div ng-if="fields" ng-repeat="field in fields" class="mb-3">
-                            <label class="form-label">{{field.name}}</label>
+                            <label class="form-label">{{field.title}}</label>
                             <input ng-model="queries[field.name]" ng-enter="getList()" class="form-control">
                             <!-- <mix-field-editor model="queries" field="field"></mix-field-editor> -->
                         </div>

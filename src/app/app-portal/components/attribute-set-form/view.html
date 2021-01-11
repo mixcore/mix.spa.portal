@@ -1,6 +1,9 @@
 <form ng-class="{'submitted': submitted}" ng-init="$ctrl.loadData()" ng-submit="$ctrl.submit()">
-  <div class="">
-    <actions ng-if="!$ctrl.hideAction" back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4 mb-3">
+      <actions ng-if="!$ctrl.hideAction" back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
+    </div>
   </div>
   <div class="card">
     <h6 ng-if="!$ctrl.hideAction" class="card-header position-sticky" style="top: 3.9rem; z-index: 12;">

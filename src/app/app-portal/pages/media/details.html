@@ -1,3 +1,5 @@
+<!-- TODO: Hoang to replace media section with MixDB-->
+
 <!-- Main content -->
 <section class="" ng-init="getSingle()">
     <form ng-if="viewModel" ng-class="{'submitted': submitted}" ng-submit="save()" class="row" enctype="multipart/form-data">
@@ -8,16 +10,16 @@
                 </h6>
                 <section class=" card-body">
                     <div class="mb-3">
-                        <label class="control-label">Title</label>
+                        <label class="form-label">Title</label>
                         <input type="text" class="form-control" ng-model="viewModel.title">
                     </div>
                     <div class="mb-3">
-                        <label class="control-label">Description</label>
+                        <label class="form-label">Description</label>
                         <!-- <input type="text" class="form-control" ng-model="viewModel.description"> -->
                         <textarea class="form-control" ng-model="viewModel.description">{{viewModel.description}}</textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="control-label">Tags</label>
+                        <label class="form-label">Tags</label>
                         <!-- <input type="text" class="form-control tags" ng-model="viewModel.tags"> -->
 
                         <tags-input ng-model="$ctrl.media.listTag">

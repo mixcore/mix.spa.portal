@@ -1,14 +1,14 @@
 <!-- <div class="tab-pane fade active show" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab"> -->
 <div class="mb-3 row">
     <div class="col">
-        <label class="control-label">Content Status</label>
+        <label class="form-label">Content Status</label>
         <select class="btn btn-outline-secondary form-select"
             ng-model="$ctrl.appSettings.GlobalSettings.DefaultStatus">
             <option ng-repeat="item in $ctrl.statuses track by $index" value="{{$index}}">{{item}}</option>
         </select>
     </div>
     <div class="col">
-        <label class="control-label">Language</label>
+        <label class="form-label">Language</label>
         <select class="btn btn-outline-secondary form-select"
             ng-model="$ctrl.appSettings.GlobalSettings.DefaultCulture">
             <option ng-repeat="item in $ctrl.cultures track by $index" ng-value="item.specificulture">
@@ -19,27 +19,27 @@
 </div>
 <!-- <div class="mb-3 row">
     <div class="col">
-        <label class="control-label">Order By</label>
+        <label class="form-label">Order By</label>
         <input type="text" ng-model="$ctrl.appSettings.GlobalSettings.OrderBy" class="form-control">
     </div>
     <div class="col">
-        <label class="control-label">Order Direction</label>
+        <label class="form-label">Order Direction</label>
         <input type="text" ng-model="$ctrl.appSettings.GlobalSettings.OrderDirection" class="form-control">
     </div>
 </div> -->
 <div class="mb-3 row">
     <div class="col">
-        <label class="control-label">Search PageSize</label>
+        <label class="form-label">Search PageSize</label>
         <input type="number" ng-model="$ctrl.appSettings.GlobalSettings.SearchPageSize" class="form-control">
     </div>
     <div class="col">
-        <label class="control-label">Tag PageSize</label>
+        <label class="form-label">Tag PageSize</label>
         <input type="number" ng-model="$ctrl.appSettings.GlobalSettings.TagPageSize" class="form-control">
     </div>
 </div>
 
 <!-- <div class="mb-3">
-    <label class="control-label">Post Attributes</label>
+    <label class="form-label">Post Attributes</label>
     <properties-structure header="'Post Attributes'" columns="$ctrl.properties"></properties-structure>
 </div> -->
 <!-- </div> -->

@@ -170,7 +170,7 @@
         placeholder="{{$ctrl.attributeValue.field.title}}"
       />
       <label
-        class="control-label"
+        class="form-label"
         ng-bind="$ctrl.attributeValue.integerValue | currency:'':0"
       ></label>
     </div>
@@ -183,7 +183,7 @@
         placeholder="{{$ctrl.attributeValue.field.title}}"
       />
       <label
-        class="control-label"
+        class="form-label"
         ng-bind="$ctrl.attributeValue.doubleValue | currency:''"
       ></label>
     </div>
@@ -197,7 +197,7 @@
         placeholder="{{$ctrl.title}}"
       />
       <label
-        class="control-label"
+        class="form-label"
         ng-bind="$ctrl.doubleValue | currency:''"
       ></label>
     </div>
@@ -243,7 +243,7 @@
 <div ng-if="$ctrl.attributeValue.field.isSelect" class="mb-3 row">
   <div class="col-3">
     <h6
-      class="control-label"
+      class="form-label"
       ng-if="$ctrl.isShowTitle"
       ng-bind="$ctrl.attributeValue.field.title"
     ></h6>

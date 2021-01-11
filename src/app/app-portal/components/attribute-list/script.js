@@ -53,7 +53,7 @@ modules.component("attributeList", {
         angular.forEach(ctrl.viewModel.attributes, function (e, i) {
           var el;
           var label = document.createElement("label");
-          label.setAttribute("class", "control-label");
+          label.setAttribute("class", "form-label");
           label.setAttribute("ng-bind", "{{data.title}}");
 
           switch (e.dataType) {
