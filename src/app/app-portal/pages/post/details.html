@@ -43,7 +43,8 @@
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Post type</label>
+                <!-- TODO: Hoang to check again -->
+                <label class="form-label">Post type [ <a href="/portal/attribute-set-data/create?attributeSetId=9&attributeSetName=post_type&attributeSetTitle=Post%20Type&dataId=default" title="Add new post type to the list"> + </a> ]</label>
                 <select ng-init="loadPostTypes()" class="form-select"
                   ng-options="item.attribute_set_name as item.title for item in postTypes track by item.id"
                   ng-change="onSelectType()" ng-model="postType"></select>
