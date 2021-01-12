@@ -1,18 +1,14 @@
-<div class="row">
-  <div class="col-lg-12">
+<div class="card mb-5">
+  <div class="card-body">
     <page-main page="$ctrl.model" generate-seo="$ctrl.generateSEO()"></page-main>
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-12">
     <tabs-v class="mb-4">
       <pane-v header="General">
         <page-general is-admin="isAdmin" page="$ctrl.model"></page-general>
-        
-  <div class="col-lg-12" ng-if="$ctrl.addictionalData">
-    <addictional-value class="mb-4" addictional-data="$ctrl.addictionalData" database-name="$ctrl.type"
-      parent-type="'Page'" parent-id="$ctrl.model.id"></addictional-value>
-  </div>
+
       </pane-v>
       <pane-v header="SEO" class="">
         <page-seo page="$ctrl.model"></page-seo>
@@ -35,9 +31,14 @@
   </div>
 </div>
 <div class="row">
+
+  <div class="col-12" ng-if="$ctrl.addictionalData">
+    <addictional-value class="mb-4" addictional-data="$ctrl.addictionalData" database-name="$ctrl.type"
+      parent-type="'Page'" parent-id="$ctrl.model.id"></addictional-value>
+  </div>
 </div>
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-12">
     <div ng-repeat="nav in $ctrl.model.attributeSetNavs | orderBy: 'priority' track by $index" ng-if="nav.isActived"
       class="card mt-3">
       <h6 class="card-header">

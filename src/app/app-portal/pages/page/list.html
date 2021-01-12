@@ -16,8 +16,9 @@
                 <option ng-repeat="item in pageTypes track by $index" value="{{item.value}}">{{item.name}}
                 </option>
             </select> -->
-
-  <table id="list-page" class="table table-sm table-hover mb-5" dnd-list="data.items" dnd-disable-if="canDrag"
+<div class="card card-body mb-5">
+  
+  <table id="list-page" class="table table-striped-x table-hover" dnd-list="data.items" dnd-disable-if="canDrag"
     cellspacing="0" ng-init="getList()">
     <thead class="thead-light">
       <tr>
@@ -48,10 +49,10 @@
       </tr>
     </thead>
 
-    <tbody ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move"
-      dnd-selected="selected = item" dnd-moved="updateInfos($index)" ng-class="{'selected': selected === item}"
-      class="border-top">
-      <tr class="" sort-model="category" sort-model-id="{{item.id}}">
+    <tbody 
+      class="">
+      <tr ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move"
+      dnd-selected="selected = item" dnd-moved="updateInfos($index)" ng-class="{'selected': selected === item}" class="" sort-model="category" sort-model-id="{{item.id}}">
         <!-- <td ng-if="!canDrag" style="cursor:grab;" class="drag-header align-middle small">
                                 <small class="fa fa-grip-vertical text-black-50"></small>
                             </td>
@@ -72,10 +73,8 @@
           </div>
         </td>
         <td class="">
-          <a href="" ng-click="goToPath('/portal/page/details/' + item.id)" class="btn btn-link">
-            <small>
+          <a href="" ng-click="goToPath('/portal/page/details/' + item.id)" class="">
               {{item.title}}
-            </small>
           </a>
         </td>
         <td class="text-secondary">
@@ -205,6 +204,7 @@
       </tr>
     </tbody>
   </table>
+</div>
 
 
   <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
