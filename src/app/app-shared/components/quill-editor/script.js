@@ -9,9 +9,10 @@
                 ctrl.guid = $rootScope.generateUUID();
                 setTimeout(() => {
 
-                    var toolbarOptions = [
+                    var toolbarOptions = {
+                        container:[
                         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                        ['blockquote', 'code-block'],
+                        ['blockquote', 'image', 'link', 'code-block'],
                       
                         [{ 'header': 1 }, { 'header': 2 }],               // custom button values
                         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
@@ -27,11 +28,29 @@
                         [{ 'align': [] }],
                       
                         ['clean']                                         // remove formatting button
-                      ];
+                      ],
+                      handlers: {
+                        // handlers object will be merged with default handlers object
+                        'link': function(value) {
+                          if (value) {
+                            var href = prompt('Enter the URL');
+                            this.quill.format('link', href);
+                          } else {
+                            this.quill.format('link', false);
+                          }
+                        },
+                        'image': function() {
+                            var range = this.quill.getSelection();
+                            var value = prompt('Enter the image URL');
+                            this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+                        }
+                      }
+                    };
 
                     ctrl.editor = new Quill('#quill-editor-' + ctrl.guid, {
                         modules: {
-                            toolbar: toolbarOptions
+                            toolbar: toolbarOptions,
+                            imageResize: {}
                         },
                         placeholder: 'Compose an epic...',
                         theme: 'snow'
@@ -58,7 +77,7 @@
             ctrl.updateContent = function () {
                 // ctrl.content = JSON.stringify(ctrl.editor.getContents());
                 ctrl.content = ctrl.editor.root.innerHTML;
-                console.log(ctrl.content);
+                // console.log(ctrl.content);
             };
 
 

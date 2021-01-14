@@ -12,6 +12,8 @@
     <section class="" ng-init="getSingle()">
         <h3>Create Database</h3>
         <p class="text-subtitle text-muted">Dynamic database to allow you design any web/mobile applications.</p>
+
+
         <form ng-class="{'submitted': submitted}" ng-submit="save(viewModel)">
 
             <nav class="mb-3">
@@ -25,9 +27,12 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-                    <attribute-set-main model="viewModel">
-                    </attribute-set-main>
-                    <div class="mb-5"></div>
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <attribute-set-main model="viewModel">
+                            </attribute-set-main>
+                        </div>
+                    </div>
 
                     <!-- app-portal/components/attribute-list -->
                     <attribute-list header="'Attributes'" fields="viewModel.fields"
@@ -36,9 +41,13 @@
                 </div>
                 <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
 
+                    <div class="card mb-5">
+                        <div class="card-body">
 
-                    <attribute-set-edm model="viewModel">
-                    </attribute-set-edm>
+                            <attribute-set-edm model="viewModel">
+                            </attribute-set-edm>
+                        </div>
+                    </div>
 
                     <mix-template-editor folder-type="'Edms'" template="viewModel.edmView" hide-js="'true'"
                         hide-css="'true'" ng-if="isAdmin">

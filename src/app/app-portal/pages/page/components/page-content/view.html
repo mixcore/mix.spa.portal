@@ -3,7 +3,8 @@
     <page-main page="$ctrl.model" generate-seo="$ctrl.generateSEO()"></page-main>
   </div>
 </div>
-<div class="row">
+
+<div class="row mb-5">
   <div class="col-12">
     <tabs-v class="mb-4">
       <pane-v header="General">
@@ -16,9 +17,9 @@
       <!-- <pane-v header="Parents" class="">
                 <page-parents page="$ctrl.model"></page-parents>
             </pane-v> -->
-      <pane-v header="Media">
+      <!-- <pane-v header="Media">
         <page-medias page="$ctrl.model" medias="$ctrl.model.mediaNavs"></page-medias>
-      </pane-v>
+      </pane-v> -->
       <pane-v header="Module">
         <page-modules page="$ctrl.model"></page-modules>
       </pane-v>
@@ -37,6 +38,7 @@
       parent-type="'Page'" parent-id="$ctrl.model.id"></addictional-value>
   </div>
 </div>
+
 <div class="row">
   <div class="col-12">
     <div ng-repeat="nav in $ctrl.model.attributeSetNavs | orderBy: 'priority' track by $index" ng-if="nav.isActived"

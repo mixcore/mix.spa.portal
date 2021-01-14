@@ -1,23 +1,5 @@
-<!-- <div class="tab-pane">
-    <div class="mb-3">
-        <label ng-bind="$ctrl.translate('SeoTitle')"></label>
-        <input type="text" class="form-control" ng-model="$ctrl.page.seoTitle" maxlength="60">
-    </div>
-    <div class="mb-3">
-        <label ng-bind="$ctrl.translate('SeoName')"></label>
-        <input type="text" class="form-control" ng-model="$ctrl.page.seoName">
-    </div>
-    <div class="mb-3">
-        <label ng-bind="$ctrl.translate('SeoDescription')"></label>
-        <textarea class="form-control" ng-model="$ctrl.page.seoDescription" rows="2" maxlength="160"></textarea>
-    </div>
-    <div class="mb-3">
-        <label ng-bind="$ctrl.translate('SeoKeywords')"></label>
-        <textarea class="form-control" ng-model="$ctrl.page.seoKeywords" rows="2"></textarea>
-    </div>
-</div> -->
-
-<div class="tab-pane">
+<div class="card">
+    <div class="card-body">
         <div class="row mb-3">
             <div class="col-3">
                 <label class="form-label">Friendly Title</label>
@@ -70,10 +52,12 @@
             <div class="col-9">
                 <textarea class="form-control" ng-model="$ctrl.page.seoKeywords" rows="3"></textarea>
                 <small class="text-muted form-text">
-                    Do make sure your most important keywords for the webpage show up in the meta description. Often search
+                    Do make sure your most important keywords for the webpage show up in the meta description. Often
+                    search
                     engines will highlight in bold where it finds the searchers query in your snippet.
                 </small>
                 <!-- <input type="text" class="form-control" ng-model="$ctrl.page.seoKeywords"> -->
             </div>
         </div>
     </div>
+</div>
