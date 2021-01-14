@@ -45,8 +45,8 @@
       <label class="control-label" ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"></label>
     </div>
     <div class="text-muted" ng-switch-when="html">
-      <!--Html-->
-      <trumbowyg options="{}" ng-model="$ctrl.model.obj[$ctrl.field.name]"></trumbowyg>
+      <!--Html-->      
+      <quill-editor content="$ctrl.model.obj[$ctrl.field.name]"></quill-editor>
     </div>
     <div class="text-muted" ng-switch-when="multilinetext">
       <!--TextArea-->

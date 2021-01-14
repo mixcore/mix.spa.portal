@@ -13,11 +13,6 @@
     <label class="form-label">Excerpt</label>
     <textarea class="form-control" ng-model="$ctrl.post.excerpt" ng-blur="$ctrl.generateSeo()">
 {{$ctrl.post.excerpt}}</textarea>
-    <!-- 
-          <trumbowyg ng-model="$ctrl.post.excerpt" removeformat-pasted="'true'"
-                      placeholder="Start typing some text..."
-                      options="{}">
-                    </trumbowyg> -->
   </div>
   <div class="mb-3 mb-0">
     <quill-editor content="$ctrl.post.content"></quill-editor>

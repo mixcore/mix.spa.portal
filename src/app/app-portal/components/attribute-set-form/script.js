@@ -36,7 +36,7 @@ modules.component("attributeSetForm", {
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
-          ctrl.loadData();
+        ctrl.loadData();
       };
       ctrl.loadData = async function () {
         /*
@@ -86,9 +86,8 @@ modules.component("attributeSetForm", {
               case "Post":
               case "Page":
               case "Module":
-                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                  ctrl.parentId
-                }`;
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${ctrl.parentId
+                  }`;
                 break;
 
               default:

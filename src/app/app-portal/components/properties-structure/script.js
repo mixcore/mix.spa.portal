@@ -66,7 +66,7 @@ modules.component('propertiesStructure', {
                         break;
                        
                         case 'html':
-                        el = document.createElement('trumbowyg');
+                        el = document.createElement('quill');
                         el.setAttribute('options', '{}');                                 
                         el.setAttribute('type', 'number');                                 
                         break;
