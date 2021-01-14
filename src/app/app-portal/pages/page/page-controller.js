@@ -64,15 +64,17 @@ app.controller("PageController", [
 
       if ($scope.viewModel.sysCategories) {
         angular.forEach($scope.viewModel.sysCategories, function (e) {
-          e.attributeData.obj.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
+          // TODO: Hoang to check JS error
+          // e.attributeData.obj.isActived = true; 
+          // $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
 
       if ($scope.viewModel.sysTags) {
         angular.forEach($scope.viewModel.sysTags, function (e) {
-          e.data.data.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
+          // TODO: Hoang to check JS error
+          // e.data.data.isActived = true;
+          // $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
       if ($routeParams.template) {

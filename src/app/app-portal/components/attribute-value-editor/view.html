@@ -61,10 +61,12 @@
     </div>
     <div class="text-muted" ng-switch-when="html">
       <!--Html-->
-      <trumbowyg
+      <!-- <trumbowyg
         options="{}"
         ng-model="$ctrl.attributeValue.stringValue"
-      ></trumbowyg>
+      ></trumbowyg> -->
+      
+      <quill-editor content="$ctrl.attributeValue.stringValue"></quill-editor>
     </div>
     <div class="text-muted" ng-switch-when="multilinetext">
       <!--TextArea-->

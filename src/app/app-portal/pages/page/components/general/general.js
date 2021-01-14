@@ -93,7 +93,7 @@ app.component('pageGeneral', {
                 })
                 $.each($('.editor-content'), function (i, e) {
                     var $demoTextarea = $(e);
-                    $demoTextarea.trumbowyg(ctrl.configurations.plugins);
+                    $demoTextarea.quill(ctrl.configurations.plugins);
                 });
             }, 200)
         }

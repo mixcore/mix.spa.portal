@@ -21,8 +21,12 @@
   </div>
   <div class="mb-3 mb-0">
     <!-- <label class="form-label">Body content</label> -->
+    <!-- <textarea class="form-control" ng-model="$ctrl.post.content">{{$ctrl.post.content}}</textarea> -->
+    <quill-editor content="$ctrl.post.content"></quill-editor>
+
+<!--     
     <trumbowyg ng-model="$ctrl.post.content" removeformat-pasted="'true'" placeholder="Start typing some text..."
       options="{}">
-    </trumbowyg>
+    </trumbowyg> -->
   </div>
 </div>
