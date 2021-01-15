@@ -75,11 +75,11 @@ app.controller("MixAttributeSetDataController", [
         $scope.viewModel = $scope.selectedList.data[0];
       }
     };
-    $scope.saveSuccessCallback = function () {
-      if ($location.path() == "/portal/attribute-set-data/create") {
-        $scope.goToDetail($scope.viewModel.id, "attribute-set-data");
-      }
-    };
+    // $scope.saveSuccessCallback = function () {
+    //   if ($location.path() == "/portal/attribute-set-data/create") {
+    //     $scope.goToDetail($scope.viewModel.id, "attribute-set-data");
+    //   }
+    // };
 
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;
