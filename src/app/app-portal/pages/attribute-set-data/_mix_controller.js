@@ -69,24 +69,28 @@ app.controller("MixAttributeSetDataController", [
         $scope.fields = getFields.data;
         $scope.$apply();
       }
-    }
+    };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
         $scope.viewModel = $scope.selectedList.data[0];
       }
     };
-    // $scope.saveSuccessCallback = function () {
-    //   if ($location.path() == "/portal/attribute-set-data/create") {
-    //     $scope.goToDetail($scope.viewModel.id, "attribute-set-data");
-    //   }
-    // };
+    $scope.saveSuccessCallback = function () {
+      if ($location.path() == "/portal/attribute-set-data/create") {
+        $rootScope.goToSiteUrl(
+          `/portal/attribute-set-data/details?dataId=${$scope.viewModel.id}`
+        );
+      }
+    };
 
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.edit = function (data) {
-      $scope.goToPath("/portal/attribute-set-data/details?dataId=" + data.id);
+      $rootScope.goToSiteUrl(
+        "/portal/attribute-set-data/details?dataId=" + data.id
+      );
     };
     $scope.remove = function (data) {
       $rootScope.showConfirm(

@@ -608,7 +608,7 @@ app.run([
       window.top.location = url;
     };
     $rootScope.goToPath = function (url) {
-      $location.url(url.trim());
+        $window.location.assign(url);
     };
     $rootScope.encryptAttributeSet = function (attributes, data) {
       angular.forEach(attributes, function (attr) {
