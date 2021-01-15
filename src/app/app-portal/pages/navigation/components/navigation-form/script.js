@@ -122,7 +122,6 @@ modules.component("navigationForm", {
             if (result && result.isSucceed) {
               ctrl.isBusy = false;
               ctrl.attrData = result.data;
-              ctrl.createMenuUrl = `/portal/navigation/create?attributeSetId=1&dataId=default&parentId=${ctrl.attrData.id}&parentType=1`;
               $scope.$apply();
             } else {
               ctrl.isBusy = false;

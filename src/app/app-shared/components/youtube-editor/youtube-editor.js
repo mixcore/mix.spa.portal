@@ -25,6 +25,7 @@
         }
     ],
     bindings: {
-        code: '='
+        code: '=',
+        hideInput: '=?'
     }
 });
