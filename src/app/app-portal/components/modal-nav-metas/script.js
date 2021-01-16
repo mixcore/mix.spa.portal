@@ -132,19 +132,16 @@
           ctrl.navs = [];
           angular.forEach(response.data.items, function (e) {
             // Not show data if there's in selected list
-            e.disabled =
-              $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.id) !=
-              null;
             ctrl.data.items.push({
               specificulture: e.specificulture,
               attributesetName: ctrl.attributeSetName,
               parentId: ctrl.parentId,
               parentType: ctrl.parentType,
               dataId: e.id,
-              attributeData: e,
-              disabled: e.disabled,
+              attributeData: e
             });
           });
+          ctrl.filterData();
           ctrl.isBusy = false;
           $scope.$apply();
         } else {
@@ -152,6 +149,15 @@
           ctrl.isBusy = false;
           $scope.$apply();
         }
+      };
+      ctrl.filterData = function(){
+        angular.forEach(ctrl.data.items, function (e) {
+          // Not show data if there's in selected list
+          e.disabled =
+            $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.dataId) != null;
+          e.attributeData.disabled = e.disabled;
+        });
+        $scope.$apply();
       };
       ctrl.select = function (nav) {
         if (nav.isActived) {
@@ -229,6 +235,7 @@
             $rootScope.removeObjectByKey(ctrl.selectedList, "id", nav.id);
           }
         }
+        ctrl.filterData();
         if (ctrl.selectCallback) {
           ctrl.selectCallback({ data: nav });
         }
