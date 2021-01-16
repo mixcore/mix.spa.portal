@@ -209,6 +209,8 @@ function BaseRestCtrl(
       } else {
         resp = await service.update($scope.viewModel.id, $scope.viewModel);
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
       if (resp.isSucceed) {
         $scope.viewModel = resp.data;
         $rootScope.showMessage("success", "success");
@@ -219,9 +221,6 @@ function BaseRestCtrl(
             $scope.saveSuccessCallbackArgs,
             $scope
           );
-        } else {
-          $rootScope.isBusy = false;
-          $scope.$apply();
         }
       } else {
         if ($scope.saveFailCallback) {
@@ -234,8 +233,6 @@ function BaseRestCtrl(
         if (resp) {
           $rootScope.showErrors(resp.errors);
         }
-        $rootScope.isBusy = false;
-        $scope.$apply();
       }
       return resp;
     } else {
