@@ -1,6 +1,6 @@
 ﻿modules.component("mainSideBarDynamic", {
   templateUrl:
-    "/app/app-portal/components/main-side-bar-dynamic/main-side-bar-dynamic.html",
+    "/mix-app/views/app-portal/components/main-side-bar-dynamic/main-side-bar-dynamic.html",
   controller: [
     "$rootScope",
     "$scope",

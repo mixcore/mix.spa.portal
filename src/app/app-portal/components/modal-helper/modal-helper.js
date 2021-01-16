@@ -1,5 +1,5 @@
 ﻿modules.component("modalHelper", {
-  templateUrl: "/app/app-portal/components/modal-helper/modal-helper.html",
+  templateUrl: "/mix-app/views/app-portal/components/modal-helper/modal-helper.html",
   bindings: {
     url: "=?",
     title: "=?",

@@ -21,13 +21,13 @@ app.controller("Step3Controller", [
         $(this).addClass("active");
       });
       // $("#theme-1").change(function () {
-      //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme1.png')";
+      //     $('.bg-register-image')[0].style.backgroundImage = "url('../mix-app/mix-app/assets/img/bgs/r_theme1.png')";
       // });
       // $("#theme-2").change(function () {
-      //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/r_theme2.png')";
+      //     $('.bg-register-image')[0].style.backgroundImage = "url('../mix-app/mix-app/assets/img/bgs/r_theme2.png')";
       // });
       // $("#theme-3").change(function () {
-      //     $('.bg-register-image')[0].style.backgroundImage = "url('../assets/img/bgs/right-bg.png')";
+      //     $('.bg-register-image')[0].style.backgroundImage = "url('../mix-app/mix-app/assets/img/bgs/right-bg.png')";
       // });
       // $("input:checkbox").click(function () {
       //     if ($(this).is(":checked")) {

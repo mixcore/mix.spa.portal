@@ -1,6 +1,6 @@
 modules.component("navigationForm", {
   templateUrl:
-    "/app/app-portal/pages/navigation/components/navigation-form/view.html",
+    "/mix-app/views/app-portal/pages/navigation/components/navigation-form/view.html",
   bindings: {
     attributeSetId: "=",
     attributeSetName: "=",

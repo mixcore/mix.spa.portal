@@ -24,7 +24,7 @@
     function ($rootScope, $scope, $uibModal, ngAppSettings, mediaService) {
       var ctrl = this;
       ctrl.isAdmin = $rootScope.isAdmin;
-      var image_placeholder = "/assets/img/image_placeholder.jpg";
+      var image_placeholder = "/mix-app/assets/img/image_placeholder.jpg";
       ctrl.isImage = false;
       ctrl.croppedStream = null;
       ctrl.mediaNavs = [];
