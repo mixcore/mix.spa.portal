@@ -31,10 +31,10 @@
               class="form-control form-control-sm" />
           </div>
           <div style="width:15%">
-            <small class="form-label">Type</small>
+            <small class="form-label">Type {{col.dataType}}</small>
             <select class="form-select form-select-sm" ng-model="col.dataType"
               ng-change="$ctrl.changeDataType(col.dataType);">
-              <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.value">
+              <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.name">
                 {{item.name}}
               </option>
             </select>

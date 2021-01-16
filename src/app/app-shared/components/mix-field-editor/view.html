@@ -44,6 +44,18 @@
         ng-model="$ctrl.model.obj[$ctrl.field.name]" placeholder="{{$ctrl.title}}" />
       <label class="control-label" ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"></label>
     </div>
+    <div ng-switch-when="double">
+      <!-- Number -->
+      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="number"
+        ng-model="$ctrl.model.obj[$ctrl.field.name]" placeholder="{{$ctrl.title}}" />
+      <label class="control-label" ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"></label>
+    </div>
+    <div ng-switch-when="currency">
+      <!-- Number -->
+      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="number"
+        ng-model="$ctrl.model.obj[$ctrl.field.name]" placeholder="{{$ctrl.title}}" />
+      <label class="control-label" ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"></label>
+    </div>
     <div class="text-muted" ng-switch-when="html">
       <!--Html-->      
       <quill-editor content="$ctrl.model.obj[$ctrl.field.name]"></quill-editor>

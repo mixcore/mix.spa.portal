@@ -98,15 +98,6 @@ modules.component("attributeSetForm", {
             ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
           }
         }
-        if (!ctrl.fields) {
-          var getFields = await fieldService.initData(
-            ctrl.attributeSetName || ctrl.attributeSetId
-          );
-          if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
-            $scope.$apply();
-          }
-        }
         var getDefault = await service.initData(
           ctrl.attributeSetName || ctrl.attributeSetId
         );
@@ -116,6 +107,8 @@ modules.component("attributeSetForm", {
           ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
           ctrl.defaultData.parentId = ctrl.parentId;
           ctrl.defaultData.parentType = ctrl.parentType;
+
+          ctrl.fields = ctrl.fields || ctrl.defaultData.fields;
         }
 
         if (!ctrl.attrData) {
