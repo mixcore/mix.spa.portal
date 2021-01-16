@@ -43,6 +43,7 @@ app.controller("MixAttributeSetDataController", [
     $scope.init = async function () {
       $scope.attributeSetId = $routeParams.attributeSetId;
       $scope.attributeSetName = $routeParams.attributeSetName;
+      $scope.attributeSetTitle = $routeParams.attributeSetTitle;
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.attributeSetName = $routeParams.attributeSetName;

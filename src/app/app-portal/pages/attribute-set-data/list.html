@@ -99,10 +99,10 @@
 <div class="content-body py-3 px-5">
     <div class="row" ng-init="init()">
         <div class="col-12" ng-init="getList()">
-            <h3>[{{attributeSetName}}] data </h3>
+            <h3>{{attributeSetTitle}} data </h3>
             <p class="text-subtitle text-muted">This list is show all of the total <span ng-bind="data.totalItems"
                     class="text-muted"></span> items existing in
-                <strong>[{{attributeSetName}}]</strong> database.
+                <strong>{{attributeSetTitle}}</strong> database.
             </p>
 
             <div class="mb-5">
