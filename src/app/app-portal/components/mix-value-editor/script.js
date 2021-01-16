@@ -1,6 +1,6 @@
 ﻿
 modules.component('mixValueEditor', {
-    templateUrl: '/app/app-portal/components/mix-value-editor/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/mix-value-editor/view.html',
     bindings: {
         title: '=?',
         isSelect: '=?',

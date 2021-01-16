@@ -1,6 +1,6 @@
 ﻿
 modules.component('haiyenLoader', {
-    templateUrl: '/app/app-client/components/customs/loader/view.html',
+    templateUrl: '/mix-app/views/app-client/components/customs/loader/view.html',
     controller: ['$scope', '$location', function($scope, $location) {
         var ctrl = this;
         ctrl.imageDataArray = [];

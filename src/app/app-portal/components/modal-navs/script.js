@@ -1,5 +1,5 @@
 ﻿modules.component('modalNavs', {
-    templateUrl: '/app/app-portal/components/modal-navs/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/modal-navs/view.html',
     bindings: {
         modelName:'=',
         viewType:'=',        

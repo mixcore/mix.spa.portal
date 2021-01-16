@@ -1,5 +1,5 @@
 modules.component("attributeSetForm", {
-  templateUrl: "/app/app-portal/components/attribute-set-form/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/attribute-set-form/view.html",
   bindings: {
     attributeSetId: "=",
     attributeSetName: "=",

@@ -1,6 +1,6 @@
 ﻿modules.component("mixModuleDataTable", {
   templateUrl:
-    "/app/app-shared/components/mix-module-data-table/mix-module-data-table.html",
+    "/mix-app/views/app-shared/components/mix-module-data-table/mix-module-data-table.html",
   controller: [
     "$rootScope",
     "$scope",

@@ -1,5 +1,5 @@
 ﻿app.component("mediaNavs", {
-  templateUrl: "/app/app-shared/components/media-navs/media-navs.html",
+  templateUrl: "/mix-app/views/app-shared/components/media-navs/media-navs.html",
   controller: [
     "$rootScope",
     "$scope",

@@ -1,5 +1,5 @@
 ﻿modules.component('googlePay', {
-    templateUrl: '/app/app-client/components/google-pay/view.html',
+    templateUrl: '/mix-app/views/app-client/components/google-pay/view.html',
     controller: [
         '$rootScope', 'CommonService',
         function ($rootScope, commonService) {

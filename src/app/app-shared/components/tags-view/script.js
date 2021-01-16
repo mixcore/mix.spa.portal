@@ -1,6 +1,6 @@
 ﻿
 modules.component('tagsView', {
-    templateUrl: '/app/app-shared/components/tags-view/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/tags-view/view.html',
     controller: ['$rootScope', '$scope', function ($rootScope,$scope) {        
         var ctrl = this;
         ctrl.$onInit = function(){

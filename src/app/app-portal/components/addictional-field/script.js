@@ -1,5 +1,5 @@
 modules.component("addictionalField", {
-  templateUrl: "/app/app-portal/components/addictional-field/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/addictional-field/view.html",
   bindings: {
     model: "=",
     addictionalData: "=",

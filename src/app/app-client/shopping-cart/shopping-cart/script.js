@@ -1,5 +1,5 @@
 ﻿cart.component('shoppingCart', {
-    templateUrl: '/app/app-client/components/shopping-cart/view.html',
+    templateUrl: '/mix-app/views/app-client/components/shopping-cart/view.html',
     controller: [
         '$rootScope','localStorageService', 'CommonService', 
         function ($rootScope, localStorageService, commonService) {

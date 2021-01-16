@@ -24,7 +24,7 @@
       file: null,
     },
   };
-  ctrl.image_placeholder = "/assets/img/image_placeholder.jpg";
+  ctrl.image_placeholder = "/mix-app/assets/img/image_placeholder.jpg";
   ctrl.options = null;
   // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
   ctrl.init = function () {
@@ -229,6 +229,6 @@
         width: w,
       };
     }
-    // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
+    // ctrl.image_placeholder = "/mix-app/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
   };
 });

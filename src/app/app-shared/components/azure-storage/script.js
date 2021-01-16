@@ -1,5 +1,5 @@
 ﻿modules.component("azureStorage", {
-  templateUrl: "/app/app-shared/components/azure-storage/view.html",
+  templateUrl: "/mix-app/views/app-shared/components/azure-storage/view.html",
   bindings: {
     data: "=",
     width: "=",

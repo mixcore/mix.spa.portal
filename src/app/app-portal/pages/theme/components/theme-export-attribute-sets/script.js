@@ -1,6 +1,6 @@
 ﻿
 app.component('themeExportAttributeSets', {
-    templateUrl: '/app/app-portal/pages/theme/components/theme-export-attribute-sets/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/theme/components/theme-export-attribute-sets/view.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', function ($rootScope, $scope) {
         var ctrl = this;
         ctrl.updateAttributeSetExport = function(){

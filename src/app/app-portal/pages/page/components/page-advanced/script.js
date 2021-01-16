@@ -1,5 +1,5 @@
 ﻿app.component("pageAdvanced", {
-  templateUrl: "/app/app-portal/pages/page/components/page-advanced/view.html",
+  templateUrl: "/mix-app/views/app-portal/pages/page/components/page-advanced/view.html",
   bindings: {
     model: "=",
     addictionalData: "=",

@@ -1,6 +1,6 @@
 ﻿
 app.component('initSiteConfigurations', {
-    templateUrl: '/app/app-init/pages/step3/components/site-configurations/view.html',
+    templateUrl: '/mix-app/views/app-init/pages/step3/components/site-configurations/view.html',
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this; 
         ctrl.data = [];

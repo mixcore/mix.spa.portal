@@ -1,5 +1,5 @@
 ﻿modules.component("modalNavMetas", {
-  templateUrl: "/app/app-portal/components/modal-nav-metas/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/modal-nav-metas/view.html",
   bindings: {
     header: "=",
     attributeSetId: "=?",

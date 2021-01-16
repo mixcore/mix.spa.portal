@@ -1,5 +1,5 @@
 modules.component('navigationValues', {
-    templateUrl: '/app/app-portal/pages/navigation/components/navigation-values/navigation-values.html?v=2',
+    templateUrl: '/mix-app/views/app-portal/pages/navigation/components/navigation-values/navigation-values.html?v=2',
     bindings: {
         header: '=',
         data: '=',

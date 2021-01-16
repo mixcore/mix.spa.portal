@@ -1,6 +1,6 @@
 ﻿
 app.component('appSettingsDefault', {
-    templateUrl: '/app/app-portal/pages/app-settings/components/default/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/app-settings/components/default/view.html',
     controller: ['$rootScope', 'ngAppSettings', function ($rootScope, ngAppSettings) {
         var ctrl = this;
         ctrl.$onInit = function(){

@@ -1,6 +1,6 @@
 ﻿
 modules.component('mediaUpload', {
-    templateUrl: '/app/app-portal/components/media-upload/media-upload.html',
+    templateUrl: '/mix-app/views/app-portal/components/media-upload/media-upload.html',
     controller: ['$scope', '$rootScope', 'MediaService', 'CommonService',
         function ($scope, $rootScope, service, commonService) {
             var ctrl = this;

@@ -1,5 +1,5 @@
 ﻿modules.component('moduleForm', {
-    templateUrl: '/app/app-shared/components/module-form/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/module-form/view.html',
     bindings: {
         moduleId: '=',
         categoryId: '=',

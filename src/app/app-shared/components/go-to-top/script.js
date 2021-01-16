@@ -1,6 +1,6 @@
 ﻿
 modules.component('goToTop', {
-    templateUrl: '/app/app-shared/components/go-to-top/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/go-to-top/view.html',
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {
             var ctrl = this;

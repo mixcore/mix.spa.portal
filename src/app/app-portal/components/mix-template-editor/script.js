@@ -1,5 +1,5 @@
 ﻿modules.component('mixTemplateEditor', {
-    templateUrl: '/app/app-portal/components/mix-template-editor/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/mix-template-editor/view.html',
     bindings: {
         template: '=',
         folderType: '=',

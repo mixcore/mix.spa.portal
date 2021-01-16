@@ -1,6 +1,6 @@
 ﻿
 modules.component('fbLike', {
-    templateUrl: '/app/app-client/components/fb-like/fb-like.html',
+    templateUrl: '/mix-app/views/app-client/components/fb-like/fb-like.html',
     controller: ['$location', function ($location) {
         var ctrl = this;
         ctrl.href = ctrl.href || window.top.location.href;        

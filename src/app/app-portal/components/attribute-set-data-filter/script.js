@@ -1,5 +1,5 @@
 ﻿modules.component('attributeSetDataFilter', {
-    templateUrl: '/app/app-portal/components/attribute-set-data-filter/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/attribute-set-data-filter/view.html',
     bindings: {
         query: '=',
         attributeSetName: '=?',

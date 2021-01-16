@@ -1,5 +1,5 @@
 ﻿modules.component('previewImage', {
-    templateUrl: '/app/app-shared/components/preview-image/preview-image.html',
+    templateUrl: '/mix-app/views/app-shared/components/preview-image/preview-image.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', function ($rootScope, $scope) {
         var ctrl = this;
         ctrl.isImage= false;

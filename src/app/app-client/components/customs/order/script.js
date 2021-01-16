@@ -2,7 +2,7 @@ modules.component('tclOrder', {
     binding: {
         user: '='
     },
-    templateUrl: '/app/app-client/components/customs/order/view.html',
+    templateUrl: '/mix-app/views/app-client/components/customs/order/view.html',
     controller: ['$scope', '$rootScope', 'ngAppSettings', 'RestAttributeSetDataClientService',
         function ($scope, $rootScope, ngAppSettings, service) {
             var ctrl = this;

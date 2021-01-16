@@ -21,7 +21,7 @@
                 panes.push(pane);
             };
         },
-        templateUrl: '/app/app-shared/components/tabs-horizontal/tabs.html',
+        templateUrl: '/mix-app/views/app-shared/components/tabs-horizontal/tabs.html',
         replace: true
     };
 });

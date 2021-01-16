@@ -1,5 +1,5 @@
 ﻿app.component("postMain", {
-  templateUrl: "/app/app-portal/pages/post/components/main/view.html",
+  templateUrl: "/mix-app/views/app-portal/pages/post/components/main/view.html",
   bindings: {
     post: "=",
   },

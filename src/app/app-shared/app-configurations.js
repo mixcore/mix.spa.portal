@@ -686,6 +686,27 @@ app.run([
         items[i].priority = minIndex + i;
       }
     };
+
+    $rootScope.openModal = function(templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null){
+      var modalInstance = $uibModal.open({
+        animation: true,
+        windowClass: "show",
+        templateUrl: templateUrl,
+        controller: controllerName,
+        controllerAs: "$ctrl",
+        size: "lg",
+        resolve: resolve,
+      });
+
+      modalInstance.result.then(
+        function (result) {
+          successCallback(result);
+        },
+        function (error) {
+          failCallback(error);
+        }
+      );
+    }
   },
 ]);
 

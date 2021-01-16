@@ -1,5 +1,5 @@
 ﻿modules.component('modalNavPosts', {
-    templateUrl: '/app/app-portal/components/modal-nav-posts/modal-nav-posts.html',
+    templateUrl: '/mix-app/views/app-portal/components/modal-nav-posts/modal-nav-posts.html',
     bindings: {
         srcField: '=',
         srcId: '=',

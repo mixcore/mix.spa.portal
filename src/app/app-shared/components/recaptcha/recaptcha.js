@@ -1,6 +1,6 @@
 ﻿
 modules.component('recaptcha', {
-    templateUrl: '/app/app-shared/components/recaptcha/recaptcha.html',
+    templateUrl: '/mix-app/views/app-shared/components/recaptcha/recaptcha.html',
     controller: ['$rootScope', 'CommonService',
         function ($rootScope, commonService) {
             var ctrl = this;

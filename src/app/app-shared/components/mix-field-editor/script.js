@@ -1,5 +1,5 @@
 ﻿modules.component("mixFieldEditor", {
-  templateUrl: "/app/app-shared/components/mix-field-editor/view.html",
+  templateUrl: "/mix-app/views/app-shared/components/mix-field-editor/view.html",
   bindings: {
     model: "=",
     field: "=",

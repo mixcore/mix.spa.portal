@@ -1,6 +1,6 @@
 ﻿
 app.component('pageParents', {
-    templateUrl: '/app/app-portal/pages/page/components/parents/parents.html',
+    templateUrl: '/mix-app/views/app-portal/pages/page/components/parents/parents.html',
     bindings: {
         page: '=',
         onDelete: '&',

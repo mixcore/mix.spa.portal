@@ -1,5 +1,5 @@
 ﻿modules.component("uploadCroppie", {
-  templateUrl: "/app/app-shared/components/upload-croppie/view.html?v=1",
+  templateUrl: "/mix-app/views/app-shared/components/upload-croppie/view.html?v=1",
   bindings: {
     header: "=",
     description: "=",
@@ -33,7 +33,7 @@
       ctrl.postedFile = {};
       ctrl.isImage = false;
       ctrl.mediaNavs = [];
-      ctrl.image_placeholder = "/assets/img/image_placeholder.jpg";
+      ctrl.image_placeholder = "/mix-app/assets/img/image_placeholder.jpg";
       // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
       ctrl.$onInit = function () {
         ctrl.loadViewport();
@@ -223,7 +223,7 @@
           ctrl.options.viewport.height = ctrl.h;
           ctrl.options.viewport.width = ctrl.options.viewport.height * ctrl.rto;
         }
-        // ctrl.image_placeholder = "/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
+        // ctrl.image_placeholder = "/mix-app/assets/img/image_placeholder.jpg"; // `https://via.placeholder.com/${ctrl.options.render.width}x${ctrl.options.render.height}.png`;
       };
     },
   ],

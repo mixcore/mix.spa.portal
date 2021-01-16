@@ -1,6 +1,6 @@
 ﻿
 app.component('pageSeo', {
-    templateUrl: '/app/app-portal/pages/page/components/seo/seo.html',
+    templateUrl: '/mix-app/views/app-portal/pages/page/components/seo/seo.html',
     controller: [
         '$rootScope',
         function($rootScope){

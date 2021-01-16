@@ -1,5 +1,5 @@
 ﻿modules.component("mediaFileUpload", {
-  templateUrl: "/app/app-portal/components/media-file-upload/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/media-file-upload/view.html",
   bindings: {
     header: "=?",
     description: "=?",
@@ -22,7 +22,7 @@
     function ($rootScope, $scope, ngAppSettings, mediaService) {
       var ctrl = this;
       ctrl.isAdmin = $rootScope.isAdmin;
-      var image_placeholder = "/assets/img/image_placeholder.jpg";
+      var image_placeholder = "/mix-app/assets/img/image_placeholder.jpg";
       ctrl.isImage = false;
       ctrl.mediaNavs = [];
       ctrl.$onInit = function () {

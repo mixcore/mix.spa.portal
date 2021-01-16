@@ -1,6 +1,6 @@
 ﻿
 modules.component('menuItemEditor', {
-    templateUrl: '/app/app-portal/pages/navigation/components/menu-item-editor/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/navigation/components/menu-item-editor/view.html',
     bindings: {
         attributeValue: '=?',
         parentType: '=?',

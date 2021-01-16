@@ -25,15 +25,15 @@ app.controller("Step1Controller", [
           text: "MySQL Server",
           value: "MySQL",
           port: "3306",
-          img: "/assets/img/mysql.jpg",
+          img: "/mix-app/assets/img/mysql.jpg",
         },
         {
           text: "Microsoft SQL Server",
           value: "MSSQL",
           port: null,
-          img: "/assets/img/mssql.jpg",
+          img: "/mix-app/assets/img/mssql.jpg",
         },
-        // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/assets/img/mysql.jpg' }
+        // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/mix-app/assets/img/mysql.jpg' }
       ],
       cultures: [],
     };

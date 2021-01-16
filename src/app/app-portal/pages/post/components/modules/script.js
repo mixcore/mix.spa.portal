@@ -1,6 +1,6 @@
 ﻿
 app.component('postModules', {
-    templateUrl: '/app/app-portal/pages/post/components/modules/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/post/components/modules/view.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', 'SharedModuleDataService',
         function ($rootScope, $scope, ngAppSettings, moduleDataService) {
             var ctrl = this;

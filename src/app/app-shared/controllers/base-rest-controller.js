@@ -66,6 +66,7 @@ function BaseRestCtrl(
       }
     }
   };
+
   $scope.goToDetail = function (id, type) {
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
@@ -209,6 +210,8 @@ function BaseRestCtrl(
       } else {
         resp = await service.update($scope.viewModel.id, $scope.viewModel);
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
       if (resp.isSucceed) {
         $scope.viewModel = resp.data;
         $rootScope.showMessage("success", "success");
@@ -219,9 +222,6 @@ function BaseRestCtrl(
             $scope.saveSuccessCallbackArgs,
             $scope
           );
-        } else {
-          $rootScope.isBusy = false;
-          $scope.$apply();
         }
       } else {
         if ($scope.saveFailCallback) {
@@ -234,8 +234,6 @@ function BaseRestCtrl(
         if (resp) {
           $rootScope.showErrors(resp.errors);
         }
-        $rootScope.isBusy = false;
-        $scope.$apply();
       }
       return resp;
     } else {
@@ -251,6 +249,7 @@ function BaseRestCtrl(
       $scope.removeObject($scope.selectedList.data, id);
     }
   };
+
   $scope.selectAll = function (isSelected) {
     $scope.selectedList.data = [];
     angular.forEach($scope.data.items, function (e) {
@@ -260,6 +259,7 @@ function BaseRestCtrl(
       }
     });
   };
+  
   $scope.applyList = async function () {
     $rootScope.showConfirm(
       $scope,

@@ -1,6 +1,6 @@
 ﻿
 app.component('postAttributeSet', {
-    templateUrl: '/app/app-portal/pages/post/components/attribute-set/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/post/components/attribute-set/view.html',
     bindings: {
         set: '=',
         parentType: '=?',

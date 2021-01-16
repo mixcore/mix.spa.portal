@@ -1,6 +1,6 @@
 ﻿
 app.component('postRelated', {
-    templateUrl: '/app/app-portal/pages/post/components/related/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/post/components/related/view.html',
     controller: function () {
         var ctrl = this;
         ctrl.activePost = function (model) {

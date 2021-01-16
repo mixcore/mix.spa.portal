@@ -1,6 +1,6 @@
 ﻿(function (angular) {
   app.component("headerNav", {
-    templateUrl: "/app/app-portal/components/header-nav/headerNav.html",
+    templateUrl: "/mix-app/views/app-portal/components/header-nav/headerNav.html",
     controller: [
       "$rootScope",
       "$location",

@@ -1,5 +1,5 @@
 modules.component('propertiesValue', {
-    templateUrl: '/app/app-portal/components/properties-value/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/properties-value/view.html',
     bindings: {
         title: '=',
         columns: '=',
