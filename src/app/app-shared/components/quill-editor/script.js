@@ -77,6 +77,7 @@
             ctrl.updateContent = function () {
                 // ctrl.content = JSON.stringify(ctrl.editor.getContents());
                 ctrl.content = ctrl.editor.root.innerHTML;
+                $scope.$apply();
                 // console.log(ctrl.content);
             };
 
