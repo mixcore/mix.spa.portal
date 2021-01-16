@@ -54,10 +54,21 @@ app.factory("RestAttributeSetDataPortalService", [
       return await commonService.getRestApiResult(req);
     };
 
+    var _import = async function (attributeSetName, file) {
+      var url =
+        (this.prefixUrl || "/" + this.lang + "/" + this.modelName) +
+        "/import-data/" +
+        attributeSetName;
+      var frm = new FormData();
+      frm.append("file", file);
+      return serviceFactory.ajaxSubmitForm(frm, url);
+    };
+
     serviceFactory.initData = _initData;
     serviceFactory.getAddictionalData = _getAddictionalData;
     serviceFactory.saveAddictionalData = _saveAddictionalData;
     serviceFactory.export = _export;
+    serviceFactory.import = _import;
     return serviceFactory;
   },
 ]);

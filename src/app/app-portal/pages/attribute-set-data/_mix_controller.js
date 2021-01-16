@@ -114,10 +114,10 @@ app.controller("MixAttributeSetDataController", [
     $scope.import = async function () {
       if ($scope.validateDataFile()) {
         $rootScope.isBusy = true;
-        var form = document.getElementById("frm-import");
+        var form = document.getElementById("form-portal");
         var result = await service.import(
           $scope.attributeSetName,
-          form["data"].files[0]
+          form["import-data-inp"].files[0]
         );
         if (result.isSucceed) {
           $rootScope.showMessage("success", "success");

@@ -74,19 +74,15 @@
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-
-
-                        <form action="" id="frm-import" class="">
-                            <div class="input-group">
-                                <input id="inp-import-data" type="file" name="data"
-                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                                    ngf-select="selectImportFile($files)" data-files="file.files" class="form-control"
-                                    aria-label="Upload">
-                                <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
-                                    class="btn btn-outline-secondary text-white">
-                                    <i class="fas fa-upload"></i> Import</label>
-                            </div>
-                        </form>
+                        <div class="input-group">
+                            <input id="inp-import-data" type="file" name="import-data-inp"
+                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                ngf-select="selectImportFile($files)" data-files="file.files" class="form-control"
+                                aria-label="Upload">
+                            <a ng-class="{'btn-secondary': !importFile.file}" ng-click="import()"
+                                class="btn btn-outline-secondary text-white">
+                                <i class="fas fa-upload"></i> Import</label>
+                        </div>
                     </div>
                 </div>
             </div>
