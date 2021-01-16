@@ -157,7 +157,6 @@
             $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.dataId) != null;
           e.attributeData.disabled = e.disabled;
         });
-        $scope.$apply();
       };
       ctrl.select = function (nav) {
         if (nav.isActived) {
