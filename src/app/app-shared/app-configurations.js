@@ -365,6 +365,9 @@ app.run([
       }
     };
     $rootScope.showMessage = function (content, type) {
+      // $rootScope.toast = new  bootstrap.Toast(document.getElementById('toast-msg'));
+      // $rootScope.toastMsg= content;
+      // $rootScope.toast.show();
       var from = "bottom";
       var align = "right";
       if ($ && $.notify) {

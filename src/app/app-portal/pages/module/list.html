@@ -84,7 +84,7 @@
                           <small class="small">{{item.priority}}</small>
                       </td> -->
           <td>
-            <a href="/portal/module/details/{{item.id}}" class="btn btn-link">
+            <a href="/portal/module/details/{{item.id}}" class="btn-link">
               <small>{{item.title}}</small>
             </a>
           </td>
@@ -124,9 +124,9 @@
         </tr>
       </tbody>
     </table>
-    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-      ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
-      scroll-top="true">
-    </paging>
   </div>
+  <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+    ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+    scroll-top="true">
+  </paging>
 </div>
