@@ -14,7 +14,7 @@ app.controller('ThemeController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             $scope.theme = null;
         }
         $scope.save = async function (viewModel) {
-            var form = document.getElementById('frm-theme');
+            var form = document.getElementById('form-portal');
             var frm = new FormData();
             var url = service.prefixUrl + '/save';
 
