@@ -37,7 +37,7 @@
         <div class="col-sm-12">
           <div ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
             
-            <mix-field-editor model="$ctrl.attrData" field="field"></mix-field-editor>
+            <mix-field-editor level="$ctrl.level + 1" model="$ctrl.attrData" field="field"></mix-field-editor>
           </div>
         </div>
       </div>

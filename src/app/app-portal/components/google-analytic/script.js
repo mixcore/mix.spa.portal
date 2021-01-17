@@ -5,6 +5,7 @@
     function ($rootScope, commonService) {
       var ctrl = this;
       ctrl.init = function () {
+        if(gapi){
         gapi.analytics.ready(function () {
           if ($rootScope.settings.data.Google_Client_Id) {
             /**
@@ -173,6 +174,7 @@
             // });
           }
         });
+      }
       }
     }
   ],

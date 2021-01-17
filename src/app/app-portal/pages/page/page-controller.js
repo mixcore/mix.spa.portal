@@ -60,7 +60,7 @@ app.controller("PageController", [
       }
     };
     $scope.getSingleSuccessCallback = function () {
-      $scope.loadAddictionalData();
+      $scope.loadAdditionalData();
 
       if ($scope.viewModel.sysCategories) {
         angular.forEach($scope.viewModel.sysCategories, function (e) {
@@ -90,15 +90,15 @@ app.controller("PageController", [
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
     };
-    $scope.loadAddictionalData = async function () {
+    $scope.loadAdditionalData = async function () {
       const obj = {
         parentType: "Page",
         parentId: $scope.viewModel.id,
         databaseName: "sys_additional_field_page",
       };
-      const getData = await dataService.getAddictionalData(obj);
+      const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {
-        $scope.addictionalData = getData.data;
+        $scope.additionalData = getData.data;
         $scope.$apply();
       }
     };
@@ -156,15 +156,15 @@ app.controller("PageController", [
       }
     };
     $scope.saveSuccessCallback = async function () {
-      if ($scope.addictionalData) {
-        $scope.addictionalData.parentId = $scope.viewModel.id;
-        $scope.addictionalData.parentType = "Page";
-        var saveData = await dataService.save($scope.addictionalData);
+      if ($scope.additionalData) {
+        $scope.additionalData.parentId = $scope.viewModel.id;
+        $scope.additionalData.parentType = "Page";
+        var saveData = await dataService.save($scope.additionalData);
         if (saveData.isSucceed) {
           if ($location.path() == "/portal/page/create") {
             $scope.goToDetail($scope.viewModel.id, "page");
           } else {
-            $scope.addictionalData = saveData.data;
+            $scope.additionalData = saveData.data;
           }
         }
       }

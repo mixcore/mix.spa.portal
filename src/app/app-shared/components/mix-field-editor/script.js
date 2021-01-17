@@ -8,6 +8,7 @@
     createUrl: "=?",
     updateUrl: "=?",
     backUrl: "=?",
+    level: "=?",
   },
   controller: [
     "$rootScope",

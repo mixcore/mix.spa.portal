@@ -1,8 +1,8 @@
 modules.component("addictionalValue", {
   templateUrl: "/mix-app/views/app-portal/components/addictional-value/view.html",
   bindings: {
-    addictionalData: "=?",
-    addictionalDataId: "=?",
+    additionalData: "=?",
+    additionalDataId: "=?",
     parentType: "=?",
     parentId: "=?",
     databaseName: "=?",
@@ -19,26 +19,26 @@ modules.component("addictionalValue", {
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
-        if (!ctrl.addictionalData) {
-          if (!ctrl.addictionalDataId) {
+        if (!ctrl.additionalData) {
+          if (!ctrl.additionalDataId) {
             const obj = {
               parentType: ctrl.parentType,
               parentId: ctrl.parentId,
               databaseName: ctrl.databaseName,
             };
-            const getData = await dataService.getAddictionalData(obj);
+            const getData = await dataService.getAdditionalData(obj);
             if (getData.isSucceed) {
-              ctrl.addictionalData = getData.data;
-              ctrl.addictionalData.attributeSetName = ctrl.databaseName;
-              ctrl.addictionalData.parentType = ctrl.parentType;
-              ctrl.addictionalData.parentId = ctrl.parentId;
+              ctrl.additionalData = getData.data;
+              ctrl.additionalData.attributeSetName = ctrl.databaseName;
+              ctrl.additionalData.parentType = ctrl.parentType;
+              ctrl.additionalData.parentId = ctrl.parentId;
               $scope.$apply();
             } else {
               $rootScope.showErrors(getData.errors);
             }
           } else {
-            var getData = await dataService.getSingle([ctrl.addictionalDataId]);
-            ctrl.addictionalData = getData.data;
+            var getData = await dataService.getSingle([ctrl.additionalDataId]);
+            ctrl.additionalData = getData.data;
             $scope.$apply();
           }
         }
@@ -74,7 +74,7 @@ modules.component("addictionalValue", {
           $rootScope.isBusy = true;
           var result = await valueService.delete([val.id]);
           if (result.isSucceed) {
-            ctrl.model.addictionalData.data.values.splice(index, 1);
+            ctrl.model.additionalData.data.values.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -83,7 +83,7 @@ modules.component("addictionalValue", {
             $scope.$apply();
           }
         } else {
-          ctrl.model.addictionalData.data.values.splice(index, 1);
+          ctrl.model.additionalData.data.values.splice(index, 1);
         }
       };
     },

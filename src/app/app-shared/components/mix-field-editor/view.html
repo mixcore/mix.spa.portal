@@ -139,10 +139,10 @@
 </div>
 <!-- TODO: Only allow stringValue -->
 <div ng-if="$ctrl.model && $ctrl.field.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
-  <div class="col-3">
-    <h6 class="control-label" ng-if="$ctrl.isShowTitle" ng-bind="$ctrl.field.title"></h6>
+  <div class="col-2">
+    <h6 class="control-label" ng-bind="$ctrl.translate($ctrl.field.title)"></h6>
   </div>
-  <div class="col-9">
+  <div class="col-10">
     <select ng-if="$ctrl.field.dataType!='icon'" class="form-select form-control"
       ng-model="$ctrl.model.obj[$ctrl.field.name]">
       <option ng-repeat="item in $ctrl.field.options track by $index" ng-value="item.value">

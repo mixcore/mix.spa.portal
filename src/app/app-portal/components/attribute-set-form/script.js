@@ -1,5 +1,6 @@
 modules.component("attributeSetForm", {
-  templateUrl: "/mix-app/views/app-portal/components/attribute-set-form/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/attribute-set-form/view.html",
   bindings: {
     attributeSetId: "=",
     attributeSetName: "=",
@@ -10,6 +11,7 @@ modules.component("attributeSetForm", {
     parentId: "=?",
     defaultId: "=",
     backUrl: "=?",
+    level: "=?",
     hideAction: "=?",
     saveData: "&?",
   },
@@ -36,6 +38,7 @@ modules.component("attributeSetForm", {
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
+        ctrl.level = ctrl.level || 0;
         ctrl.loadData();
       };
       ctrl.loadData = async function () {
@@ -86,8 +89,9 @@ modules.component("attributeSetForm", {
               case "Post":
               case "Page":
               case "Module":
-                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${ctrl.parentId
-                  }`;
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                  ctrl.parentId
+                }`;
                 break;
 
               default:

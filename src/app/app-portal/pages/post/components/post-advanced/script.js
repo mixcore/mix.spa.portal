@@ -2,7 +2,7 @@
   templateUrl: "/mix-app/views/app-portal/pages/post/components/post-advanced/view.html",
   bindings: {
     model: "=",
-    addictionalData: "=",
+    additionalData: "=",
   },
   controller: [
     "$rootScope",

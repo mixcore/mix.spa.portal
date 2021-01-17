@@ -32,7 +32,7 @@ app.controller("ModuleController", [
     );
     $scope.contentUrl = "";
     $scope.getSingleSuccessCallback = function () {
-      $scope.loadAddictionalData();
+      $scope.loadAdditionalData();
 
       if ($scope.viewModel.id > 0) {
         // module => list post or list product
@@ -222,11 +222,11 @@ app.controller("ModuleController", [
       }
     };
     $scope.saveSuccessCallback = async function () {
-      if ($scope.addictionalData) {
-        $scope.addictionalData.parentId = $scope.viewModel.id;
-        $scope.addictionalData.parentType = "Module";
-        var saveData = await dataService.saveAddictionalData(
-          $scope.addictionalData
+      if ($scope.additionalData) {
+        $scope.additionalData.parentId = $scope.viewModel.id;
+        $scope.additionalData.parentType = "Module";
+        var saveData = await dataService.saveAdditionalData(
+          $scope.additionalData
         );
         if (saveData.isSucceed) {
           if ($location.path() == "/portal/module/create") {
@@ -234,7 +234,7 @@ app.controller("ModuleController", [
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
-            $scope.addictionalData = saveData.data;
+            $scope.additionalData = saveData.data;
             $rootScope.isBusy = false;
             $scope.$apply();
           }
@@ -275,15 +275,15 @@ app.controller("ModuleController", [
       RestRelatedAttributeSetPortalService.delete([]);
       $scope.viewModel.attributeData.data.values.splice(index, 1);
     };
-    $scope.loadAddictionalData = async function () {
+    $scope.loadAdditionalData = async function () {
       const obj = {
         parentType: "Module",
         parentId: $scope.viewModel.id,
         databaseName: "sys_additional_field_module",
       };
-      const getData = await dataService.getAddictionalData(obj);
+      const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {
-        $scope.addictionalData = getData.data;
+        $scope.additionalData = getData.data;
         $rootScope.isBusy = false;
         $scope.$apply();
       }

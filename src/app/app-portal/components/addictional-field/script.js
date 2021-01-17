@@ -2,7 +2,7 @@ modules.component("addictionalField", {
   templateUrl: "/mix-app/views/app-portal/components/addictional-field/view.html",
   bindings: {
     model: "=",
-    addictionalData: "=",
+    additionalData: "=",
   },
   controller: [
     "$rootScope",
@@ -22,7 +22,7 @@ modules.component("addictionalField", {
       ctrl.addAttr = function () {
         if (ctrl.field.name) {
           var current = $rootScope.findObjectByKey(
-            ctrl.addictionalData.fields,
+            ctrl.additionalData.fields,
             "name",
             ctrl.field.name
           );
@@ -30,8 +30,8 @@ modules.component("addictionalField", {
             $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
           } else {
             var t = angular.copy(ctrl.field);
-            t.priority = ctrl.addictionalData.fields.length + 1;
-            ctrl.addictionalData.fields.push(t);
+            t.priority = ctrl.additionalData.fields.length + 1;
+            ctrl.additionalData.fields.push(t);
 
             //reset field option
             ctrl.field.title = "";
@@ -87,7 +87,7 @@ modules.component("addictionalField", {
           $rootScope.isBusy = true;
           var result = await fieldService.delete([val.id]);
           if (result.isSucceed) {
-            ctrl.addictionalData.fields.splice(index, 1);
+            ctrl.additionalData.fields.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -96,7 +96,7 @@ modules.component("addictionalField", {
             $scope.$apply();
           }
         } else {
-          ctrl.addictionalData.data.values.splice(index, 1);
+          ctrl.additionalData.data.values.splice(index, 1);
         }
       };
     },

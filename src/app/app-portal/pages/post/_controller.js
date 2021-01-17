@@ -29,7 +29,7 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
-    $scope.addictionalData = null;
+    $scope.additionalData = null;
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
@@ -155,15 +155,15 @@ app.controller("PostController", [
       });
     };
     $scope.saveSuccessCallback = async function () {
-      if ($scope.addictionalData) {
-        $scope.addictionalData.parentId = $scope.viewModel.id;
-        $scope.addictionalData.parentType = "Post";
-        var saveData = await dataService.save($scope.addictionalData);
+      if ($scope.additionalData) {
+        $scope.additionalData.parentId = $scope.viewModel.id;
+        $scope.additionalData.parentType = "Post";
+        var saveData = await dataService.save($scope.additionalData);
         if (saveData.isSucceed) {
           if ($location.path() == "/portal/post/create") {
             $scope.goToDetail($scope.viewModel.id, "post");
           } else {
-            $scope.addictionalData = saveData.data;
+            $scope.additionalData = saveData.data;
           }
         }
       }
@@ -180,7 +180,7 @@ app.controller("PostController", [
         $scope.viewModel.detailsUrl = `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${$scope.viewModel.seoName}`;
       }
       await $scope.loadPostTypes()
-      $scope.loadAddictionalData();
+      $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
           var moduleNav = $rootScope.findObjectByKey(
@@ -230,15 +230,15 @@ app.controller("PostController", [
       );
     };
 
-    $scope.loadAddictionalData = async function () {
+    $scope.loadAdditionalData = async function () {
       const obj = {
         parentType: "Post",
         parentId: $scope.viewModel.id,
         databaseName: $scope.viewModel.type,
       };
-      const getData = await dataService.getAddictionalData(obj);
+      const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {
-        $scope.addictionalData = getData.data;
+        $scope.additionalData = getData.data;
         $scope.$apply();
       }
     };

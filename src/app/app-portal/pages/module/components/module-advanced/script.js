@@ -3,7 +3,7 @@
     "/mix-app/views/app-portal/pages/module/components/module-advanced/view.html",
   bindings: {
     model: "=",
-    addictionalData: "=",
+    additionalData: "=",
   },
   controller: [
     "$rootScope",
