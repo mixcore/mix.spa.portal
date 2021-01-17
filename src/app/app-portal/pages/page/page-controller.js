@@ -61,22 +61,6 @@ app.controller("PageController", [
     };
     $scope.getSingleSuccessCallback = function () {
       $scope.loadAdditionalData();
-
-      if ($scope.viewModel.sysCategories) {
-        angular.forEach($scope.viewModel.sysCategories, function (e) {
-          // TODO: Hoang to check JS error
-          // e.attributeData.obj.isActived = true; 
-          // $scope.selectedCategories.push(e.attributeData.obj);
-        });
-      }
-
-      if ($scope.viewModel.sysTags) {
-        angular.forEach($scope.viewModel.sysTags, function (e) {
-          // TODO: Hoang to check JS error
-          // e.data.data.isActived = true;
-          // $scope.selectedCategories.push(e.attributeData.obj);
-        });
-      }
       if ($routeParams.template) {
         $scope.viewModel.view = $rootScope.findObjectByKey(
           $scope.viewModel.templates,
