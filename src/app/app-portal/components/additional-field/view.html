@@ -27,10 +27,10 @@
               class="form-control form-control-sm" />
           </div>
           <div class="mb-3x col-md-2">
-            <small class="form-label">Type</small>
+            <small class="form-label">Type {{col.dataType}}</small>
             <select class="form-control form-control-sm" ng-model="col.dataType"
               ng-change="$ctrl.changeDataType(col.dataType);">
-              <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.value">
+              <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.name">
                 {{item.name}}
               </option>
             </select>
@@ -156,7 +156,7 @@
                 </div>
                 <div class="mb-3x col-md-3">
                   <select class="form-control form-control-sm" ng-model="col.options[$index].dataType">
-                    <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.value">
+                    <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.name">
                       {{item.name}}
                     </option>
                   </select>
@@ -221,7 +221,7 @@
         <div class="col-md-10 row">
           <input type="text" class="col-7 form-control form-control-sm" ng-model="col.options[$index].value" />
           <select class="col-5 form-control form-control-sm" ng-model="col.options[$index].dataType">
-            <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.value">
+            <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.name">
               {{item.name}}
             </option>
           </select>
@@ -244,7 +244,7 @@
         <small class="form-label">Type</small>
         <select class="form-control form-control-sm" ng-model="$ctrl.field.dataType"
           ng-change="$ctrl.changeDataType($ctrl.field.dataType);">
-          <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.value">
+          <option ng-repeat="item in $ctrl.settings.dataTypes track by $index" ng-value="item.name">
             {{item.name}}
           </option>
         </select>

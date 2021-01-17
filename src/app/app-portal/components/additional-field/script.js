@@ -1,5 +1,5 @@
-modules.component("addictionalField", {
-  templateUrl: "/mix-app/views/app-portal/components/addictional-field/view.html",
+modules.component("additionalField", {
+  templateUrl: "/mix-app/views/app-portal/components/additional-field/view.html",
   bindings: {
     model: "=",
     additionalData: "=",
@@ -36,7 +36,7 @@ modules.component("addictionalField", {
             //reset field option
             ctrl.field.title = "";
             ctrl.field.name = "";
-            ctrl.field.dataType = "text";
+            ctrl.field.dataType = "Text";
           }
         } else {
           $rootScope.showErrors(["Please add column Name"]);

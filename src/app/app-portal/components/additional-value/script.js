@@ -1,5 +1,5 @@
-modules.component("addictionalValue", {
-  templateUrl: "/mix-app/views/app-portal/components/addictional-value/view.html",
+modules.component("additionalValue", {
+  templateUrl: "/mix-app/views/app-portal/components/additional-value/view.html",
   bindings: {
     additionalData: "=?",
     additionalDataId: "=?",

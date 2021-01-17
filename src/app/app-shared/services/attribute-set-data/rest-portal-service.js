@@ -7,7 +7,7 @@ app.factory("RestAttributeSetDataPortalService", [
     serviceFactory.init("attribute-set-data/portal");
 
     var _saveAdditionalData = async function (objData) {
-      var url = this.prefixUrl + "/save-addictional-data";
+      var url = this.prefixUrl + "/save-additional-data";
       var req = {
         method: "POST",
         url: url,
@@ -17,7 +17,7 @@ app.factory("RestAttributeSetDataPortalService", [
     };
 
     var _getAdditionalData = async function (data) {
-      var url = this.prefixUrl + "/addictional-data";
+      var url = this.prefixUrl + "/additional-data";
       var queries = serviceFactory.parseQuery(data);
       if (queries) {
         url += "?";
