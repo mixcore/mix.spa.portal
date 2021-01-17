@@ -697,7 +697,7 @@ app.run([
         templateUrl: templateUrl,
         controller: controllerName,
         controllerAs: "$ctrl",
-        size: "lg",
+        size: size,
         resolve: resolve,
       });
 
