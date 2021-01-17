@@ -193,6 +193,17 @@ modules.component("attributeSetForm", {
         });
         return isValid;
       };
+      ctrl.showContentFilter = function ($event) {
+        $rootScope.showContentFilter(ctrl.loadSelectedLink);
+      };
+      ctrl.loadSelectedLink = function (data, type) {
+        if (data) {
+          ctrl.attrData.obj.target_id = data.id;
+          ctrl.attrData.obj.title = data.title;
+          ctrl.attrData.obj.type = type;
+          ctrl.attrData.obj.uri = data.detailsUrl;
+        }
+      };
       ctrl.filterData = function (attributeName) {
         if (ctrl.attrData) {
           var attr = $rootScope.findObjectByKey(
