@@ -1,5 +1,6 @@
 ﻿modules.component("modalHelper", {
-  templateUrl: "/mix-app/views/app-portal/components/modal-helper/modal-helper.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/modal-helper/modal-helper.html",
   bindings: {
     url: "=?",
     title: "=?",
@@ -21,8 +22,20 @@
     ) {
       var ctrl = this;
       ctrl.$onInit = function () {
-        ctrl.trustedUrl = $sce.trustAsResourceUrl(ctrl.url);
-        ctrl.title = ctrl.title || "Developer Document";
+        $("#dev-helper-modal").on("shown.bs.modal", function () {
+          ctrl.loadHelperUrl();
+        });
+      };
+      ctrl.loadHelperUrl = function () {
+        var portalUrl = $location.url();
+        var defaultUrl = 'https://docs.mixcore.org/docs/introduction';
+        switch (portalUrl) {
+          case '/portal':
+            ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl);
+            ctrl.title = "Developer Document";
+            $scope.$apply();
+            break;
+        }
       };
     },
   ],
