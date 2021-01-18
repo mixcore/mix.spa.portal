@@ -2,9 +2,8 @@
     <navs class="col-12 mb-2" data="$ctrl.navs" prefix="'module-nav'" model="'nav-related'"></navs>
 </div>
 <div class="row">
-
-    <div class="col-12">
-        <filter-list request="$ctrl.request" callback="$ctrl.load(pageIndex)"></filter-list>
+    <div class="col-8">
+        
         <table class="table table-sm table-hover mt-2">
             <thead class="thead-light">
                 <tr>
@@ -41,5 +40,8 @@
         <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize" total="$ctrl.data.totalItems"
             ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="callback(page-1)"
             scroll-top="true"></paging>
+    </div>
+    <div class="col-4">
+        <filter-list request="$ctrl.request" callback="$ctrl.load(pageIndex)"></filter-list>
     </div>
 </div>
