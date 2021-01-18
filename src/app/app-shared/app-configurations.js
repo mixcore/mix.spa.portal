@@ -690,6 +690,11 @@ app.run([
       }
     };
 
+    $rootScope.showHelper = function(url) {
+      $rootScope.helperUrl = url;
+      $("#dev-helper-modal").modal('show');
+    }
+
     $rootScope.openModal = function(templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null){
       var modalInstance = $uibModal.open({
         animation: true,

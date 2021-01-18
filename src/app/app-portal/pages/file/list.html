@@ -1,5 +1,5 @@
 <aside class="bd-sidebar sub-sidebar" ng-if="folderType">
-    <nav class="bd-links p-3" aria-label="Docs navigation">
+    <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
         <filter-list request="request" callback="loadFiles(pageIndex)"></filter-list>
     </nav>
 </aside>
@@ -12,18 +12,18 @@
     <h3>File list</h3>
     <p class="text-subtitle text-muted">The table below display all of the files within your content and assets folders.</p>
 
-    <div class="mb-5">
-        <div class="row mb-3">
-            <div class="col-6">
-                <a class="btn btn-outline-primary px-3" ng-if="backUrl" href="{{backUrl}}"><i
-                    class="fas fa-reply"></i> Back</a>
-            </div>
-            <div class="col-6">
-                <mix-file-upload folder="request.key" on-success="loadFiles()">
-                </mix-file-upload>
-            </div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <a class="btn btn-outline-primary px-3" ng-if="backUrl" href="{{backUrl}}"><i
+                class="fas fa-reply"></i> Back</a>
         </div>
-        <div class="row">
+        <div class="col-6">
+            <mix-file-upload folder="request.key" on-success="loadFiles()">
+            </mix-file-upload>
+        </div>
+    </div>
+    <div class="card mb-5">
+        <div class="card-body">
             <div class="col-12">
                 <table class="table table-sm table-hover">
                     <thead class="thead-light">

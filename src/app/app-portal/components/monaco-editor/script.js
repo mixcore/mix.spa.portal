@@ -28,6 +28,10 @@
         }
       };
 
+      ctrl.showHelper = function(url){
+        $rootScope.showHelper(url);
+      }
+
       this.$doCheck = function () {
         if (ctrl.previousId != null && ctrl.previousId !== ctrl.contentId) {
           ctrl.previousId = ctrl.contentId;

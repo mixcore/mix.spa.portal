@@ -23,7 +23,16 @@
       var ctrl = this;
       ctrl.$onInit = function () {
         $("#dev-helper-modal").on("shown.bs.modal", function () {
-          ctrl.loadHelperUrl();
+          if ($rootScope.helperUrl) {
+            ctrl.trustedUrl = $sce.trustAsResourceUrl($rootScope.helperUrl);
+            ctrl.title = "Developer Document";
+          }
+          else {
+            ctrl.loadHelperUrl();
+            ctrl.title = "Developer Document";
+          }
+          $rootScope.helperUrl = null;
+          $scope.$apply();
         });
       };
       ctrl.loadHelperUrl = function () {
@@ -31,9 +40,8 @@
         var defaultUrl = 'https://docs.mixcore.org/docs/introduction';
         switch (portalUrl) {
           case '/portal':
+          default:
             ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl);
-            ctrl.title = "Developer Document";
-            $scope.$apply();
             break;
         }
       };
