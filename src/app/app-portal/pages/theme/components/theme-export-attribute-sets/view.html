@@ -6,7 +6,7 @@
                 <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.exportData.attributeSets)"
                     id="switchSelectAllAttributeSets" />
-                <label class="custom-control-label" for="switchSelectAllAttributeSets">Select all attributeSets</label>
+                <label class="custom-control-label" for="switchSelectAllAttributeSets">Select all databases</label>
             </div>            
         </div>
         <div class="col-md-6">
@@ -27,7 +27,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-11" ng-show="attributeSet.isActived">
                 <input type="checkbox" ng-model="attributeSet.isExportData" ng-change="$ctrl.updateAttributeSetExport()" />
-                Export Data
+                With Data
             </div>
         </div>
     </div>
