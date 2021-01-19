@@ -678,6 +678,19 @@ app.run([
       // window.top.location.href = "/security/login";
       $("#login-popup").modal("show");
     };
+    $rootScope.isInRoles = function (roleNames) {
+      for (let index = 0; index < roleNames.length; index++) {
+        const roleName = roleNames[index];
+        if (authService.isInRole(roleName)) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $rootScope.isInRole = function (roleName) {
+      return authService.isInRole(roleName);
+    };
     $rootScope.showContentFilter = function (callback) {
       $rootScope.contentFilterCallback = callback;
       $("#modal-content-filter").modal("show");
