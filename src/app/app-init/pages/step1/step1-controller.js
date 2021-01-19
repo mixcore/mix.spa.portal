@@ -39,7 +39,12 @@ app.controller("Step1Controller", [
           port: null,
           img: "/mix-app/assets/img/mssql.jpg",
         },
-        // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/mix-app/assets/img/mysql.jpg' }
+        {
+          text: "PostgreSQL Server",
+          value: "PostgreSQL",
+          port: "5432",
+          img: "/mix-app/assets/img/mysql.jpg",
+        },
       ],
       cultures: [],
     };
@@ -65,7 +70,7 @@ app.controller("Step1Controller", [
     $scope.changeTypeDB = async function (type) {
       $scope.initCmsModel.isUseLocal = type;
     };
-    
+
     $scope.canConnect = function () {
       return (
         ($scope.initCmsModel.databaseServer &&
@@ -82,7 +87,7 @@ app.controller("Step1Controller", [
         "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=" +
         rand +
         "-mix-cms.db;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
-      sqliteDbConnectionString: "Data Source=MixContent\\" + rand + "-mix-cms.db",
+      sqliteDbConnectionString: "Data Source=MixContent\\mix-cms.db",
       localDbName: rand + "-mix-cms",
       databaseServer: "",
       databasePort: "",
@@ -110,8 +115,8 @@ app.controller("Step1Controller", [
       $scope.initCmsModel.databasePort = $scope.dbProvider.port;
     };
     $scope.initCms = async function () {
-      if(!$scope.canConnect()){
-        $rootScope.showErrors(['Please check your connection info']);
+      if (!$scope.canConnect()) {
+        $rootScope.showErrors(["Please check your connection info"]);
         return;
       }
       $rootScope.isBusy = true;
