@@ -21,7 +21,8 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
         // multipart form   
         $scope.formFile = null; 
         $scope.relatedMedias = [];
-        $scope.save = async function (data) {
+        $scope.save = async function () {
+            var data = $scope.viewModel;
             $rootScope.isBusy = true;
             if($scope.validate){
                 $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope)
