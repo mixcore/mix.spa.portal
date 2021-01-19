@@ -28,7 +28,7 @@
                     <div class="accordion-body">
                         <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
                             request="request" callback="getList(pageIndex)"></filter-list>
-
+                        <!-- TODO: Hoang to review again fields not show -->
                         <div ng-if="fields" ng-repeat="field in fields" class="mb-3">
                             <label class="form-label">{{field.title}}</label>
                             <input ng-model="queries[field.name]" ng-enter="getList()" class="form-control">
