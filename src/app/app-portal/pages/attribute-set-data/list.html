@@ -15,7 +15,7 @@
 
         </div>
 
-        <div class="accordion accordion-flush" id="accordionFlushExample" ng-init="$ctrl.init()">
+        <div class="accordion accordion-flush" id="accordionFlushExample" ng-init="init()">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -28,7 +28,6 @@
                     <div class="accordion-body">
                         <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
                             request="request" callback="getList(pageIndex)"></filter-list>
-
                         <div ng-if="fields" ng-repeat="field in fields" class="mb-3">
                             <label class="form-label">{{field.title}}</label>
                             <input ng-model="queries[field.name]" ng-enter="getList()" class="form-control">
@@ -107,7 +106,8 @@
                         <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
                     </div>
                 </div>
-                <attribute-set-values on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"
+                <attribute-set-values ng-if="fields" on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"
+                    fields="fields"
                     can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
                     on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
                     on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"

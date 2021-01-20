@@ -58,6 +58,16 @@ app.controller("MixAttributeSetDataController", [
           parentType: $scope.parentType,
         };
       }
+
+      if ($scope.attributeSetName || $scope.attributeSetId) {
+        var getFields = await fieldService.initData(
+          $scope.attributeSetName || $scope.attributeSetId
+        );
+        if (getFields.isSucceed) {
+          $scope.fields = getFields.data;
+          $scope.$apply();
+        }
+      }
     };
 
     $scope.selectData = function () {
