@@ -1,5 +1,5 @@
 ﻿modules.component('starRating', {
-    templateUrl: '/app/app-shared/components/star-rating/star-rating.html',
+    templateUrl: '/mix-app/views/app-shared/components/star-rating/star-rating.html',
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
         ctrl.translate = function (keyword) {

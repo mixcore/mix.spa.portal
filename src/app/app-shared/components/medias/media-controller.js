@@ -3,7 +3,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
     function ($scope, $rootScope, ngAppSettings, $routeParams, service, commonService) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
 
-        $scope.activedData = {
+        $scope.viewModel = {
             title: '',
             description: '',
             status: 'Published',
@@ -21,7 +21,8 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
         // multipart form   
         $scope.formFile = null; 
         $scope.relatedMedias = [];
-        $scope.save = async function (data) {
+        $scope.save = async function () {
+            var data = $scope.viewModel;
             $rootScope.isBusy = true;
             if($scope.validate){
                 $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope)
@@ -29,7 +30,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             if($scope.isValid){
                 var resp = await service.save(data, $scope.formFile);
                 if (resp && resp.isSucceed) {
-                    $scope.activedData = resp.data;
+                    $scope.viewModel = resp.data;
                     $rootScope.showMessage('success', 'success');
     
                     if ($scope.saveSuccessCallback) {
@@ -118,7 +119,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             }
         };
         $scope.saveSuccessCallback = function(){
-            $scope.activedData = {
+            $scope.viewModel = {
                 title: '',
                 description: '',
                 status: 'Published',

@@ -1,6 +1,6 @@
 ﻿
 app.component('customerMain', {
-    templateUrl: '/app/app-portal/pages/customer/components/main/customer-main.html',
+    templateUrl: '/mix-app/views/app-portal/pages/customer/components/main/customer-main.html',
     bindings: {
         customer: '=',
         onDelete: '&',

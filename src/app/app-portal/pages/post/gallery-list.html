@@ -6,7 +6,7 @@
                     create-text="'Create Post'">
                 </filter-list>
 
-                <select class="custom-select custom-select-sm col-2" ng-model="selectedList.action">
+                <select class="form-select form-select-sm col-2" ng-model="selectedList.action">
                     <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
                 </select>
                 <button type="buttin" class="btn btn-sm btn-primary"
@@ -20,8 +20,8 @@
                             <!-- <th ng-if="!canDrag" scope="col" width="15px">
                             </th> -->
                             <th scope="col" width="15px">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input"
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input"
                                         ng-model="selectedList.isSelectAll"
                                         ng-change="selectAll(selectedList.isSelectAll)" id="customCheck_all">
                                     <label class="custom-control-label" for="customCheck_all"></label>
@@ -79,7 +79,7 @@
                             </td>
 
                             <td>
-                                <div class="btn-group btn-group-sm btn-group-sm float-right" role="group"
+                                <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
                                     aria-label="Actions">
                                     <a href="/portal/post/gallery-details/{{item.id}}" class="btn btn-link text-primary">
                                         <span class="fas fa-pen"></span>

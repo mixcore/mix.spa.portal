@@ -1,6 +1,6 @@
 ﻿
 modules.component('mixLoader', {
-    templateUrl: '/app/app-shared/components/mix-loader/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/mix-loader/view.html',
     controller: ['$rootScope', '$location', function($rootScope, $location) {
         var ctrl = this;
         ctrl.imageDataArray = [];

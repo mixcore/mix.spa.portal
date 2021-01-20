@@ -1,5 +1,5 @@
 ﻿modules.component('modalPosts', {
-    templateUrl: '/app/app-shared/components/modal-posts/modal-posts.html',
+    templateUrl: '/mix-app/views/app-shared/components/modal-posts/modal-posts.html',
     controller: 'ModalPostController',
     bindings: {
         data: '=',

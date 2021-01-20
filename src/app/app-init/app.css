@@ -5,7 +5,7 @@
 /* Fading right column's image */
 .bg-register-image {
   transition: background-image 0.2s ease-in-out;
-  background-image: url("../assets/img/bgs/right-bg.png");
+  background-image: url("../mix-app/mix-app/assets/img/bgs/right-bg.png");
 }
 /* Input Site name */
 .input-site-name {
@@ -48,7 +48,7 @@ input.country-select {
   display: block;
 }
 /* .bg-register-image:hover {
-  background-image:url("../assets/img/bgs/NowUI-Demo.png");
+  background-image:url("../mix-app/mix-app/assets/img/bgs/NowUI-Demo.png");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -124,7 +124,7 @@ input.country-select {
 }
 
 .bg-register-image {
-  background-image: url("../assets/img/bgs/right-bg.png");
+  background-image: url("../mix-app/mix-app/assets/img/bgs/right-bg.png");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;

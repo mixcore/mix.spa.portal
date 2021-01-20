@@ -1,5 +1,5 @@
 ﻿modules.component('mediumNews', {
-  templateUrl: '/app/app-portal/components/medium-news/view.html',
+  templateUrl: '/mix-app/views/app-portal/components/medium-news/view.html',
   controller: [
     '$rootScope', '$http',
     function ($rootScope, $http) {

@@ -1,5 +1,5 @@
 ﻿modules.component('youtubeEditor', {
-    templateUrl: '/app/app-shared/components/youtube-editor/youtube-editor.html',
+    templateUrl: '/mix-app/views/app-shared/components/youtube-editor/youtube-editor.html',
     controller: ['$rootScope', '$scope', '$sce',
         function ($rootScope, $scope, $sce) {
             var ctrl = this;
@@ -25,6 +25,7 @@
         }
     ],
     bindings: {
-        code: '='
+        code: '=',
+        hideInput: '=?'
     }
 });

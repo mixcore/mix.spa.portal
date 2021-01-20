@@ -1,23 +1,23 @@
 <div ng-init="init()">
-  <div class="form-group">
-    <label class="control-label">App Id</label>
+  <div class="mb-3">
+    <label class="form-label">App Id</label>
     <input type="text" class="form-control" ng-model="socialSettings.app_id">
   </div>
-  <div class="form-group">
-    <label class="control-label">App Secret</label>
+  <div class="mb-3">
+    <label class="form-label">App Secret</label>
     <input type="password" class="form-control" ng-model="socialSettings.app_secret">
   </div>
-  <div class="form-group">
-    <label class="control-label">Access Token</label>
+  <div class="mb-3">
+    <label class="form-label">Access Token</label>
     <textarea class="form-control" ng-model="socialSettings.access_token"></textarea>
   </div>
-  <div class="form-group">
-    <label class="control-label">Page Id</label>
-    <select class="btn btn-secondary custom-select" ng-options="item.id as item.name for item in socialSettings.pages"
+  <div class="mb-3">
+    <label class="form-label">Page Id</label>
+    <select class="btn btn-secondary form-select" ng-options="item.id as item.name for item in socialSettings.pages"
       ng-model="socialSettings.page_id"></select>
     <input type="text" class="form-control" ng-model="socialSettings.page_id">
   </div>
-  <div class="form-group">
+  <div class="mb-3">
     <a class="btn btn-primary text-white" ng-if="socialSettings.posts.length>0" ng-click="syncPosts()">Sync</a>
     <a class="btn btn-primary text-white" ng-click="login()">Login</a>
     <a class="btn btn-primary text-white" ng-if="socialSettings.page_id" ng-click="loadFeeds()">Load Data</a>
@@ -61,7 +61,7 @@
 
 
         <td>
-          <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+          <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
             <a href="{{item.permalink_url}}" target="_blank" class="btn btn-dark">
               <span class="fas fa-eye text-info"></span>
             </a>
@@ -72,7 +72,7 @@
         <td colspan="6">
           <a class="btn btn-primary text-white" ng-if="socialSettings.prevUrl"
             ng-click="loadFeeds(socialSettings.prevUrl)">Prev</a>
-          <a class="btn btn-primary text-white float-right" ng-if="socialSettings.nextUrl"
+          <a class="btn btn-primary text-white float-end" ng-if="socialSettings.nextUrl"
             ng-click="loadFeeds(socialSettings.nextUrl)">Next</a>
         </td>
       </tr>

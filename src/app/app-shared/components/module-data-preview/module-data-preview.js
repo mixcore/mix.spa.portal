@@ -1,6 +1,6 @@
 ﻿modules.component("moduleDataPreview", {
   templateUrl:
-    "/app/app-shared/components/module-data-preview/module-data-preview.html",
+    "/mix-app/views/app-shared/components/module-data-preview/module-data-preview.html",
   controller: [
     "$rootScope",
     function ($rootScope) {

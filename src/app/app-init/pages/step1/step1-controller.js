@@ -25,15 +25,26 @@ app.controller("Step1Controller", [
           text: "MySQL Server",
           value: "MySQL",
           port: "3306",
-          img: "/assets/img/mysql.jpg",
+          img: "/mix-app/assets/img/mysql.jpg",
         },
         {
           text: "Microsoft SQL Server",
           value: "MSSQL",
           port: null,
-          img: "/assets/img/mssql.jpg",
+          img: "/mix-app/assets/img/mssql.jpg",
         },
-        // { text: 'PostgreSQL Server', value: 'PostgreSQL', port: '5432', img: '/assets/img/mysql.jpg' }
+        {
+          text: "SQLITE",
+          value: "SQLITE",
+          port: null,
+          img: "/mix-app/assets/img/mssql.jpg",
+        },
+        {
+          text: "PostgreSQL Server",
+          value: "PostgreSQL",
+          port: "5432",
+          img: "/mix-app/assets/img/mysql.jpg",
+        },
       ],
       cultures: [],
     };
@@ -59,15 +70,24 @@ app.controller("Step1Controller", [
     $scope.changeTypeDB = async function (type) {
       $scope.initCmsModel.isUseLocal = type;
     };
+
+    $scope.canConnect = function () {
+      return (
+        ($scope.initCmsModel.databaseServer &&
+          $scope.initCmsModel.databaseName &&
+          $scope.initCmsModel.databaseUser &&
+          $scope.initCmsModel.culture) ||
+        ($scope.initCmsModel.databaseProvider == "SQLITE" &&
+          $scope.initCmsModel.sqliteDbConnectionString)
+      );
+    };
     $scope.initCmsModel = {
       isUseLocal: false,
-      localDbConnectionString: "",
-      sqliteDbConnectionString: "",
       localDbConnectionString:
         "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=" +
         rand +
         "-mix-cms.db;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
-      sqliteDbConnectionString: "Data Source=" + rand + "-mix-cms",
+      sqliteDbConnectionString: "Data Source=MixContent\\mix-cms.db",
       localDbName: rand + "-mix-cms",
       databaseServer: "",
       databasePort: "",
@@ -95,6 +115,10 @@ app.controller("Step1Controller", [
       $scope.initCmsModel.databasePort = $scope.dbProvider.port;
     };
     $scope.initCms = async function () {
+      if (!$scope.canConnect()) {
+        $rootScope.showErrors(["Please check your connection info"]);
+        return;
+      }
       $rootScope.isBusy = true;
       if ($scope.initCmsModel.siteName && $scope.initCmsModel.siteName != "") {
         var result = await step1Services.initCms($scope.initCmsModel);

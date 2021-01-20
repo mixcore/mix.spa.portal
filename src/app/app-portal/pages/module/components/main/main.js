@@ -1,6 +1,6 @@
 ﻿
 app.component('moduleMain', {
-    templateUrl: '/app/app-portal/pages/module/components/main/main.html',
+    templateUrl: '/mix-app/views/app-portal/pages/module/components/main/main.html',
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
         ctrl.settings = $rootScope.globalSettings;

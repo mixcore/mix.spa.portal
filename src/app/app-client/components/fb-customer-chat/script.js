@@ -1,6 +1,6 @@
 ﻿
 modules.component('fbCustomerChat', {
-    templateUrl: '/app/app-client/components/fb-customer-chat/view.html',
+    templateUrl: '/mix-app/views/app-client/components/fb-customer-chat/view.html',
     controller: ['$location', function ($location) {
         var ctrl = this;
         this.$onInit = function(){

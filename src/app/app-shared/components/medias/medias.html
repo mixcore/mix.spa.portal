@@ -3,8 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><i class="mi mi-Media"></i> Media Manager</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    
                 </button>
             </div>
             <!-- <div class="modal-body" style="height: calc(100vh - 143px);overflow-y: auto;"> -->
@@ -30,7 +30,7 @@
                             <th scope="col">
                                 Content
                             </th>
-                            <th scope="col" width="5%" class="text-right">
+                            <th scope="col" width="5%" class="text-end">
                                 Actions
                             </th>
                         </tr>
@@ -48,10 +48,8 @@
                                 <div class="input-group input-group-sm">
                                     <input id="path-modal-{{$index}}" value="{{item.fullPath}}" onclick="this.select()"
                                         class="form-control form-control-sm" readonly="readonly">
-                                    <div class="input-group-append">
                                         <button class="btn btn-outline-secondary btn-clipboard" type="button"
                                             data-clipboard-target="#path-modal-{{$index}}"><i class="mi mi-Copy"></i></button>
-                                    </div>
                                 </div>
                             </td>
                             <td width="35%">

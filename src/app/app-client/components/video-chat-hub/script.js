@@ -1,5 +1,5 @@
 ﻿modules.component('videoChatHub', {
-    templateUrl: '/app/app-client/components/video-chat-hub/view.html',
+    templateUrl: '/mix-app/views/app-client/components/video-chat-hub/view.html',
     bindings: {
         attrSetName: '=',
         isSave: '=?'

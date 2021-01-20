@@ -1,6 +1,6 @@
 ﻿
 modules.component('cultures', {
-    templateUrl: '/app/app-shared/components/cultures/cultures.html',
+    templateUrl: '/mix-app/views/app-shared/components/cultures/cultures.html',
     bindings: {
         isClone: '=',
         data: '='

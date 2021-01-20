@@ -1,6 +1,6 @@
 ﻿(function (angular) {
   app.component("headerNav", {
-    templateUrl: "/app/app-portal/components/header-nav/headerNav.html",
+    templateUrl: "/mix-app/views/app-portal/components/header-nav/headerNav.html",
     controller: [
       "$rootScope",
       "$location",
@@ -48,7 +48,8 @@
           $("#dlg-bookmark").modal("show");
         };
         ctrl.toggleSidebar = function () {
-          $("#sidebar").toggleClass("active");
+          $(".main-sidebar").toggle();
+          $(".sub-sidebar").toggle();
           // $('.navbar-brand').toggle();
         };
         ctrl.generateSitemap = async function () {

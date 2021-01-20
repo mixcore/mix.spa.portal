@@ -4,17 +4,17 @@
     </div>
     <div class="col-md-12">
         <a href="/portal/attribute-set/list"
-            class="btn btn-sm btn-primary float-right px-4">
+            class="btn btn-sm btn-primary float-end px-4">
             <i class="fas fa-list"></i> Table list
         </a>
-        <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-sm btn-primary float-right px-4 mr-2">
+        <a href="/portal/attribute-set/details/{{attributeSetId}}" class="btn btn-sm btn-primary float-end px-4 me-2">
             <i class="fas fa-pen"></i> Edit Fields
         </a>
-        <a ng-click="export()"  class="btn btn-sm btn-primary text-white float-right px-4 mr-2">
+        <a ng-click="export()"  class="btn btn-sm btn-primary text-white float-end px-4 me-2">
             <i class="fas fa-download"></i> Export
         </a>
         <a href="/portal/attribute-set-data/create?attributeSetId={{attributeSetId}}&attributeSetName={{attributeSetName}}&dataId=default"
-            class="btn btn-sm btn-primary float-right px-4 mr-2">
+            class="btn btn-sm btn-primary float-end px-4 me-2">
             <i class="fas fa-plus"></i> Create data
         </a>
     </div>

@@ -1,5 +1,5 @@
 ﻿modules.component("mixFileUpload", {
-  templateUrl: "/app/app-portal/components/mix-file-upload/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/mix-file-upload/view.html",
   bindings: {
     folder: "=?",
     accept: "=?",

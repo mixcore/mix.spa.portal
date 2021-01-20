@@ -27,12 +27,12 @@
                     <th width="30%">
                         Rating
                     </th>
-                    <th scope="col" width="5%" class="text-right"></th>
+                    <th scope="col" width="5%" class="text-end"></th>
                 </tr>
             </thead>
 
             <tbody class="sortable-item" ng-repeat="item in data.items track by $index" style="border: 1px;">
-                <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-order{{item.id}}-comments"
+                <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-bs-toggle="collapse" href="#collapse-order{{item.id}}-comments"
                     role="button" aria-expanded="false" aria-controls="collapse-order{{item.id}}-comments">
 
                     <!--<td>
@@ -73,7 +73,7 @@
                                         Rating
                                     </th>
 
-                                    <!--<th scope="col" width="5%" class="text-right"></th>-->
+                                    <!--<th scope="col" width="5%" class="text-end"></th>-->
                                 </tr>
                             </thead>
 
@@ -87,7 +87,7 @@
                                         <star-rating rating-value="c.rating" max="5" is-readonly="false"></star-rating>
                                     </td>
                                     <!--<td>
-                                                <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                                                <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
                                                     <a ng-click="removeOrder(item.id);"
                                                        class="btn btn-link">
                                                         <span class="fas fa-trash-alt text-danger"></span>
@@ -99,7 +99,7 @@
                         </table>
                     </td>
                     <td>
-                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                        <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
 
                             <a href="/portal/order/details/{{item.id}}" class="btn btn-link"><span class="fa fa-pen text-primary"></span></a>
                             <!--<a href="{{item.detailsUrl}}" target="_blank" class="btn btn-link"><span class="fas fa-eye text-primary"></span></a>-->

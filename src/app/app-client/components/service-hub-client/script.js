@@ -1,5 +1,5 @@
 ﻿modules.component('serviceHubClient', {
-    templateUrl: '/app/app-client/components/service-hub-client/view.html',
+    templateUrl: '/mix-app/views/app-client/components/service-hub-client/view.html',
     bindings: {
         attrSetName: '=',
         isSave: '=?'

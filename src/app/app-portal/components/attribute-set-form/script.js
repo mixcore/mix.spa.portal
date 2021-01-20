@@ -1,5 +1,6 @@
 modules.component("attributeSetForm", {
-  templateUrl: "/app/app-portal/components/attribute-set-form/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/attribute-set-form/view.html",
   bindings: {
     attributeSetId: "=",
     attributeSetName: "=",
@@ -10,6 +11,7 @@ modules.component("attributeSetForm", {
     parentId: "=?",
     defaultId: "=",
     backUrl: "=?",
+    level: "=?",
     hideAction: "=?",
     saveData: "&?",
   },
@@ -35,9 +37,10 @@ modules.component("attributeSetForm", {
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
-      // ctrl.$onInit = async function () {
-      //     ctrl.loadData();
-      // };
+      ctrl.$onInit = async function () {
+        ctrl.level = ctrl.level || 0;
+        ctrl.loadData();
+      };
       ctrl.loadData = async function () {
         /*
                     If input is data id => load ctrl.attrData from service and handle it independently
@@ -99,15 +102,6 @@ modules.component("attributeSetForm", {
             ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
           }
         }
-        if (!ctrl.fields) {
-          var getFields = await fieldService.initData(
-            ctrl.attributeSetName || ctrl.attributeSetId
-          );
-          if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
-            $scope.$apply();
-          }
-        }
         var getDefault = await service.initData(
           ctrl.attributeSetName || ctrl.attributeSetId
         );
@@ -117,6 +111,8 @@ modules.component("attributeSetForm", {
           ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
           ctrl.defaultData.parentId = ctrl.parentId;
           ctrl.defaultData.parentType = ctrl.parentType;
+
+          ctrl.fields = ctrl.fields || ctrl.defaultData.fields;
         }
 
         if (!ctrl.attrData) {
@@ -196,6 +192,17 @@ modules.component("attributeSetForm", {
           }
         });
         return isValid;
+      };
+      ctrl.showContentFilter = function ($event) {
+        $rootScope.showContentFilter(ctrl.loadSelectedLink);
+      };
+      ctrl.loadSelectedLink = function (data, type) {
+        if (data) {
+          ctrl.attrData.obj.target_id = data.id;
+          ctrl.attrData.obj.title = data.title;
+          ctrl.attrData.obj.type = type;
+          ctrl.attrData.obj.uri = data.detailsUrl;
+        }
       };
       ctrl.filterData = function (attributeName) {
         if (ctrl.attrData) {

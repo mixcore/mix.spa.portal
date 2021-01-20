@@ -1,6 +1,6 @@
 ﻿
 modules.component('limitString', {
-    templateUrl: '/app/app-shared/components/limit-string/limit-string.html',
+    templateUrl: '/mix-app/views/app-shared/components/limit-string/limit-string.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings',
         function ($rootScope, $scope, ngAppSettings) {
             var ctrl = this;

@@ -1,6 +1,6 @@
 ﻿
 app.component('pageType', {
-    templateUrl: '/app/app-portal/pages/page/components/page-type/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/page/components/page-type/view.html',
     bindings: {
         model: '=',
     },

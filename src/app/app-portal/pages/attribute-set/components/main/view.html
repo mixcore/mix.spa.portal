@@ -1,25 +1,20 @@
-<div class="card mb-4">
-    <h6 class="card-header">
-        Database > Table
-    </h6>
-    <div class="card-body">
-        <div class="row form-group">
-            <div class="col">
-                <label>Title</label>
-                <input type="text" class="form-control" ng-model="$ctrl.model.title" ng-blur="$ctrl.gennerateName()">
-            </div>
-            <div class="col">
-                <label>Name</label>
-                <input type="text" class="form-control" ng-model="$ctrl.model.name">
-            </div>
-        </div>
-        <!-- <div class="form-group">
-            <label class="control-label">Type</label>
-            <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-toggle="buttons">
+<div class="row mb-3">
+    <div class="col-7">
+        <label class="form-label">Database title</label>
+        <input type="text" class="form-control" ng-model="$ctrl.model.title" ng-blur="$ctrl.gennerateName()">
+    </div>
+    <div class="col">
+        <label class="form-label">Database system name</label>
+        <input type="text" class="form-control" ng-model="$ctrl.model.name">
+    </div>
+</div>
+<!-- <div class="mb-3">
+            <label class="form-label">Type</label>
+            <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-bs-toggle="buttons">
                 <label ng-repeat="type in $ctrl.settings.attributeSetTypes track by $index" ng-switch="type.name"
                     ng-class="{active: type.value === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
                     ng-click="$ctrl.model.type=type.value;">
-                    <input ng-model="$ctrl.model.type" type="radio" value="{{type.value}}" class="custom-control-input"
+                    <input ng-model="$ctrl.model.type" type="radio" value="{{type.value}}" class="form-check-input"
                         id="model_type_{{type.value}}">
                     <span ng-switch-when="System" class="" title="{{type}}"><i class="fas fa-cog"></i> System</span>
                     <span ng-switch-when="Set" class="" title="{{type}}"><i class="fas fa-database"></i> Data Set</span>
@@ -32,9 +27,7 @@
                 </label>
             </div>
         </div> -->
-        <div class="form-group">
-            <label>Description</label>
-            <textarea class="form-control" ng-model="$ctrl.model.description"></textarea>
-        </div>
-    </div>
+<div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea class="form-control" ng-model="$ctrl.model.description"></textarea>
 </div>

@@ -16,7 +16,7 @@
                         Total
                     </th>
                     <th width="40%">Rating</th>
-                    <th scope="col" width="5%" class="text-right"></th>
+                    <th scope="col" width="5%" class="text-end"></th>
                 </tr>
             </thead>
 
@@ -27,7 +27,7 @@
                     </td>
                     <td>
                         <small>
-                            {{order.createdDateTime | utcToLocal:'dd.MM.yy - hh:mm a'}}
+                            {{order.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
                         </small>
                     </td>
                     <td>
@@ -44,7 +44,7 @@
                                         Rating
                                     </th>
 
-                                    <!--<th scope="col" width="5%" class="text-right"></th>-->
+                                    <!--<th scope="col" width="5%" class="text-end"></th>-->
                                 </tr>
                             </thead>
 
@@ -62,7 +62,7 @@
                         </table>
                     </td>
                     <td>
-                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                        <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
                             <a ng-click="$ctrl.removeOrder(order.id);" class="btn btn-dark">
                                 <span class="fas fa-trash-alt text-danger"></span>
                             </a>

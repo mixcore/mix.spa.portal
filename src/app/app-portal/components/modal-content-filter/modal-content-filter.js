@@ -1,5 +1,5 @@
 ﻿modules.component('modalContentFilter', {
-    templateUrl: '/app/app-portal/components/modal-content-filter/modal-content-filter.html',
+    templateUrl: '/mix-app/views/app-portal/components/modal-content-filter/modal-content-filter.html',
     bindings: {
         query: '=',
         initData: '=?',

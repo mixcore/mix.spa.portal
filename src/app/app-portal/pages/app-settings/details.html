@@ -1,34 +1,59 @@
-<section class="" ng-init="loadAppSettings()">
-    <form ng-if="appSettings" ng-class="{'submitted': submitted}" ng-submit="saveAppSettings(appSettings)"
-        autocomplete="new-password">
-        <tabs-h> 
-            <actions preview-url="appSettings.fullPath" back-url="'/portal/configuration/list'"></actions>
-            <pane-h header="General" class="">
-                <div class="">
-                    <app-settings-general app-settings="appSettings"></app-settings-general>
+<!-- <aside class="bd-sidebar sub-sidebar">
+    <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
+
+    </nav>
+</aside> -->
+
+
+<!-- ----------------------------------------------------------- -->
+
+
+<div class="content-body py-3 px-5">
+    <h3>App settings</h3>
+    <p class="text-subtitle text-muted">Use the filter side bar on the right to filter and search your settings.
+    </p>
+    <section class="" ng-init="loadAppSettings()">
+        <form ng-if="appSettings" ng-class="{'submitted': submitted}" ng-submit="saveAppSettings(appSettings)"
+            autocomplete="new-password">
+            <tabs-h>
+                <div class="row mb-3">
+                    <div class="col"></div>
+                    <div class="col-4">
+                        <div class="btn-group w-100" role="group">
+                            <button id="btnToSubmit" type="button" ng-click="saveAppSettings(appSettings)"
+                                class="btn btn-outline-primary">
+                                <i class="fa fa-save"></i>
+                                <span ng-bind="translate('Save')"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </pane-h>
-            <!-- <pane-h header="Default" class="card">
+                <pane-h header="General" class="">
+                    <div class="">
+                        <app-settings-general app-settings="appSettings"></app-settings-general>
+                    </div>
+                </pane-h>
+                <!-- <pane-h header="Default" class="card">
                 <div class="card-body">
                     <app-settings-default app-settings="appSettings" statuses="statuses"
                         cultures="globalSettings.cultures">
                     </app-settings-default>
                 </div>
             </pane-h> -->
-            <pane-h header="Authentication" class="card">
+                <pane-h header="Authentication" class="card">
                     <div class="card-body">
                         <app-settings-auth app-settings="appSettings"></app-settings-auth>
                     </div>
                 </pane-h>
-            <pane-h header="Email" class="card">
-                <div class="card-body">
-                    <app-settings-smtp app-settings="appSettings"></app-settings-smtp>
-                </div>
-            </pane-h>
-            <!-- <pane-h header="Import" class="card">
+                <pane-h header="Email" class="card">
+                    <div class="card-body">
+                        <app-settings-smtp app-settings="appSettings"></app-settings-smtp>
+                    </div>
+                </pane-h>
+                <!-- <pane-h header="Import" class="card">
                 <div class="card-body">
                     <h6>Import
-                        <a href="/portal/import" class="btn btn-link text-primary btn-sm float-right"><span
+                        <a href="/portal/import" class="btn btn-link text-primary btn-sm float-end"><span
                                 class="fas fa-file-import text-primary"></span> Import</a>
 
                     </h6>
@@ -36,90 +61,87 @@
                         appear in a search engine listing.</p>
                 </div>
             </pane-h> -->
-            <pane-h header="Permissions" class="card">
-                <div class="card-body">
-                    <h6>Permissions
-                        <a href="/portal/permission/create" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="fas fa-plus text-primary"></span> Add
-                            new</a>
-                        <a href="/portal/permission/list" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="far fa-list-alt text-primary"></span> List
-                            permissions</a>
-                    </h6>
-                </div>
-            </pane-h>
-            <pane-h header="File Management" class="card">
-                <div class="card-body">
-                    <h6>Files
-                        <a href="/portal/file/create" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="fas fa-plus text-primary"></span> Add
-                            new</a>
-                        <a href="/portal/file/list" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="far fa-list-alt text-primary"></span> List
-                            file</a>
-                    </h6>
-                </div>
-            </pane-h> 
-            <pane-h header="Json Setttings" class="card">
-                <div class="card-body">
-                    <h6>Json Settings
-                        <!-- <a href="/portal/create/create" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="fas fa-plus text-primary"></span> Add
-                            new</a> -->
-                        <a href="/portal/json-data/list" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="far fa-list-alt text-primary"></span> List
-                            Json List</a>
-                    </h6>
-                </div>
-            </pane-h> 
-            <!-- <pane-h header="Attribute sets" class="card">
+                <!-- <pane-h header="Permissions" class="card">
+                    <div class="card-body">
+                        <h6>Permissions
+                            <a href="/portal/permission/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add
+                                new</a>
+                            <a href="/portal/permission/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                permissions</a>
+                        </h6>
+                    </div>
+                </pane-h> -->
+                <pane-h header="File Management" class="card">
+                    <div class="card-body">
+                        <h6>Files
+                            <a href="/portal/file/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add
+                                new</a>
+                            <a href="/portal/file/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                file</a>
+                        </h6>
+                    </div>
+                </pane-h>
+                <!-- <pane-h header="Json Setttings" class="card">
+                    <div class="card-body">
+                        <h6>Json Settings
+                            <a href="/portal/json-data/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                Json List</a>
+                        </h6>
+                    </div>
+                </pane-h> -->
+                <!-- <pane-h header="Attribute sets" class="card">
                 <div class="card-body">
                     <h6>Attribute sets
                         <a href="/portal/attribute-set/create"
-                            class="btn btn-link text-primary btn-sm float-right"><span
+                            class="btn btn-link text-primary btn-sm float-end"><span
                                 class="fas fa-plus text-primary"></span> Add
                             New</a>
-                        <a href="/portal/attribute-set/list" class="btn btn-link text-primary btn-sm float-right"><span
+                        <a href="/portal/attribute-set/list" class="btn btn-link text-primary btn-sm float-end"><span
                                 class="far fa-list-alt text-primary"></span> List
                             Attr Sets</a>
                     </h6>
                 </div>
             </pane-h> -->
-            <pane-h header="Languages" class="card">
-                <div class="card-body">
-                    <h6>Languages
-                        <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="fas fa-plus text-primary"></span> Add
-                            new</a>
-                        <a href="/portal/language/list" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="far fa-list-alt text-primary"></span> List
-                            languages</a>
-                    </h6>
-                </div>
-            </pane-h>
-            <pane-h header="Localization" class="card">
-                <div class="card-body">
-                    <h6>Localization
-                        <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="fas fa-plus text-primary"></span> Add
-                            new</a>
-                        <a href="/portal/localize/list" class="btn btn-link text-primary btn-sm float-right"><span
-                                class="far fa-list-alt text-primary"></span> List
-                            strings</a>
-                    </h6>
-                    <p class="text-muted">Manage your multilingual site contents.</p>
-                </div>
-            </pane-h>
-        </tabs-h>
+                <pane-h header="Languages" class="card">
+                    <div class="card-body">
+                        <h6>Languages
+                            <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add
+                                new</a>
+                            <a href="/portal/language/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                languages</a>
+                        </h6>
+                    </div>
+                </pane-h>
+                <pane-h header="Localization" class="card">
+                    <div class="card-body">
+                        <h6>Localization
+                            <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add
+                                new</a>
+                            <a href="/portal/localize/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                strings</a>
+                        </h6>
+                        <p class="text-muted">Manage your multilingual site contents.</p>
+                    </div>
+                </pane-h>
+            </tabs-h>
 
-        <!-- 
+            <!-- 
         <div class="row justify-content-md-center">
             <div class="col-lg-6">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>General
-                            <button class="btn btn-link text-primary btn-sm float-right" type="button"
-                                data-toggle="collapse" data-target="#general-setting" aria-controls="seo-tab-content"
+                            <button class="btn btn-link text-primary btn-sm float-end" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#general-setting" aria-controls="seo-tab-content"
                                 aria-expanded="false" aria-label="Toggle navigation"><span
                                     class="far fa-edit text-primary"></span> Edit general settings</button>
 
@@ -128,7 +150,7 @@
                             appear in a search engine listing.</p>
                     </div>
 
-                    <div id="general-setting" class="card-body collapse">
+                    <div id="general-setting" class="card-body collapse-x">
 
                         <app-settings-general app-settings="appSettings"></app-settings-general>
 
@@ -138,8 +160,8 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Default
-                            <button class="btn btn-link text-primary btn-sm float-right" type="button"
-                                data-toggle="collapse" data-target="#default-setting" aria-controls="seo-tab-content"
+                            <button class="btn btn-link text-primary btn-sm float-end" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#default-setting" aria-controls="seo-tab-content"
                                 aria-expanded="false" aria-label="Toggle navigation"><span
                                     class="far fa-edit text-primary"></span> Edit default settings</button>
 
@@ -148,7 +170,7 @@
                             appear in a search engine listing.</p>
                     </div>
 
-                    <div id="default-setting" class="card-body collapse">
+                    <div id="default-setting" class="card-body collapse-x">
                         <app-settings-default app-settings="appSettings" statuses="statuses"
                             cultures="globalSettings.cultures"></app-settings-default>
 
@@ -158,7 +180,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Import
-                            <a href="/portal/import" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/import" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-file-import text-primary"></span> Import</a>
 
                         </h6>
@@ -171,10 +193,10 @@
                     <div class="card-header">
                         <h6>Permissions
                             <a href="/portal/permission/create"
-                                class="btn btn-link text-primary btn-sm float-right"><span
+                                class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-plus text-primary"></span> Add
                                 new</a>
-                            <a href="/portal/permission/list" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/permission/list" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="far fa-list-alt text-primary"></span> List
                                 permissions</a>
                         </h6>
@@ -188,11 +210,11 @@
                     <div class="card-header">
                         <h6>Attribute sets
                             <a href="/portal/attribute-set/create"
-                                class="btn btn-link text-primary btn-sm float-right"><span
+                                class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-plus text-primary"></span> Add
                                 New</a>
                             <a href="/portal/attribute-set/list"
-                                class="btn btn-link text-primary btn-sm float-right"><span
+                                class="btn btn-link text-primary btn-sm float-end"><span
                                     class="far fa-list-alt text-primary"></span> List
                                 Attr Sets</a>
                         </h6>
@@ -207,8 +229,8 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Authentication
-                            <button class="btn btn-link text-primary btn-sm float-right" type="button"
-                                data-toggle="collapse" data-target="#auth-setting" aria-controls="seo-tab-content"
+                            <button class="btn btn-link text-primary btn-sm float-end" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#auth-setting" aria-controls="seo-tab-content"
                                 aria-expanded="false" aria-label="Toggle navigation"><span
                                     class="far fa-edit text-primary"></span> Edit authentication
                                 settings</button>
@@ -217,7 +239,7 @@
                         <p class="text-muted">Manage and control authentication settings.</p>
                     </div>
 
-                    <div id="auth-setting" class="card-body collapse">
+                    <div id="auth-setting" class="card-body collapse-x">
 
                         <app-settings-auth app-settings="appSettings"></app-settings-auth>
 
@@ -227,8 +249,8 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Email
-                            <button class="btn btn-link text-primary btn-sm float-right" type="button"
-                                data-toggle="collapse" data-target="#smtp-setting" aria-controls="seo-tab-content"
+                            <button class="btn btn-link text-primary btn-sm float-end" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#smtp-setting" aria-controls="seo-tab-content"
                                 aria-expanded="false" aria-label="Toggle navigation"><span
                                     class="far fa-edit text-primary"></span> Edit SMTP settings</button>
 
@@ -236,7 +258,7 @@
                         <p class="text-muted">Enables you to configure e-mail settings.</p>
                     </div>
 
-                    <div id="smtp-setting" class="card-body collapse">
+                    <div id="smtp-setting" class="card-body collapse-x">
 
 
                         <app-settings-smtp app-settings="appSettings"></app-settings-smtp>
@@ -248,10 +270,10 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Languages
-                            <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-plus text-primary"></span> Add
                                 new</a>
-                            <a href="/portal/language/list" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/language/list" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="far fa-list-alt text-primary"></span> List
                                 languages</a>
                         </h6>
@@ -263,10 +285,10 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6>Localization
-                            <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-plus text-primary"></span> Add
                                 new</a>
-                            <a href="/portal/localize/list" class="btn btn-link text-primary btn-sm float-right"><span
+                            <a href="/portal/localize/list" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="far fa-list-alt text-primary"></span> List
                                 strings</a>
                         </h6>
@@ -278,7 +300,7 @@
         </div> -->
 
 
-        <!-- 
+            <!-- 
         <div class="row justify-content-md-center">
             <div class=" col-lg-6">
                 <div class="card mb-4">
@@ -304,6 +326,8 @@
             </div>
         </div> -->
 
-    </form>
-</section>
-<!-- /.content -->
+        </form>
+    </section>
+    <!-- /.content -->
+
+</div>

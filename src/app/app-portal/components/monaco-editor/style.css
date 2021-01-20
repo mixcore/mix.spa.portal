@@ -6,16 +6,16 @@
     z-index: 2222;
 }
 
-.cta-full {
+/* .cta-full {
     position: absolute;
     z-index: 1;
     right: 5px;
     top: 5px;
-}
+} */
 
-.monaco-editor-full .cta-full {
+.monaco-editor-full .monaco-editor-btn-group-full {
     z-index: 2223;
     position: fixed;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 25px;
 }

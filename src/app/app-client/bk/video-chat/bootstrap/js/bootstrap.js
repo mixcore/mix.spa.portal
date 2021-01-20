@@ -92,7 +92,7 @@
 
   Alert.prototype.close = function (e) {
     var $this = $(this)
-      , selector = $this.attr('data-target')
+      , selector = $this.attr('data-bs-target')
       , $parent
 
     if (!selector) {
@@ -208,7 +208,7 @@
   }
 
   Button.prototype.toggle = function () {
-    var $parent = this.$element.closest('[data-toggle="buttons-radio"]')
+    var $parent = this.$element.closest('[data-bs-toggle="buttons-radio"]')
 
     $parent && $parent
       .find('.active')
@@ -253,7 +253,7 @@
  /* BUTTON DATA-API
   * =============== */
 
-  $(document).on('click.button.data-api', '[data-toggle^=button]', function (e) {
+  $(document).on('click.button.data-api', '[data-bs-toggle^=button]', function (e) {
     var $btn = $(e.target)
     if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
     $btn.button('toggle')
@@ -437,7 +437,7 @@
 
   $(document).on('click.carousel.data-api', '[data-slide]', function (e) {
     var $this = $(this), href
-      , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
+      , $target = $($this.attr('data-bs-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
       , options = $.extend({}, $target.data(), $this.data())
     $target.carousel(options)
     e.preventDefault()
@@ -599,9 +599,9 @@
  /* COLLAPSE DATA-API
   * ================= */
 
-  $(document).on('click.collapse.data-api', '[data-toggle=collapse]', function (e) {
+  $(document).on('click.collapse.data-api', '[data-bs-toggle=collapse]', function (e) {
     var $this = $(this), href
-      , target = $this.attr('data-target')
+      , target = $this.attr('data-bs-target')
         || e.preventDefault()
         || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7
       , option = $(target).data('collapse') ? 'toggle' : $this.data()
@@ -637,7 +637,7 @@
  /* DROPDOWN CLASS DEFINITION
   * ========================= */
 
-  var toggle = '[data-toggle=dropdown]'
+  var toggle = '[data-bs-toggle=dropdown]'
     , Dropdown = function (element) {
         var $el = $(element).on('click.dropdown.data-api', this.toggle)
         $('html').on('click.dropdown.data-api', function () {
@@ -718,7 +718,7 @@
   }
 
   function getParent($this) {
-    var selector = $this.attr('data-target')
+    var selector = $this.attr('data-bs-target')
       , $parent
 
     if (!selector) {
@@ -998,10 +998,10 @@
  /* MODAL DATA-API
   * ============== */
 
-  $(document).on('click.modal.data-api', '[data-toggle="modal"]', function (e) {
+  $(document).on('click.modal.data-api', '[data-bs-toggle="modal"]', function (e) {
     var $this = $(this)
       , href = $this.attr('href')
-      , $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
+      , $target = $($this.attr('data-bs-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) //strip for ie7
       , option = $target.data('modal') ? 'toggle' : $.extend({ remote:!/#/.test(href) && href }, $target.data(), $this.data())
 
     e.preventDefault()
@@ -1516,7 +1516,7 @@
           .removeClass('active')
 
         selector = this.selector
-          + '[data-target="' + target + '"],'
+          + '[data-bs-target="' + target + '"],'
           + this.selector + '[href="' + target + '"]'
 
         active = $(selector)
@@ -1613,7 +1613,7 @@
   , show: function () {
       var $this = this.element
         , $ul = $this.closest('ul:not(.dropdown-menu)')
-        , selector = $this.attr('data-target')
+        , selector = $this.attr('data-bs-target')
         , previous
         , $target
         , e
@@ -1712,7 +1712,7 @@
  /* TAB DATA-API
   * ============ */
 
-  $(document).on('click.tab.data-api', '[data-toggle="tab"], [data-toggle="pill"]', function (e) {
+  $(document).on('click.tab.data-api', '[data-bs-toggle="tab"], [data-bs-toggle="pill"]', function (e) {
     e.preventDefault()
     $(this).tab('show')
   })

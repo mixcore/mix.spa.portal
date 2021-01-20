@@ -52,7 +52,7 @@
                 })
                 ctrl.isBusy = false;
                 setTimeout(function () {
-                    $('[data-toggle="popover"]').popover({
+                    $('[data-bs-toggle="popover"]').popover({
                         html: true,
                         content: function () {
                             var content = $(this).next('.popover-body');

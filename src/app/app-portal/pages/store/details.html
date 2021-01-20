@@ -1,6 +1,6 @@
 <!-- Main content -->
 <section class="" ng-init="getSingle()">
-    <form ng-if="activedData" ng-class="{'submitted': submitted}" ng-submit="save()">
+    <form ng-if="viewModel" ng-class="{'submitted': submitted}" ng-submit="save()">
 
         <div class="row justify-content-md-center">
             <div class=" col-lg-8">
@@ -14,36 +14,36 @@
 
                                 <div class="row">
                                     <div class="col">
-                                        <div class="form-group" ng-if="isAdmin">
-                                            <label class="control-label">Category</label>
-                                            <select class="btn custom-select" ng-model="activedData.category">
+                                        <div class="mb-3" ng-if="isAdmin">
+                                            <label class="form-label">Category</label>
+                                            <select class="form-select" ng-model="viewModel.category">
                                                 <option ng-repeat="item in cates" ng-value="item">{{item}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="form-group" ng-if="isAdmin">
-                                            <label class="control-label">Type</label>
-                                            <select ng-change="initEditors()" class="form-control mr-2"
-                                                ng-model="activedData.property.dataType">
+                                        <div class="mb-3" ng-if="isAdmin">
+                                            <label class="form-label">Type</label>
+                                            <select ng-change="initEditors()" class="form-control me-2"
+                                                ng-model="viewModel.property.dataType">
                                                 <option ng-repeat="item in settings.dataTypes track by $index"
                                                     ng-value="item.value">{{item.name}}</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-if="isAdmin">
-                                    <label class="control-label">Keyword</label>
-                                    <input type="text" required class="form-control" ng-model="activedData.keyword">
+                                <div class="mb-3" ng-if="isAdmin">
+                                    <label class="form-label">Keyword</label>
+                                    <input type="text" required class="form-control" ng-model="viewModel.keyword">
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">Value</label>
-                                    <module-form-editor data="activedData.property" field-title="activedData.title" input-class="mr-2">
+                                <div class="mb-3">
+                                    <label class="form-label">Value</label>
+                                    <module-form-editor data="viewModel.property" field-title="viewModel.title" input-class="me-2">
                                 </div>
-                                <div class="form-group" ng-if="isAdmin">
-                                    <label class="control-label">Description</label>
+                                <div class="mb-3" ng-if="isAdmin">
+                                    <label class="form-label">Description</label>
                                     <textarea type="text" class="form-control"
-                                        ng-model="activedData.description"></textarea>
+                                        ng-model="viewModel.description"></textarea>
                                 </div>
 
                             </section>
@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <actions preview-url="activedData.fullPath" back-url="'/portal/configuration/list'" class="col-lg-4 mb-3">
+            <actions preview-url="viewModel.fullPath" back-url="'/portal/configuration/list'" class="col-lg-4 mb-3">
             </actions>
 
         </div>

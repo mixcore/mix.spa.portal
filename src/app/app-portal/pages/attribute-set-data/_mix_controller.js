@@ -6,7 +6,7 @@ app.controller("MixAttributeSetDataController", [
   "$routeParams",
   "$location",
   "RestAttributeSetDataPortalService",
-  "RestRelatedAttributeDataPortalService",
+  "RestAttributeFieldPortalService",
   function (
     $scope,
     $rootScope,
@@ -14,7 +14,7 @@ app.controller("MixAttributeSetDataController", [
     $routeParams,
     $location,
     service,
-    navService
+    fieldService
   ) {
     BaseRestCtrl.call(
       this,
@@ -43,6 +43,7 @@ app.controller("MixAttributeSetDataController", [
     $scope.init = async function () {
       $scope.attributeSetId = $routeParams.attributeSetId;
       $scope.attributeSetName = $routeParams.attributeSetName;
+      $scope.attributeSetTitle = $routeParams.attributeSetTitle;
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.attributeSetName = $routeParams.attributeSetName;
@@ -57,15 +58,28 @@ app.controller("MixAttributeSetDataController", [
           parentType: $scope.parentType,
         };
       }
+
+      if ($scope.attributeSetName || $scope.attributeSetId) {
+        var getFields = await fieldService.initData(
+          $scope.attributeSetName || $scope.attributeSetId
+        );
+        if (getFields.isSucceed) {
+          $scope.fields = getFields.data;
+          $scope.$apply();
+        }
+      }
     };
+
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
-        $scope.activedData = $scope.selectedList.data[0];
+        $scope.viewModel = $scope.selectedList.data[0];
       }
     };
     $scope.saveSuccessCallback = function () {
       if ($location.path() == "/portal/attribute-set-data/create") {
-        $scope.goToDetail($scope.activedData.id, "attribute-set-data");
+        $rootScope.goToSiteUrl(
+          `/portal/attribute-set-data/details?dataId=${$scope.viewModel.id}`
+        );
       }
     };
 
@@ -74,7 +88,9 @@ app.controller("MixAttributeSetDataController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.edit = function (data) {
-      $scope.goToPath("/portal/attribute-set-data/details?dataId=" + data.id);
+      $rootScope.goToSiteUrl(
+        "/portal/attribute-set-data/details?dataId=" + data.id
+      );
     };
     $scope.remove = function (data) {
       $rootScope.showConfirm(
@@ -108,10 +124,10 @@ app.controller("MixAttributeSetDataController", [
     $scope.import = async function () {
       if ($scope.validateDataFile()) {
         $rootScope.isBusy = true;
-        var form = document.getElementById("frm-import");
+        var form = document.getElementById("form-portal");
         var result = await service.import(
           $scope.attributeSetName,
-          form["data"].files[0]
+          form["import-data-inp"].files[0]
         );
         if (result.isSucceed) {
           $rootScope.showMessage("success", "success");

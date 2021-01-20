@@ -1,5 +1,5 @@
 modules.component('trumbowyg', {
-  templateUrl: '/app/app-shared/components/trumbowyg/trumbowyg.html',
+  templateUrl: '/mix-app/views/app-shared/components/trumbowyg/trumbowyg.html',
   bindings: {
     options: '<?',
     ngDisabled: '<?',

@@ -1,5 +1,5 @@
 modules.component('propertiesStructure', {
-    templateUrl: '/app/app-portal/components/properties-structure/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/properties-structure/view.html',
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {
             var ctrl = this;
@@ -33,7 +33,7 @@ modules.component('propertiesStructure', {
             ctrl.generateForm = function(){
                 var formHtml = document.createElement('module-form');
                 formHtml.setAttribute('class','row');
-                angular.forEach(ctrl.activedData.columns, function(e,i){
+                angular.forEach(ctrl.viewModel.columns, function(e,i){
                     var el;
                     var label = document.createElement('label');
                     label.setAttribute('class', 'control-label');
@@ -66,7 +66,7 @@ modules.component('propertiesStructure', {
                         break;
                        
                         case 'html':
-                        el = document.createElement('trumbowyg');
+                        el = document.createElement('quill');
                         el.setAttribute('options', '{}');                                 
                         el.setAttribute('type', 'number');                                 
                         break;
@@ -87,7 +87,7 @@ modules.component('propertiesStructure', {
                     formHtml.appendChild(el);      
                     
                 });
-                ctrl.activedData.formView.content = formHtml.innerHTML;
+                ctrl.viewModel.formView.content = formHtml.innerHTML;
             };
     
             ctrl.generateName = function (col) {

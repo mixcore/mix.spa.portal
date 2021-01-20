@@ -1,21 +1,21 @@
 <form class="card" ng-class="{'submitted': submitted}" ng-submit="register()">
     <div class="p-5">
-        <img src="/css/portal/img/mixcore-logo-green.svg" alt="Mixcore CMS" height="35" class="mb-4">
-        <div class="lead">Create Your Account</div>
-        <hr>
+        <img src="/mix-app/css/portal/img/mixcore-logo-green.svg" alt="Mixcore CMS" height="35" class="mb-4">
+        <div class="lead mb-5">Hi! Let's create your new account.</div>
+        <!-- <hr> -->
         <div class="">
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input ng-model="user.userName" class="form-control" required placeholder="Handsome...">
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="form-label">
                     Password
                 </label>
                 <input ng-model="user.password" type="password" required class="form-control"
                     placeholder="MyC0mpl3xP@ssw0rd">
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="form-label">
                     Confirm Password
                 </label>
@@ -23,22 +23,22 @@
                     placeholder="MyC0mpl3xP@ssw0rd">
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 <label class="form-label">Email address
                 </label>
                 <input ng-model="user.email" class="form-control" type="email" required placeholder="your-email-address@domain.com"
                     type="text">
             </div>
-            <div class="form-group">
-                <label class="custom-control custom-checkbox">
-                    <input ng-model="user.isAgreed" class="custom-control-input" type="checkbox" required>
+            <div class="mb-3 mb-5">
+                <label class="form-check">
+                    <input ng-model="user.isAgreed" class="form-check-input" type="checkbox" required>
                     <span class="custom-control-label">
-                        I agree to the <a href="#" data-toggle="modal" data-target="#termAndCondition">terms and
+                        I agree to the <a href="https://mixcore.org/terms-and-conditions.html" target="_blank">terms and
                             conditions</a>.</span>
                 </label>
             </div>
 
-            <hr>
+            <!-- <hr> -->
             <div class="form-footer text-center">
                 <button type="submit" class="btn btn-primary btn-block">
                     Register
@@ -92,7 +92,7 @@
                     <label class="form-check-label">
                         <input ng-model="user.isAgreed" class="form-check-input" type="checkbox">
                         <span class="form-check-sign"></span>
-                        I agree to the <a href="#" data-toggle="modal" data-target="#termAndCondition">terms and conditions</a>.
+                        I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termAndCondition">terms and conditions</a>.
                     </label>
                 </div>
             </div>

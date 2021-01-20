@@ -1,6 +1,6 @@
 ﻿
 app.component('pageModules', {
-    templateUrl: '/app/app-portal/pages/page/components/modules/modules.html',
+    templateUrl: '/mix-app/views/app-portal/pages/page/components/modules/modules.html',
     bindings: {
         page: '=',
         onDelete: '&',

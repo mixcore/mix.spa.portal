@@ -1,5 +1,5 @@
 modules.component('postAttributeSetValues', {
-    templateUrl: '/app/app-portal/components/post-attribute-set-values/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/post-attribute-set-values/view.html',
     bindings: {
         header: '=',
         data: '=',

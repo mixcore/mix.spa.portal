@@ -1,6 +1,6 @@
 ﻿
 modules.component('qrCode', {
-    templateUrl: '/app/app-shared/components/qr-code/view.html',
+    templateUrl: '/mix-app/views/app-shared/components/qr-code/view.html',
     controller: ['$location', function ($location) {
         var ctrl = this;
         ctrl.$onInit= function(){

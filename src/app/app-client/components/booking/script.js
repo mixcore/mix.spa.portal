@@ -1,5 +1,5 @@
 ﻿modules.component('booking', {
-    templateUrl: '/app/app-client/components/booking/index.html',
+    templateUrl: '/mix-app/views/app-client/components/booking/index.html',
     controller: [
         '$rootScope', 'CommonService', 
         function ($rootScope, commonService) {

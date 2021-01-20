@@ -1,79 +1,63 @@
 <div ng-init="loadSettings()"></div>
-<form class="needs-validation" novalidate>
-    <h1 class="lead">Hi there! We're setting up your website.
+<form class="needs-validation" novalidate autocomplete="off">
+    <h1 class="lead mb-5">Hi there! Let start the first steps together.
     </h1>
-    <hr>
-    <div class="intruction-labels">
-        <div class="form-group">
-            <label>
-                Your Website Name
+    <!-- <hr> -->
+    <div class="intruction-labels mb-5">
+        <div class="mb-3">
+            <label class="form-label">
+                Your site title
             </label>
             <input type="text" ng-model="initCmsModel.siteName" class="form-control" required placeholder="My Best Site Ever! - Mixcore CMS" value="My Best Site Ever! - Mixcore CMS">
         </div>
-        <div class="form-group">
-            <label>
-                1st Culture & Language
+        <div class="mb-5">
+            <label class="form-label">
+                Your 1st culture & language
             </label>
-            <select id="inputState" class="form-control custom-select custom-select-sm"
+            <select id="inputState" class="form-select"
                 ng-options="item as item.fullName for item in settings.cultures track by item.specificulture"
                 ng-model="initCmsModel.culture">
             </select>
         </div>
-        <hr class="mt-4">
-        <div class="form-group pb-4">
-            <strong class="col-8 strong pl-0">
+        <!-- <hr class="mt-4"> -->
+        <div class="mb-3">
+            <h6 class="text-primary">
                 Database Configuration
-                <div class="float-right">
-                    <div class="btn-group  pl-sm-0" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-primary active" ng-click="initCmsModel.isUseLocal=!initCmsModel.isUseLocal" ng-class="{ 'active' : !initCmsModel.isUseLocal }">Remote</button>
-                        <button type="button" class="btn btn-primary" ng-click="initCmsModel.isUseLocal=!initCmsModel.isUseLocal" ng-class="{ 'active' : initCmsModel.isUseLocal }">Local</button>
-                    </div>
-                </div>
-            </strong>
-            <!-- <div class="col-4 text-right">
+            </h6>
+            <!-- <div class="col-4 text-end">
                 <span style="cursor: pointer;" ng-click="initCmsModel.isUseLocal=!initCmsModel.isUseLocal">
-                    <span data-toggle="tooltip" data-placement="top" title="Click to change to remote database."
+                    <span data-bs-toggle="tooltip" data-placement="top" title="Click to change to remote database."
                         style="text-decoration: underline;" ng-if="initCmsModel.isUseLocal">local<i
                             class="fa fa-angle-down ml-1"></i></span>
-                    <span data-toggle="tooltip" data-placement="top" title="Click to change to local database."
+                    <span data-bs-toggle="tooltip" data-placement="top" title="Click to change to local database."
                         style="text-decoration: underline;" ng-if="!initCmsModel.isUseLocal">remote<i
                             class="fa fa-angle-down ml-1"></i></span>
                 </span>
             </div> -->
 
         </div>
-        <div class="form-group" ng-show="!initCmsModel.isUseLocal">
-            <label>Server</label>
-            <select class="custom-select form-control" ng-options="item as item.text for item in settings.providers"
+        <div class="mb-3" ng-show="!initCmsModel.isUseLocal">
+            <label class="form-label">Server type</label>
+            <select class="form-select" ng-options="item as item.text for item in settings.providers"
                 ng-model="dbProvider" ng-change="updateDbProvider()">
             </select>
         </div>
+        <sqlite-info ng-if="!initCmsModel.isUseLocal && dbProvider.value=='SQLITE'" init-cms-model="initCmsModel">
+        </sqlite-info>
         <mssql-info ng-if="!initCmsModel.isUseLocal && dbProvider.value=='MSSQL'" init-cms-model="initCmsModel">
         </mssql-info>
         <mysql-info ng-if="!initCmsModel.isUseLocal && dbProvider.value=='MySQL'" init-cms-model="initCmsModel">
         </mysql-info>
-        <!-- <posgresql-info ng-if="!initCmsModel.isUseLocal && dbProvider.value=='PostgreSQL'" init-cms-model="initCmsModel">
-        </posgresql-info> -->
+        <posgresql-info ng-if="!initCmsModel.isUseLocal && dbProvider.value=='PostgreSQL'" init-cms-model="initCmsModel">
+        </posgresql-info>
         <mssql-local-info ng-if="initCmsModel.isUseLocal" init-cms-model="initCmsModel">
         </mssql-local-info>
     </div>
 
-    <hr class="mt-4">
-    <div class="text-right">
-        <button ng-if="!initCmsModel.isUseLocal" ng-click="initCms();" class="btn btn-primary" style="min-width:200px"
-            ng-disabled="!initCmsModel.databaseServer || !initCmsModel.databaseName || !initCmsModel.databaseUser || !initCmsModel.culture">
-            <span
-                ng-if="!initCmsModel.databaseServer || !initCmsModel.databaseName || !initCmsModel.databaseUser || !initCmsModel.culture">Next
-                <i class="fa fa-angle-right"></i></span>
-            <span
-                ng-if="initCmsModel.databaseServer && initCmsModel.databaseName && initCmsModel.databaseUser  && initCmsModel.culture">Connect</span>
-        </button>
-        <button ng-if="initCmsModel.isUseLocal" ng-click="initCms();" class="btn btn-primary" style="min-width:200px"
-            ng-disabled="!initCmsModel.sqliteDbConnectionString || !initCmsModel.localDbName">
-            <span ng-if="!initCmsModel.sqliteDbConnectionString || !initCmsModel.localDbName">Next <i
-                    class="fa fa-angle-right"></i></span>
-            <span ng-if="initCmsModel.sqliteDbConnectionString && initCmsModel.localDbName ">Next <i
-                    class="fa fa-angle-right"></i></span>
+    <!-- <hr class="mt-4"> -->
+    <div class="text-end">
+        <button ng-click="initCms();" class="btn btn-primary" style="min-width:200px">
+            <span>Connect</span>
         </button>
     </div>
 </form>

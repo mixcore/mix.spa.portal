@@ -1,5 +1,5 @@
 ﻿modules.component('aceEditor', {
-  templateUrl: '/app/app-portal/components/ace-editor/ace-editor.html',
+  templateUrl: '/mix-app/views/app-portal/components/ace-editor/ace-editor.html',
   controller: ['$rootScope', '$scope', 'ngAppSettings',
     function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;

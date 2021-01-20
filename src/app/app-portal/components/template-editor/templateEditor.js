@@ -1,5 +1,5 @@
 ﻿modules.component('templateEditor', {
-    templateUrl: '/app/app-portal/components/template-editor/templateEditor.html',
+    templateUrl: '/mix-app/views/app-portal/components/template-editor/templateEditor.html',
     bindings: {
         template: '=',
         templates: '=',

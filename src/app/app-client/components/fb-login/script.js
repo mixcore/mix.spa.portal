@@ -1,5 +1,5 @@
 ﻿modules.component("fbLogin", {
-  templateUrl: "/app/app-client/components/fb-login/view.html",
+  templateUrl: "/mix-app/views/app-client/components/fb-login/view.html",
   controller: [
     "$rootScope",
     "$scope",

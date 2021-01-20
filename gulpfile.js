@@ -27,7 +27,7 @@ var dest = "."; //For publish folder use "./bin/Release/PublishOutput/";
 
 var paths = {
   //webroot: "./dist/Mix.Cms.Web/wwwroot/", // Use for current repo dist
-  webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/", // Use for mix.core repo
+  webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/mix-app/", // Use for mix.core repo
   webapp: "./src/app/", //app
   libs: "./src/lib/",
   nodeModules: "./node_modules/",
@@ -304,7 +304,7 @@ paths.views = {
     paths.webapp + "app-init/**/*.html",
     paths.webapp + "app-security/**/*.html",
   ],
-  dest: paths.webroot + "app/",
+  dest: paths.webroot + "views/",
 };
 gulp.task("clean:views", function (cb) {
   rimraf(paths.views.dest, cb);

@@ -1,5 +1,5 @@
 modules.component('postAttributeSetForm', {
-    templateUrl: '/app/app-portal/components/post-attribute-set-form/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/post-attribute-set-form/view.html',
     bindings: {
         setId: '=',
         data: '=',

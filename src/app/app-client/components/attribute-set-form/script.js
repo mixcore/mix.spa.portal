@@ -1,5 +1,5 @@
 modules.component('attributeSetForm', {
-    templateUrl: '/app/app-client/components/attribute-set-form/view.html',
+    templateUrl: '/mix-app/views/app-client/components/attribute-set-form/view.html',
     bindings: {
         attrSetId: '=',
         attrSetName: '=',
@@ -19,7 +19,7 @@ modules.component('attributeSetForm', {
             ctrl.selectedProp = null;
             ctrl.settings = $rootScope.globalSettings;
             ctrl.$onInit = async function () {
-                // ctrl.loadData();
+                ctrl.loadData();
             };
             ctrl.loadData = async function () {
 

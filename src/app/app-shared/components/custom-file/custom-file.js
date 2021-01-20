@@ -1,6 +1,6 @@
 ﻿//modules.controller('ImageController', );
 modules.component("customFile", {
-  templateUrl: "/app/app-shared/components/custom-file/custom-file.html",
+  templateUrl: "/mix-app/views/app-shared/components/custom-file/custom-file.html",
   bindings: {
     header: "=",
     title: "=",

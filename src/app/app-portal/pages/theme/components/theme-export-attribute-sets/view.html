@@ -2,16 +2,16 @@
 <section>
     <div class="row">
         <div class="col-md-6">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isSelectAll"
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectedList.isSelectAll"
                     ng-change="$ctrl.selectAll($ctrl.exportData.attributeSets)"
                     id="switchSelectAllAttributeSets" />
-                <label class="custom-control-label" for="switchSelectAllAttributeSets">Select all attributeSets</label>
+                <label class="custom-control-label" for="switchSelectAllAttributeSets">Select all databases</label>
             </div>            
         </div>
         <div class="col-md-6">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" ng-model="$ctrl.selectedList.isExportData"
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectedList.isExportData"
                     ng-change="$ctrl.selectAll($ctrl.exportData.attributeSets)"
                     id="switchSelectAllSetData" />
                 <label class="custom-control-label" for="switchSelectAllSetData">With Data</label>
@@ -27,7 +27,7 @@
             <div class="col-md-1"></div>
             <div class="col-md-11" ng-show="attributeSet.isActived">
                 <input type="checkbox" ng-model="attributeSet.isExportData" ng-change="$ctrl.updateAttributeSetExport()" />
-                Export Data
+                With Data
             </div>
         </div>
     </div>

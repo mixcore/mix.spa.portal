@@ -1,5 +1,5 @@
 ﻿modules.component('addToCartButton', {
-    templateUrl: '/app/app-client/components/add-to-cart-button/view.html',
+    templateUrl: '/mix-app/views/app-client/components/add-to-cart-button/view.html',
     controller: ['$rootScope', 'localStorageService',
         function ($rootScope, localStorageService) {
             var ctrl = this;

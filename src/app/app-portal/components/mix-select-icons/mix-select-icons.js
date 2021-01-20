@@ -1,5 +1,5 @@
 ﻿modules.component('mixSelectIcons', {
-    templateUrl: '/app/app-portal/components/mix-select-icons/mix-select-icons.html',
+    templateUrl: '/mix-app/views/app-portal/components/mix-select-icons/mix-select-icons.html',
     controller: ['$rootScope', '$scope', '$location', '$element',
         function ($rootScope, $scope, $location, $element) {
             var ctrl = this;

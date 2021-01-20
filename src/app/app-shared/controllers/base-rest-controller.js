@@ -17,7 +17,7 @@ function BaseRestCtrl(
     toDate: null,
   };
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-  $scope.activedData = null;
+  $scope.viewModel = null;
   $scope.isScrollTop = true;
   $scope.defaultId = 0;
   $scope.data = null;
@@ -66,6 +66,7 @@ function BaseRestCtrl(
       }
     }
   };
+
   $scope.goToDetail = function (id, type) {
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
@@ -79,7 +80,7 @@ function BaseRestCtrl(
       params.splice(0, 0, id);
       var resp = await service.getSingle([id]);
       if (resp.isSucceed) {
-        $scope.activedData = resp.data;
+        $scope.viewModel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
@@ -102,7 +103,7 @@ function BaseRestCtrl(
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
     if (resp.isSucceed) {
-      $scope.activedData = resp.data;
+      $scope.viewModel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
       }
@@ -137,7 +138,7 @@ function BaseRestCtrl(
     if (resp && resp.isSucceed) {
       $scope.data = resp.data;
       $.each($scope.data, function (i, data) {
-        $.each($scope.activedDatas, function (i, e) {
+        $.each($scope.viewModels, function (i, e) {
           if (e.dataId === data.id) {
             data.isHidden = true;
           }
@@ -204,13 +205,15 @@ function BaseRestCtrl(
     }
     if ($scope.isValid) {
       var resp = null;
-      if ($scope.activedData.id == 0 || $scope.activedData.id == null) {
-        resp = await service.create($scope.activedData);
+      if ($scope.viewModel.id == 0 || $scope.viewModel.id == null) {
+        resp = await service.create($scope.viewModel);
       } else {
-        resp = await service.update($scope.activedData.id, $scope.activedData);
+        resp = await service.update($scope.viewModel.id, $scope.viewModel);
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
       if (resp.isSucceed) {
-        $scope.activedData = resp.data;
+        $scope.viewModel = resp.data;
         $rootScope.showMessage("success", "success");
 
         if ($scope.saveSuccessCallback) {
@@ -219,9 +222,6 @@ function BaseRestCtrl(
             $scope.saveSuccessCallbackArgs,
             $scope
           );
-        } else {
-          $rootScope.isBusy = false;
-          $scope.$apply();
         }
       } else {
         if ($scope.saveFailCallback) {
@@ -234,8 +234,6 @@ function BaseRestCtrl(
         if (resp) {
           $rootScope.showErrors(resp.errors);
         }
-        $rootScope.isBusy = false;
-        $scope.$apply();
       }
       return resp;
     } else {
@@ -251,6 +249,7 @@ function BaseRestCtrl(
       $scope.removeObject($scope.selectedList.data, id);
     }
   };
+
   $scope.selectAll = function (isSelected) {
     $scope.selectedList.data = [];
     angular.forEach($scope.data.items, function (e) {
@@ -260,6 +259,7 @@ function BaseRestCtrl(
       }
     });
   };
+  
   $scope.applyList = async function () {
     $rootScope.showConfirm(
       $scope,
@@ -298,9 +298,9 @@ function BaseRestCtrl(
     }
   };
   $scope.clearCache = async function () {
-    if ($scope.activedData) {
+    if ($scope.viewModel) {
       $rootScope.isBusy = true;
-      var resp = await service.clearCache([$scope.activedData.id]);
+      var resp = await service.clearCache([$scope.viewModel.id]);
       if (resp.isSucceed) {
         $rootScope.showMessage("success", "success");
       } else {

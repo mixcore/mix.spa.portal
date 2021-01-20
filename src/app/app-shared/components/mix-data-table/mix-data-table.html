@@ -42,14 +42,14 @@
                     </small>
                 </div>
                 <div class="col-sm-{{$ctrl.lastColWidth}}">
-                    <div class="btn-group btn-group-sm float-right" role="group" aria-label="Actions">
+                    <div class="btn-group btn-group-sm float-end" role="group" aria-label="Actions">
                         <a ng-if="nav.childNavs.length > 0" class="btn btn-dark text-primary" ng-click="$ctrl.toggleChildNavs(nav)">
                             <span class="fa fa-list"></span>
                         </a>
                         <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(nav.id)" class="btn btn-sm text-primary ">
                             <span class="fas fa-pen"></span>
                         </a>
-                        <a ng-click="$ctrl.delete(nav.id);" class="btn btn-sm del-popover text-danger" data-toggle="popover"
+                        <a ng-click="$ctrl.delete(nav.id);" class="btn btn-sm del-popover text-danger" data-bs-toggle="popover"
                             data-html="true">
                             <span class="fas fa-trash-alt"></span>
                         </a>
@@ -75,12 +75,12 @@
                             </mix-data-preview>
                         </div>
                         <div class="col-sm-{{$ctrl.lastColWidth}}">
-                            <div class="btn-group btn-group-sm float-right" role="group" aria-label="Actions">
+                            <div class="btn-group btn-group-sm float-end" role="group" aria-label="Actions">
                                 <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(snav.page.id)" class="btn btn-sm btn-dark text-primary">
                                     <span class="fas fa-pen"></span>
                                 </a>
                                 <a ng-click="$ctrl.delete(snav.id);" class="btn btn-dark del-popover text-danger"
-                                    data-toggle="popover" data-html="true">
+                                    data-bs-toggle="popover" data-html="true">
                                     <span class="fas fa-trash-alt"></span>
                                 </a>
                             </div>

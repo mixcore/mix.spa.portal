@@ -1,5 +1,5 @@
 ﻿modules.component('githubReleases', {
-  templateUrl: '/app/app-portal/components/github-releases/view.html',
+  templateUrl: '/mix-app/views/app-portal/components/github-releases/view.html',
   controller: [
     '$rootScope', '$http',
     function ($rootScope, $http) {

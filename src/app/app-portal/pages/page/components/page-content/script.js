@@ -1,8 +1,8 @@
 ﻿app.component("pageContent", {
-  templateUrl: "/app/app-portal/pages/page/components/page-content/view.html",
+  templateUrl: "/mix-app/views/app-portal/pages/page/components/page-content/view.html",
   bindings: {
     model: "=",
-    addictionalData: "=",
+    additionalData: "=",
   },
   controller: [
     "$rootScope",
@@ -11,7 +11,7 @@
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
       ctrl.generateSeo = function () {
-        if ($scope.activedData) {
+        if ($scope.viewModel) {
           if (ctrl.model.seoName === null || ctrl.model.seoName === "") {
             ctrl.model.seoName = $rootScope.generateKeyword(
               ctrl.model.title,

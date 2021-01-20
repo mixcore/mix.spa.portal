@@ -1,6 +1,6 @@
 ﻿
 app.component('pageGeneral', {
-    templateUrl: '/app/app-portal/pages/page/components/general/general.html',
+    templateUrl: '/mix-app/views/app-portal/pages/page/components/general/general.html',
     controller: function ($scope) {
         var ctrl = this;
         ctrl.dataTypes = [
@@ -93,7 +93,7 @@ app.component('pageGeneral', {
                 })
                 $.each($('.editor-content'), function (i, e) {
                     var $demoTextarea = $(e);
-                    $demoTextarea.trumbowyg(ctrl.configurations.plugins);
+                    $demoTextarea.quill(ctrl.configurations.plugins);
                 });
             }, 200)
         }

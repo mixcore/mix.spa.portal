@@ -1,6 +1,6 @@
 ﻿
 app.component('postMedias', {
-    templateUrl: '/app/app-portal/pages/post/components/medias/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/post/components/medias/view.html',
     controller: function () {
         var ctrl = this;
         ctrl.activeMedia = function (media) {

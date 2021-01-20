@@ -1,6 +1,6 @@
 modules.component("attributeSetValues", {
   templateUrl:
-    "/app/app-portal/components/attribute-set-values/attribute-set-values.html?v=2",
+    "/mix-app/views/app-portal/components/attribute-set-values/attribute-set-values.html?v=2",
   bindings: {
     header: "=",
     data: "=",

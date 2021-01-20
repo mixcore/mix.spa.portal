@@ -1,5 +1,5 @@
 ﻿modules.component('githubContributers', {
-  templateUrl: '/app/app-portal/components/github-contributers/view.html',
+  templateUrl: '/mix-app/views/app-portal/components/github-contributers/view.html',
   controller: [
     '$rootScope', '$http',
     function ($rootScope, $http) {

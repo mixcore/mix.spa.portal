@@ -1,5 +1,5 @@
 modules.component("attributeList", {
-  templateUrl: "/app/app-portal/components/attribute-list/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/attribute-list/view.html",
   controller: [
     "$rootScope",
     "$scope",
@@ -50,10 +50,10 @@ modules.component("attributeList", {
       ctrl.generateForm = function () {
         var formHtml = document.createElement("module-form");
         formHtml.setAttribute("class", "row");
-        angular.forEach(ctrl.activedData.attributes, function (e, i) {
+        angular.forEach(ctrl.viewModel.attributes, function (e, i) {
           var el;
           var label = document.createElement("label");
-          label.setAttribute("class", "control-label");
+          label.setAttribute("class", "form-label");
           label.setAttribute("ng-bind", "{{data.title}}");
 
           switch (e.dataType) {
@@ -103,7 +103,7 @@ modules.component("attributeList", {
           formHtml.appendChild(label);
           formHtml.appendChild(el);
         });
-        ctrl.activedData.formView.content = formHtml.innerHTML;
+        ctrl.viewModel.formView.content = formHtml.innerHTML;
       };
 
       ctrl.generateName = function (col) {

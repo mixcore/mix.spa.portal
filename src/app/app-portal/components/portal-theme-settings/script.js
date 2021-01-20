@@ -1,5 +1,5 @@
 ﻿modules.component('portalThemeSettings', {
-    templateUrl: '/app/app-portal/components/portal-theme-settings/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/portal-theme-settings/view.html',
     bindings: {
         showLink: '='
     },

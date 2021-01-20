@@ -10,8 +10,8 @@
                                 class="fa fa-grip-vertical text-black-50"></span>
                         </th>
                         <td class="align-middle">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitch_{{item.id}}"
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" id="customSwitch_{{item.id}}"
                                     ng-model="item.isActived" ng-change="$ctrl.change(item)">
                                 <label class="custom-control-label" for="customSwitch_{{item.id}}"
                                     ng-bind="item.data.title"></label>

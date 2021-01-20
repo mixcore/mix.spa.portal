@@ -69,10 +69,10 @@ app.controller("TemplateController", [
           themeId: themeId,
         });
         if (resp && resp.isSucceed) {
-          $scope.activedData = resp.data;
+          $scope.viewModel = resp.data;
           $scope.canRename =
-            $scope.activedData.id === 0 ||
-            $scope.activedData.fileName.indexOf("Copy") === 0;
+            $scope.viewModel.id === 0 ||
+            $scope.viewModel.fileName.indexOf("Copy") === 0;
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -87,7 +87,7 @@ app.controller("TemplateController", [
         if (resp && resp.isSucceed) {
           resp.data.themeId = themeId;
           resp.data.folderType = $scope.folderType;
-          $scope.activedData = resp.data;
+          $scope.viewModel = resp.data;
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {

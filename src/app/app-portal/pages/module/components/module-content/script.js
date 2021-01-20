@@ -1,9 +1,9 @@
 ﻿
 app.component('moduleContent', {
-    templateUrl: '/app/app-portal/pages/module/components/module-content/view.html',
+    templateUrl: '/mix-app/views/app-portal/pages/module/components/module-content/view.html',
     bindings: {
         model: '=',
-        addictionalData: "=",
+        additionalData: "=",
     },
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;

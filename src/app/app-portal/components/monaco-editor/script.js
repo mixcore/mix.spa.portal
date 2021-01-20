@@ -1,5 +1,5 @@
 ﻿modules.component("monacoEditor", {
-  templateUrl: "/app/app-portal/components/monaco-editor/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/monaco-editor/view.html",
   bindings: {
     editor: "=?",
     content: "=",
@@ -27,6 +27,10 @@
           ctrl.updateEditors();
         }
       };
+
+      ctrl.showHelper = function(url){
+        $rootScope.showHelper(url);
+      }
 
       this.$doCheck = function () {
         if (ctrl.previousId != null && ctrl.previousId !== ctrl.contentId) {

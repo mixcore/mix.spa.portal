@@ -365,6 +365,9 @@ app.run([
       }
     };
     $rootScope.showMessage = function (content, type) {
+      // $rootScope.toast = new  bootstrap.Toast(document.getElementById('toast-msg'));
+      // $rootScope.toastMsg= content;
+      // $rootScope.toast.show();
       var from = "bottom";
       var align = "right";
       if ($ && $.notify) {
@@ -608,7 +611,7 @@ app.run([
       window.top.location = url;
     };
     $rootScope.goToPath = function (url) {
-      $location.url(url.trim());
+        $location.url(url.trim());
     };
     $rootScope.encryptAttributeSet = function (attributes, data) {
       angular.forEach(attributes, function (attr) {
@@ -675,6 +678,19 @@ app.run([
       // window.top.location.href = "/security/login";
       $("#login-popup").modal("show");
     };
+    $rootScope.isInRoles = function (roleNames) {
+      for (let index = 0; index < roleNames.length; index++) {
+        const roleName = roleNames[index];
+        if (authService.isInRole(roleName)) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    $rootScope.isInRole = function (roleName) {
+      return authService.isInRole(roleName);
+    };
     $rootScope.showContentFilter = function (callback) {
       $rootScope.contentFilterCallback = callback;
       $("#modal-content-filter").modal("show");
@@ -686,6 +702,32 @@ app.run([
         items[i].priority = minIndex + i;
       }
     };
+
+    $rootScope.showHelper = function(url) {
+      $rootScope.helperUrl = url;
+      $("#dev-helper-modal").modal('show');
+    }
+
+    $rootScope.openModal = function(templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null){
+      var modalInstance = $uibModal.open({
+        animation: true,
+        windowClass: "show",
+        templateUrl: templateUrl,
+        controller: controllerName,
+        controllerAs: "$ctrl",
+        size: size,
+        resolve: resolve,
+      });
+
+      modalInstance.result.then(
+        function (result) {
+          successCallback(result);
+        },
+        function (error) {
+          failCallback(error);
+        }
+      );
+    }
   },
 ]);
 

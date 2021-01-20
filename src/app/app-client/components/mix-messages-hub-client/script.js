@@ -1,5 +1,5 @@
 ﻿modules.component('mixMessagesHubClient', {
-    templateUrl: '/app/app-client/components/mix-messages-hub-client/view.html',
+    templateUrl: '/mix-app/views/app-client/components/mix-messages-hub-client/view.html',
     bindings: {
         attrSetName: '=',
         isSave: '=?'

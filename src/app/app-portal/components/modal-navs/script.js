@@ -1,5 +1,5 @@
 ﻿modules.component('modalNavs', {
-    templateUrl: '/app/app-portal/components/modal-navs/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/modal-navs/view.html',
     bindings: {
         modelName:'=',
         viewType:'=',        
@@ -13,7 +13,7 @@
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-            ctrl.activedData = null;
+            ctrl.viewModel = null;
             ctrl.data = null;
             ctrl.isInit = false;
             ctrl.isValid = true;            
@@ -43,7 +43,7 @@
                 if (resp.isSucceed) {            
                     ctrl.data = resp.data;
                     $.each(ctrl.data.items, function (i, data) {
-                        $.each(ctrl.activedDatas, function (i, e) {
+                        $.each(ctrl.viewModels, function (i, e) {
                             if (e.dataId === data.id) {
                                 data.isHidden = true;
                             }

@@ -6,7 +6,7 @@ app.controller('ForgotPasswordController', [ '$rootScope', '$scope', 'ngAppSetti
     }
     $scope.pageClass = 'page-forgot-password';
     $scope.isSucceed = false;
-    $scope.activedData = {
+    $scope.viewModel = {
         email:  null
     };
 
@@ -17,7 +17,7 @@ app.controller('ForgotPasswordController', [ '$rootScope', '$scope', 'ngAppSetti
     });
     $scope.submit = async function () {        
         
-        var result = await authService.forgotPassword($scope.activedData);
+        var result = await authService.forgotPassword($scope.viewModel);
         if (result.isSucceed) {
             $rootScope.isBusy = false;
             $scope.isSucceed = true;

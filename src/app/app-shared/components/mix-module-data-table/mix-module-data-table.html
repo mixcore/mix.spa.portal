@@ -5,7 +5,7 @@
       ng-bind="$ctrl.translate('warning_can_not_drag_drop',true, 'Note: Drag Drop only allow when order by priority asc!')"
     ></em>
   </div>
-  <div class="col-6 text-right small">
+  <div class="col-6 text-end small">
     <em>
       Total records:
       <span ng-bind="$ctrl.data.totalItems" class="text-muted"></span
@@ -74,7 +74,7 @@
         </div>
         <div class="col">
           <div
-            class="btn-group btn-group-sm float-right"
+            class="btn-group btn-group-sm float-end"
             role="group"
             aria-label="Actions"
           >
@@ -97,7 +97,7 @@
             <a
               ng-click="$ctrl.delete(nav.id);"
               class="btn btn-link del-popover text-danger"
-              data-toggle="popover"
+              data-bs-toggle="popover"
               data-html="true"
             >
               <span class="fas fa-trash-alt"></span>

@@ -1,6 +1,6 @@
 ﻿
 modules.component('relatedNavs', {
-    templateUrl: '/app/app-portal/components/related-navigations/view.html',
+    templateUrl: '/mix-app/views/app-portal/components/related-navigations/view.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', '$q', function ($rootScope, $scope, ngAppSettings, $q) {
         var ctrl = this;
         ctrl.selected = null;

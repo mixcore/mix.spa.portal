@@ -1,6 +1,6 @@
 ﻿
 modules.component('medias', {
-    templateUrl: '/app/app-shared/components/medias/medias.html',
+    templateUrl: '/mix-app/views/app-shared/components/medias/medias.html',
     controller: 'MediaController',
     bindings: {
         
