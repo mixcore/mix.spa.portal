@@ -22,28 +22,28 @@ app.controller("Step1Controller", [
     $scope.settings = {
       providers: [
         {
-          text: "MySQL Server",
+          text: "MySQL Database",
           value: "MySQL",
           port: "3306",
           img: "/mix-app/assets/img/mysql.jpg",
         },
         {
-          text: "Microsoft SQL Server",
+          text: "Microsoft SQL Server Database",
           value: "MSSQL",
           port: null,
           img: "/mix-app/assets/img/mssql.jpg",
         },
         {
-          text: "SQLITE",
-          value: "SQLITE",
-          port: null,
-          img: "/mix-app/assets/img/mssql.jpg",
-        },
-        {
-          text: "PostgreSQL Server",
+          text: "PostgreSQL Database",
           value: "PostgreSQL",
           port: "5432",
-          img: "/mix-app/assets/img/mysql.jpg",
+          img: "/mix-app/assets/img/postgresql.jpg",
+        },
+        {
+          text: "SQLite Database",
+          value: "SQLITE",
+          port: null,
+          img: "/mix-app/assets/img/sqlite.jpg",
         },
       ],
       cultures: [],
