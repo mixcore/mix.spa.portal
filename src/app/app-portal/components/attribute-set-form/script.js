@@ -56,6 +56,7 @@ modules.component("attributeSetForm", {
             ctrl.attrData.parentType = ctrl.parentType;
             ctrl.attributeSetId = ctrl.attrData.attributeSetId;
             ctrl.attributeSetName = ctrl.attrData.attributeSetName;
+            ctrl.attributeSetTitle = $routeParams.attributeSetTitle;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
@@ -95,11 +96,11 @@ modules.component("attributeSetForm", {
                 break;
 
               default:
-                ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}`;
+                ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}&attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
                 break;
             }
           } else {
-            ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}`;
+            ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
           }
         }
         var getDefault = await service.initData(
@@ -157,7 +158,7 @@ modules.component("attributeSetForm", {
               if ($location.path() == "/portal/attribute-set-data/create") {
                 const url =
                   ctrl.backUrl ||
-                  `/portal/attribute-set-data/details?dataId=${ctrl.attrData.id}`;
+                  `/portal/attribute-set-data/details?dataId=${ctrl.attrData.id}&attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
                 $location.url(url);
               }
               $scope.$apply();

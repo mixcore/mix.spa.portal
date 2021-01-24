@@ -1,4 +1,4 @@
-<form ng-class="{'submitted': submitted}"  ng-submit="$ctrl.submit()">
+<form ng-class="{'submitted': submitted}" ng-submit="$ctrl.submit()">
   <div class="row">
     <div class="col-8"></div>
     <div class="col-4 mb-3">
@@ -13,14 +13,14 @@
         >{{$ctrl.attributeSetName}}'s Data </span> -->
 
       <a class="btn btn-link text-primary btn-sm float-end py-0" ng-if="$ctrl.backUrl" href="{{$ctrl.backUrl}}">
-        <i class="fas fa-return"></i> Back
+        <i class="fas fa-chevron-left"></i> Back to list
       </a>
       <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
         aria-controls="attributeSetId_{{$ctrl.attrData.attributeSetId}} collapse">
         <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
-        <a href="#" ng-click="$ctrl.showContentFilter()" class="btn bnt-sm btn-primary px-3">
-          <i class="fas fa-search"></i> Search links
-        </a>
+      <a href="#" ng-click="$ctrl.showContentFilter()" class="btn bnt-sm btn-primary px-3">
+        <i class="fas fa-search"></i> Search links
+      </a>
       <button ng-if="$ctrl.parentId" type="button" data-bs-toggle="modal" data-bs-target="#modal-data-filter"
         class="btn btn-sm btn-link py-0 float-end" ng-disabled="$ctrl.isBusy">
         <i class="fas fa-folder"></i> Browse Data
@@ -31,15 +31,15 @@
       </button>
       <button type="button" ng-click="$ctrl.submit()"
         class="btn btn-sm btn-link btn-round pull-right float-end me-2 py-0" ng-disabled="$ctrl.isBusy">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy"></span>
-        <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy" ng-show="!$ctrl.isBusy"></span>
+        <i class="fas fa-save"></i> Save current
       </button>
     </h6>
     <div id="attributeSetId_{{$ctrl.attrData.attributeSetId}}" class="card-body show">
       <div class="row">
         <div class="col-sm-12">
           <div ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index">
-            
+
             <mix-field-editor level="$ctrl.level + 1" model="$ctrl.attrData" field="field"></mix-field-editor>
           </div>
         </div>
@@ -49,8 +49,8 @@
     <div class="card-footer" ng-if="!$ctrl.hideAction">
       <button type="button" ng-click="$ctrl.submit()" class="btn btn-sm btn-primary btn-round float-end px-4"
         ng-disabled="$ctrl.isBusy">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy"></span>
-        <i class="fas fa-save" ng-show="!$ctrl.isBusy"></i> Save current
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy" ng-show="!$ctrl.isBusy"></span>
+        <i class="fas fa-save"></i> Save current
       </button>
     </div>
   </div>
@@ -58,4 +58,4 @@
 <attribute-set-data-filter ng-if="$ctrl.parentId" callback="$ctrl.loadSelected()"
   attribute-set-id="$ctrl.attributeSetId" attribute-set-name="$ctrl.attributeSetName" selected-list="$ctrl.selectedList"
   fields="$ctrl.fields"></attribute-set-data-filter>
-  <modal-content-filter ng-if="$ctrl.attrData" callback="$ctrl.loadSelectedLink(nav,type)"></modal-content-filter>
+<modal-content-filter ng-if="$ctrl.attrData" callback="$ctrl.loadSelectedLink(nav,type)"></modal-content-filter>
