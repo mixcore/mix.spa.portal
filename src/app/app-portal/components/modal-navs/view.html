@@ -1,20 +1,13 @@
 <div class="modal modal-default fade" id="modal-navs" ng-init="$ctrl.init()">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            
-                        </button>
-                        <filter-list request="$ctrl.request" callback="$ctrl.getList(pageIndex)"></filter-list>
-                    </div>
-
-                </div>
+                <h5 class="modal-title" id="exampleModalLabel">Select reference database</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-8">
                         <table class="table table-sm table-hover" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
@@ -34,7 +27,8 @@
                             <tbody>
                                 <tr ng-repeat="item in $ctrl.data.items track by $index">
                                     <td style="cursor:grab;" class="drag-header">
-                                        <small class="fa fa-grip-vertical text-black-50 align-middle" style="cursor: grab"></small>
+                                        <small class="fa fa-grip-vertical text-black-50 align-middle"
+                                            style="cursor: grab"></small>
                                     </td>
                                     <td>
                                         <input type="checkbox" ng-model="item.isActived"
@@ -56,12 +50,17 @@
                             a-class="page-link" paging-action="$ctrl.getList($ctrl.request.pageIndex)"
                             scroll-top="true">
                     </div>
+                    <div class="col-4">
+                        <h6 class="form-label">Filter</h6>
+                        <filter-list request="$ctrl.request" callback="$ctrl.getList(pageIndex)"></filter-list>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="#" class="btn btn-primary px-4" ng-click="$ctrl.saveSelected()"><i class="fas fa-save"></i> Save</a>
+                        <a href="#" class="btn btn-primary px-5" ng-click="$ctrl.saveSelected()"><i
+                                class="fas fa-save"></i> Save</a>
                     </div>
                 </div>
             </div>

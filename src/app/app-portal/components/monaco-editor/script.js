@@ -17,7 +17,8 @@
     function ($rootScope, $scope, $element) {
       var ctrl = this;
       ctrl.previousId = null;
-      ctrl.minHeight = 500;
+      ctrl.minHeight = 400;
+      ctrl.isFull = false;
       ctrl.id = Math.floor(Math.random() * 100) + 1;
       ctrl.$onChanges = (changes) => {
         if (changes.content) {
@@ -28,7 +29,7 @@
         }
       };
 
-      ctrl.showHelper = function(url){
+      ctrl.showHelper = function (url) {
         $rootScope.showHelper(url);
       }
 
@@ -45,14 +46,16 @@
           }, 200);
         }
       }.bind(this);
+
       ctrl.initEditor = function () {
-        ctrl.lineCount = parseInt(ctrl.lineCount) || 100;
+        // ctrl.lineCount = parseInt(ctrl.lineCount) || 100;
         setTimeout(() => {
           ctrl.previousId = ctrl.contentId;
           ctrl.updateEditors();
           $scope.$apply();
         }, 200);
       };
+      
       ctrl.updateContent = function (content) {
         ctrl.editor.setValue(content);
         // lineCount = ctrl.editor.getModel().getLineCount();
@@ -69,11 +72,15 @@
             var model = {
               value: ctrl.content || ctrl.defaultContent,
               readOnly: ctrl.isReadonly === "true" || false,
+              
+              lineNumbers: "on",
+              roundedSelection: false,
+              scrollBeyondLastLine: false,
               contextmenu: false,
               // theme: "vs-dark",
               formatOnType: true,
               formatOnPaste: true,
-              wordWrap: "on",
+              // wordWrap: "on",
               automaticLayout: true, // the important part
             };
             switch (ctrl.ext) {
@@ -109,17 +116,34 @@
                 btn.click();
               }
             );
-            setTimeout(() => {
-              // var h = ctrl.editor.getModel().getLineCount() * 18;
-              // h = h < ctrl.minHeight ? ctrl.minHeight : h;
-              var h = ctrl.lineCount * 20;
-              $(e).height(h);
-              ctrl.editor.layout();
-            }, 200);
+
+              if(ctrl.isFull){
+                $(e).height(window.innerHeight);
+              }else{
+                $(e).height(ctrl.minHeight);
+              }
+
+            // setTimeout(() => {
+            //   // var h = ctrl.editor.getModel().getLineCount() * 18;
+            //   // h = h < ctrl.minHeight ? ctrl.minHeight : h;
+            //   var h = ctrl.lineCount * 20;
+              // $(e).height(h);
+              // ctrl.editor.layout();
+            // }, 200);
+
+            
           }
         });
       };
+      
       ctrl.fullscreen = function (event) {
+        // const element = $(event.target).parents(".monaco-editor");
+
+        // event.target.addEventListener('click', () => {
+        //   if (screenfull.isEnabled) {
+        //     screenfull.request(element);
+        //   }
+        // });
         // $.each($($element).find('.code-editor'), function (i, e) {
         //     //var container = $(this);
         //     if (e) {}
@@ -130,28 +154,29 @@
           .parents(".monaco-editor")
           .toggleClass("monaco-editor-full");
 
-        // $('.monaco-editor').toggleClass('monaco-editor-full');
-        var h;
+          ctrl.isFull = !ctrl.isFull;
 
-        ctrl.editor.dispose();
-        // setTimeout(() => {
-        if ($(".monaco-editor.container-code-editor.monaco-editor-full")[0]) {
-          // Do something if class exists
-          h = window.innerHeight;
-          $(
-            ".monaco-editor.container-code-editor.monaco-editor-full .code-editor"
-          ).height(h);
-          document.body.style.overflow = "hidden";
-        } else {
-          // Do something if class does not exist
-          h = ctrl.lineCount * 12;
-          $(".monaco-editor .code-editor").height(h);
-          document.body.style.overflow = "visible";
-        }
-        ctrl.editor.layout();
+          ctrl.editor.dispose();
+          
+          // var h;
+
+          // ctrl.editor.dispose();
+          // if ($(".monaco-editor.container-code-editor.monaco-editor-full")[0]) {
+          //   // Do something if class exists
+          //   h = window.innerHeight;
+          //   $(
+          //     ".monaco-editor.container-code-editor.monaco-editor-full .code-editor"
+          //   ).height(h);
+          //   document.body.style.overflow = "hidden";
+          // } else {
+          //   // Do something if class does not exist
+          //   h = ctrl.lineCount * 20;
+          //   $(".monaco-editor .code-editor").height(h);
+          //   document.body.style.overflow = "visible";
+          // }
+          // ctrl.editor.layout();
 
         ctrl.updateEditors();
-        // }, 200);
       };
     },
   ],
