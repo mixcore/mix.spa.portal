@@ -18,7 +18,7 @@
       <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
         aria-controls="attributeSetId_{{$ctrl.attrData.attributeSetId}} collapse">
         <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
-      <a href="#" ng-click="$ctrl.showContentFilter()" class="btn bnt-sm btn-primary px-3">
+      <a href="#" ng-if="$ctrl.attributeSetId==1" ng-click="$ctrl.showContentFilter()" class="btn bnt-sm btn-primary px-3">
         <i class="fas fa-search"></i> Search links
       </a>
       <button ng-if="$ctrl.parentId" type="button" data-bs-toggle="modal" data-bs-target="#modal-data-filter"

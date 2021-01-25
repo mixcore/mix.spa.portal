@@ -37,6 +37,9 @@ app.controller("LoginPopupController", [
           $rootScope.loginCallbackType = null;
         }
       }
+      else{
+        $rootScope.goToSiteUrl('/security/login');
+      }
     };
     $scope.closeDialog = function () {
       $("#login-popup").modal("hide");
