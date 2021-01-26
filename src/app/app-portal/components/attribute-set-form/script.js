@@ -99,9 +99,7 @@ modules.component("attributeSetForm", {
                 ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}&attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
                 break;
             }
-          } else {
-            ctrl.backUrl = `/portal/attribute-set-data/list?attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
-          }
+          } 
         }
         var getDefault = await service.initData(
           ctrl.attributeSetName || ctrl.attributeSetId
