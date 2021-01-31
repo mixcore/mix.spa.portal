@@ -248,7 +248,7 @@
         if (!tmp) {
           ctrl.isBusy = true;
           ctrl.attrData.parentId = 0;
-          ctrl.attrData.parentType = "2";
+          ctrl.attrData.parentType = 'Set';
           ctrl.attrData.obj.title = ctrl.newTitle;
           ctrl.attrData.obj.slug = $rootScope.generateKeyword(
             ctrl.newTitle,

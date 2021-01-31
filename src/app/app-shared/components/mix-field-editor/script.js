@@ -79,7 +79,7 @@
             ctrl.field.referenceId
           }&dataId=default&parentId=${
             ctrl.model.id
-          }&parentType=1&backUrl=${backUrl}`;
+          }&parentType=Set&backUrl=${backUrl}`;
         }
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/attribute-set-data/details";

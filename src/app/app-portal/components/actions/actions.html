@@ -15,7 +15,7 @@
     <i class="fa fa-save"></i>
     <span>Save</span>
   </button>
-  <button type="button" ng-click="$ctrl.clearCache()" class="btn btn-outline-primary">
+  <button type="button" ng-click="$ctrl.clearCache()" ng-if="$ctrl.onClearCache" class="btn btn-outline-primary">
     <i class="fa fa-recycle"></i>
     <span>Clear cache</span>
   </button>
