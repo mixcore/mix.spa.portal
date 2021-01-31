@@ -20,8 +20,8 @@
     <h3>Template list</h3>
     <p class="text-subtitle text-muted">Use the filter side bar on the right to filter and search your templates.</p>
 
-    <section ng-init="loadParams()" class="">
-        <div class="mb-5">
+    <section ng-init="loadParams()" class="card mb-5">
+        <div class="card-body">
 
             <!-- <div ng-if="folderType">
                 <div class="row mb-3">
@@ -132,12 +132,12 @@
                 </div>
             </div>
         </div>
-        <div class="">
-
-            <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-                ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
-                scroll-top="true"></paging>
-        </div>
     </section>
+    <div class="">
+
+        <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+            ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+            scroll-top="true"></paging>
+    </div>
 
 </div>
