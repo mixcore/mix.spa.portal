@@ -1,7 +1,6 @@
 <div class="" ng-init="$ctrl.init()">
     <div class="mb-3">
         {{$ctrl.header}}
-        {{$ctrl.formFile}}
         <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" data-bs-toggle="modal"
             data-bs-target="#modal-files-search-{{$ctrl.id}}">
             <i class="fa fa-folder-open"></i> Browse
@@ -12,7 +11,7 @@
     <div class="mb-3">
         <div class="input-group">
             <div class="custom-file">
-                <input id="{{$ctrl.id}}" type="file" name="pic" accept="{{$ctrl.accept}}"
+                <input id="{{$ctrl.id}}" type="file" name="pic" accept="{{$ctrl.acceptTypes}}"
                     ngf-select="$ctrl.selectFile($files)" data-files="file.files" class="position-absolute hidden form-control">
                 <label class="form-label" for="{{$ctrl.id}}">Upload file...</label>
             </div>
@@ -21,7 +20,7 @@
     <div
         style="background:url(/mix-app/assets/img/image_placeholder.jpg) no-repeat center;  cursor:pointer; min-height: 200px;">
         <img ng-if="$ctrl.isImage" imageonload ng-src="{{$ctrl.srcUrl}}" ng-if="$ctrl.srcUrl" name="pic"
-            class="custom-file-img d-block ng-scope ml-auto mr-auto w-100" accept="image/*">
+            class="custom-file-img d-block ng-scope ml-auto mr-auto w-100" accept="{{$ctrl.acceptTypes}}">
         <a ng-if="!$ctrl.isImage && $ctrl.srcUrl" href="{{$ctrl.srcUrl}}" target="_blank">View</a>
         <input type="hidden" value="{{$ctrl.type}}/{{$ctrl.folder}}" class="folder-val">
         <div class="input-group mb-3">

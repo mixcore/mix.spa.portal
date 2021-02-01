@@ -57,7 +57,7 @@
       <label class="control-label" ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"></label>
     </div>
     <div class="text-muted" ng-switch-when="html">
-      <!--Html-->      
+      <!--Html-->
       <quill-editor content="$ctrl.model.obj[$ctrl.field.name]"></quill-editor>
     </div>
     <div class="text-muted" ng-switch-when="multilinetext">
@@ -81,11 +81,18 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}" type="url"
         ng-model="$ctrl.model.obj[$ctrl.field.name]" placeholder="{{$ctrl.translate($ctrl.field.title)}}" />
     </div>
-    <div class="text-muted col-8 card p-0" ng-switch-when="upload">
+    <div class="text-muted col-8 card p-0" ng-switch-when="upload"
+      ng-if="$ctrl.field.fieldConfigurations">
       <!--upload-->
-      <custom-image header="'Image'" type="'Posts'" w="$ctrl.field.fieldConfigurations.upload.width"
-        h="$ctrl.field.fieldConfigurations.upload.height" folder="'Attributes'"
-        src-url="$ctrl.model.obj[$ctrl.field.name]" src="$ctrl.model.obj[$ctrl.field.name]" auto="'true'">
+      <media-file-upload 
+        ng-if="!$ctrl.field.fieldConfigurations.upload.isCrop" header="'Media Upload'" type="'Medias'"
+        folder="'Medias'" accept-types="$ctrl.field.fieldConfigurations.upload.accepts" src-url="$ctrl.model.obj[$ctrl.field.name]"
+        src="$ctrl.model.obj[$ctrl.field.name]" media-file="$ctrl.model.mediaFile" form-file="formFile">
+      </media-file-upload>
+      <custom-image ng-if="$ctrl.field.fieldConfigurations.upload.isCrop" header="'Image'" type="'Medias'"
+        w="$ctrl.field.fieldConfigurations.upload.width" h="$ctrl.field.fieldConfigurations.upload.height"
+        folder="'Medias'" src-url="$ctrl.model.obj[$ctrl.field.name]" src="$ctrl.model.obj[$ctrl.field.name]"
+        auto="'true'">
       </custom-image>
     </div>
     <div class="text-muted" ng-switch-when="color">
