@@ -31,31 +31,31 @@ modules.component('tclOrder', {
             ctrl.loadDefaultPackages = async function () {
                 $rootScope.isBusy = true;
                 ctrl.request.parentId = ctrl.user.id;
-                ctrl.request.parentType = 1;
+                ctrl.request.parentType = 'Set';
                 var getPackages = await service.getList(ctrl.request);
                 if (getPackages.isSucceed) {
                     ctrl.user.obj.order_packages = getPackages.data.items;
                     angular.forEach(ctrl.user.obj.order_packages, function (pack) {
                         pack.parentId = ctrl.user.id;
                         pack.attributeSetId = 0;
-                        pack.parentType = 1;
+                        pack.parentType = 'Set';
                         pack.status = 2;
                         pack.attributeSetName = 'order_package';
                         pack.id = null;
                         pack.obj.quantity = 0;
                         pack.obj.total = 0;
                         pack.parentId = ctrl.user.id;
-                        pack.parentType = 1;
+                        pack.parentType = 'Set';
                         angular.forEach(pack.obj.package_slots, function (slot) {
                             slot.id = null;
                             slot.attributeSetName = 'order_package_slot';
-                            slot.parentType = 1;
+                            slot.parentType = 'Set';
                             slot.status = 2;
                             slot.attributeSetId = 0;
                             angular.forEach(slot.obj.package_items, function (item) {
                                 item.id = null;
                                 item.attributeSetName = 'order_package_item';
-                                item.parentType = 1;
+                                item.parentType = 'Set';
                                 item.attributeSetId = 0;
                             });
                         });
@@ -74,7 +74,7 @@ modules.component('tclOrder', {
                         pack.obj.id = savePackage.data.id;
                         angular.forEach(pack.obj.gifts, async function (gift) {
                             gift.parentId = pack.id;
-                            gift.parentType = 1;
+                            gift.parentType = 'Set';
                             await ctrl.saveData(gift);
 
                         });
@@ -98,7 +98,7 @@ modules.component('tclOrder', {
                                         item.attributeSetId = saveItem.data.attributeSetId;
                                         angular.forEach(item.obj.products, async function (product) {
                                             product.parentId = item.id;
-                                            product.parentType = 1;
+                                            product.parentType = 'Set';
                                             await ctrl.saveData(product);
                                         });
                                     }

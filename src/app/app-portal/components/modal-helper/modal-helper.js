@@ -37,13 +37,64 @@
       };
       ctrl.loadHelperUrl = function () {
         var portalUrl = $location.url();
-        var defaultUrl = 'https://docs.mixcore.org/docs/introduction';
-        switch (portalUrl) {
-          case '/portal':
-          default:
-            ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl);
-            break;
+        // var portalabsUrl = $location.absUrl();
+        var defaultUrl = '//docs.mixcore.org';
+        ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl);
+
+
+        if(portalUrl.startsWith("/portal")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-administration-screens");
         }
+        if(portalUrl.startsWith("/portal/attribute-set-data/list?attributeSetId=2")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-navigation");
+        }
+        if(portalUrl.startsWith("/portal/post")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-writing-posts");
+        }
+        if(portalUrl.startsWith("/portal/page")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-page");
+        }
+        if(portalUrl.startsWith("/portal/module")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-module");
+        }
+        if(portalUrl.startsWith("/portal/attribute-set")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-database");
+        }
+        if(portalUrl.startsWith("/portal/attribute-set-data/list?attributeSetId=7")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-category");
+        }
+        if(portalUrl.startsWith("/portal/attribute-set-data/list?attributeSetId=8")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-tag");
+        }
+        if(portalUrl.startsWith("/portal/media")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-media");
+        }
+        if(portalUrl.startsWith("/portal/file")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-file");
+        }
+        if(portalUrl.startsWith("/portal/user")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-user");
+        }
+        if(portalUrl.startsWith("/portal/theme")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-theme");
+        }
+        if(portalUrl.startsWith("/portal/app-settings")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-app-settings");
+        }
+        if(portalUrl.startsWith("/portal/configuration")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-configuration");
+        }
+        if(portalUrl.startsWith("/portal/my-profile")){
+          ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl+"/basic-usage-users-profile");
+        }
+
+
+        // switch (portalUrl) {
+        //   case '/portal':
+        //   default:
+        //     ctrl.trustedUrl = $sce.trustAsResourceUrl(defaultUrl);
+        //     break;
+        // }
       };
     },
   ],

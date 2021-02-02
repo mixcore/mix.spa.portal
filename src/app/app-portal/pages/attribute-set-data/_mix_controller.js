@@ -47,7 +47,9 @@ app.controller("MixAttributeSetDataController", [
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.attributeSetName = $routeParams.attributeSetName;
-      $scope.backUrl = $routeParams.backUrl;
+      if ($routeParams.backUrl) {
+        $scope.backUrl = decodeURIComponent($routeParams.backUrl);
+      }
       if ($routeParams.dataId != $scope.defaultId) {
         $scope.dataId = $routeParams.dataId;
       }
@@ -77,9 +79,15 @@ app.controller("MixAttributeSetDataController", [
     };
     $scope.saveSuccessCallback = function () {
       if ($location.path() == "/portal/attribute-set-data/create") {
-        $rootScope.goToSiteUrl(
-          `/portal/attribute-set-data/details?dataId=${$scope.viewModel.id}`
-        );
+        let backUrl =
+          $scope.backUrl ||
+          `/portal/attribute-set-data/details?dataId=${$scope.viewModel.id}`;
+        $rootScope.goToSiteUrl(backUrl);
+      } else {
+        let backUrl =
+          $scope.backUrl ||
+          `/portal/attribute-set-data/list?attributeSetId=${$scope.viewModel.attributeSetId}&attributeSetName=${$scope.viewModel.attributeSetName}&attributeSetTitle=${$scope.viewModel.attributeSetName}`;
+        $rootScope.goToSiteUrl(backUrl);
       }
     };
 

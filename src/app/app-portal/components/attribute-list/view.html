@@ -112,18 +112,24 @@
             </div>
           </div>
           <div class="row mb-3" ng-show="col.dataType == 'Upload'">
+            <div class="col-md-12 mb-3" ng-if="col.fieldConfigurations.upload.arrayAccepts">
+              <label class="form-label">Accepts</label>
+              <tags-input min-length="1" ng-model="col.fieldConfigurations.upload.arrayAccepts">
+              </tags-input>
+          </div>
             <div class="form-check form-switch mx-2 float-start">
+
               <input type="checkbox" class="form-check-input" ng-model="col.fieldConfigurations.upload.isCrop"
                 id="{{'isCrop_' + $index}}" />
               <label class="custom-form-label" for="{{'isCrop_' + $index}}">
                 Crop
               </label>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" ng-if="col.fieldConfigurations.upload.isCrop">
               <small>Width</small>
               <input type="number" ng-model="col.fieldConfigurations.upload.width" class="sm-control" />
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" ng-if="col.fieldConfigurations.upload.isCrop">
               <small>Height</small>
               <input type="number" ng-model="col.fieldConfigurations.upload.height" class="sm-control" />
             </div>

@@ -10,7 +10,7 @@
     type: "=?",
     folder: "=?",
     auto: "=",
-    accept: "=?",
+    acceptTypes: "=?",
     onDelete: "&?",
     onUpdate: "&?",
   },
