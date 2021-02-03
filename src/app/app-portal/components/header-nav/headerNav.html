@@ -28,8 +28,12 @@
   </div>
   <div class="d-flex pe-2">
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" ng-if="$ctrl.settings">
-      <li class="nav-item me-2 text-center">
-        {{$ctrl.isAdmin}}
+      <li class="nav-item me-2">
+        <a class="nav-link p-2 text-primary" href="#"  ng-click="$ctrl.generateSitemap()">
+          <i class="mi mi-CheckList"></i>
+        </a>
+      </li>
+      <li class="nav-item me-2 text-center">        
         <a class="nav-link p-2 text-primary" href="#" data-bs-toggle="modal"
           data-bs-target="#dlg-portal-theme-settings">
           <i class="mi mi-Personalize"></i>
@@ -55,6 +59,7 @@
         <i class="mi mi-CheckList"></i>
       </a>
     </li> -->
+     
       <li class="nav-item me-2">
         <a class="nav-link p-2 text-primary" href="#" data-bs-toggle="modal" data-bs-target="#modal-files">
           <i class="mi mi-Media"></i>
@@ -87,6 +92,7 @@
         </a>
       </li>
     </ul>
+    
     <a href="/portal/my-profile">
       <img class="rounded-circle border" alt="200x200" ng-src="{{$ctrl.avatar}}" data-holder-rendered="true" width="32"
         height="32" />
