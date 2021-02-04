@@ -108,6 +108,7 @@
 
             ctrl.editor.model.onDidChangeContent(() => {
               ctrl.content = ctrl.editor.model.getValue();
+              $scope.$apply();
             });
             ctrl.editor.addCommand(
               monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
