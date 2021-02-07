@@ -26,6 +26,7 @@
       navService
     ) {
       var ctrl = this;
+      ctrl.mediaFile =  {};
       ctrl.icons = ngAppSettings.icons;
       ctrl.previousValue = null;
       ctrl.translate = (keyword, isWrap, defaultText) => {
