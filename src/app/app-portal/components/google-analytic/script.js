@@ -1,5 +1,7 @@
 ﻿modules.component("googleAnalytic", {
   templateUrl: "/mix-app/views/app-portal/components/google-analytic/view.html",
+  bindings: {
+  },
   controller: [
     "$rootScope",
     "CommonService",
@@ -189,10 +191,5 @@
         }
       };
     },
-  ],
-  bindings: {
-    totalPriceStatus: "=",
-    currencyCode: "=",
-    totalPrice: "=",
-  },
+  ]
 });

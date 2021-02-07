@@ -44,7 +44,7 @@ app.controller("Step3Controller", [
       var form = document.getElementById("frm-theme");
       var frm = new FormData();
       var url = "/init/init-cms/step-3";
-
+      $scope.data.isCreateDefault = $('#customRadio_theme-cleanblog').is(':checked');
       $rootScope.isBusy = true;
       // Looping over all files and add it to FormData object
       frm.append("theme", form["theme"].files[0]);
@@ -56,7 +56,9 @@ app.controller("Step3Controller", [
         $scope.viewModel = response.data;
         authService.initSettings().then(function () {
           $rootScope.isBusy = false;
-          $rootScope.goToSiteUrl("/portal");
+          setTimeout(() => {
+            $rootScope.goToSiteUrl("/portal");
+          }, 500);
           $scope.$apply();
         });
       } else {
