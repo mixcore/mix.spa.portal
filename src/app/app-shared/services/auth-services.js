@@ -94,7 +94,7 @@ app.factory("AuthService", [
           refresh_token: data.refresh_token,
           referredUrl: "/",
         };
-        angular.forEach(data.userData.roles, function (value, key) {
+        angular.forEach(data.userData.userRoles, function (value, key) {
           if (
             value.role.name === "SuperAdmin"
             //|| value.role.name === 'Admin'
@@ -168,7 +168,7 @@ app.factory("AuthService", [
           refresh_token: data.refresh_token,
           referredUrl: "/",
         };
-        angular.forEach(data.userData.roles, function (value, key) {
+        angular.forEach(data.userData.userRoles, function (value, key) {
           if (
             value.role.name === "SuperAdmin"
             //|| value.role.name === 'Admin'
@@ -299,7 +299,7 @@ app.factory("AuthService", [
                   userRoles: data.userData.userRoles,
                   token: data.access_token,
                   userName: data.userData.firstName,
-                  roleNames: data.userData.roles.map(
+                  roleNames: data.userData.userRoles.map(
                     (i) => i.role.normalizedName
                   ),
                   avatar: data.userData.avatar,
