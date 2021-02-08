@@ -24,27 +24,11 @@ app.factory('MediaService', ['$rootScope', 'CommonService', 'BaseService',
             //var container = $(this).parents('.model-media').first().find('.custom-file').first();
             if (mediaFile.file !== undefined && mediaFile.file !== null) {
                 // Create FormData object
-                var files = new FormData();
+                var url = this.prefixUrl + '/upload-media';
+                var fd = new FormData();
 
-                // Looping over all files and add it to FormData object
-                files.append(mediaFile.file.name, file);
-
-                // Adding one more key to FormData object
-                files.append('fileFolder', mediaFile.folder); files.append('title', mediaFile.title);
-                files.append('description', mediaFile.description);
-
-                var req = {
-                    url: this.prefixUrl + '/media/upload', //'/tts/UploadImage',
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    contentType: false, // Not to set any content header
-                    processData: false, // Not to process data
-                    data: files,
-                };
-
-                return await commonService.getApiResult(req);
+                fd.append('file', file);
+                return await serviceFactory.ajaxSubmitForm(fd, url);
             }
         };
         serviceFactory.cloneMedia = _cloneMedia;
