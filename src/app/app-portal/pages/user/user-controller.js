@@ -109,12 +109,12 @@ app.controller('UserController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
             }
         }
 
-        $scope.saveUser = async function (user) {
+        $scope.save = async function () {
             //if (user.avatar !== user.avatarUrl) {
             //    user.avatar = user.avatarUrl;
             //}
             $rootScope.isBusy = true;
-            var resp = await userServices.saveUser(user);
+            var resp = await userServices.saveUser($scope.activedUser);
             if (resp && resp.isSucceed) {
                 $rootScope.showMessage('Update successfully!', 'success');
                 $rootScope.isBusy = false;
