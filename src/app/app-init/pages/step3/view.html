@@ -46,7 +46,7 @@
         >
       </div>
     </div>
-    <div class="mb-3 mb-5" ng-if="themeType ==='custom'">
+    <div class="mb-3 mb-5" ng-show="themeType ==='custom'">
       <api-file form-name="'theme'" posted-file="theme"></api-file>
       <small class="form-text text-muted"
         >Awesome Mixcore theme
@@ -59,6 +59,7 @@
     </div>
     <div class="text-end">
       <button
+        ng-disabled="themeType ==='custom' && !form['theme'].files.length"
         class="btn btn-primary"
         style="min-width: 200px;"
         ng-click="submit()"
