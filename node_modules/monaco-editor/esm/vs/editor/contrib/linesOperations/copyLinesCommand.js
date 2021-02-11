@@ -5,9 +5,10 @@
 import { Range } from '../../common/core/range.js';
 import { Selection } from '../../common/core/selection.js';
 export class CopyLinesCommand {
-    constructor(selection, isCopyingDown) {
+    constructor(selection, isCopyingDown, noop) {
         this._selection = selection;
         this._isCopyingDown = isCopyingDown;
+        this._noop = noop || false;
         this._selectionDirection = 0 /* LTR */;
         this._selectionId = null;
         this._startLineNumberDelta = 0;
@@ -33,11 +34,16 @@ export class CopyLinesCommand {
                 this._endLineNumberDelta++;
             }
         }
-        if (!this._isCopyingDown) {
-            builder.addEditOperation(new Range(s.endLineNumber, model.getLineMaxColumn(s.endLineNumber), s.endLineNumber, model.getLineMaxColumn(s.endLineNumber)), '\n' + sourceText);
+        if (this._noop) {
+            builder.addEditOperation(new Range(s.endLineNumber, model.getLineMaxColumn(s.endLineNumber), s.endLineNumber + 1, 1), s.endLineNumber === model.getLineCount() ? '' : '\n');
         }
         else {
-            builder.addEditOperation(new Range(s.startLineNumber, 1, s.startLineNumber, 1), sourceText + '\n');
+            if (!this._isCopyingDown) {
+                builder.addEditOperation(new Range(s.endLineNumber, model.getLineMaxColumn(s.endLineNumber), s.endLineNumber, model.getLineMaxColumn(s.endLineNumber)), '\n' + sourceText);
+            }
+            else {
+                builder.addEditOperation(new Range(s.startLineNumber, 1, s.startLineNumber, 1), sourceText + '\n');
+            }
         }
         this._selectionId = builder.trackSelection(s);
         this._selectionDirection = this._selection.getDirection();

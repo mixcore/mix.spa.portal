@@ -44,7 +44,7 @@ let CodeLensCache = class CodeLensCache {
         // store lens data on shutdown
         once(storageService.onWillSaveState)(e => {
             if (e.reason === WillSaveStateReason.SHUTDOWN) {
-                storageService.store(key, this._serialize(), 1 /* WORKSPACE */);
+                storageService.store(key, this._serialize(), 1 /* WORKSPACE */, 1 /* MACHINE */);
             }
         });
     }

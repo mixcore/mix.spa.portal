@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export class ResolvedKeybindingItem {
-    constructor(resolvedKeybinding, command, commandArgs, when, isDefault, extensionId) {
+    constructor(resolvedKeybinding, command, commandArgs, when, isDefault, extensionId, isBuiltinExtension) {
         this.resolvedKeybinding = resolvedKeybinding;
         this.keypressParts = resolvedKeybinding ? removeElementsAfterNulls(resolvedKeybinding.getDispatchParts()) : [];
         this.bubble = (command ? command.charCodeAt(0) === 94 /* Caret */ : false);
@@ -12,6 +12,7 @@ export class ResolvedKeybindingItem {
         this.when = when;
         this.isDefault = isDefault;
         this.extensionId = extensionId;
+        this.isBuiltinExtension = isBuiltinExtension;
     }
 }
 export function removeElementsAfterNulls(arr) {

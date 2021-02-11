@@ -2,11 +2,11 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as Json from '../../jsonc-parser/main.js';
-import { URI } from '../../vscode-uri/index.js';
+import * as Json from './../../jsonc-parser/main.js';
+import { URI } from './../../vscode-uri/index.js';
 import * as Strings from '../utils/strings.js';
 import * as Parser from '../parser/jsonParser.js';
-import * as nls from '../../../fillers/vscode-nls.js';
+import * as nls from './../../../fillers/vscode-nls.js';
 var localize = nls.loadMessageBundle();
 var FilePatternAssociation = /** @class */ (function () {
     function FilePatternAssociation(pattern, uris) {
@@ -445,9 +445,10 @@ var JSONSchemaService = /** @class */ (function () {
         }
         var seen = Object.create(null);
         var schemas = [];
+        var normalizedResource = normalizeResourceForMatching(resource);
         for (var _i = 0, _a = this.filePatternAssociations; _i < _a.length; _i++) {
             var entry = _a[_i];
-            if (entry.matchesPattern(resource)) {
+            if (entry.matchesPattern(normalizedResource)) {
                 for (var _b = 0, _c = entry.getURIs(); _b < _c.length; _b++) {
                     var schemaId = _c[_b];
                     if (!seen[schemaId]) {
@@ -498,6 +499,15 @@ function normalizeId(id) {
     }
     catch (e) {
         return id;
+    }
+}
+function normalizeResourceForMatching(resource) {
+    // remove querues and fragments, normalize drive capitalization
+    try {
+        return URI.parse(resource).with({ fragment: null, query: null }).toString();
+    }
+    catch (e) {
+        return resource;
     }
 }
 function toDisplayString(url) {

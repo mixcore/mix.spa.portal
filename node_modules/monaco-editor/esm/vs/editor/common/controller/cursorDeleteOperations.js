@@ -31,8 +31,8 @@ export class DeleteOperations {
         }
         return [shouldPushStackElementBefore, commands];
     }
-    static _isAutoClosingPairDelete(config, model, selections) {
-        if (config.autoClosingBrackets === 'never' && config.autoClosingQuotes === 'never') {
+    static isAutoClosingPairDelete(autoClosingBrackets, autoClosingQuotes, autoClosingPairsOpen, model, selections) {
+        if (autoClosingBrackets === 'never' && autoClosingQuotes === 'never') {
             return false;
         }
         for (let i = 0, len = selections.length; i < len; i++) {
@@ -42,22 +42,25 @@ export class DeleteOperations {
                 return false;
             }
             const lineText = model.getLineContent(position.lineNumber);
-            const character = lineText[position.column - 2];
-            const autoClosingPairCandidates = config.autoClosingPairsOpen2.get(character);
+            if (position.column < 2 || position.column >= lineText.length + 1) {
+                return false;
+            }
+            const character = lineText.charAt(position.column - 2);
+            const autoClosingPairCandidates = autoClosingPairsOpen.get(character);
             if (!autoClosingPairCandidates) {
                 return false;
             }
             if (isQuote(character)) {
-                if (config.autoClosingQuotes === 'never') {
+                if (autoClosingQuotes === 'never') {
                     return false;
                 }
             }
             else {
-                if (config.autoClosingBrackets === 'never') {
+                if (autoClosingBrackets === 'never') {
                     return false;
                 }
             }
-            const afterCharacter = lineText[position.column - 1];
+            const afterCharacter = lineText.charAt(position.column - 1);
             let foundAutoClosingPair = false;
             for (const autoClosingPairCandidate of autoClosingPairCandidates) {
                 if (autoClosingPairCandidate.open === character && autoClosingPairCandidate.close === afterCharacter) {
@@ -80,7 +83,7 @@ export class DeleteOperations {
         return [true, commands];
     }
     static deleteLeft(prevEditOperationType, config, model, selections) {
-        if (this._isAutoClosingPairDelete(config, model, selections)) {
+        if (this.isAutoClosingPairDelete(config.autoClosingBrackets, config.autoClosingQuotes, config.autoClosingPairs.autoClosingPairsOpenByEnd, model, selections)) {
             return this._runAutoClosingPairDelete(config, model, selections);
         }
         let commands = [];

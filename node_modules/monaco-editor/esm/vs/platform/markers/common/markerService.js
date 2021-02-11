@@ -127,6 +127,7 @@ export class MarkerService {
     }
     dispose() {
         this._stats.dispose();
+        this._onMarkerChanged.dispose();
     }
     remove(owner, resources) {
         for (const resource of resources || []) {

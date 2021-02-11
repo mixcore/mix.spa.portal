@@ -164,7 +164,7 @@ export class HSVA {
             r = x;
             b = c;
         }
-        else if (h < 360) {
+        else if (h <= 360) {
             r = c;
             b = x;
         }

@@ -53,7 +53,6 @@ import { IUndoRedoService } from '../../../platform/undoRedo/common/undoRedo.js'
 import { UndoRedoService } from '../../../platform/undoRedo/common/undoRedoService.js';
 import { StandaloneQuickInputServiceImpl } from './quickInput/standaloneQuickInputServiceImpl.js';
 import { IQuickInputService } from '../../../platform/quickinput/common/quickInput.js';
-import { IStorageKeysSyncRegistryService, StorageKeysSyncRegistryService } from '../../../platform/userDataSync/common/storageKeys.js';
 export var StaticServices;
 (function (StaticServices) {
     const _serviceCollection = new ServiceCollection();
@@ -128,7 +127,6 @@ export var StaticServices;
     StaticServices.codeEditorService = define(ICodeEditorService, (o) => new StandaloneCodeEditorServiceImpl(StaticServices.standaloneThemeService.get(o)));
     StaticServices.editorProgressService = define(IEditorProgressService, () => new SimpleEditorProgressService());
     StaticServices.storageService = define(IStorageService, () => new InMemoryStorageService());
-    StaticServices.storageSyncService = define(IStorageKeysSyncRegistryService, () => new StorageKeysSyncRegistryService());
     StaticServices.editorWorkerService = define(IEditorWorkerService, (o) => new EditorWorkerServiceImpl(StaticServices.modelService.get(o), StaticServices.resourceConfigurationService.get(o), StaticServices.logService.get(o)));
 })(StaticServices || (StaticServices = {}));
 export class DynamicStandaloneServices extends Disposable {

@@ -114,11 +114,4 @@ export class LinkedList {
             node = node.next;
         }
     }
-    toArray() {
-        const result = [];
-        for (let node = this._first; node !== Node.Undefined; node = node.next) {
-            result.push(node.element);
-        }
-        return result;
-    }
 }

@@ -44,5 +44,14 @@
 
                 }
             }
+            ctrl.updateTemplateContent = function(content){
+                ctrl.template.content = content;
+            }
+            ctrl.updateStyleContent = function(content){
+                ctrl.template.scripts = content;
+            }
+            ctrl.updateScriptContent = function(content){
+                ctrl.template.styles = content;
+            }
         }]
 });

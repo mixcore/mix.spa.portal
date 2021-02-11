@@ -2,13 +2,19 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+function resetGlobalRegex(reg) {
+    if (reg.global) {
+        reg.lastIndex = 0;
+    }
+    return true;
+}
 export class IndentRulesSupport {
     constructor(indentationRules) {
         this._indentationRules = indentationRules;
     }
     shouldIncrease(text) {
         if (this._indentationRules) {
-            if (this._indentationRules.increaseIndentPattern && this._indentationRules.increaseIndentPattern.test(text)) {
+            if (this._indentationRules.increaseIndentPattern && resetGlobalRegex(this._indentationRules.increaseIndentPattern) && this._indentationRules.increaseIndentPattern.test(text)) {
                 return true;
             }
             // if (this._indentationRules.indentNextLinePattern && this._indentationRules.indentNextLinePattern.test(text)) {
@@ -18,20 +24,20 @@ export class IndentRulesSupport {
         return false;
     }
     shouldDecrease(text) {
-        if (this._indentationRules && this._indentationRules.decreaseIndentPattern && this._indentationRules.decreaseIndentPattern.test(text)) {
+        if (this._indentationRules && this._indentationRules.decreaseIndentPattern && resetGlobalRegex(this._indentationRules.decreaseIndentPattern) && this._indentationRules.decreaseIndentPattern.test(text)) {
             return true;
         }
         return false;
     }
     shouldIndentNextLine(text) {
-        if (this._indentationRules && this._indentationRules.indentNextLinePattern && this._indentationRules.indentNextLinePattern.test(text)) {
+        if (this._indentationRules && this._indentationRules.indentNextLinePattern && resetGlobalRegex(this._indentationRules.indentNextLinePattern) && this._indentationRules.indentNextLinePattern.test(text)) {
             return true;
         }
         return false;
     }
     shouldIgnore(text) {
         // the text matches `unIndentedLinePattern`
-        if (this._indentationRules && this._indentationRules.unIndentedLinePattern && this._indentationRules.unIndentedLinePattern.test(text)) {
+        if (this._indentationRules && this._indentationRules.unIndentedLinePattern && resetGlobalRegex(this._indentationRules.unIndentedLinePattern) && this._indentationRules.unIndentedLinePattern.test(text)) {
             return true;
         }
         return false;

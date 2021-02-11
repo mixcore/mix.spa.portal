@@ -6,14 +6,12 @@ import './progressbar.css';
 import { Disposable } from '../../../common/lifecycle.js';
 import { Color } from '../../../common/color.js';
 import { mixin } from '../../../common/objects.js';
-import { removeClasses, addClass, hasClass, addClasses, show } from '../../dom.js';
+import { show } from '../../dom.js';
 import { RunOnceScheduler } from '../../../common/async.js';
-const css_done = 'done';
-const css_active = 'active';
-const css_infinite = 'infinite';
-const css_discrete = 'discrete';
-const css_progress_container = 'monaco-progress-container';
-const css_progress_bit = 'progress-bit';
+const CSS_DONE = 'done';
+const CSS_ACTIVE = 'active';
+const CSS_INFINITE = 'infinite';
+const CSS_DISCRETE = 'discrete';
 const defaultOpts = {
     progressBarBackground: Color.fromHex('#0E70C0')
 };
@@ -32,17 +30,19 @@ export class ProgressBar extends Disposable {
     }
     create(container) {
         this.element = document.createElement('div');
-        addClass(this.element, css_progress_container);
+        this.element.classList.add('monaco-progress-container');
+        this.element.setAttribute('role', 'progressbar');
+        this.element.setAttribute('aria-valuemin', '0');
         container.appendChild(this.element);
         this.bit = document.createElement('div');
-        addClass(this.bit, css_progress_bit);
+        this.bit.classList.add('progress-bit');
         this.element.appendChild(this.bit);
         this.applyStyles();
     }
     off() {
         this.bit.style.width = 'inherit';
         this.bit.style.opacity = '1';
-        removeClasses(this.element, css_active, css_infinite, css_discrete);
+        this.element.classList.remove(CSS_ACTIVE, CSS_INFINITE, CSS_DISCRETE);
         this.workedVal = 0;
         this.totalWork = undefined;
     }
@@ -53,9 +53,9 @@ export class ProgressBar extends Disposable {
         return this.doDone(false);
     }
     doDone(delayed) {
-        addClass(this.element, css_done);
+        this.element.classList.add(CSS_DONE);
         // let it grow to 100% width and hide afterwards
-        if (!hasClass(this.element, css_infinite)) {
+        if (!this.element.classList.contains(CSS_INFINITE)) {
             this.bit.style.width = 'inherit';
             if (delayed) {
                 setTimeout(() => this.off(), 200);
@@ -82,8 +82,8 @@ export class ProgressBar extends Disposable {
     infinite() {
         this.bit.style.width = '2%';
         this.bit.style.opacity = '1';
-        removeClasses(this.element, css_discrete, css_done);
-        addClasses(this.element, css_active, css_infinite);
+        this.element.classList.remove(CSS_DISCRETE, CSS_DONE);
+        this.element.classList.add(CSS_ACTIVE, CSS_INFINITE);
         return this;
     }
     getContainer() {

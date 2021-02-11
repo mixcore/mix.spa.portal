@@ -70,6 +70,6 @@ export function detectModeId(modelService, modeService, resource) {
     // otherwise fallback to path based detection
     return modeService.getModeIdByFilepathOrFirstLine(resource);
 }
-export function cssEscape(val) {
-    return val.replace(/\s/g, '\\$&'); // make sure to not introduce CSS classes from files that contain whitespace
+export function cssEscape(str) {
+    return str.replace(/[\11\12\14\15\40]/g, '/'); // HTML class names can not contain certain whitespace characters, use / instead, which doesn't exist in file names.
 }

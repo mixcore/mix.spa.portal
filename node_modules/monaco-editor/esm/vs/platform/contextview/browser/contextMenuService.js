@@ -14,16 +14,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import { ContextMenuHandler } from './contextMenuHandler.js';
 import { IContextViewService } from './contextView.js';
 import { ITelemetryService } from '../../telemetry/common/telemetry.js';
-import { Emitter } from '../../../base/common/event.js';
 import { INotificationService } from '../../notification/common/notification.js';
 import { IThemeService } from '../../theme/common/themeService.js';
 import { IKeybindingService } from '../../keybinding/common/keybinding.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
+import { ModifierKeyEmitter } from '../../../base/browser/dom.js';
 let ContextMenuService = class ContextMenuService extends Disposable {
     constructor(telemetryService, notificationService, contextViewService, keybindingService, themeService) {
         super();
-        this._onDidContextMenu = this._register(new Emitter());
-        this.onDidContextMenu = this._onDidContextMenu.event;
         this.contextMenuHandler = new ContextMenuHandler(contextViewService, telemetryService, notificationService, keybindingService, themeService);
     }
     configure(options) {
@@ -32,7 +30,7 @@ let ContextMenuService = class ContextMenuService extends Disposable {
     // ContextMenu
     showContextMenu(delegate) {
         this.contextMenuHandler.showContextMenu(delegate);
-        this._onDidContextMenu.fire();
+        ModifierKeyEmitter.getInstance().resetKeyStatus();
     }
 };
 ContextMenuService = __decorate([

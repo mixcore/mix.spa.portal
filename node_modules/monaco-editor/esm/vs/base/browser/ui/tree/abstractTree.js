@@ -5,7 +5,7 @@
 import './media/tree.css';
 import { dispose, Disposable, toDisposable, DisposableStore } from '../../../common/lifecycle.js';
 import { List, MouseController, DefaultKeyboardNavigationDelegate, isInputElement, isMonacoEditor } from '../list/listWidget.js';
-import { append, $, toggleClass, getDomNodePagePosition, removeClass, addClass, hasClass, hasParentWithClass, createStyleSheet, clearNode, addClasses, removeClasses } from '../../dom.js';
+import { append, $, getDomNodePagePosition, hasParentWithClass, createStyleSheet, clearNode } from '../../dom.js';
 import { Event, Relay, Emitter, EventBufferer } from '../../../common/event.js';
 import { StandardKeyboardEvent } from '../../keyboardEvent.js';
 import { TreeMouseEventTarget } from './tree.js';
@@ -136,7 +136,7 @@ function asListOptions(modelProvider, options) {
             },
             getWidgetAriaLabel() {
                 return options.accessibilityProvider.getWidgetAriaLabel();
-            }, getWidgetRole: options.accessibilityProvider && options.accessibilityProvider.getWidgetRole ? () => options.accessibilityProvider.getWidgetRole() : () => 'tree', getAriaLevel(node) {
+            }, getWidgetRole: options.accessibilityProvider && options.accessibilityProvider.getWidgetRole ? () => options.accessibilityProvider.getWidgetRole() : () => 'tree', getAriaLevel: options.accessibilityProvider && options.accessibilityProvider.getAriaLevel ? (node) => options.accessibilityProvider.getAriaLevel(node.element) : (node) => {
                 return node.depth;
             }, getActiveDescendantId: options.accessibilityProvider.getActiveDescendantId && (node => {
                 return options.accessibilityProvider.getActiveDescendantId(node.element);
@@ -272,15 +272,20 @@ class TreeRenderer {
         this.renderIndentGuides(node, data.templateData);
     }
     renderTwistie(node, templateData) {
+        templateData.twistie.classList.remove(...treeItemExpandedIcon.classNamesArray);
+        let twistieRendered = false;
         if (this.renderer.renderTwistie) {
-            this.renderer.renderTwistie(node.element, templateData.twistie);
+            twistieRendered = this.renderer.renderTwistie(node.element, templateData.twistie);
         }
         if (node.collapsible && (!this.hideTwistiesOfChildlessElements || node.visibleChildrenCount > 0)) {
-            addClasses(templateData.twistie, treeItemExpandedIcon.classNames, 'collapsible');
-            toggleClass(templateData.twistie, 'collapsed', node.collapsed);
+            if (!twistieRendered) {
+                templateData.twistie.classList.add(...treeItemExpandedIcon.classNamesArray);
+            }
+            templateData.twistie.classList.add('collapsible');
+            templateData.twistie.classList.toggle('collapsed', node.collapsed);
         }
         else {
-            removeClasses(templateData.twistie, treeItemExpandedIcon.classNames, 'collapsible', 'collapsed');
+            templateData.twistie.classList.remove('collapsible', 'collapsed');
         }
         if (node.collapsible) {
             templateData.container.setAttribute('aria-expanded', String(!node.collapsed));
@@ -307,7 +312,7 @@ class TreeRenderer {
             const parent = model.getNode(parentRef);
             const guide = $('.indent-guide', { style: `width: ${this.indent}px` });
             if (this.activeIndentNodes.has(parent)) {
-                addClass(guide, 'active');
+                guide.classList.add('active');
             }
             if (templateData.indent.childElementCount === 0) {
                 templateData.indent.appendChild(guide);
@@ -344,12 +349,12 @@ class TreeRenderer {
         });
         this.activeIndentNodes.forEach(node => {
             if (!set.has(node)) {
-                this.renderedIndentGuides.forEach(node, line => removeClass(line, 'active'));
+                this.renderedIndentGuides.forEach(node, line => line.classList.remove('active'));
             }
         });
         set.forEach(node => {
             if (!this.activeIndentNodes.has(node)) {
-                this.renderedIndentGuides.forEach(node, line => addClass(line, 'active'));
+                this.renderedIndentGuides.forEach(node, line => line.classList.add('active'));
             }
         });
         this.activeIndentNodes = set;
@@ -406,23 +411,26 @@ class TypeFilter {
             return { data: FuzzyScore.Default, visibility: true };
         }
         const label = this.keyboardNavigationLabelProvider.getKeyboardNavigationLabel(element);
-        const labelStr = label && label.toString();
-        if (typeof labelStr === 'undefined') {
-            return { data: FuzzyScore.Default, visibility: true };
-        }
-        const score = fuzzyScore(this._pattern, this._lowercasePattern, 0, labelStr, labelStr.toLowerCase(), 0, true);
-        if (!score) {
-            if (this.tree.options.filterOnType) {
-                return 2 /* Recurse */;
-            }
-            else {
+        const labels = Array.isArray(label) ? label : [label];
+        for (const l of labels) {
+            const labelStr = l && l.toString();
+            if (typeof labelStr === 'undefined') {
                 return { data: FuzzyScore.Default, visibility: true };
             }
-            // DEMO: smarter filter ?
-            // return parentVisibility === TreeVisibility.Visible ? true : TreeVisibility.Recurse;
+            const score = fuzzyScore(this._pattern, this._lowercasePattern, 0, labelStr, labelStr.toLowerCase(), 0, true);
+            if (score) {
+                this._matchCount++;
+                return labels.length === 1 ?
+                    { data: score, visibility: true } :
+                    { data: { label: labelStr, score: score }, visibility: true };
+            }
         }
-        this._matchCount++;
-        return { data: score, visibility: true };
+        if (this.tree.options.filterOnType) {
+            return 2 /* Recurse */;
+        }
+        else {
+            return { data: FuzzyScore.Default, visibility: true };
+        }
     }
     reset() {
         this._totalCount = 0;
@@ -588,7 +596,7 @@ class TypeFilterController {
         };
         const onDragOver = (event) => {
             event.preventDefault(); // needed so that the drop event fires (https://stackoverflow.com/questions/21339924/drop-event-not-firing-in-chrome)
-            const x = event.screenX - left;
+            const x = event.clientX - left;
             if (event.dataTransfer) {
                 event.dataTransfer.dropEffect = 'none';
             }
@@ -608,9 +616,9 @@ class TypeFilterController {
             dispose(disposables);
         };
         updatePosition();
-        removeClass(this.domNode, positionClassName);
-        addClass(this.domNode, 'dragging');
-        disposables.add(toDisposable(() => removeClass(this.domNode, 'dragging')));
+        this.domNode.classList.remove(positionClassName);
+        this.domNode.classList.add('dragging');
+        disposables.add(toDisposable(() => this.domNode.classList.remove('dragging')));
         domEvent(document, 'dragover')(onDragOver, null, disposables);
         domEvent(this.domNode, 'dragend')(onDragEnd, null, disposables);
         StaticDND.CurrentDragAndDropData = new DragAndDropData('vscode-ui');
@@ -632,13 +640,13 @@ class TypeFilterController {
     }
     updateFilterOnTypeTitleAndIcon() {
         if (this.filterOnType) {
-            removeClasses(this.filterOnTypeDomNode, treeFilterOnTypeOffIcon.classNames);
-            addClasses(this.filterOnTypeDomNode, treeFilterOnTypeOnIcon.classNames);
+            this.filterOnTypeDomNode.classList.remove(...treeFilterOnTypeOffIcon.classNamesArray);
+            this.filterOnTypeDomNode.classList.add(...treeFilterOnTypeOnIcon.classNamesArray);
             this.filterOnTypeDomNode.title = localize('disable filter on type', "Disable Filter on Type");
         }
         else {
-            removeClasses(this.filterOnTypeDomNode, treeFilterOnTypeOnIcon.classNames);
-            addClasses(this.filterOnTypeDomNode, treeFilterOnTypeOffIcon.classNames);
+            this.filterOnTypeDomNode.classList.remove(...treeFilterOnTypeOnIcon.classNamesArray);
+            this.filterOnTypeDomNode.classList.add(...treeFilterOnTypeOffIcon.classNamesArray);
             this.filterOnTypeDomNode.title = localize('enable filter on type', "Enable Filter on Type");
         }
     }
@@ -652,7 +660,7 @@ class TypeFilterController {
             this.messageDomNode.innerText = '';
             this._empty = false;
         }
-        toggleClass(this.domNode, 'no-matches', noMatches);
+        this.domNode.classList.toggle('no-matches', noMatches);
         this.domNode.title = localize('found', "Matched {0} out of {1} elements", this.filter.matchCount, this.filter.totalCount);
         this.labelDomNode.textContent = this.pattern.length > 16 ? '…' + this.pattern.substr(this.pattern.length - 16) : this.pattern;
         this._onDidChangeEmptyState.fire(this._empty);
@@ -713,7 +721,8 @@ class Trait {
         return this._nodeSet;
     }
     set(nodes, browserEvent) {
-        if (equals(this.nodes, nodes)) {
+        var _a;
+        if (!((_a = browserEvent) === null || _a === void 0 ? void 0 : _a.__forceEvent) && equals(this.nodes, nodes)) {
             return;
         }
         this._set(nodes, false, browserEvent);
@@ -794,8 +803,8 @@ class TreeNodeListMouseController extends MouseController {
             return super.onViewPointer(e);
         }
         const target = e.browserEvent.target;
-        const onTwistie = hasClass(target, 'monaco-tl-twistie')
-            || (hasClass(target, 'monaco-icon-label') && hasClass(target, 'folder-icon') && e.browserEvent.offsetX < 16);
+        const onTwistie = target.classList.contains('monaco-tl-twistie')
+            || (target.classList.contains('monaco-icon-label') && target.classList.contains('folder-icon') && e.browserEvent.offsetX < 16);
         let expandOnlyOnTwistieClick = false;
         if (typeof this.tree.expandOnlyOnTwistieClick === 'function') {
             expandOnlyOnTwistieClick = this.tree.expandOnlyOnTwistieClick(node.element);
@@ -803,7 +812,7 @@ class TreeNodeListMouseController extends MouseController {
         else {
             expandOnlyOnTwistieClick = !!this.tree.expandOnlyOnTwistieClick;
         }
-        if (expandOnlyOnTwistieClick && !onTwistie) {
+        if (expandOnlyOnTwistieClick && !onTwistie && e.browserEvent.detail !== 2) {
             return super.onViewPointer(e);
         }
         if (this.tree.expandOnlyOnDoubleClick && e.browserEvent.detail !== 2 && !onTwistie) {
@@ -821,7 +830,7 @@ class TreeNodeListMouseController extends MouseController {
         super.onViewPointer(e);
     }
     onDoubleClick(e) {
-        const onTwistie = hasClass(e.browserEvent.target, 'monaco-tl-twistie');
+        const onTwistie = e.browserEvent.target.classList.contains('monaco-tl-twistie');
         if (onTwistie) {
             return;
         }
@@ -942,7 +951,7 @@ export class AbstractTree {
             this.disposables.add(this.typeFilterController);
         }
         this.styleElement = createStyleSheet(this.view.getHTMLElement());
-        toggleClass(this.getHTMLElement(), 'always', this._options.renderIndentGuides === RenderIndentGuides.Always);
+        this.getHTMLElement().classList.toggle('always', this._options.renderIndentGuides === RenderIndentGuides.Always);
     }
     get onDidChangeFocus() { return this.eventBufferer.wrapEvent(this.focus.onDidChange); }
     get onDidChangeSelection() { return this.eventBufferer.wrapEvent(this.selection.onDidChange); }
@@ -968,7 +977,7 @@ export class AbstractTree {
             this.typeFilterController.updateOptions(this._options);
         }
         this._onDidUpdateOptions.fire(this._options);
-        toggleClass(this.getHTMLElement(), 'always', this._options.renderIndentGuides === RenderIndentGuides.Always);
+        this.getHTMLElement().classList.toggle('always', this._options.renderIndentGuides === RenderIndentGuides.Always);
     }
     get options() {
         return this._options;
@@ -996,10 +1005,7 @@ export class AbstractTree {
             content.push(`.monaco-list${suffix}:hover .monaco-tl-indent > .indent-guide, .monaco-list${suffix}.always .monaco-tl-indent > .indent-guide  { border-color: ${styles.treeIndentGuidesStroke.transparent(0.4)}; }`);
             content.push(`.monaco-list${suffix} .monaco-tl-indent > .indent-guide.active { border-color: ${styles.treeIndentGuidesStroke}; }`);
         }
-        const newStyles = content.join('\n');
-        if (newStyles !== this.styleElement.innerHTML) {
-            this.styleElement.innerHTML = newStyles;
-        }
+        this.styleElement.textContent = content.join('\n');
         this.view.style(styles);
     }
     collapse(location, recursive = false) {

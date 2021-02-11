@@ -35,7 +35,7 @@ export class RenderLineInput {
         this.containsRTL = containsRTL;
         this.fauxIndentLength = fauxIndentLength;
         this.lineTokens = lineTokens;
-        this.lineDecorations = lineDecorations;
+        this.lineDecorations = lineDecorations.sort(LineDecoration.compare);
         this.tabSize = tabSize;
         this.startVisibleColumn = startVisibleColumn;
         this.spaceWidth = spaceWidth;
@@ -327,7 +327,7 @@ function transformAndRemoveOverflowing(tokens, fauxIndentLength, len) {
     return result;
 }
 /**
- * See https://github.com/Microsoft/vscode/issues/6885.
+ * See https://github.com/microsoft/vscode/issues/6885.
  * It appears that having very large spans causes very slow reading of character positions.
  * So here we try to avoid that.
  */

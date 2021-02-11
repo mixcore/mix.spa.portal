@@ -21,7 +21,6 @@ import { EditorContextKeys } from '../../common/editorContextKeys.js';
 import * as modes from '../../common/modes.js';
 import * as nls from '../../../nls.js';
 import { MenuId } from '../../../platform/actions/common/actions.js';
-import { dispose } from '../../../base/common/lifecycle.js';
 import { WordSelectionRangeProvider } from './wordSelections.js';
 import { BracketSelectionRangeProvider } from './bracketSelections.js';
 import { CommandsRegistry } from '../../../platform/commands/common/commands.js';
@@ -45,65 +44,67 @@ class SelectionRanges {
     }
 }
 class SmartSelectController {
-    constructor(editor) {
+    constructor(_editor) {
+        this._editor = _editor;
         this._ignoreSelection = false;
-        this._editor = editor;
     }
     static get(editor) {
         return editor.getContribution(SmartSelectController.ID);
     }
     dispose() {
-        dispose(this._selectionListener);
+        var _a;
+        (_a = this._selectionListener) === null || _a === void 0 ? void 0 : _a.dispose();
     }
     run(forward) {
-        if (!this._editor.hasModel()) {
-            return;
-        }
-        const selections = this._editor.getSelections();
-        const model = this._editor.getModel();
-        if (!modes.SelectionRangeRegistry.has(model)) {
-            return;
-        }
-        let promise = Promise.resolve(undefined);
-        if (!this._state) {
-            promise = provideSelectionRanges(model, selections.map(s => s.getPosition()), CancellationToken.None).then(ranges => {
-                if (!arrays.isNonEmptyArray(ranges) || ranges.length !== selections.length) {
-                    // invalid result
-                    return;
-                }
-                if (!this._editor.hasModel() || !arrays.equals(this._editor.getSelections(), selections, (a, b) => a.equalsSelection(b))) {
-                    // invalid editor state
-                    return;
-                }
-                for (let i = 0; i < ranges.length; i++) {
-                    ranges[i] = ranges[i].filter(range => {
-                        // filter ranges inside the selection
-                        return range.containsPosition(selections[i].getStartPosition()) && range.containsPosition(selections[i].getEndPosition());
-                    });
-                    // prepend current selection
-                    ranges[i].unshift(selections[i]);
-                }
-                this._state = ranges.map(ranges => new SelectionRanges(0, ranges));
-                // listen to caret move and forget about state
-                dispose(this._selectionListener);
-                this._selectionListener = this._editor.onDidChangeCursorPosition(() => {
-                    if (!this._ignoreSelection) {
-                        dispose(this._selectionListener);
-                        this._state = undefined;
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!this._editor.hasModel()) {
+                return;
+            }
+            const selections = this._editor.getSelections();
+            const model = this._editor.getModel();
+            if (!modes.SelectionRangeRegistry.has(model)) {
+                return;
+            }
+            if (!this._state) {
+                yield provideSelectionRanges(model, selections.map(s => s.getPosition()), this._editor.getOption(97 /* smartSelect */), CancellationToken.None).then(ranges => {
+                    var _a;
+                    if (!arrays.isNonEmptyArray(ranges) || ranges.length !== selections.length) {
+                        // invalid result
+                        return;
                     }
+                    if (!this._editor.hasModel() || !arrays.equals(this._editor.getSelections(), selections, (a, b) => a.equalsSelection(b))) {
+                        // invalid editor state
+                        return;
+                    }
+                    for (let i = 0; i < ranges.length; i++) {
+                        ranges[i] = ranges[i].filter(range => {
+                            // filter ranges inside the selection
+                            return range.containsPosition(selections[i].getStartPosition()) && range.containsPosition(selections[i].getEndPosition());
+                        });
+                        // prepend current selection
+                        ranges[i].unshift(selections[i]);
+                    }
+                    this._state = ranges.map(ranges => new SelectionRanges(0, ranges));
+                    // listen to caret move and forget about state
+                    (_a = this._selectionListener) === null || _a === void 0 ? void 0 : _a.dispose();
+                    this._selectionListener = this._editor.onDidChangeCursorPosition(() => {
+                        var _a;
+                        if (!this._ignoreSelection) {
+                            (_a = this._selectionListener) === null || _a === void 0 ? void 0 : _a.dispose();
+                            this._state = undefined;
+                        }
+                    });
                 });
-            });
-        }
-        return promise.then(() => {
+            }
             if (!this._state) {
                 // no state
                 return;
             }
             this._state = this._state.map(state => state.mov(forward));
-            const selections = this._state.map(state => Selection.fromPositions(state.ranges[state.index].getStartPosition(), state.ranges[state.index].getEndPosition()));
+            const newSelections = this._state.map(state => Selection.fromPositions(state.ranges[state.index].getStartPosition(), state.ranges[state.index].getEndPosition()));
             this._ignoreSelection = true;
             try {
-                this._editor.setSelections(selections);
+                this._editor.setSelections(newSelections);
             }
             finally {
                 this._ignoreSelection = false;
@@ -183,31 +184,32 @@ registerEditorAction(GrowSelectionAction);
 registerEditorAction(ShrinkSelectionAction);
 // word selection
 modes.SelectionRangeRegistry.register('*', new WordSelectionRangeProvider());
-export function provideSelectionRanges(model, positions, token) {
-    const providers = modes.SelectionRangeRegistry.all(model);
-    if (providers.length === 1) {
-        // add word selection and bracket selection when no provider exists
-        providers.unshift(new BracketSelectionRangeProvider());
-    }
-    let work = [];
-    let allRawRanges = [];
-    for (const provider of providers) {
-        work.push(Promise.resolve(provider.provideSelectionRanges(model, positions, token)).then(allProviderRanges => {
-            if (arrays.isNonEmptyArray(allProviderRanges) && allProviderRanges.length === positions.length) {
-                for (let i = 0; i < positions.length; i++) {
-                    if (!allRawRanges[i]) {
-                        allRawRanges[i] = [];
-                    }
-                    for (const oneProviderRanges of allProviderRanges[i]) {
-                        if (Range.isIRange(oneProviderRanges.range) && Range.containsPosition(oneProviderRanges.range, positions[i])) {
-                            allRawRanges[i].push(Range.lift(oneProviderRanges.range));
+export function provideSelectionRanges(model, positions, options, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const providers = modes.SelectionRangeRegistry.all(model);
+        if (providers.length === 1) {
+            // add word selection and bracket selection when no provider exists
+            providers.unshift(new BracketSelectionRangeProvider());
+        }
+        let work = [];
+        let allRawRanges = [];
+        for (const provider of providers) {
+            work.push(Promise.resolve(provider.provideSelectionRanges(model, positions, token)).then(allProviderRanges => {
+                if (arrays.isNonEmptyArray(allProviderRanges) && allProviderRanges.length === positions.length) {
+                    for (let i = 0; i < positions.length; i++) {
+                        if (!allRawRanges[i]) {
+                            allRawRanges[i] = [];
+                        }
+                        for (const oneProviderRanges of allProviderRanges[i]) {
+                            if (Range.isIRange(oneProviderRanges.range) && Range.containsPosition(oneProviderRanges.range, positions[i])) {
+                                allRawRanges[i].push(Range.lift(oneProviderRanges.range));
+                            }
                         }
                     }
                 }
-            }
-        }, onUnexpectedExternalError));
-    }
-    return Promise.all(work).then(() => {
+            }, onUnexpectedExternalError));
+        }
+        yield Promise.all(work);
         return allRawRanges.map(oneRawRanges => {
             if (oneRawRanges.length === 0) {
                 return [];
@@ -240,6 +242,9 @@ export function provideSelectionRanges(model, positions, token) {
                     last = range;
                 }
             }
+            if (!options.selectLeadingAndTrailingWhitespace) {
+                return oneRanges;
+            }
             // add ranges that expand trivia at line starts and ends whenever a range
             // wraps onto the a new line
             let oneRangesWithTrivia = [oneRanges[0]];
@@ -266,5 +271,5 @@ export function provideSelectionRanges(model, positions, token) {
 }
 registerModelCommand('_executeSelectionRangeProvider', function (model, ...args) {
     const [positions] = args;
-    return provideSelectionRanges(model, positions, CancellationToken.None);
+    return provideSelectionRanges(model, positions, { selectLeadingAndTrailingWhitespace: true }, CancellationToken.None);
 });

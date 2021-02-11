@@ -7,7 +7,7 @@ import { isEmptyMarkdownString } from '../../../base/common/htmlContent.js';
 import { DisposableStore } from '../../../base/common/lifecycle.js';
 import { HoverOperation } from './hoverOperation.js';
 import { GlyphHoverWidget } from './hoverWidgets.js';
-import { MarkdownRenderer } from '../markdown/markdownRenderer.js';
+import { MarkdownRenderer } from '../../browser/core/markdownRenderer.js';
 import { NullOpenerService } from '../../../platform/opener/common/opener.js';
 import { asArray } from '../../../base/common/arrays.js';
 class MarginComputer {
@@ -62,7 +62,7 @@ export class ModesGlyphHoverWidget extends GlyphHoverWidget {
         this._renderDisposeables = this._register(new DisposableStore());
         this._messages = [];
         this._lastLineNumber = -1;
-        this._markdownRenderer = this._register(new MarkdownRenderer(this._editor, modeService, openerService));
+        this._markdownRenderer = this._register(new MarkdownRenderer({ editor: this._editor }, modeService, openerService));
         this._computer = new MarginComputer(this._editor);
         this._hoverOperation = new HoverOperation(this._computer, (result) => this._withResult(result), undefined, (result) => this._withResult(result), 300);
     }

@@ -187,7 +187,7 @@ let ReferenceWidget = class ReferenceWidget extends peekView.PeekViewWidget {
         this._callOnDispose = new DisposableStore();
         this._onDidSelectReference = new Emitter();
         this.onDidSelectReference = this._onDidSelectReference.event;
-        this._dim = { height: 0, width: 0 };
+        this._dim = new dom.Dimension(0, 0);
         this._applyTheme(themeService.getColorTheme());
         this._callOnDispose.add(themeService.onDidColorThemeChange(this._applyTheme.bind(this)));
         this._peekViewService.addExclusiveWidget(editor, this);
@@ -344,7 +344,7 @@ let ReferenceWidget = class ReferenceWidget extends peekView.PeekViewWidget {
     }
     _doLayoutBody(heightInPixel, widthInPixel) {
         super._doLayoutBody(heightInPixel, widthInPixel);
-        this._dim = { height: heightInPixel, width: widthInPixel };
+        this._dim = new dom.Dimension(widthInPixel, heightInPixel);
         this.layoutData.heightInLines = this._viewZone ? this._viewZone.heightInLines : this.layoutData.heightInLines;
         this._splitView.layout(widthInPixel);
         this._splitView.resizeView(0, widthInPixel * this.layoutData.ratio);

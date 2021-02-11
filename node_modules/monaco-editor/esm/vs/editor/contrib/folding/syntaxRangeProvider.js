@@ -4,15 +4,24 @@
  *--------------------------------------------------------------------------------------------*/
 import { onUnexpectedExternalError } from '../../../base/common/errors.js';
 import { MAX_LINE_NUMBER, FoldingRegions } from './foldingRanges.js';
+import { DisposableStore } from '../../../base/common/lifecycle.js';
 const MAX_FOLDING_REGIONS = 5000;
 const foldingContext = {};
 export const ID_SYNTAX_PROVIDER = 'syntax';
 export class SyntaxRangeProvider {
-    constructor(editorModel, providers, limit = MAX_FOLDING_REGIONS) {
+    constructor(editorModel, providers, handleFoldingRangesChange, limit = MAX_FOLDING_REGIONS) {
         this.editorModel = editorModel;
         this.providers = providers;
         this.limit = limit;
         this.id = ID_SYNTAX_PROVIDER;
+        for (const provider of providers) {
+            if (typeof provider.onDidChange === 'function') {
+                if (!this.disposables) {
+                    this.disposables = new DisposableStore();
+                }
+                this.disposables.add(provider.onDidChange(handleFoldingRangesChange));
+            }
+        }
     }
     compute(cancellationToken) {
         return collectSyntaxRanges(this.providers, this.editorModel, cancellationToken).then(ranges => {
@@ -24,6 +33,8 @@ export class SyntaxRangeProvider {
         });
     }
     dispose() {
+        var _a;
+        (_a = this.disposables) === null || _a === void 0 ? void 0 : _a.dispose();
     }
 }
 function collectSyntaxRanges(providers, model, cancellationToken) {

@@ -9,6 +9,7 @@
     isReadonly: "=?",
     lineCount: "=?",
     ext: "=",
+    updateContent: "&",
   },
   controller: [
     "$rootScope",
@@ -31,7 +32,7 @@
 
       ctrl.showHelper = function (url) {
         $rootScope.showHelper(url);
-      }
+      };
 
       this.$doCheck = function () {
         if (ctrl.previousId != null && ctrl.previousId !== ctrl.contentId) {
@@ -53,9 +54,9 @@
           ctrl.previousId = ctrl.contentId;
           ctrl.updateEditors();
           $scope.$apply();
-        }, 200);
+        }, 300);
       };
-      
+
       ctrl.updateContent = function (content) {
         ctrl.editor.setValue(content);
         // lineCount = ctrl.editor.getModel().getLineCount();
@@ -72,7 +73,7 @@
             var model = {
               value: ctrl.content || ctrl.defaultContent,
               readOnly: ctrl.isReadonly === "true" || false,
-              
+
               lineNumbers: "on",
               roundedSelection: false,
               scrollBeyondLastLine: false,
@@ -106,9 +107,9 @@
             }
             ctrl.editor = monaco.editor.create(e, model);
 
-            ctrl.editor.model.onDidChangeContent(() => {
-              ctrl.content = ctrl.editor.model.getValue();
-              $scope.$apply();
+            ctrl.editor.getModel().onDidChangeContent(() => {
+              ctrl.content = ctrl.editor.getModel().getValue();
+              ctrl.updateContent({ content: ctrl.content });
             });
             ctrl.editor.addCommand(
               monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
@@ -118,25 +119,23 @@
               }
             );
 
-              if(ctrl.isFull){
-                $(e).height(window.innerHeight);
-              }else{
-                $(e).height(ctrl.minHeight);
-              }
+            if (ctrl.isFull) {
+              $(e).height(window.innerHeight);
+            } else {
+              $(e).height(ctrl.minHeight);
+            }
 
             // setTimeout(() => {
             //   // var h = ctrl.editor.getModel().getLineCount() * 18;
             //   // h = h < ctrl.minHeight ? ctrl.minHeight : h;
             //   var h = ctrl.lineCount * 20;
-              // $(e).height(h);
-              // ctrl.editor.layout();
+            // $(e).height(h);
+            // ctrl.editor.layout();
             // }, 200);
-
-            
           }
         });
       };
-      
+
       ctrl.fullscreen = function (event) {
         // const element = $(event.target).parents(".monaco-editor");
 
@@ -155,27 +154,27 @@
           .parents(".monaco-editor")
           .toggleClass("monaco-editor-full");
 
-          ctrl.isFull = !ctrl.isFull;
+        ctrl.isFull = !ctrl.isFull;
 
-          ctrl.editor.dispose();
-          
-          // var h;
+        ctrl.editor.dispose();
 
-          // ctrl.editor.dispose();
-          // if ($(".monaco-editor.container-code-editor.monaco-editor-full")[0]) {
-          //   // Do something if class exists
-          //   h = window.innerHeight;
-          //   $(
-          //     ".monaco-editor.container-code-editor.monaco-editor-full .code-editor"
-          //   ).height(h);
-          //   document.body.style.overflow = "hidden";
-          // } else {
-          //   // Do something if class does not exist
-          //   h = ctrl.lineCount * 20;
-          //   $(".monaco-editor .code-editor").height(h);
-          //   document.body.style.overflow = "visible";
-          // }
-          // ctrl.editor.layout();
+        // var h;
+
+        // ctrl.editor.dispose();
+        // if ($(".monaco-editor.container-code-editor.monaco-editor-full")[0]) {
+        //   // Do something if class exists
+        //   h = window.innerHeight;
+        //   $(
+        //     ".monaco-editor.container-code-editor.monaco-editor-full .code-editor"
+        //   ).height(h);
+        //   document.body.style.overflow = "hidden";
+        // } else {
+        //   // Do something if class does not exist
+        //   h = ctrl.lineCount * 20;
+        //   $(".monaco-editor .code-editor").height(h);
+        //   document.body.style.overflow = "visible";
+        // }
+        // ctrl.editor.layout();
 
         ctrl.updateEditors();
       };

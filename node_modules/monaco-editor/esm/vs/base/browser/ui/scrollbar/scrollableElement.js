@@ -121,7 +121,7 @@ export class AbstractScrollableElement extends Widget {
             this._onDidScroll(e);
             this._onScroll.fire(e);
         }));
-        let scrollbarHost = {
+        const scrollbarHost = {
             onMouseWheel: (mouseWheelEvent) => this._onMouseWheel(mouseWheelEvent),
             onDragStart: () => this._onDragStart(),
             onDragEnd: () => this._onDragEnd(),
@@ -231,7 +231,7 @@ export class AbstractScrollableElement extends Widget {
     }
     // -------------------- mouse wheel scrolling --------------------
     _setListeningToMouseWheel(shouldListen) {
-        let isListening = (this._mouseWheelToDispose.length > 0);
+        const isListening = (this._mouseWheelToDispose.length > 0);
         if (isListening === shouldListen) {
             // No change
             return;
@@ -240,7 +240,7 @@ export class AbstractScrollableElement extends Widget {
         this._mouseWheelToDispose = dispose(this._mouseWheelToDispose);
         // Start listening (if necessary)
         if (shouldListen) {
-            let onMouseWheel = (browserEvent) => {
+            const onMouseWheel = (browserEvent) => {
                 this._onMouseWheel(new StandardWheelEvent(browserEvent));
             };
             this._mouseWheelToDispose.push(dom.addDisposableListener(this._listenOnDomNode, dom.EventType.MOUSE_WHEEL, onMouseWheel, { passive: false }));
@@ -260,6 +260,7 @@ export class AbstractScrollableElement extends Widget {
             }
         }
         // console.log(`${Date.now()}, ${e.deltaY}, ${e.deltaX}`);
+        let didScroll = false;
         if (e.deltaY || e.deltaX) {
             let deltaY = e.deltaY * this._options.mouseWheelScrollSensitivity;
             let deltaX = e.deltaX * this._options.mouseWheelScrollSensitivity;
@@ -308,10 +309,17 @@ export class AbstractScrollableElement extends Widget {
                 else {
                     this._scrollable.setScrollPositionNow(desiredScrollPosition);
                 }
-                this._shouldRender = true;
+                didScroll = true;
             }
         }
-        if (this._options.alwaysConsumeMouseWheel || this._shouldRender) {
+        let consumeMouseWheel = didScroll;
+        if (!consumeMouseWheel && this._options.alwaysConsumeMouseWheel) {
+            consumeMouseWheel = true;
+        }
+        if (!consumeMouseWheel && this._options.consumeMouseWheelIfScrollbarIsNeeded && (this._verticalScrollbar.isNeeded() || this._horizontalScrollbar.isNeeded())) {
+            consumeMouseWheel = true;
+        }
+        if (consumeMouseWheel) {
             e.preventDefault();
             e.stopPropagation();
         }
@@ -348,8 +356,8 @@ export class AbstractScrollableElement extends Widget {
         this._verticalScrollbar.render();
         if (this._options.useShadows) {
             const scrollState = this._scrollable.getCurrentScrollPosition();
-            let enableTop = scrollState.scrollTop > 0;
-            let enableLeft = scrollState.scrollLeft > 0;
+            const enableTop = scrollState.scrollTop > 0;
+            const enableLeft = scrollState.scrollLeft > 0;
             this._leftShadowDomNode.setClassName('shadow' + (enableLeft ? ' left' : ''));
             this._topShadowDomNode.setClassName('shadow' + (enableTop ? ' top' : ''));
             this._topLeftShadowDomNode.setClassName('shadow top-left-corner' + (enableTop ? ' top' : '') + (enableLeft ? ' left' : ''));
@@ -406,7 +414,12 @@ export class SmoothScrollableElement extends AbstractScrollableElement {
         super(element, options, scrollable);
     }
     setScrollPosition(update) {
-        this._scrollable.setScrollPositionNow(update);
+        if (update.reuseAnimation) {
+            this._scrollable.setScrollPositionSmooth(update, update.reuseAnimation);
+        }
+        else {
+            this._scrollable.setScrollPositionNow(update);
+        }
     }
     getScrollPosition() {
         return this._scrollable.getCurrentScrollPosition();
@@ -441,12 +454,13 @@ export class DomScrollableElement extends ScrollableElement {
     }
 }
 function resolveOptions(opts) {
-    let result = {
+    const result = {
         lazyRender: (typeof opts.lazyRender !== 'undefined' ? opts.lazyRender : false),
         className: (typeof opts.className !== 'undefined' ? opts.className : ''),
         useShadows: (typeof opts.useShadows !== 'undefined' ? opts.useShadows : true),
         handleMouseWheel: (typeof opts.handleMouseWheel !== 'undefined' ? opts.handleMouseWheel : true),
         flipAxes: (typeof opts.flipAxes !== 'undefined' ? opts.flipAxes : false),
+        consumeMouseWheelIfScrollbarIsNeeded: (typeof opts.consumeMouseWheelIfScrollbarIsNeeded !== 'undefined' ? opts.consumeMouseWheelIfScrollbarIsNeeded : false),
         alwaysConsumeMouseWheel: (typeof opts.alwaysConsumeMouseWheel !== 'undefined' ? opts.alwaysConsumeMouseWheel : false),
         scrollYToX: (typeof opts.scrollYToX !== 'undefined' ? opts.scrollYToX : false),
         mouseWheelScrollSensitivity: (typeof opts.mouseWheelScrollSensitivity !== 'undefined' ? opts.mouseWheelScrollSensitivity : 1),
@@ -462,7 +476,8 @@ function resolveOptions(opts) {
         vertical: (typeof opts.vertical !== 'undefined' ? opts.vertical : 1 /* Auto */),
         verticalScrollbarSize: (typeof opts.verticalScrollbarSize !== 'undefined' ? opts.verticalScrollbarSize : 10),
         verticalHasArrows: (typeof opts.verticalHasArrows !== 'undefined' ? opts.verticalHasArrows : false),
-        verticalSliderSize: (typeof opts.verticalSliderSize !== 'undefined' ? opts.verticalSliderSize : 0)
+        verticalSliderSize: (typeof opts.verticalSliderSize !== 'undefined' ? opts.verticalSliderSize : 0),
+        scrollByPage: (typeof opts.scrollByPage !== 'undefined' ? opts.scrollByPage : false)
     };
     result.horizontalSliderSize = (typeof opts.horizontalSliderSize !== 'undefined' ? opts.horizontalSliderSize : result.horizontalScrollbarSize);
     result.verticalSliderSize = (typeof opts.verticalSliderSize !== 'undefined' ? opts.verticalSliderSize : result.verticalScrollbarSize);

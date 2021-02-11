@@ -19,6 +19,7 @@ export class BareFontInfo {
      */
     constructor(opts) {
         this.zoomLevel = opts.zoomLevel;
+        this.pixelRatio = opts.pixelRatio;
         this.fontFamily = String(opts.fontFamily);
         this.fontWeight = String(opts.fontWeight);
         this.fontSize = opts.fontSize;
@@ -29,19 +30,19 @@ export class BareFontInfo {
     /**
      * @internal
      */
-    static createFromValidatedSettings(options, zoomLevel, ignoreEditorZoom) {
-        const fontFamily = options.get(35 /* fontFamily */);
-        const fontWeight = options.get(39 /* fontWeight */);
-        const fontSize = options.get(38 /* fontSize */);
-        const fontFeatureSettings = options.get(37 /* fontLigatures */);
-        const lineHeight = options.get(51 /* lineHeight */);
-        const letterSpacing = options.get(48 /* letterSpacing */);
-        return BareFontInfo._create(fontFamily, fontWeight, fontSize, fontFeatureSettings, lineHeight, letterSpacing, zoomLevel, ignoreEditorZoom);
+    static createFromValidatedSettings(options, zoomLevel, pixelRatio, ignoreEditorZoom) {
+        const fontFamily = options.get(37 /* fontFamily */);
+        const fontWeight = options.get(41 /* fontWeight */);
+        const fontSize = options.get(40 /* fontSize */);
+        const fontFeatureSettings = options.get(39 /* fontLigatures */);
+        const lineHeight = options.get(53 /* lineHeight */);
+        const letterSpacing = options.get(50 /* letterSpacing */);
+        return BareFontInfo._create(fontFamily, fontWeight, fontSize, fontFeatureSettings, lineHeight, letterSpacing, zoomLevel, pixelRatio, ignoreEditorZoom);
     }
     /**
      * @internal
      */
-    static _create(fontFamily, fontWeight, fontSize, fontFeatureSettings, lineHeight, letterSpacing, zoomLevel, ignoreEditorZoom) {
+    static _create(fontFamily, fontWeight, fontSize, fontFeatureSettings, lineHeight, letterSpacing, zoomLevel, pixelRatio, ignoreEditorZoom) {
         if (lineHeight === 0) {
             lineHeight = Math.round(GOLDEN_LINE_HEIGHT_RATIO * fontSize);
         }
@@ -53,6 +54,7 @@ export class BareFontInfo {
         lineHeight *= editorZoomLevelMultiplier;
         return new BareFontInfo({
             zoomLevel: zoomLevel,
+            pixelRatio: pixelRatio,
             fontFamily: fontFamily,
             fontWeight: fontWeight,
             fontSize: fontSize,
@@ -65,7 +67,7 @@ export class BareFontInfo {
      * @internal
      */
     getId() {
-        return this.zoomLevel + '-' + this.fontFamily + '-' + this.fontWeight + '-' + this.fontSize + '-' + this.fontFeatureSettings + '-' + this.lineHeight + '-' + this.letterSpacing;
+        return this.zoomLevel + '-' + this.pixelRatio + '-' + this.fontFamily + '-' + this.fontWeight + '-' + this.fontSize + '-' + this.fontFeatureSettings + '-' + this.lineHeight + '-' + this.letterSpacing;
     }
     /**
      * @internal
@@ -82,12 +84,15 @@ export class BareFontInfo {
         return this.fontFamily;
     }
 }
+// change this whenever `FontInfo` members are changed
+export const SERIALIZED_FONT_INFO_VERSION = 1;
 export class FontInfo extends BareFontInfo {
     /**
      * @internal
      */
     constructor(opts, isTrusted) {
         super(opts);
+        this.version = SERIALIZED_FONT_INFO_VERSION;
         this.isTrusted = isTrusted;
         this.isMonospace = opts.isMonospace;
         this.typicalHalfwidthCharacterWidth = opts.typicalHalfwidthCharacterWidth;

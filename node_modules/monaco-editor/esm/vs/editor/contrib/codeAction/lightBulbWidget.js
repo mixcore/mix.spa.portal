@@ -20,7 +20,7 @@ import { TextModel } from '../../common/model/textModel.js';
 import * as nls from '../../../nls.js';
 import { IKeybindingService } from '../../../platform/keybinding/common/keybinding.js';
 import { registerThemingParticipant } from '../../../platform/theme/common/themeService.js';
-import { editorLightBulbForeground, editorLightBulbAutoFixForeground } from '../../../platform/theme/common/colorRegistry.js';
+import { editorLightBulbForeground, editorLightBulbAutoFixForeground, editorBackground } from '../../../platform/theme/common/colorRegistry.js';
 import { Gesture } from '../../../base/browser/touch.js';
 import { Codicon } from '../../../base/common/codicons.js';
 var LightBulbState;
@@ -68,7 +68,7 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
             // a bit of extra work to make sure the menu
             // doesn't cover the line-text
             const { top, height } = dom.getDomNodePagePosition(this._domNode);
-            const lineHeight = this._editor.getOption(51 /* lineHeight */);
+            const lineHeight = this._editor.getOption(53 /* lineHeight */);
             let pad = Math.floor(lineHeight / 3);
             if (this.state.widgetPosition.position !== null && this.state.widgetPosition.position.lineNumber < this.state.editorPosition.lineNumber) {
                 pad += lineHeight;
@@ -95,7 +95,7 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
         }));
         this._register(this._editor.onDidChangeConfiguration(e => {
             // hide when told to do so
-            if (e.hasChanged(49 /* lightbulb */) && !this._editor.getOption(49 /* lightbulb */).enabled) {
+            if (e.hasChanged(51 /* lightbulb */) && !this._editor.getOption(51 /* lightbulb */).enabled) {
                 this.hide();
             }
         }));
@@ -120,7 +120,7 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
             return this.hide();
         }
         const options = this._editor.getOptions();
-        if (!options.get(49 /* lightbulb */).enabled) {
+        if (!options.get(51 /* lightbulb */).enabled) {
             return this.hide();
         }
         const model = this._editor.getModel();
@@ -129,7 +129,7 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
         }
         const { lineNumber, column } = model.validatePosition(atPosition);
         const tabSize = model.getOptions().tabSize;
-        const fontInfo = options.get(36 /* fontInfo */);
+        const fontInfo = options.get(38 /* fontInfo */);
         const lineContent = model.getLineContent(lineNumber);
         const indent = TextModel.computeIndentLevel(lineContent, tabSize);
         const lineHasSpace = fontInfo.spaceWidth * indent > 22;
@@ -168,8 +168,8 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
     _updateLightBulbTitleAndIcon() {
         if (this.state.type === 1 /* Showing */ && this.state.actions.hasAutoFix) {
             // update icon
-            dom.removeClasses(this._domNode, Codicon.lightBulb.classNames);
-            dom.addClasses(this._domNode, Codicon.lightbulbAutofix.classNames);
+            this._domNode.classList.remove(...Codicon.lightBulb.classNamesArray);
+            this._domNode.classList.add(...Codicon.lightbulbAutofix.classNamesArray);
             const preferredKb = this._keybindingService.lookupKeybinding(this._preferredFixActionId);
             if (preferredKb) {
                 this.title = nls.localize('prefferedQuickFixWithKb', "Show Fixes. Preferred Fix Available ({0})", preferredKb.getLabel());
@@ -177,8 +177,8 @@ let LightBulbWidget = class LightBulbWidget extends Disposable {
             }
         }
         // update icon
-        dom.removeClasses(this._domNode, Codicon.lightbulbAutofix.classNames);
-        dom.addClasses(this._domNode, Codicon.lightBulb.classNames);
+        this._domNode.classList.remove(...Codicon.lightbulbAutofix.classNamesArray);
+        this._domNode.classList.add(...Codicon.lightBulb.classNamesArray);
         const kb = this._keybindingService.lookupKeybinding(this._quickFixActionId);
         if (kb) {
             this.title = nls.localize('quickFixWithKb', "Show Fixes ({0})", kb.getLabel());
@@ -197,12 +197,15 @@ LightBulbWidget = __decorate([
 ], LightBulbWidget);
 export { LightBulbWidget };
 registerThemingParticipant((theme, collector) => {
+    var _a;
+    const editorBackgroundColor = (_a = theme.getColor(editorBackground)) === null || _a === void 0 ? void 0 : _a.transparent(0.7);
     // Lightbulb Icon
     const editorLightBulbForegroundColor = theme.getColor(editorLightBulbForeground);
     if (editorLightBulbForegroundColor) {
         collector.addRule(`
 		.monaco-editor .contentWidgets ${Codicon.lightBulb.cssSelector} {
 			color: ${editorLightBulbForegroundColor};
+			background-color: ${editorBackgroundColor};
 		}`);
     }
     // Lightbulb Auto Fix Icon
@@ -211,6 +214,7 @@ registerThemingParticipant((theme, collector) => {
         collector.addRule(`
 		.monaco-editor .contentWidgets ${Codicon.lightbulbAutofix.cssSelector} {
 			color: ${editorLightBulbAutoFixForegroundColor};
+			background-color: ${editorBackgroundColor};
 		}`);
     }
 });

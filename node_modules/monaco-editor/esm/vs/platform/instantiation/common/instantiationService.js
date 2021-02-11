@@ -18,6 +18,7 @@ class CyclicDependencyError extends Error {
 }
 export class InstantiationService {
     constructor(services = new ServiceCollection(), strict = false, parent) {
+        this._activeInstantiations = new Set();
         this._services = services;
         this._strict = strict;
         this._parent = parent;
@@ -112,11 +113,23 @@ export class InstantiationService {
     _getOrCreateServiceInstance(id, _trace) {
         let thing = this._getServiceInstanceOrDescriptor(id);
         if (thing instanceof SyncDescriptor) {
-            return this._createAndCacheServiceInstance(id, thing, _trace.branch(id, true));
+            return this._safeCreateAndCacheServiceInstance(id, thing, _trace.branch(id, true));
         }
         else {
             _trace.branch(id, false);
             return thing;
+        }
+    }
+    _safeCreateAndCacheServiceInstance(id, desc, _trace) {
+        if (this._activeInstantiations.has(id)) {
+            throw new Error(`illegal state - RECURSIVELY instantiating service '${id}'`);
+        }
+        this._activeInstantiations.add(id);
+        try {
+            return this._createAndCacheServiceInstance(id, desc, _trace);
+        }
+        finally {
+            this._activeInstantiations.delete(id);
         }
     }
     _createAndCacheServiceInstance(id, desc, _trace) {
@@ -154,9 +167,15 @@ export class InstantiationService {
                 break;
             }
             for (const { data } of roots) {
-                // create instance and overwrite the service collections
-                const instance = this._createServiceInstanceWithOwner(data.id, data.desc.ctor, data.desc.staticArguments, data.desc.supportsDelayedInstantiation, data._trace);
-                this._setServiceInstance(data.id, instance);
+                // Repeat the check for this still being a service sync descriptor. That's because
+                // instantiating a dependency might have side-effect and recursively trigger instantiation
+                // so that some dependencies are now fullfilled already.
+                const instanceOrDesc = this._getServiceInstanceOrDescriptor(data.id);
+                if (instanceOrDesc instanceof SyncDescriptor) {
+                    // create instance and overwrite the service collections
+                    const instance = this._createServiceInstanceWithOwner(data.id, data.desc.ctor, data.desc.staticArguments, data.desc.supportsDelayedInstantiation, data._trace);
+                    this._setServiceInstance(data.id, instance);
+                }
                 graph.removeNode(data);
             }
         }

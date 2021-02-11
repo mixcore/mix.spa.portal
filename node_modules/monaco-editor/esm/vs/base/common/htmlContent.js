@@ -3,44 +3,41 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { equals } from './arrays.js';
-import { escapeCodicons } from './codicons.js';
+import { escapeIcons } from './iconLabels.js';
 import { illegalArgument } from './errors.js';
 export class MarkdownString {
-    constructor(_value = '', isTrustedOrOptions = false) {
+    constructor(value = '', isTrustedOrOptions = false) {
         var _a, _b;
-        this._value = _value;
-        if (typeof this._value !== 'string') {
+        this.value = value;
+        if (typeof this.value !== 'string') {
             throw illegalArgument('value');
         }
         if (typeof isTrustedOrOptions === 'boolean') {
-            this._isTrusted = isTrustedOrOptions;
-            this._supportThemeIcons = false;
+            this.isTrusted = isTrustedOrOptions;
+            this.supportThemeIcons = false;
         }
         else {
-            this._isTrusted = (_a = isTrustedOrOptions.isTrusted) !== null && _a !== void 0 ? _a : false;
-            this._supportThemeIcons = (_b = isTrustedOrOptions.supportThemeIcons) !== null && _b !== void 0 ? _b : false;
+            this.isTrusted = (_a = isTrustedOrOptions.isTrusted) !== null && _a !== void 0 ? _a : undefined;
+            this.supportThemeIcons = (_b = isTrustedOrOptions.supportThemeIcons) !== null && _b !== void 0 ? _b : false;
         }
     }
-    get value() { return this._value; }
-    get isTrusted() { return this._isTrusted; }
-    get supportThemeIcons() { return this._supportThemeIcons; }
-    appendText(value) {
-        // escape markdown syntax tokens: http://daringfireball.net/projects/markdown/syntax#backslash
-        this._value += (this._supportThemeIcons ? escapeCodicons(value) : value)
-            .replace(/[\\`*_{}[\]()#+\-.!]/g, '\\$&')
-            .replace(/\n/g, '\n\n');
+    appendText(value, newlineStyle = 0 /* Paragraph */) {
+        this.value += escapeMarkdownSyntaxTokens(this.supportThemeIcons ? escapeIcons(value) : value)
+            .replace(/([ \t]+)/g, (_match, g1) => '&nbsp;'.repeat(g1.length))
+            .replace(/^>/gm, '\\>')
+            .replace(/\n/g, newlineStyle === 1 /* Break */ ? '\\\n' : '\n\n');
         return this;
     }
     appendMarkdown(value) {
-        this._value += value;
+        this.value += value;
         return this;
     }
     appendCodeblock(langId, code) {
-        this._value += '\n```';
-        this._value += langId;
-        this._value += '\n';
-        this._value += code;
-        this._value += '\n```\n';
+        this.value += '\n```';
+        this.value += langId;
+        this.value += '\n';
+        this.value += code;
+        this.value += '\n```\n';
         return this;
     }
 }
@@ -93,6 +90,10 @@ function markdownStringEqual(a, b) {
     else {
         return a.value === b.value && a.isTrusted === b.isTrusted && a.supportThemeIcons === b.supportThemeIcons;
     }
+}
+export function escapeMarkdownSyntaxTokens(text) {
+    // escape markdown syntax tokens: http://daringfireball.net/projects/markdown/syntax#backslash
+    return text.replace(/[\\`*_{}[\]()#+\-.!]/g, '\\$&');
 }
 export function removeMarkdownEscapes(text) {
     if (!text) {

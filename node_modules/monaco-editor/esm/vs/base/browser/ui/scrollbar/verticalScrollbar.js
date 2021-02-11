@@ -6,9 +6,9 @@ import { StandardWheelEvent } from '../../mouseEvent.js';
 import { AbstractScrollbar } from './abstractScrollbar.js';
 import { ARROW_IMG_SIZE } from './scrollbarArrow.js';
 import { ScrollbarState } from './scrollbarState.js';
-import { Codicon, registerIcon } from '../../../common/codicons.js';
-const scrollbarButtonUpIcon = registerIcon('scrollbar-button-up', Codicon.triangleUp);
-const scrollbarButtonDownIcon = registerIcon('scrollbar-button-down', Codicon.triangleDown);
+import { Codicon, registerCodicon } from '../../../common/codicons.js';
+const scrollbarButtonUpIcon = registerCodicon('scrollbar-button-up', Codicon.triangleUp);
+const scrollbarButtonDownIcon = registerCodicon('scrollbar-button-down', Codicon.triangleDown);
 export class VerticalScrollbar extends AbstractScrollbar {
     constructor(scrollable, options, host) {
         const scrollDimensions = scrollable.getScrollDimensions();
@@ -21,11 +21,12 @@ export class VerticalScrollbar extends AbstractScrollbar {
             0, scrollDimensions.height, scrollDimensions.scrollHeight, scrollPosition.scrollTop),
             visibility: options.vertical,
             extraScrollbarClassName: 'vertical',
-            scrollable: scrollable
+            scrollable: scrollable,
+            scrollByPage: options.scrollByPage
         });
         if (options.verticalHasArrows) {
-            let arrowDelta = (options.arrowSize - ARROW_IMG_SIZE) / 2;
-            let scrollbarDelta = (options.verticalScrollbarSize - ARROW_IMG_SIZE) / 2;
+            const arrowDelta = (options.arrowSize - ARROW_IMG_SIZE) / 2;
+            const scrollbarDelta = (options.verticalScrollbarSize - ARROW_IMG_SIZE) / 2;
             this._createArrow({
                 className: 'scra',
                 icon: scrollbarButtonUpIcon,

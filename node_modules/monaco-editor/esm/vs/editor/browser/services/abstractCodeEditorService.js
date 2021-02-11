@@ -13,6 +13,7 @@ export class AbstractCodeEditorService extends Disposable {
         this.onCodeEditorRemove = this._onCodeEditorRemove.event;
         this._onDiffEditorAdd = this._register(new Emitter());
         this._onDiffEditorRemove = this._register(new Emitter());
+        this._onDecorationTypeRegistered = this._register(new Emitter());
         this._modelProperties = new Map();
         this._codeEditors = Object.create(null);
         this._diffEditors = Object.create(null);

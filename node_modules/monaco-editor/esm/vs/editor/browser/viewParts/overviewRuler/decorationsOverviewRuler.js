@@ -11,17 +11,17 @@ import { editorCursorForeground, editorOverviewRulerBorder, editorOverviewRulerB
 class Settings {
     constructor(config, theme) {
         const options = config.options;
-        this.lineHeight = options.get(51 /* lineHeight */);
-        this.pixelRatio = options.get(115 /* pixelRatio */);
-        this.overviewRulerLanes = options.get(65 /* overviewRulerLanes */);
-        this.renderBorder = options.get(64 /* overviewRulerBorder */);
+        this.lineHeight = options.get(53 /* lineHeight */);
+        this.pixelRatio = options.get(122 /* pixelRatio */);
+        this.overviewRulerLanes = options.get(68 /* overviewRulerLanes */);
+        this.renderBorder = options.get(67 /* overviewRulerBorder */);
         const borderColor = theme.getColor(editorOverviewRulerBorder);
         this.borderColor = borderColor ? borderColor.toString() : null;
-        this.hideCursor = options.get(44 /* hideCursorInOverviewRuler */);
+        this.hideCursor = options.get(46 /* hideCursorInOverviewRuler */);
         const cursorColor = theme.getColor(editorCursorForeground);
         this.cursorColor = cursorColor ? cursorColor.transparent(0.7).toString() : null;
         this.themeType = theme.type;
-        const minimapOpts = options.get(56 /* minimap */);
+        const minimapOpts = options.get(59 /* minimap */);
         const minimapEnabled = minimapOpts.enabled;
         const minimapSide = minimapOpts.side;
         const backgroundColor = minimapEnabled
@@ -33,7 +33,7 @@ class Settings {
         else {
             this.backgroundColor = Color.Format.CSS.formatHex(backgroundColor);
         }
-        const layoutInfo = options.get(117 /* layoutInfo */);
+        const layoutInfo = options.get(124 /* layoutInfo */);
         const position = layoutInfo.overviewRuler;
         this.top = position.top;
         this.right = position.right;
@@ -70,7 +70,7 @@ class Settings {
                     rightOffset,
                     leftOffset,
                     centerOffset,
-                    leftOffset,
+                    leftOffset, // Left | Center | Right
                 ], [
                     0,
                     leftWidth,
@@ -79,7 +79,7 @@ class Settings {
                     rightWidth,
                     leftWidth + centerWidth + rightWidth,
                     centerWidth + rightWidth,
-                    leftWidth + centerWidth + rightWidth,
+                    leftWidth + centerWidth + rightWidth, // Left | Center | Right
                 ]
             ];
         }
@@ -97,7 +97,7 @@ class Settings {
                     rightOffset,
                     leftOffset,
                     leftOffset,
-                    leftOffset,
+                    leftOffset, // Left | Center | Right
                 ], [
                     0,
                     leftWidth,
@@ -106,7 +106,7 @@ class Settings {
                     rightWidth,
                     leftWidth + rightWidth,
                     leftWidth + rightWidth,
-                    leftWidth + rightWidth,
+                    leftWidth + rightWidth, // Left | Center | Right
                 ]
             ];
         }
@@ -122,7 +122,7 @@ class Settings {
                     offset,
                     offset,
                     offset,
-                    offset,
+                    offset, // Left | Center | Right
                 ], [
                     0,
                     width,
@@ -131,7 +131,7 @@ class Settings {
                     width,
                     width,
                     width,
-                    width,
+                    width, // Left | Center | Right
                 ]
             ];
         }

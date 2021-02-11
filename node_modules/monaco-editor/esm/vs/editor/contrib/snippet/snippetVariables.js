@@ -7,9 +7,10 @@ import * as path from '../../../base/common/path.js';
 import { dirname } from '../../../base/common/resources.js';
 import { Text } from './snippetParser.js';
 import { LanguageConfigurationRegistry } from '../../common/modes/languageConfigurationRegistry.js';
-import { getLeadingWhitespace, commonPrefixLength, isFalsyOrWhitespace } from '../../../base/common/strings.js';
-import { isSingleFolderWorkspaceIdentifier, toWorkspaceIdentifier, WORKSPACE_EXTENSION } from '../../../platform/workspaces/common/workspaces.js';
+import { getLeadingWhitespace, commonPrefixLength, isFalsyOrWhitespace, splitLines } from '../../../base/common/strings.js';
+import { toWorkspaceIdentifier, WORKSPACE_EXTENSION, isSingleFolderWorkspaceIdentifier } from '../../../platform/workspaces/common/workspaces.js';
 import { normalizeDriveLetter } from '../../../base/common/labels.js';
+import { generateUuid } from '../../../base/common/uuid.js';
 export class CompositeSnippetVariableResolver {
     constructor(_delegates) {
         this._delegates = _delegates;
@@ -59,7 +60,7 @@ export class SelectionBasedVariableResolver {
                         return false;
                     }
                     if (marker instanceof Text) {
-                        varLeadingWhitespace = getLeadingWhitespace(marker.value.split(/\r\n|\r|\n/).pop());
+                        varLeadingWhitespace = getLeadingWhitespace(splitLines(marker.value).pop());
                     }
                     return true;
                 });
@@ -116,6 +117,9 @@ export class ModelBasedVariableResolver {
         }
         else if (name === 'TM_FILEPATH' && this._labelService) {
             return this._labelService.getUriLabel(this._model.uri);
+        }
+        else if (name === 'RELATIVE_FILEPATH' && this._labelService) {
+            return this._labelService.getUriLabel(this._model.uri, { relative: true, noPrefix: true });
         }
         return undefined;
     }
@@ -242,7 +246,7 @@ export class WorkspaceBasedVariableResolver {
     }
     _resolveWorkspaceName(workspaceIdentifier) {
         if (isSingleFolderWorkspaceIdentifier(workspaceIdentifier)) {
-            return path.basename(workspaceIdentifier.path);
+            return path.basename(workspaceIdentifier.uri.path);
         }
         let filename = path.basename(workspaceIdentifier.configPath.path);
         if (filename.endsWith(WORKSPACE_EXTENSION)) {
@@ -252,7 +256,7 @@ export class WorkspaceBasedVariableResolver {
     }
     _resoveWorkspacePath(workspaceIdentifier) {
         if (isSingleFolderWorkspaceIdentifier(workspaceIdentifier)) {
-            return normalizeDriveLetter(workspaceIdentifier.fsPath);
+            return normalizeDriveLetter(workspaceIdentifier.uri.fsPath);
         }
         let filename = path.basename(workspaceIdentifier.configPath.path);
         let folderpath = workspaceIdentifier.configPath.fsPath;
@@ -270,6 +274,9 @@ export class RandomBasedVariableResolver {
         }
         else if (name === 'RANDOM_HEX') {
             return Math.random().toString(16).slice(-6);
+        }
+        else if (name === 'UUID') {
+            return generateUuid();
         }
         return undefined;
     }

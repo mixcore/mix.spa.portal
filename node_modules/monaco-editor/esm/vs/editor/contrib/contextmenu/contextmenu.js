@@ -60,7 +60,7 @@ let ContextMenuController = class ContextMenuController {
         if (!this._editor.hasModel()) {
             return;
         }
-        if (!this._editor.getOption(15 /* contextmenu */)) {
+        if (!this._editor.getOption(17 /* contextmenu */)) {
             this._editor.focus();
             // Ensure the cursor is at the position of the mouse click
             if (e.target.position && !this._editor.getSelection().containsPosition(e.target.position)) {
@@ -99,7 +99,7 @@ let ContextMenuController = class ContextMenuController {
         this.showContextMenu(anchor);
     }
     showContextMenu(anchor) {
-        if (!this._editor.getOption(15 /* contextmenu */)) {
+        if (!this._editor.getOption(17 /* contextmenu */)) {
             return; // Context menu is turned off through configuration
         }
         if (!this._editor.hasModel()) {
@@ -153,7 +153,7 @@ let ContextMenuController = class ContextMenuController {
             return;
         }
         // Disable hover
-        const oldHoverSetting = this._editor.getOption(46 /* hover */);
+        const oldHoverSetting = this._editor.getOption(48 /* hover */);
         this._editor.updateOptions({
             hover: {
                 enabled: false

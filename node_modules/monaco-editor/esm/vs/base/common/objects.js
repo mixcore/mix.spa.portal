@@ -8,7 +8,7 @@ export function deepClone(obj) {
         return obj;
     }
     if (obj instanceof RegExp) {
-        // See https://github.com/Microsoft/TypeScript/issues/10990
+        // See https://github.com/microsoft/TypeScript/issues/10990
         return obj;
     }
     const result = Array.isArray(obj) ? [] : {};
@@ -101,10 +101,6 @@ export function mixin(destination, source, overwrite = true) {
             }
         });
     }
-    return destination;
-}
-export function assign(destination, ...sources) {
-    sources.forEach(source => Object.keys(source).forEach(key => destination[key] = source[key]));
     return destination;
 }
 export function equals(one, other) {

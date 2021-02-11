@@ -76,7 +76,7 @@ export class FoldingModel {
             const maxColumn = this._textModel.getLineMaxColumn(startLineNumber);
             const decorationRange = {
                 startLineNumber: startLineNumber,
-                startColumn: maxColumn,
+                startColumn: Math.max(maxColumn - 1, 1),
                 endLineNumber: startLineNumber,
                 endColumn: maxColumn
             };
@@ -103,7 +103,7 @@ export class FoldingModel {
             let decRange = this._textModel.getDecorationRange(this._editorDecorationIds[collapsedIndex]);
             if (decRange) {
                 let collapsedStartLineNumber = decRange.startLineNumber;
-                if (this._textModel.getLineMaxColumn(collapsedStartLineNumber) === decRange.startColumn) { // test that the decoration is still at the end otherwise it got deleted
+                if (decRange.startColumn === Math.max(decRange.endColumn - 1, 1) && this._textModel.getLineMaxColumn(collapsedStartLineNumber) === decRange.endColumn) { // test that the decoration is still covering the full line else it got deleted
                     while (k < newRegions.length) {
                         let startLineNumber = newRegions.getStartLineNumber(k);
                         if (collapsedStartLineNumber >= startLineNumber) {

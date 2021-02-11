@@ -8,17 +8,6 @@ export function isFalsyOrWhitespace(str) {
     }
     return str.trim().length === 0;
 }
-/**
- * @deprecated ES6: use `String.padStart`
- */
-export function pad(n, l, char = '0') {
-    const str = '' + n;
-    const r = [str];
-    for (let i = str.length; i < l; i++) {
-        r.push(char);
-    }
-    return r.reverse().join('');
-}
 const _formatRegexp = /{(\d+)}/g;
 /**
  * Helper to produce a string with a variable number of arguments. Insert variable segments
@@ -117,38 +106,6 @@ export function convertSimple2RegExpPattern(pattern) {
 export function stripWildcards(pattern) {
     return pattern.replace(/\*/g, '');
 }
-/**
- * @deprecated ES6: use `String.startsWith`
- */
-export function startsWith(haystack, needle) {
-    if (haystack.length < needle.length) {
-        return false;
-    }
-    if (haystack === needle) {
-        return true;
-    }
-    for (let i = 0; i < needle.length; i++) {
-        if (haystack[i] !== needle[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-/**
- * @deprecated ES6: use `String.endsWith`
- */
-export function endsWith(haystack, needle) {
-    const diff = haystack.length - needle.length;
-    if (diff > 0) {
-        return haystack.indexOf(needle, diff) === diff;
-    }
-    else if (diff === 0) {
-        return haystack === needle;
-    }
-    else {
-        return false;
-    }
-}
 export function createRegExp(searchString, isRegex, options = {}) {
     if (!searchString) {
         throw new Error('Cannot create regex from empty string');
@@ -195,6 +152,9 @@ export function regExpFlags(regexp) {
         + (regexp.ignoreCase ? 'i' : '')
         + (regexp.multiline ? 'm' : '')
         + (regexp /* standalone editor compilation */.unicode ? 'u' : '');
+}
+export function splitLines(str) {
+    return str.split(/\r\n|\r|\n/);
 }
 /**
  * Returns first index of the string that is not whitespace.

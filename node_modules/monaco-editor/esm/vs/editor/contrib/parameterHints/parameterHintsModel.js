@@ -22,8 +22,9 @@ var ParameterHintState;
 (function (ParameterHintState) {
     ParameterHintState.Default = { type: 0 /* Default */ };
     class Pending {
-        constructor(request) {
+        constructor(request, previouslyActiveHints) {
             this.request = request;
+            this.previouslyActiveHints = previouslyActiveHints;
             this.type = 2 /* Pending */;
         }
     }
@@ -93,7 +94,7 @@ export class ParameterHintsModel extends Disposable {
         const length = this.state.hints.signatures.length;
         const activeSignature = this.state.hints.activeSignature;
         const last = (activeSignature % length) === (length - 1);
-        const cycle = this.editor.getOption(67 /* parameterHints */).cycle;
+        const cycle = this.editor.getOption(70 /* parameterHints */).cycle;
         // If there is only one signature, or we're on last signature of list
         if ((length < 2 || last) && !cycle) {
             this.cancel();
@@ -108,7 +109,7 @@ export class ParameterHintsModel extends Disposable {
         const length = this.state.hints.signatures.length;
         const activeSignature = this.state.hints.activeSignature;
         const first = activeSignature === 0;
-        const cycle = this.editor.getOption(67 /* parameterHints */).cycle;
+        const cycle = this.editor.getOption(70 /* parameterHints */).cycle;
         // If there is only one signature, or we're on first signature of list
         if ((length < 2 || first) && !cycle) {
             this.cancel();
@@ -126,7 +127,7 @@ export class ParameterHintsModel extends Disposable {
     doTrigger(triggerId) {
         return __awaiter(this, void 0, void 0, function* () {
             const isRetrigger = this.state.type === 1 /* Active */ || this.state.type === 2 /* Pending */;
-            const activeSignatureHelp = this.state.type === 1 /* Active */ ? this.state.hints : undefined;
+            const activeSignatureHelp = this.getLastActiveHints();
             this.cancel(true);
             if (this._pendingTriggers.length === 0) {
                 return false;
@@ -144,7 +145,7 @@ export class ParameterHintsModel extends Disposable {
             }
             const model = this.editor.getModel();
             const position = this.editor.getPosition();
-            this.state = new ParameterHintState.Pending(createCancelablePromise(token => provideSignatureHelp(model, position, triggerContext, token)));
+            this.state = new ParameterHintState.Pending(createCancelablePromise(token => provideSignatureHelp(model, position, triggerContext, token)), activeSignatureHelp);
             try {
                 const result = yield this.state.request;
                 // Check that we are still resolving the correct signature help
@@ -173,6 +174,13 @@ export class ParameterHintsModel extends Disposable {
                 return false;
             }
         });
+    }
+    getLastActiveHints() {
+        switch (this.state.type) {
+            case 1 /* Active */: return this.state.hints;
+            case 2 /* Pending */: return this.state.previouslyActiveHints;
+            default: return undefined;
+        }
     }
     get isTriggered() {
         return this.state.type === 1 /* Active */
@@ -226,7 +234,7 @@ export class ParameterHintsModel extends Disposable {
         }
     }
     onEditorConfigurationChange() {
-        this.triggerOnType = this.editor.getOption(67 /* parameterHints */).enabled;
+        this.triggerOnType = this.editor.getOption(70 /* parameterHints */).enabled;
         if (!this.triggerOnType) {
             this.cancel();
         }

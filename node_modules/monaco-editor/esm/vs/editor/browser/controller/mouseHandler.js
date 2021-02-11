@@ -45,11 +45,14 @@ export class MouseHandler extends ViewEventHandler {
         this._register(mouseEvents.onMouseDown(this.viewHelper.viewDomNode, (e) => this._onMouseDown(e)));
         const onMouseWheel = (browserEvent) => {
             this.viewController.emitMouseWheel(browserEvent);
-            if (!this._context.configuration.options.get(59 /* mouseWheelZoom */)) {
+            if (!this._context.configuration.options.get(62 /* mouseWheelZoom */)) {
                 return;
             }
             const e = new StandardWheelEvent(browserEvent);
-            if (e.browserEvent.ctrlKey || e.browserEvent.metaKey) {
+            const doMouseWheelZoom = (platform.isMacintosh
+                ? (browserEvent.metaKey && !browserEvent.ctrlKey && !browserEvent.shiftKey && !browserEvent.altKey)
+                : (browserEvent.ctrlKey && !browserEvent.metaKey && !browserEvent.shiftKey && !browserEvent.altKey));
+            if (doMouseWheelZoom) {
                 const zoomLevel = EditorZoom.getZoomLevel();
                 const delta = e.deltaY > 0 ? 1 : -1;
                 EditorZoom.setZoomLevel(zoomLevel + delta);
@@ -131,7 +134,7 @@ export class MouseHandler extends ViewEventHandler {
         const targetIsContent = (t.type === 6 /* CONTENT_TEXT */ || t.type === 7 /* CONTENT_EMPTY */);
         const targetIsGutter = (t.type === 2 /* GUTTER_GLYPH_MARGIN */ || t.type === 3 /* GUTTER_LINE_NUMBERS */ || t.type === 4 /* GUTTER_LINE_DECORATIONS */);
         const targetIsLineNumbers = (t.type === 3 /* GUTTER_LINE_NUMBERS */);
-        const selectOnLineNumbers = this._context.configuration.options.get(90 /* selectOnLineNumbers */);
+        const selectOnLineNumbers = this._context.configuration.options.get(93 /* selectOnLineNumbers */);
         const targetIsViewZone = (t.type === 8 /* CONTENT_VIEW_ZONE */ || t.type === 5 /* GUTTER_VIEW_ZONE */);
         const targetIsWidget = (t.type === 9 /* CONTENT_WIDGET */);
         let shouldHandle = e.leftButton || e.middleButton;
@@ -222,9 +225,9 @@ class MouseDownOperation extends Disposable {
         // Overwrite the detail of the MouseEvent, as it will be sent out in an event and contributions might rely on it.
         e.detail = this._mouseState.count;
         const options = this._context.configuration.options;
-        if (!options.get(72 /* readOnly */)
-            && options.get(25 /* dragAndDrop */)
-            && !options.get(13 /* columnSelection */)
+        if (!options.get(75 /* readOnly */)
+            && options.get(27 /* dragAndDrop */)
+            && !options.get(15 /* columnSelection */)
             && !this._mouseState.altKey // we don't support multiple mouse
             && e.detail < 2 // only single click on a selection can work
             && !this._isActive // the mouse is not down yet
@@ -234,12 +237,18 @@ class MouseDownOperation extends Disposable {
         ) {
             this._mouseState.isDragAndDrop = true;
             this._isActive = true;
-            this._mouseMoveMonitor.startMonitoring(e.target, e.buttons, createMouseMoveEventMerger(null), (e) => this._onMouseDownThenMove(e), () => {
+            this._mouseMoveMonitor.startMonitoring(e.target, e.buttons, createMouseMoveEventMerger(null), (e) => this._onMouseDownThenMove(e), (browserEvent) => {
                 const position = this._findMousePosition(this._lastMouseEvent, true);
-                this._viewController.emitMouseDrop({
-                    event: this._lastMouseEvent,
-                    target: (position ? this._createMouseTarget(this._lastMouseEvent, true) : null) // Ignoring because position is unknown, e.g., Content View Zone
-                });
+                if (browserEvent && browserEvent instanceof KeyboardEvent) {
+                    // cancel
+                    this._viewController.emitMouseDropCanceled();
+                }
+                else {
+                    this._viewController.emitMouseDrop({
+                        event: this._lastMouseEvent,
+                        target: (position ? this._createMouseTarget(this._lastMouseEvent, true) : null) // Ignoring because position is unknown, e.g., Content View Zone
+                    });
+                }
                 this._stop();
             });
             return;

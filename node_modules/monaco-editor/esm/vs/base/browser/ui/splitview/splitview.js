@@ -6,12 +6,14 @@ import './splitview.css';
 import { toDisposable, Disposable, combinedDisposable } from '../../../common/lifecycle.js';
 import { Event, Emitter } from '../../../common/event.js';
 import * as types from '../../../common/types.js';
-import * as dom from '../../dom.js';
 import { clamp } from '../../../common/numbers.js';
-import { range, firstIndex, pushToStart, pushToEnd } from '../../../common/arrays.js';
+import { range, pushToStart, pushToEnd } from '../../../common/arrays.js';
 import { Sash } from '../sash/sash.js';
 import { Color } from '../../../common/color.js';
 import { domEvent } from '../../event.js';
+import { $, append, scheduleAtNextAnimationFrame } from '../../dom.js';
+import { SmoothScrollableElement } from '../scrollbar/scrollableElement.js';
+import { Scrollable } from '../../../common/scrollable.js';
 const defaultStyles = {
     separatorBorder: Color.transparent
 };
@@ -24,7 +26,7 @@ class ViewItem {
         if (typeof size === 'number') {
             this._size = size;
             this._cachedVisibleSize = undefined;
-            dom.addClass(container, 'visible');
+            container.classList.add('visible');
         }
         else {
             this._size = 0;
@@ -52,7 +54,7 @@ class ViewItem {
             this._cachedVisibleSize = typeof size === 'number' ? size : this.size;
             this.size = 0;
         }
-        dom.toggleClass(this.container, 'visible', visible);
+        this.container.classList.toggle('visible', visible);
         if (this.view.setVisible) {
             this.view.setVisible(visible);
         }
@@ -118,11 +120,21 @@ export class SplitView extends Disposable {
         this.inverseAltBehavior = !!options.inverseAltBehavior;
         this.proportionalLayout = types.isUndefined(options.proportionalLayout) ? true : !!options.proportionalLayout;
         this.el = document.createElement('div');
-        dom.addClass(this.el, 'monaco-split-view2');
-        dom.addClass(this.el, this.orientation === 0 /* VERTICAL */ ? 'vertical' : 'horizontal');
+        this.el.classList.add('monaco-split-view2');
+        this.el.classList.add(this.orientation === 0 /* VERTICAL */ ? 'vertical' : 'horizontal');
         container.appendChild(this.el);
-        this.sashContainer = dom.append(this.el, dom.$('.sash-container'));
-        this.viewContainer = dom.append(this.el, dom.$('.split-view-container'));
+        this.sashContainer = append(this.el, $('.sash-container'));
+        this.viewContainer = $('.split-view-container');
+        this.scrollable = new Scrollable(125, scheduleAtNextAnimationFrame);
+        this.scrollableElement = this._register(new SmoothScrollableElement(this.viewContainer, {
+            vertical: this.orientation === 0 /* VERTICAL */ ? 1 /* Auto */ : 2 /* Hidden */,
+            horizontal: this.orientation === 1 /* HORIZONTAL */ ? 1 /* Auto */ : 2 /* Hidden */
+        }, this.scrollable));
+        this._register(this.scrollableElement.onScroll(e => {
+            this.viewContainer.scrollTop = e.scrollTop;
+            this.viewContainer.scrollLeft = e.scrollLeft;
+        }));
+        append(this.el, this.scrollableElement.getDomNode());
         this.style(options.styles || defaultStyles);
         // We have an existing set of view, add them now
         if (options.descriptor) {
@@ -169,11 +181,11 @@ export class SplitView extends Disposable {
     }
     style(styles) {
         if (styles.separatorBorder.isTransparent()) {
-            dom.removeClass(this.el, 'separator-border');
+            this.el.classList.remove('separator-border');
             this.el.style.removeProperty('--separator-border');
         }
         else {
-            dom.addClass(this.el, 'separator-border');
+            this.el.classList.add('separator-border');
             this.el.style.setProperty('--separator-border', styles.separatorBorder.toString());
         }
     }
@@ -208,7 +220,7 @@ export class SplitView extends Disposable {
         for (const item of this.viewItems) {
             item.enabled = false;
         }
-        const index = firstIndex(this.sashItems, item => item.sash === sash);
+        const index = this.sashItems.findIndex(item => item.sash === sash);
         // This way, we can press Alt while we resize a sash, macOS style!
         const disposable = combinedDisposable(domEvent(document.body, 'keydown')(e => resetSashDragState(this.sashDragState.current, e.altKey)), domEvent(document.body, 'keyup')(() => resetSashDragState(this.sashDragState.current, false)));
         const resetSashDragState = (start, alt) => {
@@ -363,7 +375,7 @@ export class SplitView extends Disposable {
         }
         this.state = State.Busy;
         // Add view
-        const container = dom.$('.split-view-view');
+        const container = $('.split-view-view');
         if (index === this.viewItems.length) {
             this.viewContainer.appendChild(container);
         }
@@ -410,10 +422,10 @@ export class SplitView extends Disposable {
             const onStartDisposable = onStart(this.onSashStart, this);
             const onChange = Event.map(sash.onDidChange, sashEventMapper);
             const onChangeDisposable = onChange(this.onSashChange, this);
-            const onEnd = Event.map(sash.onDidEnd, () => firstIndex(this.sashItems, item => item.sash === sash));
+            const onEnd = Event.map(sash.onDidEnd, () => this.sashItems.findIndex(item => item.sash === sash));
             const onEndDisposable = onEnd(this.onSashEnd, this);
             const onDidResetDisposable = sash.onDidReset(() => {
-                const index = firstIndex(this.sashItems, item => item.sash === sash);
+                const index = this.sashItems.findIndex(item => item.sash === sash);
                 const upIndexes = range(index, -1);
                 const downIndexes = range(index + 1, this.viewItems.length);
                 const snapBeforeIndex = this.findFirstSnapIndex(upIndexes);
@@ -546,6 +558,21 @@ export class SplitView extends Disposable {
         // Layout sashes
         this.sashItems.forEach(item => item.sash.layout());
         this.updateSashEnablement();
+        this.updateScrollableElement();
+    }
+    updateScrollableElement() {
+        if (this.orientation === 0 /* VERTICAL */) {
+            this.scrollableElement.setScrollDimensions({
+                height: this.size,
+                scrollHeight: this.contentSize
+            });
+        }
+        else {
+            this.scrollableElement.setScrollDimensions({
+                width: this.size,
+                scrollWidth: this.contentSize
+            });
+        }
     }
     updateSashEnablement() {
         let previous = false;

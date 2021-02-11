@@ -31,19 +31,19 @@ const GUTTER_DECORATION_WIDTH = 2;
 class MinimapOptions {
     constructor(configuration, theme, tokensColorTracker) {
         const options = configuration.options;
-        const pixelRatio = options.get(115 /* pixelRatio */);
-        const layoutInfo = options.get(117 /* layoutInfo */);
+        const pixelRatio = options.get(122 /* pixelRatio */);
+        const layoutInfo = options.get(124 /* layoutInfo */);
         const minimapLayout = layoutInfo.minimap;
-        const fontInfo = options.get(36 /* fontInfo */);
-        const minimapOpts = options.get(56 /* minimap */);
+        const fontInfo = options.get(38 /* fontInfo */);
+        const minimapOpts = options.get(59 /* minimap */);
         this.renderMinimap = minimapLayout.renderMinimap;
         this.size = minimapOpts.size;
         this.minimapHeightIsEditorHeight = minimapLayout.minimapHeightIsEditorHeight;
-        this.scrollBeyondLastLine = options.get(86 /* scrollBeyondLastLine */);
+        this.scrollBeyondLastLine = options.get(89 /* scrollBeyondLastLine */);
         this.showSlider = minimapOpts.showSlider;
         this.pixelRatio = pixelRatio;
         this.typicalHalfwidthCharacterWidth = fontInfo.typicalHalfwidthCharacterWidth;
-        this.lineHeight = options.get(51 /* lineHeight */);
+        this.lineHeight = options.get(53 /* lineHeight */);
         this.minimapLeft = minimapLayout.minimapLeft;
         this.minimapWidth = minimapLayout.minimapWidth;
         this.minimapHeight = layoutInfo.height;
@@ -105,13 +105,12 @@ class MinimapLayout {
      * Compute a desired `scrollPosition` such that the slider moves by `delta`.
      */
     getDesiredScrollTopFromDelta(delta) {
-        const desiredSliderPosition = this.sliderTop + delta;
-        return Math.round(desiredSliderPosition / this._computedSliderRatio);
+        return Math.round(this.scrollTop + delta / this._computedSliderRatio);
     }
     getDesiredScrollTopFromTouchLocation(pageY) {
         return Math.round((pageY - this.sliderHeight / 2) / this._computedSliderRatio);
     }
-    static create(options, viewportStartLineNumber, viewportEndLineNumber, viewportHeight, viewportContainsWhitespaceGaps, lineCount, realLineCount, scrollTop, scrollHeight, previousLayout) {
+    static create(options, viewportStartLineNumber, viewportEndLineNumber, viewportStartLineNumberVerticalOffset, viewportHeight, viewportContainsWhitespaceGaps, lineCount, realLineCount, scrollTop, scrollHeight, previousLayout) {
         const pixelRatio = options.pixelRatio;
         const minimapLineHeight = options.minimapLineHeight;
         const minimapLinesFitting = Math.floor(options.canvasInnerHeight / minimapLineHeight);
@@ -191,7 +190,9 @@ class MinimapLayout {
                 }
             }
             const endLineNumber = Math.min(lineCount, startLineNumber + minimapLinesFitting - 1);
-            return new MinimapLayout(scrollTop, scrollHeight, true, computedSliderRatio, sliderTop, sliderHeight, startLineNumber, endLineNumber);
+            const partialLine = (scrollTop - viewportStartLineNumberVerticalOffset) / lineHeight;
+            const sliderTopAligned = (viewportStartLineNumber - startLineNumber + partialLine) * minimapLineHeight / pixelRatio;
+            return new MinimapLayout(scrollTop, scrollHeight, true, computedSliderRatio, sliderTopAligned, sliderHeight, startLineNumber, endLineNumber);
         }
     }
 }
@@ -602,6 +603,7 @@ export class Minimap extends ViewPart {
         }
     }
     onTokensColorsChanged(e) {
+        this._onOptionsMaybeChanged();
         return this._actual.onTokensColorsChanged();
     }
     onZonesChanged(e) {
@@ -627,6 +629,7 @@ export class Minimap extends ViewPart {
             scrollHeight: ctx.scrollHeight,
             viewportStartLineNumber: viewportStartLineNumber,
             viewportEndLineNumber: viewportEndLineNumber,
+            viewportStartLineNumberVerticalOffset: ctx.getVerticalOffsetForLineNumber(viewportStartLineNumber),
             scrollTop: ctx.scrollTop,
             scrollLeft: ctx.scrollLeft,
             viewportWidth: ctx.viewportWidth,
@@ -981,7 +984,7 @@ class InnerMinimap extends Disposable {
         else {
             this._shadow.setClassName('minimap-shadow-visible');
         }
-        const layout = MinimapLayout.create(this._model.options, renderingCtx.viewportStartLineNumber, renderingCtx.viewportEndLineNumber, renderingCtx.viewportHeight, renderingCtx.viewportContainsWhitespaceGaps, this._model.getLineCount(), this._model.getRealLineCount(), renderingCtx.scrollTop, renderingCtx.scrollHeight, this._lastRenderData ? this._lastRenderData.renderedLayout : null);
+        const layout = MinimapLayout.create(this._model.options, renderingCtx.viewportStartLineNumber, renderingCtx.viewportEndLineNumber, renderingCtx.viewportStartLineNumberVerticalOffset, renderingCtx.viewportHeight, renderingCtx.viewportContainsWhitespaceGaps, this._model.getLineCount(), this._model.getRealLineCount(), renderingCtx.scrollTop, renderingCtx.scrollHeight, this._lastRenderData ? this._lastRenderData.renderedLayout : null);
         this._slider.setDisplay(layout.sliderNeeded ? 'block' : 'none');
         this._slider.setTop(layout.sliderTop);
         this._slider.setHeight(layout.sliderHeight);

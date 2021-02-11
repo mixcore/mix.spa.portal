@@ -11,9 +11,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import './list.css';
 import { dispose, DisposableStore } from '../../../common/lifecycle.js';
 import { isNumber } from '../../../common/types.js';
-import { range, firstIndex, binarySearch } from '../../../common/arrays.js';
+import { range, binarySearch } from '../../../common/arrays.js';
 import { memoize } from '../../../common/decorators.js';
-import * as DOM from '../../dom.js';
 import * as platform from '../../../common/platform.js';
 import { Gesture } from '../../touch.js';
 import { StandardKeyboardEvent } from '../../keyboardEvent.js';
@@ -27,6 +26,7 @@ import { CombinedSpliceable } from './splice.js';
 import { clamp } from '../../../common/numbers.js';
 import { matchesPrefix } from '../../../common/filters.js';
 import { alert } from '../aria/aria.js';
+import { createStyleSheet } from '../../dom.js';
 class TraitRenderer {
     constructor(trait) {
         this.trait = trait;
@@ -39,7 +39,7 @@ class TraitRenderer {
         return container;
     }
     renderElement(element, index, templateData) {
-        const renderedElementIndex = firstIndex(this.renderedElements, el => el.templateData === templateData);
+        const renderedElementIndex = this.renderedElements.findIndex(el => el.templateData === templateData);
         if (renderedElementIndex >= 0) {
             const rendered = this.renderedElements[renderedElementIndex];
             this.trait.unrender(templateData);
@@ -74,7 +74,7 @@ class TraitRenderer {
         }
     }
     disposeTemplate(templateData) {
-        const index = firstIndex(this.renderedElements, el => el.templateData === templateData);
+        const index = this.renderedElements.findIndex(el => el.templateData === templateData);
         if (index < 0) {
             return;
         }
@@ -105,10 +105,10 @@ class Trait {
         this._set(indexes, indexes);
     }
     renderIndex(index, container) {
-        DOM.toggleClass(container, this._trait, this.contains(index));
+        container.classList.toggle(this._trait, this.contains(index));
     }
     unrender(container) {
-        DOM.removeClass(container, this._trait);
+        container.classList.remove(this._trait);
     }
     /**
      * Sets the indexes which should have this trait.
@@ -183,10 +183,10 @@ export function isInputElement(e) {
     return e.tagName === 'INPUT' || e.tagName === 'TEXTAREA';
 }
 export function isMonacoEditor(e) {
-    if (DOM.hasClass(e, 'monaco-editor')) {
+    if (e.classList.contains('monaco-editor')) {
         return true;
     }
-    if (DOM.hasClass(e, 'monaco-list')) {
+    if (e.classList.contains('monaco-list')) {
         return false;
     }
     if (!e.parentElement) {
@@ -253,10 +253,12 @@ class KeyboardController {
         this.view.domNode.focus();
     }
     onEscape(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.list.setSelection([], e.browserEvent);
-        this.view.domNode.focus();
+        if (this.list.getSelection().length) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.list.setSelection([], e.browserEvent);
+            this.view.domNode.focus();
+        }
     }
     dispose() {
         this.disposables.dispose();
@@ -636,10 +638,7 @@ export class DefaultStyleController {
         if (styles.listMatchesShadow) {
             content.push(`.monaco-list-type-filter { box-shadow: 1px 1px 1px ${styles.listMatchesShadow}; }`);
         }
-        const newStyles = content.join('\n');
-        if (newStyles !== this.styleElement.innerHTML) {
-            this.styleElement.innerHTML = newStyles;
-        }
+        this.styleElement.textContent = content.join('\n');
     }
 }
 const defaultStyles = {
@@ -868,7 +867,7 @@ export class List {
             this.styleController = _options.styleController(this.view.domId);
         }
         else {
-            const styleElement = DOM.createStyleSheet(this.view.domNode);
+            const styleElement = createStyleSheet(this.view.domNode);
             this.styleController = new DefaultStyleController(styleElement, this.view.domId);
         }
         this.spliceable = new CombinedSpliceable([
@@ -1060,6 +1059,7 @@ export class List {
             const previousScrollTop = this.view.getScrollTop();
             this.view.setScrollTop(previousScrollTop + this.view.renderHeight - this.view.elementHeight(lastPageIndex));
             if (this.view.getScrollTop() !== previousScrollTop) {
+                this.setFocus([]);
                 // Let the scroll event listener run
                 setTimeout(() => this.focusNextPage(browserEvent, filter), 0);
             }
@@ -1089,6 +1089,7 @@ export class List {
             const previousScrollTop = scrollTop;
             this.view.setScrollTop(scrollTop - this.view.renderHeight);
             if (this.view.getScrollTop() !== previousScrollTop) {
+                this.setFocus([]);
                 // Let the scroll event listener run
                 setTimeout(() => this.focusPreviousPage(browserEvent, filter), 0);
             }
@@ -1202,7 +1203,7 @@ export class List {
     }
     _onFocusChange() {
         const focus = this.focus.get();
-        DOM.toggleClass(this.view.domNode, 'element-focused', focus.length > 0);
+        this.view.domNode.classList.toggle('element-focused', focus.length > 0);
         this.onDidChangeActiveDescendant();
     }
     onDidChangeActiveDescendant() {
@@ -1221,9 +1222,9 @@ export class List {
     }
     _onSelectionChange() {
         const selection = this.selection.get();
-        DOM.toggleClass(this.view.domNode, 'selection-none', selection.length === 0);
-        DOM.toggleClass(this.view.domNode, 'selection-single', selection.length === 1);
-        DOM.toggleClass(this.view.domNode, 'selection-multiple', selection.length > 1);
+        this.view.domNode.classList.toggle('selection-none', selection.length === 0);
+        this.view.domNode.classList.toggle('selection-single', selection.length === 1);
+        this.view.domNode.classList.toggle('selection-multiple', selection.length > 1);
     }
     dispose() {
         this._onDidDispose.fire();

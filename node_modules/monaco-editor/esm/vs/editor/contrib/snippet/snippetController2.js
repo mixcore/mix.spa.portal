@@ -11,7 +11,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { dispose, DisposableStore } from '../../../base/common/lifecycle.js';
+import { DisposableStore } from '../../../base/common/lifecycle.js';
 import { EditorCommand, registerEditorCommand, registerEditorContribution } from '../../browser/editorExtensions.js';
 import { Range } from '../../common/core/range.js';
 import { Selection } from '../../common/core/selection.js';
@@ -43,10 +43,11 @@ let SnippetController2 = class SnippetController2 {
         return editor.getContribution(SnippetController2.ID);
     }
     dispose() {
+        var _a;
         this._inSnippet.reset();
         this._hasPrevTabstop.reset();
         this._hasNextTabstop.reset();
-        dispose(this._session);
+        (_a = this._session) === null || _a === void 0 ? void 0 : _a.dispose();
         this._snippetListener.dispose();
     }
     insert(template, opts) {
@@ -149,11 +150,12 @@ let SnippetController2 = class SnippetController2 {
         }
     }
     cancel(resetSelection = false) {
+        var _a;
         this._inSnippet.reset();
         this._hasPrevTabstop.reset();
         this._hasNextTabstop.reset();
         this._snippetListener.clear();
-        dispose(this._session);
+        (_a = this._session) === null || _a === void 0 ? void 0 : _a.dispose();
         this._session = undefined;
         this._modelVersionId = -1;
         if (resetSelection) {
@@ -225,4 +227,9 @@ registerEditorCommand(new CommandCtor({
     id: 'acceptSnippet',
     precondition: SnippetController2.InSnippetMode,
     handler: ctrl => ctrl.finish(),
+    // kbOpts: {
+    // 	weight: KeybindingWeight.EditorContrib + 30,
+    // 	kbExpr: EditorContextKeys.textFocus,
+    // 	primary: KeyCode.Enter,
+    // }
 }));

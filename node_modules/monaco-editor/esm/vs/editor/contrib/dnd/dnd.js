@@ -27,6 +27,7 @@ export class DragAndDropController extends Disposable {
         this._register(this._editor.onMouseUp((e) => this._onEditorMouseUp(e)));
         this._register(this._editor.onMouseDrag((e) => this._onEditorMouseDrag(e)));
         this._register(this._editor.onMouseDrop((e) => this._onEditorMouseDrop(e)));
+        this._register(this._editor.onMouseDropCanceled(() => this._onEditorMouseDropCanceled()));
         this._register(this._editor.onKeyDown((e) => this.onEditorKeyDown(e)));
         this._register(this._editor.onKeyUp((e) => this.onEditorKeyUp(e)));
         this._register(this._editor.onDidBlurEditorWidget(() => this.onEditorBlur()));
@@ -43,7 +44,7 @@ export class DragAndDropController extends Disposable {
         this._modifierPressed = false;
     }
     onEditorKeyDown(e) {
-        if (!this._editor.getOption(25 /* dragAndDrop */) || this._editor.getOption(13 /* columnSelection */)) {
+        if (!this._editor.getOption(27 /* dragAndDrop */) || this._editor.getOption(15 /* columnSelection */)) {
             return;
         }
         if (hasTriggerModifier(e)) {
@@ -56,7 +57,7 @@ export class DragAndDropController extends Disposable {
         }
     }
     onEditorKeyUp(e) {
-        if (!this._editor.getOption(25 /* dragAndDrop */) || this._editor.getOption(13 /* columnSelection */)) {
+        if (!this._editor.getOption(27 /* dragAndDrop */) || this._editor.getOption(15 /* columnSelection */)) {
             return;
         }
         if (hasTriggerModifier(e)) {
@@ -109,6 +110,14 @@ export class DragAndDropController extends Disposable {
             }
         }
     }
+    _onEditorMouseDropCanceled() {
+        this._editor.updateOptions({
+            mouseStyle: 'text'
+        });
+        this._removeDecoration();
+        this._dragSelection = null;
+        this._mouseDown = false;
+    }
     _onEditorMouseDrop(mouseEvent) {
         if (mouseEvent.target && (this._hitContent(mouseEvent.target) || this._hitMargin(mouseEvent.target)) && mouseEvent.target.position) {
             let newCursorPosition = new Position(mouseEvent.target.position.lineNumber, mouseEvent.target.position.column);
@@ -131,8 +140,8 @@ export class DragAndDropController extends Disposable {
                         }
                     });
                 }
-                // Use `mouse` as the source instead of `api`.
-                this._editor.setSelections(newSelections || [], 'mouse');
+                // Use `mouse` as the source instead of `api` and setting the reason to explicit (to behave like any other mouse operation).
+                this._editor.setSelections(newSelections || [], 'mouse', 3 /* Explicit */);
             }
             else if (!this._dragSelection.containsPosition(newCursorPosition) ||
                 ((hasTriggerModifier(mouseEvent.event) ||

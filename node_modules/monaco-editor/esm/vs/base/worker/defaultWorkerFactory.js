@@ -2,8 +2,10 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+var _a;
 import { globals } from '../common/platform.js';
 import { logOnceWebWorkerWarning } from '../common/worker/simpleWorker.js';
+const ttPolicy = (_a = window.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy('defaultWorkerFactory', { createScriptURL: value => value });
 function getWorker(workerId, label) {
     // Option for hosts to overwrite the worker script (used in the standalone editor)
     if (globals.MonacoEnvironment) {
@@ -11,15 +13,16 @@ function getWorker(workerId, label) {
             return globals.MonacoEnvironment.getWorker(workerId, label);
         }
         if (typeof globals.MonacoEnvironment.getWorkerUrl === 'function') {
-            return new Worker(globals.MonacoEnvironment.getWorkerUrl(workerId, label));
+            const wokerUrl = globals.MonacoEnvironment.getWorkerUrl(workerId, label);
+            return new Worker(ttPolicy ? ttPolicy.createScriptURL(wokerUrl) : wokerUrl, { name: label });
         }
     }
     // ESM-comment-begin
     // 	if (typeof require === 'function') {
     // 		// check if the JS lives on a different origin
-    // 		const workerMain = require.toUrl('./' + workerId);
+    // 		const workerMain = require.toUrl('./' + workerId); // explicitly using require.toUrl(), see https://github.com/microsoft/vscode/issues/107440#issuecomment-698982321
     // 		const workerUrl = getWorkerBootstrapUrl(workerMain, label);
-    // 		return new Worker(workerUrl, { name: label });
+    // 		return new Worker(ttPolicy ? ttPolicy.createScriptURL(workerUrl) as unknown as string : workerUrl, { name: label });
     // 	}
     // ESM-comment-end
     throw new Error(`You must define a function MonacoEnvironment.getWorkerUrl or MonacoEnvironment.getWorker`);
@@ -33,7 +36,7 @@ function getWorker(workerId, label) {
 // 			// this is the cross-origin case
 // 			// i.e. the webpage is running at a different origin than where the scripts are loaded from
 // 			const myPath = 'vs/base/worker/defaultWorkerFactory.js';
-// 			const workerBaseUrl = require.toUrl(myPath).slice(0, -myPath.length);
+// 			const workerBaseUrl = require.toUrl(myPath).slice(0, -myPath.length); // explicitly using require.toUrl(), see https://github.com/microsoft/vscode/issues/107440#issuecomment-698982321
 // 			const js = `/*${label}*/self.MonacoEnvironment={baseUrl: '${workerBaseUrl}'};importScripts('${scriptPath}');/*${label}*/`;
 // 			if (forceDataUri) {
 // 				const url = `data:text/javascript;charset=utf-8,${encodeURIComponent(js)}`;

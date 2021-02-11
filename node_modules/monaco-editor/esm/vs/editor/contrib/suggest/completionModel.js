@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { fuzzyScore, fuzzyScoreGracefulAggressive, FuzzyScore, anyScore } from '../../../base/common/filters.js';
 import { compareIgnoreCase } from '../../../base/common/strings.js';
+import { quickSelect } from '../../../base/common/arrays.js';
 export class LineContext {
     constructor(leadingLineContent, characterCountDelta) {
         this.leadingLineContent = leadingLineContent;
@@ -46,11 +47,17 @@ export class CompletionModel {
     }
     get allProvider() {
         this._ensureCachedState();
-        return this._allProvider;
+        return this._providerInfo.keys();
     }
     get incomplete() {
         this._ensureCachedState();
-        return this._isIncomplete;
+        const result = new Set();
+        for (let [provider, incomplete] of this._providerInfo) {
+            if (incomplete) {
+                result.add(provider);
+            }
+        }
+        return result;
     }
     adopt(except) {
         let res = [];
@@ -79,9 +86,8 @@ export class CompletionModel {
         }
     }
     _createCachedState() {
-        this._isIncomplete = new Set();
-        this._allProvider = new Set();
-        this._stats = { suggestionCount: 0, snippetCount: 0, textCount: 0 };
+        this._providerInfo = new Map();
+        const labelLengths = [];
         const { leadingLineContent, characterCountDelta } = this._lineContext;
         let word = '';
         let wordLow = '';
@@ -97,12 +103,8 @@ export class CompletionModel {
             if (item.isInvalid) {
                 continue; // SKIP invalid items
             }
-            // collect those supports that signaled having
-            // an incomplete result
-            if (item.container.incomplete) {
-                this._isIncomplete.add(item.provider);
-            }
-            this._allProvider.add(item.provider);
+            // collect all support, know if their result is incomplete
+            this._providerInfo.set(item.provider, Boolean(item.container.incomplete));
             // 'word' is that remainder of the current line that we
             // filter and score against. In theory each suggestion uses a
             // different word, but in practice not - that's why we cache
@@ -112,6 +114,7 @@ export class CompletionModel {
                 word = wordLen === 0 ? '' : leadingLineContent.slice(-wordLen);
                 wordLow = word.toLowerCase();
             }
+            const textLabel = typeof item.completion.label === 'string' ? item.completion.label : item.completion.label.name;
             // remember the word against which this item was
             // scored
             item.word = word;
@@ -136,7 +139,6 @@ export class CompletionModel {
                         break;
                     }
                 }
-                const textLabel = typeof item.completion.label === 'string' ? item.completion.label : item.completion.label.name;
                 if (wordPos >= wordLen) {
                     // the wordPos at which scoring starts is the whole word
                     // and therefore the same rules as not having a word apply
@@ -175,18 +177,15 @@ export class CompletionModel {
             item.distance = this._wordDistance.distance(item.position, item.completion);
             target.push(item);
             // update stats
-            this._stats.suggestionCount++;
-            switch (item.completion.kind) {
-                case 27 /* Snippet */:
-                    this._stats.snippetCount++;
-                    break;
-                case 18 /* Text */:
-                    this._stats.textCount++;
-                    break;
-            }
+            labelLengths.push(textLabel.length);
         }
         this._filteredItems = target.sort(this._snippetCompareFn);
         this._refilterKind = 0 /* Nothing */;
+        this._stats = {
+            pLabelLen: labelLengths.length ?
+                quickSelect(labelLengths.length - .85, labelLengths, (a, b) => a - b)
+                : 0
+        };
     }
     static _compareCompletionItems(a, b) {
         if (a.score[0] > b.score[0]) {

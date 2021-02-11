@@ -21,8 +21,9 @@ import { NULL_STATE, nullTokenize, nullTokenize2 } from '../../../common/modes/n
 import { IModeService } from '../../../common/services/modeService.js';
 import { IStandaloneThemeService } from '../../common/standaloneThemeService.js';
 import { editorHoverBackground, editorHoverBorder, editorHoverForeground } from '../../../../platform/theme/common/colorRegistry.js';
-import { HIGH_CONTRAST, registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
+import { registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
 import { InspectTokensNLS } from '../../../common/standaloneStrings.js';
+import { ColorScheme } from '../../../../platform/theme/common/theme.js';
 let InspectTokensController = class InspectTokensController extends Disposable {
     constructor(editor, standaloneColorService, modeService) {
         super();
@@ -102,8 +103,8 @@ function getSafeTokenizationSupport(languageIdentifier) {
     }
     return {
         getInitialState: () => NULL_STATE,
-        tokenize: (line, state, deltaOffset) => nullTokenize(languageIdentifier.language, line, state, deltaOffset),
-        tokenize2: (line, state, deltaOffset) => nullTokenize2(languageIdentifier.id, line, state, deltaOffset)
+        tokenize: (line, hasEOL, state, deltaOffset) => nullTokenize(languageIdentifier.language, line, state, deltaOffset),
+        tokenize2: (line, hasEOL, state, deltaOffset) => nullTokenize2(languageIdentifier.id, line, state, deltaOffset)
     };
 }
 class InspectTokensWidget extends Disposable {
@@ -204,8 +205,8 @@ class InspectTokensWidget extends Disposable {
     }
     _getTokensAtLine(lineNumber) {
         let stateBeforeLine = this._getStateBeforeLine(lineNumber);
-        let tokenizationResult1 = this._tokenizationSupport.tokenize(this._model.getLineContent(lineNumber), stateBeforeLine, 0);
-        let tokenizationResult2 = this._tokenizationSupport.tokenize2(this._model.getLineContent(lineNumber), stateBeforeLine, 0);
+        let tokenizationResult1 = this._tokenizationSupport.tokenize(this._model.getLineContent(lineNumber), true, stateBeforeLine, 0);
+        let tokenizationResult2 = this._tokenizationSupport.tokenize2(this._model.getLineContent(lineNumber), true, stateBeforeLine, 0);
         return {
             startState: stateBeforeLine,
             tokens1: tokenizationResult1.tokens,
@@ -216,7 +217,7 @@ class InspectTokensWidget extends Disposable {
     _getStateBeforeLine(lineNumber) {
         let state = this._tokenizationSupport.getInitialState();
         for (let i = 1; i < lineNumber; i++) {
-            let tokenizationResult = this._tokenizationSupport.tokenize(this._model.getLineContent(i), state, 0);
+            let tokenizationResult = this._tokenizationSupport.tokenize(this._model.getLineContent(i), true, state, 0);
             state = tokenizationResult.endState;
         }
         return state;
@@ -237,7 +238,7 @@ registerEditorAction(InspectTokens);
 registerThemingParticipant((theme, collector) => {
     const border = theme.getColor(editorHoverBorder);
     if (border) {
-        let borderWidth = theme.type === HIGH_CONTRAST ? 2 : 1;
+        let borderWidth = theme.type === ColorScheme.HIGH_CONTRAST ? 2 : 1;
         collector.addRule(`.monaco-editor .tokens-inspect-widget { border: ${borderWidth}px solid ${border}; }`);
         collector.addRule(`.monaco-editor .tokens-inspect-widget .tokens-inspect-separator { background-color: ${border}; }`);
     }

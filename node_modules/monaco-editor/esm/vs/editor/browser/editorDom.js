@@ -135,14 +135,14 @@ export class GlobalEditorMouseMoveMonitor extends Disposable {
                 // Allow modifier keys
                 return;
             }
-            this._globalMouseMoveMonitor.stopMonitoring(true);
+            this._globalMouseMoveMonitor.stopMonitoring(true, e.browserEvent);
         }, true);
         const myMerger = (lastEvent, currentEvent) => {
             return merger(lastEvent, new EditorMouseEvent(currentEvent, this._editorViewDomNode));
         };
-        this._globalMouseMoveMonitor.startMonitoring(initialElement, initialButtons, myMerger, mouseMoveCallback, () => {
+        this._globalMouseMoveMonitor.startMonitoring(initialElement, initialButtons, myMerger, mouseMoveCallback, (e) => {
             this._keydownListener.dispose();
-            onStopCallback();
+            onStopCallback(e);
         });
     }
 }

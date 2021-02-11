@@ -14,11 +14,12 @@ export class ViewCursors extends ViewPart {
     constructor(context) {
         super(context);
         const options = this._context.configuration.options;
-        this._readOnly = options.get(72 /* readOnly */);
-        this._cursorBlinking = options.get(17 /* cursorBlinking */);
-        this._cursorStyle = options.get(19 /* cursorStyle */);
-        this._cursorSmoothCaretAnimation = options.get(18 /* cursorSmoothCaretAnimation */);
+        this._readOnly = options.get(75 /* readOnly */);
+        this._cursorBlinking = options.get(19 /* cursorBlinking */);
+        this._cursorStyle = options.get(21 /* cursorStyle */);
+        this._cursorSmoothCaretAnimation = options.get(20 /* cursorSmoothCaretAnimation */);
         this._selectionIsEmpty = true;
+        this._isComposingInput = false;
         this._isVisible = false;
         this._primaryCursor = new ViewCursor(this._context);
         this._secondaryCursors = [];
@@ -43,12 +44,22 @@ export class ViewCursors extends ViewPart {
         return this._domNode;
     }
     // --- begin event handlers
+    onCompositionStart(e) {
+        this._isComposingInput = true;
+        this._updateBlinking();
+        return true;
+    }
+    onCompositionEnd(e) {
+        this._isComposingInput = false;
+        this._updateBlinking();
+        return true;
+    }
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        this._readOnly = options.get(72 /* readOnly */);
-        this._cursorBlinking = options.get(17 /* cursorBlinking */);
-        this._cursorStyle = options.get(19 /* cursorStyle */);
-        this._cursorSmoothCaretAnimation = options.get(18 /* cursorSmoothCaretAnimation */);
+        this._readOnly = options.get(75 /* readOnly */);
+        this._cursorBlinking = options.get(19 /* cursorBlinking */);
+        this._cursorStyle = options.get(21 /* cursorStyle */);
+        this._cursorSmoothCaretAnimation = options.get(20 /* cursorSmoothCaretAnimation */);
         this._updateBlinking();
         this._updateDomClassName();
         this._primaryCursor.onConfigurationChanged(e);
@@ -143,6 +154,10 @@ export class ViewCursors extends ViewPart {
     // --- end event handlers
     // ---- blinking logic
     _getCursorBlinking() {
+        if (this._isComposingInput) {
+            // avoid double cursors
+            return 0 /* Hidden */;
+        }
         if (!this._editorHasFocus) {
             return 0 /* Hidden */;
         }

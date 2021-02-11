@@ -20,7 +20,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { IntervalTimer } from '../../../base/common/async.js';
+import { IntervalTimer, timeout } from '../../../base/common/async.js';
 import { Disposable, dispose, toDisposable, DisposableStore } from '../../../base/common/lifecycle.js';
 import { SimpleWorkerClient, logOnceWebWorkerWarning } from '../../../base/common/worker/simpleWorker.js';
 import { DefaultWorkerFactory } from '../../../base/worker/defaultWorkerFactory.js';
@@ -89,7 +89,7 @@ let EditorWorkerServiceImpl = class EditorWorkerServiceImpl extends Disposable {
             const sw = StopWatch.create(true);
             const result = this._workerManager.withWorker().then(client => client.computeMoreMinimalEdits(resource, edits));
             result.finally(() => this._logService.trace('FORMAT#computeMoreMinimalEdits', resource.toString(true), sw.elapsed()));
-            return result;
+            return Promise.race([result, timeout(1000).then(() => edits)]);
         }
         else {
             return Promise.resolve(undefined);
@@ -123,30 +123,53 @@ class WordBasedCompletionItemProvider {
     }
     provideCompletionItems(model, position) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { wordBasedSuggestions } = this._configurationService.getValue(model.uri, position, 'editor');
-            if (!wordBasedSuggestions) {
+            const config = this._configurationService.getValue(model.uri, position, 'editor');
+            if (!config.wordBasedSuggestions) {
                 return undefined;
             }
-            if (!canSyncModel(this._modelService, model.uri)) {
-                return undefined; // File too large
+            const models = [];
+            if (config.wordBasedSuggestionsMode === 'currentDocument') {
+                // only current file and only if not too large
+                if (canSyncModel(this._modelService, model.uri)) {
+                    models.push(model.uri);
+                }
             }
+            else {
+                // either all files or files of same language
+                for (const candidate of this._modelService.getModels()) {
+                    if (!canSyncModel(this._modelService, candidate.uri)) {
+                        continue;
+                    }
+                    if (candidate === model) {
+                        models.unshift(candidate.uri);
+                    }
+                    else if (config.wordBasedSuggestionsMode === 'allDocuments' || candidate.getLanguageIdentifier().id === model.getLanguageIdentifier().id) {
+                        models.push(candidate.uri);
+                    }
+                }
+            }
+            if (models.length === 0) {
+                return undefined; // File too large, no other files
+            }
+            const wordDefRegExp = LanguageConfigurationRegistry.getWordDefinition(model.getLanguageIdentifier().id);
             const word = model.getWordAtPosition(position);
             const replace = !word ? Range.fromPositions(position) : new Range(position.lineNumber, word.startColumn, position.lineNumber, word.endColumn);
             const insert = replace.setEndPosition(position.lineNumber, position.column);
             const client = yield this._workerManager.withWorker();
-            const words = yield client.textualSuggest(model.uri, position);
-            if (!words) {
+            const data = yield client.textualSuggest(models, word === null || word === void 0 ? void 0 : word.word, wordDefRegExp);
+            if (!data) {
                 return undefined;
             }
             return {
-                suggestions: words.map((word) => {
+                duration: data.duration,
+                suggestions: data.words.map((word) => {
                     return {
                         kind: 18 /* Text */,
                         label: word,
                         insertText: word,
                         range: { insert, replace }
                     };
-                })
+                }),
             };
         });
     }
@@ -366,16 +389,12 @@ export class EditorWorkerClient extends Disposable {
             return proxy.computeLinks(resource.toString());
         });
     }
-    textualSuggest(resource, position) {
-        return this._withSyncedResources([resource]).then(proxy => {
-            let model = this._modelService.getModel(resource);
-            if (!model) {
-                return null;
-            }
-            let wordDefRegExp = LanguageConfigurationRegistry.getWordDefinition(model.getLanguageIdentifier().id);
-            let wordDef = wordDefRegExp.source;
-            let wordDefFlags = regExpFlags(wordDefRegExp);
-            return proxy.textualSuggest(resource.toString(), position, wordDef, wordDefFlags);
+    textualSuggest(resources, leadingWord, wordDefRegExp) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const proxy = yield this._withSyncedResources(resources);
+            const wordDef = wordDefRegExp.source;
+            const wordDefFlags = regExpFlags(wordDefRegExp);
+            return proxy.textualSuggest(resources.map(r => r.toString()), leadingWord, wordDef, wordDefFlags);
         });
     }
     computeWordRanges(resource, range) {

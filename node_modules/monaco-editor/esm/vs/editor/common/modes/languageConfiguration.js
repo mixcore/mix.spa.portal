@@ -56,3 +56,32 @@ export class StandardAutoClosingPairConditional {
         return (this._standardTokenMask & standardToken) === 0;
     }
 }
+/**
+ * @internal
+ */
+export class AutoClosingPairs {
+    constructor(autoClosingPairs) {
+        this.autoClosingPairsOpenByStart = new Map();
+        this.autoClosingPairsOpenByEnd = new Map();
+        this.autoClosingPairsCloseByStart = new Map();
+        this.autoClosingPairsCloseByEnd = new Map();
+        this.autoClosingPairsCloseSingleChar = new Map();
+        for (const pair of autoClosingPairs) {
+            appendEntry(this.autoClosingPairsOpenByStart, pair.open.charAt(0), pair);
+            appendEntry(this.autoClosingPairsOpenByEnd, pair.open.charAt(pair.open.length - 1), pair);
+            appendEntry(this.autoClosingPairsCloseByStart, pair.close.charAt(0), pair);
+            appendEntry(this.autoClosingPairsCloseByEnd, pair.close.charAt(pair.close.length - 1), pair);
+            if (pair.close.length === 1 && pair.open.length === 1) {
+                appendEntry(this.autoClosingPairsCloseSingleChar, pair.close, pair);
+            }
+        }
+    }
+}
+function appendEntry(target, key, value) {
+    if (target.has(key)) {
+        target.get(key).push(value);
+    }
+    else {
+        target.set(key, [value]);
+    }
+}

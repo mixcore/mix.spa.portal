@@ -25,14 +25,15 @@ export class ObjectTreeModel {
         }
         this.identityProvider = options.identityProvider;
     }
-    setChildren(element, children = Iterable.empty(), onDidCreateNode, onDidDeleteNode) {
+    setChildren(element, children = Iterable.empty(), options = {}) {
         const location = this.getElementLocation(element);
-        this._setChildren(location, this.preserveCollapseState(children), onDidCreateNode, onDidDeleteNode);
+        this._setChildren(location, this.preserveCollapseState(children), options);
     }
-    _setChildren(location, children = Iterable.empty(), onDidCreateNode, onDidDeleteNode) {
+    _setChildren(location, children = Iterable.empty(), options) {
         const insertedElements = new Set();
         const insertedElementIds = new Set();
-        const _onDidCreateNode = (node) => {
+        const onDidCreateNode = (node) => {
+            var _a;
             if (node.element === null) {
                 return;
             }
@@ -44,11 +45,10 @@ export class ObjectTreeModel {
                 insertedElementIds.add(id);
                 this.nodesByIdentity.set(id, tnode);
             }
-            if (onDidCreateNode) {
-                onDidCreateNode(tnode);
-            }
+            (_a = options.onDidCreateNode) === null || _a === void 0 ? void 0 : _a.call(options, tnode);
         };
-        const _onDidDeleteNode = (node) => {
+        const onDidDeleteNode = (node) => {
+            var _a;
             if (node.element === null) {
                 return;
             }
@@ -62,11 +62,9 @@ export class ObjectTreeModel {
                     this.nodesByIdentity.delete(id);
                 }
             }
-            if (onDidDeleteNode) {
-                onDidDeleteNode(tnode);
-            }
+            (_a = options.onDidDeleteNode) === null || _a === void 0 ? void 0 : _a.call(options, tnode);
         };
-        this.model.splice([...location, 0], Number.MAX_VALUE, children, _onDidCreateNode, _onDidDeleteNode);
+        this.model.splice([...location, 0], Number.MAX_VALUE, children, Object.assign(Object.assign({}, options), { onDidCreateNode, onDidDeleteNode }));
     }
     preserveCollapseState(elements = Iterable.empty()) {
         if (this.sorter) {

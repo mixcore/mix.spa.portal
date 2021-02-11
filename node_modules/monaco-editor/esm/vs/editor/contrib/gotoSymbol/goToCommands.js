@@ -135,6 +135,9 @@ class SymbolNavigationAction extends EditorAction {
             if (!range) {
                 range = reference.range;
             }
+            if (!range) {
+                return undefined;
+            }
             const targetEditor = yield editorService.openCodeEditor({
                 resource: reference.uri,
                 options: {
@@ -180,10 +183,10 @@ export class DefinitionAction extends SymbolNavigationAction {
             : nls.localize('generic.noResults', "No definition found");
     }
     _getAlternativeCommand(editor) {
-        return editor.getOption(43 /* gotoLocation */).alternativeDefinitionCommand;
+        return editor.getOption(45 /* gotoLocation */).alternativeDefinitionCommand;
     }
     _getGoToPreference(editor) {
-        return editor.getOption(43 /* gotoLocation */).multipleDefinitions;
+        return editor.getOption(45 /* gotoLocation */).multipleDefinitions;
     }
 }
 const goToDefinitionKb = isWeb && !isStandalone
@@ -285,10 +288,10 @@ class DeclarationAction extends SymbolNavigationAction {
             : nls.localize('decl.generic.noResults', "No declaration found");
     }
     _getAlternativeCommand(editor) {
-        return editor.getOption(43 /* gotoLocation */).alternativeDeclarationCommand;
+        return editor.getOption(45 /* gotoLocation */).alternativeDeclarationCommand;
     }
     _getGoToPreference(editor) {
-        return editor.getOption(43 /* gotoLocation */).multipleDeclarations;
+        return editor.getOption(45 /* gotoLocation */).multipleDeclarations;
     }
 }
 registerEditorAction((_d = class GoToDeclarationAction extends DeclarationAction {
@@ -355,10 +358,10 @@ class TypeDefinitionAction extends SymbolNavigationAction {
             : nls.localize('goToTypeDefinition.generic.noResults', "No type definition found");
     }
     _getAlternativeCommand(editor) {
-        return editor.getOption(43 /* gotoLocation */).alternativeTypeDefinitionCommand;
+        return editor.getOption(45 /* gotoLocation */).alternativeTypeDefinitionCommand;
     }
     _getGoToPreference(editor) {
-        return editor.getOption(43 /* gotoLocation */).multipleTypeDefinitions;
+        return editor.getOption(45 /* gotoLocation */).multipleTypeDefinitions;
     }
 }
 registerEditorAction((_e = class GoToTypeDefinitionAction extends TypeDefinitionAction {
@@ -427,10 +430,10 @@ class ImplementationAction extends SymbolNavigationAction {
             : nls.localize('goToImplementation.generic.noResults', "No implementation found");
     }
     _getAlternativeCommand(editor) {
-        return editor.getOption(43 /* gotoLocation */).alternativeImplementationCommand;
+        return editor.getOption(45 /* gotoLocation */).alternativeImplementationCommand;
     }
     _getGoToPreference(editor) {
-        return editor.getOption(43 /* gotoLocation */).multipleImplementations;
+        return editor.getOption(45 /* gotoLocation */).multipleImplementations;
     }
 }
 registerEditorAction((_g = class GoToImplementationAction extends ImplementationAction {
@@ -499,10 +502,10 @@ class ReferencesAction extends SymbolNavigationAction {
             : nls.localize('references.noGeneric', "No references found");
     }
     _getAlternativeCommand(editor) {
-        return editor.getOption(43 /* gotoLocation */).alternativeReferenceCommand;
+        return editor.getOption(45 /* gotoLocation */).alternativeReferenceCommand;
     }
     _getGoToPreference(editor) {
-        return editor.getOption(43 /* gotoLocation */).multipleReferences;
+        return editor.getOption(45 /* gotoLocation */).multipleReferences;
     }
 }
 registerEditorAction(class GoToReferencesAction extends ReferencesAction {
@@ -586,7 +589,7 @@ class GenericGoToLocationAction extends SymbolNavigationAction {
     }
     _getGoToPreference(editor) {
         var _a;
-        return (_a = this._gotoMultipleBehaviour) !== null && _a !== void 0 ? _a : editor.getOption(43 /* gotoLocation */).multipleReferences;
+        return (_a = this._gotoMultipleBehaviour) !== null && _a !== void 0 ? _a : editor.getOption(45 /* gotoLocation */).multipleReferences;
     }
     _getAlternativeCommand() { return ''; }
 }

@@ -15,4 +15,7 @@ export class MovingAverage {
         this._n += 1;
         return this;
     }
+    get value() {
+        return this._val;
+    }
 }

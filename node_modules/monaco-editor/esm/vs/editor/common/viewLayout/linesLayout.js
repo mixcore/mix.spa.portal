@@ -429,6 +429,21 @@ export class LinesLayout {
         const totalHeight = this.getLinesTotalHeight();
         return verticalOffset > totalHeight;
     }
+    isInTopPadding(verticalOffset) {
+        if (this._paddingTop === 0) {
+            return false;
+        }
+        this._checkPendingChanges();
+        return (verticalOffset < this._paddingTop);
+    }
+    isInBottomPadding(verticalOffset) {
+        if (this._paddingBottom === 0) {
+            return false;
+        }
+        this._checkPendingChanges();
+        const totalHeight = this.getLinesTotalHeight();
+        return (verticalOffset >= totalHeight - this._paddingBottom);
+    }
     /**
      * Find the first line number that is at or after vertical offset `verticalOffset`.
      * i.e. if getVerticalOffsetForLine(line) is x and getVerticalOffsetForLine(line + 1) is y, then

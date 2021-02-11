@@ -10,7 +10,7 @@ import { Selection } from '../../common/core/selection.js';
 import { LanguageConfigurationRegistry } from '../../common/modes/languageConfigurationRegistry.js';
 import { BlockCommentCommand } from './blockCommentCommand.js';
 export class LineCommentCommand {
-    constructor(selection, tabSize, type, insertSpace, ignoreEmptyLines) {
+    constructor(selection, tabSize, type, insertSpace, ignoreEmptyLines, ignoreFirstLine) {
         this._selection = selection;
         this._tabSize = tabSize;
         this._type = type;
@@ -19,6 +19,7 @@ export class LineCommentCommand {
         this._deltaColumn = 0;
         this._moveEndPositionDown = false;
         this._ignoreEmptyLines = ignoreEmptyLines;
+        this._ignoreFirstLine = ignoreFirstLine || false;
     }
     /**
      * Do an initial pass over the lines and gather info about the line comment string.
@@ -48,7 +49,7 @@ export class LineCommentCommand {
      * Analyze lines and decide which lines are relevant and what the toggle should do.
      * Also, build up several offsets and lengths useful in the generation of editor operations.
      */
-    static _analyzeLines(type, insertSpace, model, lines, startLineNumber, ignoreEmptyLines) {
+    static _analyzeLines(type, insertSpace, model, lines, startLineNumber, ignoreEmptyLines, ignoreFirstLine) {
         let onlyWhitespaceLines = true;
         let shouldRemoveComments;
         if (type === 0 /* Toggle */) {
@@ -63,6 +64,11 @@ export class LineCommentCommand {
         for (let i = 0, lineCount = lines.length; i < lineCount; i++) {
             const lineData = lines[i];
             const lineNumber = startLineNumber + i;
+            if (lineNumber === startLineNumber && ignoreFirstLine) {
+                // first line ignored
+                lineData.ignore = true;
+                continue;
+            }
             const lineContent = model.getLineContent(lineNumber);
             const lineContentStartOffset = strings.firstNonWhitespaceIndex(lineContent);
             if (lineContentStartOffset === -1) {
@@ -111,14 +117,14 @@ export class LineCommentCommand {
     /**
      * Analyze all lines and decide exactly what to do => not supported | insert line comments | remove line comments
      */
-    static _gatherPreflightData(type, insertSpace, model, startLineNumber, endLineNumber, ignoreEmptyLines) {
+    static _gatherPreflightData(type, insertSpace, model, startLineNumber, endLineNumber, ignoreEmptyLines, ignoreFirstLine) {
         const lines = LineCommentCommand._gatherPreflightCommentStrings(model, startLineNumber, endLineNumber);
         if (lines === null) {
             return {
                 supported: false
             };
         }
-        return LineCommentCommand._analyzeLines(type, insertSpace, model, lines, startLineNumber, ignoreEmptyLines);
+        return LineCommentCommand._analyzeLines(type, insertSpace, model, lines, startLineNumber, ignoreEmptyLines, ignoreFirstLine);
     }
     /**
      * Given a successful analysis, execute either insert line comments, either remove line comments
@@ -219,11 +225,16 @@ export class LineCommentCommand {
     getEditOperations(model, builder) {
         let s = this._selection;
         this._moveEndPositionDown = false;
+        if (s.startLineNumber === s.endLineNumber && this._ignoreFirstLine) {
+            builder.addEditOperation(new Range(s.startLineNumber, model.getLineMaxColumn(s.startLineNumber), s.startLineNumber + 1, 1), s.startLineNumber === model.getLineCount() ? '' : '\n');
+            this._selectionId = builder.trackSelection(s);
+            return;
+        }
         if (s.startLineNumber < s.endLineNumber && s.endColumn === 1) {
             this._moveEndPositionDown = true;
             s = s.setEndPosition(s.endLineNumber - 1, model.getLineMaxColumn(s.endLineNumber - 1));
         }
-        const data = LineCommentCommand._gatherPreflightData(this._type, this._insertSpace, model, s.startLineNumber, s.endLineNumber, this._ignoreEmptyLines);
+        const data = LineCommentCommand._gatherPreflightData(this._type, this._insertSpace, model, s.startLineNumber, s.endLineNumber, this._ignoreEmptyLines, this._ignoreFirstLine);
         if (data.supported) {
             return this._executeLineComments(model, builder, data, s);
         }

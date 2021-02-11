@@ -27,10 +27,10 @@ export function compress(element) {
         if (children.length !== 1) {
             break;
         }
-        element = children[0];
-        if (element.incompressible) {
+        if (children[0].incompressible) {
             break;
         }
+        element = children[0];
         elements.push(element.element);
     }
     return {
@@ -74,6 +74,11 @@ function splice(treeElement, element, children) {
     }
     return Object.assign(Object.assign({}, treeElement), { children: Iterable.map(Iterable.from(treeElement.children), e => splice(e, element, children)) });
 }
+const wrapIdentityProvider = (base) => ({
+    getId(node) {
+        return node.elements.map(e => base.getId(e).toString()).join('\0');
+    }
+});
 // Exported only for test reasons, do not use directly
 export class CompressedObjectTreeModel {
     constructor(user, list, options = {}) {
@@ -82,14 +87,18 @@ export class CompressedObjectTreeModel {
         this.nodes = new Map();
         this.model = new ObjectTreeModel(user, list, options);
         this.enabled = typeof options.compressionEnabled === 'undefined' ? true : options.compressionEnabled;
+        this.identityProvider = options.identityProvider;
     }
     get onDidSplice() { return this.model.onDidSplice; }
     get onDidChangeCollapseState() { return this.model.onDidChangeCollapseState; }
     get onDidChangeRenderNodeCount() { return this.model.onDidChangeRenderNodeCount; }
-    setChildren(element, children = Iterable.empty()) {
+    setChildren(element, children = Iterable.empty(), options) {
+        // Diffs must be deem, since the compression can affect nested elements.
+        // @see https://github.com/microsoft/vscode/pull/114237#issuecomment-759425034
+        const diffIdentityProvider = options.diffIdentityProvider && wrapIdentityProvider(options.diffIdentityProvider);
         if (element === null) {
             const compressedChildren = Iterable.map(children, this.enabled ? compress : noCompress);
-            this._setChildren(null, compressedChildren);
+            this._setChildren(null, compressedChildren, { diffIdentityProvider, diffDepth: Infinity });
             return;
         }
         const compressedNode = this.nodes.get(element);
@@ -104,7 +113,10 @@ export class CompressedObjectTreeModel {
         const recompressedElement = (this.enabled ? compress : noCompress)(splicedElement);
         const parentChildren = parent.children
             .map(child => child === node ? recompressedElement : child);
-        this._setChildren(parent.element, parentChildren);
+        this._setChildren(parent.element, parentChildren, {
+            diffIdentityProvider,
+            diffDepth: node.depth - parent.depth,
+        });
     }
     setCompressionEnabled(enabled) {
         if (enabled === this.enabled) {
@@ -115,24 +127,29 @@ export class CompressedObjectTreeModel {
         const rootChildren = root.children;
         const decompressedRootChildren = Iterable.map(rootChildren, decompress);
         const recompressedRootChildren = Iterable.map(decompressedRootChildren, enabled ? compress : noCompress);
-        this._setChildren(null, recompressedRootChildren);
+        // it should be safe to always use deep diff mode here if an identity
+        // provider is available, since we know the raw nodes are unchanged.
+        this._setChildren(null, recompressedRootChildren, {
+            diffIdentityProvider: this.identityProvider,
+            diffDepth: Infinity,
+        });
     }
-    _setChildren(node, children) {
+    _setChildren(node, children, options) {
         const insertedElements = new Set();
-        const _onDidCreateNode = (node) => {
+        const onDidCreateNode = (node) => {
             for (const element of node.element.elements) {
                 insertedElements.add(element);
                 this.nodes.set(element, node.element);
             }
         };
-        const _onDidDeleteNode = (node) => {
+        const onDidDeleteNode = (node) => {
             for (const element of node.element.elements) {
                 if (!insertedElements.has(element)) {
                     this.nodes.delete(element);
                 }
             }
         };
-        this.model.setChildren(node, children, _onDidCreateNode, _onDidDeleteNode);
+        this.model.setChildren(node, children, Object.assign(Object.assign({}, options), { onDidCreateNode, onDidDeleteNode }));
     }
     has(element) {
         return this.nodes.has(element);
@@ -234,13 +251,13 @@ function mapList(nodeMapper, list) {
     };
 }
 function mapOptions(compressedNodeUnwrapper, options) {
-    return Object.assign(Object.assign({}, options), { sorter: options.sorter && {
-            compare(node, otherNode) {
-                return options.sorter.compare(node.elements[0], otherNode.elements[0]);
-            }
-        }, identityProvider: options.identityProvider && {
+    return Object.assign(Object.assign({}, options), { identityProvider: options.identityProvider && {
             getId(node) {
                 return options.identityProvider.getId(compressedNodeUnwrapper(node));
+            }
+        }, sorter: options.sorter && {
+            compare(node, otherNode) {
+                return options.sorter.compare(node.elements[0], otherNode.elements[0]);
             }
         }, filter: options.filter && {
             filter(node, parentVisibility) {
@@ -271,8 +288,8 @@ export class CompressibleObjectTreeModel {
     get onDidChangeRenderNodeCount() {
         return Event.map(this.model.onDidChangeRenderNodeCount, node => this.nodeMapper.map(node));
     }
-    setChildren(element, children = Iterable.empty()) {
-        this.model.setChildren(element, children);
+    setChildren(element, children = Iterable.empty(), options = {}) {
+        this.model.setChildren(element, children, options);
     }
     setCompressionEnabled(enabled) {
         this.model.setCompressionEnabled(enabled);

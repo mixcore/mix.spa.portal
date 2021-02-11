@@ -69,7 +69,7 @@ var JSONWorker = /** @class */ (function () {
                 document = this._getTextDocument(uri);
                 if (document) {
                     jsonDocument = this._languageService.parseJSONDocument(document);
-                    return [2 /*return*/, this._languageService.doValidation(document, jsonDocument)];
+                    return [2 /*return*/, this._languageService.doValidation(document, jsonDocument, this._languageSettings)];
                 }
                 return [2 /*return*/, Promise.resolve([])];
             });

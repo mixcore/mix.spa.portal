@@ -34,11 +34,11 @@ export class ColorPickerHeader extends Disposable {
         this._register(model.onDidChangeColor(this.onDidChangeColor, this));
         this._register(model.onDidChangePresentation(this.onDidChangePresentation, this));
         this.pickedColorNode.style.backgroundColor = Color.Format.CSS.format(model.color) || '';
-        dom.toggleClass(this.pickedColorNode, 'light', model.color.rgba.a < 0.5 ? this.backgroundColor.isLighter() : model.color.isLighter());
+        this.pickedColorNode.classList.toggle('light', model.color.rgba.a < 0.5 ? this.backgroundColor.isLighter() : model.color.isLighter());
     }
     onDidChangeColor(color) {
         this.pickedColorNode.style.backgroundColor = Color.Format.CSS.format(color) || '';
-        dom.toggleClass(this.pickedColorNode, 'light', color.rgba.a < 0.5 ? this.backgroundColor.isLighter() : color.isLighter());
+        this.pickedColorNode.classList.toggle('light', color.rgba.a < 0.5 ? this.backgroundColor.isLighter() : color.isLighter());
         this.onDidChangePresentation();
     }
     onDidChangePresentation() {
@@ -194,7 +194,7 @@ class Strip extends Disposable {
     onMouseDown(e) {
         const monitor = this._register(new GlobalMouseMoveMonitor());
         const origin = dom.getDomNodePagePosition(this.domNode);
-        dom.addClass(this.domNode, 'grabbing');
+        this.domNode.classList.add('grabbing');
         if (e.target !== this.slider) {
             this.onDidChangeTop(e.offsetY);
         }
@@ -203,7 +203,7 @@ class Strip extends Disposable {
             this._onColorFlushed.fire();
             mouseUpListener.dispose();
             monitor.stopMonitoring(true);
-            dom.removeClass(this.domNode, 'grabbing');
+            this.domNode.classList.remove('grabbing');
         }, true);
     }
     onDidChangeTop(top) {
@@ -218,7 +218,7 @@ class Strip extends Disposable {
 class OpacityStrip extends Strip {
     constructor(container, model) {
         super(container, model);
-        dom.addClass(this.domNode, 'opacity-strip');
+        this.domNode.classList.add('opacity-strip');
         this._register(model.onDidChangeColor(this.onDidChangeColor, this));
         this.onDidChangeColor(this.model.color);
     }
@@ -235,7 +235,7 @@ class OpacityStrip extends Strip {
 class HueStrip extends Strip {
     constructor(container, model) {
         super(container, model);
-        dom.addClass(this.domNode, 'hue-strip');
+        this.domNode.classList.add('hue-strip');
     }
     getValue(color) {
         return 1 - (color.hsva.h / 360);

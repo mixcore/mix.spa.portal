@@ -2,7 +2,6 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as dom from './dom.js';
 export class FastDomNode {
     constructor(domNode) {
         this.domNode = domNode;
@@ -134,7 +133,7 @@ export class FastDomNode {
         this.domNode.className = this._className;
     }
     toggleClassName(className, shouldHaveIt) {
-        dom.toggleClass(this.domNode, className, shouldHaveIt);
+        this.domNode.classList.toggle(className, shouldHaveIt);
         this._className = this.domNode.className;
     }
     setDisplay(display) {

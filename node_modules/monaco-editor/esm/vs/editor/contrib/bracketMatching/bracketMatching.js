@@ -91,7 +91,7 @@ export class BracketMatchingController extends Disposable {
         this._lastVersionId = 0;
         this._decorations = [];
         this._updateBracketsSoon = this._register(new RunOnceScheduler(() => this._updateBrackets(), 50));
-        this._matchBrackets = this._editor.getOption(55 /* matchBrackets */);
+        this._matchBrackets = this._editor.getOption(58 /* matchBrackets */);
         this._updateBracketsSoon.schedule();
         this._register(editor.onDidChangeCursorPosition((e) => {
             if (this._matchBrackets === 'never') {
@@ -114,8 +114,8 @@ export class BracketMatchingController extends Disposable {
             this._updateBracketsSoon.schedule();
         }));
         this._register(editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(55 /* matchBrackets */)) {
-                this._matchBrackets = this._editor.getOption(55 /* matchBrackets */);
+            if (e.hasChanged(58 /* matchBrackets */)) {
+                this._matchBrackets = this._editor.getOption(58 /* matchBrackets */);
                 this._decorations = this._editor.deltaDecorations(this._decorations, []);
                 this._lastBracketsData = [];
                 this._lastVersionId = 0;

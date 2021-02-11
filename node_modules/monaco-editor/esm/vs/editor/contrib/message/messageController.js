@@ -14,27 +14,29 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 import './messageController.css';
 import * as nls from '../../../nls.js';
 import { TimeoutTimer } from '../../../base/common/async.js';
-import { Disposable, DisposableStore, MutableDisposable } from '../../../base/common/lifecycle.js';
+import { DisposableStore, MutableDisposable } from '../../../base/common/lifecycle.js';
 import { alert } from '../../../base/browser/ui/aria/aria.js';
 import { Range } from '../../common/core/range.js';
 import { registerEditorContribution, EditorCommand, registerEditorCommand } from '../../browser/editorExtensions.js';
 import { IContextKeyService, RawContextKey } from '../../../platform/contextkey/common/contextkey.js';
-import { registerThemingParticipant, HIGH_CONTRAST } from '../../../platform/theme/common/themeService.js';
+import { registerThemingParticipant } from '../../../platform/theme/common/themeService.js';
 import { inputValidationInfoBorder, inputValidationInfoBackground, inputValidationInfoForeground } from '../../../platform/theme/common/colorRegistry.js';
-let MessageController = class MessageController extends Disposable {
+import { ColorScheme } from '../../../platform/theme/common/theme.js';
+let MessageController = class MessageController {
     constructor(editor, contextKeyService) {
-        super();
-        this._messageWidget = this._register(new MutableDisposable());
-        this._messageListeners = this._register(new DisposableStore());
+        this._messageWidget = new MutableDisposable();
+        this._messageListeners = new DisposableStore();
         this._editor = editor;
         this._visible = MessageController.MESSAGE_VISIBLE.bindTo(contextKeyService);
-        this._register(this._editor.onDidAttemptReadOnlyEdit(() => this._onDidAttemptReadOnlyEdit()));
+        this._editorListener = this._editor.onDidAttemptReadOnlyEdit(() => this._onDidAttemptReadOnlyEdit());
     }
     static get(editor) {
         return editor.getContribution(MessageController.ID);
     }
     dispose() {
-        super.dispose();
+        this._editorListener.dispose();
+        this._messageListeners.dispose();
+        this._messageWidget.dispose();
         this._visible.reset();
     }
     showMessage(message, position) {
@@ -106,13 +108,16 @@ class MessageWidget {
         this._position = { lineNumber, column: column - 1 };
         this._domNode = document.createElement('div');
         this._domNode.classList.add('monaco-editor-overlaymessage');
+        const anchorTop = document.createElement('div');
+        anchorTop.classList.add('anchor', 'top');
+        this._domNode.appendChild(anchorTop);
         const message = document.createElement('div');
         message.classList.add('message');
         message.textContent = text;
         this._domNode.appendChild(message);
-        const anchor = document.createElement('div');
-        anchor.classList.add('anchor');
-        this._domNode.appendChild(anchor);
+        const anchorBottom = document.createElement('div');
+        anchorBottom.classList.add('anchor', 'below');
+        this._domNode.appendChild(anchorBottom);
         this._editor.addContentWidget(this);
         this._domNode.classList.add('fadeIn');
     }
@@ -140,13 +145,17 @@ class MessageWidget {
     getPosition() {
         return { position: this._position, preference: [1 /* ABOVE */, 2 /* BELOW */] };
     }
+    afterRender(position) {
+        this._domNode.classList.toggle('below', position === 2 /* BELOW */);
+    }
 }
 registerEditorContribution(MessageController.ID, MessageController);
 registerThemingParticipant((theme, collector) => {
     const border = theme.getColor(inputValidationInfoBorder);
     if (border) {
-        let borderWidth = theme.type === HIGH_CONTRAST ? 2 : 1;
-        collector.addRule(`.monaco-editor .monaco-editor-overlaymessage .anchor { border-top-color: ${border}; }`);
+        let borderWidth = theme.type === ColorScheme.HIGH_CONTRAST ? 2 : 1;
+        collector.addRule(`.monaco-editor .monaco-editor-overlaymessage .anchor.below { border-top-color: ${border}; }`);
+        collector.addRule(`.monaco-editor .monaco-editor-overlaymessage .anchor.top { border-bottom-color: ${border}; }`);
         collector.addRule(`.monaco-editor .monaco-editor-overlaymessage .message { border: ${borderWidth}px solid ${border}; }`);
     }
     const background = theme.getColor(inputValidationInfoBackground);

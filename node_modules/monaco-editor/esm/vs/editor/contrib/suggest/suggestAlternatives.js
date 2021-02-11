@@ -11,7 +11,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { dispose } from '../../../base/common/lifecycle.js';
 import { IContextKeyService, RawContextKey } from '../../../platform/contextkey/common/contextkey.js';
 let SuggestAlternatives = class SuggestAlternatives {
     constructor(_editor, contextKeyService) {
@@ -23,8 +22,9 @@ let SuggestAlternatives = class SuggestAlternatives {
         this.reset();
     }
     reset() {
+        var _a;
         this._ckOtherSuggestions.reset();
-        dispose(this._listener);
+        (_a = this._listener) === null || _a === void 0 ? void 0 : _a.dispose();
         this._model = undefined;
         this._acceptNext = undefined;
         this._ignore = false;

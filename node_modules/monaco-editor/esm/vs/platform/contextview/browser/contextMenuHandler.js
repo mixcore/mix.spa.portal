@@ -6,7 +6,7 @@ import './contextMenuHandler.css';
 import { ActionRunner } from '../../../base/common/actions.js';
 import { combinedDisposable, DisposableStore } from '../../../base/common/lifecycle.js';
 import { Menu } from '../../../base/browser/ui/menu/menu.js';
-import { EventType, $, removeNode, isHTMLElement } from '../../../base/browser/dom.js';
+import { EventType, $, isHTMLElement } from '../../../base/browser/dom.js';
 import { attachMenuStyler } from '../../theme/common/styler.js';
 import { domEvent } from '../../../base/browser/event.js';
 import { StandardMouseEvent } from '../../../base/browser/mouseEvent.js';
@@ -36,6 +36,7 @@ export class ContextMenuHandler {
             getAnchor: () => delegate.getAnchor(),
             canRelayout: false,
             anchorAlignment: delegate.anchorAlignment,
+            anchorAxisAlignment: delegate.anchorAxisAlignment,
             render: (container) => {
                 let className = delegate.getMenuClassName ? delegate.getMenuClassName() : '';
                 if (className) {
@@ -55,7 +56,7 @@ export class ContextMenuHandler {
                 }
                 const menuDisposables = new DisposableStore();
                 const actionRunner = delegate.actionRunner || new ActionRunner();
-                actionRunner.onDidBeforeRun(this.onActionRun, this, menuDisposables);
+                actionRunner.onBeforeRun(this.onActionRun, this, menuDisposables);
                 actionRunner.onDidRun(this.onDidActionRun, this, menuDisposables);
                 menu = new Menu(container, actions, {
                     actionViewItemProvider: delegate.getActionViewItem,
@@ -97,7 +98,7 @@ export class ContextMenuHandler {
                     delegate.onHide(!!didCancel);
                 }
                 if (this.block) {
-                    removeNode(this.block);
+                    this.block.remove();
                     this.block = null;
                 }
                 if (this.focusToReturn) {
@@ -117,7 +118,7 @@ export class ContextMenuHandler {
         }
     }
     onDidActionRun(e) {
-        if (e.error && this.notificationService) {
+        if (e.error) {
             this.notificationService.error(e.error);
         }
     }

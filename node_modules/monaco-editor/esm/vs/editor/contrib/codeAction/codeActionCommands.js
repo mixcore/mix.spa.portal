@@ -20,6 +20,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { CancellationToken } from '../../../base/common/cancellation.js';
 import { Lazy } from '../../../base/common/lazy.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { escapeRegExpCharacters } from '../../../base/common/strings.js';
@@ -120,23 +121,24 @@ QuickFixController = __decorate([
     __param(4, IInstantiationService)
 ], QuickFixController);
 export { QuickFixController };
-export function applyCodeAction(accessor, action, editor) {
+export function applyCodeAction(accessor, item, editor) {
     return __awaiter(this, void 0, void 0, function* () {
         const bulkEditService = accessor.get(IBulkEditService);
         const commandService = accessor.get(ICommandService);
         const telemetryService = accessor.get(ITelemetryService);
         const notificationService = accessor.get(INotificationService);
         telemetryService.publicLog2('codeAction.applyCodeAction', {
-            codeActionTitle: action.title,
-            codeActionKind: action.kind,
-            codeActionIsPreferred: !!action.isPreferred,
+            codeActionTitle: item.action.title,
+            codeActionKind: item.action.kind,
+            codeActionIsPreferred: !!item.action.isPreferred,
         });
-        if (action.edit) {
-            yield bulkEditService.apply(ResourceEdit.convert(action.edit), { editor, label: action.title });
+        yield item.resolve(CancellationToken.None);
+        if (item.action.edit) {
+            yield bulkEditService.apply(ResourceEdit.convert(item.action.edit), { editor, label: item.action.title });
         }
-        if (action.command) {
+        if (item.action.command) {
             try {
-                yield commandService.executeCommand(action.command.id, ...(action.command.arguments || []));
+                yield commandService.executeCommand(item.action.command.id, ...(item.action.command.arguments || []));
             }
             catch (err) {
                 const message = asMessage(err);

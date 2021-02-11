@@ -593,6 +593,9 @@ export class TokensStore2 {
         this._pieces = [];
         this._isComplete = false;
     }
+    isEmpty() {
+        return (this._pieces.length === 0);
+    }
     set(pieces, isComplete) {
         this._pieces = pieces || [];
         this._isComplete = isComplete;

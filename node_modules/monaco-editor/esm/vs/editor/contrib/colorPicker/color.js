@@ -5,10 +5,10 @@
 import { CancellationToken } from '../../../base/common/cancellation.js';
 import { illegalArgument } from '../../../base/common/errors.js';
 import { URI } from '../../../base/common/uri.js';
-import { registerLanguageCommand } from '../../browser/editorExtensions.js';
 import { Range } from '../../common/core/range.js';
 import { ColorProviderRegistry } from '../../common/modes.js';
 import { IModelService } from '../../common/services/modelService.js';
+import { CommandsRegistry } from '../../../platform/commands/common/commands.js';
 export function getColors(model, token) {
     const colors = [];
     const providers = ColorProviderRegistry.ordered(model).reverse();
@@ -24,8 +24,8 @@ export function getColors(model, token) {
 export function getColorPresentations(model, colorInfo, provider, token) {
     return Promise.resolve(provider.provideColorPresentations(model, colorInfo, token));
 }
-registerLanguageCommand('_executeDocumentColorProvider', function (accessor, args) {
-    const { resource } = args;
+CommandsRegistry.registerCommand('_executeDocumentColorProvider', function (accessor, ...args) {
+    const [resource] = args;
     if (!(resource instanceof URI)) {
         throw illegalArgument();
     }
@@ -44,13 +44,14 @@ registerLanguageCommand('_executeDocumentColorProvider', function (accessor, arg
     }));
     return Promise.all(promises).then(() => rawCIs);
 });
-registerLanguageCommand('_executeColorPresentationProvider', function (accessor, args) {
-    const { resource, color, range } = args;
-    if (!(resource instanceof URI) || !Array.isArray(color) || color.length !== 4 || !Range.isIRange(range)) {
+CommandsRegistry.registerCommand('_executeColorPresentationProvider', function (accessor, ...args) {
+    const [color, context] = args;
+    const { uri, range } = context;
+    if (!(uri instanceof URI) || !Array.isArray(color) || color.length !== 4 || !Range.isIRange(range)) {
         throw illegalArgument();
     }
     const [red, green, blue, alpha] = color;
-    const model = accessor.get(IModelService).getModel(resource);
+    const model = accessor.get(IModelService).getModel(uri);
     if (!model) {
         throw illegalArgument();
     }

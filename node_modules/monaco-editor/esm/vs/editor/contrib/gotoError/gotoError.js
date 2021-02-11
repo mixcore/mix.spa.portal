@@ -30,9 +30,10 @@ import { EditorContextKeys } from '../../common/editorContextKeys.js';
 import { MarkerNavigationWidget } from './gotoErrorWidget.js';
 import { ICodeEditorService } from '../../browser/services/codeEditorService.js';
 import { MenuId } from '../../../platform/actions/common/actions.js';
-import { Codicon, registerIcon } from '../../../base/common/codicons.js';
+import { Codicon } from '../../../base/common/codicons.js';
 import { IInstantiationService } from '../../../platform/instantiation/common/instantiation.js';
 import { IMarkerNavigationService } from './markerNavigationService.js';
+import { registerIcon } from '../../../platform/theme/common/iconRegistry.js';
 let MarkerController = class MarkerController {
     constructor(editor, _markerNavigationService, _contextKeyService, _editorService, _instantiationService) {
         this._markerNavigationService = _markerNavigationService;
@@ -186,7 +187,7 @@ export class NextMarkerAction extends MarkerNavigationAction {
             menuOpts: {
                 menuId: MarkerNavigationWidget.TitleMenu,
                 title: NextMarkerAction.LABEL,
-                icon: registerIcon('marker-navigation-next', Codicon.chevronDown),
+                icon: registerIcon('marker-navigation-next', Codicon.chevronDown, nls.localize('nextMarkerIcon', 'Icon for goto next marker.')),
                 group: 'navigation',
                 order: 1
             }
@@ -210,7 +211,7 @@ class PrevMarkerAction extends MarkerNavigationAction {
             menuOpts: {
                 menuId: MarkerNavigationWidget.TitleMenu,
                 title: NextMarkerAction.LABEL,
-                icon: registerIcon('marker-navigation-previous', Codicon.chevronUp),
+                icon: registerIcon('marker-navigation-previous', Codicon.chevronUp, nls.localize('previousMarkerIcon', 'Icon for goto previous marker.')),
                 group: 'navigation',
                 order: 2
             }

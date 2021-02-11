@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import './codelensWidget.css';
-import { renderCodicons } from '../../../base/common/codicons.js';
-import { escape } from '../../../base/common/strings.js';
+import * as dom from '../../../base/browser/dom.js';
 import { Range } from '../../common/core/range.js';
 import { ModelDecorationOptions } from '../../common/model/textModel.js';
 import { editorCodeLensForeground } from '../../common/view/editorColorRegistry.js';
 import { editorActiveLinkForeground } from '../../../platform/theme/common/colorRegistry.js';
 import { registerThemingParticipant } from '../../../platform/theme/common/themeService.js';
+import { renderLabelWithIcons } from '../../../base/browser/ui/iconLabel/iconLabels.js';
 class CodeLensViewZone {
-    constructor(afterLineNumber, onHeight) {
+    constructor(afterLineNumber, heightInPx, onHeight) {
         this.afterLineNumber = afterLineNumber;
+        this.heightInPx = heightInPx;
         this._onHeight = onHeight;
-        this.heightInLines = 1;
         this.suppressMouseDown = true;
         this.domNode = document.createElement('div');
     }
@@ -43,7 +43,7 @@ class CodeLensContentWidget {
     }
     withCommands(lenses, animate) {
         this._commands.clear();
-        let innerHtml = '';
+        let children = [];
         let hasSymbol = false;
         for (let i = 0; i < lenses.length; i++) {
             const lens = lenses[i];
@@ -52,29 +52,26 @@ class CodeLensContentWidget {
             }
             hasSymbol = true;
             if (lens.command) {
-                const title = renderCodicons(escape(lens.command.title));
+                const title = renderLabelWithIcons(lens.command.title.trim());
                 if (lens.command.id) {
-                    innerHtml += `<a id=${i}>${title}</a>`;
+                    children.push(dom.$('a', { id: String(i) }, ...title));
                     this._commands.set(String(i), lens.command);
                 }
                 else {
-                    innerHtml += `<span>${title}</span>`;
+                    children.push(dom.$('span', undefined, ...title));
                 }
                 if (i + 1 < lenses.length) {
-                    innerHtml += '<span>&#160;|&#160;</span>';
+                    children.push(dom.$('span', undefined, '\u00a0|\u00a0'));
                 }
             }
         }
         if (!hasSymbol) {
             // symbols but no commands
-            this._domNode.innerHTML = '<span>no commands</span>';
+            dom.reset(this._domNode, dom.$('span', undefined, 'no commands'));
         }
         else {
             // symbols and commands
-            if (!innerHtml) {
-                innerHtml = '\u00a0';
-            }
-            this._domNode.innerHTML = innerHtml;
+            dom.reset(this._domNode, ...children);
             if (this._isEmpty && animate) {
                 this._domNode.classList.add('fadein');
             }
@@ -125,7 +122,7 @@ export class CodeLensHelper {
     }
 }
 export class CodeLensWidget {
-    constructor(data, editor, className, helper, viewZoneChangeAccessor, updateCallback) {
+    constructor(data, editor, className, helper, viewZoneChangeAccessor, heightInPx, updateCallback) {
         this._isDisposed = false;
         this._editor = editor;
         this._className = className;
@@ -151,7 +148,7 @@ export class CodeLensWidget {
                 range = Range.plusRange(range, codeLensData.symbol.range);
             }
         });
-        this._viewZone = new CodeLensViewZone(range.startLineNumber - 1, updateCallback);
+        this._viewZone = new CodeLensViewZone(range.startLineNumber - 1, heightInPx, updateCallback);
         this._viewZoneId = viewZoneChangeAccessor.addZone(this._viewZone);
         if (lenses.length > 0) {
             this._createContentWidgetIfNecessary();
@@ -162,6 +159,9 @@ export class CodeLensWidget {
         if (!this._contentWidget) {
             this._contentWidget = new CodeLensContentWidget(this._editor, this._className, this._viewZone.afterLineNumber + 1);
             this._editor.addContentWidget(this._contentWidget);
+        }
+        else {
+            this._editor.layoutContentWidget(this._contentWidget);
         }
     }
     dispose(helper, viewZoneChangeAccessor) {
@@ -196,6 +196,13 @@ export class CodeLensWidget {
                 options: ModelDecorationOptions.EMPTY
             }, id => this._decorationIds[i] = id);
         });
+    }
+    updateHeight(height, viewZoneChangeAccessor) {
+        this._viewZone.heightInPx = height;
+        viewZoneChangeAccessor.layoutZone(this._viewZoneId);
+        if (this._contentWidget) {
+            this._editor.layoutContentWidget(this._contentWidget);
+        }
     }
     computeIfNecessary(model) {
         if (!this._viewZone.domNode.hasAttribute('monaco-visible-view-zone')) {

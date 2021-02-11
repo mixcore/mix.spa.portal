@@ -2,6 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+var _a;
 import { createFastDomNode } from '../../../base/browser/fastDomNode.js';
 import { createStringBuilder } from '../../common/core/stringBuilder.js';
 export class RenderedLinesCollection {
@@ -189,7 +190,7 @@ export class VisibleLinesCollection {
     }
     // ---- begin view event handlers
     onConfigurationChanged(e) {
-        if (e.hasChanged(117 /* layoutInfo */)) {
+        if (e.hasChanged(124 /* layoutInfo */)) {
             return true;
         }
         return false;
@@ -369,9 +370,12 @@ class ViewLayerRenderer {
         ctx.lines.splice(removeIndex, removeCount);
     }
     _finishRenderingNewLines(ctx, domNodeIsEmpty, newLinesHTML, wasNew) {
+        if (ViewLayerRenderer._ttPolicy) {
+            newLinesHTML = ViewLayerRenderer._ttPolicy.createHTML(newLinesHTML);
+        }
         const lastChild = this.domNode.lastChild;
         if (domNodeIsEmpty || !lastChild) {
-            this.domNode.innerHTML = newLinesHTML;
+            this.domNode.innerHTML = newLinesHTML; // explains the ugly casts -> https://github.com/microsoft/vscode/issues/106396#issuecomment-692625393;
         }
         else {
             lastChild.insertAdjacentHTML('afterend', newLinesHTML);
@@ -387,6 +391,9 @@ class ViewLayerRenderer {
     }
     _finishRenderingInvalidLines(ctx, invalidLinesHTML, wasInvalid) {
         const hugeDomNode = document.createElement('div');
+        if (ViewLayerRenderer._ttPolicy) {
+            invalidLinesHTML = ViewLayerRenderer._ttPolicy.createHTML(invalidLinesHTML);
+        }
         hugeDomNode.innerHTML = invalidLinesHTML;
         for (let i = 0; i < ctx.linesLength; i++) {
             const line = ctx.lines[i];
@@ -452,4 +459,5 @@ class ViewLayerRenderer {
         }
     }
 }
+ViewLayerRenderer._ttPolicy = (_a = window.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy('editorViewLayer', { createHTML: value => value });
 ViewLayerRenderer._sb = createStringBuilder(100000);

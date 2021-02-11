@@ -32,7 +32,7 @@ export class InlineDiffMargin extends Disposable {
         this._diffActions = document.createElement('div');
         this._diffActions.className = Codicon.lightBulb.classNames + ' lightbulb-glyph';
         this._diffActions.style.position = 'absolute';
-        const lineHeight = editor.getOption(51 /* lineHeight */);
+        const lineHeight = editor.getOption(53 /* lineHeight */);
         const lineFeed = editor.getModel().getEOL();
         this._diffActions.style.right = '0px';
         this._diffActions.style.visibility = 'hidden';
@@ -44,26 +44,31 @@ export class InlineDiffMargin extends Disposable {
         actions.push(new Action('diff.clipboard.copyDeletedContent', diff.originalEndLineNumber > diff.modifiedStartLineNumber
             ? nls.localize('diff.clipboard.copyDeletedLinesContent.label', "Copy deleted lines")
             : nls.localize('diff.clipboard.copyDeletedLinesContent.single.label', "Copy deleted line"), undefined, true, () => __awaiter(this, void 0, void 0, function* () {
-            yield this._clipboardService.writeText(diff.originalContent.join(lineFeed) + lineFeed);
+            const range = new Range(diff.originalStartLineNumber, 1, diff.originalEndLineNumber + 1, 1);
+            const deletedText = diff.originalModel.getValueInRange(range);
+            yield this._clipboardService.writeText(deletedText);
         })));
         let currentLineNumberOffset = 0;
         let copyLineAction = undefined;
         if (diff.originalEndLineNumber > diff.modifiedStartLineNumber) {
             copyLineAction = new Action('diff.clipboard.copyDeletedLineContent', nls.localize('diff.clipboard.copyDeletedLineContent.label', "Copy deleted line ({0})", diff.originalStartLineNumber), undefined, true, () => __awaiter(this, void 0, void 0, function* () {
-                yield this._clipboardService.writeText(diff.originalContent[currentLineNumberOffset]);
+                const lineContent = diff.originalModel.getLineContent(diff.originalStartLineNumber + currentLineNumberOffset);
+                yield this._clipboardService.writeText(lineContent);
             }));
             actions.push(copyLineAction);
         }
-        const readOnly = editor.getOption(72 /* readOnly */);
+        const readOnly = editor.getOption(75 /* readOnly */);
         if (!readOnly) {
             actions.push(new Action('diff.inline.revertChange', nls.localize('diff.inline.revertChange.label', "Revert this change"), undefined, true, () => __awaiter(this, void 0, void 0, function* () {
+                const range = new Range(diff.originalStartLineNumber, 1, diff.originalEndLineNumber, diff.originalModel.getLineMaxColumn(diff.originalEndLineNumber));
+                const deletedText = diff.originalModel.getValueInRange(range);
                 if (diff.modifiedEndLineNumber === 0) {
                     // deletion only
                     const column = editor.getModel().getLineMaxColumn(diff.modifiedStartLineNumber);
                     editor.executeEdits('diffEditor', [
                         {
                             range: new Range(diff.modifiedStartLineNumber, column, diff.modifiedStartLineNumber, column),
-                            text: lineFeed + diff.originalContent.join(lineFeed)
+                            text: lineFeed + deletedText
                         }
                     ]);
                 }
@@ -72,7 +77,7 @@ export class InlineDiffMargin extends Disposable {
                     editor.executeEdits('diffEditor', [
                         {
                             range: new Range(diff.modifiedStartLineNumber, 1, diff.modifiedEndLineNumber, column),
-                            text: diff.originalContent.join(lineFeed)
+                            text: deletedText
                         }
                     ]);
                 }
@@ -150,6 +155,15 @@ export class InlineDiffMargin extends Disposable {
         const lineNumberOffset = Math.floor(offset / lineHeight);
         const newTop = lineNumberOffset * lineHeight;
         this._diffActions.style.top = `${newTop}px`;
+        if (this.diff.viewLineCounts) {
+            let acc = 0;
+            for (let i = 0; i < this.diff.viewLineCounts.length; i++) {
+                acc += this.diff.viewLineCounts[i];
+                if (lineNumberOffset < acc) {
+                    return i;
+                }
+            }
+        }
         return lineNumberOffset;
     }
 }

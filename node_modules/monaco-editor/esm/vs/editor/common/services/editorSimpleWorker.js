@@ -24,6 +24,7 @@ import { computeLinks } from '../modes/linkComputer.js';
 import { BasicInplaceReplace } from '../modes/supports/inplaceReplaceSupport.js';
 import { createMonacoBaseAPI } from '../standalone/standaloneBase.js';
 import * as types from '../../../base/common/types.js';
+import { StopWatch } from '../../../base/common/stopwatch.js';
 /**
  * @internal
  */
@@ -341,33 +342,27 @@ export class EditorSimpleWorker {
             return computeLinks(model);
         });
     }
-    textualSuggest(modelUrl, position, wordDef, wordDefFlags) {
+    textualSuggest(modelUrls, leadingWord, wordDef, wordDefFlags) {
         return __awaiter(this, void 0, void 0, function* () {
-            const model = this._getModel(modelUrl);
-            if (!model) {
-                return null;
-            }
-            const words = [];
-            const seen = new Set();
+            const sw = new StopWatch(true);
             const wordDefRegExp = new RegExp(wordDef, wordDefFlags);
-            const wordAt = model.getWordAtPosition(position, wordDefRegExp);
-            if (wordAt) {
-                seen.add(model.getValueInRange(wordAt));
-            }
-            for (let word of model.words(wordDefRegExp)) {
-                if (seen.has(word)) {
+            const seen = new Set();
+            outer: for (let url of modelUrls) {
+                const model = this._getModel(url);
+                if (!model) {
                     continue;
                 }
-                seen.add(word);
-                if (!isNaN(Number(word))) {
-                    continue;
-                }
-                words.push(word);
-                if (seen.size > EditorSimpleWorker._suggestionsLimit) {
-                    break;
+                for (let word of model.words(wordDefRegExp)) {
+                    if (word === leadingWord || !isNaN(Number(word))) {
+                        continue;
+                    }
+                    seen.add(word);
+                    if (seen.size > EditorSimpleWorker._suggestionsLimit) {
+                        break outer;
+                    }
                 }
             }
-            return words;
+            return { words: Array.from(seen), duration: sw.elapsed() };
         });
     }
     // ---- END suggest --------------------------------------------------------------------------

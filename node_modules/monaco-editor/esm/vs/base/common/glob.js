@@ -2,7 +2,6 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as arrays from './arrays.js';
 import * as strings from './strings.js';
 import * as extpath from './extpath.js';
 import * as paths from './path.js';
@@ -281,7 +280,7 @@ function trivia3(pattern, options) {
         }
         return null;
     };
-    const withBasenames = arrays.first(parsedPatterns, pattern => !!pattern.allBasenames);
+    const withBasenames = parsedPatterns.find(pattern => !!pattern.allBasenames);
     if (withBasenames) {
         parsedPattern.allBasenames = withBasenames.allBasenames;
     }
@@ -292,15 +291,23 @@ function trivia3(pattern, options) {
     return parsedPattern;
 }
 // common patterns: **/something/else just need endsWith check, something/else just needs and equals check
-function trivia4and5(path, pattern, matchPathEnds) {
-    const nativePath = paths.sep !== paths.posix.sep ? path.replace(ALL_FORWARD_SLASHES, paths.sep) : path;
+function trivia4and5(targetPath, pattern, matchPathEnds) {
+    const usingPosixSep = paths.sep === paths.posix.sep;
+    const nativePath = usingPosixSep ? targetPath : targetPath.replace(ALL_FORWARD_SLASHES, paths.sep);
     const nativePathEnd = paths.sep + nativePath;
-    const parsedPattern = matchPathEnds ? function (path, basename) {
-        return typeof path === 'string' && (path === nativePath || path.endsWith(nativePathEnd)) ? pattern : null;
-    } : function (path, basename) {
-        return typeof path === 'string' && path === nativePath ? pattern : null;
+    const targetPathEnd = paths.posix.sep + targetPath;
+    const parsedPattern = matchPathEnds ? function (testPath, basename) {
+        return typeof testPath === 'string' &&
+            ((testPath === nativePath || testPath.endsWith(nativePathEnd))
+                || !usingPosixSep && (testPath === targetPath || testPath.endsWith(targetPathEnd)))
+            ? pattern : null;
+    } : function (testPath, basename) {
+        return typeof testPath === 'string' &&
+            (testPath === nativePath
+                || (!usingPosixSep && testPath === targetPath))
+            ? pattern : null;
     };
-    parsedPattern.allPaths = [(matchPathEnds ? '*/' : './') + path];
+    parsedPattern.allPaths = [(matchPathEnds ? '*/' : './') + targetPath];
     return parsedPattern;
 }
 function toRegExp(pattern) {
@@ -371,7 +378,7 @@ function parsedExpression(expression, options) {
             }
             return null;
         };
-        const withBasenames = arrays.first(parsedPatterns, pattern => !!pattern.allBasenames);
+        const withBasenames = parsedPatterns.find(pattern => !!pattern.allBasenames);
         if (withBasenames) {
             resultExpression.allBasenames = withBasenames.allBasenames;
         }
@@ -401,7 +408,7 @@ function parsedExpression(expression, options) {
         }
         return null;
     };
-    const withBasenames = arrays.first(parsedPatterns, pattern => !!pattern.allBasenames);
+    const withBasenames = parsedPatterns.find(pattern => !!pattern.allBasenames);
     if (withBasenames) {
         resultExpression.allBasenames = withBasenames.allBasenames;
     }

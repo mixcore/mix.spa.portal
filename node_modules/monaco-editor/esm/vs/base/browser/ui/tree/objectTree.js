@@ -18,8 +18,8 @@ export class ObjectTree extends AbstractTree {
         super(user, container, delegate, renderers, options);
     }
     get onDidChangeCollapseState() { return this.model.onDidChangeCollapseState; }
-    setChildren(element, children = Iterable.empty()) {
-        this.model.setChildren(element, children);
+    setChildren(element, children = Iterable.empty(), options) {
+        this.model.setChildren(element, children, options);
     }
     rerender(element) {
         if (element === undefined) {
@@ -79,8 +79,9 @@ class CompressibleRenderer {
     }
     renderTwistie(element, twistieElement) {
         if (this.renderer.renderTwistie) {
-            this.renderer.renderTwistie(element, twistieElement);
+            return this.renderer.renderTwistie(element, twistieElement);
         }
+        return false;
     }
 }
 __decorate([
@@ -111,8 +112,8 @@ export class CompressibleObjectTree extends ObjectTree {
         const compressibleRenderers = renderers.map(r => new CompressibleRenderer(compressedTreeNodeProvider, r));
         super(user, container, delegate, compressibleRenderers, asObjectTreeOptions(compressedTreeNodeProvider, options));
     }
-    setChildren(element, children = Iterable.empty()) {
-        this.model.setChildren(element, children);
+    setChildren(element, children = Iterable.empty(), options) {
+        this.model.setChildren(element, children, options);
     }
     createModel(user, view, options) {
         return new CompressibleObjectTreeModel(user, view, options);

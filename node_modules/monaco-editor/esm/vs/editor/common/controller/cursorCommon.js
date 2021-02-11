@@ -12,53 +12,36 @@ import { LanguageConfigurationRegistry } from '../modes/languageConfigurationReg
 const autoCloseAlways = () => true;
 const autoCloseNever = () => false;
 const autoCloseBeforeWhitespace = (chr) => (chr === ' ' || chr === '\t');
-function appendEntry(target, key, value) {
-    if (target.has(key)) {
-        target.get(key).push(value);
-    }
-    else {
-        target.set(key, [value]);
-    }
-}
 export class CursorConfiguration {
     constructor(languageIdentifier, modelOptions, configuration) {
         this._languageIdentifier = languageIdentifier;
         const options = configuration.options;
-        const layoutInfo = options.get(117 /* layoutInfo */);
-        this.readOnly = options.get(72 /* readOnly */);
+        const layoutInfo = options.get(124 /* layoutInfo */);
+        this.readOnly = options.get(75 /* readOnly */);
         this.tabSize = modelOptions.tabSize;
         this.indentSize = modelOptions.indentSize;
         this.insertSpaces = modelOptions.insertSpaces;
-        this.lineHeight = options.get(51 /* lineHeight */);
+        this.stickyTabStops = options.get(99 /* stickyTabStops */);
+        this.lineHeight = options.get(53 /* lineHeight */);
         this.pageSize = Math.max(1, Math.floor(layoutInfo.height / this.lineHeight) - 2);
-        this.useTabStops = options.get(104 /* useTabStops */);
-        this.wordSeparators = options.get(105 /* wordSeparators */);
-        this.emptySelectionClipboard = options.get(26 /* emptySelectionClipboard */);
-        this.copyWithSyntaxHighlighting = options.get(16 /* copyWithSyntaxHighlighting */);
-        this.multiCursorMergeOverlapping = options.get(60 /* multiCursorMergeOverlapping */);
-        this.multiCursorPaste = options.get(62 /* multiCursorPaste */);
+        this.useTabStops = options.get(109 /* useTabStops */);
+        this.wordSeparators = options.get(110 /* wordSeparators */);
+        this.emptySelectionClipboard = options.get(28 /* emptySelectionClipboard */);
+        this.copyWithSyntaxHighlighting = options.get(18 /* copyWithSyntaxHighlighting */);
+        this.multiCursorMergeOverlapping = options.get(63 /* multiCursorMergeOverlapping */);
+        this.multiCursorPaste = options.get(65 /* multiCursorPaste */);
         this.autoClosingBrackets = options.get(5 /* autoClosingBrackets */);
         this.autoClosingQuotes = options.get(7 /* autoClosingQuotes */);
         this.autoClosingOvertype = options.get(6 /* autoClosingOvertype */);
         this.autoSurround = options.get(10 /* autoSurround */);
         this.autoIndent = options.get(8 /* autoIndent */);
-        this.autoClosingPairsOpen2 = new Map();
-        this.autoClosingPairsClose2 = new Map();
         this.surroundingPairs = {};
         this._electricChars = null;
         this.shouldAutoCloseBefore = {
             quote: CursorConfiguration._getShouldAutoClose(languageIdentifier, this.autoClosingQuotes),
             bracket: CursorConfiguration._getShouldAutoClose(languageIdentifier, this.autoClosingBrackets)
         };
-        let autoClosingPairs = CursorConfiguration._getAutoClosingPairs(languageIdentifier);
-        if (autoClosingPairs) {
-            for (const pair of autoClosingPairs) {
-                appendEntry(this.autoClosingPairsOpen2, pair.open.charAt(pair.open.length - 1), pair);
-                if (pair.close.length === 1) {
-                    appendEntry(this.autoClosingPairsClose2, pair.close, pair);
-                }
-            }
-        }
+        this.autoClosingPairs = LanguageConfigurationRegistry.getAutoClosingPairs(languageIdentifier.id);
         let surroundingPairs = CursorConfiguration._getSurroundingPairs(languageIdentifier);
         if (surroundingPairs) {
             for (const pair of surroundingPairs) {
@@ -67,18 +50,18 @@ export class CursorConfiguration {
         }
     }
     static shouldRecreate(e) {
-        return (e.hasChanged(117 /* layoutInfo */)
-            || e.hasChanged(105 /* wordSeparators */)
-            || e.hasChanged(26 /* emptySelectionClipboard */)
-            || e.hasChanged(60 /* multiCursorMergeOverlapping */)
-            || e.hasChanged(62 /* multiCursorPaste */)
+        return (e.hasChanged(124 /* layoutInfo */)
+            || e.hasChanged(110 /* wordSeparators */)
+            || e.hasChanged(28 /* emptySelectionClipboard */)
+            || e.hasChanged(63 /* multiCursorMergeOverlapping */)
+            || e.hasChanged(65 /* multiCursorPaste */)
             || e.hasChanged(5 /* autoClosingBrackets */)
             || e.hasChanged(7 /* autoClosingQuotes */)
             || e.hasChanged(6 /* autoClosingOvertype */)
             || e.hasChanged(10 /* autoSurround */)
-            || e.hasChanged(104 /* useTabStops */)
-            || e.hasChanged(51 /* lineHeight */)
-            || e.hasChanged(72 /* readOnly */));
+            || e.hasChanged(109 /* useTabStops */)
+            || e.hasChanged(53 /* lineHeight */)
+            || e.hasChanged(75 /* readOnly */));
     }
     get electricChars() {
         if (!this._electricChars) {
@@ -98,15 +81,6 @@ export class CursorConfiguration {
     static _getElectricCharacters(languageIdentifier) {
         try {
             return LanguageConfigurationRegistry.getElectricCharacters(languageIdentifier.id);
-        }
-        catch (e) {
-            onUnexpectedError(e);
-            return null;
-        }
-    }
-    static _getAutoClosingPairs(languageIdentifier) {
-        try {
-            return LanguageConfigurationRegistry.getAutoClosingPairs(languageIdentifier.id);
         }
         catch (e) {
             onUnexpectedError(e);
@@ -371,13 +345,13 @@ export class CursorColumns {
         return visibleColumn + indentSize - visibleColumn % indentSize;
     }
     /**
-     * ATTENTION: This works with 0-based columns (as oposed to the regular 1-based columns)
+     * ATTENTION: This works with 0-based columns (as opposed to the regular 1-based columns)
      */
     static prevRenderTabStop(column, tabSize) {
         return column - 1 - (column - 1) % tabSize;
     }
     /**
-     * ATTENTION: This works with 0-based columns (as oposed to the regular 1-based columns)
+     * ATTENTION: This works with 0-based columns (as opposed to the regular 1-based columns)
      */
     static prevIndentTabStop(column, indentSize) {
         return column - 1 - (column - 1) % indentSize;

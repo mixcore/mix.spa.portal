@@ -23,8 +23,8 @@ export class DeleteWordPartLeft extends DeleteWordCommand {
             }
         });
     }
-    _delete(wordSeparators, model, selection, whitespaceHeuristics, wordNavigationType) {
-        let r = WordPartOperations.deleteWordPartLeft(wordSeparators, model, selection, whitespaceHeuristics);
+    _delete(ctx, wordNavigationType) {
+        let r = WordPartOperations.deleteWordPartLeft(ctx);
         if (r) {
             return r;
         }
@@ -46,13 +46,13 @@ export class DeleteWordPartRight extends DeleteWordCommand {
             }
         });
     }
-    _delete(wordSeparators, model, selection, whitespaceHeuristics, wordNavigationType) {
-        let r = WordPartOperations.deleteWordPartRight(wordSeparators, model, selection, whitespaceHeuristics);
+    _delete(ctx, wordNavigationType) {
+        let r = WordPartOperations.deleteWordPartRight(ctx);
         if (r) {
             return r;
         }
-        const lineCount = model.getLineCount();
-        const maxColumn = model.getLineMaxColumn(lineCount);
+        const lineCount = ctx.model.getLineCount();
+        const maxColumn = ctx.model.getLineMaxColumn(lineCount);
         return new Range(lineCount, maxColumn, lineCount, maxColumn);
     }
 }

@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as nls from '../../../nls.js';
-import * as arrays from '../../../base/common/arrays.js';
 import { IntervalTimer } from '../../../base/common/async.js';
 import { Emitter, Event } from '../../../base/common/event.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
@@ -34,9 +33,6 @@ export class AbstractKeybindingService extends Disposable {
     }
     getKeybindings() {
         return this._getResolver().getKeybindings();
-    }
-    lookupKeybindings(commandId) {
-        return arrays.coalesce(this._getResolver().lookupKeybindings(commandId).map(item => item.resolvedKeybinding));
     }
     lookupKeybinding(commandId) {
         const result = this._getResolver().lookupPrimaryKeybinding(commandId);

@@ -30,7 +30,7 @@ import { SyntaxRangeProvider, ID_SYNTAX_PROVIDER } from './syntaxRangeProvider.j
 import { InitializingRangeProvider, ID_INIT_PROVIDER } from './intializingRangeProvider.js';
 import { onUnexpectedError } from '../../../base/common/errors.js';
 import { RawContextKey, IContextKeyService } from '../../../platform/contextkey/common/contextkey.js';
-import { registerThemingParticipant } from '../../../platform/theme/common/themeService.js';
+import { registerThemingParticipant, ThemeIcon } from '../../../platform/theme/common/themeService.js';
 import { registerColor, editorSelectionBackground, transparent, iconForeground } from '../../../platform/theme/common/colorRegistry.js';
 const CONTEXT_FOLDING_ENABLED = new RawContextKey('foldingEnabled', false);
 let FoldingController = class FoldingController extends Disposable {
@@ -40,9 +40,10 @@ let FoldingController = class FoldingController extends Disposable {
         this.localToDispose = this._register(new DisposableStore());
         this.editor = editor;
         const options = this.editor.getOptions();
-        this._isEnabled = options.get(31 /* folding */);
-        this._useFoldingProviders = options.get(32 /* foldingStrategy */) !== 'indentation';
-        this._unfoldOnClickAfterEndOfLine = options.get(34 /* unfoldOnClickAfterEndOfLine */);
+        this._isEnabled = options.get(33 /* folding */);
+        this._useFoldingProviders = options.get(34 /* foldingStrategy */) !== 'indentation';
+        this._unfoldOnClickAfterEndOfLine = options.get(36 /* unfoldOnClickAfterEndOfLine */);
+        this._restoringViewState = false;
         this.foldingModel = null;
         this.hiddenRangeModel = null;
         this.rangeProvider = null;
@@ -53,29 +54,29 @@ let FoldingController = class FoldingController extends Disposable {
         this.cursorChangedScheduler = null;
         this.mouseDownInfo = null;
         this.foldingDecorationProvider = new FoldingDecorationProvider(editor);
-        this.foldingDecorationProvider.autoHideFoldingControls = options.get(91 /* showFoldingControls */) === 'mouseover';
-        this.foldingDecorationProvider.showFoldingHighlights = options.get(33 /* foldingHighlight */);
+        this.foldingDecorationProvider.autoHideFoldingControls = options.get(94 /* showFoldingControls */) === 'mouseover';
+        this.foldingDecorationProvider.showFoldingHighlights = options.get(35 /* foldingHighlight */);
         this.foldingEnabled = CONTEXT_FOLDING_ENABLED.bindTo(this.contextKeyService);
         this.foldingEnabled.set(this._isEnabled);
         this._register(this.editor.onDidChangeModel(() => this.onModelChanged()));
         this._register(this.editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(31 /* folding */)) {
-                this._isEnabled = this.editor.getOptions().get(31 /* folding */);
+            if (e.hasChanged(33 /* folding */)) {
+                this._isEnabled = this.editor.getOptions().get(33 /* folding */);
                 this.foldingEnabled.set(this._isEnabled);
                 this.onModelChanged();
             }
-            if (e.hasChanged(91 /* showFoldingControls */) || e.hasChanged(33 /* foldingHighlight */)) {
+            if (e.hasChanged(94 /* showFoldingControls */) || e.hasChanged(35 /* foldingHighlight */)) {
                 const options = this.editor.getOptions();
-                this.foldingDecorationProvider.autoHideFoldingControls = options.get(91 /* showFoldingControls */) === 'mouseover';
-                this.foldingDecorationProvider.showFoldingHighlights = options.get(33 /* foldingHighlight */);
+                this.foldingDecorationProvider.autoHideFoldingControls = options.get(94 /* showFoldingControls */) === 'mouseover';
+                this.foldingDecorationProvider.showFoldingHighlights = options.get(35 /* foldingHighlight */);
                 this.onModelContentChanged();
             }
-            if (e.hasChanged(32 /* foldingStrategy */)) {
-                this._useFoldingProviders = this.editor.getOptions().get(32 /* foldingStrategy */) !== 'indentation';
+            if (e.hasChanged(34 /* foldingStrategy */)) {
+                this._useFoldingProviders = this.editor.getOptions().get(34 /* foldingStrategy */) !== 'indentation';
                 this.onFoldingStrategyChanged();
             }
-            if (e.hasChanged(34 /* unfoldOnClickAfterEndOfLine */)) {
-                this._unfoldOnClickAfterEndOfLine = this.editor.getOptions().get(34 /* unfoldOnClickAfterEndOfLine */);
+            if (e.hasChanged(36 /* unfoldOnClickAfterEndOfLine */)) {
+                this._unfoldOnClickAfterEndOfLine = this.editor.getOptions().get(36 /* unfoldOnClickAfterEndOfLine */);
             }
         }));
         this.onModelChanged();
@@ -119,7 +120,13 @@ let FoldingController = class FoldingController extends Disposable {
             if (foldingModel) {
                 foldingModel.then(foldingModel => {
                     if (foldingModel) {
-                        foldingModel.applyMemento(collapsedRegions);
+                        this._restoringViewState = true;
+                        try {
+                            foldingModel.applyMemento(collapsedRegions);
+                        }
+                        finally {
+                            this._restoringViewState = false;
+                        }
                     }
                 }).then(undefined, onUnexpectedError);
             }
@@ -192,7 +199,7 @@ let FoldingController = class FoldingController extends Disposable {
                 return rangeProvider; // keep memento in case there are still no foldingProviders on the next request.
             }
             else if (foldingProviders.length > 0) {
-                this.rangeProvider = new SyntaxRangeProvider(editorModel, foldingProviders);
+                this.rangeProvider = new SyntaxRangeProvider(editorModel, foldingProviders, () => this.onModelContentChanged());
             }
         }
         this.foldingStateMemento = null;
@@ -229,7 +236,7 @@ let FoldingController = class FoldingController extends Disposable {
         }
     }
     onHiddenRangesChanges(hiddenRanges) {
-        if (this.hiddenRangeModel && hiddenRanges.length) {
+        if (this.hiddenRangeModel && hiddenRanges.length && !this._restoringViewState) {
             let selections = this.editor.getSelections();
             if (selections) {
                 if (this.hiddenRangeModel.adjustSelections(selections)) {
@@ -780,8 +787,8 @@ registerThemingParticipant((theme, collector) => {
     const editorFoldColor = theme.getColor(editorFoldForeground);
     if (editorFoldColor) {
         collector.addRule(`
-		.monaco-editor .cldr${foldingExpandedIcon.cssSelector},
-		.monaco-editor .cldr${foldingCollapsedIcon.cssSelector} {
+		.monaco-editor .cldr${ThemeIcon.asCSSSelector(foldingExpandedIcon)},
+		.monaco-editor .cldr${ThemeIcon.asCSSSelector(foldingCollapsedIcon)} {
 			color: ${editorFoldColor} !important;
 		}
 		`);

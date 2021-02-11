@@ -2,6 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { splitLines } from '../../../base/common/strings.js';
 import { Position } from '../core/position.js';
 import { PrefixSumComputer } from '../viewModel/prefixSumComputer.js';
 export class MirrorTextModel {
@@ -83,7 +84,7 @@ export class MirrorTextModel {
             // Nothing to insert
             return;
         }
-        let insertLines = insertText.split(/\r\n|\r|\n/);
+        let insertLines = splitLines(insertText);
         if (insertLines.length === 1) {
             // Inserting text on one line
             this._setLineText(position.lineNumber - 1, this._lines[position.lineNumber - 1].substring(0, position.column - 1)

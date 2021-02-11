@@ -30,7 +30,7 @@ export function addToValueTree(settingsTreeRoot, key, value, conflictReporter) {
     }
     if (typeof curr === 'object' && curr !== null) {
         try {
-            curr[last] = value; // workaround https://github.com/Microsoft/vscode/issues/13606
+            curr[last] = value; // workaround https://github.com/microsoft/vscode/issues/13606
         }
         catch (e) {
             conflictReporter(`Ignoring ${key} as ${segments.join('.')} is ${JSON.stringify(curr)}`);

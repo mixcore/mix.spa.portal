@@ -27,15 +27,18 @@ import { Lazy } from '../../../base/common/lazy.js';
 import { Disposable, MutableDisposable } from '../../../base/common/lifecycle.js';
 import { Position } from '../../common/core/position.js';
 import { CodeActionProviderRegistry } from '../../common/modes.js';
-import { codeActionCommandId, fixAllCommandId, organizeImportsCommandId, refactorCommandId, sourceActionCommandId } from './codeAction.js';
+import { codeActionCommandId, CodeActionItem, fixAllCommandId, organizeImportsCommandId, refactorCommandId, sourceActionCommandId } from './codeAction.js';
 import { CodeActionCommandArgs, CodeActionKind } from './types.js';
 import { IContextMenuService } from '../../../platform/contextview/browser/contextView.js';
 import { IKeybindingService } from '../../../platform/keybinding/common/keybinding.js';
 class CodeActionAction extends Action {
     constructor(action, callback) {
-        super(action.command ? action.command.id : action.title, action.title, undefined, !action.disabled, callback);
+        super(action.command ? action.command.id : action.title, stripNewlines(action.title), undefined, !action.disabled, callback);
         this.action = action;
     }
+}
+function stripNewlines(str) {
+    return str.replace(/\r\n|\r|\n/g, ' ');
 }
 let CodeActionMenu = class CodeActionMenu extends Disposable {
     constructor(_editor, _delegate, _contextMenuService, keybindingService) {
@@ -84,7 +87,7 @@ let CodeActionMenu = class CodeActionMenu extends Disposable {
     }
     getMenuActions(trigger, actionsToShow, documentation) {
         var _a, _b;
-        const toCodeActionAction = (action) => new CodeActionAction(action, () => this._delegate.onSelectCodeAction(action));
+        const toCodeActionAction = (item) => new CodeActionAction(item.action, () => this._delegate.onSelectCodeAction(item));
         const result = actionsToShow
             .map(toCodeActionAction);
         const allDocumentation = [...documentation];
@@ -92,15 +95,15 @@ let CodeActionMenu = class CodeActionMenu extends Disposable {
         if (model && result.length) {
             for (const provider of CodeActionProviderRegistry.all(model)) {
                 if (provider._getAdditionalMenuItems) {
-                    allDocumentation.push(...provider._getAdditionalMenuItems({ trigger: trigger.type, only: (_b = (_a = trigger.filter) === null || _a === void 0 ? void 0 : _a.include) === null || _b === void 0 ? void 0 : _b.value }, actionsToShow));
+                    allDocumentation.push(...provider._getAdditionalMenuItems({ trigger: trigger.type, only: (_b = (_a = trigger.filter) === null || _a === void 0 ? void 0 : _a.include) === null || _b === void 0 ? void 0 : _b.value }, actionsToShow.map(item => item.action)));
                 }
             }
         }
         if (allDocumentation.length) {
-            result.push(new Separator(), ...allDocumentation.map(command => toCodeActionAction({
+            result.push(new Separator(), ...allDocumentation.map(command => toCodeActionAction(new CodeActionItem({
                 title: command.title,
                 command: command,
-            })));
+            }, undefined))));
         }
         return result;
     }

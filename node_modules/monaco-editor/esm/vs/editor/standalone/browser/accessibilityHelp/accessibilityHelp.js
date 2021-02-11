@@ -172,8 +172,8 @@ let AccessibilityHelpWidget = class AccessibilityHelpWidget extends Widget {
             }
         }
         let text = getSelectionLabel(selections, charactersSelected);
-        if (options.get(47 /* inDiffEditor */)) {
-            if (options.get(72 /* readOnly */)) {
+        if (options.get(49 /* inDiffEditor */)) {
+            if (options.get(75 /* readOnly */)) {
                 text += AccessibilityHelpNLS.readonlyDiffEditor;
             }
             else {
@@ -181,7 +181,7 @@ let AccessibilityHelpWidget = class AccessibilityHelpWidget extends Widget {
             }
         }
         else {
-            if (options.get(72 /* readOnly */)) {
+            if (options.get(75 /* readOnly */)) {
                 text += AccessibilityHelpNLS.readonlyEditor;
             }
             else {
@@ -203,7 +203,7 @@ let AccessibilityHelpWidget = class AccessibilityHelpWidget extends Widget {
                 text += ' ' + turnOnMessage;
                 break;
         }
-        if (options.get(116 /* tabFocusMode */)) {
+        if (options.get(123 /* tabFocusMode */)) {
             text += '\n\n - ' + this._descriptionForCommand(ToggleTabFocusModeAction.ID, AccessibilityHelpNLS.tabFocusModeOnMsg, AccessibilityHelpNLS.tabFocusModeOnMsgNoKb);
         }
         else {
@@ -258,7 +258,6 @@ class ShowAccessibilityHelpAction extends EditorAction {
             alias: 'Show Accessibility Help',
             precondition: undefined,
             kbOpts: {
-                kbExpr: EditorContextKeys.focus,
                 primary: 512 /* Alt */ | 59 /* F1 */,
                 weight: 100 /* EditorContrib */,
                 linux: {

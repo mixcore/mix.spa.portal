@@ -40,7 +40,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import { DocumentHighlightKind, Location, Range, SymbolKind, TextEdit, FileType } from '../cssLanguageTypes.js';
-import * as nls from '../../../fillers/vscode-nls.js';
+import * as nls from './../../../fillers/vscode-nls.js';
 import * as nodes from '../parser/cssNodes.js';
 import { Symbols } from '../parser/cssSymbolScope.js';
 import { getColorValue, hslFromColor } from '../languageFacts/facts.js';

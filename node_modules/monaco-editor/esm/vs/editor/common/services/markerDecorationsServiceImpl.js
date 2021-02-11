@@ -63,8 +63,8 @@ let MarkerDecorationsService = class MarkerDecorationsService extends Disposable
         this._markerDecorations.forEach(value => value.dispose());
         this._markerDecorations.clear();
     }
-    getMarker(model, decoration) {
-        const markerDecorations = this._markerDecorations.get(MODEL_ID(model.uri));
+    getMarker(uri, decoration) {
+        const markerDecorations = this._markerDecorations.get(MODEL_ID(uri));
         return markerDecorations ? (markerDecorations.getMarker(decoration) || null) : null;
     }
     _handleMarkerChange(changedResources) {

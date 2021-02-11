@@ -155,5 +155,15 @@ app.controller("TemplateController", [
         $rootScope.isBusy = false;
       }
     };
+
+    $scope.updateTemplateContent = function (content) {
+      $scope.viewModel.content = content;
+    };
+    $scope.updateStyleContent = function (content) {
+      $scope.viewModel.scripts = content;
+    };
+    $scope.updateScriptContent = function (content) {
+      $scope.viewModel.styles = content;
+    };
   },
 ]);

@@ -9,17 +9,16 @@ import { ApplyEditsResult } from '../../model.js';
 import { PieceTreeBase } from './pieceTreeBase.js';
 import { countEOL } from '../tokensStore.js';
 import { TextChange } from '../textChange.js';
-export class PieceTreeTextBuffer {
+import { Disposable } from '../../../../base/common/lifecycle.js';
+export class PieceTreeTextBuffer extends Disposable {
     constructor(chunks, BOM, eol, containsRTL, containsUnusualLineTerminators, isBasicASCII, eolNormalized) {
-        this._onDidChangeContent = new Emitter();
+        super();
+        this._onDidChangeContent = this._register(new Emitter());
         this._BOM = BOM;
         this._mightContainNonBasicASCII = !isBasicASCII;
         this._mightContainRTL = containsRTL;
         this._mightContainUnusualLineTerminators = containsUnusualLineTerminators;
         this._pieceTree = new PieceTreeBase(chunks, eol, eolNormalized);
-    }
-    dispose() {
-        this._onDidChangeContent.dispose();
     }
     mightContainRTL() {
         return this._mightContainRTL;

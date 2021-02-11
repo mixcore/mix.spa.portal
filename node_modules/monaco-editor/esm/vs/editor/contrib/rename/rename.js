@@ -327,7 +327,7 @@ registerModelAndPositionCommand('_executeDocumentRenameProvider', function (mode
     assertType(typeof newName === 'string');
     return rename(model, position, newName);
 });
-//todo@joh use editor options world
+//todo@jrieken use editor options world
 Registry.as(Extensions.Configuration).registerConfiguration({
     id: 'editor',
     properties: {

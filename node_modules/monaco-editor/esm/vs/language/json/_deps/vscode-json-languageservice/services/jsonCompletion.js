@@ -3,12 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as Parser from '../parser/jsonParser.js';
-import * as Json from '../../jsonc-parser/main.js';
+import * as Json from './../../jsonc-parser/main.js';
 import { stringifyObject } from '../utils/json.js';
 import { endsWith } from '../utils/strings.js';
 import { isDefined } from '../utils/objects.js';
 import { CompletionItem, CompletionItemKind, Range, TextEdit, InsertTextFormat, MarkupKind } from '../jsonLanguageTypes.js';
-import * as nls from '../../../fillers/vscode-nls.js';
+import * as nls from './../../../fillers/vscode-nls.js';
 var localize = nls.loadMessageBundle();
 var valueCommitCharacters = [',', '}', ']'];
 var propertyCommitCharacters = [':'];
@@ -89,8 +89,13 @@ var JSONCompletion = /** @class */ (function () {
                     proposed[label] = suggestion;
                     result.items.push(suggestion);
                 }
-                else if (!existing.documentation) {
-                    existing.documentation = suggestion.documentation;
+                else {
+                    if (!existing.documentation) {
+                        existing.documentation = suggestion.documentation;
+                    }
+                    if (!existing.detail) {
+                        existing.detail = suggestion.detail;
+                    }
                 }
             },
             setAsIncomplete: function () {

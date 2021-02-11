@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { TreeError } from './tree.js';
 import { tail2 } from '../../../common/arrays.js';
+import { LcsDiff } from '../../../common/diff/diff.js';
 import { Emitter, EventBufferer } from '../../../common/event.js';
 import { Iterable } from '../../../common/iterator.js';
 export function isFilterResult(obj) {
@@ -49,14 +50,62 @@ export class IndexTreeModel {
             filterData: undefined
         };
     }
-    splice(location, deleteCount, toInsert = Iterable.empty(), onDidCreateNode, onDidDeleteNode) {
+    splice(location, deleteCount, toInsert = Iterable.empty(), options = {}) {
         if (location.length === 0) {
             throw new TreeError(this.user, 'Invalid tree location');
         }
+        if (options.diffIdentityProvider) {
+            this.spliceSmart(options.diffIdentityProvider, location, deleteCount, toInsert, options);
+        }
+        else {
+            this.spliceSimple(location, deleteCount, toInsert, options);
+        }
+    }
+    spliceSmart(identity, location, deleteCount, toInsertIterable, options, recurseLevels) {
+        var _a;
+        if (toInsertIterable === void 0) { toInsertIterable = Iterable.empty(); }
+        if (recurseLevels === void 0) { recurseLevels = (_a = options.diffDepth) !== null && _a !== void 0 ? _a : 0; }
+        const { parentNode } = this.getParentNodeWithListIndex(location);
+        const toInsert = [...toInsertIterable];
+        const index = location[location.length - 1];
+        const diff = new LcsDiff({ getElements: () => parentNode.children.map(e => identity.getId(e.element).toString()) }, {
+            getElements: () => [
+                ...parentNode.children.slice(0, index),
+                ...toInsert,
+                ...parentNode.children.slice(index + deleteCount),
+            ].map(e => identity.getId(e.element).toString())
+        }).ComputeDiff(false);
+        // if we were given a 'best effort' diff, use default behavior
+        if (diff.quitEarly) {
+            return this.spliceSimple(location, deleteCount, toInsert, options);
+        }
+        const locationPrefix = location.slice(0, -1);
+        const recurseSplice = (fromOriginal, fromModified, count) => {
+            if (recurseLevels > 0) {
+                for (let i = 0; i < count; i++) {
+                    fromOriginal--;
+                    fromModified--;
+                    this.spliceSmart(identity, [...locationPrefix, fromOriginal, 0], Number.MAX_SAFE_INTEGER, toInsert[fromModified].children, options, recurseLevels - 1);
+                }
+            }
+        };
+        let lastStartO = Math.min(parentNode.children.length, index + deleteCount);
+        let lastStartM = toInsert.length;
+        for (const change of diff.changes.sort((a, b) => b.originalStart - a.originalStart)) {
+            recurseSplice(lastStartO, lastStartM, lastStartO - (change.originalStart + change.originalLength));
+            lastStartO = change.originalStart;
+            lastStartM = change.modifiedStart - index;
+            this.spliceSimple([...locationPrefix, lastStartO], change.originalLength, Iterable.slice(toInsert, lastStartM, lastStartM + change.modifiedLength), options);
+        }
+        // at this point, startO === startM === count since any remaining prefix should match
+        recurseSplice(lastStartO, lastStartM, lastStartO);
+    }
+    spliceSimple(location, deleteCount, toInsert = Iterable.empty(), { onDidCreateNode, onDidDeleteNode }) {
         const { parentNode, listIndex, revealed, visible } = this.getParentNodeWithListIndex(location);
         const treeListElementsToInsert = [];
         const nodesToInsertIterator = Iterable.map(toInsert, el => this.createTreeNode(el, parentNode, parentNode.visible ? 1 /* Visible */ : 0 /* Hidden */, revealed, treeListElementsToInsert, onDidCreateNode));
         const lastIndex = location[location.length - 1];
+        const lastHadChildren = parentNode.children.length > 0;
         // figure out what's the visible child start index right before the
         // splice point
         let visibleChildStartIndex = 0;
@@ -107,6 +156,10 @@ export class IndexTreeModel {
                 node.children.forEach(visit);
             };
             deletedNodes.forEach(visit);
+        }
+        const currentlyHasChildren = parentNode.children.length > 0;
+        if (lastHadChildren !== currentlyHasChildren) {
+            this.setCollapsible(location.slice(0, -1), currentlyHasChildren);
         }
         this._onDidSplice.fire({ insertedNodes: nodesToInsert, deletedNodes });
         let node = parentNode;

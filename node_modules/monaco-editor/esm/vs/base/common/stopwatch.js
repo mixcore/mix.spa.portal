@@ -23,6 +23,6 @@ export class StopWatch {
         return this._now() - this._startTime;
     }
     _now() {
-        return this._highResolution ? globals.performance.now() : new Date().getTime();
+        return this._highResolution ? globals.performance.now() : Date.now();
     }
 }

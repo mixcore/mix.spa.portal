@@ -67,6 +67,37 @@ export function findFirstInSorted(array, p) {
     }
     return low;
 }
+export function quickSelect(nth, data, compare) {
+    nth = nth | 0;
+    if (nth >= data.length) {
+        throw new TypeError('invalid index');
+    }
+    let pivotValue = data[Math.floor(data.length * Math.random())];
+    let lower = [];
+    let higher = [];
+    let pivots = [];
+    for (let value of data) {
+        const val = compare(value, pivotValue);
+        if (val < 0) {
+            lower.push(value);
+        }
+        else if (val > 0) {
+            higher.push(value);
+        }
+        else {
+            pivots.push(value);
+        }
+    }
+    if (nth < lower.length) {
+        return quickSelect(nth, lower, compare);
+    }
+    else if (nth < lower.length + pivots.length) {
+        return pivots[0];
+    }
+    else {
+        return quickSelect(nth - (lower.length + pivots.length), higher, compare);
+    }
+}
 /**
  * Like `Array#sort` but always stable. Usually runs a little slower `than Array#sort`
  * so only use this when actually needing stable sort.
@@ -172,22 +203,6 @@ export function distinctES6(array) {
         seen.add(element);
         return true;
     });
-}
-/**
- * @deprecated ES6: use `Array.findIndex`
- */
-export function firstIndex(array, fn) {
-    for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        if (fn(element)) {
-            return i;
-        }
-    }
-    return -1;
-}
-export function first(array, fn, notFoundValue = undefined) {
-    const index = firstIndex(array, fn);
-    return index < 0 ? notFoundValue : array[index];
 }
 export function firstOrDefault(array, notFoundValue) {
     return array.length > 0 ? array[0] : notFoundValue;

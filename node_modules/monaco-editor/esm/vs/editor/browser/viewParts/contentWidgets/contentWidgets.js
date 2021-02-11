@@ -129,11 +129,11 @@ class Widget {
         this.allowEditorOverflow = this._actual.allowEditorOverflow || false;
         this.suppressMouseDown = this._actual.suppressMouseDown || false;
         const options = this._context.configuration.options;
-        const layoutInfo = options.get(117 /* layoutInfo */);
-        this._fixedOverflowWidgets = options.get(30 /* fixedOverflowWidgets */);
+        const layoutInfo = options.get(124 /* layoutInfo */);
+        this._fixedOverflowWidgets = options.get(32 /* fixedOverflowWidgets */);
         this._contentWidth = layoutInfo.contentWidth;
         this._contentLeft = layoutInfo.contentLeft;
-        this._lineHeight = options.get(51 /* lineHeight */);
+        this._lineHeight = options.get(53 /* lineHeight */);
         this._range = null;
         this._viewRange = null;
         this._preference = [];
@@ -149,9 +149,9 @@ class Widget {
     }
     onConfigurationChanged(e) {
         const options = this._context.configuration.options;
-        this._lineHeight = options.get(51 /* lineHeight */);
-        if (e.hasChanged(117 /* layoutInfo */)) {
-            const layoutInfo = options.get(117 /* layoutInfo */);
+        this._lineHeight = options.get(53 /* lineHeight */);
+        if (e.hasChanged(124 /* layoutInfo */)) {
+            const layoutInfo = options.get(124 /* layoutInfo */);
             this._contentLeft = layoutInfo.contentLeft;
             this._contentWidth = layoutInfo.contentWidth;
             this._maxWidth = this._getMaxWidth();
@@ -316,9 +316,19 @@ class Widget {
             return null;
         }
         if (this._cachedDomNodeClientWidth === -1 || this._cachedDomNodeClientHeight === -1) {
-            const domNode = this.domNode.domNode;
-            this._cachedDomNodeClientWidth = domNode.clientWidth;
-            this._cachedDomNodeClientHeight = domNode.clientHeight;
+            let preferredDimensions = null;
+            if (typeof this._actual.beforeRender === 'function') {
+                preferredDimensions = safeInvoke(this._actual.beforeRender, this._actual);
+            }
+            if (preferredDimensions) {
+                this._cachedDomNodeClientWidth = preferredDimensions.width;
+                this._cachedDomNodeClientHeight = preferredDimensions.height;
+            }
+            else {
+                const domNode = this.domNode.domNode;
+                this._cachedDomNodeClientWidth = domNode.clientWidth;
+                this._cachedDomNodeClientHeight = domNode.clientHeight;
+            }
         }
         let placement;
         if (this.allowEditorOverflow) {
@@ -338,7 +348,7 @@ class Widget {
                             return null;
                         }
                         if (pass === 2 || placement.fitsAbove) {
-                            return new Coordinate(placement.aboveTop, placement.aboveLeft);
+                            return { coordinate: new Coordinate(placement.aboveTop, placement.aboveLeft), position: 1 /* ABOVE */ };
                         }
                     }
                     else if (pref === 2 /* BELOW */) {
@@ -347,15 +357,15 @@ class Widget {
                             return null;
                         }
                         if (pass === 2 || placement.fitsBelow) {
-                            return new Coordinate(placement.belowTop, placement.belowLeft);
+                            return { coordinate: new Coordinate(placement.belowTop, placement.belowLeft), position: 2 /* BELOW */ };
                         }
                     }
                     else {
                         if (this.allowEditorOverflow) {
-                            return this._prepareRenderWidgetAtExactPositionOverflowing(topLeft);
+                            return { coordinate: this._prepareRenderWidgetAtExactPositionOverflowing(topLeft), position: 0 /* EXACT */ };
                         }
                         else {
-                            return topLeft;
+                            return { coordinate: topLeft, position: 0 /* EXACT */ };
                         }
                     }
                 }
@@ -387,21 +397,36 @@ class Widget {
                 this._isVisible = false;
                 this.domNode.setVisibility('hidden');
             }
+            if (typeof this._actual.afterRender === 'function') {
+                safeInvoke(this._actual.afterRender, this._actual, null);
+            }
             return;
         }
         // This widget should be visible
         if (this.allowEditorOverflow) {
-            this.domNode.setTop(this._renderData.top);
-            this.domNode.setLeft(this._renderData.left);
+            this.domNode.setTop(this._renderData.coordinate.top);
+            this.domNode.setLeft(this._renderData.coordinate.left);
         }
         else {
-            this.domNode.setTop(this._renderData.top + ctx.scrollTop - ctx.bigNumbersDelta);
-            this.domNode.setLeft(this._renderData.left);
+            this.domNode.setTop(this._renderData.coordinate.top + ctx.scrollTop - ctx.bigNumbersDelta);
+            this.domNode.setLeft(this._renderData.coordinate.left);
         }
         if (!this._isVisible) {
             this.domNode.setVisibility('inherit');
             this.domNode.setAttribute('monaco-visible-content-widget', 'true');
             this._isVisible = true;
         }
+        if (typeof this._actual.afterRender === 'function') {
+            safeInvoke(this._actual.afterRender, this._actual, this._renderData.position);
+        }
+    }
+}
+function safeInvoke(fn, thisArg, ...args) {
+    try {
+        return fn.call(thisArg, ...args);
+    }
+    catch (_a) {
+        // ignore
+        return null;
     }
 }

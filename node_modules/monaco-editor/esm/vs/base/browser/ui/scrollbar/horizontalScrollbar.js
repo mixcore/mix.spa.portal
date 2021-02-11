@@ -6,9 +6,9 @@ import { StandardWheelEvent } from '../../mouseEvent.js';
 import { AbstractScrollbar } from './abstractScrollbar.js';
 import { ARROW_IMG_SIZE } from './scrollbarArrow.js';
 import { ScrollbarState } from './scrollbarState.js';
-import { Codicon, registerIcon } from '../../../common/codicons.js';
-const scrollbarButtonLeftIcon = registerIcon('scrollbar-button-left', Codicon.triangleLeft);
-const scrollbarButtonRightIcon = registerIcon('scrollbar-button-right', Codicon.triangleRight);
+import { Codicon, registerCodicon } from '../../../common/codicons.js';
+const scrollbarButtonLeftIcon = registerCodicon('scrollbar-button-left', Codicon.triangleLeft);
+const scrollbarButtonRightIcon = registerCodicon('scrollbar-button-right', Codicon.triangleRight);
 export class HorizontalScrollbar extends AbstractScrollbar {
     constructor(scrollable, options, host) {
         const scrollDimensions = scrollable.getScrollDimensions();
@@ -19,11 +19,12 @@ export class HorizontalScrollbar extends AbstractScrollbar {
             scrollbarState: new ScrollbarState((options.horizontalHasArrows ? options.arrowSize : 0), (options.horizontal === 2 /* Hidden */ ? 0 : options.horizontalScrollbarSize), (options.vertical === 2 /* Hidden */ ? 0 : options.verticalScrollbarSize), scrollDimensions.width, scrollDimensions.scrollWidth, scrollPosition.scrollLeft),
             visibility: options.horizontal,
             extraScrollbarClassName: 'horizontal',
-            scrollable: scrollable
+            scrollable: scrollable,
+            scrollByPage: options.scrollByPage
         });
         if (options.horizontalHasArrows) {
-            let arrowDelta = (options.arrowSize - ARROW_IMG_SIZE) / 2;
-            let scrollbarDelta = (options.horizontalScrollbarSize - ARROW_IMG_SIZE) / 2;
+            const arrowDelta = (options.arrowSize - ARROW_IMG_SIZE) / 2;
+            const scrollbarDelta = (options.horizontalScrollbarSize - ARROW_IMG_SIZE) / 2;
             this._createArrow({
                 className: 'scra',
                 icon: scrollbarButtonLeftIcon,

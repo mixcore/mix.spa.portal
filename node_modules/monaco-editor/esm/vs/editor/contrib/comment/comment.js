@@ -5,6 +5,7 @@
 import * as nls from '../../../nls.js';
 import { KeyChord } from '../../../base/common/keyCodes.js';
 import { EditorAction, registerEditorAction } from '../../browser/editorExtensions.js';
+import { Range } from '../../common/core/range.js';
 import { EditorContextKeys } from '../../common/editorContextKeys.js';
 import { BlockCommentCommand } from './blockCommentCommand.js';
 import { LineCommentCommand } from './lineCommentCommand.js';
@@ -20,11 +21,29 @@ class CommentLineAction extends EditorAction {
         }
         const model = editor.getModel();
         const commands = [];
-        const selections = editor.getSelections();
         const modelOptions = model.getOptions();
-        const commentsOptions = editor.getOption(14 /* comments */);
+        const commentsOptions = editor.getOption(16 /* comments */);
+        const selections = editor.getSelections().map((selection, index) => ({ selection, index, ignoreFirstLine: false }));
+        selections.sort((a, b) => Range.compareRangesUsingStarts(a.selection, b.selection));
+        // Remove selections that would result in copying the same line
+        let prev = selections[0];
+        for (let i = 1; i < selections.length; i++) {
+            const curr = selections[i];
+            if (prev.selection.endLineNumber === curr.selection.startLineNumber) {
+                // these two selections would copy the same line
+                if (prev.index < curr.index) {
+                    // prev wins
+                    curr.ignoreFirstLine = true;
+                }
+                else {
+                    // curr wins
+                    prev.ignoreFirstLine = true;
+                    prev = curr;
+                }
+            }
+        }
         for (const selection of selections) {
-            commands.push(new LineCommentCommand(selection, modelOptions.tabSize, this._type, commentsOptions.insertSpace, commentsOptions.ignoreEmptyLines));
+            commands.push(new LineCommentCommand(selection.selection, modelOptions.tabSize, this._type, commentsOptions.insertSpace, commentsOptions.ignoreEmptyLines, selection.ignoreFirstLine));
         }
         editor.pushUndoStop();
         editor.executeCommands(this.id, commands);
@@ -107,7 +126,7 @@ class BlockCommentAction extends EditorAction {
         if (!editor.hasModel()) {
             return;
         }
-        const commentsOptions = editor.getOption(14 /* comments */);
+        const commentsOptions = editor.getOption(16 /* comments */);
         const commands = [];
         const selections = editor.getSelections();
         for (const selection of selections) {

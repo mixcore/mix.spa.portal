@@ -6,9 +6,10 @@ import { equals } from '../../../base/common/arrays.js';
 import { CancellationTokenSource } from '../../../base/common/cancellation.js';
 import { onUnexpectedExternalError } from '../../../base/common/errors.js';
 import { LRUCache } from '../../../base/common/map.js';
+import { Range } from '../../common/core/range.js';
 import { DocumentSymbolProviderRegistry } from '../../common/modes.js';
 import { Iterable } from '../../../base/common/iterator.js';
-import { MovingAverage } from '../../../base/common/numbers.js';
+import { LanguageFeatureRequestDelays } from '../../common/modes/languageFeatureRegistry.js';
 export class TreeElement {
     remove() {
         if (this.parent) {
@@ -83,13 +84,7 @@ export class OutlineModel extends TreeElement {
             // keep moving average of request durations
             const now = Date.now();
             data.promise.then(() => {
-                let key = this._keys.for(textModel, false);
-                let avg = this._requestDurations.get(key);
-                if (!avg) {
-                    avg = new MovingAverage();
-                    this._requestDurations.set(key, avg);
-                }
-                avg.update(Date.now() - now);
+                this._requestDurations.update(textModel, Date.now() - now);
             });
         }
         if (data.model) {
@@ -191,8 +186,44 @@ export class OutlineModel extends TreeElement {
         }
         return this;
     }
+    getTopLevelSymbols() {
+        const roots = [];
+        for (const child of this.children.values()) {
+            if (child instanceof OutlineElement) {
+                roots.push(child.symbol);
+            }
+            else {
+                roots.push(...Iterable.map(child.children.values(), child => child.symbol));
+            }
+        }
+        return roots.sort((a, b) => Range.compareRangesUsingStarts(a.range, b.range));
+    }
+    asListOfDocumentSymbols() {
+        const roots = this.getTopLevelSymbols();
+        const bucket = [];
+        OutlineModel._flattenDocumentSymbols(bucket, roots, '');
+        return bucket.sort((a, b) => Range.compareRangesUsingStarts(a.range, b.range));
+    }
+    static _flattenDocumentSymbols(bucket, entries, overrideContainerLabel) {
+        for (const entry of entries) {
+            bucket.push({
+                kind: entry.kind,
+                tags: entry.tags,
+                name: entry.name,
+                detail: entry.detail,
+                containerName: entry.containerName || overrideContainerLabel,
+                range: entry.range,
+                selectionRange: entry.selectionRange,
+                children: undefined, // we flatten it...
+            });
+            // Recurse over children
+            if (entry.children) {
+                OutlineModel._flattenDocumentSymbols(bucket, entry.children, entry.name);
+            }
+        }
+    }
 }
-OutlineModel._requestDurations = new LRUCache(50, 0.7);
+OutlineModel._requestDurations = new LanguageFeatureRequestDelays(DocumentSymbolProviderRegistry, 350);
 OutlineModel._requests = new LRUCache(9, 0.75);
 OutlineModel._keys = new class {
     constructor() {

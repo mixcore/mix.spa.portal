@@ -2,6 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+var _a;
 import * as DOM from './dom.js';
 import { createElement } from './formattedTextRenderer.js';
 import { onUnexpectedError } from '../common/errors.js';
@@ -13,12 +14,23 @@ import { parse } from '../common/marshalling.js';
 import { cloneAndChange } from '../common/objects.js';
 import { escape } from '../common/strings.js';
 import { URI } from '../common/uri.js';
-import { Schemas } from '../common/network.js';
-import { renderCodicons, markdownEscapeEscapedCodicons } from '../common/codicons.js';
+import { FileAccess, Schemas } from '../common/network.js';
+import { markdownEscapeEscapedIcons } from '../common/iconLabels.js';
 import { resolvePath } from '../common/resources.js';
 import { StandardMouseEvent } from './mouseEvent.js';
+import { renderLabelWithIcons } from './ui/iconLabel/iconLabels.js';
+import { Event } from '../common/event.js';
+import { domEvent } from './event.js';
+const _ttpInsane = (_a = window.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy('insane', {
+    createHTML(value, options) {
+        return insane(value, options);
+    }
+});
 /**
- * Create html nodes for the given content element.
+ * Low-level way create a html element from a markdown string.
+ *
+ * **Note** that for most cases you should be using [`MarkdownRenderer`](./src/vs/editor/browser/core/markdownRenderer.ts)
+ * which comes with support for pretty code block rendering and which uses the default way of handling links.
  */
 export function renderMarkdown(markdown, options = {}, markedOptions = {}) {
     var _a;
@@ -58,7 +70,7 @@ export function renderMarkdown(markdown, options = {}, markedOptions = {}) {
             // and because of that special rewriting needs to be done
             // so that the URI uses a protocol that's understood by
             // browsers (like http or https)
-            return DOM.asDomUri(uri).toString(true);
+            return FileAccess.asBrowserUri(uri).toString(true);
         }
         if (uri.query) {
             uri = uri.with({ query: _uriMassage(uri.query) });
@@ -128,7 +140,11 @@ export function renderMarkdown(markdown, options = {}, markedOptions = {}) {
         }
     };
     renderer.paragraph = (text) => {
-        return `<p>${markdown.supportThemeIcons ? renderCodicons(text) : text}</p>`;
+        if (markdown.supportThemeIcons) {
+            const elements = renderLabelWithIcons(text);
+            text = elements.map(e => typeof e === 'string' ? e : e.outerHTML).join('');
+        }
+        return `<p>${text}</p>`;
     };
     if (options.codeBlockRenderer) {
         renderer.code = (code, lang) => {
@@ -137,83 +153,102 @@ export function renderMarkdown(markdown, options = {}, markedOptions = {}) {
             // but update the node with the real result later.
             const id = defaultGenerator.nextId();
             const promise = Promise.all([value, withInnerHTML]).then(values => {
-                const strValue = values[0];
                 const span = element.querySelector(`div[data-code="${id}"]`);
                 if (span) {
-                    span.innerHTML = strValue;
+                    DOM.reset(span, values[0]);
                 }
-            }).catch(err => {
+            }).catch(_err => {
                 // ignore
             });
-            if (options.codeBlockRenderCallback) {
-                promise.then(options.codeBlockRenderCallback);
+            if (options.asyncRenderCallback) {
+                promise.then(options.asyncRenderCallback);
             }
             return `<div class="code" data-code="${id}">${escape(code)}</div>`;
         };
     }
-    const actionHandler = options.actionHandler;
-    if (actionHandler) {
-        [DOM.EventType.CLICK, DOM.EventType.AUXCLICK].forEach(event => {
-            actionHandler.disposeables.add(DOM.addDisposableListener(element, event, (e) => {
-                const mouseEvent = new StandardMouseEvent(e);
-                if (!mouseEvent.leftButton && !mouseEvent.middleButton) {
+    if (options.actionHandler) {
+        options.actionHandler.disposeables.add(Event.any(domEvent(element, 'click'), domEvent(element, 'auxclick'))(e => {
+            const mouseEvent = new StandardMouseEvent(e);
+            if (!mouseEvent.leftButton && !mouseEvent.middleButton) {
+                return;
+            }
+            let target = mouseEvent.target;
+            if (target.tagName !== 'A') {
+                target = target.parentElement;
+                if (!target || target.tagName !== 'A') {
                     return;
                 }
-                let target = mouseEvent.target;
-                if (target.tagName !== 'A') {
-                    target = target.parentElement;
-                    if (!target || target.tagName !== 'A') {
-                        return;
-                    }
+            }
+            try {
+                const href = target.dataset['href'];
+                if (href) {
+                    options.actionHandler.callback(href, mouseEvent);
                 }
-                try {
-                    const href = target.dataset['href'];
-                    if (href) {
-                        actionHandler.callback(href, mouseEvent);
-                    }
-                }
-                catch (err) {
-                    onUnexpectedError(err);
-                }
-                finally {
-                    mouseEvent.preventDefault();
-                }
-            }));
-        });
+            }
+            catch (err) {
+                onUnexpectedError(err);
+            }
+            finally {
+                mouseEvent.preventDefault();
+            }
+        }));
     }
     // Use our own sanitizer so that we can let through only spans.
     // Otherwise, we'd be letting all html be rendered.
     // If we want to allow markdown permitted tags, then we can delete sanitizer and sanitize.
+    // We always pass the output through insane after this so that we don't rely on
+    // marked for sanitization.
     markedOptions.sanitizer = (html) => {
-        const match = markdown.isTrusted ? html.match(/^(<span[^<]+>)|(<\/\s*span>)$/) : undefined;
+        const match = markdown.isTrusted ? html.match(/^(<span[^>]+>)|(<\/\s*span>)$/) : undefined;
         return match ? html : '';
     };
     markedOptions.sanitize = true;
+    markedOptions.silent = true;
     markedOptions.renderer = renderer;
-    const allowedSchemes = [Schemas.http, Schemas.https, Schemas.mailto, Schemas.data, Schemas.file, Schemas.vscodeRemote, Schemas.vscodeRemoteResource];
-    if (markdown.isTrusted) {
-        allowedSchemes.push(Schemas.command);
-    }
     // values that are too long will freeze the UI
     let value = (_a = markdown.value) !== null && _a !== void 0 ? _a : '';
     if (value.length > 100000) {
         value = `${value.substr(0, 100000)}…`;
     }
-    const renderedMarkdown = marked.parse(markdown.supportThemeIcons ? markdownEscapeEscapedCodicons(value) : value, markedOptions);
-    function filter(token) {
-        if (token.tag === 'span' && markdown.isTrusted && (Object.keys(token.attrs).length === 1)) {
-            if (token.attrs['style']) {
-                return !!token.attrs['style'].match(/^(color\:#[0-9a-fA-F]+;)?(background-color\:#[0-9a-fA-F]+;)?$/);
-            }
-            else if (token.attrs['class']) {
-                // The class should match codicon rendering in src\vs\base\common\codicons.ts
-                return !!token.attrs['class'].match(/^codicon codicon-[a-z\-]+( codicon-animation-[a-z\-]+)?$/);
-            }
-            return false;
-        }
-        return true;
+    // escape theme icons
+    if (markdown.supportThemeIcons) {
+        value = markdownEscapeEscapedIcons(value);
     }
-    element.innerHTML = insane(renderedMarkdown, {
+    const renderedMarkdown = marked.parse(value, markedOptions);
+    // sanitize with insane
+    element.innerHTML = sanitizeRenderedMarkdown(markdown, renderedMarkdown);
+    // signal that async code blocks can be now be inserted
+    signalInnerHTML();
+    // signal size changes for image tags
+    if (options.asyncRenderCallback) {
+        for (const img of element.getElementsByTagName('img')) {
+            const listener = DOM.addDisposableListener(img, 'load', () => {
+                listener.dispose();
+                options.asyncRenderCallback();
+            });
+        }
+    }
+    return element;
+}
+function sanitizeRenderedMarkdown(options, renderedMarkdown) {
+    var _a;
+    const insaneOptions = getInsaneOptions(options);
+    return (_a = _ttpInsane === null || _ttpInsane === void 0 ? void 0 : _ttpInsane.createHTML(renderedMarkdown, insaneOptions)) !== null && _a !== void 0 ? _a : insane(renderedMarkdown, insaneOptions);
+}
+function getInsaneOptions(options) {
+    const allowedSchemes = [
+        Schemas.http,
+        Schemas.https,
+        Schemas.mailto,
+        Schemas.data,
+        Schemas.file,
+        Schemas.vscodeRemote,
+        Schemas.vscodeRemoteResource,
+    ];
+    if (options.isTrusted) {
+        allowedSchemes.push(Schemas.command);
+    }
+    return {
         allowedSchemes,
         // allowedTags should included everything that markdown renders to.
         // Since we have our own sanitize function for marked, it's possible we missed some tag so let insane make sure.
@@ -229,8 +264,18 @@ export function renderMarkdown(markdown, options = {}, markedOptions = {}) {
             'th': ['align'],
             'td': ['align']
         },
-        filter
-    });
-    signalInnerHTML();
-    return element;
+        filter(token) {
+            if (token.tag === 'span' && options.isTrusted) {
+                if (token.attrs['style'] && (Object.keys(token.attrs).length === 1)) {
+                    return !!token.attrs['style'].match(/^(color\:#[0-9a-fA-F]+;)?(background-color\:#[0-9a-fA-F]+;)?$/);
+                }
+                else if (token.attrs['class']) {
+                    // The class should match codicon rendering in src\vs\base\common\codicons.ts
+                    return !!token.attrs['class'].match(/^codicon codicon-[a-z\-]+( codicon-modifier-[a-z\-]+)?$/);
+                }
+                return false;
+            }
+            return true;
+        }
+    };
 }

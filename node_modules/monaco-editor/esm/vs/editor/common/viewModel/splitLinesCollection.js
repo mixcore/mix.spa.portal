@@ -8,49 +8,7 @@ import { Range } from '../core/range.js';
 import { ModelDecorationOptions } from '../model/textModel.js';
 import * as viewEvents from '../view/viewEvents.js';
 import { PrefixSumIndexOfResult } from './prefixSumComputer.js';
-import { ViewLineData } from './viewModel.js';
-export class OutputPosition {
-    constructor(outputLineIndex, outputOffset) {
-        this.outputLineIndex = outputLineIndex;
-        this.outputOffset = outputOffset;
-    }
-}
-export class LineBreakData {
-    constructor(breakOffsets, breakOffsetsVisibleColumn, wrappedTextIndentLength) {
-        this.breakOffsets = breakOffsets;
-        this.breakOffsetsVisibleColumn = breakOffsetsVisibleColumn;
-        this.wrappedTextIndentLength = wrappedTextIndentLength;
-    }
-    static getInputOffsetOfOutputPosition(breakOffsets, outputLineIndex, outputOffset) {
-        if (outputLineIndex === 0) {
-            return outputOffset;
-        }
-        else {
-            return breakOffsets[outputLineIndex - 1] + outputOffset;
-        }
-    }
-    static getOutputPositionOfInputOffset(breakOffsets, inputOffset) {
-        let low = 0;
-        let high = breakOffsets.length - 1;
-        let mid = 0;
-        let midStart = 0;
-        while (low <= high) {
-            mid = low + ((high - low) / 2) | 0;
-            const midStop = breakOffsets[mid];
-            midStart = mid > 0 ? breakOffsets[mid - 1] : 0;
-            if (inputOffset < midStart) {
-                high = mid - 1;
-            }
-            else if (inputOffset >= midStop) {
-                low = mid + 1;
-            }
-            else {
-                break;
-            }
-        }
-        return new OutputPosition(mid, inputOffset - midStart);
-    }
-}
+import { LineBreakData, ViewLineData } from './viewModel.js';
 export class CoordinatesConverter {
     constructor(lines) {
         this._lines = lines;
@@ -77,6 +35,9 @@ export class CoordinatesConverter {
     }
     modelPositionIsVisible(modelPosition) {
         return this._lines.modelPositionIsVisible(modelPosition.lineNumber, modelPosition.column);
+    }
+    getModelLineViewLineCount(modelLineNumber) {
+        return this._lines.getModelLineViewLineCount(modelLineNumber);
     }
 }
 class LineNumberMapper {
@@ -292,6 +253,13 @@ export class SplitLinesCollection {
         }
         return this.lines[modelLineNumber - 1].isVisible();
     }
+    getModelLineViewLineCount(modelLineNumber) {
+        if (modelLineNumber < 1 || modelLineNumber > this.lines.length) {
+            // invalid arguments
+            return 1;
+        }
+        return this.lines[modelLineNumber - 1].getViewLineCount();
+    }
     setTabSize(newTabSize) {
         if (this.tabSize === newTabSize) {
             return false;
@@ -350,15 +318,8 @@ export class SplitLinesCollection {
             // We don't want to apply stale change events on top of a newer read model state.
             return null;
         }
-        let hiddenAreas = this.getHiddenAreas();
-        let isInHiddenArea = false;
-        let testPosition = new Position(fromLineNumber, 1);
-        for (const hiddenArea of hiddenAreas) {
-            if (hiddenArea.containsPosition(testPosition)) {
-                isInHiddenArea = true;
-                break;
-            }
-        }
+        // cannot use this.getHiddenAreas() because those decorations have already seen the effect of this model change
+        const isInHiddenArea = (fromLineNumber > 2 && !this.lines[fromLineNumber - 2].isVisible());
         let outputFromLineNumber = (fromLineNumber === 1 ? 1 : this.prefixSumComputer.getAccumulatedValue(fromLineNumber - 2) + 1);
         let totalOutputLineCount = 0;
         let insertLines = [];
@@ -1065,6 +1026,9 @@ export class IdentityCoordinatesConverter {
             return false;
         }
         return true;
+    }
+    getModelLineViewLineCount(modelLineNumber) {
+        return 1;
     }
 }
 export class IdentityLinesCollection {

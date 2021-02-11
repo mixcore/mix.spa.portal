@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 export class KeybindingResolver {
     constructor(defaultKeybindings, overrides, log) {
         this._log = log;
@@ -168,18 +172,6 @@ export class KeybindingResolver {
     getKeybindings() {
         return this._keybindings;
     }
-    lookupKeybindings(commandId) {
-        let items = this._lookupMap.get(commandId);
-        if (typeof items === 'undefined' || items.length === 0) {
-            return [];
-        }
-        // Reverse to get the most specific item first
-        let result = [], resultLen = 0;
-        for (let i = items.length - 1; i >= 0; i--) {
-            result[resultLen++] = items[i];
-        }
-        return result;
-    }
     lookupPrimaryKeybinding(commandId) {
         let items = this._lookupMap.get(commandId);
         if (typeof items === 'undefined' || items.length === 0) {
@@ -265,14 +257,7 @@ function printWhenExplanation(when) {
     return `${when.serialize()}`;
 }
 function printSourceExplanation(kb) {
-    if (kb.isDefault) {
-        if (kb.extensionId) {
-            return `built-in extension ${kb.extensionId}`;
-        }
-        return `built-in`;
-    }
-    if (kb.extensionId) {
-        return `user extension ${kb.extensionId}`;
-    }
-    return `user`;
+    return (kb.extensionId
+        ? (kb.isBuiltinExtension ? `built-in extension ${kb.extensionId}` : `user extension ${kb.extensionId}`)
+        : (kb.isDefault ? `built-in` : `user`));
 }

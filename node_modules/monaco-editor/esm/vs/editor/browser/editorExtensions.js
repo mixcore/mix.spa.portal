@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as nls from '../../nls.js';
-import { illegalArgument } from '../../base/common/errors.js';
 import { URI } from '../../base/common/uri.js';
 import { ICodeEditorService } from './services/codeEditorService.js';
 import { Position } from '../common/core/position.js';
@@ -69,8 +68,8 @@ export class Command {
             command: {
                 id: this.id,
                 title: item.title,
-                icon: item.icon
-                // precondition: this.precondition
+                icon: item.icon,
+                precondition: this.precondition
             },
             when: item.when,
             order: item.order
@@ -101,8 +100,12 @@ export class MultiCommand extends Command {
     }
     runCommand(accessor, args) {
         for (const impl of this._implementations) {
-            if (impl[1](accessor, args)) {
-                return;
+            const result = impl[1](accessor, args);
+            if (result) {
+                if (typeof result === 'boolean') {
+                    return;
+                }
+                return result;
             }
         }
     }
@@ -219,38 +222,6 @@ export class MultiEditorAction extends EditorAction {
 }
 //#endregion
 // --- Registration of commands and actions
-export function registerLanguageCommand(id, handler) {
-    CommandsRegistry.registerCommand(id, (accessor, args) => handler(accessor, args || {}));
-}
-export function registerDefaultLanguageCommand(id, handler) {
-    registerLanguageCommand(id, function (accessor, args) {
-        const { resource, position } = args;
-        if (!(resource instanceof URI)) {
-            throw illegalArgument('resource');
-        }
-        if (!Position.isIPosition(position)) {
-            throw illegalArgument('position');
-        }
-        const model = accessor.get(IModelService).getModel(resource);
-        if (model) {
-            const editorPosition = Position.lift(position);
-            return handler(model, editorPosition, args);
-        }
-        return accessor.get(ITextModelService).createModelReference(resource).then(reference => {
-            return new Promise((resolve, reject) => {
-                try {
-                    const result = handler(reference.object.textEditorModel, Position.lift(position), args);
-                    resolve(result);
-                }
-                catch (err) {
-                    reject(err);
-                }
-            }).finally(() => {
-                reference.dispose();
-            });
-        });
-    });
-}
 export function registerModelAndPositionCommand(id, handler) {
     CommandsRegistry.registerCommand(id, function (accessor, ...args) {
         const [resource, position] = args;

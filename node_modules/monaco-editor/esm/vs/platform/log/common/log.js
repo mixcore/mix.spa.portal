@@ -43,6 +43,11 @@ export class ConsoleLogService extends AbstractLogService {
             console.log('%cTRACE', 'color: #888', message, ...args);
         }
     }
+    debug(message, ...args) {
+        if (this.getLevel() <= LogLevel.Debug) {
+            console.log('%cDEBUG', 'background: #eee; color: #888', message, ...args);
+        }
+    }
     info(message, ...args) {
         if (this.getLevel() <= LogLevel.Info) {
             console.log('%c INFO', 'color: #33f', message, ...args);

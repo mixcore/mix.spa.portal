@@ -37,9 +37,10 @@ let SymbolNavigationService = class SymbolNavigationService {
         this._ctxHasSymbols = ctxHasSymbols.bindTo(contextKeyService);
     }
     reset() {
+        var _a, _b;
         this._ctxHasSymbols.reset();
-        dispose(this._currentState);
-        dispose(this._currentMessage);
+        (_a = this._currentState) === null || _a === void 0 ? void 0 : _a.dispose();
+        (_b = this._currentMessage) === null || _b === void 0 ? void 0 : _b.dispose();
         this._currentModel = undefined;
         this._currentIdx = -1;
     }
@@ -107,7 +108,8 @@ let SymbolNavigationService = class SymbolNavigationService {
         });
     }
     _showMessage() {
-        dispose(this._currentMessage);
+        var _a;
+        (_a = this._currentMessage) === null || _a === void 0 ? void 0 : _a.dispose();
         const kb = this._keybindingService.lookupKeybinding('editor.gotoNextSymbolFromResult');
         const message = kb
             ? localize('location.kb', "Symbol {0} of {1}, {2} for next", this._currentIdx + 1, this._currentModel.references.length, kb.getLabel())
@@ -166,7 +168,8 @@ let EditorState = class EditorState {
         this._listener.set(editor, combinedDisposable(editor.onDidChangeCursorPosition(_ => this._onDidChange.fire({ editor })), editor.onDidChangeModelContent(_ => this._onDidChange.fire({ editor }))));
     }
     _onDidRemoveEditor(editor) {
-        dispose(this._listener.get(editor));
+        var _a;
+        (_a = this._listener.get(editor)) === null || _a === void 0 ? void 0 : _a.dispose();
         this._listener.delete(editor);
     }
 };

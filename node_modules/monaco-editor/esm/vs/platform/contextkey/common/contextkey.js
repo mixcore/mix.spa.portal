@@ -4,7 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import { isFalsyOrWhitespace } from '../../../base/common/strings.js';
 import { createDecorator } from '../../instantiation/common/instantiation.js';
-import { isMacintosh, isLinux, isWindows, isWeb } from '../../../base/common/platform.js';
+import { userAgent, isMacintosh, isLinux, isWindows, isWeb } from '../../../base/common/platform.js';
+let _userAgent = userAgent || '';
 const STATIC_VALUES = new Map();
 STATIC_VALUES.set('false', false);
 STATIC_VALUES.set('true', true);
@@ -13,6 +14,11 @@ STATIC_VALUES.set('isLinux', isLinux);
 STATIC_VALUES.set('isWindows', isWindows);
 STATIC_VALUES.set('isWeb', isWeb);
 STATIC_VALUES.set('isMacNative', isMacintosh && !isWeb);
+STATIC_VALUES.set('isEdge', _userAgent.indexOf('Edg/') >= 0);
+STATIC_VALUES.set('isFirefox', _userAgent.indexOf('Firefox') >= 0);
+STATIC_VALUES.set('isChrome', _userAgent.indexOf('Chrome') >= 0);
+STATIC_VALUES.set('isSafari', _userAgent.indexOf('Safari') >= 0);
+STATIC_VALUES.set('isIPad', _userAgent.indexOf('iPad') >= 0);
 const hasOwnProperty = Object.prototype.hasOwnProperty;
 export class ContextKeyExpr {
     static has(key) {
@@ -64,6 +70,22 @@ export class ContextKeyExpr {
         if (serializedOne.indexOf(' in ') >= 0) {
             let pieces = serializedOne.split(' in ');
             return ContextKeyInExpr.create(pieces[0].trim(), pieces[1].trim());
+        }
+        if (/^[^<=>]+>=[^<=>]+$/.test(serializedOne)) {
+            const pieces = serializedOne.split('>=');
+            return ContextKeyGreaterEqualsExpr.create(pieces[0].trim(), pieces[1].trim());
+        }
+        if (/^[^<=>]+>[^<=>]+$/.test(serializedOne)) {
+            const pieces = serializedOne.split('>');
+            return ContextKeyGreaterExpr.create(pieces[0].trim(), pieces[1].trim());
+        }
+        if (/^[^<=>]+<=[^<=>]+$/.test(serializedOne)) {
+            const pieces = serializedOne.split('<=');
+            return ContextKeySmallerEqualsExpr.create(pieces[0].trim(), pieces[1].trim());
+        }
+        if (/^[^<=>]+<[^<=>]+$/.test(serializedOne)) {
+            const pieces = serializedOne.split('<');
+            return ContextKeySmallerExpr.create(pieces[0].trim(), pieces[1].trim());
         }
         if (/^\!\s*/.test(serializedOne)) {
             return ContextKeyNotExpr.create(serializedOne.substr(1).trim());
@@ -188,13 +210,7 @@ export class ContextKeyDefinedExpr {
         if (other.type !== this.type) {
             return this.type - other.type;
         }
-        if (this.key < other.key) {
-            return -1;
-        }
-        if (this.key > other.key) {
-            return 1;
-        }
-        return 0;
+        return cmp1(this.key, other.key);
     }
     equals(other) {
         if (other.type === this.type) {
@@ -236,19 +252,7 @@ export class ContextKeyEqualsExpr {
         if (other.type !== this.type) {
             return this.type - other.type;
         }
-        if (this.key < other.key) {
-            return -1;
-        }
-        if (this.key > other.key) {
-            return 1;
-        }
-        if (this.value < other.value) {
-            return -1;
-        }
-        if (this.value > other.value) {
-            return 1;
-        }
-        return 0;
+        return cmp2(this.key, this.value, other.key, other.value);
     }
     equals(other) {
         if (other.type === this.type) {
@@ -262,7 +266,7 @@ export class ContextKeyEqualsExpr {
         return (context.getValue(this.key) == this.value);
     }
     serialize() {
-        return this.key + ' == \'' + this.value + '\'';
+        return `${this.key} == '${this.value}'`;
     }
     keys() {
         return [this.key];
@@ -284,19 +288,7 @@ export class ContextKeyInExpr {
         if (other.type !== this.type) {
             return this.type - other.type;
         }
-        if (this.key < other.key) {
-            return -1;
-        }
-        if (this.key > other.key) {
-            return 1;
-        }
-        if (this.valueKey < other.valueKey) {
-            return -1;
-        }
-        if (this.valueKey > other.valueKey) {
-            return 1;
-        }
-        return 0;
+        return cmp2(this.key, this.valueKey, other.key, other.valueKey);
     }
     equals(other) {
         if (other.type === this.type) {
@@ -316,7 +308,7 @@ export class ContextKeyInExpr {
         return false;
     }
     serialize() {
-        return this.key + ' in \'' + this.valueKey + '\'';
+        return `${this.key} in '${this.valueKey}'`;
     }
     keys() {
         return [this.key, this.valueKey];
@@ -383,19 +375,7 @@ export class ContextKeyNotEqualsExpr {
         if (other.type !== this.type) {
             return this.type - other.type;
         }
-        if (this.key < other.key) {
-            return -1;
-        }
-        if (this.key > other.key) {
-            return 1;
-        }
-        if (this.value < other.value) {
-            return -1;
-        }
-        if (this.value > other.value) {
-            return 1;
-        }
-        return 0;
+        return cmp2(this.key, this.value, other.key, other.value);
     }
     equals(other) {
         if (other.type === this.type) {
@@ -409,7 +389,7 @@ export class ContextKeyNotEqualsExpr {
         return (context.getValue(this.key) != this.value);
     }
     serialize() {
-        return this.key + ' != \'' + this.value + '\'';
+        return `${this.key} != '${this.value}'`;
     }
     keys() {
         return [this.key];
@@ -434,13 +414,7 @@ export class ContextKeyNotExpr {
         if (other.type !== this.type) {
             return this.type - other.type;
         }
-        if (this.key < other.key) {
-            return -1;
-        }
-        if (this.key > other.key) {
-            return 1;
-        }
-        return 0;
+        return cmp1(this.key, other.key);
     }
     equals(other) {
         if (other.type === this.type) {
@@ -452,13 +426,149 @@ export class ContextKeyNotExpr {
         return (!context.getValue(this.key));
     }
     serialize() {
-        return '!' + this.key;
+        return `!${this.key}`;
     }
     keys() {
         return [this.key];
     }
     negate() {
         return ContextKeyDefinedExpr.create(this.key);
+    }
+}
+export class ContextKeyGreaterExpr {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.type = 12 /* Greater */;
+    }
+    static create(key, value) {
+        return new ContextKeyGreaterExpr(key, value);
+    }
+    cmp(other) {
+        if (other.type !== this.type) {
+            return this.type - other.type;
+        }
+        return cmp2(this.key, this.value, other.key, other.value);
+    }
+    equals(other) {
+        if (other.type === this.type) {
+            return (this.key === other.key && this.value === other.value);
+        }
+        return false;
+    }
+    evaluate(context) {
+        return (parseFloat(context.getValue(this.key)) > parseFloat(this.value));
+    }
+    serialize() {
+        return `${this.key} > ${this.value}`;
+    }
+    keys() {
+        return [this.key];
+    }
+    negate() {
+        return ContextKeySmallerEqualsExpr.create(this.key, this.value);
+    }
+}
+export class ContextKeyGreaterEqualsExpr {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.type = 13 /* GreaterEquals */;
+    }
+    static create(key, value) {
+        return new ContextKeyGreaterEqualsExpr(key, value);
+    }
+    cmp(other) {
+        if (other.type !== this.type) {
+            return this.type - other.type;
+        }
+        return cmp2(this.key, this.value, other.key, other.value);
+    }
+    equals(other) {
+        if (other.type === this.type) {
+            return (this.key === other.key && this.value === other.value);
+        }
+        return false;
+    }
+    evaluate(context) {
+        return (parseFloat(context.getValue(this.key)) >= parseFloat(this.value));
+    }
+    serialize() {
+        return `${this.key} >= ${this.value}`;
+    }
+    keys() {
+        return [this.key];
+    }
+    negate() {
+        return ContextKeySmallerExpr.create(this.key, this.value);
+    }
+}
+export class ContextKeySmallerExpr {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.type = 14 /* Smaller */;
+    }
+    static create(key, value) {
+        return new ContextKeySmallerExpr(key, value);
+    }
+    cmp(other) {
+        if (other.type !== this.type) {
+            return this.type - other.type;
+        }
+        return cmp2(this.key, this.value, other.key, other.value);
+    }
+    equals(other) {
+        if (other.type === this.type) {
+            return (this.key === other.key && this.value === other.value);
+        }
+        return false;
+    }
+    evaluate(context) {
+        return (parseFloat(context.getValue(this.key)) < parseFloat(this.value));
+    }
+    serialize() {
+        return `${this.key} < ${this.value}`;
+    }
+    keys() {
+        return [this.key];
+    }
+    negate() {
+        return ContextKeyGreaterEqualsExpr.create(this.key, this.value);
+    }
+}
+export class ContextKeySmallerEqualsExpr {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+        this.type = 15 /* SmallerEquals */;
+    }
+    static create(key, value) {
+        return new ContextKeySmallerEqualsExpr(key, value);
+    }
+    cmp(other) {
+        if (other.type !== this.type) {
+            return this.type - other.type;
+        }
+        return cmp2(this.key, this.value, other.key, other.value);
+    }
+    equals(other) {
+        if (other.type === this.type) {
+            return (this.key === other.key && this.value === other.value);
+        }
+        return false;
+    }
+    evaluate(context) {
+        return (parseFloat(context.getValue(this.key)) <= parseFloat(this.value));
+    }
+    serialize() {
+        return `${this.key} <= ${this.value}`;
+    }
+    keys() {
+        return [this.key];
+    }
+    negate() {
+        return ContextKeyGreaterExpr.create(this.key, this.value);
     }
 }
 export class ContextKeyRegexExpr {
@@ -648,6 +758,9 @@ export class ContextKeyAndExpr {
                 expr.sort(cmp);
             }
         }
+        if (expr.length === 1) {
+            return expr[0];
+        }
         return new ContextKeyAndExpr(expr);
     }
     serialize() {
@@ -805,6 +918,33 @@ export class RawContextKey extends ContextKeyDefinedExpr {
     toNegated() {
         return ContextKeyExpr.not(this.key);
     }
+    isEqualTo(value) {
+        return ContextKeyExpr.equals(this.key, value);
+    }
 }
 export const IContextKeyService = createDecorator('contextKeyService');
 export const SET_CONTEXT_COMMAND_ID = 'setContext';
+function cmp1(key1, key2) {
+    if (key1 < key2) {
+        return -1;
+    }
+    if (key1 > key2) {
+        return 1;
+    }
+    return 0;
+}
+function cmp2(key1, value1, key2, value2) {
+    if (key1 < key2) {
+        return -1;
+    }
+    if (key1 > key2) {
+        return 1;
+    }
+    if (value1 < value2) {
+        return -1;
+    }
+    if (value1 > value2) {
+        return 1;
+    }
+    return 0;
+}

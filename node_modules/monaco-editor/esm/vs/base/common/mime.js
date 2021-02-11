@@ -108,7 +108,7 @@ function guessMimeTypeByPath(path, filename, associations) {
     let patternMatch = null;
     let extensionMatch = null;
     // We want to prioritize associations based on the order they are registered so that the last registered
-    // association wins over all other. This is for https://github.com/Microsoft/vscode/issues/20074
+    // association wins over all other. This is for https://github.com/microsoft/vscode/issues/20074
     for (let i = associations.length - 1; i >= 0; i--) {
         const association = associations[i];
         // First exact name match
@@ -154,7 +154,7 @@ function guessMimeTypeByFirstline(firstLine) {
     }
     if (firstLine.length > 0) {
         // We want to prioritize associations based on the order they are registered so that the last registered
-        // association wins over all other. This is for https://github.com/Microsoft/vscode/issues/20074
+        // association wins over all other. This is for https://github.com/microsoft/vscode/issues/20074
         for (let i = registeredAssociations.length - 1; i >= 0; i--) {
             const association = registeredAssociations[i];
             if (!association.firstline) {

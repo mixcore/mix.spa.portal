@@ -7,7 +7,7 @@ import { LineTokens } from '../core/lineTokens.js';
 import { NULL_STATE, nullTokenize2 } from './nullMode.js';
 const fallback = {
     getInitialState: () => NULL_STATE,
-    tokenize2: (buffer, state, deltaOffset) => nullTokenize2(0 /* Null */, buffer, state, deltaOffset)
+    tokenize2: (buffer, hasEOL, state, deltaOffset) => nullTokenize2(0 /* Null */, buffer, state, deltaOffset)
 };
 export function tokenizeToString(text, tokenizationSupport = fallback) {
     return _tokenizeToString(text, tokenizationSupport || fallback);
@@ -72,14 +72,14 @@ export function tokenizeLineToHTML(text, viewLineTokens, colorMap, startOffset, 
 }
 function _tokenizeToString(text, tokenizationSupport) {
     let result = `<div class="monaco-tokenized-source">`;
-    let lines = text.split(/\r\n|\r|\n/);
+    let lines = strings.splitLines(text);
     let currentState = tokenizationSupport.getInitialState();
     for (let i = 0, len = lines.length; i < len; i++) {
         let line = lines[i];
         if (i > 0) {
             result += `<br/>`;
         }
-        let tokenizationResult = tokenizationSupport.tokenize2(line, currentState, 0);
+        let tokenizationResult = tokenizationSupport.tokenize2(line, true, currentState, 0);
         LineTokens.convertToEndOffset(tokenizationResult.tokens, line.length);
         let lineTokens = new LineTokens(tokenizationResult.tokens, line);
         let viewLineTokens = lineTokens.inflate();

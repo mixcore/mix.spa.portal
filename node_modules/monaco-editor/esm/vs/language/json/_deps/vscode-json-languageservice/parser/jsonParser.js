@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
@@ -15,10 +15,10 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import * as Json from '../../jsonc-parser/main.js';
+import * as Json from './../../jsonc-parser/main.js';
 import { isNumber, equals, isBoolean, isString, isDefined } from '../utils/objects.js';
 import { ErrorCode, Diagnostic, DiagnosticSeverity, Range } from '../jsonLanguageTypes.js';
-import * as nls from '../../../fillers/vscode-nls.js';
+import * as nls from './../../../fillers/vscode-nls.js';
 var localize = nls.loadMessageBundle();
 var formats = {
     'color-hex': { errorMessage: localize('colorHexFormatWarning', 'Invalid color format. Use #RGB, #RGBA, #RRGGBB or #RRGGBBAA.'), pattern: /^#([0-9A-Fa-f]{3,4}|([0-9A-Fa-f]{2}){3,4})$/ },
@@ -299,13 +299,15 @@ var JSONDocument = /** @class */ (function () {
             doVisit_1(this.root);
         }
     };
-    JSONDocument.prototype.validate = function (textDocument, schema) {
+    JSONDocument.prototype.validate = function (textDocument, schema, severity) {
+        if (severity === void 0) { severity = DiagnosticSeverity.Warning; }
         if (this.root && schema) {
             var validationResult = new ValidationResult();
             validate(this.root, schema, validationResult, NoOpSchemaCollector.instance);
             return validationResult.problems.map(function (p) {
+                var _a;
                 var range = Range.create(textDocument.positionAt(p.location.offset), textDocument.positionAt(p.location.offset + p.location.length));
-                return Diagnostic.create(range, p.message, p.severity, p.code);
+                return Diagnostic.create(range, p.message, (_a = p.severity) !== null && _a !== void 0 ? _a : severity, p.code);
             });
         }
         return undefined;
@@ -352,7 +354,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!schema.type.some(matchesType)) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: schema.errorMessage || localize('typeArrayMismatchWarning', 'Incorrect type. Expected one of {0}.', schema.type.join(', '))
                 });
             }
@@ -361,7 +362,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!matchesType(schema.type)) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: schema.errorMessage || localize('typeMismatchWarning', 'Incorrect type. Expected "{0}".', schema.type)
                 });
             }
@@ -380,7 +380,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!subValidationResult.hasProblems()) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('notSchemaWarning', "Matches a schema that is not allowed.")
                 });
             }
@@ -430,7 +429,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (matches.length > 1 && maxOneMatch) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: 1 },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('oneOfWarning', "Matches multiple schemas when only one must validate.")
                 });
             }
@@ -491,7 +489,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!enumValueMatch) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     code: ErrorCode.EnumValueMismatch,
                     message: schema.errorMessage || localize('enumWarning', 'Value is not accepted. Valid values: {0}.', schema.enum.map(function (v) { return JSON.stringify(v); }).join(', '))
                 });
@@ -502,7 +499,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!equals(val, schema.const)) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     code: ErrorCode.EnumValueMismatch,
                     message: schema.errorMessage || localize('constWarning', 'Value must be {0}.', JSON.stringify(schema.const))
                 });
@@ -517,7 +513,8 @@ function validate(n, schema, validationResult, matchingSchemas) {
             validationResult.problems.push({
                 location: { offset: node.parent.offset, length: node.parent.length },
                 severity: DiagnosticSeverity.Warning,
-                message: schema.deprecationMessage
+                message: schema.deprecationMessage,
+                code: ErrorCode.Deprecated
             });
         }
     }
@@ -554,7 +551,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (remainder !== 0) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('multipleOfWarning', 'Value is not divisible by {0}.', schema.multipleOf)
                 });
             }
@@ -578,7 +574,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(exclusiveMinimum) && val <= exclusiveMinimum) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('exclusiveMinimumWarning', 'Value is below the exclusive minimum of {0}.', exclusiveMinimum)
             });
         }
@@ -586,7 +581,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(exclusiveMaximum) && val >= exclusiveMaximum) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('exclusiveMaximumWarning', 'Value is above the exclusive maximum of {0}.', exclusiveMaximum)
             });
         }
@@ -594,7 +588,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(minimum) && val < minimum) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('minimumWarning', 'Value is below the minimum of {0}.', minimum)
             });
         }
@@ -602,7 +595,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(maximum) && val > maximum) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('maximumWarning', 'Value is above the maximum of {0}.', maximum)
             });
         }
@@ -611,14 +603,12 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(schema.minLength) && node.value.length < schema.minLength) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('minLengthWarning', 'String is shorter than the minimum length of {0}.', schema.minLength)
             });
         }
         if (isNumber(schema.maxLength) && node.value.length > schema.maxLength) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('maxLengthWarning', 'String is longer than the maximum length of {0}.', schema.maxLength)
             });
         }
@@ -627,7 +617,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!regex.test(node.value)) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: schema.patternErrorMessage || schema.errorMessage || localize('patternWarning', 'String does not match the pattern of "{0}".', schema.pattern)
                 });
             }
@@ -653,7 +642,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                         if (errorMessage) {
                             validationResult.problems.push({
                                 location: { offset: node.offset, length: node.length },
-                                severity: DiagnosticSeverity.Warning,
                                 message: schema.patternErrorMessage || schema.errorMessage || localize('uriFormatWarning', 'String is not a URI: {0}', errorMessage)
                             });
                         }
@@ -668,7 +656,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                     if (!node.value || !format.pattern.exec(node.value)) {
                         validationResult.problems.push({
                             location: { offset: node.offset, length: node.length },
-                            severity: DiagnosticSeverity.Warning,
                             message: schema.patternErrorMessage || schema.errorMessage || format.errorMessage
                         });
                     }
@@ -703,7 +690,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                 else if (schema.additionalItems === false) {
                     validationResult.problems.push({
                         location: { offset: node.offset, length: node.length },
-                        severity: DiagnosticSeverity.Warning,
                         message: localize('additionalItemsWarning', 'Array has too many items according to schema. Expected {0} or fewer.', subSchemas.length)
                     });
                 }
@@ -730,7 +716,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (!doesContain) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: schema.errorMessage || localize('requiredItemMissingWarning', 'Array does not contain required item.')
                 });
             }
@@ -738,14 +723,12 @@ function validate(n, schema, validationResult, matchingSchemas) {
         if (isNumber(schema.minItems) && node.items.length < schema.minItems) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('minItemsWarning', 'Array has too few items. Expected {0} or more.', schema.minItems)
             });
         }
         if (isNumber(schema.maxItems) && node.items.length > schema.maxItems) {
             validationResult.problems.push({
                 location: { offset: node.offset, length: node.length },
-                severity: DiagnosticSeverity.Warning,
                 message: localize('maxItemsWarning', 'Array has too many items. Expected {0} or fewer.', schema.maxItems)
             });
         }
@@ -757,7 +740,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (duplicates) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('uniqueItemsWarning', 'Array has duplicate items.')
                 });
             }
@@ -780,7 +762,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                     var location = keyNode ? { offset: keyNode.offset, length: keyNode.length } : { offset: node.offset, length: 1 };
                     validationResult.problems.push({
                         location: location,
-                        severity: DiagnosticSeverity.Warning,
                         message: localize('MissingRequiredPropWarning', 'Missing property "{0}".', propertyName)
                     });
                 }
@@ -805,7 +786,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                             var propertyNode = child.parent;
                             validationResult.problems.push({
                                 location: { offset: propertyNode.keyNode.offset, length: propertyNode.keyNode.length },
-                                severity: DiagnosticSeverity.Warning,
                                 message: schema.errorMessage || localize('DisallowedExtraPropWarning', 'Property {0} is not allowed.', propertyName)
                             });
                         }
@@ -838,7 +818,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                                     var propertyNode = child.parent;
                                     validationResult.problems.push({
                                         location: { offset: propertyNode.keyNode.offset, length: propertyNode.keyNode.length },
-                                        severity: DiagnosticSeverity.Warning,
                                         message: schema.errorMessage || localize('DisallowedExtraPropWarning', 'Property {0} is not allowed.', propertyName)
                                     });
                                 }
@@ -877,7 +856,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                         var propertyNode = child.parent;
                         validationResult.problems.push({
                             location: { offset: propertyNode.keyNode.offset, length: propertyNode.keyNode.length },
-                            severity: DiagnosticSeverity.Warning,
                             message: schema.errorMessage || localize('DisallowedExtraPropWarning', 'Property {0} is not allowed.', propertyName)
                         });
                     }
@@ -888,7 +866,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (node.properties.length > schema.maxProperties) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('MaxPropWarning', 'Object has more properties than limit of {0}.', schema.maxProperties)
                 });
             }
@@ -897,7 +874,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
             if (node.properties.length < schema.minProperties) {
                 validationResult.problems.push({
                     location: { offset: node.offset, length: node.length },
-                    severity: DiagnosticSeverity.Warning,
                     message: localize('MinPropWarning', 'Object has fewer properties than the required number of {0}', schema.minProperties)
                 });
             }
@@ -914,7 +890,6 @@ function validate(n, schema, validationResult, matchingSchemas) {
                             if (!seenKeys[requiredProp]) {
                                 validationResult.problems.push({
                                     location: { offset: node.offset, length: node.length },
-                                    severity: DiagnosticSeverity.Warning,
                                     message: localize('RequiredDependentPropWarning', 'Object is missing property {0} required by property {1}.', requiredProp, key)
                                 });
                             }

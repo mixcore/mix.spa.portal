@@ -2,7 +2,6 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { startsWith } from '../../../base/common/strings.js';
 export class CodeActionKind {
     constructor(value) {
         this.value = value;
@@ -11,7 +10,7 @@ export class CodeActionKind {
         return this.value === other.value;
     }
     contains(other) {
-        return this.equals(other) || this.value === '' || startsWith(other.value, this.value + CodeActionKind.sep);
+        return this.equals(other) || this.value === '' || other.value.startsWith(this.value + CodeActionKind.sep);
     }
     intersects(other) {
         return this.contains(other) || other.contains(this);

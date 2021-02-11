@@ -150,7 +150,7 @@ export class PointerEventHandler extends MouseHandler {
         }
     }
     _onMouseDown(e) {
-        if (e.target && this.viewHelper.linesContentDomNode.contains(e.target) && this._lastPointerType === 'touch') {
+        if (e.browserEvent.pointerType === 'touch') {
             return;
         }
         super._onMouseDown(e);

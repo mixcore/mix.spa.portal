@@ -78,8 +78,8 @@ let CodeActionUi = class CodeActionUi extends Disposable {
                     // Check to see if there is an action that we would have applied were it not invalid
                     if (newState.trigger.context) {
                         const invalidAction = this.getInvalidActionThatWouldHaveBeenApplied(newState.trigger, actions);
-                        if (invalidAction && invalidAction.disabled) {
-                            MessageController.get(this._editor).showMessage(invalidAction.disabled, newState.trigger.context.position);
+                        if (invalidAction && invalidAction.action.disabled) {
+                            MessageController.get(this._editor).showMessage(invalidAction.action.disabled, newState.trigger.context.position);
                             actions.dispose();
                             return;
                         }
@@ -115,7 +115,7 @@ let CodeActionUi = class CodeActionUi extends Disposable {
         }
         if ((trigger.autoApply === "first" /* First */ && actions.validActions.length === 0)
             || (trigger.autoApply === "ifSingle" /* IfSingle */ && actions.allActions.length === 1)) {
-            return actions.allActions.find(action => action.disabled);
+            return actions.allActions.find(({ action }) => action.disabled);
         }
         return undefined;
     }

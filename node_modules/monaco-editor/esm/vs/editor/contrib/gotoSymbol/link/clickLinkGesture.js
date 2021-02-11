@@ -65,13 +65,13 @@ export class ClickLinkGesture extends Disposable {
         this._onCancel = this._register(new Emitter());
         this.onCancel = this._onCancel.event;
         this._editor = editor;
-        this._opts = createOptions(this._editor.getOption(61 /* multiCursorModifier */));
+        this._opts = createOptions(this._editor.getOption(64 /* multiCursorModifier */));
         this._lastMouseMoveEvent = null;
         this._hasTriggerKeyOnMouseDown = false;
         this._lineNumberOnMouseDown = 0;
         this._register(this._editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(61 /* multiCursorModifier */)) {
-                const newOpts = createOptions(this._editor.getOption(61 /* multiCursorModifier */));
+            if (e.hasChanged(64 /* multiCursorModifier */)) {
+                const newOpts = createOptions(this._editor.getOption(64 /* multiCursorModifier */));
                 if (this._opts.equals(newOpts)) {
                     return;
                 }
@@ -99,7 +99,7 @@ export class ClickLinkGesture extends Disposable {
     }
     _onDidChangeCursorSelection(e) {
         if (e.selection && e.selection.startColumn !== e.selection.endColumn) {
-            this._resetHandler(); // immediately stop this feature if the user starts to select (https://github.com/Microsoft/vscode/issues/7827)
+            this._resetHandler(); // immediately stop this feature if the user starts to select (https://github.com/microsoft/vscode/issues/7827)
         }
     }
     _onEditorMouseMove(mouseEvent) {

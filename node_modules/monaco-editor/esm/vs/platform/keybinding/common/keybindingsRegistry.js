@@ -96,7 +96,8 @@ class KeybindingsRegistryImpl {
             when: when,
             weight1: weight1,
             weight2: weight2,
-            extensionId: null
+            extensionId: null,
+            isBuiltinExtension: false
         });
         this._cachedMergedKeybindings = null;
     }

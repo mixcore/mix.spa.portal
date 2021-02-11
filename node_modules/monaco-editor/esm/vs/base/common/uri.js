@@ -120,7 +120,7 @@ export class URI {
             && typeof thing.path === 'string'
             && typeof thing.query === 'string'
             && typeof thing.scheme === 'string'
-            && typeof thing.fsPath === 'function'
+            && typeof thing.fsPath === 'string'
             && typeof thing.with === 'function'
             && typeof thing.toString === 'function';
     }
@@ -270,7 +270,7 @@ export class URI {
      */
     static joinPath(uri, ...pathFragment) {
         if (!uri.path) {
-            throw new Error(`[UriError]: cannot call joinPaths on URI without path`);
+            throw new Error(`[UriError]: cannot call joinPath on URI without path`);
         }
         let newPath;
         if (isWindows && uri.scheme === 'file') {

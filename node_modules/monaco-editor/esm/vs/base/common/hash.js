@@ -74,8 +74,11 @@ function leftPad(value, length, char = '0') {
     }
     return value;
 }
-function toHexString(value, bitsize = 32) {
-    return leftPad((value >>> 0).toString(16), bitsize / 4);
+export function toHexString(bufferOrValue, bitsize = 32) {
+    if (bufferOrValue instanceof ArrayBuffer) {
+        return Array.from(new Uint8Array(bufferOrValue)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    return leftPad((bufferOrValue >>> 0).toString(16), bitsize / 4);
 }
 /**
  * A SHA1 implementation that works with strings and does not allocate.

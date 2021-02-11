@@ -59,12 +59,13 @@ export class ReplaceInput extends Widget {
         this.inputValidationErrorBorder = options.inputValidationErrorBorder;
         this.inputValidationErrorBackground = options.inputValidationErrorBackground;
         this.inputValidationErrorForeground = options.inputValidationErrorForeground;
+        const appendPreserveCaseLabel = options.appendPreserveCaseLabel || '';
         const history = options.history || [];
         const flexibleHeight = !!options.flexibleHeight;
         const flexibleWidth = !!options.flexibleWidth;
         const flexibleMaxHeight = options.flexibleMaxHeight;
         this.domNode = document.createElement('div');
-        dom.addClass(this.domNode, 'monaco-findInput');
+        this.domNode.classList.add('monaco-findInput');
         this.inputBox = this._register(new HistoryInputBox(this.domNode, this.contextViewProvider, {
             ariaLabel: this.label || '',
             placeholder: this.placeholder || '',
@@ -89,7 +90,7 @@ export class ReplaceInput extends Widget {
             flexibleMaxHeight
         }));
         this.preserveCase = this._register(new PreserveCaseCheckbox({
-            appendTitle: '',
+            appendTitle: appendPreserveCaseLabel,
             isChecked: false,
             inputActiveOptionBorder: this.inputActiveOptionBorder,
             inputActiveOptionForeground: this.inputActiveOptionForeground,
@@ -131,6 +132,7 @@ export class ReplaceInput extends Widget {
                     }
                     if (event.equals(9 /* Escape */)) {
                         indexes[index].blur();
+                        this.inputBox.focus();
                     }
                     else if (newIndex >= 0) {
                         indexes[newIndex].focus();
@@ -153,12 +155,12 @@ export class ReplaceInput extends Widget {
         this.onmousedown(this.inputBox.inputElement, (e) => this._onMouseDown.fire(e));
     }
     enable() {
-        dom.removeClass(this.domNode, 'disabled');
+        this.domNode.classList.remove('disabled');
         this.inputBox.enable();
         this.preserveCase.enable();
     }
     disable() {
-        dom.addClass(this.domNode, 'disabled');
+        this.domNode.classList.add('disabled');
         this.inputBox.disable();
         this.preserveCase.disable();
     }

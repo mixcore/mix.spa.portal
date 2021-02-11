@@ -3,11 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as dom from './dom.js';
-import * as platform from '../common/platform.js';
 import { IframeUtils } from './iframe.js';
 import { StandardMouseEvent } from './mouseEvent.js';
 import { DisposableStore } from '../common/lifecycle.js';
-import { BrowserFeatures } from './canIUse.js';
 export function standardMouseMoveMerger(lastEvent, currentEvent) {
     let ev = new StandardMouseEvent(currentEvent);
     ev.preventDefault();
@@ -29,7 +27,7 @@ export class GlobalMouseMoveMonitor {
         this.stopMonitoring(false);
         this._hooks.dispose();
     }
-    stopMonitoring(invokeStopCallback) {
+    stopMonitoring(invokeStopCallback, browserEvent) {
         if (!this.isMonitoring()) {
             // Not monitoring
             return;
@@ -41,7 +39,7 @@ export class GlobalMouseMoveMonitor {
         const onStopCallback = this._onStopCallback;
         this._onStopCallback = null;
         if (invokeStopCallback && onStopCallback) {
-            onStopCallback();
+            onStopCallback(browserEvent);
         }
     }
     isMonitoring() {
@@ -56,8 +54,8 @@ export class GlobalMouseMoveMonitor {
         this._mouseMoveCallback = mouseMoveCallback;
         this._onStopCallback = onStopCallback;
         const windowChain = IframeUtils.getSameOriginWindowChain();
-        const mouseMove = platform.isIOS && BrowserFeatures.pointerEvents ? 'pointermove' : 'mousemove';
-        const mouseUp = platform.isIOS && BrowserFeatures.pointerEvents ? 'pointerup' : 'mouseup';
+        const mouseMove = 'mousemove';
+        const mouseUp = 'mouseup';
         const listenTo = windowChain.map(element => element.window.document);
         const shadowRoot = dom.getShadowRoot(initialElement);
         if (shadowRoot) {

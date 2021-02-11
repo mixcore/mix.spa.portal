@@ -5,6 +5,7 @@
 import { onUnexpectedError } from './errors.js';
 import { Disposable, combinedDisposable, DisposableStore } from './lifecycle.js';
 import { LinkedList } from './linkedList.js';
+import { StopWatch } from './stopwatch.js';
 export var Event;
 (function (Event) {
     Event.None = () => Disposable.None;
@@ -286,10 +287,32 @@ export var Event;
     }
     Event.fromPromise = fromPromise;
     function toPromise(event) {
-        return new Promise(c => once(event)(c));
+        return new Promise(resolve => once(event)(resolve));
     }
     Event.toPromise = toPromise;
 })(Event || (Event = {}));
+class EventProfiling {
+    constructor(name) {
+        this._listenerCount = 0;
+        this._invocationCount = 0;
+        this._elapsedOverall = 0;
+        this._name = `${name}_${EventProfiling._idPool++}`;
+    }
+    start(listenerCount) {
+        this._stopWatch = new StopWatch(true);
+        this._listenerCount = listenerCount;
+    }
+    stop() {
+        if (this._stopWatch) {
+            const elapsed = this._stopWatch.elapsed();
+            this._elapsedOverall += elapsed;
+            this._invocationCount += 1;
+            console.info(`did FIRE ${this._name}: elapsed_ms: ${elapsed.toFixed(5)}, listener: ${this._listenerCount} (elapsed_overall: ${this._elapsedOverall.toFixed(2)}, invocations: ${this._invocationCount})`);
+            this._stopWatch = undefined;
+        }
+    }
+}
+EventProfiling._idPool = 0;
 let _globalLeakWarningThreshold = -1;
 class LeakageMonitor {
     constructor(customThreshold, name = Math.random().toString(18).slice(2, 5)) {
@@ -362,11 +385,11 @@ class LeakageMonitor {
  */
 export class Emitter {
     constructor(options) {
+        var _a;
         this._disposed = false;
         this._options = options;
-        this._leakageMon = _globalLeakWarningThreshold > 0
-            ? new LeakageMonitor(this._options && this._options.leakWarningThreshold)
-            : undefined;
+        this._leakageMon = _globalLeakWarningThreshold > 0 ? new LeakageMonitor(this._options && this._options.leakWarningThreshold) : undefined;
+        this._perfMon = ((_a = this._options) === null || _a === void 0 ? void 0 : _a._profName) ? new EventProfiling(this._options._profName) : undefined;
     }
     /**
      * For the public to allow to subscribe
@@ -375,6 +398,7 @@ export class Emitter {
     get event() {
         if (!this._event) {
             this._event = (listener, thisArgs, disposables) => {
+                var _a;
                 if (!this._listeners) {
                     this._listeners = new LinkedList();
                 }
@@ -390,10 +414,7 @@ export class Emitter {
                     this._options.onListenerDidAdd(this, listener, thisArgs);
                 }
                 // check and record this emitter for potential leakage
-                let removeMonitor;
-                if (this._leakageMon) {
-                    removeMonitor = this._leakageMon.check(this._listeners.size);
-                }
+                const removeMonitor = (_a = this._leakageMon) === null || _a === void 0 ? void 0 : _a.check(this._listeners.size);
                 let result;
                 result = {
                     dispose: () => {
@@ -428,6 +449,7 @@ export class Emitter {
      * subscribers
      */
     fire(event) {
+        var _a, _b;
         if (this._listeners) {
             // put all [listener,event]-pairs into delivery queue
             // then emit all event. an inner/nested event might be
@@ -438,6 +460,8 @@ export class Emitter {
             for (let listener of this._listeners) {
                 this._deliveryQueue.push([listener, event]);
             }
+            // start/stop performance insight collection
+            (_a = this._perfMon) === null || _a === void 0 ? void 0 : _a.start(this._deliveryQueue.size);
             while (this._deliveryQueue.size > 0) {
                 const [listener, event] = this._deliveryQueue.shift();
                 try {
@@ -452,18 +476,14 @@ export class Emitter {
                     onUnexpectedError(e);
                 }
             }
+            (_b = this._perfMon) === null || _b === void 0 ? void 0 : _b.stop();
         }
     }
     dispose() {
-        if (this._listeners) {
-            this._listeners.clear();
-        }
-        if (this._deliveryQueue) {
-            this._deliveryQueue.clear();
-        }
-        if (this._leakageMon) {
-            this._leakageMon.dispose();
-        }
+        var _a, _b, _c;
+        (_a = this._listeners) === null || _a === void 0 ? void 0 : _a.clear();
+        (_b = this._deliveryQueue) === null || _b === void 0 ? void 0 : _b.clear();
+        (_c = this._leakageMon) === null || _c === void 0 ? void 0 : _c.dispose();
         this._disposed = true;
     }
 }
@@ -473,7 +493,7 @@ export class PauseableEmitter extends Emitter {
         super(options);
         this._isPaused = 0;
         this._eventQueue = new LinkedList();
-        this._mergeFn = options && options.merge;
+        this._mergeFn = options === null || options === void 0 ? void 0 : options.merge;
     }
     pause() {
         this._isPaused++;
@@ -483,7 +503,7 @@ export class PauseableEmitter extends Emitter {
             if (this._mergeFn) {
                 // use the merge function to create a single composite
                 // event. make a copy in case firing pauses this emitter
-                const events = this._eventQueue.toArray();
+                const events = Array.from(this._eventQueue);
                 this._eventQueue.clear();
                 super.fire(this._mergeFn(events));
             }

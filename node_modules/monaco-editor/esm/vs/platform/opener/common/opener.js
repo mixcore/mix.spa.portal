@@ -11,17 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { URI } from '../../../base/common/uri.js';
-import { createDecorator } from '../../instantiation/common/instantiation.js';
 import { Disposable } from '../../../base/common/lifecycle.js';
 import { equalsIgnoreCase, startsWithIgnoreCase } from '../../../base/common/strings.js';
+import { URI } from '../../../base/common/uri.js';
+import { createDecorator } from '../../instantiation/common/instantiation.js';
 export const IOpenerService = createDecorator('openerService');
 export const NullOpenerService = Object.freeze({
     _serviceBrand: undefined,
     registerOpener() { return Disposable.None; },
     registerValidator() { return Disposable.None; },
     registerExternalUriResolver() { return Disposable.None; },
-    setExternalOpener() { },
+    setDefaultExternalOpener() { },
+    registerExternalOpener() { return Disposable.None; },
     open() {
         return __awaiter(this, void 0, void 0, function* () { return false; });
     },
