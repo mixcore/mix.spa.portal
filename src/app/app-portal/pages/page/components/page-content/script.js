@@ -1,5 +1,6 @@
 ﻿app.component("pageContent", {
-  templateUrl: "/mix-app/views/app-portal/pages/page/components/page-content/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/pages/page/components/page-content/view.html",
   bindings: {
     model: "=",
     additionalData: "=",

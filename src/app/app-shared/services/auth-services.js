@@ -73,28 +73,28 @@ app.factory("AuthService", [
       if (resp.isSucceed) {
         data = resp.data;
         var authData = {
-          userRoles: data.userData.userRoles,
+          userRoles: data.info.userRoles,
           token: data.access_token,
-          userName: data.userData.username,
-          roleNames: data.userData.userRoles.map((i) => i.role.normalizedName),
-          avatar: data.userData.avatar,
+          userName: data.info.user.username,
+          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
+          avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
-          userId: data.userData.id,
+          userId: data.info.user.id,
         };
         var encrypted = $rootScope.encrypt(JSON.stringify(authData));
         localStorageService.set("authorizationData", encrypted);
         _authentication = {
           isAuth: true,
-          userName: data.userData.username,
-          userId: data.userData.id,
-          roleNames: data.userData.userRoles.map((i) => i.role.normalizedName),
+          userName: data.info.user.username,
+          userId: data.info.user.id,
+          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
           token: data.access_token,
           useRefreshTokens: loginData.rememberme,
-          avatar: data.userData.avatar,
+          avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
           referredUrl: "/",
         };
-        angular.forEach(data.userData.userRoles, function (value, key) {
+        angular.forEach(data.info.userRoles, function (value, key) {
           if (
             value.role.name === "SuperAdmin"
             //|| value.role.name === 'Admin'
@@ -117,7 +117,7 @@ app.factory("AuthService", [
             }, 500);
           } else {
             setTimeout(() => {
-            window.top.location = "/";
+              window.top.location = "/";
             }, 500);
           }
         });
@@ -147,28 +147,28 @@ app.factory("AuthService", [
       if (resp.isSucceed) {
         data = resp.data;
         var authData = {
-          userRoles: data.userData.userRoles,
+          userRoles: data.info.userRoles,
           token: data.access_token,
-          userName: data.userData.username,
-          roleNames: data.userData.userRoles.map((i) => i.role.normalizedName),
-          avatar: data.userData.avatar,
+          userName: data.info.user.username,
+          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
+          avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
-          userId: data.userData.id,
+          userId: data.info.user.id,
         };
         var encrypted = $rootScope.encrypt(JSON.stringify(authData));
         localStorageService.set("authorizationData", encrypted);
         _authentication = {
           isAuth: true,
-          userName: data.userData.NickName,
-          userId: data.userData.id,
-          roleNames: data.userData.userRoles.map((i) => i.role.normalizedName),
+          userName: data.info.user.NickName,
+          userId: data.info.user.id,
+          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
           token: data.access_token,
           useRefreshTokens: loginData.rememberme,
-          avatar: data.userData.avatar,
+          avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
           referredUrl: "/",
         };
-        angular.forEach(data.userData.userRoles, function (value, key) {
+        angular.forEach(data.info.userRoles, function (value, key) {
           if (
             value.role.name === "SuperAdmin"
             //|| value.role.name === 'Admin'
@@ -296,15 +296,15 @@ app.factory("AuthService", [
             if (data) {
               try {
                 var authData = {
-                  userRoles: data.userData.userRoles,
+                  userRoles: data.info.userRoles,
                   token: data.access_token,
-                  userName: data.userData.firstName,
-                  roleNames: data.userData.userRoles.map(
+                  userName: data.info.user.firstName,
+                  roleNames: data.info.userRoles.map(
                     (i) => i.role.normalizedName
                   ),
-                  avatar: data.userData.avatar,
+                  avatar: data.info.user.avatar,
                   refresh_token: data.refresh_token,
-                  userId: data.userData.id,
+                  userId: data.info.user.id,
                 };
                 var encrypted = $rootScope.encrypt(JSON.stringify(authData));
                 localStorageService.set("authorizationData", encrypted);
