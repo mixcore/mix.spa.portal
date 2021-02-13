@@ -41,15 +41,14 @@
                         </pane-v>
                         <pane-v header="Layout">
                             <div class="tab-pane">
-                                <template-editor  is-readonly="'true'" folder-type="'Posts'" template="viewModel.view"
-                                    templates="viewModel.templates"
-                                    enable-rename="'true'"></template-editor>
+                                <template-editor is-readonly="'true'" folder-type="'Posts'" template="viewModel.view"
+                                    templates="viewModel.templates" enable-rename="'true'"></template-editor>
                             </div>
                         </pane-v>
                         <pane-v header="Related">
-                            <related-navs request="request" source-id="viewModel.id"
-                                culture="viewModel.specificulture" prefix="'post'" navs="viewModel.postNavs"
-                                data="data" load-data="getList(pageIndex)"></related-navs>
+                            <related-navs request="request" source-id="viewModel.id" culture="viewModel.specificulture"
+                                prefix="'post'" navs="viewModel.postNavs" data="data" load-data="getList(pageIndex)">
+                            </related-navs>
                         </pane-v>
                     </tabs-v>
                 </div>
@@ -65,17 +64,15 @@
                         <div class="mb-3" ng-if="viewModel.status == 4">
                             <label class="form-label">Published Date Time</label>
                             <div class="input-group input-group-sm mb-3">
-                                    <span class="input-group-text" id="basic-addon1"><i
-                                            class="mi mi-Calendar"></i></span>
-                                <input value="{{viewModel.publishedDateTime}}"
-                                    ng-model="viewModel.publishedDateTime" type="datetime-local" class="form-control">
+                                <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
+                                <input value="{{viewModel.publishedDateTime}}" ng-model="viewModel.publishedDateTime"
+                                    type="datetime-local" class="form-control">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Created Date Time</label>
                             <div class="input-group input-group-sm">
-                                    <span class="input-group-text" id="basic-addon1"><i
-                                            class="mi mi-Calendar"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
                                 <input ng-model="viewModel.createdDateTime" type="text" class="form-control"
                                     readonly="readonly">
                             </div>
@@ -83,15 +80,14 @@
                         <div class="mb-3">
                             <label class="form-label">Author</label>
                             <div class="input-group input-group-sm">
-                                    <span class="input-group-text" id="basic-addon1"><i
-                                            class="mi mi-Contact"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>
                                 <input ng-model="viewModel.createdBy" class="form-control" readonly="readonly">
                             </div>
                         </div>
                         <div class="mb-3 mb-0">
                             <label class="form-label">Template</label>
                             <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
+                                <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
                                 <select class="form-select"
                                     ng-options="item as item.fileName for item in viewModel.templates track by item.id"
                                     ng-model="viewModel.view"></select>
@@ -120,8 +116,8 @@
                             url-alias="alias" remove-callback="removeAliasCallback(index)"></url-alias>
                     </div>
                 </div>
-                <custom-image header="'Image'" type="'Posts'" folder="viewModel.seoName"
-                    src-url="viewModel.imageUrl" src="viewModel.image" auto="'true'"></custom-image>
+                <custom-image header="'Image'" type="'Posts'" folder="viewModel.seoName" src-url="viewModel.imageUrl"
+                    src="viewModel.image" auto="'true'"></custom-image>
                 <custom-image header="'Thumnail'" type="'Posts'" folder="viewModel.seoName"
                     src-url="viewModel.thumbnailUrl" src="viewModel.thumbnail" auto="'true'"></custom-image>
             </section>

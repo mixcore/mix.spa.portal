@@ -5,6 +5,6 @@ modules.component('breadcrumbs', {
         var ctrl = this;
     }],
     bindings: {
-        breadCrumbs:'='
+        breadCrumbs: '='
     }
 });

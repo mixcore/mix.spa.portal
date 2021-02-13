@@ -5,31 +5,31 @@ app.factory('RestAttributeSetPortalService', ['$rootScope', 'CommonService', 'Ba
         serviceFactory.init('attribute-set-data');
 
         var _getList = async function (viewType, objData, attributeSetId, attributeSetName, parentType, parentId) {
-            objData.filter  = '';
-            if(attributeSetId){
+            objData.filter = '';
+            if (attributeSetId) {
                 objData.filter += 'attributeSetId eq ' + attributeSetId;
             }
-            if(attributeSetName){
-                if(objData.filter){
+            if (attributeSetName) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += "attributeSetName eq '" + attributeSetName + "'";;
             }
-            if(parentType){
-                if(objData.filter){
+            if (parentType) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += 'parentType eq ' + parentType;
             }
-            if(parentId){
-                if(objData.filter){
+            if (parentId) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += "parentId eq '" + parentId + "'";
-            }        
-            var data = serviceFactory.parseODataQuery(objData);           
+            }
+            var data = serviceFactory.parseODataQuery(objData);
             var url = this.prefixUrl + '/' + viewType;
-            if(data){
+            if (data) {
                 url = url.concat(data);
             }
             var req = {
@@ -38,33 +38,33 @@ app.factory('RestAttributeSetPortalService', ['$rootScope', 'CommonService', 'Ba
             };
             return await commonService.getApiResult(req);
         };
-        
+
         var _export = async function (viewType, objData, attributeSetId, attributeSetName, parentType, parentId) {
-            objData.filter  = '';
-            if(attributeSetId){
+            objData.filter = '';
+            if (attributeSetId) {
                 objData.filter += 'attributeSetId eq ' + attributeSetId;
             }
-            if(attributeSetName){
-                if(objData.filter){
+            if (attributeSetName) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += "attributeSetName eq '" + attributeSetName + "'";;
             }
-            if(parentType){
-                if(objData.filter){
+            if (parentType) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += 'parentType eq ' + parentType;
             }
-            if(parentId){
-                if(objData.filter){
+            if (parentId) {
+                if (objData.filter) {
                     objData.filter += ' and ';
                 }
                 objData.filter += "parentId eq '" + parentId + "'";
-            }        
-            var data = serviceFactory.parseODataQuery(objData);           
+            }
+            var data = serviceFactory.parseODataQuery(objData);
             var url = this.prefixUrl + '/' + viewType + '/export/' + attributeSetName;
-            if(data){
+            if (data) {
                 url = url.concat(data);
             }
             var req = {

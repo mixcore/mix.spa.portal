@@ -163,7 +163,7 @@
             break;
         }
       };
-      
+
       ctrl.updateRefData = function (nav) {
         ctrl.goToPath(`/portal/attribute-set-data/details?dataId=${nav.data.id}
                 &attributeSetId=${nav.data.attributeSetId}
@@ -174,7 +174,7 @@
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/attribute-set-data/details?dataId='+ item.id +'&attributeSetId=' + item.attributeSetId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
-      
+
       ctrl.removeRefData = async function (nav) {
         $rootScope.showConfirm(
           ctrl,

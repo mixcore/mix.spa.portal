@@ -15,7 +15,7 @@ app.factory('CultureService', ['BaseService', function (baseService) {
 
     var _syncTemplates = async function (id) {
         var apiUrl = '/culture/';
-        var url = apiUrl + 'sync/' + id;        
+        var url = apiUrl + 'sync/' + id;
         var req = {
             method: 'GET',
             url: url

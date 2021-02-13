@@ -63,9 +63,9 @@ app.controller('SocialFeedController',
                     $scope.statusChangeCallback(response);
 
                 }, {
-                        scope: 'email, manage_pages',
-                        return_scopes: true
-                    });
+                    scope: 'email, manage_pages',
+                    return_scopes: true
+                });
             }
 
             $scope.statusChangeCallback = function (response) {

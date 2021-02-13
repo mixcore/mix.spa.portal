@@ -19,10 +19,10 @@
                 angular.forEach(ctrl.titleField.split('.'), (e) => {
                     t = t[e];
                 });
-                return ctrl.limString(t, ctrl.titleMaxLength ||  30);
+                return ctrl.limString(t, ctrl.titleMaxLength || 30);
             }
-            else{
-                return ctrl.limString(item.description, ctrl.titleMaxLength ||  30);
+            else {
+                return ctrl.limString(item.description, ctrl.titleMaxLength || 30);
             }
         }
         ctrl.updateOrders = function (index) {

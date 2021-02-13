@@ -2,8 +2,7 @@
 <div class="mb-3 row">
     <div class="col">
         <label class="form-label">Content Status</label>
-        <select class="btn btn-outline-secondary form-select"
-            ng-model="$ctrl.appSettings.GlobalSettings.DefaultStatus">
+        <select class="btn btn-outline-secondary form-select" ng-model="$ctrl.appSettings.GlobalSettings.DefaultStatus">
             <option ng-repeat="item in $ctrl.statuses track by $index" value="{{$index}}">{{item}}</option>
         </select>
     </div>

@@ -17,79 +17,79 @@ modules.component('propertiesStructure', {
                 isDisplay: true,
                 width: 3
             };
-            
+
             ctrl.addAttr = function () {
                 if (ctrl.columns) {
                     var t = angular.copy(ctrl.defaultAttr);
                     ctrl.columns.push(t);
                 }
             };
-    
+
             ctrl.addOption = function (col, index) {
                 var val = $('#option_' + index).val();
                 col.options.push(val);
                 $('#option_' + index).val('');
             };
-            ctrl.generateForm = function(){
+            ctrl.generateForm = function () {
                 var formHtml = document.createElement('module-form');
-                formHtml.setAttribute('class','row');
-                angular.forEach(ctrl.viewModel.columns, function(e,i){
+                formHtml.setAttribute('class', 'row');
+                angular.forEach(ctrl.viewModel.columns, function (e, i) {
                     var el;
                     var label = document.createElement('label');
                     label.setAttribute('class', 'control-label');
                     label.setAttribute('ng-bind', '{{data.title}}');
-                    
-                    switch(e.dataType){
+
+                    switch (e.dataType) {
                         case 'datetime':
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'datetime-local');                                 
-                        break;
-                        
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'datetime-local');
+                            break;
+
                         case 'date':
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'date');                                 
-                        break;
-                        
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'date');
+                            break;
+
                         case 'time':
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'time');                                 
-                        break;
-    
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'time');
+                            break;
+
                         case 'phonenumber':
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'tel');                                 
-                        break;
-                       
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'tel');
+                            break;
+
                         case 'integer':
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'number');                                 
-                        break;
-                       
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'number');
+                            break;
+
                         case 'html':
-                        el = document.createElement('quill');
-                        el.setAttribute('options', '{}');                                 
-                        el.setAttribute('type', 'number');                                 
-                        break;
-                        
+                            el = document.createElement('quill');
+                            el.setAttribute('options', '{}');
+                            el.setAttribute('type', 'number');
+                            break;
+
                         case 'multilinetext':
-                        el = document.createElement('textarea');
-                        break;
-    
+                            el = document.createElement('textarea');
+                            break;
+
                         default:
-                        el = document.createElement('input');
-                        el.setAttribute('type', 'text');
-                        formHtml.appendChild(el);
-                        break;
+                            el = document.createElement('input');
+                            el.setAttribute('type', 'text');
+                            formHtml.appendChild(el);
+                            break;
                     }
                     el.setAttribute('ng-model', 'data.jItem[' + e.name + '].value');
-                    el.setAttribute( 'placeholder', '{{$ctrl.title}}');
-                    formHtml.appendChild(label);      
-                    formHtml.appendChild(el);      
-                    
+                    el.setAttribute('placeholder', '{{$ctrl.title}}');
+                    formHtml.appendChild(label);
+                    formHtml.appendChild(el);
+
                 });
                 ctrl.viewModel.formView.content = formHtml.innerHTML;
             };
-    
+
             ctrl.generateName = function (col) {
                 col.name = $rootScope.generateKeyword(col.title, '_');
             }

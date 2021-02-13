@@ -1,5 +1,5 @@
 <section ng-init="$ctrl.init()">
-    <div  ng-repeat="msg in $ctrl.messages">
+    <div ng-repeat="msg in $ctrl.messages">
         <ul class="row">
             <li class="col-sm-12" ng-class="{ 'message-right': msg.connection.id == $ctrl.user.connection.id , 
                 'message-left': msg.connection.id != $ctrl.user.connection.id }">
@@ -26,6 +26,6 @@
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
 </section>
 <!-- /.content -->

@@ -1,12 +1,6 @@
 <!-- Modal -->
-<div
-  class="modal fade modal-default"
-  id="dlg-permission"
-  tabindex="-1"
-  role="dialog"
-  aria-hidden="true"
-  ng-init="initDialog()"
->
+<div class="modal fade modal-default" id="dlg-permission" tabindex="-1" role="dialog" aria-hidden="true"
+  ng-init="initDialog()">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -27,11 +21,8 @@
                     Plug &amp; Play
                   </h6>
                   <div class="card-body">
-                    <permission-plug-play
-                      page="viewModel"
-                      prefix-parent="'modal_perm_parent_'"
-                      prefix-child="'modal_perm_child_'"
-                    ></permission-plug-play>
+                    <permission-plug-play page="viewModel" prefix-parent="'modal_perm_parent_'"
+                      prefix-child="'modal_perm_child_'"></permission-plug-play>
                   </div>
                 </div>
               </section>
@@ -41,11 +32,7 @@
                 <button type="submit" class="btn btn-success">
                   Save
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-default"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">
                   Close
                 </button>
               </div>

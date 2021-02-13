@@ -15,9 +15,9 @@ modules.component('modulePreview', {
                     ctrl.previousContentId = ctrl.contentId;
                 }
             };
-            
+
             ctrl.loadModuleData = async function () {
-                $rootScope.isBusy = true;                
+                $rootScope.isBusy = true;
                 var response = await moduleDataService.getModuleData(ctrl.moduleId, ctrl.contentId, 'portal');
                 if (response.isSucceed) {
                     ctrl.data = response.data;

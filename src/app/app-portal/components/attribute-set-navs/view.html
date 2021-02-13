@@ -1,7 +1,7 @@
 <div class="container">
     <div dnd-list="$ctrl.attributeSetNavs" dnd-inserted="$ctrl.updateOrders(index)">
-        <div ng-repeat="item in $ctrl.attributeSetNavs | orderBy: 'priority' track by $index" dnd-draggable="item" dnd-type="'item'"
-            dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedItem = item"
+        <div ng-repeat="item in $ctrl.attributeSetNavs | orderBy: 'priority' track by $index" dnd-draggable="item"
+            dnd-type="'item'" dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedItem = item"
             dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedItem === item}" class="row">
             <table class="table table-sm mb-0 border-top-0">
                 <tbody>

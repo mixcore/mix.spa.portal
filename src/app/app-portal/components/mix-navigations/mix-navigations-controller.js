@@ -82,10 +82,10 @@ app.controller('MixNavigationController', ['$scope', '$rootScope', 'ngAppSetting
                 $scope.$apply();
             }
         };
-        $scope.saveSuccessCallback = function(){
+        $scope.saveSuccessCallback = function () {
             $scope.getList();
         }
-        $scope.removeCallback = function(){
+        $scope.removeCallback = function () {
             $scope.getList();
         }
     }]);

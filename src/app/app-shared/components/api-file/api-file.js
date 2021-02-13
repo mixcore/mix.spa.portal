@@ -61,7 +61,7 @@
             $rootScope.isBusy = false;
             $scope.$apply();
           };
-          reader.onerror = function (error) {};
+          reader.onerror = function (error) { };
         } else {
           return null;
         }

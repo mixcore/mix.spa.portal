@@ -106,8 +106,8 @@
                         <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
                     </div>
                 </div>
-                <attribute-set-values ng-if="fields" on-duplicate="duplicate(data)" on-update="edit(data)" on-delete="remove(data)"
-                    fields="fields"
+                <attribute-set-values ng-if="fields" on-duplicate="duplicate(data)" on-update="edit(data)"
+                    on-delete="remove(data)" fields="fields"
                     can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
                     on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
                     on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"

@@ -591,9 +591,9 @@ app.run([
         function (resp) {
           console.log(
             "Success " +
-              resp.config.data.file.name +
-              "uploaded. Response: " +
-              resp.data
+            resp.config.data.file.name +
+            "uploaded. Response: " +
+            resp.data
           );
         },
         function (resp) {
@@ -611,7 +611,7 @@ app.run([
       window.top.location = url;
     };
     $rootScope.goToPath = function (url) {
-        $location.url(url.trim());
+      $location.url(url.trim());
     };
     $rootScope.encryptAttributeSet = function (attributes, data) {
       angular.forEach(attributes, function (attr) {
@@ -703,12 +703,12 @@ app.run([
       }
     };
 
-    $rootScope.showHelper = function(url) {
+    $rootScope.showHelper = function (url) {
       $rootScope.helperUrl = url;
       $("#dev-helper-modal").modal('show');
     }
 
-    $rootScope.openModal = function(templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null){
+    $rootScope.openModal = function (templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null) {
       var modalInstance = $uibModal.open({
         animation: true,
         windowClass: "show",

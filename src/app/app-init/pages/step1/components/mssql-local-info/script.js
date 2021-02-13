@@ -3,7 +3,7 @@
     controller: ['$rootScope',
         function ($rootScope) {
             var ctrl = this;
-            
+
         }
     ],
     bindings: {

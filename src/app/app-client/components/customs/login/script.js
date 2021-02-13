@@ -26,9 +26,9 @@ modules.component('tclLogin', {
                 if (result.isSucceed) {
                     if (result.data.totalItems > 0) {
                         if (result.data.items[0].obj.password == ctrl.loginData.password && result.data.items[0].obj.username == ctrl.loginData.username) {
-                            ctrl.onSuccess(result);                            
+                            ctrl.onSuccess(result);
                         }
-                        else{
+                        else {
                             ctrl.onFail(result);
                         }
                     }
@@ -44,7 +44,7 @@ modules.component('tclLogin', {
                     $scope.$apply();
                 }
             };
-            
+
             ctrl.onSuccess = function (result) {
                 $rootScope.isLogin = true;
                 ctrl.user = result.data.items[0];
@@ -57,7 +57,7 @@ modules.component('tclLogin', {
                     color: 'red',
                     text: 'Sai tên đăng nhập hoặc mật khẩu!'
                 };
-                
+
             };
 
         }

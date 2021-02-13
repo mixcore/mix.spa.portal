@@ -79,7 +79,7 @@ app.factory('TranslatorService', ['$rootScope', 'CommonService', 'localStorageSe
         //return '<span data-key="/portal/language/details?k=' + keyword + '">[' + keyword + ']</span>';
         return isWrap ? '[' + keyword + ']' : keyword;
     };
-    var _translateUrl = async function(culture){
+    var _translateUrl = async function (culture) {
         var viewType = document.getElementById('view-type').value;
         var viewId = document.getElementById('view-id').value;
         var url = '/portal/translate-url/' + culture + '/' + viewType + '/' + viewId;

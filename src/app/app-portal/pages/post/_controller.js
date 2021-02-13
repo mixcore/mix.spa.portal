@@ -56,7 +56,7 @@ app.controller("PostController", [
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes =  $scope.postTypes.concat(getTypes.data.items.map(m => m.obj));
+        $scope.postTypes = $scope.postTypes.concat(getTypes.data.items.map(m => m.obj));
         $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.request.type);
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();

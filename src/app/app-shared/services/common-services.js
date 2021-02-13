@@ -48,8 +48,8 @@ app.factory("CommonService", [
         _showAlertMsg(
           "",
           "Invalid file selected, valid files are of " +
-            validExts.toString() +
-            " types."
+          validExts.toString() +
+          " types."
         );
         sender.value = "";
         return false;
@@ -263,7 +263,7 @@ app.factory("CommonService", [
             req.url.indexOf("settings") == -1 &&
             (!$rootScope.settings ||
               $rootScope.settings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
+              resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
           }
@@ -351,7 +351,7 @@ app.factory("CommonService", [
             req.url.indexOf("settings") == -1 &&
             (!$rootScope.settings ||
               $rootScope.settings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
+              resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
           }

@@ -32,8 +32,9 @@
             </thead>
 
             <tbody class="sortable-item" ng-repeat="item in data.items track by $index" style="border: 1px;">
-                <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-bs-toggle="collapse" href="#collapse-order{{item.id}}-comments"
-                    role="button" aria-expanded="false" aria-controls="collapse-order{{item.id}}-comments">
+                <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-bs-toggle="collapse"
+                    href="#collapse-order{{item.id}}-comments" role="button" aria-expanded="false"
+                    aria-controls="collapse-order{{item.id}}-comments">
 
                     <!--<td>
                             <input type="text" value="{{item.priority}}" class="item-priority form-control form-control-sm d-inline" style="width:40px;" />
@@ -42,8 +43,10 @@
                         <!--<small class="fa fa-grip-vertical text-black-50 align-middle"></small>-->
 
                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-link"><span class="fa fa-sort-up small"></span></button>
-                            <button type="button" class="btn btn-link"><span class="fa fa-sort-down small"></span></button>
+                            <button type="button" class="btn btn-link"><span
+                                    class="fa fa-sort-up small"></span></button>
+                            <button type="button" class="btn btn-link"><span
+                                    class="fa fa-sort-down small"></span></button>
                         </div>
                     </td>
                     <td>
@@ -62,8 +65,8 @@
                         </small>
                     </td>
                     <td>
-                        <table class="table table-sm table-hover mb-0" cellspacing="0" style="background-color: #f5f5f5;"
-                            ng-if="item.comments.length>0">
+                        <table class="table table-sm table-hover mb-0" cellspacing="0"
+                            style="background-color: #f5f5f5;" ng-if="item.comments.length>0">
                             <thead style="font-size:small; font-weight:normal">
                                 <tr>
                                     <th scope="col" width="60%">
@@ -101,7 +104,8 @@
                     <td>
                         <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
 
-                            <a href="/portal/order/details/{{item.id}}" class="btn btn-link"><span class="fa fa-pen text-primary"></span></a>
+                            <a href="/portal/order/details/{{item.id}}" class="btn btn-link"><span
+                                    class="fa fa-pen text-primary"></span></a>
                             <!--<a href="{{item.detailsUrl}}" target="_blank" class="btn btn-link"><span class="fas fa-eye text-primary"></span></a>-->
                             <a href="#" class="btn btn-link" ng-click="removeOrder(item.id)">
                                 <span class="fas fa-trash-alt text-danger"></span>
@@ -115,8 +119,9 @@
 
     </div>
     <div class="card-footer">
-        <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0"
-            a-class="page-link" paging-action="loadOrders(page-1)" scroll-top="true"></paging>
+        <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+            ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="loadOrders(page-1)"
+            scroll-top="true"></paging>
     </div>
 
 

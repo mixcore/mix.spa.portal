@@ -110,13 +110,13 @@ app.controller('CultureController', ['$scope', '$rootScope', 'ngAppSettings', '$
                 () => commonService.fillAllSettings($scope.lang).then(
                     () => window.location.href = '/portal/culture/list')
             );
-            
+
         }
         $scope.removeCallback = function () {
             commonService.initAllSettings().then(
                 () => commonService.fillAllSettings($scope.lang).then(
                     () => window.location.href = '/portal/culture/list')
-            );          
+            );
         }
         $scope.changeData = function (selected) {
             if (selected) {

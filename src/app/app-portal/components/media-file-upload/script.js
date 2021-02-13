@@ -71,9 +71,9 @@
           if (ctrl.mediaFile) {
             var response = await mediaService.uploadMedia(ctrl.mediaFile, file);
             if (response.isSucceed) {
-              $scope.viewModel = response.data;
+              ctrl.media = response.data;
               $rootScope.isBusy = false;
-              $location.url($scope.referrerUrl);
+              ctrl.srcUrl = response.data.filePath;
               $scope.$apply();
             } else {
               $rootScope.showErrors(response.errors);

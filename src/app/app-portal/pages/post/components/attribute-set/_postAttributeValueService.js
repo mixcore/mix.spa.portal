@@ -4,5 +4,5 @@ app.factory('PostAttributeValueService', ['BaseService',
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('post-attribute-value');
         // Define more service methods here
-    return serviceFactory;
-}]);
+        return serviceFactory;
+    }]);

@@ -41,7 +41,7 @@ app.factory('FileServices', ['$http', '$rootScope', 'CommonService', 'BaseServic
         var apiUrl = '/file/';
         var req = {
             method: 'GET',
-            url: apiUrl + 'delete/?fullPath='+ fullPath
+            url: apiUrl + 'delete/?fullPath=' + fullPath
         };
         return await commonService.getApiResult(req)
     };

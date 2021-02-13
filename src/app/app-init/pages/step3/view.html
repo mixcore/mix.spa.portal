@@ -1,109 +1,43 @@
-<!-- <div class="text-center mb-6 mt-6">
-    <img src="/assets/mixcore-logo-full-white-text.png" alt="">
-</div> -->
 <div ng-init="init()">
-    <h1 class="lead mb-5">You can start <strong>Mixcore</strong> with blank theme or with our default beautiful themes. </h1>
-    <!-- <hr> -->
-    
-    <form id="frm-theme">
-        <div class="mb-5">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="radio" id="customRadio_theme-blank" name="themes[1][]">
-                <label class="form-check-label" for="customRadio_theme-blank">A blank theme</label>
-              </div>
-              <div class="form-check form-switch">
-                <input class="form-check-input" type="radio" id="customRadio_theme-cleanblog" name="themes[1][]" checked>
-                <label class="form-check-label" for="customRadio_theme-cleanblog">Clean simple Blog theme</label>
-              </div>
+  <h1 class="lead mb-5">
+    You can start <strong>Mixcore</strong> with blank theme or with our default
+    beautiful themes.
+  </h1>
+  <!-- <hr> -->
 
-            <!-- <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio_theme-blank" name="themes[1][]" class="form-check-input">
-                <label class="custom-control-label" for="customRadio_theme-blank">Blank</label>
-            </div>
-            <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio_theme-cleanblog" name="themes[1][]" class="form-check-input" checked>
-                <label class="custom-control-label" for="customRadio_theme-cleanblog">Clean Blog</label>
-            </div>                 -->
-        </div>
-        <label for="">Or upload your theme from local PC:</label>
-        <div class="mb-3 mb-5">
-            <api-file form-name="'theme'" posted-file="theme"></api-file>
-            <small class="form-text text-muted">Awesome Mixcore theme <a target="_blank" href="https://github.com/mixcore/awesome-mixcore#themes">list</a>.</small>
-        </div>
-        <!-- <div class="options" ng-show="data.isCreateDefault">
+  <form id="frm-theme">
+    <div class="mb-5">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="radio" id="customRadio_theme-cleanblog" ng-model="themeType"
+          value="cleanblog" />
+        <label class="form-check-label" for="customRadio_theme-cleanblog">
+          Clean simple Blog theme
+        </label>
+      </div>
 
-            <div class="option active" style="--optionBackground:url(../mix-app/mix-app/assets/img/bgs/thumb_theme1.jpg);">
-                <label for="theme-1">
-                    <div class="shadow"></div>
-                    <div class="label">
-                        <div class="round">
-                            <input class="preventUncheck" type="checkbox" id="theme-1"
-                                checked name="themes[1][]" />
-                            <label ng-if="!data.is1Selected" for="theme-1"></label>
-                            <label ng-if="data.is1Selected" ng-click="submit()" for="theme-1"></label>
-                        </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="radio" id="customRadio_theme-blank" ng-model="themeType" value="blank" />
+        <label class="form-check-label" for="customRadio_theme-blank">
+          A blank theme
+        </label>
+      </div>
 
-                        <div class="info">
-                            <div class="main">Mix Agency</div>
-                            <div class="sub">Bootstrap 4 + Shards</div>
-
-                        </div>
-                    </div>
-                </label>
-            </div>
-
-            <div class="option" style="--optionBackground:url(../mix-app/mix-app/assets/img/bgs/thumb_theme1.png);">
-                <label for="theme-2">
-                    <div class="shadow"></div>
-                    <div class="label">
-                        <div class="round">
-                            <input class="preventUncheck" type="checkbox" id="theme-2" name="themes[1][]" />
-                            <label for="theme-2"></label>
-                        </div>
-                        <div class="info">
-                            <div class="main">Now UI Kit Pro</div>
-                            <div class="sub">Bootstrap 4</div>
-
-                        </div>
-                    </div>
-                </label>
-            </div>
-
-            <div class="option" style="--optionBackground:url(../mix-app/mix-app/assets/img/bgs/thumb_owntheme.png);">
-                <label for="theme-3">
-                    <div class="shadow"></div>
-                    <div class="label">
-                        <div class="round">
-                            <input class="preventUncheck" type="checkbox" id="theme-3" name="themes[1][]" />
-                            <label for="theme-3"></label>
-                        </div>
-                        <div class="info">
-                            <div class="main">Your own theme</div>
-                            <div class="sub">
-                                <api-file form-name="'theme'" class="form-control form-control-sm" posted-file="theme" style="
-                            display: unset;
-                            padding: 0;
-                            background-color: unset;
-                            border: none;
-                            border-radius: 0;
-                            color: #fff;
-                        "></api-file>
-                            </div>
-                        </div>
-                    </div>
-                </label>
-            </div>
-
-        </div> -->
-        <div class="text-end">
-            <!-- <div class="text-center form-footer">
-                <button ng-click="submit()" class="btn btn-primary mt-4">Create and Login</button>
-            </div> -->
-            <button class="btn btn-primary" style="min-width:200px" ng-click="submit()">Continue to my portal
-                <i class="fa fa-angle-right"></i></button>
-            <!-- <button type="button" class="btn btn-link" ng-click="advanceSetup()">Advance Setup <i
-                    class="fa fa-angle-right" style="font-size: 19px;"></i></button> -->
-        </div>
-    </form>
-
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="radio" id="customRadio_theme-import" ng-model="themeType"
+          value="custom" />
+        <label class="form-check-label" for="customRadio_theme-import">Upload your theme from local PC</label>
+      </div>
+    </div>
+    <div class="mb-3 mb-5" ng-show="themeType ==='custom'">
+      <api-file form-name="'theme'" posted-file="theme"></api-file>
+      <small class="form-text text-muted">Awesome Mixcore theme
+        <a target="_blank" href="https://github.com/mixcore/awesome-mixcore#themes">list</a>.</small>
+    </div>
+    <div class="text-end">
+      <button ng-disabled="themeType ==='custom' && !form['theme'].files.length" class="btn btn-primary"
+        style="min-width: 200px;" ng-click="submit()">
+        Continue to my portal <i class="fa fa-angle-right"></i>
+      </button>
+    </div>
+  </form>
 </div>

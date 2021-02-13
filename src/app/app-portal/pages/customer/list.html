@@ -33,8 +33,9 @@
             </thead>
 
             <tbody class="sortable" ng-repeat="item in data.items track by $index">
-                <tr class="sortable-item" sort-model="customer" sort-model-id="{{item.id}}" data-bs-toggle="collapse" href="#collapse-page{{item.id}}-childs"
-                    role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+                <tr class="sortable-item" sort-model="customer" sort-model-id="{{item.id}}" data-bs-toggle="collapse"
+                    href="#collapse-page{{item.id}}-childs" role="button" aria-expanded="false"
+                    aria-controls="collapse-page{{item.id}}-childs">
                     <td>
                         {{item.firstName}}
                     </td>
@@ -78,7 +79,8 @@
         </table>
     </div>
     <div class="card-footer">
-        <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0"
-            a-class="page-link" paging-action="loadCustomers(page-1)" scroll-top="true"></paging>
+        <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+            ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="loadCustomers(page-1)"
+            scroll-top="true"></paging>
     </div>
 </section>

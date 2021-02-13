@@ -9,7 +9,6 @@
     <tabs-v class="mb-4">
       <pane-v header="General">
         <page-general is-admin="isAdmin" page="$ctrl.model"></page-general>
-
       </pane-v>
       <pane-v header="SEO" class="">
         <page-seo page="$ctrl.model"></page-seo>
@@ -32,7 +31,6 @@
   </div>
 </div>
 <div class="row">
-
   <div class="col-12" ng-if="$ctrl.additionalData">
     <additional-value class="mb-4" additional-data="$ctrl.additionalData" database-name="$ctrl.type"
       parent-type="'Page'" parent-id="$ctrl.model.id"></additional-value>

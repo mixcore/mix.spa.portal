@@ -1,21 +1,22 @@
 <header class="navbar navbar-expand-md bd-navbar">
-
   <div class="container-fluid d-flex align-items-center">
     <h1 class="d-flex align-items-center fs-4 text-white mb-0">
       <!-- <a class="navbar-brand ml-2" href="/{{$ctrl.settings.lang}}/" target="_blank" aria-label="mixcore"> -->
       <a class="navbar-brand ml-2" href="/" target="_blank" aria-label="mixcore">
         <div class="mixcore-logo" style="
-              width: 120px;
-              height: 30px;
-              background-color: hsla(
-                var(--primary-color-hue, 211),
-                var(--primary-color-saturation, 100%),
-                var(--primary-color-brightness, 50%),
-                1
-              );
-              -webkit-mask: url(../mix-app/assets/mixcore-logo-green.svg) no-repeat 50% 50%;
-              mask: url(../mix-app/assets/mixcore-logo-green.svg) no-repeat 50% 50%;
-            "></div>
+            width: 120px;
+            height: 30px;
+            background-color: hsla(
+              var(--primary-color-hue, 211),
+              var(--primary-color-saturation, 100%),
+              var(--primary-color-brightness, 50%),
+              1
+            );
+            -webkit-mask: url(../mix-app/assets/mixcore-logo-green.svg)
+              no-repeat 50% 50%;
+            mask: url(../mix-app/assets/mixcore-logo-green.svg) no-repeat 50%
+              50%;
+          "></div>
 
         <!-- <img src="{{$ctrl.settings.data.Logo}}" alt="Kiwi standing on oval" height="25px"> -->
       </a>
@@ -28,8 +29,12 @@
   </div>
   <div class="d-flex pe-2">
     <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" ng-if="$ctrl.settings">
+      <li class="nav-item me-2">
+        <a class="nav-link p-2 text-primary" href="#" ng-click="$ctrl.generateSitemap()">
+          <i class="mi mi-CheckList"></i>
+        </a>
+      </li>
       <li class="nav-item me-2 text-center">
-        {{$ctrl.isAdmin}}
         <a class="nav-link p-2 text-primary" href="#" data-bs-toggle="modal"
           data-bs-target="#dlg-portal-theme-settings">
           <i class="mi mi-Personalize"></i>
@@ -55,16 +60,22 @@
         <i class="mi mi-CheckList"></i>
       </a>
     </li> -->
+
       <li class="nav-item me-2">
         <a class="nav-link p-2 text-primary" href="#" data-bs-toggle="modal" data-bs-target="#modal-files">
           <i class="mi mi-Media"></i>
         </a>
       </li>
       <li class="nav-item me-2">
-        <a  class="nav-link p-2 text-primary btn-link" data-bs-toggle="modal"
-          data-bs-target="#dev-helper-modal">
+        <a class="nav-link p-2 text-primary btn-link" href="#"
+          ng-click="$ctrl.showHelper('https://community.mixcore.org')">
+          <i class="mi mi-ChatBubbles"></i>
+        </a>
+      </li>
+      <li class="nav-item me-2">
+        <a class="nav-link p-2 text-primary btn-link" data-bs-toggle="modal" data-bs-target="#dev-helper-modal">
           <i class="mi mi-Help"></i>
-      </a>
+        </a>
       </li>
       <li class="nav-item dropdown me-2">
         <!-- <div class="language-switcher portal"></div> -->
@@ -87,10 +98,10 @@
         </a>
       </li>
     </ul>
+
     <a href="/portal/my-profile">
       <img class="rounded-circle border" alt="200x200" ng-src="{{$ctrl.avatar}}" data-holder-rendered="true" width="32"
         height="32" />
     </a>
-
   </div>
 </header>

@@ -259,7 +259,7 @@ function BaseRestCtrl(
       }
     });
   };
-  
+
   $scope.applyList = async function () {
     $rootScope.showConfirm(
       $scope,

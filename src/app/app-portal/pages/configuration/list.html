@@ -38,7 +38,7 @@
                   </th>
                 </tr>
               </thead>
-  
+
               <tbody class="sortable" ng-init="getList()">
                 <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="configuration"
                   sort-model-id="{{item.id}}">
@@ -74,7 +74,7 @@
       </section>
     </div>
   </div>
-  
+
   <div class="">
     <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
       ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"

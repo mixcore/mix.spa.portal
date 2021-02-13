@@ -6,7 +6,7 @@ app.component('postModules', {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.translate = function (keyword, wrap, defaultValue) {
-                return $rootScope.translate(keyword,wrap, defaultValue);
+                return $rootScope.translate(keyword, wrap, defaultValue);
             };
 
             ctrl.removeData = function (id, moduleId) {
@@ -24,8 +24,8 @@ app.component('postModules', {
                     $scope.$apply();
                 }
             };
-            ctrl.saveDataCallback = function(data){
-                if(data){
+            ctrl.saveDataCallback = function (data) {
+                if (data) {
                     ctrl.loadModuleDatas(data.moduleId);
                 }
             }
@@ -34,7 +34,7 @@ app.component('postModules', {
                 $scope.dataColumns = [];
                 var request = angular.copy(ngAppSettings.request);
                 request.query = '?module_id=' + id + '&post_id=' + ctrl.post.id;
-                if(pageIndex){
+                if (pageIndex) {
                     request.pageIndex = pageIndex;
                 }
                 var response = await moduleDataService.getModuleDatas(request);

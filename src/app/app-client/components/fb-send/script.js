@@ -13,7 +13,7 @@ modules.component('fbSend', {
         };
     }],
     bindings: {
-        href:'=',
-        appId:'='
+        href: '=',
+        appId: '='
     }
 });

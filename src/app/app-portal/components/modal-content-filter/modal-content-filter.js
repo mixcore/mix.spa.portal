@@ -7,8 +7,8 @@
         callback: '&?',
         save: '&?'
     },
-    controller: ['$rootScope', '$scope', 'ngAppSettings', 
-            'PostRestService', 'PageRestService', 'ModuleRestService',
+    controller: ['$rootScope', '$scope', 'ngAppSettings',
+        'PostRestService', 'PageRestService', 'ModuleRestService',
         function ($rootScope, $scope, ngAppSettings, postService, pageService, moduleService) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
@@ -35,7 +35,7 @@
                 $('#modal-content-filter').modal('hide');
             };
             ctrl.loadData = async function (pageIndex) {
-                
+
                 ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
                 if (pageIndex !== undefined) {

@@ -46,7 +46,8 @@
                                             <span ng-bind="item.obj.quantity"></span>
                                         </td>
                                         <td ng-if="$index==0" class="no-border-bottom" rowspan="2" class="text-center">
-                                            <span ng-bind="slot.obj.total_unit"></span></td>
+                                            <span ng-bind="slot.obj.total_unit"></span>
+                                        </td>
 
                                     </tr>
                                 </table>
@@ -91,7 +92,8 @@
                                             <span ng-bind="item.obj.quantity"></span>
                                         </td>
                                         <td ng-if="$index==0" class="no-border-bottom" rowspan="2" class="text-center">
-                                            <span ng-bind="slot.obj.total_unit"></span></td>
+                                            <span ng-bind="slot.obj.total_unit"></span>
+                                        </td>
 
                                     </tr>
                                 </table>
@@ -153,16 +155,17 @@
                         <td width="90%"> FINAL TOTAL UNIT</td>
                         <td><span ng-bind="$ctrl.totalUnit"></span></td>
                     </tr>
-                    
+
                     <tr>
                         <td colspan="2"> Final Gifts</td>
                     </tr>
-                    
+
                     <tr ng-repeat="package in $ctrl.user.obj.order_packages"
-                    ng-if="package.isValid && package.obj.quantity > 0">
+                        ng-if="package.isValid && package.obj.quantity > 0">
                         <td colspan="2">
                             <span style="float: left;" ng-bind="package.obj.gifts[0].obj.title"></span>
-                            <span style="float: right;" ng-bind="package.obj.quantity"></span></td>
+                            <span style="float: right;" ng-bind="package.obj.quantity"></span>
+                        </td>
                     </tr>
                 </table>
             </div>

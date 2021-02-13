@@ -13,7 +13,7 @@
                     pane.selected = false;
                 });
                 pane.selected = true;
-                this.selectCallback({pane: pane});
+                this.selectCallback({ pane: pane });
             };
 
             this.addPane = function (pane) {

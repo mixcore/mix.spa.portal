@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><i class="mi mi-Media"></i> Media Manager</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    
+
                 </button>
             </div>
             <!-- <div class="modal-body" style="height: calc(100vh - 143px);overflow-y: auto;"> -->
@@ -39,13 +39,17 @@
                             <td width="15%">
 
                                 <div class="input-group input-group-sm">
-                                    <input id="path-modal-{{$index}}" value="{{item.fullPath}}" onclick="this.select()" class="form-control form-control-sm" readonly="readonly">
-                                        <button class="btn btn-outline-secondary btn-clipboard" type="button" data-clipboard-target="#path-modal-{{$index}}"><i class="mi mi-Copy"></i></button>
+                                    <input id="path-modal-{{$index}}" value="{{item.fullPath}}" onclick="this.select()"
+                                        class="form-control form-control-sm" readonly="readonly">
+                                    <button class="btn btn-outline-secondary btn-clipboard" type="button"
+                                        data-clipboard-target="#path-modal-{{$index}}"><i
+                                            class="mi mi-Copy"></i></button>
                                 </div>
                             </td>
                             <td width="35%">
                                 <a class="" style="cursor:pointer;" ng-click="togglePreview(item)">
-                                    <img class="rounded" ng-src="{{item.fullPath}}" ng-class="{preview: item.isPreview}">
+                                    <img class="rounded" ng-src="{{item.fullPath}}"
+                                        ng-class="{preview: item.isPreview}">
                                 </a>
                             </td>
                             <td>
@@ -66,11 +70,15 @@
 
                 <div class="col-md-7">
                     <div class="col-md-12" role="toolbar" aria-label="Toolbar with button groups">
-                            <custom-file header="''" folder="'Medias'" media-file="viewModel.mediaFile" data="viewModel" src-url="viewModel.mediaFile.fullPath" save="save()" auto="'false'" class=""></custom-file>
+                        <custom-file header="''" folder="'Medias'" media-file="viewModel.mediaFile" data="viewModel"
+                            src-url="viewModel.mediaFile.fullPath" save="save()" auto="'false'" class=""></custom-file>
                     </div>
                 </div>
-                <paging class="small col-md-5" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)" scroll-top="true">
-            </paging></div>
+                <paging class="small col-md-5" page="data.page" page-size="data.pageSize" total="data.totalItems"
+                    ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+                    scroll-top="true">
+                </paging>
+            </div>
         </div>
         <!-- /.modal-content -->
     </div>

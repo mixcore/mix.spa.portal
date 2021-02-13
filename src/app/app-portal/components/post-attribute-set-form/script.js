@@ -31,24 +31,24 @@ modules.component('postAttributeSetForm', {
                         $scope.$apply();
                     }
 
-                }else{
+                } else {
                     if (!ctrl.data) {
                         ctrl.data = angular.copy(ctrl.defaultData);
                     }
                 }
             };
             ctrl.submit = async function () {
-               
+
                 if (ctrl.saveData) {
                     var result = await ctrl.saveData({ data: ctrl.data });
-                    if(result.isSucceed){
+                    if (result.isSucceed) {
                         ctrl.data = angular.copy(ctrl.defaultData);
                     }
                 }
                 else {
-                    angular.forEach(ctrl.data.data, function(e){                    
+                    angular.forEach(ctrl.data.data, function (e) {
                         //Encrypt field before send
-                        if(e.field.isEncrypt){
+                        if (e.field.isEncrypt) {
                             var encryptData = $rootScope.encrypt(e.stringValue);
                             e.encryptKey = encryptData.key;
                             e.encryptValue = encryptData.data;
@@ -68,11 +68,11 @@ modules.component('postAttributeSetForm', {
 
                 }
             };
-           
+
             ctrl.filterData = function (attributeName) {
-                if(ctrl.data){
-                    var attr =  $rootScope.findObjectByKey(ctrl.data.data, 'attributeName', attributeName);
-                    if (!attr){
+                if (ctrl.data) {
+                    var attr = $rootScope.findObjectByKey(ctrl.data.data, 'attributeName', attributeName);
+                    if (!attr) {
                         attr = angular.copy($rootScope.findObjectByKey(ctrl.defaultData.data, 'attributeName', attributeName));
                         ctrl.data.data.push(attr);
                     }

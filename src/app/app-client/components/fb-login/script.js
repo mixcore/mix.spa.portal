@@ -35,7 +35,7 @@
           ctrl.profile = response;
           ctrl.loggedIn = true;
           $scope.$apply();
-        });t
+        }); t
       };
       ctrl.checkLoginState = function () {
         FB.getLoginStatus(function (response) {

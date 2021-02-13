@@ -6,7 +6,7 @@ app.component('pageGeneral', {
         ctrl.dataTypes = [
             {
                 title: 'String',
-                value:'text'
+                value: 'text'
             },
             {
                 title: 'Int',
@@ -67,7 +67,7 @@ app.component('pageGeneral', {
                 dataType: 0
             });
         };
-        ctrl.initEditor = function() {
+        ctrl.initEditor = function () {
             setTimeout(function () {
                 // Init Code editor
                 $.each($('.code-editor'), function (i, e) {

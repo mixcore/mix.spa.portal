@@ -1,5 +1,5 @@
 'use strict';
-app.factory('MixRestAttributeSetPortalService', ['BaseService','CommonService', function (baseService, commonService) {
+app.factory('MixRestAttributeSetPortalService', ['BaseService', 'CommonService', function (baseService, commonService) {
 
     var serviceFactory = Object.create(baseService);
     serviceFactory.init('attribute-set-data');
@@ -26,9 +26,9 @@ app.factory('MixRestAttributeSetPortalService', ['BaseService','CommonService', 
         };
         return await commonService.getApiResult(req);
     };
-    
+
     var _import = async function (attributeSetName, file) {
-        var url = (this.prefixUrl || '/' + this.lang + '/' 
+        var url = (this.prefixUrl || '/' + this.lang + '/'
             + this.modelName) + '/import-data/' + attributeSetName;
         var frm = new FormData();
         frm.append('file', file);

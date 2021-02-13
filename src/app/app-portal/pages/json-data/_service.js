@@ -7,7 +7,7 @@ app.factory('JsonDataService', ['$http', '$rootScope', 'CommonService', function
 
     var _getFile = async function (folder, filename) {
         var apiUrl = '/file/';
-        var url = apiUrl + 'details?folder=' + folder + '&filename=' + filename;        
+        var url = apiUrl + 'details?folder=' + folder + '&filename=' + filename;
         var req = {
             method: 'GET',
             url: url
@@ -31,7 +31,7 @@ app.factory('JsonDataService', ['$http', '$rootScope', 'CommonService', function
             url: apiUrl + 'list',
             data: JSON.stringify(request)
         };
-        
+
         return await commonService.getApiResult(req);
     };
 

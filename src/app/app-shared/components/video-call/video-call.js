@@ -5,17 +5,17 @@
             var ctrl = this;
             ctrl.constraints = {
                 audio: {
-                    
+
                 },
                 video: {
-                    
+
                 }
             };
             ctrl.isPlayed = false;
             ctrl.videoElement = document.querySelector('video');
             ctrl.audioSelect = document.querySelector('select#audioSource');
             ctrl.videoSelect = document.querySelector('select#videoSource');
-            ctrl.init = function () {                
+            ctrl.init = function () {
                 navigator.mediaDevices.enumerateDevices()
                     .then(ctrl.gotDevices).then(ctrl.getStream).catch(ctrl.handleError);
             };
@@ -31,7 +31,7 @@
                     } else if (deviceInfo.kind === 'videoinput') {
                         option.text = deviceInfo.label || 'camera ' +
                             (ctrl.videoSelect.length + 1);
-                            ctrl.videoSelect.appendChild(option);
+                        ctrl.videoSelect.appendChild(option);
                     } else {
                         console.log('Found another kind of device: ', deviceInfo);
                     }

@@ -4,8 +4,8 @@ modules.component('goToTop', {
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {
             var ctrl = this;
-            ctrl.$onInit = function(){
-                $(window).scroll(function() {
+            ctrl.$onInit = function () {
+                $(window).scroll(function () {
                     if ($(window).scrollTop() >= 50) {        // If page is scrolled more than 50px
                         $('#return-to-top').fadeIn(200);    // Fade in the arrow
                     } else {
@@ -13,12 +13,12 @@ modules.component('goToTop', {
                     }
                 });
             };
-           ctrl.goToTop = function(){
-               // ===== Scroll to Top ==== 
+            ctrl.goToTop = function () {
+                // ===== Scroll to Top ==== 
                 $('body,html').animate({
-                    scrollTop : 0                       // Scroll to top of body
+                    scrollTop: 0                       // Scroll to top of body
                 }, 500);
-           };
+            };
         }],
     bindings: {
     }

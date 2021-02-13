@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('LocalizeService', ['BaseRestService','CommonService', function (baseService, commonService) {
+app.factory('LocalizeService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
 
     var serviceFactory = Object.create(baseService);
     serviceFactory.init('language');

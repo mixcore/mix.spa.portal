@@ -4,12 +4,12 @@ modules.component('urlAlias', {
     controller: ['$rootScope', '$scope', 'UrlAliasService',
         function ($rootScope, $scope, service) {
             var ctrl = this;
-            ctrl.$onInit = function(){
+            ctrl.$onInit = function () {
                 ctrl.updateUrl();
             }
-            ctrl.updateUrl =  function(){
+            ctrl.updateUrl = function () {
                 ctrl.url = $rootScope.globalSettings.domain + '/'
-                 + $rootScope.settings.lang + '/'  + ctrl.urlAlias.alias;
+                    + $rootScope.settings.lang + '/' + ctrl.urlAlias.alias;
             }
             ctrl.remove = function () {
                 if (ctrl.urlAlias.id > 0) {

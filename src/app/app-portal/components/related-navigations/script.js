@@ -4,9 +4,9 @@ modules.component('relatedNavs', {
     controller: ['$rootScope', '$scope', 'ngAppSettings', '$q', function ($rootScope, $scope, ngAppSettings, $q) {
         var ctrl = this;
         ctrl.selected = null;
-        ctrl.activeItem = function (item) {            
+        ctrl.activeItem = function (item) {
             var currentItem = $rootScope.findObjectByKey(ctrl.navs, ['sourceId', 'destinationId']
-                            , [ctrl.sourceId, item.id]);
+                , [ctrl.sourceId, item.id]);
             if (currentItem === null) {
                 currentItem = item;
                 currentItem.priority = ctrl.navs.length + 1;

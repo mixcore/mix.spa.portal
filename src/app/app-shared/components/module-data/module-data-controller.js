@@ -151,6 +151,6 @@ app.controller('SharedModuleDataController', ['$scope', '$rootScope', 'ngAppSett
                 $rootScope.isBusy = false;
                 $scope.$apply();
             }
-        };       
+        };
 
     }]);

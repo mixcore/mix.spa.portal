@@ -1,13 +1,13 @@
 <md-dialog>
     <md-toolbar>
-        
+
     </md-toolbar>
     <md-dialog-content>
         <p class="text-{{message.class}}" ng-bind="message.content">
 
-            <p class="text-danger" ng-repeat="err in message.errors">
-                <span ng-bind="err">
-            </p>
+        <p class="text-danger" ng-repeat="err in message.errors">
+            <span ng-bind="err">
+        </p>
     </md-dialog-content>
     <md-dialog-actions layout="row">
         <md-button ng-click="closeDialog()">

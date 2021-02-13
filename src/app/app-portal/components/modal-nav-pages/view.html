@@ -1,12 +1,11 @@
-<div class="modal modal-default fade show" id="modal-nav-pages-{{$ctrl.srcId}}" 
-ng-init="$ctrl.loadData()">
+<div class="modal modal-default fade show" id="modal-nav-pages-{{$ctrl.srcId}}" ng-init="$ctrl.loadData()">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            
+
                         </button>
                         <filter-list request="$ctrl.request" callback="$ctrl.loadData(pageIndex)"></filter-list>
                     </div>
@@ -26,12 +25,9 @@ ng-init="$ctrl.loadData()">
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-12">
-                        <paging class="small" 
-                            page="$ctrl.data.page" page-size="$ctrl.data.pageSize" 
-                            total="$ctrl.data.totalItems"
-                            ul-class="pagination justify-content-end m-0" a-class="page-link" 
-                            paging-action="$ctrl.loadPosts(page-1)"
-                            scroll-top="true">
+                        <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize"
+                            total="$ctrl.data.totalItems" ul-class="pagination justify-content-end m-0"
+                            a-class="page-link" paging-action="$ctrl.loadPosts(page-1)" scroll-top="true">
                         </paging>
                     </div>
                 </div>

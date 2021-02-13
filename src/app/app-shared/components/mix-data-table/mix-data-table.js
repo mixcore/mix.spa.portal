@@ -4,8 +4,7 @@
         var ctrl = this;
         ctrl.colWidth = 3;
         ctrl.init = function () {
-            if(ctrl.data.items.length)
-            {
+            if (ctrl.data.items.length) {
                 ctrl.min = ctrl.data.items[0].priority;
             }
             ctrl.colWidth = parseInt(9 / ctrl.columns.length);
@@ -40,8 +39,8 @@
         ctrl.goTo = function (id) {
             $location.path(ctrl.editUrl + '/' + id);
         }
-        ctrl.toggleChildNavs = function(nav){
-            nav.showChildNavs = nav.childNavs.length>0 && !nav.showChildNavs;
+        ctrl.toggleChildNavs = function (nav) {
+            nav.showChildNavs = nav.childNavs.length > 0 && !nav.showChildNavs;
         }
     }],
     bindings: {

@@ -147,7 +147,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
                 if ($scope.saveSuccessCallback) {
                     $rootScope.executeFunctionByName('saveSuccessCallback', $scope.saveSuccessCallbackArgs, $scope);
                 }
-                else{
+                else {
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }

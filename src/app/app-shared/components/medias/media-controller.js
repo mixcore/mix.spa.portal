@@ -19,27 +19,27 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             }
         };
         // multipart form   
-        $scope.formFile = null; 
+        $scope.formFile = null;
         $scope.relatedMedias = [];
         $scope.save = async function () {
             var data = $scope.viewModel;
             $rootScope.isBusy = true;
-            if($scope.validate){
+            if ($scope.validate) {
                 $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope)
             }
-            if($scope.isValid){
+            if ($scope.isValid) {
                 var resp = await service.save(data, $scope.formFile);
                 if (resp && resp.isSucceed) {
                     $scope.viewModel = resp.data;
                     $rootScope.showMessage('success', 'success');
-    
+
                     if ($scope.saveSuccessCallback) {
                         $rootScope.executeFunctionByName('saveSuccessCallback', $scope.saveSuccessCallbackArgs, $scope);
                     }
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 } else {
-                    if($scope.saveFailCallback){
+                    if ($scope.saveFailCallback) {
                         $rootScope.executeFunctionByName('saveFailCallback', $scope.saveSuccessCallbackArgs, $scope)
                     }
                     if (resp) {
@@ -49,7 +49,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
                     $scope.$apply();
                 }
             }
-            else{
+            else {
                 $rootScope.showErrors(['invalid model']);
                 $rootScope.isBusy = false;
                 $scope.$apply();
@@ -118,7 +118,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
                 $scope.$apply();
             }
         };
-        $scope.saveSuccessCallback = function(){
+        $scope.saveSuccessCallback = function () {
             $scope.viewModel = {
                 title: '',
                 description: '',
@@ -136,7 +136,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
             };
             $scope.getList();
         }
-        $scope.removeCallback = function(){
+        $scope.removeCallback = function () {
             $scope.getList();
         }
     }]);

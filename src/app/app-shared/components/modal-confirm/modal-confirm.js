@@ -5,12 +5,12 @@
 //         message: '='
 //     }
 // });
-function ModalConfirmController ($rootScope, $scope, $mdDialog, message) {
+function ModalConfirmController($rootScope, $scope, $mdDialog, message) {
     $scope.message = message;
     $scope.executeFunctionByName = async function (functionName, args, context) {
         var result = await $rootScope.executeFunctionByName(functionName, args, context);
         if (result) {
-            $scope.$apply();            
+            $scope.$apply();
         }
         $mdDialog.hide();
     }

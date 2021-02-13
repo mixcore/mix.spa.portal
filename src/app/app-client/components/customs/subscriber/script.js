@@ -1,44 +1,44 @@
-modules.component('haiyenSubscriber',{
-    binding:{
+modules.component('haiyenSubscriber', {
+    binding: {
 
     },
     templateUrl: '/mix-app/views/app-client/components/customs/subscriber/view.html',
-    controller: [ '$scope', '$rootScope', 'RestAttributeSetDataClientService',
-        function($scope, $rootScope, service){
+    controller: ['$scope', '$rootScope', 'RestAttributeSetDataClientService',
+        function ($scope, $rootScope, service) {
             var ctrl = this;
             ctrl.subscriber = null;
             ctrl.formName = 'subscribers';
-            ctrl.$onInit = async function(){
+            ctrl.$onInit = async function () {
                 var initData = await service.initData(ctrl.formName);
-                if(initData.isSucceed){
+                if (initData.isSucceed) {
                     ctrl.default = initData.data;
                     ctrl.subscriber = angular.copy(ctrl.default);
                     $scope.$apply();
                 }
             };
             ctrl.isBusy = false;
-            ctrl.submit = async function(){
+            ctrl.submit = async function () {
                 ctrl.isBusy = true;
                 var result = await service.save(ctrl.subscriber);
-                if(result.isSucceed){
+                if (result.isSucceed) {
                     ctrl.onSuccess(result);
                     ctrl.subscriber = angular.copy(ctrl.default);
                     ctrl.isBusy = false;
                 }
-                else{
+                else {
                     ctrl.onFail(result);
                     ctrl.isBusy = false;
                 }
                 $scope.$apply();
             };
-            ctrl.onSuccess = function(result){
+            ctrl.onSuccess = function (result) {
                 ctrl.msg = {
                     color: 'green',
                     text: 'Cám ơn bạn đã đăng ký thành công!'
                 };
             };
-            
-            ctrl.onFail = function(result){
+
+            ctrl.onFail = function (result) {
                 ctrl.msg = {
                     color: 'red',
                     text: result.errors[0]

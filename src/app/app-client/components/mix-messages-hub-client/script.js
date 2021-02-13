@@ -18,7 +18,7 @@
             ctrl.hideContact = true;
             ctrl.fields = [];
             ctrl.members = [];
-            ctrl.errors =[];
+            ctrl.errors = [];
             ctrl.messages = {
                 items: []
             };
@@ -85,12 +85,11 @@
                     if (field.regex) {
                         var regex = RegExp(field.regex, 'g');
                         isValid = regex.test(ctrl.attrData.data[field.name]);
-                        if(!isValid){
-                            if(field.name=='message')
-                            {
+                        if (!isValid) {
+                            if (field.name == 'message') {
                                 ctrl.errors.push('Please don\'t use bad words in your message');
                             }
-                            else{
+                            else {
                                 ctrl.errors.push(`${field.name} is not match Regex`);
                             }
                         }

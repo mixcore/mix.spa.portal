@@ -4,15 +4,15 @@ modules.component('checkboxSwitch', {
     controller: ['$rootScope', '$location', function ($rootScope, $location) {
         var ctrl = this;
         ctrl.guid = $rootScope.generateUUID();
-        ctrl.$onInit = function(){
+        ctrl.$onInit = function () {
         };
-        ctrl.limString = function(str, max){          
-            if(str){  
-                return (str.length>max)?  str.substring(0, max) + ' ...': str;
+        ctrl.limString = function (str, max) {
+            if (str) {
+                return (str.length > max) ? str.substring(0, max) + ' ...' : str;
             }
         };
     }],
-    
+
     bindings: {
         data: '=',
         detailsUrl: '=',

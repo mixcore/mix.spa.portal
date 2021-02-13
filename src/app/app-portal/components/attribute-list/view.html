@@ -53,8 +53,8 @@
                 ] Database
               </small>
               <br />
-              <a ng-if="col.referenceId" href="/portal/attribute-set/details/{{col.referenceId}}"
-                class="btn btn-link" target="_blank"><small>
+              <a ng-if="col.referenceId" href="/portal/attribute-set/details/{{col.referenceId}}" class="btn btn-link"
+                target="_blank"><small>
                   <span class="fas fa-pen text-primary"></span> Edit linked
                   database {{col.reference.title}}</small>
               </a>
@@ -116,7 +116,7 @@
               <label class="form-label">Accepts</label>
               <tags-input min-length="1" ng-model="col.fieldConfigurations.upload.arrayAccepts">
               </tags-input>
-          </div>
+            </div>
             <div class="form-check form-switch mx-2 float-start">
 
               <input type="checkbox" class="form-check-input" ng-model="col.fieldConfigurations.upload.isCrop"

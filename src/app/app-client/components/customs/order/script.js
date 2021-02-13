@@ -22,7 +22,7 @@ modules.component('tclOrder', {
                 ctrl.totalUnit = 0;
                 angular.forEach(ctrl.user.obj.order_packages, function (pack) {
                     ctrl.calculateItems(pack);
-                    if(pack.obj.quantity>0){
+                    if (pack.obj.quantity > 0) {
                         ctrl.totalUnit += (pack.obj.total * pack.obj.quantity);
                     }
                 });
@@ -132,7 +132,7 @@ modules.component('tclOrder', {
                     ctrl.handleResult(result);
                     ctrl.calculateItems(pack);
                     if (!pack.isValid) {
-                        ctrl.totalUnit -= (pack.obj.unit * pack.obj.quantity); 
+                        ctrl.totalUnit -= (pack.obj.unit * pack.obj.quantity);
                         pack.obj.quantity = 0;
                     }
                     service.clearCache([pack.id]);
@@ -143,7 +143,7 @@ modules.component('tclOrder', {
             };
 
             ctrl.calculateItems = function (pack) {
-                pack.obj.total = 0;                
+                pack.obj.total = 0;
                 angular.forEach(pack.obj.package_slots, function (slot) {
                     slot.obj.total_unit = 0;
                     angular.forEach(slot.obj.package_items, function (item) {
@@ -151,7 +151,7 @@ modules.component('tclOrder', {
                     });
                     pack.obj.total += slot.obj.total_unit;
                 });
-                pack.isValid = pack.obj.total == pack.obj.unit;                
+                pack.isValid = pack.obj.total == pack.obj.unit;
             };
 
             ctrl.submit = async function () {

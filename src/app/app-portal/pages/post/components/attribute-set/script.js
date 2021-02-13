@@ -9,11 +9,11 @@ app.component('postAttributeSet', {
     controller: ['$rootScope', '$scope', 'RestRelatedAttributeSetPortalService', 'RestAttributeSetPortalService',
         function ($rootScope, $scope, navService, dataService) {
             var ctrl = this;
-            ctrl.dataTypes = $rootScope.globalSettings.dataTypes;            
+            ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
             ctrl.viewModel = null;
             ctrl.defaultData = null;
             ctrl.$onInit = async function () {
-                navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default']).then(resp=>{
+                navService.getSingle('portal', [ctrl.parentId, ctrl.parentType, 'default']).then(resp => {
                     ctrl.defaultData = resp;
                     ctrl.viewModel = angular.copy(ctrl.defaultData);
                 });
@@ -63,18 +63,18 @@ app.component('postAttributeSet', {
                 // }
             };
 
-            ctrl.saveData = async function (data) {                
+            ctrl.saveData = async function (data) {
                 $rootScope.isBusy = true;
                 ctrl.viewModel.data = data;
-                dataService.save('portal', data).then(resp=>{
-                    if(resp.isSucceed){
+                dataService.save('portal', data).then(resp => {
+                    if (resp.isSucceed) {
                         ctrl.viewModel.id = resp.data.id;
                         ctrl.viewModel.data = resp.data;
-                        navService.save('portal', ctrl.viewModel).then(resp=>{
-                            if(resp.isSucceed){
-                                var tmp = $rootScope.findObjectByKey(ctrl.set.attributeSet.postData.items, ['parentId', 'parentType', 'id'], 
+                        navService.save('portal', ctrl.viewModel).then(resp => {
+                            if (resp.isSucceed) {
+                                var tmp = $rootScope.findObjectByKey(ctrl.set.attributeSet.postData.items, ['parentId', 'parentType', 'id'],
                                     [resp.data.parentId, resp.data.parentType, resp.data.id]);
-                                if(!tmp){
+                                if (!tmp) {
                                     ctrl.set.attributeSet.postData.items.push(resp.data);
                                     var e = $(".pane-data-" + ctrl.set.attributeSet.id)[0];
                                     angular.element(e).triggerHandler('click');
@@ -82,16 +82,16 @@ app.component('postAttributeSet', {
                                 ctrl.viewModel = angular.copy(ctrl.defaultData);
                                 $rootScope.isBusy = false;
                                 $scope.$apply();
-                            }else{
-                                $rootScope.showMessage('failed');    
+                            } else {
+                                $rootScope.showMessage('failed');
                                 $rootScope.isBusy = false;
                                 $scope.$apply();
                             }
                         })
-                        
+
                     }
-                    else{
-                        $rootScope.showMessage('failed');    
+                    else {
+                        $rootScope.showMessage('failed');
                         $rootScope.isBusy = false;
                         $scope.$apply();
                     }

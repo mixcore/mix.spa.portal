@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-12">
                 <input type="text" placeholder="Enter new category then press enter to create new one"
-                    ng-model="$ctrl.newTitle" ng-enter="$ctrl.createData()"/>
+                    ng-model="$ctrl.newTitle" ng-enter="$ctrl.createData()" />
             </div>
         </div>
         <div class="row">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="row">
-            <div  class="col-12" ng-repeat="item in $ctrl.data.items" ng-hide="item.disabled">
+            <div class="col-12" ng-repeat="item in $ctrl.data.items" ng-hide="item.disabled">
                 <checkbox-switch data="item" callback="$ctrl.select(data)" description="item.data[$ctrl.fieldDisplay]">
                 </checkbox-switch>
             </div>

@@ -52,6 +52,10 @@
           $(".sub-sidebar").toggle();
           // $('.navbar-brand').toggle();
         };
+        ctrl.showHelper = function (url) {
+          $rootScope.helperUrl = url;
+          $("#dev-helper-modal").modal("show");
+        };
         ctrl.generateSitemap = async function () {
           $rootScope.isBusy = true;
           var resp = await commonService.genrateSitemap();

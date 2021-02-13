@@ -4,5 +4,5 @@ app.factory('PostRestService', ['BaseRestService',
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('post/portal');
         // Define more service methods here
-    return serviceFactory;
-}]);
+        return serviceFactory;
+    }]);

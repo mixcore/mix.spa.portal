@@ -29,7 +29,7 @@ app.component('postMedias', {
                 media.isHidden = true;
                 ctrl.post.mediaNavs.push(currentItem);
             }
-        }        
+        }
     },
     bindings: {
         post: '=',

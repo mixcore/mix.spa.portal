@@ -4,5 +4,5 @@ app.factory('AttributeSetService', ['BaseRestService',
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('attribute-set/portal', true);
         // Define more service methods here
-    return serviceFactory;
-}]);
+        return serviceFactory;
+    }]);

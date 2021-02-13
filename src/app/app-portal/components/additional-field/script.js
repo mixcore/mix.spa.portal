@@ -18,8 +18,8 @@ modules.component("additionalField", {
       };
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
-      ctrl.$onInit = async function () {};
-      ctrl.addAttr = function () {
+      ctrl.$onInit = async function () { };
+      ctrl.addAttr = async function () {
         if (ctrl.field.name) {
           var current = $rootScope.findObjectByKey(
             ctrl.additionalData.fields,
@@ -29,14 +29,19 @@ modules.component("additionalField", {
           if (current) {
             $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
           } else {
-            var t = angular.copy(ctrl.field);
-            t.priority = ctrl.additionalData.fields.length + 1;
-            ctrl.additionalData.fields.push(t);
+            ctrl.field.priority = ctrl.additionalData.fields.length + 1;
+            $rootScope.isBusy = true;
+            var saveField = await fieldService.create(ctrl.field);
+            $rootScope.isBusy = false;
+            if (saveField.isSucceed) {
+              ctrl.additionalData.fields.push(saveField.data);
 
-            //reset field option
-            ctrl.field.title = "";
-            ctrl.field.name = "";
-            ctrl.field.dataType = "Text";
+              //reset field option
+              ctrl.field.title = "";
+              ctrl.field.name = "";
+              ctrl.field.dataType = "Text";
+              $scope.$apply();
+            }
           }
         } else {
           $rootScope.showErrors(["Please add column Name"]);
@@ -96,7 +101,7 @@ modules.component("additionalField", {
             $scope.$apply();
           }
         } else {
-          ctrl.additionalData.data.values.splice(index, 1);
+          ctrl.additionalData.fields.splice(index, 1);
         }
       };
     },

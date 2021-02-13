@@ -43,9 +43,9 @@ app.controller("TemplateController", [
     $scope.loadFolder = function (d) {
       $location.url(
         "/portal/template/list/" +
-          $routeParams.themeId +
-          "?folderType=" +
-          encodeURIComponent(d)
+        $routeParams.themeId +
+        "?folderType=" +
+        encodeURIComponent(d)
       );
     };
     $scope.loadParams = async function () {
@@ -154,6 +154,16 @@ app.controller("TemplateController", [
       } else {
         $rootScope.isBusy = false;
       }
+    };
+
+    $scope.updateTemplateContent = function (content) {
+      $scope.viewModel.content = content;
+    };
+    $scope.updateStyleContent = function (content) {
+      $scope.viewModel.scripts = content;
+    };
+    $scope.updateScriptContent = function (content) {
+      $scope.viewModel.styles = content;
     };
   },
 ]);

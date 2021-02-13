@@ -67,7 +67,7 @@ modules.component("customFile", {
               }
             }
           };
-          reader.onerror = function (error) {};
+          reader.onerror = function (error) { };
         } else {
           return null;
         }

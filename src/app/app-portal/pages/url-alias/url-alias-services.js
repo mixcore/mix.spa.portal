@@ -4,7 +4,7 @@ app.factory('UrlAliasService', ['$rootScope', 'CommonService', 'BaseService',
 
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('url-alias');
-        
+
         var _updateInfos = async function (pages) {
 
             var req = {

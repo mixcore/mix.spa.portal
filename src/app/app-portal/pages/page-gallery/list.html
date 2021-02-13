@@ -12,7 +12,8 @@
                 <i class="fas fa-search"></i>
             </a>
         </div>
-        <modal-nav-posts save="saveOthers()" src-field="'pageId'" src-id="pageId" selected="others" query="'not_page_id='"></modal-nav-posts>
+        <modal-nav-posts save="saveOthers()" src-field="'pageId'" src-id="pageId" selected="others"
+            query="'not_page_id='"></modal-nav-posts>
     </div>
 </div>
 <div class="card-body">
@@ -44,16 +45,19 @@
 
         <tbody class="sortable" dnd-list="data.items" dnd-disable-if="canDrag">
             <tr ng-if="canDrag">
-                <td colspan="7"><small class="text-info" ng-bind="translate('warning_can_not_drag_drop',true, '(Drag & Drop feature only active when priority is asc)')"></small></td>
+                <td colspan="7"><small class="text-info"
+                        ng-bind="translate('warning_can_not_drag_drop',true, '(Drag & Drop feature only active when priority is asc)')"></small>
+                </td>
             </tr>
-            <tr ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move" dnd-selected="selected = item"
-                dnd-moved="updateInfos($index)" ng-class="{'selected': selected === item}">
+            <tr ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move"
+                dnd-selected="selected = item" dnd-moved="updateInfos($index)"
+                ng-class="{'selected': selected === item}">
                 <td style="cursor:grab;" class="drag-header">
                     <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
                 </td>
                 <td>
-                    <input type="text" value="{{item.priority}}" class="item-priority form-control form-control-sm d-inline"
-                        style="width:40px;">
+                    <input type="text" value="{{item.priority}}"
+                        class="item-priority form-control form-control-sm d-inline" style="width:40px;">
                 </td>
                 <td>
                     <small>
@@ -94,8 +98,9 @@
     </table>
 </div>
 <div class="card-footer">
-    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0"
-        a-class="page-link" paging-action="getList(page-1)" scroll-top="true"></paging>
+    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+        ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+        scroll-top="true"></paging>
 </div>
 
 

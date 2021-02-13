@@ -1,5 +1,5 @@
 var demo = {
-    initDashboardPageCharts: function (incomes,services) {
+    initDashboardPageCharts: function (incomes, services) {
         incomes = incomes || [50, 150, 100, 190, 130, 90, 150, 160, 120, 140, 190, 95];
         chartColor = "#eeeeee";
         // General configuration for the charts with Line gradientStroke
@@ -21,7 +21,7 @@ var demo = {
             scales: {
                 yAxes: [{
                     display: 0,
-                    
+
                     ticks: {
                         display: false
                     },
@@ -34,7 +34,7 @@ var demo = {
                 }],
                 xAxes: [{
                     display: 0,
-                    
+
                     ticks: {
                         display: false
                     },
@@ -68,7 +68,7 @@ var demo = {
             responsive: true,
             scales: {
                 yAxes: [{
-                    
+
                     gridLines: {
                         zeroLineColor: "transparent",
                         drawBorder: false
@@ -76,7 +76,7 @@ var demo = {
                 }],
                 xAxes: [{
                     display: 0,
-                    
+
                     ticks: {
                         display: false
                     },
@@ -125,7 +125,7 @@ var demo = {
                         borderWidth: 2,
                         data: incomes
                     },
-                    {                        
+                    {
                         label: "Services",
                         //borderColor: chartColor,
                         //pointBorderColor: chartColor,

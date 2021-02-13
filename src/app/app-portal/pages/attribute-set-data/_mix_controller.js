@@ -97,7 +97,7 @@ app.controller("MixAttributeSetDataController", [
     };
     $scope.edit = function (data) {
       $rootScope.goToSiteUrl(
-        "/portal/attribute-set-data/details?dataId=" + data.id+"&abc"
+        "/portal/attribute-set-data/details?dataId=" + data.id + "&abc"
       );
     };
     $scope.remove = function (data) {

@@ -13,12 +13,14 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <customer-orders customer="activedCustomer" ondelete="loadCustomer(activedCustomer.id)"></customer-orders>
+                        <customer-orders customer="activedCustomer" ondelete="loadCustomer(activedCustomer.id)">
+                        </customer-orders>
                     </div>
                 </div>
             </section>
             <section class="col-lg-3" style="padding-left:0">
-                <custom-image header="'Image'" type="'Customers'" folder="activedCustomer.avatar" src-url="activedCustomer.avatar" src="activedCustomer.avatar" auto="'true'"></custom-image>
+                <custom-image header="'Image'" type="'Customers'" folder="activedCustomer.avatar"
+                    src-url="activedCustomer.avatar" src="activedCustomer.avatar" auto="'true'"></custom-image>
 
             </section>
         </div>

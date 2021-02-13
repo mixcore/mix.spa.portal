@@ -26,6 +26,7 @@
       navService
     ) {
       var ctrl = this;
+      ctrl.mediaFile = {};
       ctrl.icons = ngAppSettings.icons;
       ctrl.previousValue = null;
       ctrl.translate = (keyword, isWrap, defaultText) => {
@@ -74,12 +75,10 @@
       ctrl.previousId = null;
       ctrl.$onInit = function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.field.referenceId) {
-          var backUrl =  encodeURIComponent($location.url());
-          ctrl.createUrl = `/portal/attribute-set-data/create?attributeSetId=${
-            ctrl.field.referenceId
-          }&dataId=default&parentId=${
-            ctrl.model.id
-          }&parentType=Set&backUrl=${backUrl}`;
+          var backUrl = encodeURIComponent($location.url());
+          ctrl.createUrl = `/portal/attribute-set-data/create?attributeSetId=${ctrl.field.referenceId
+            }&dataId=default&parentId=${ctrl.model.id
+            }&parentType=Set&backUrl=${backUrl}`;
         }
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/attribute-set-data/details";

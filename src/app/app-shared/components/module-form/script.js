@@ -32,7 +32,7 @@
                         if (ctrl.d) {
                             resp = await moduleDataService.getSingle([ctrl.d]);
                         }
-                        else{
+                        else {
                             resp = await moduleDataService.initForm(ctrl.moduleId);
                         }
                     }

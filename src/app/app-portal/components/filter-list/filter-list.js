@@ -7,25 +7,24 @@ modules.component('filterList', {
             fromDate: null,
             toDate: null
         };
-        ctrl.init = function(){
-            if(!ctrl.orders)
-            {
+        ctrl.init = function () {
+            if (!ctrl.orders) {
                 ctrl.orders = ngAppSettings.orders;
             }
             ctrl.directions = ngAppSettings.directions;
             ctrl.pageSizes = ngAppSettings.pageSizes;
             ctrl.statuses = [];
             var statuses = ngAppSettings.contentStatuses;
-            if(ctrl.request && ctrl.request.contentStatuses){
+            if (ctrl.request && ctrl.request.contentStatuses) {
                 statuses = ctrl.request.contentStatuses;
             }
-            angular.forEach(statuses, function(val,i){
+            angular.forEach(statuses, function (val, i) {
                 ctrl.statuses.push({
-                    value:val,
-                    title:val
+                    value: val,
+                    title: val
                 });
             });
-            
+
         };
         ctrl.updateDate = function () {
             if (Date.parse(ctrl.dateRange.fromDate)) {

@@ -44,7 +44,9 @@
 
               <div class="mb-3">
                 <!-- TODO: Hoang to check again -->
-                <label class="form-label">Post type [ <a href="/portal/attribute-set-data/create?attributeSetId=9&attributeSetName=post_type&attributeSetTitle=Post%20Type&dataId=default" title="Add new post type to the list"> + </a> ]</label>
+                <label class="form-label">Post type [ <a
+                    href="/portal/attribute-set-data/create?attributeSetId=9&attributeSetName=post_type&attributeSetTitle=Post%20Type&dataId=default"
+                    title="Add new post type to the list"> + </a> ]</label>
                 <select ng-init="loadPostTypes()" class="form-select"
                   ng-options="item.attribute_set_name as item.title for item in postTypes track by item.id"
                   ng-change="onSelectType()" ng-model="postType"></select>
@@ -90,8 +92,8 @@
               <tabs-v ng-if="viewModel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
                 <pane-v header="Feature">
                   <custom-image w="imgW" h="imgH" header="'Feature Upload'" type="'Posts'" folder="viewModel.seoName"
-                    header="viewModel.title" description="viewModel.excerpt" src-url="viewModel.imageUrl" src="viewModel.image"
-                    auto="'true'"></custom-image>
+                    header="viewModel.title" description="viewModel.excerpt" src-url="viewModel.imageUrl"
+                    src="viewModel.image" auto="'true'"></custom-image>
                 </pane-v>
                 <pane-v header="Thumbnail">
                   <custom-image w="imgW" h="imgH" header="'Thumbnail Upload'" type="'Posts'" folder="viewModel.seoName"
@@ -113,10 +115,10 @@
             data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
               <!-- TODO: Hoang to check the add slugs button not working -->
-              
-          <button class="btn btn-link text-primary btn-sm float-end py-0" type="button" ng-click="addAlias()">
-            <span class="fas fa-plus text-primary"></span> Add slugs
-          </button>
+
+              <button class="btn btn-link text-primary btn-sm float-end py-0" type="button" ng-click="addAlias()">
+                <span class="fas fa-plus text-primary"></span> Add slugs
+              </button>
               <div id="slug-tab" class="card-body collapse-x">
                 <url-alias ng-repeat="alias in viewModel.urlAliases" ng-if="alias" index="$index" url-alias="alias"
                   remove-callback="removeAliasCallback(index)"></url-alias>
@@ -136,9 +138,9 @@
             aria-labelledby="flush-heading-categories" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
 
-              <modal-nav-metas ng-if="viewModel.sysCategories" header="'Categories'" parent-id="viewModel.id" is-open="'show'"
-              parent-type="'Post'" type="''" attribute-set-name="'sys_category'" field-display="'title'"
-              selected-list="viewModel.sysCategories"></modal-nav-metas>
+              <modal-nav-metas ng-if="viewModel.sysCategories" header="'Categories'" parent-id="viewModel.id"
+                is-open="'show'" parent-type="'Post'" type="''" attribute-set-name="'sys_category'"
+                field-display="'title'" selected-list="viewModel.sysCategories"></modal-nav-metas>
             </div>
           </div>
         </div>
@@ -154,8 +156,8 @@
             <div class="accordion-body">
 
               <modal-nav-metas ng-if="viewModel.sysTags" header="'Tags'" parent-id="viewModel.id" is-open="'show'"
-              parent-type="'Post'" type="''" attribute-set-name="'sys_tag'" field-display="'title'"
-              selected-list="viewModel.sysTags"></modal-nav-metas>
+                parent-type="'Post'" type="''" attribute-set-name="'sys_tag'" field-display="'title'"
+                selected-list="viewModel.sysTags"></modal-nav-metas>
             </div>
           </div>
         </div>

@@ -4,8 +4,8 @@ app.factory('ModuleDataRestService', ['BaseRestService', 'CommonService',
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('module-data/portal');
         // Define more service methods here
-        
-        var _initForm = async function(moduleId){
+
+        var _initForm = async function (moduleId) {
             var url = `${this.prefixUrl}/init-form/${moduleId}`;
             var req = {
                 method: 'GET',

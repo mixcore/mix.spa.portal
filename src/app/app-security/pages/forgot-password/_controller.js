@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('ForgotPasswordController', [ '$rootScope', '$scope', 'ngAppSettings', '$location', 'AuthService', function ($rootScope, $scope, ngAppSettings, $location, authService) {
+app.controller('ForgotPasswordController', ['$rootScope', '$scope', 'ngAppSettings', '$location', 'AuthService', function ($rootScope, $scope, ngAppSettings, $location, authService) {
     if (authService.authentication && authService.authentication.isAuth && authService.authentication && authService.authentication.isAdmin) {
         authService.referredUrl = $location.path();
         $location.path('/portal');
@@ -7,7 +7,7 @@ app.controller('ForgotPasswordController', [ '$rootScope', '$scope', 'ngAppSetti
     $scope.pageClass = 'page-forgot-password';
     $scope.isSucceed = false;
     $scope.viewModel = {
-        email:  null
+        email: null
     };
 
     $scope.message = "";
@@ -15,62 +15,62 @@ app.controller('ForgotPasswordController', [ '$rootScope', '$scope', 'ngAppSetti
         $rootScope.isBusy = false;
         authService.referredUrl = "/security/login";
     });
-    $scope.submit = async function () {        
-        
+    $scope.submit = async function () {
+
         var result = await authService.forgotPassword($scope.viewModel);
         if (result.isSucceed) {
             $rootScope.isBusy = false;
             $scope.isSucceed = true;
             $scope.$apply();
         }
-        else{
+        else {
             $rootScope.isBusy = false;
             $rootScope.showErrors(result.errors);
         }
     };
 
-$scope.authExternalProvider = function (provider) {
+    $scope.authExternalProvider = function (provider) {
 
-    var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
+        var redirectUri = location.protocol + '//' + location.host + '/authcomplete.html';
 
-    var externalProviderUrl = ngAuthSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
-        + "&response_type=token&client_id=" + ngAuthSettings.clientId
-        + "&redirect_uri=" + redirectUri;
-    window.$windowScope = $scope;
+        var externalProviderUrl = ngAuthSettings.apiServiceBaseUri + "api/Account/ExternalLogin?provider=" + provider
+            + "&response_type=token&client_id=" + ngAuthSettings.clientId
+            + "&redirect_uri=" + redirectUri;
+        window.$windowScope = $scope;
 
-    var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
-};
+        var oauthWindow = window.open(externalProviderUrl, "Authenticate Account", "location=0,status=0,width=600,height=750");
+    };
 
-$scope.authCompletedCB = function (fragment) {
+    $scope.authCompletedCB = function (fragment) {
 
-    $scope.$apply(function () {
+        $scope.$apply(function () {
 
-        if (fragment.haslocalaccount === 'False') {
+            if (fragment.haslocalaccount === 'False') {
 
-            authService.logOut();
+                authService.logOut();
 
-            authService.externalAuthData = {
-                provider: fragment.provider,
-                userName: fragment.external_user_name,
-                externalAccessToken: fragment.external_access_token
-            };
+                authService.externalAuthData = {
+                    provider: fragment.provider,
+                    userName: fragment.external_user_name,
+                    externalAccessToken: fragment.external_access_token
+                };
 
-            $location.path('/associate');
+                $location.path('/associate');
 
-        }
-        else {
-            //Obtain access token and redirect to orders
-            var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
-            authService.obtainAccessToken(externalData).then(function (response) {
+            }
+            else {
+                //Obtain access token and redirect to orders
+                var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
+                authService.obtainAccessToken(externalData).then(function (response) {
 
-                $location.path('/orders');
+                    $location.path('/orders');
 
-            },
-                function (err) {
-                    $scope.message = err.error_description;
-                });
-        }
+                },
+                    function (err) {
+                        $scope.message = err.error_description;
+                    });
+            }
 
-    });
-}
+        });
+    }
 }]);

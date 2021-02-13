@@ -4,5 +4,5 @@ app.factory('RestMvcPostService', ['BaseRestService',
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('post/mvc');
         // Define more service methods here
-    return serviceFactory;
-}]);
+        return serviceFactory;
+    }]);

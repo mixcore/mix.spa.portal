@@ -55,11 +55,11 @@ app.controller("AttributeSetFormController", [
       });
     };
     $scope.submit = async (data) => {
-      $rootScope.isBusy = true;      
-      if($scope.loadingHandler){
+      $rootScope.isBusy = true;
+      if ($scope.loadingHandler) {
         $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
       }
-      if(!$scope.validateHandler || $rootScope.executeFunctionByName($scope.validateHandler, [data])){        
+      if (!$scope.validateHandler || $rootScope.executeFunctionByName($scope.validateHandler, [data])) {
         var saveResult = await dataService.save(data);
         if (saveResult.isSucceed) {
           if ($scope.successHandler) {
@@ -70,7 +70,7 @@ app.controller("AttributeSetFormController", [
           $scope.formData = angular.copy($scope.defaultData);
           $rootScope.isBusy = false;
           $scope.loadData();
-          if($scope.loadingHandler){
+          if ($scope.loadingHandler) {
             $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
           }
           $scope.$apply();
@@ -82,7 +82,7 @@ app.controller("AttributeSetFormController", [
               alert(errMsg);
             }
           }
-          if($scope.loadingHandler){
+          if ($scope.loadingHandler) {
             $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
           }
           $rootScope.isBusy = false;

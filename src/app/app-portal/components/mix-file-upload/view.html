@@ -1,12 +1,13 @@
 <div class="" ng-init="$ctrl.init()">
   <div class="input-group">
-      <input id="{{$ctrl.id}}" type="file" class="form-control" accept="{{$ctrl.accept}}"
-        ngf-select="$ctrl.selectFile($files)" data-files="file.files" />
-      <!-- <label class="input-group-text" for="{{$ctrl.id}}" aria-describedby="{{$ctrl.id}}_addon">Choose file</label> -->
-      <button class="btn btn-outline-primary" id="{{$ctrl.id}}_addon" ng-click="$ctrl.uploadFile()" type="button">Upload</span>
-    </div>
+    <input id="{{$ctrl.id}}" type="file" class="form-control" accept="{{$ctrl.accept}}"
+      ngf-select="$ctrl.selectFile($files)" data-files="file.files" />
+    <!-- <label class="input-group-text" for="{{$ctrl.id}}" aria-describedby="{{$ctrl.id}}_addon">Choose file</label> -->
+    <button class="btn btn-outline-primary" id="{{$ctrl.id}}_addon" ng-click="$ctrl.uploadFile()"
+      type="button">Upload</span>
   </div>
-  <!-- <div class="input-group input-group-sm col-8">
+</div>
+<!-- <div class="input-group input-group-sm col-8">
         <div class="custom-file">
             <input id="{{$ctrl.id}}" type="file" name="pic"  class="custom-file-input position-absolute hidden">
             <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>

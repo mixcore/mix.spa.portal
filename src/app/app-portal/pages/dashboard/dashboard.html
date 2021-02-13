@@ -1,6 +1,7 @@
 <div class="content-body py-3 px-5">
   <h3>Dashboard</h3>
-  <p class="text-subtitle text-muted">You can see some of the news and information of your site and Mixcore CMS here.</p>
+  <p class="text-subtitle text-muted">You can see some of the news and information of your site and Mixcore CMS here.
+  </p>
 
   <section ng-init="getDashboardInfo()">
     <div id="adminDashboard">
@@ -25,36 +26,36 @@
         </div>
       </div>
       <div class="col">
-        
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">
-            <i class="mi mi-Page mi-1x mi-fw text-primary"></i> Pages
-          </h4>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">
+              <i class="mi mi-Page mi-1x mi-fw text-primary"></i> Pages
+            </h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">
+              <span class="display-3" ng-bind="data.totalPage"></span>
+            </h1>
+            <a href="/portal/page/list" class="card-link">Go to Pages</a>
+          </div>
         </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">
-            <span class="display-3" ng-bind="data.totalPage"></span>
-          </h1>
-          <a href="/portal/page/list" class="card-link">Go to Pages</a>
-        </div>
-      </div>
       </div>
       <div class="col">
-        
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">
-            <i class="mi mi-Contact mi-1x mi-fw text-primary"></i> Users
-          </h4>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">
+              <i class="mi mi-Contact mi-1x mi-fw text-primary"></i> Users
+            </h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">
+              <span class="display-3" ng-bind="data.totalUser"></span>
+            </h1>
+            <a href="/portal/user/list" class="card-link">Go to Users</a>
+          </div>
         </div>
-        <div class="card-body">
-          <h1 class="card-title pricing-card-title">
-            <span class="display-3" ng-bind="data.totalUser"></span>
-          </h1>
-          <a href="/portal/user/list" class="card-link">Go to Users</a>
-        </div>
-      </div>
       </div>
     </div>
   </section>
