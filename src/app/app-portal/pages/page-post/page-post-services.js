@@ -4,7 +4,7 @@ app.factory('PagePostRestService', ['$rootScope', 'CommonService', 'BaseService'
 
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('page-post');
-        var _delete = async function(id){
+        var _delete = async function (id) {
             var url = this.prefixUrl + '/delete/' + id;
             var req = {
                 method: 'GET',

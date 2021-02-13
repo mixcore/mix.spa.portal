@@ -33,13 +33,14 @@
         </thead>
 
         <tbody class="sortable" ng-init="loadProducts()">
-            <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="product" sort-model-id="{{item.id}}">
+            <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="product"
+                sort-model-id="{{item.id}}">
                 <td style="cursor:grab;" class="drag-header">
                     <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
                 </td>
                 <td>
-                    <input type="text" value="{{item.priority}}" class="item-priority form-control form-control-sm d-inline"
-                        style="width:40px;">
+                    <input type="text" value="{{item.priority}}"
+                        class="item-priority form-control form-control-sm d-inline" style="width:40px;">
                 </td>
                 <td>
                     {{item.code}}
@@ -77,7 +78,8 @@
                             <span class="fas fa-trash-alt text-danger"></span>
                         </button>
                         <div class="popover-body d-none">
-                            <a href="/{{currentLanguage}}/portal/products/delete/{{item.id}}" class="btn btn btn-danger">Yes,
+                            <a href="/{{currentLanguage}}/portal/products/delete/{{item.id}}"
+                                class="btn btn btn-danger">Yes,
                                 I want to delete!</a>
                         </div>
                     </div>
@@ -90,13 +92,15 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
             <li class="page-item">
-                <a class="page-link active" href="javascript:void(0)" ng-click="loadProducts(data.pageIndex-1)" ng-hide="data.pageIndex==0">Prev</a>
+                <a class="page-link active" href="javascript:void(0)" ng-click="loadProducts(data.pageIndex-1)"
+                    ng-hide="data.pageIndex==0">Prev</a>
             </li>
             <li class="page-item" ng-class="{active: n-1==data.pageIndex}" ng-repeat="n in range(data.totalPage)">
                 <a class="page-link" href="javascript:void(0)" ng-click="loadProducts(n-1)">{{n}}</a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="javascript:void(0)" ng-click="loadProducts(data.page)" ng-hide="data.pageIndex >= (data.totalPage-1)">Next</a>
+                <a class="page-link" href="javascript:void(0)" ng-click="loadProducts(data.page)"
+                    ng-hide="data.pageIndex >= (data.totalPage-1)">Next</a>
             </li>
         </ul>
     </nav>

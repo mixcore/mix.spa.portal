@@ -45,7 +45,7 @@ modules.component('jsonBuilder', {
             ctrl.loadFile = async function () {
                 $rootScope.isBusy = true;
                 $scope.listUrl = '/portal/json-data/list?folder=' + ctrl.folder;
-                
+
                 var response = await fileService.getFile(ctrl.folder, ctrl.filename);
                 if (response.isSucceed) {
                     ctrl.file = response.data;
@@ -97,7 +97,7 @@ modules.component('jsonBuilder', {
                     ]
                 };
                 ctrl.parseObj(obj, ctrl.model);
-                ctrl.onUpdate({data: ctrl.model});
+                ctrl.onUpdate({ data: ctrl.model });
             };
             ctrl.parseObjToList = function (item, items) {
                 // key: the name of the object key

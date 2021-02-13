@@ -154,7 +154,7 @@
                 ctrl.user.connection.name = response.data.username;
                 ctrl.user.connection.id = response.data.id;
                 ctrl.user.connection.connectionId = ctrl.connection.connectionId;
-                ctrl.user.connection.avatar =  response.data.avatar;
+                ctrl.user.connection.avatar = response.data.avatar;
                 ctrl.user.loggedIn = true;
                 ctrl.join();
             };

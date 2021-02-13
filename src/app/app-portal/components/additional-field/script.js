@@ -18,7 +18,7 @@ modules.component("additionalField", {
       };
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
-      ctrl.$onInit = async function () {};
+      ctrl.$onInit = async function () { };
       ctrl.addAttr = async function () {
         if (ctrl.field.name) {
           var current = $rootScope.findObjectByKey(
@@ -30,12 +30,12 @@ modules.component("additionalField", {
             $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
           } else {
             ctrl.field.priority = ctrl.additionalData.fields.length + 1;
-            $rootScope.isBusy= true;
+            $rootScope.isBusy = true;
             var saveField = await fieldService.create(ctrl.field);
-            $rootScope.isBusy= false;
-            if(saveField.isSucceed){
+            $rootScope.isBusy = false;
+            if (saveField.isSucceed) {
               ctrl.additionalData.fields.push(saveField.data);
-  
+
               //reset field option
               ctrl.field.title = "";
               ctrl.field.name = "";

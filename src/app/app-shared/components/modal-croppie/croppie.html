@@ -5,30 +5,15 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="input-group mb-3 hidden">
-          <span class="input-group-text">URL</span>
-        <input
-          type="text"
-          onclick="this.select()"
-          ng-model="$ctrl.srcUrl"
-          class="form-control hidden"
-          placeholder="https://your-image-url..."
-          ng-change="$ctrl.loadFromUrl()"
-        />
+        <span class="input-group-text">URL</span>
+        <input type="text" onclick="this.select()" ng-model="$ctrl.srcUrl" class="form-control hidden"
+          placeholder="https://your-image-url..." ng-change="$ctrl.loadFromUrl()" />
       </div>
       <div class="input-group">
         <div class="custom-file">
-          <input
-            id="{{$ctrl.id}}"
-            accept="image/*"
-            type="file"
-            name="pic-{{$ctrl.id}}"
-            data-files="file.files"
-            ngf-select="$ctrl.selectFile($files)"
-            class="hidden"
-          />
-          <label class="custom-file-label" for="{{$ctrl.id}}"
-            >Upload file...</label
-          >
+          <input id="{{$ctrl.id}}" accept="image/*" type="file" name="pic-{{$ctrl.id}}" data-files="file.files"
+            ngf-select="$ctrl.selectFile($files)" class="hidden" />
+          <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>
         </div>
       </div>
     </div>
@@ -36,19 +21,11 @@
       <!-- Croppie needs a container -> using 'boundary' option -->
 
       <div class="col-sm-12" ng-if="$ctrl.options && $ctrl.cropped.source">
-        <croppie
-          ng-if="$ctrl.cropped.source"
-          src="$ctrl.cropped.source"
-          ng-model="$ctrl.cropped.image"
-          boundary-w="$ctrl.options.boundary.width"
-          boundary-h="$ctrl.options.boundary.height"
-          viewport-w="$ctrl.options.viewport.width"
-          viewport-h="$ctrl.options.viewport.height"
-          output-w="$ctrl.options.output.width"
-          output-h="$ctrl.options.output.height"
-          on-update="$ctrl.combineImage()"
-          options="$ctrl.options"
-        ></croppie>
+        <croppie ng-if="$ctrl.cropped.source" src="$ctrl.cropped.source" ng-model="$ctrl.cropped.image"
+          boundary-w="$ctrl.options.boundary.width" boundary-h="$ctrl.options.boundary.height"
+          viewport-w="$ctrl.options.viewport.width" viewport-h="$ctrl.options.viewport.height"
+          output-w="$ctrl.options.output.width" output-h="$ctrl.options.output.height" on-update="$ctrl.combineImage()"
+          options="$ctrl.options"></croppie>
       </div>
     </div>
   </div>

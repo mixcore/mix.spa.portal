@@ -1,9 +1,6 @@
 <div class="card mb-5">
   <div class="card-body">
-    <page-main
-      page="$ctrl.model"
-      generate-seo="$ctrl.generateSEO()"
-    ></page-main>
+    <page-main page="$ctrl.model" generate-seo="$ctrl.generateSEO()"></page-main>
   </div>
 </div>
 
@@ -35,12 +32,7 @@
 </div>
 <div class="row">
   <div class="col-12" ng-if="$ctrl.additionalData">
-    <additional-value
-      class="mb-4"
-      additional-data="$ctrl.additionalData"
-      database-name="$ctrl.type"
-      parent-type="'Page'"
-      parent-id="$ctrl.model.id"
-    ></additional-value>
+    <additional-value class="mb-4" additional-data="$ctrl.additionalData" database-name="$ctrl.type"
+      parent-type="'Page'" parent-id="$ctrl.model.id"></additional-value>
   </div>
 </div>

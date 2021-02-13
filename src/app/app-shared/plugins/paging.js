@@ -18,7 +18,7 @@ angular.module('bw.paging', []).directive('paging', function () {
      * Feel free to tweak / fork values for your application
      */
     var regex = /\{page\}/g;
-    
+
 
     /**
      * The angular return value required for the directive
@@ -31,7 +31,7 @@ angular.module('bw.paging', []).directive('paging', function () {
 
         // Assign the angular link function
         link: fieldLink,
-        
+
         // Assign the angular directive template HTML
         template: fieldTemplate,
 
@@ -63,7 +63,7 @@ angular.module('bw.paging', []).directive('paging', function () {
             textTitleNext: '@',
             textTitlePrev: '@'
         }
-                    
+
     };
 
 
@@ -81,8 +81,8 @@ angular.module('bw.paging', []).directive('paging', function () {
             build(scope, attrs);
         });
     }
-    
-    
+
+
     /**
      * Create our template html 
      * We use a function to figure out how to handle href correctly
@@ -90,20 +90,20 @@ angular.module('bw.paging', []).directive('paging', function () {
      * @param {object} el - Angular link element
      * @param {object} attrs - Angular link attribute
      */
-    function fieldTemplate(el, attrs){
-            return '<ul data-ng-hide="Hide" data-ng-class="ulClass"> ' +
-                '<li class="page-item"' +
-                    'title="{{item.title}}" ' +
-                    'data-ng-class="Item.liClass" ' +
-                    'data-ng-repeat="Item in List"> ' +
-                        '<a ' + 
-                            (attrs.pgHref ? 'data-ng-href="{{Item.pgHref}}" ' : 'href ') +
-                            'data-ng-class="aClass" ' +
-                            'data-ng-click="Item.action()" ' +
-                            'data-ng-bind="Item.value">'+ 
-                        '</a> ' +
-                '</li>' +
-            '</ul>' 
+    function fieldTemplate(el, attrs) {
+        return '<ul data-ng-hide="Hide" data-ng-class="ulClass"> ' +
+            '<li class="page-item"' +
+            'title="{{item.title}}" ' +
+            'data-ng-class="Item.liClass" ' +
+            'data-ng-repeat="Item in List"> ' +
+            '<a ' +
+            (attrs.pgHref ? 'data-ng-href="{{Item.pgHref}}" ' : 'href ') +
+            'data-ng-class="aClass" ' +
+            'data-ng-click="Item.action()" ' +
+            'data-ng-bind="Item.value">' +
+            '</a> ' +
+            '</li>' +
+            '</ul>'
     }
 
 
@@ -118,14 +118,14 @@ angular.module('bw.paging', []).directive('paging', function () {
 
         scope.List = [];
         scope.Hide = false;
-        
+
         scope.page = parseInt(scope.page) || 1;
         scope.total = parseInt(scope.total) || 0;
         scope.adjacent = parseInt(scope.adjacent) || 2;
 
         scope.pgHref = scope.pgHref || '';
         scope.dots = scope.dots || '...';
-        
+
         scope.ulClass = scope.ulClass || 'pagination';
         scope.activeClass = scope.activeClass || 'active';
         scope.disabledClass = scope.disabledClass || 'disabled';
@@ -134,17 +134,17 @@ angular.module('bw.paging', []).directive('paging', function () {
         scope.textLast = scope.textLast || '>>';
         scope.textNext = scope.textNext || '>';
         scope.textPrev = scope.textPrev || '<';
-        
+
         scope.textFirstClass = scope.textFirstClass || '';
-        scope.textLastClass= scope.textLastClass || '';
+        scope.textLastClass = scope.textLastClass || '';
         scope.textNextClass = scope.textNextClass || '';
         scope.textPrevClass = scope.textPrevClass || '';
 
         scope.textTitlePage = scope.textTitlePage || 'Page {page}';
-        scope.textTitleFirst = scope.textTitleFirst || 'First Page'; 
-        scope.textTitleLast = scope.textTitleLast || 'Last Page'; 
-        scope.textTitleNext = scope.textTitleNext || 'Next Page'; 
-        scope.textTitlePrev = scope.textTitlePrev || 'Previous Page'; 
+        scope.textTitleFirst = scope.textTitleFirst || 'First Page';
+        scope.textTitleLast = scope.textTitleLast || 'Last Page';
+        scope.textTitleNext = scope.textTitleNext || 'Next Page';
+        scope.textTitlePrev = scope.textTitlePrev || 'Previous Page';
 
         scope.hideIfEmpty = evalBoolAttribute(scope, attrs.hideIfEmpty);
         scope.showPrevNext = evalBoolAttribute(scope, attrs.showPrevNext);
@@ -161,7 +161,7 @@ angular.module('bw.paging', []).directive('paging', function () {
      * @param {Object} scope - The local directive scope object
      * @param {Object} value - The attribute value of interest
      */
-    function evalBoolAttribute(scope, value){
+    function evalBoolAttribute(scope, value) {
         return angular.isDefined(value)
             ? !!scope.$parent.$eval(value)
             : false;
@@ -214,8 +214,7 @@ angular.module('bw.paging', []).directive('paging', function () {
         }
 
         // Block if we are forcing disabled 
-        if(scope.isDisabled)
-        {
+        if (scope.isDisabled) {
             return;
         }
 
@@ -265,22 +264,22 @@ angular.module('bw.paging', []).directive('paging', function () {
             disabled = scope.page - 1 <= 0;
             var prevPage = scope.page - 1 <= 0 ? 1 : scope.page - 1;
 
-            if(scope.showFirstLast){
+            if (scope.showFirstLast) {
                 alpha = {
                     value: scope.textFirst,
-                    title: scope.textTitleFirst, 
+                    title: scope.textTitleFirst,
                     aClass: scope.textFirstClass,
                     page: 1
-                };                
+                };
             }
 
-            if(scope.showPrevNext){
+            if (scope.showPrevNext) {
                 beta = {
                     value: scope.textPrev,
-                    title: scope.textTitlePrev, 
+                    title: scope.textTitlePrev,
                     aClass: scope.textPrevClass,
                     page: prevPage
-                };    
+                };
             }
 
         } else {
@@ -288,24 +287,24 @@ angular.module('bw.paging', []).directive('paging', function () {
             disabled = scope.page + 1 > pageCount;
             var nextPage = scope.page + 1 >= pageCount ? pageCount : scope.page + 1;
 
-            if(scope.showPrevNext){
+            if (scope.showPrevNext) {
                 alpha = {
                     value: scope.textNext,
-                    title: scope.textTitleNext, 
+                    title: scope.textTitleNext,
                     aClass: scope.textNextClass,
                     page: nextPage
-                };    
+                };
             }
-            
-            if(scope.showFirstLast){
+
+            if (scope.showFirstLast) {
                 beta = {
                     value: scope.textLast,
-                    title: scope.textTitleLast, 
+                    title: scope.textTitleLast,
                     aClass: scope.textLastClass,
                     page: pageCount
-                };    
+                };
             }
-            
+
         }
 
         // Create the Add Item Function
@@ -321,24 +320,24 @@ angular.module('bw.paging', []).directive('paging', function () {
                         internalAction(scope, item.page);
                     }
                 }
-            };    
+            };
         };
 
         // Force disabled if specified
-        if(scope.isDisabled){
+        if (scope.isDisabled) {
             disabled = true;
         }
 
         // Add alpha items
-        if(alpha){
+        if (alpha) {
             var alphaItem = buildItem(alpha, disabled);
-            scope.List.push(alphaItem);    
+            scope.List.push(alphaItem);
         }
-        
+
         // Add beta items
-        if(beta){
+        if (beta) {
             var betaItem = buildItem(beta, disabled);
-            scope.List.push(betaItem);    
+            scope.List.push(betaItem);
         }
     }
 
@@ -352,16 +351,16 @@ angular.module('bw.paging', []).directive('paging', function () {
      * @param {Object} scope - The local directive scope object
      */
     function addRange(start, finish, scope) {
-    
+
         // Add our items where i is the page number
         var i = 0;
         for (i = start; i <= finish; i++) {
 
             var pgHref = scope.pgHref.replace(regex, i);
-            var liClass = scope.page === i ? scope.activeClass : ''; 
+            var liClass = scope.page === i ? scope.activeClass : '';
 
             // Handle items that are affected by disabled
-            if(scope.isDisabled){
+            if (scope.isDisabled) {
                 pgHref = '';
                 liClass = scope.disabledClass;
             }

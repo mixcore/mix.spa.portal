@@ -150,7 +150,7 @@
           $scope.$apply();
         }
       };
-      ctrl.filterData = function(){
+      ctrl.filterData = function () {
         angular.forEach(ctrl.data.items, function (e) {
           // Not show data if there's in selected list
           e.disabled =

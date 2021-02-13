@@ -3,18 +3,18 @@
     bindings: {
         srcField: '=',
         srcId: '=',
-        query:'=',
-        selected:'=',
+        query: '=',
+        selected: '=',
         save: '&'
     },
     controller: ['$rootScope', '$scope', 'ngAppSettings', 'PageRestService',
         function ($rootScope, $scope, ngAppSettings, pageService) {
             var ctrl = this;
-            ctrl.request = angular.copy(ngAppSettings.request);            
+            ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.navs = [];
             ctrl.data = { items: [] }
-            ctrl.loadData = async function (pageIndex) {   
-                ctrl.request.query = ctrl.query + ctrl.srcId;    
+            ctrl.loadData = async function (pageIndex) {
+                ctrl.request.query = ctrl.query + ctrl.srcId;
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
                 }
@@ -34,7 +34,7 @@
                         var item = {
                             priority: e.priority,
                             description: e.title,
-                            pageId: e.id,                            
+                            pageId: e.id,
                             image: e.thumbnailUrl,
                             specificulture: e.specificulture,
                             status: 'Published',
@@ -52,18 +52,18 @@
                     $scope.$apply();
                 }
             }
-            ctrl.saveSelected = function(){
+            ctrl.saveSelected = function () {
                 ctrl.selected = $rootScope.filterArray(ctrl.navs, ['isActived'], [true]);
                 setTimeout(() => {
                     ctrl.save().then(() => {
                         ctrl.loadPages();
-                    });   
-                     
+                    });
+
                 }, 500);
-                
+
             }
         }
 
     ],
-    
+
 });

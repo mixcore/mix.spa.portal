@@ -13,11 +13,10 @@
   <p class="text-subtitle text-muted">Use the filter side bar on the right to filter and search your module's data.</p>
 
   <section ng-init="init()">
-    
+
     <div class="row">
-        
-      <div class="d-flex justify-content-end mb-3" role="toolbar"
-        aria-label="Toolbar with button groups">
+
+      <div class="d-flex justify-content-end mb-3" role="toolbar" aria-label="Toolbar with button groups">
         <a href="/portal/module-data/details/{{moduleId}}" class="btn btn-primary px-3 me-2">
           <i class="fas fa-plus"></i> Add Data
         </a>
@@ -30,12 +29,12 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-body"> 
+      <div class="card-body">
 
         <mix-module-data-table ng-show="module" ng-init="getList()" data="data"
-        can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'" edit-url="editDataUrl"
-        module-id="moduleId" columns="dataColumns" on-delete="remove(id)">
-      </mix-module-data-table>
+          can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'" edit-url="editDataUrl"
+          module-id="moduleId" columns="dataColumns" on-delete="remove(id)">
+        </mix-module-data-table>
       </div>
 
     </div>

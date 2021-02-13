@@ -26,7 +26,7 @@ modules.component('mediaUpload', {
                     $scope.viewModel = resp.data;
                     $rootScope.showMessage('success', 'success');
                     $rootScope.isBusy = false;
-                    if(ctrl.onUpdate){
+                    if (ctrl.onUpdate) {
                         ctrl.onUpdate();
                     }
                     $scope.$apply();

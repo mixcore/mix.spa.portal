@@ -4,8 +4,8 @@ app.component('postGeneral', {
     controller: ['$rootScope', 'ngAppSettings', function ($rootScope, ngAppSettings) {
         var ctrl = this;
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
-        ctrl.$onInit = function(){
-            
+        ctrl.$onInit = function () {
+
         };
         ctrl.addProperty = function (type) {
             var i = $(".property").length;
@@ -15,7 +15,7 @@ app.component('postGeneral', {
                 value: null,
                 dataType: 'text'
             });
-        };        
+        };
     }],
     bindings: {
         post: '=',

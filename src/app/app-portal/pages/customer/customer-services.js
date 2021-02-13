@@ -36,7 +36,7 @@ app.factory('CustomerServices', ['$http', '$rootScope', 'CommonService', functio
             url: apiUrl + 'list',
             data: JSON.stringify(request)
         };
-        
+
         return await commonService.getApiResult(req);
     };
 

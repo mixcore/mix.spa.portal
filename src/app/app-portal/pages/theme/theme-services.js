@@ -23,7 +23,7 @@ app.factory('ThemeService', ['CommonService', 'BaseService',
             return await commonService.getApiResult(req);
         };
         var _getExportData = async function (id) {
-            var url = (this.prefixUrl || '/' + this.lang + '/' + this.modelName) + '/export/'+ id;
+            var url = (this.prefixUrl || '/' + this.lang + '/' + this.modelName) + '/export/' + id;
             var req = {
                 method: 'GET',
                 url: url

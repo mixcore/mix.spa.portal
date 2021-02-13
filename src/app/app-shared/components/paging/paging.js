@@ -5,7 +5,7 @@ modules.component('mixPaging', {
         var ctrl = this;
         ctrl.loadData = function (index) {
             ctrl.pagingAction({ pageIndex: index });
-        };        
+        };
         ctrl.range = $rootScope.range;
     }],
     bindings: {

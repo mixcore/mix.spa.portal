@@ -1,7 +1,7 @@
 ﻿
 app.component('permissionMain', {
     templateUrl: '/mix-app/views/app-portal/pages/permission/components/main/main.html',
-    controller: ['$rootScope', '$scope', 'ngAppSettings', '$routeParams',function ($rootScope, $scope, ngAppSettings, $routeParams) {
+    controller: ['$rootScope', '$scope', 'ngAppSettings', '$routeParams', function ($rootScope, $scope, ngAppSettings, $routeParams) {
         var ctrl = this;
         ctrl.settings = $rootScope.globalSettings;
         ctrl.icons = ngAppSettings.icons;

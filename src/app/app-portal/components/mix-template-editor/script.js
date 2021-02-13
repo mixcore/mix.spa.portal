@@ -32,7 +32,7 @@
 
                     if (resp && resp.isSucceed) {
                         ctrl.templates = resp.data.items;
-                        if(!ctrl.template){
+                        if (!ctrl.template) {
                             ctrl.template = ctrl.templates[0];
                         }
                         $rootScope.isBusy = false;
@@ -44,13 +44,13 @@
 
                 }
             }
-            ctrl.updateTemplateContent = function(content){
+            ctrl.updateTemplateContent = function (content) {
                 ctrl.template.content = content;
             }
-            ctrl.updateStyleContent = function(content){
+            ctrl.updateStyleContent = function (content) {
                 ctrl.template.scripts = content;
             }
-            ctrl.updateScriptContent = function(content){
+            ctrl.updateScriptContent = function (content) {
                 ctrl.template.styles = content;
             }
         }]

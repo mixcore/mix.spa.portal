@@ -75,10 +75,10 @@ app.controller('AttributeSetDataController',
                     $scope.$apply();
                 }
             };
-            $scope.openImportDialog = function(){
+            $scope.openImportDialog = function () {
                 $('#inp-import-data').click();
             };
-            
+
             $scope.getList = async function (page = 0) {
                 $rootScope.isBusy = true;
                 $scope.attributeSetId = $routeParams.attributeSetId;
@@ -162,4 +162,4 @@ app.controller('AttributeSetDataController',
                 }
             };
 
-    }]);
+        }]);

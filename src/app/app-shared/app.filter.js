@@ -82,16 +82,16 @@ app.filter('utcToLocal', FilterUtcDate)
             { title: 'PostalCode', value: 15 },
             { title: 'Upload', value: 16 },
 
-        ]        
+        ]
     });
 
-function MarkdownToHtml($filter){
-    return function(mdContent){
+function MarkdownToHtml($filter) {
+    return function (mdContent) {
         var converter = new showdown.Converter();
         return converter.makeHtml(mdContent);
     }
 }
-    
+
 function FilterUtcDate($filter) {
     return function (utcDateString, format) {
         format = format || 'MM.dd.yyyy - hh:mm:ss a';
@@ -152,5 +152,4 @@ function FilterMoney() {
     return function (money) {
         return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     };
-} 
-                
+}

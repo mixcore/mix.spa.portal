@@ -1,32 +1,32 @@
 ﻿modules.component('modalNavs', {
     templateUrl: '/mix-app/views/app-portal/components/modal-navs/view.html',
     bindings: {
-        modelName:'=',
-        viewType:'=',        
-        selects:'=',        
-        isSingle:'=?',
-        isGlobal:'=?',
+        modelName: '=',
+        viewType: '=',
+        selects: '=',
+        isSingle: '=?',
+        isGlobal: '=?',
         save: '&'
     },
     controller: ['$rootScope', '$scope', '$routeParams', 'ngAppSettings',
-        function ($rootScope, $scope, $routeParams, ngAppSettings) {            
+        function ($rootScope, $scope, $routeParams, ngAppSettings) {
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
             ctrl.viewModel = null;
             ctrl.data = null;
             ctrl.isInit = false;
-            ctrl.isValid = true;            
+            ctrl.isValid = true;
             ctrl.errors = [];
             ctrl.selected = [];
-            
-            ctrl.init = function(){                
-                ctrl.service = $rootScope.getRestService(ctrl.modelName +'/portal', ctrl.isGlobal);
+
+            ctrl.init = function () {
+                ctrl.service = $rootScope.getRestService(ctrl.modelName + '/portal', ctrl.isGlobal);
                 ctrl.prefix = 'modal_navs_' + ctrl.modelName;
                 ctrl.cols = ctrl.selects.split(',');
                 ctrl.getList();
             };
-            
+
             ctrl.getList = async function (pageIndex) {
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
@@ -40,7 +40,7 @@
                     ctrl.request.toDate = d.toISOString();
                 }
                 var resp = await ctrl.service.getList(ctrl.request);
-                if (resp.isSucceed) {            
+                if (resp.isSucceed) {
                     ctrl.data = resp.data;
                     $.each(ctrl.data.items, function (i, data) {
                         $.each(ctrl.viewModels, function (i, e) {
@@ -99,27 +99,27 @@
             //         $scope.$apply();
             //     }
             // }
-            ctrl.selectAll = function(isSelectAll){
+            ctrl.selectAll = function (isSelectAll) {
                 angular.forEach(ctrl.data.items, element => {
                     element.isActived = isSelectAll;
                 });
             };
-            ctrl.selectChange = function(item){
-                if(ctrl.isSingle == 'true' && item.isActived){
+            ctrl.selectChange = function (item) {
+                if (ctrl.isSingle == 'true' && item.isActived) {
                     angular.forEach(ctrl.data.items, element => {
                         element.isActived = false;
-                    }); 
+                    });
                     item.isActived = true;
                 }
             };
-            ctrl.saveSelected = function(){
+            ctrl.saveSelected = function () {
                 ctrl.selected = $rootScope.filterArray(ctrl.data.items, ['isActived'], [true]);
-                if(ctrl.save){
-                    ctrl.save({selected: ctrl.selected});
+                if (ctrl.save) {
+                    ctrl.save({ selected: ctrl.selected });
                 }
             };
         }
 
     ],
-    
+
 });

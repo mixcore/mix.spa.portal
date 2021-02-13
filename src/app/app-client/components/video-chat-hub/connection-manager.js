@@ -4,9 +4,11 @@ app.factory('ConnectionManager', [
         var _signaler,
             _connections = {},
             _iceServers = [
-                {"urls": "stun:ec2-54-176-1-181.us-west-1.compute.amazonaws.com:3478"},
-                {"urls": "turn:ec2-54-176-1-181.us-west-1.compute.amazonaws.com:3478",
-                "username":"tadhackuser", "credential":"tadhackpw"}], // stun.l.google.com - Firefox does not support DNS names.
+                { "urls": "stun:ec2-54-176-1-181.us-west-1.compute.amazonaws.com:3478" },
+                {
+                    "urls": "turn:ec2-54-176-1-181.us-west-1.compute.amazonaws.com:3478",
+                    "username": "tadhackuser", "credential": "tadhackpw"
+                }], // stun.l.google.com - Firefox does not support DNS names.
 
             /* Callbacks */
             _onReadyForStreamCallback = function () { console.log('UNIMPLEMENTED: _onReadyForStreamCallback'); },

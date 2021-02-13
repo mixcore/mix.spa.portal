@@ -10,7 +10,7 @@ app.factory('Step1Services', ['$http', '$rootScope', 'AppSettings', 'CommonServi
             };
             return commonService.getAnonymousApiResult(req);
         };
-        
+
         var _initCms = async function (data) {
             var req = {
                 method: 'POST',
@@ -19,7 +19,7 @@ app.factory('Step1Services', ['$http', '$rootScope', 'AppSettings', 'CommonServi
             };
             return await commonService.getAnonymousApiResult(req);
         };
-        
+
         step1ServiceFactory.initCms = _initCms;
         step1ServiceFactory.saveDefaultSettings = _saveDefaultSettings;
         return step1ServiceFactory;

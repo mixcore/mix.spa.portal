@@ -7,8 +7,8 @@
   controller: [
     "$rootScope",
     function ($rootScope) {
-      var ctrl = this;      
-      ctrl.visible= $rootScope.visible;
+      var ctrl = this;
+      ctrl.visible = $rootScope.visible;
     },
   ],
 });

@@ -90,16 +90,15 @@ modules.component("attributeSetForm", {
               case "Post":
               case "Page":
               case "Module":
-                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                  ctrl.parentId
-                }`;
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${ctrl.parentId
+                  }`;
                 break;
 
               default:
                 ctrl.backUrl = `/portal/attribute-set-data/details?dataId=${ctrl.parentId}&attributeSetId=${ctrl.attributeSetId}&attributeSetName=${ctrl.attributeSetName}&attributeSetTitle=${$routeParams.attributeSetTitle}`;
                 break;
             }
-          } 
+          }
         }
         var getDefault = await service.initData(
           ctrl.attributeSetName || ctrl.attributeSetId

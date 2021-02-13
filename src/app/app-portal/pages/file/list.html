@@ -10,12 +10,13 @@
 
 <div class="content-body py-3 px-5">
     <h3>File list</h3>
-    <p class="text-subtitle text-muted">The table below display all of the files within your content and assets folders.</p>
+    <p class="text-subtitle text-muted">The table below display all of the files within your content and assets folders.
+    </p>
 
     <div class="row mb-3">
         <div class="col-6">
-            <a class="btn btn-outline-primary px-3" ng-if="backUrl" href="{{backUrl}}"><i
-                class="fas fa-reply"></i> Back</a>
+            <a class="btn btn-outline-primary px-3" ng-if="backUrl" href="{{backUrl}}"><i class="fas fa-reply"></i>
+                Back</a>
         </div>
         <div class="col-6">
             <mix-file-upload folder="request.key" on-success="loadFiles()">
@@ -60,9 +61,9 @@
                                 <div class="input-group input-group-sm">
                                     <input id="path-modal-{{$index}}" value="{{item.webPath}}" onclick="this.select()"
                                         class="form-control" readonly="readonly">
-                                        <button class="btn btn-outline-secondary btn-clipboard" type="button"
-                                            data-clipboard-target="#path-modal-{{$index}}"><i
-                                                class="mi mi-Copy"></i></button>
+                                    <button class="btn btn-outline-secondary btn-clipboard" type="button"
+                                        data-clipboard-target="#path-modal-{{$index}}"><i
+                                            class="mi mi-Copy"></i></button>
                                 </div>
                             </td>
                             <td>

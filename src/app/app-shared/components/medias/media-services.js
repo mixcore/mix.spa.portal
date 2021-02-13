@@ -11,10 +11,10 @@ app.factory('MediaService', ['$rootScope', 'CommonService', 'BaseService',
             };
             return await commonService.getApiResult(req);
         };
-        var _save = async function(objData, file){
+        var _save = async function (objData, file) {
             var url = this.prefixUrl + '/save';
             var fd = new FormData();
-            var file =objData.mediaFile.file;
+            var file = objData.mediaFile.file;
             objData.mediaFile.file = null;
             fd.append('model', angular.toJson(objData));
             fd.append('file', file);

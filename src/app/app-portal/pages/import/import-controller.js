@@ -7,7 +7,7 @@ app.controller('ImportFileController',
                 $rootScope.isBusy = true;
                 var form = document.getElementById('frm-import');
                 var frm = new FormData();
-                frm.append( 'assets',  form['assets'].files[0]);
+                frm.append('assets', form['assets'].files[0]);
                 var response = await service.saveImportFile(frm);
                 if (response.isSucceed) {
                     $scope.viewModel = response.data;

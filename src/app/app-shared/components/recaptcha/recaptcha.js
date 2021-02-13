@@ -7,22 +7,22 @@ modules.component('recaptcha', {
             ctrl.shortenString = '';
             ctrl.previousContentId = undefined;
             ctrl.recaptcha_key = null;
-            ctrl.token= null;
-            this.$onInit = () => { 
+            ctrl.token = null;
+            this.$onInit = () => {
                 ctrl.recaptcha_key = $rootScope.globalSettings.data.Recaptcha_Key;
                 ctrl.recaptcha_secret = $rootScope.globalSettings.data.Recaptcha_Secret;
-                grecaptcha.ready(function() {
-                    grecaptcha.execute(ctrl.recaptcha_key, {action: ctrl.action})
-                    .then(function(token) {
-                       ctrl.token = token;
-                    });
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(ctrl.recaptcha_key, { action: ctrl.action })
+                        .then(function (token) {
+                            ctrl.token = token;
+                        });
                 });
             };
-            ctrl.verify = function(){
-                var  url = 'https://www.google.com/recaptcha/api/siteverify';
+            ctrl.verify = function () {
+                var url = 'https://www.google.com/recaptcha/api/siteverify';
                 var data = {
                     secret: ctrl.recaptcha_secret,
-                    response: ctrl.token                    
+                    response: ctrl.token
                 };
                 var req = {
                     method: 'POST',
@@ -30,16 +30,16 @@ modules.component('recaptcha', {
                     data: data
                 };
                 return commonService.getApiResult(req).then(function (response) {
-                    if(response.success){
+                    if (response.success) {
                         ctrl.callback();
                     }
-                    else{
-                        angular.forEach(response.error-codes, function(err){
+                    else {
+                        angular.forEach(response.error - codes, function (err) {
                             commonService.showAlertMsg('Recaptcha Error', err);
                         });
-                        
+
                     }
-                });                       
+                });
             }
         }],
     bindings: {

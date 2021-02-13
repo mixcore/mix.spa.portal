@@ -46,8 +46,7 @@
                 <div class="col-3">
 
                     <filter-list request="$ctrl.request" callback="$ctrl.loadData(pageIndex)"></filter-list>
-                    <select class="form-select mt-3" ng-model="$ctrl.type"
-                        ng-change="$ctrl.loadData(0)">
+                    <select class="form-select mt-3" ng-model="$ctrl.type" ng-change="$ctrl.loadData(0)">
                         <option ng-repeat="item in $ctrl.types track by $index" value="{{item}}">
                             {{item}}
                         </option>

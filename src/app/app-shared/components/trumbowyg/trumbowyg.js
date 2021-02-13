@@ -94,12 +94,12 @@ modules.component('trumbowyg', {
       ctrl.getElementReference = function () {
         return $($element.find('div'));
       };
-  
+
       ctrl.getEditorReference = function () {
         return ctrl.getElementReference().find('.trumbowyg-editor');
       };
       ctrl.updateModelValue = () => {
-        $scope.$applyAsync(() => {          
+        $scope.$applyAsync(() => {
           const value = ctrl.getEditorReference().trumbowyg('html');
           ctrl.ngModel.$setViewValue(value)
         });
@@ -113,7 +113,7 @@ modules.component('trumbowyg', {
       }
 
       ctrl.initializeEditor = (element, options) => {
-        if(ctrl.removeformatPasted){
+        if (ctrl.removeformatPasted) {
           ctrl.editorConfigurations.plugins.removeformatPasted = ctrl.removeformatPasted == 'true';
         }
         element.trumbowyg(ctrl.editorConfigurations.plugins)
@@ -153,7 +153,7 @@ modules.component('trumbowyg', {
         ctrl.ngModel.$render = () => {
           const element = ctrl.getEditorReference();
           element.trumbowyg('html', ctrl.ngModel.$modelValue);
-        };        
+        };
       };
     }
   ]

@@ -15,13 +15,13 @@ app.controller('CustomerController', ['$scope', '$rootScope', 'ngAppSettings', '
             totalItems: 0,
         };
         $scope.errors = [];
-        
+
         $scope.range = function (max) {
             var input = [];
             for (var i = 1; i <= max; i += 1) input.push(i);
             return input;
         };
-        
+
         $scope.loadCustomer = async function () {
             $rootScope.isBusy = true;
             var id = $routeParams.id;
@@ -39,7 +39,7 @@ app.controller('CustomerController', ['$scope', '$rootScope', 'ngAppSettings', '
             }
         };
         $scope.loadCustomers = async function (pageIndex) {
-            
+
             if (pageIndex !== undefined) {
                 $scope.request.pageIndex = pageIndex;
             }

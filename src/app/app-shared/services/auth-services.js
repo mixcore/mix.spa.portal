@@ -315,7 +315,7 @@ app.factory("AuthService", [
                 if (
                   !$rootScope.globalSettings.lastUpdateConfiguration ||
                   $rootScope.globalSettings.lastUpdateConfiguration <
-                    data.lastUpdateConfiguration
+                  data.lastUpdateConfiguration
                 ) {
                   _initSettings();
                 }
@@ -384,9 +384,9 @@ app.factory("AuthService", [
       $http
         .post(
           appSettings.serviceBase +
-            "/" +
-            appSettings.apiVersion +
-            "/account/registerexternal",
+          "/" +
+          appSettings.apiVersion +
+          "/account/registerexternal",
           registerExternalData
         )
         .success(function (response) {

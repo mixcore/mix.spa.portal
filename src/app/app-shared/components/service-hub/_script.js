@@ -5,8 +5,8 @@
     },
     controller: ['$rootScope', '$scope', function ($rootScope, $scope) {
         var ctrl = this;
-        BaseHub.call(this, ctrl);  
-        
+        BaseHub.call(this, ctrl);
+
         ctrl.user = {
             loggedIn: false,
             connection: {}
@@ -25,16 +25,16 @@
             isMyself: false
         };
         ctrl.loadMsgButton = function () {
-            
+
         }
         ctrl.init = function () {
             ctrl.user.connection.name = Math.random() * 100;
             ctrl.user.connection.id = 'abc';
             ctrl.user.connection.avatar = '';
-            ctrl.startConnection('serviceHub', ctrl.join);            
+            ctrl.startConnection('serviceHub', ctrl.join);
         };
         ctrl.logout = function () {
-            FB.logout(function(response) {
+            FB.logout(function (response) {
                 // user is now logged out
                 ctrl.user.loggedIn = false;
             });
@@ -65,18 +65,18 @@
             ctrl.connection.invoke('HandleRequest', JSON.stringify(ctrl.request));
 
         };
-        ctrl.toggle = function(){
+        ctrl.toggle = function () {
             ctrl.isHide = !ctrl.isHide;
         }
-        ctrl.toggleContact = function(){
+        ctrl.toggleContact = function () {
             ctrl.hideContact = !ctrl.hideContact;
         };
         ctrl.sendMessage = function () {
             // if (ctrl.user.loggedIn) {
-                ctrl.request.data = ctrl.message;
-                ctrl.request.action = "send_message";
-                ctrl.connection.invoke('sendMessage', JSON.stringify(ctrl.request));
-                ctrl.message.content = '';         
+            ctrl.request.data = ctrl.message;
+            ctrl.request.action = "send_message";
+            ctrl.connection.invoke('sendMessage', JSON.stringify(ctrl.request));
+            ctrl.message.content = '';
             // }
         };
         ctrl.receiveMessage = function (msg) {
@@ -141,20 +141,20 @@
         };
         ctrl.newMember = function (member) {
             var m = $rootScope.findObjectByKey(ctrl.members, 'id', member.id);
-            if(!m){
+            if (!m) {
                 ctrl.members.push(member);
             }
             $scope.$apply();
         };
-        
+
         ctrl.initList = function (data) {
             data.forEach(member => {
                 var index = ctrl.members.findIndex(x => x.id === member.id);
                 if (index < 0) {
                     ctrl.members.splice(0, 0, member);
-                }    
+                }
             });
-            
+
             $scope.$apply();
         }
 
@@ -173,7 +173,7 @@
             // var objDiv = document.getElementsByClassName("widget-conversation")[0];
             // objDiv.scrollTop = objDiv.scrollHeight + 20;
         }
-        
-        
+
+
     }]
 });

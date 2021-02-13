@@ -28,7 +28,7 @@
       <input class="form-control" type="checkbox" ng-model="$ctrl.model" />
     </div>
     <div ng-switch-when="videoyoutube">
-      <youtube-editor code="$ctrl.model" hide-input="'true'"></youtube-editor>      
+      <youtube-editor code="$ctrl.model" hide-input="'true'"></youtube-editor>
     </div>
     <div ng-switch-when="tuieditor">
       <div ng-bind-html="$ctrl.model | markdown"></div>

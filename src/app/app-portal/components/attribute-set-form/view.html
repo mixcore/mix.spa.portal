@@ -18,7 +18,8 @@
       <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
         aria-controls="attributeSetId_{{$ctrl.attrData.attributeSetId}} collapse">
         <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
-      <a href="#" ng-if="$ctrl.attributeSetId==1" ng-click="$ctrl.showContentFilter()" class="btn bnt-sm btn-primary px-3">
+      <a href="#" ng-if="$ctrl.attributeSetId==1" ng-click="$ctrl.showContentFilter()"
+        class="btn bnt-sm btn-primary px-3">
         <i class="fas fa-search"></i> Search links
       </a>
       <button ng-if="$ctrl.parentId" type="button" data-bs-toggle="modal" data-bs-target="#modal-data-filter"
@@ -31,7 +32,8 @@
       </button>
       <button type="button" ng-click="$ctrl.submit()"
         class="btn btn-sm btn-link btn-round pull-right float-end me-2 py-0" ng-disabled="$ctrl.isBusy">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy" ng-show="!$ctrl.isBusy"></span>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy"
+          ng-show="!$ctrl.isBusy"></span>
         <i class="fas fa-save"></i> Save current
       </button>
     </h6>
@@ -49,7 +51,8 @@
     <div class="card-footer" ng-if="!$ctrl.hideAction">
       <button type="button" ng-click="$ctrl.submit()" class="btn btn-sm btn-primary btn-round float-end px-4"
         ng-disabled="$ctrl.isBusy">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy" ng-show="!$ctrl.isBusy"></span>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy"
+          ng-show="!$ctrl.isBusy"></span>
         <i class="fas fa-save"></i> Save current
       </button>
     </div>

@@ -9,19 +9,19 @@
             </th>
             <th scope="col" ng-repeat="col in $ctrl.columns | orderBy:'priority' track by $index" ng-bind="col.title"
                 ng-if="$index < 3"></th>
-                <th></th>
-            
+            <th></th>
+
         </tr>
     </thead>
     <tbody class="sortable">
-        <tr class="sortable-item module-column" 
-            ng-repeat="item in $ctrl.data track by $index" 
-            ng-class="{'selected': $ctrl.selectedProp === item}">            
+        <tr class="sortable-item module-column" ng-repeat="item in $ctrl.data track by $index"
+            ng-class="{'selected': $ctrl.selectedProp === item}">
             <td style="cursor:grab;">
                 <span class="oi oi-move"></span>
             </td>
             <td ng-repeat="col in $ctrl.columns | orderBy:'priority' track by $index">
-                <attribute-value-preview ng-if="$index < 3" data="$ctrl.filterData(item, col.name)"></attribute-value-preview>
+                <attribute-value-preview ng-if="$index < 3" data="$ctrl.filterData(item, col.name)">
+                </attribute-value-preview>
             </td>
             <td>
                 <a ng-click="$ctrl.update(item)" class="btn btn-link">

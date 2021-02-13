@@ -187,7 +187,7 @@
             method: "share",
             href: url,
           },
-          function (response) {}
+          function (response) { }
         );
       };
       $scope.shareTwitter = function (url, content) {

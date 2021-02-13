@@ -20,25 +20,24 @@
  -->
 
 
-<div class="btn sidebar-menu-item-main d-inline-flex align-items-center collapsed w-100" 
-  ng-if="!$ctrl.item.isHiden">
+<div class="btn sidebar-menu-item-main d-inline-flex align-items-center collapsed w-100" ng-if="!$ctrl.item.isHiden">
   <!-- <a href="{{$ctrl.item.url}}" class="text {{$ctrl.linkStyle}}" ng-click="$ctrl.item.isActive = !$ctrl.item.isActive"> -->
-    <span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span> <span
-      ng-bind="$ctrl.translate($ctrl.item.textKeyword, false, $ctrl.item.textDefault)"></span>
+  <span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span> <span
+    ng-bind="$ctrl.translate($ctrl.item.textKeyword, false, $ctrl.item.textDefault)"></span>
   <!-- </a> -->
   <span class="btn-group btn-group-sm position-absolute end-0" role="group" aria-label="Quick Actions"
-  ng-if="$ctrl.item.childPages.length == 0">
+    ng-if="$ctrl.item.childPages.length == 0">
     <a class="btn btn-light" href="{{$ctrl.item.url}}">
       <span class="mi mi-Forward"></span>
     </a>
   </span>
   <span class="btn-group btn-group-sm position-absolute end-0" role="group" aria-label="Quick Actions"
-  ng-if="$ctrl.item.childPages.length > 0">
+    ng-if="$ctrl.item.childPages.length > 0">
     <a class="btn btn-light" href="{{$ctrl.item.url}}" ng-if="$ctrl.item.url">
       <span class="mi mi-Forward"></span>
     </a>
-    <button class="btn btn-light" type="button" data-bs-toggle="collapse"
-    aria-expanded="false" data-bs-target="#sub-item-{{$ctrl.item.id}}" aria-controls="contents-collapse">
+    <button class="btn btn-light" type="button" data-bs-toggle="collapse" aria-expanded="false"
+      data-bs-target="#sub-item-{{$ctrl.item.id}}" aria-controls="contents-collapse">
       <span class="mi mi-GlobalNavigationButton"></span>
     </button>
   </span>

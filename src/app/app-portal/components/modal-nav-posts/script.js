@@ -3,18 +3,18 @@
     bindings: {
         srcField: '=',
         srcId: '=',
-        query:'=',
-        selected:'=',
+        query: '=',
+        selected: '=',
         save: '&'
-    },    
+    },
     controller: ['$rootScope', '$scope', 'ngAppSettings', 'PostRestService',
         function ($rootScope, $scope, ngAppSettings, postService) {
             var ctrl = this;
-            ctrl.request = angular.copy(ngAppSettings.request);            
+            ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.navs = [];
             ctrl.data = { items: [] }
-            ctrl.loadPosts = async function (pageIndex) {   
-                ctrl.request.query = ctrl.query + ctrl.srcId;    
+            ctrl.loadPosts = async function (pageIndex) {
+                ctrl.request.query = ctrl.query + ctrl.srcId;
                 if (pageIndex !== undefined) {
                     ctrl.request.pageIndex = pageIndex;
                 }
@@ -34,7 +34,7 @@
                         var item = {
                             priority: e.priority,
                             description: e.title,
-                            postId: e.id,                            
+                            postId: e.id,
                             image: e.thumbnailUrl,
                             specificulture: e.specificulture,
                             post: e,
@@ -53,16 +53,16 @@
                     $scope.$apply();
                 }
             }
-            ctrl.saveSelected = function(){
+            ctrl.saveSelected = function () {
                 ctrl.selected = $rootScope.filterArray(ctrl.navs, ['isActived'], [true]);
                 console.log(ctrl.selected);
                 setTimeout(() => {
                     ctrl.save().then(() => {
                         ctrl.loadPosts();
-                    });   
-                     
+                    });
+
                 }, 500);
-                
+
             }
         }
 

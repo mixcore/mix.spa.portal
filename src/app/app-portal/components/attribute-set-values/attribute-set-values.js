@@ -75,7 +75,7 @@ modules.component("attributeSetValues", {
           }
         });
       };
-      ctrl.filter = function () {};
+      ctrl.filter = function () { };
       ctrl.sendMail = async function (data) {
         ctrl.onSendMail({ data: data });
       };

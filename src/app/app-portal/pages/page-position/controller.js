@@ -7,7 +7,7 @@ app.controller('PagePositionController',
             service, postService, commonService) {
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.cates = ['Site', 'System'];
-            $scope.others=[];
+            $scope.others = [];
             $scope.settings = $rootScope.globalSettings;
             $scope.pageId = $routeParams.id;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
@@ -52,7 +52,7 @@ app.controller('PagePositionController',
                 }
             };
 
-            $scope.saveOthers = async function(){                
+            $scope.saveOthers = async function () {
                 var response = await service.saveList($scope.others);
                 if (response.isSucceed) {
                     $scope.getList();
@@ -67,7 +67,7 @@ app.controller('PagePositionController',
             $scope.updateInfos = async function (index) {
                 $scope.data.items.splice(index, 1);
                 $rootScope.isBusy = true;
-                var startIndex = $scope.data.items[0].priority-1;
+                var startIndex = $scope.data.items[0].priority - 1;
                 for (var i = 0; i < $scope.data.items.length; i++) {
                     $scope.data.items[i].priority = startIndex + i + 1;
                 }

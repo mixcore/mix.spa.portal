@@ -3,7 +3,7 @@ app.component('appSettingsDefault', {
     templateUrl: '/mix-app/views/app-portal/pages/app-settings/components/default/view.html',
     controller: ['$rootScope', 'ngAppSettings', function ($rootScope, ngAppSettings) {
         var ctrl = this;
-        ctrl.$onInit = function(){
+        ctrl.$onInit = function () {
             ctrl.properties = $.parseJSON(ctrl.appSettings.GlobalSettings.DefaultPostAttr);
             ctrl.trackedProperties = $.parseJSON(ctrl.appSettings.GlobalSettings.DefaultPostAttr);
             ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
@@ -15,7 +15,7 @@ app.component('appSettingsDefault', {
                 value: null,
                 dataType: '7'
             });
-            
+
         };
         ctrl.$doCheck = function () {
             if (ctrl.trackedProperties != ctrl.properties) {

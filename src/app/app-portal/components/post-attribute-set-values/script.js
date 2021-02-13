@@ -4,44 +4,44 @@ modules.component('postAttributeSetValues', {
         header: '=',
         data: '=',
         columns: '=?',
-        onUpdate:'&?',
-        onDelete:'&?',
+        onUpdate: '&?',
+        onDelete: '&?',
     },
     controller: ['$rootScope', '$scope',
         function ($rootScope, $scope) {
             var ctrl = this;
             ctrl.selectedProp = null;
-            
+
             ctrl.settings = $rootScope.globalSettings;
-            ctrl.$onInit = function(){
-                if(ctrl.data.length && !ctrl.columns){
+            ctrl.$onInit = function () {
+                if (ctrl.data.length && !ctrl.columns) {
                     ctrl.columns = ctrl.data[0].data;
                 }
             };
 
-            ctrl.update = function(data){
-                ctrl.onUpdate({data: data});
-            };
-            
-            ctrl.delete = function(data){
-                ctrl.onDelete({data: data});
+            ctrl.update = function (data) {
+                ctrl.onUpdate({ data: data });
             };
 
-            ctrl.filterData = function(item, attributeName){
+            ctrl.delete = function (data) {
+                ctrl.onDelete({ data: data });
+            };
+
+            ctrl.filterData = function (item, attributeName) {
                 return $rootScope.findObjectByKey(item.data, 'attributeName', attributeName);
             };
 
-            ctrl.dragStart = function(index){
+            ctrl.dragStart = function (index) {
                 ctrl.dragStartIndex = index;
             };
-            ctrl.updateOrders = function(index){
-                if(index> ctrl.dragStartIndex){
+            ctrl.updateOrders = function (index) {
+                if (index > ctrl.dragStartIndex) {
                     ctrl.data.splice(ctrl.dragStartIndex, 1);
                 }
-                else{
-                    ctrl.data.splice(ctrl.dragStartIndex+1, 1);
+                else {
+                    ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
                 }
-                angular.forEach(ctrl.data, function(e,i){
+                angular.forEach(ctrl.data, function (e, i) {
                     e.priority = i;
                 });
             };

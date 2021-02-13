@@ -5,7 +5,7 @@ modules.directive('tabsV', function () {
         transclude: true,
         scope: {
             selectCallback: '&'
-        },        
+        },
         controller: function ($scope, $element) {
             var panes = $scope.panes = [];
 
@@ -14,7 +14,7 @@ modules.directive('tabsV', function () {
                     pane.selected = false;
                 });
                 pane.selected = true;
-                this.selectCallback({pane: pane});
+                this.selectCallback({ pane: pane });
             };
 
             this.addPane = function (pane) {

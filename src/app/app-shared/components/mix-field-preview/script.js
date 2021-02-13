@@ -26,8 +26,8 @@
           // youtube video
           ctrl.model = $sce.trustAsResourceUrl(
             "https://www.youtube.com/embed/" +
-              ctrl.model +
-              "?rel=0&showinfo=0&autoplay=0"
+            ctrl.model +
+            "?rel=0&showinfo=0&autoplay=0"
           );
         }
         // if(ctrl.field.dataType == 24 && ctrl.model) // youtube video

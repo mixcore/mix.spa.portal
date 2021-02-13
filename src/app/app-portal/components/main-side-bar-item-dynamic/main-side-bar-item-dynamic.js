@@ -8,7 +8,7 @@ modules.component('mainSideBarItemDynamic', {
     bindings: {
         iconSize: '=',
         linkStyle: '=',
-        itemStyle:'=',
+        itemStyle: '=',
         item: '='
     }
 });

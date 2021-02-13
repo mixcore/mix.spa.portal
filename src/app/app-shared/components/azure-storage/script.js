@@ -24,7 +24,7 @@
         status.scrollTop = status.scrollHeight;
       };
 
-      ctrl.$onInit = function () {};
+      ctrl.$onInit = function () { };
 
       ctrl.createContainer = async () => {
         try {

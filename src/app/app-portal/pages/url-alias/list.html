@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12">
             <filter-list request="request" callback="getList(pageIndex)"></filter-list>
-        </div>       
+        </div>
     </div>
 </div>
 <div class="card-body">
@@ -31,13 +31,16 @@
 
         <tbody dnd-list="data.items" dnd-disable-if="canDrag">
             <tr ng-if="canDrag">
-                <td colspan="7"><small class="text-warning" ng-bind="translate('warning_can_not_drag_drop',true, '(Drag & Drop feature only active when priority is asc)')"></small></td>
+                <td colspan="7"><small class="text-warning"
+                        ng-bind="translate('warning_can_not_drag_drop',true, '(Drag & Drop feature only active when priority is asc)')"></small>
+                </td>
             </tr>
-            <tr ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move" dnd-selected="selected = item"
-                dnd-moved="updateInfos($index)" ng-class="{'selected': selected === item}">
+            <tr ng-repeat="item in data.items" dnd-draggable="item" dnd-effect-allowed="move"
+                dnd-selected="selected = item" dnd-moved="updateInfos($index)"
+                ng-class="{'selected': selected === item}">
                 <td style="cursor:grab;" class="drag-header">
                     <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
-                </td>                
+                </td>
                 <td>
                     <small>
                         <span ng-bind-html="item.sourceId"></span>
@@ -47,7 +50,7 @@
                     <span ng-bind="item.type"></span>
                 </td>
                 <td>
-                    <span ng-bind="item.alias"></span>                    
+                    <span ng-bind="item.alias"></span>
                 </td>
                 <td>
                     <small>
@@ -71,8 +74,9 @@
 
 </div>
 <div class="card-footer">
-    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0"
-        a-class="page-link" paging-action="getList(page-1)" scroll-top="true"></paging>
+    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+        ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+        scroll-top="true"></paging>
 </div>
 
 

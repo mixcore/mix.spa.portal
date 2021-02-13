@@ -32,7 +32,7 @@ modules.component("attributeSetNavs", {
         });
       };
       ctrl.goToPath = $rootScope.goToPath;
-      ctrl.selectPane = function (pane) {};
+      ctrl.selectPane = function (pane) { };
       ctrl.loadData = async function () {
         // Load attr set navs if not in input
         if (!ctrl.attributeSetNavs) {

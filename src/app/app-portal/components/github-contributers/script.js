@@ -6,7 +6,7 @@
       var ctrl = this;
       ctrl.items = [];
       ctrl.init = function () {
-        var req= {
+        var req = {
           method: 'GET',
           url: 'https://api.github.com/repos/mixcore/mix.core/contributors'
         };
@@ -15,12 +15,11 @@
 
       ctrl.getGithubApiResult = async function (req) {
         return $http(req).then(function (resp) {
-          if(resp.status == '200')
-          {
-              ctrl.items = resp.data;
+          if (resp.status == '200') {
+            ctrl.items = resp.data;
           }
-          else{
- 
+          else {
+
           }
         },
           function (error) {

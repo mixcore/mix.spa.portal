@@ -9,22 +9,22 @@
             var ctrl = this;
             BaseHub.call(this, ctrl);
             ctrl.settings = $rootScope.globalSettings;
-            
+
             ctrl.init = function () {
                 ctrl.viewModel = viewModel;
                 _start();
             };
-            ctrl.toogleMute = function(){
-                if(ctrl._mediaStream != null && ctrl._mediaStream.getAudioTracks().length > 0){
+            ctrl.toogleMute = function () {
+                if (ctrl._mediaStream != null && ctrl._mediaStream.getAudioTracks().length > 0) {
                     ctrl.viewModel.muted = !ctrl.viewModel.muted;
                     ctrl._mediaStream.getAudioTracks()[0].enabled = ctrl.viewModel.muted;
-                }   
+                }
             };
-            ctrl.toogleVideo = function(){
-                if(ctrl._mediaStream != null && ctrl._mediaStream.getVideoTracks().length > 0){
+            ctrl.toogleVideo = function () {
+                if (ctrl._mediaStream != null && ctrl._mediaStream.getVideoTracks().length > 0) {
                     ctrl.viewModel.video = !ctrl.viewModel.video;
                     ctrl._mediaStream.getVideoTracks()[0].enabled = ctrl.viewModel.video;
-                }   
+                }
             };
 
             ctrl._mediaStream = null;
@@ -36,7 +36,7 @@
                         .withAutomaticReconnect()
                         .configureLogging(signalR.LogLevel.Information)
                         .build();
-                         // Setup client SignalR operations
+                    // Setup client SignalR operations
                     _setupHubCallbacks(hub);
                     hub.start()
                         .then(function () {
@@ -57,7 +57,7 @@
                             }
                             return Promise.reject(error);
                         });
-                   
+
                     _hub = hub;
                 },
                 _start = function () {
@@ -189,8 +189,8 @@
                     });
                     // Hub Callback: Update User List
                     hub.on("updateUserList", (userList) => {
-                        ctrl.viewModel.Users = JSON.parse(userList);     
-                        $scope.$apply();                  
+                        ctrl.viewModel.Users = JSON.parse(userList);
+                        $scope.$apply();
                     });
                     // Hub Callback: WebRTC Signal Received
                     hub.on("receiveSignal", (callingUser, data) => {
@@ -222,30 +222,30 @@
                         otherVideo.srcObject = null;
                     }
                 };
-                ctrl.callUser = function (targetConnectionId) {
-                    // Make sure we are in a state where we can make a call
-                    if (ctrl.viewModel.Mode !== 'idle') {
-                        alertify.error('Sorry, you are already in a call.  Conferencing is not yet implemented.');
-                        return;
-                    }
-                    // Then make sure we aren't calling ourselves.
-                    if (targetConnectionId != ctrl.viewModel.MyConnectionId) {
-                        // Initiate a call
-                        _hub.invoke('callUser', targetConnectionId);
+            ctrl.callUser = function (targetConnectionId) {
+                // Make sure we are in a state where we can make a call
+                if (ctrl.viewModel.Mode !== 'idle') {
+                    alertify.error('Sorry, you are already in a call.  Conferencing is not yet implemented.');
+                    return;
+                }
+                // Then make sure we aren't calling ourselves.
+                if (targetConnectionId != ctrl.viewModel.MyConnectionId) {
+                    // Initiate a call
+                    _hub.invoke('callUser', targetConnectionId);
 
-                        // UI in calling mode
-                        ctrl.viewModel.Mode = 'calling';
-                    } else {
-                        alertify.error("Ah, nope.  Can't call yourself.");
-                    }
-                };
-                ctrl.hangup = function () {
-                    // Only allow hangup if we are not idle
-                    if (ctrl.viewModel.Mode != 'idle') {
-                        _hub.invoke('hangUp');
-                        connectionManager.closeAllConnections();
-                        ctrl.viewModel.Mode = 'idle';
-                    }
-                };
+                    // UI in calling mode
+                    ctrl.viewModel.Mode = 'calling';
+                } else {
+                    alertify.error("Ah, nope.  Can't call yourself.");
+                }
+            };
+            ctrl.hangup = function () {
+                // Only allow hangup if we are not idle
+                if (ctrl.viewModel.Mode != 'idle') {
+                    _hub.invoke('hangUp');
+                    connectionManager.closeAllConnections();
+                    ctrl.viewModel.Mode = 'idle';
+                }
+            };
         }]
 });

@@ -4,11 +4,11 @@ modules.component('mainSideBarItem', {
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
         ctrl.translate = $rootScope.translate;
-        ctrl.addClass = function(obj){
+        ctrl.addClass = function (obj) {
             obj.currentTarget.classList.add('btn-group-lg');
             //alert(obj);
         }
-        ctrl.removeClass = function(obj){
+        ctrl.removeClass = function (obj) {
             obj.currentTarget.classList.remove('btn-group-lg');
             //alert(obj);
         }

@@ -3,7 +3,7 @@
     bindings: {
         showLink: '='
     },
-    controller: ['$rootScope','$scope','AppSettingsServices',
+    controller: ['$rootScope', '$scope', 'AppSettingsServices',
         function ($rootScope, $scope, appSettingsServices) {
             var ctrl = this;
             this.$onInit = function () {

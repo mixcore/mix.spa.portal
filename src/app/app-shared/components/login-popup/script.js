@@ -37,7 +37,7 @@ app.controller("LoginPopupController", [
           $rootScope.loginCallbackType = null;
         }
       }
-      else{
+      else {
         $rootScope.goToSiteUrl('/security/login');
       }
     };

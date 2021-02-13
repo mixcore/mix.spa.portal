@@ -30,7 +30,7 @@
             };
             ctrl.loadData = async function (pageIndex) {
                 ctrl.isBusy = true;
-                
+
                 // ctrl.request.query = ctrl.query + ctrl.srcId;
                 ctrl.navs = [];
                 if (pageIndex !== undefined) {
@@ -51,7 +51,7 @@
                 if (ctrl.filterType) {
                     ctrl.request.filterType = ctrl.filterType;
                 }
-                
+
                 var response = await dataService.getList(ctrl.request);
                 if (response.isSucceed) {
                     ctrl.data = response.data;
@@ -77,7 +77,7 @@
                         break;
                 }
             };
-            ctrl.onClose = function(){
+            ctrl.onClose = function () {
                 ctrl.callback();
             };
             ctrl.select = function (nav) {

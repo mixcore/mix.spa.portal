@@ -37,7 +37,7 @@ app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', 
             url: apiUrl + 'list',
             data: JSON.stringify(request)
         };
-        
+
         return await commonService.getApiResult(req);
     };
 
@@ -48,18 +48,18 @@ app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', 
             url: apiUrl + 'export',
             data: JSON.stringify(request)
         };
-        
+
         return await commonService.getApiResult(req);
     };
 
     var _initModuleForm = async function (name) {
-       
+
         var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
         var req = {
             method: 'GET',
             url: apiUrl + 'init-by-name/' + name,
         };
-        
+
         return await commonService.getApiResult(req);
     };
 
@@ -91,7 +91,7 @@ app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', 
         ]
         var req = {
             method: 'POST',
-            url: apiUrl + 'save/'+ id,
+            url: apiUrl + 'save/' + id,
             data: JSON.stringify(field)
         };
         return await commonService.getApiResult(req)

@@ -20,7 +20,7 @@
         };
         ctrl.toggle = function (index) {
             if (ctrl.readonly === undefined || ctrl.readonly === false) {
-                ctrl.ratingValue = index + 1;                
+                ctrl.ratingValue = index + 1;
             }
         };
 

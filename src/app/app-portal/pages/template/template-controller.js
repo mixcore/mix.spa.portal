@@ -43,9 +43,9 @@ app.controller("TemplateController", [
     $scope.loadFolder = function (d) {
       $location.url(
         "/portal/template/list/" +
-          $routeParams.themeId +
-          "?folderType=" +
-          encodeURIComponent(d)
+        $routeParams.themeId +
+        "?folderType=" +
+        encodeURIComponent(d)
       );
     };
     $scope.loadParams = async function () {

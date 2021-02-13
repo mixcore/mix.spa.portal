@@ -80,7 +80,7 @@
           function (result) {
             ctrl.srcUrl = result.fullPath;
           },
-          function () {}
+          function () { }
         );
       };
 
@@ -158,7 +158,7 @@
               }
             }
           };
-          reader.onerror = function (error) {};
+          reader.onerror = function (error) { };
         } else {
           return null;
         }

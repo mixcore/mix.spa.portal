@@ -19,7 +19,7 @@
                     ctrl.cartData.items.push(item);
                     ctrl.cartData.totalItems += 1;
                 }
-                ctrl.cartData.total+= parseInt(ctrl.price);
+                ctrl.cartData.total += parseInt(ctrl.price);
                 localStorageService.set('shoppingCart', ctrl.cartData);
             }
         }

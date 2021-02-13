@@ -13,6 +13,6 @@ modules.component('fbShare', {
         };
     }],
     bindings: {
-        href:'='
+        href: '='
     }
 });

@@ -14,8 +14,8 @@
         </tr>
     </thead>
     <tbody class="sortable" dnd-list="$ctrl.properties">
-        <tr class="sortable-item module-column" ng-repeat="prop in $ctrl.properties" 
-            dnd-draggable="col" dnd-effect-allowed="move" dnd-selected="$ctrl.selectedProp = col" 
+        <tr class="sortable-item module-column" ng-repeat="prop in $ctrl.properties" dnd-draggable="col"
+            dnd-effect-allowed="move" dnd-selected="$ctrl.selectedProp = col"
             dnd-moved="$ctrl.properties.splice($index, 1)" ng-class="{'selected': $ctrl.selectedProp === col}">
             <td style="cursor:grab;">
                 <span class="oi oi-move"></span>
@@ -24,16 +24,18 @@
                 <span ng-bind="prop.title"></span>
             </td>
             <td class="prop-value-container">
-                <module-form-editor ng-if="!prop.options.length" field-title="prop.name" data="prop"></module-form-editor>
+                <module-form-editor ng-if="!prop.options.length" field-title="prop.name" data="prop">
+                </module-form-editor>
                 <div ng-if="prop.options.length" class="mb-3">
-                                    
-                    <label class="form-label" ng-if="$ctrl.isShowTitle" ng-bind="prop.title"></label>                                    
-                    <mix-select-icons ng-if="prop.dataType=='icon'" options="prop.options" data="prop.value"></mix-select-icons>
-                    
+
+                    <label class="form-label" ng-if="$ctrl.isShowTitle" ng-bind="prop.title"></label>
+                    <mix-select-icons ng-if="prop.dataType=='icon'" options="prop.options" data="prop.value">
+                    </mix-select-icons>
+
                     <select ng-if="prop.dataType!='icon'" class="form-select form-control" ng-model="prop.value">
                         <option ng-repeat="item in prop.options track by $index" ng-value="item">{{item}}</option>
                     </select>
-                    <br/>                    
+                    <br />
                 </div>
             </td>
         </tr>

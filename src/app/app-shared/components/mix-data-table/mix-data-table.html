@@ -23,8 +23,9 @@
     <div dnd-list="$ctrl.data.items" id="list-page" class="nav" ng-if="$ctrl.data.items.length"
         dnd-inserted="$ctrl.insertCallback(index, item, external, type)" dnd-disable-if="!$ctrl.canDrag">
         <div class="col-sm-12 dndPlaceholder"></div>
-        <div ng-repeat="nav in $ctrl.data.items" class="container-fluid dnd-item rounded-0 border-left-0 border-right-0 border-bottom-0"
-            dnd-draggable="nav" dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)" dnd-effect-allowed="move"
+        <div ng-repeat="nav in $ctrl.data.items"
+            class="container-fluid dnd-item rounded-0 border-left-0 border-right-0 border-bottom-0" dnd-draggable="nav"
+            dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)" dnd-effect-allowed="move"
             dnd-selected="$ctrl.selected = nav" ng-class="{'selected': $ctrl.selected === nav}">
             <div class="row">
                 <div class="col-1 drag-header small" style="cursor:grab;">
@@ -33,7 +34,7 @@
                 <div class="col-sm-1">
                     <!-- <input style="width:40px" type="number" readonly="readonly" ng-model="nav.priority"
                         class="item-priority form-control form-control-sm d-inline"> -->
-                        <small class="small">{{nav.priority}}</small>
+                    <small class="small">{{nav.priority}}</small>
                 </div>
                 <div class="col-sm-{{$ctrl.colWidth}}" ng-repeat="col in $ctrl.columns track by $index">
                     <small>
@@ -43,14 +44,15 @@
                 </div>
                 <div class="col-sm-{{$ctrl.lastColWidth}}">
                     <div class="btn-group btn-group-sm float-end" role="group" aria-label="Actions">
-                        <a ng-if="nav.childNavs.length > 0" class="btn btn-dark text-primary" ng-click="$ctrl.toggleChildNavs(nav)">
+                        <a ng-if="nav.childNavs.length > 0" class="btn btn-dark text-primary"
+                            ng-click="$ctrl.toggleChildNavs(nav)">
                             <span class="fa fa-list"></span>
                         </a>
                         <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(nav.id)" class="btn btn-sm text-primary ">
                             <span class="fas fa-pen"></span>
                         </a>
-                        <a ng-click="$ctrl.delete(nav.id);" class="btn btn-sm del-popover text-danger" data-bs-toggle="popover"
-                            data-html="true">
+                        <a ng-click="$ctrl.delete(nav.id);" class="btn btn-sm del-popover text-danger"
+                            data-bs-toggle="popover" data-html="true">
                             <span class="fas fa-trash-alt"></span>
                         </a>
                     </div>
@@ -76,7 +78,8 @@
                         </div>
                         <div class="col-sm-{{$ctrl.lastColWidth}}">
                             <div class="btn-group btn-group-sm float-end" role="group" aria-label="Actions">
-                                <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(snav.page.id)" class="btn btn-sm btn-dark text-primary">
+                                <a ng-if="$ctrl.editUrl" ng-click="$ctrl.goTo(snav.page.id)"
+                                    class="btn btn-sm btn-dark text-primary">
                                     <span class="fas fa-pen"></span>
                                 </a>
                                 <a ng-click="$ctrl.delete(snav.id);" class="btn btn-dark del-popover text-danger"

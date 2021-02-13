@@ -30,7 +30,7 @@ app.component('themeExportPages', {
                 e.isExportData = ctrl.selectedList.isExportData;
             });
             ctrl.updatePageExport();
-        };        
+        };
     }],
     bindings: {
         exportData: '=',

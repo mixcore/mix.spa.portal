@@ -260,7 +260,7 @@ app.controller("ModuleController", [
     $scope.dragoverCallback = function (index, item, external, type) {
       //console.log('drop ', index, item, external, type);
     };
-    $scope.insertColCallback = function (index, item, external, type) {};
+    $scope.insertColCallback = function (index, item, external, type) { };
     $scope.removeAttribute = function (attr, index) {
       $rootScope.showConfirm(
         $scope,
