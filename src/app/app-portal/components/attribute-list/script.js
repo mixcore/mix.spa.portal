@@ -3,7 +3,7 @@ modules.component("attributeList", {
   controller: [
     "$rootScope",
     "$scope",
-    "RestAttributeFieldPortalService",
+    "RestMixDatabaseColumnPortalService",
     function ($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.selectedCol = null;

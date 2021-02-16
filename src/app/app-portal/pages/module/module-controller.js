@@ -7,8 +7,8 @@ app.controller("ModuleController", [
   "$routeParams",
   "ModuleRestService",
   "SharedModuleDataService",
-  "RestRelatedAttributeSetPortalService",
-  "RestAttributeSetDataPortalService",
+  "RestRelatedMixDatabasePortalService",
+  "RestMixDatabaseDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -17,7 +17,7 @@ app.controller("ModuleController", [
     $routeParams,
     moduleServices,
     moduleDataService,
-    RestRelatedAttributeSetPortalService,
+    RestRelatedMixDatabasePortalService,
     dataService
   ) {
     BaseRestCtrl.call(
@@ -37,8 +37,7 @@ app.controller("ModuleController", [
       if ($scope.viewModel.id > 0) {
         // module => list post or list product
         if ($scope.viewModel.type == 2 || $scope.viewModel.type == 6) {
-          $scope.contentUrl =
-            "/portal/module-post/list/" + $scope.viewModel.id;
+          $scope.contentUrl = "/portal/module-post/list/" + $scope.viewModel.id;
         } else {
           $scope.contentUrl = "/portal/module/data/" + $scope.viewModel.id;
         }
@@ -260,7 +259,7 @@ app.controller("ModuleController", [
     $scope.dragoverCallback = function (index, item, external, type) {
       //console.log('drop ', index, item, external, type);
     };
-    $scope.insertColCallback = function (index, item, external, type) { };
+    $scope.insertColCallback = function (index, item, external, type) {};
     $scope.removeAttribute = function (attr, index) {
       $rootScope.showConfirm(
         $scope,
@@ -272,7 +271,7 @@ app.controller("ModuleController", [
       );
     };
     $scope.removeAttributeConfirmed = function (attr, index) {
-      RestRelatedAttributeSetPortalService.delete([]);
+      RestRelatedMixDatabasePortalService.delete([]);
       $scope.viewModel.attributeData.data.values.splice(index, 1);
     };
     $scope.loadAdditionalData = async function () {

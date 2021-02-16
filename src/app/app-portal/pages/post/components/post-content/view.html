@@ -1,6 +1,9 @@
 <div class="card mb-5">
   <div class="card-body">
-    <post-main post="$ctrl.model" generate-seo="$ctrl.generateSEO()"></post-main>
+    <post-main
+      post="$ctrl.model"
+      generate-seo="$ctrl.generateSEO()"
+    ></post-main>
   </div>
 </div>
 
@@ -9,7 +12,6 @@
     <tabs-v class="mb-4">
       <pane-v header="General">
         <post-general is-admin="isAdmin" post="$ctrl.model"></post-general>
-
       </pane-v>
       <pane-v header="SEO" class="">
         <post-seo post="$ctrl.model"></post-seo>
@@ -23,10 +25,15 @@
       <pane-v header="Related">
         <div class="card">
           <div class="card-body">
-
-            <related-navs request="$ctrl.request" source-id="$ctrl.model.id" culture="$ctrl.model.specificulture"
-              prefix="'post'" navs="$ctrl.model.postNavs" data="$ctrl.relatedData"
-              load-data="$ctrl.getListRelated(pageIndex)">
+            <related-navs
+              request="$ctrl.request"
+              source-id="$ctrl.model.id"
+              culture="$ctrl.model.specificulture"
+              prefix="'post'"
+              navs="$ctrl.model.postNavs"
+              data="$ctrl.relatedData"
+              load-data="$ctrl.getListRelated(pageIndex)"
+            >
             </related-navs>
           </div>
         </div>
@@ -36,12 +43,17 @@
 </div>
 
 <div class="row" ng-if="$ctrl.additionalData">
-  <additional-value class="mb-4" additional-data="$ctrl.additionalData" database-name="$ctrl.model.type"
-    parent-type="'Post'" parent-id="$ctrl.model.id"></additional-value>
+  <additional-value
+    class="mb-4"
+    additional-data="$ctrl.additionalData"
+    database-name="$ctrl.model.type"
+    parent-type="'Post'"
+    parent-id="$ctrl.model.id"
+  ></additional-value>
 </div>
 <!-- <div class="row">
     <div class="col-12" ng-if="$ctrl.model.id">
-        <attribute-set-navs parent-id="$ctrl.model.id" parent-type="'Post'">
-        </attribute-set-navs>
+        <mix-database-navs parent-id="$ctrl.model.id" parent-type="'Post'">
+        </mix-database-navs>
     </div>
 </div> -->

@@ -1,5 +1,6 @@
 ﻿modules.component("attributeValueEditor", {
-  templateUrl: "/mix-app/views/app-portal/components/attribute-value-editor/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/attribute-value-editor/view.html",
   bindings: {
     attributeValue: "=?",
     parentType: "=?",
@@ -11,8 +12,8 @@
     "$scope",
     "ngAppSettings",
     "$location",
-    "RestRelatedAttributeSetPortalService",
-    "RestAttributeSetDataPortalService",
+    "RestRelatedMixDatabasePortalService",
+    "RestMixDatabaseDataPortalService",
     function (
       $rootScope,
       $scope,
@@ -65,7 +66,7 @@
                   ctrl.attributeValue.field.referenceId;
                 // navService.getSingle(["default"]).then((resp) => {
                 //   ctrl.defaultDataModel = resp;
-                //   ctrl.defaultDataModel.attributeSetId =
+                //   ctrl.defaultDataModel.mixDatabaseId =
                 //     ctrl.attributeValue.field.referenceId;
                 //   ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 // });
@@ -165,14 +166,14 @@
       };
 
       ctrl.updateRefData = function (nav) {
-        ctrl.goToPath(`/portal/attribute-set-data/details?dataId=${nav.data.id}
-                &attributeSetId=${nav.data.attributeSetId}
+        ctrl.goToPath(`/portal/mix-database-data/details?dataId=${nav.data.id}
+                &mixDatabaseId=${nav.data.mixDatabaseId}
                 &parentId=${ctrl.parentId}
                 &parentType=${ctrl.parentType}`);
         // ctrl.refDataModel = nav;
         // var e = $(".pane-form-" + ctrl.attributeValue.field.referenceId)[0];
         // angular.element(e).triggerHandler('click');
-        // $location.url('/portal/attribute-set-data/details?dataId='+ item.id +'&attributeSetId=' + item.attributeSetId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
 
       ctrl.removeRefData = async function (nav) {

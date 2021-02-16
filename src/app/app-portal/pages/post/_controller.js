@@ -8,7 +8,7 @@ app.controller("PostController", [
   "$routeParams",
   "PostRestService",
   "UrlAliasService",
-  "RestAttributeSetDataPortalService",
+  "RestMixDatabaseDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -37,11 +37,11 @@ app.controller("PostController", [
       {
         title: "All",
         attribute_set_name: "",
-      }
+      },
     ];
 
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
-    $scope.postTypeRequest.attributeSetName = "post_type";
+    $scope.postTypeRequest.mixDatabaseName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
 
@@ -56,8 +56,14 @@ app.controller("PostController", [
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes.concat(getTypes.data.items.map(m => m.obj));
-        $scope.postType = $rootScope.findObjectByKey($scope.postTypes, 'attribute_set_name', $scope.request.type);
+        $scope.postTypes = $scope.postTypes.concat(
+          getTypes.data.items.map((m) => m.obj)
+        );
+        $scope.postType = $rootScope.findObjectByKey(
+          $scope.postTypes,
+          "attribute_set_name",
+          $scope.request.type
+        );
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
@@ -145,11 +151,11 @@ app.controller("PostController", [
       }
     };
     $scope.saveFailCallback = function () {
-      angular.forEach($scope.viewModel.attributeSetNavs, function (nav) {
+      angular.forEach($scope.viewModel.mixDatabaseNavs, function (nav) {
         if (nav.isActived) {
-          $rootScope.decryptAttributeSet(
-            nav.attributeSet.attributes,
-            nav.attributeSet.postData.items
+          $rootScope.decryptMixDatabase(
+            nav.mixDatabase.attributes,
+            nav.mixDatabase.postData.items
           );
         }
       });
@@ -179,7 +185,7 @@ app.controller("PostController", [
       if ($scope.viewModel.id) {
         $scope.viewModel.detailsUrl = `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${$scope.viewModel.seoName}`;
       }
-      await $scope.loadPostTypes()
+      await $scope.loadPostTypes();
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
@@ -304,7 +310,7 @@ app.controller("PostController", [
           $scope.viewModel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewModel.id,
-            attributeSetName: "sys_category",
+            mixDatabaseName: "sys_category",
           });
         }
       });
@@ -322,17 +328,17 @@ app.controller("PostController", [
           $scope.viewModel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewModel.id,
-            attributeSetName: "sys_tag",
+            mixDatabaseName: "sys_tag",
           });
         }
       });
     };
     $scope.validate = function () {
-      angular.forEach($scope.viewModel.attributeSetNavs, function (nav) {
+      angular.forEach($scope.viewModel.mixDatabaseNavs, function (nav) {
         if (nav.isActived) {
-          $rootScope.encryptAttributeSet(
-            nav.attributeSet.attributes,
-            nav.attributeSet.postData.items
+          $rootScope.encryptMixDatabase(
+            nav.mixDatabase.attributes,
+            nav.mixDatabase.postData.items
           );
         }
       });
