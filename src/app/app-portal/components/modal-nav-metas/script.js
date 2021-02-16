@@ -1,19 +1,20 @@
 ﻿modules.component("modalNavMetas", {
-  templateUrl: "/mix-app/views/app-portal/components/modal-nav-metas/view.html",
-  bindings: {
-    header: "=",
-    mixDatabaseId: "=?",
-    mixDatabaseName: "=?",
-    parentId: "=?",
-    parentType: "=?",
-    type: "=?",
-    fieldDisplay: "=?",
-    isOpen: "=?",
-    selectedList: "=?",
-    selectCallback: "&",
-    save: "&",
+  templateUrl :
+      "/mix-app/views/app-portal/components/modal-nav-metas/view.html",
+  bindings : {
+    header : "=",
+    mixDatabaseId : "=?",
+    mixDatabaseName : "=?",
+    parentId : "=?",
+    parentType : "=?",
+    type : "=?",
+    fieldDisplay : "=?",
+    isOpen : "=?",
+    selectedList : "=?",
+    selectCallback : "&",
+    save : "&",
   },
-  controller: [
+  controller : [
     "$rootScope",
     "$scope",
     "$routeParams",
@@ -21,29 +22,20 @@
     "RestMixDatabaseDataPortalService",
     "RestRelatedAttributeDataPortalService",
     "RestMixDatabaseColumnPortalService",
-    function (
-      $rootScope,
-      $scope,
-      $routeParams,
-      ngAppSettings,
-      dataService,
-      navService,
-      fieldService
-    ) {
+    function($rootScope, $scope, $routeParams, ngAppSettings, dataService,
+             navService, fieldService) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.request.key = "readData";
       ctrl.navs = [];
 
       ctrl.queries = {};
-      ctrl.data = { items: [] };
-      ctrl.$onInit = function () {
+      ctrl.data = {items : []};
+      ctrl.$onInit = function() {
         if (!ctrl.selectedList) {
           ctrl.selectedList = [];
         }
-        angular.forEach(ctrl.selectedList, function (e) {
-          e.isActived = true;
-        });
+        angular.forEach(ctrl.selectedList, function(e) { e.isActived = true; });
         if (ctrl.mixDatabaseId) {
           ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
@@ -52,17 +44,17 @@
         }
         ctrl.loadDefaultModel();
       };
-      ctrl.loadDefaultModel = async function () {
+      ctrl.loadDefaultModel = async function() {
         ctrl.defaultNav = {
-          id: null,
-          specificulture: navService.lang,
-          dataId: null,
-          parentId: ctrl.parentId,
-          parentType: ctrl.parentType,
-          mixDatabaseId: ctrl.mixDatabaseId,
-          mixDatabaseName: ctrl.mixDatabaseName,
-          status: "Published",
-          attributeData: null,
+          id : null,
+          specificulture : navService.lang,
+          dataId : null,
+          parentId : ctrl.parentId,
+          parentType : ctrl.parentType,
+          mixDatabaseId : ctrl.mixDatabaseId,
+          mixDatabaseName : ctrl.mixDatabaseName,
+          status : "Published",
+          attributeData : null,
         };
         if ($routeParams.parentId) {
           ctrl.parentId = $routeParams.parentId;
@@ -71,17 +63,15 @@
           ctrl.parentType = $routeParams.parentType;
         }
         if (!ctrl.fields) {
-          var getFields = await fieldService.initData(
-            ctrl.mixDatabaseName || ctrl.mixDatabaseId
-          );
+          var getFields = await fieldService.initData(ctrl.mixDatabaseName ||
+                                                      ctrl.mixDatabaseId);
           if (getFields.isSucceed) {
             ctrl.fields = getFields.data;
             $scope.$apply();
           }
         }
-        var getDefault = await dataService.initData(
-          ctrl.mixDatabaseName || ctrl.mixDatabaseId
-        );
+        var getDefault = await dataService.initData(ctrl.mixDatabaseName ||
+                                                    ctrl.mixDatabaseId);
         ctrl.defaultData = getDefault.data;
         if (ctrl.defaultData) {
           ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseId || 0;
@@ -94,11 +84,11 @@
           ctrl.attrData = angular.copy(ctrl.defaultData);
         }
       };
-      ctrl.reload = async function () {
+      ctrl.reload = async function() {
         ctrl.newTitle = "";
         ctrl.attrData = angular.copy(ctrl.defaultData);
       };
-      ctrl.loadData = async function (pageIndex) {
+      ctrl.loadData = async function(pageIndex) {
         ctrl.request.query = "{}";
         if (pageIndex !== undefined) {
           ctrl.request.pageIndex = pageIndex;
@@ -130,15 +120,15 @@
         if (response.isSucceed) {
           ctrl.data.items = [];
           ctrl.navs = [];
-          angular.forEach(response.data.items, function (e) {
+          angular.forEach(response.data.items, function(e) {
             // Not show data if there's in selected list
             ctrl.data.items.push({
-              specificulture: e.specificulture,
-              attributesetName: ctrl.mixDatabaseName,
-              parentId: ctrl.parentId,
-              parentType: ctrl.parentType,
-              dataId: e.id,
-              attributeData: e,
+              specificulture : e.specificulture,
+              attributesetName : ctrl.mixDatabaseName,
+              parentId : ctrl.parentId,
+              parentType : ctrl.parentType,
+              dataId : e.id,
+              attributeData : e,
             });
           });
           ctrl.filterData();
@@ -150,26 +140,22 @@
           $scope.$apply();
         }
       };
-      ctrl.filterData = function () {
-        angular.forEach(ctrl.data.items, function (e) {
+      ctrl.filterData = function() {
+        angular.forEach(ctrl.data.items, function(e) {
           // Not show data if there's in selected list
-          e.disabled =
-            $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.dataId) !=
-            null;
+          e.disabled = $rootScope.findObjectByKey(ctrl.selectedList, "dataId",
+                                                  e.dataId) != null;
           e.attributeData.disabled = e.disabled;
         });
       };
-      ctrl.select = function (nav) {
+      ctrl.select = function(nav) {
         if (nav.isActived) {
           if (!nav.id && ctrl.parentId) {
             navService.save(nav).then((resp) => {
               if (resp.isSucceed) {
                 nav.id = resp.data.id;
                 var current = $rootScope.findObjectByKey(
-                  ctrl.selectedList,
-                  "dataId",
-                  resp.data.dataId
-                );
+                    ctrl.selectedList, "dataId", resp.data.dataId);
 
                 if (!current) {
                   nav.disabled = true;
@@ -185,34 +171,25 @@
               }
             });
           } else {
-            var current = $rootScope.findObjectByKey(
-              ctrl.data.items,
-              "id",
-              nav.id
-            );
+            var current =
+                $rootScope.findObjectByKey(ctrl.data.items, "id", nav.id);
             if (!current) {
               current.disabled = true;
             }
-            var selected = $rootScope.findObjectByKey(
-              ctrl.data.items,
-              "id",
-              nav.id
-            );
+            var selected =
+                $rootScope.findObjectByKey(ctrl.data.items, "id", nav.id);
             if (!selected) {
               ctrl.selectedList.push(nav);
             }
           }
         } else {
           if (ctrl.parentId) {
-            navService.delete([nav.id]).then((resp) => {
+            navService.delete([ nav.id ]).then((resp) => {
               if (resp.isSucceed) {
                 nav.disabled = false;
                 nav.id = null;
-                var tmp = $rootScope.findObjectByKey(
-                  ctrl.data.items,
-                  "id",
-                  nav.id
-                );
+                var tmp =
+                    $rootScope.findObjectByKey(ctrl.data.items, "id", nav.id);
                 if (tmp) {
                   tmp.disabled = false;
                 }
@@ -237,24 +214,19 @@
         }
         ctrl.filterData();
         if (ctrl.selectCallback) {
-          ctrl.selectCallback({ data: nav });
+          ctrl.selectCallback({data : nav});
         }
       };
-      ctrl.createData = function () {
-        var tmp = $rootScope.findObjectByKey(
-          ctrl.data.items,
-          "title",
-          ctrl.newTitle
-        );
+      ctrl.createData = function() {
+        var tmp =
+            $rootScope.findObjectByKey(ctrl.data.items, "title", ctrl.newTitle);
         if (!tmp) {
           ctrl.isBusy = true;
           ctrl.attrData.parentId = 0;
           ctrl.attrData.parentType = "Set";
           ctrl.attrData.obj.title = ctrl.newTitle;
-          ctrl.attrData.obj.slug = $rootScope.generateKeyword(
-            ctrl.newTitle,
-            "-"
-          );
+          ctrl.attrData.obj.slug =
+              $rootScope.generateKeyword(ctrl.newTitle, "-");
           ctrl.attrData.obj.type = ctrl.type;
           var nav = angular.copy(ctrl.defaultNav);
           nav.attributeData = ctrl.attrData;

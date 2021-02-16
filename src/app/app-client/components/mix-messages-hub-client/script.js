@@ -1,22 +1,22 @@
 ﻿modules.component("mixMessagesHubClient", {
-  templateUrl:
-    "/mix-app/views/app-client/components/mix-messages-hub-client/view.html",
-  bindings: {
-    attrSetName: "=",
-    isSave: "=?",
+  templateUrl :
+      "/mix-app/views/app-client/components/mix-messages-hub-client/view.html",
+  bindings : {
+    attrSetName : "=",
+    isSave : "=?",
   },
-  controller: [
+  controller : [
     "$rootScope",
     "$scope",
     "RestMixDatabaseColumnPortalService",
     "RestMixDatabaseDataClientService",
-    function ($rootScope, $scope, fieldService, service) {
+    function($rootScope, $scope, fieldService, service) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
       ctrl.settings = $rootScope.globalSettings;
       ctrl.user = {
-        loggedIn: false,
-        connection: {},
+        loggedIn : false,
+        connection : {},
       };
       ctrl.attrData = null;
       ctrl.isHide = true;
@@ -25,30 +25,30 @@
       ctrl.members = [];
       ctrl.errors = [];
       ctrl.messages = {
-        items: [],
+        items : [],
       };
-      ctrl.message = { connection: {}, content: "" };
+      ctrl.message = {connection : {}, content : ""};
       ctrl.request = {
-        uid: "",
-        specificulture: "",
-        action: "",
-        objectType: null,
-        data: {},
-        room: "",
-        isMyself: true,
-        isSave: false,
+        uid : "",
+        specificulture : "",
+        action : "",
+        objectType : null,
+        data : {},
+        room : "",
+        isMyself : true,
+        isSave : false,
       };
-      ctrl.init = function () {
+      ctrl.init = function() {
         ctrl.attrSetId = ctrl.attrSetId || 0;
         ctrl.request.specificulture = service.lang;
         ctrl.request.room = ctrl.attrSetName;
         ctrl.request.isSave = ctrl.isSave || false;
         ctrl.startConnection("serviceHub", ctrl.checkLoginStatus);
       };
-      ctrl.loadData = async function () {
+      ctrl.loadData = async function() {
         /*
-                    If input is data id => load ctrl.attrData from service and handle it independently
-                    Else modify input ctrl.attrData
+                    If input is data id => load ctrl.attrData from service and
+           handle it independently Else modify input ctrl.attrData
                 */
         $rootScope.isBusy = true;
         var getDefault = await service.initData(ctrl.attrSetName);
@@ -59,9 +59,9 @@
           ctrl.defaultData.data.user_avatar = ctrl.user.connection.avatar;
           ctrl.defaultData.data.data_type = 9;
           ctrl.defaultData.field = {
-            dataType: 9,
-            title: "Message",
-            name: "message",
+            dataType : 9,
+            title : "Message",
+            name : "message",
           };
           ctrl.attrData = angular.copy(ctrl.defaultData);
           $rootScope.isBusy = false;
@@ -69,14 +69,11 @@
         var getFields = await fieldService.initData(ctrl.attrSetName);
         if (getFields.isSucceed) {
           ctrl.fields = getFields.data;
-          ctrl.msgField = $rootScope.findObjectByKey(
-            ctrl.fields,
-            "name",
-            "message"
-          );
+          ctrl.msgField =
+              $rootScope.findObjectByKey(ctrl.fields, "name", "message");
         }
       };
-      ctrl.submit = async function () {
+      ctrl.submit = async function() {
         if (ctrl.validate()) {
           ctrl.request.action = "send_group_message";
           ctrl.request.uid = ctrl.user.connection.id;
@@ -86,10 +83,10 @@
           ctrl.attrData = angular.copy(ctrl.defaultData);
         }
       };
-      ctrl.validate = function () {
+      ctrl.validate = function() {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.fields, function (field) {
+        angular.forEach(ctrl.fields, function(field) {
           if (field.regex) {
             var regex = RegExp(field.regex, "g");
             isValid = regex.test(ctrl.attrData.data[field.name]);
@@ -102,56 +99,56 @@
             }
           }
           if (isValid && field.isEncrypt) {
-            ctrl.attrData.data[field.name] = $rootScope.encrypt(
-              ctrl.attrData.data[field.name]
-            );
+            ctrl.attrData.data[field.name] =
+                $rootScope.encrypt(ctrl.attrData.data[field.name]);
           }
         });
         return isValid;
       };
-      ctrl.receiveMessage = function (msg) {
+      ctrl.receiveMessage = function(msg) {
         switch (msg.responseKey) {
-          case "NewMember":
-            ctrl.newMember(msg.data);
-            // $('.widget-conversation').scrollTop = $('.widget-conversation')[0].scrollHeight;
-            break;
-          case "NewMessage":
-            ctrl.newMessage(msg.data);
-            break;
-          case "ConnectSuccess":
-            ctrl.user.loggedIn = true;
-            ctrl.initListMember(msg.data);
-            $scope.$apply();
-            break;
-          case "PreviousMessages":
-            msg.data.items.forEach((element) => {
-              element.msgField = angular.copy(ctrl.msgField);
-              element.msgField.dataType = element.data.data_type;
-            });
-            ctrl.messages = msg.data;
-            $scope.$apply();
-            break;
-          case "MemberOffline":
-            ctrl.removeMember(msg.data);
-            break;
-          case "Error":
-            console.error(msg.data);
-            break;
+        case "NewMember":
+          ctrl.newMember(msg.data);
+          // $('.widget-conversation').scrollTop =
+          // $('.widget-conversation')[0].scrollHeight;
+          break;
+        case "NewMessage":
+          ctrl.newMessage(msg.data);
+          break;
+        case "ConnectSuccess":
+          ctrl.user.loggedIn = true;
+          ctrl.initListMember(msg.data);
+          $scope.$apply();
+          break;
+        case "PreviousMessages":
+          msg.data.items.forEach((element) => {
+            element.msgField = angular.copy(ctrl.msgField);
+            element.msgField.dataType = element.data.data_type;
+          });
+          ctrl.messages = msg.data;
+          $scope.$apply();
+          break;
+        case "MemberOffline":
+          ctrl.removeMember(msg.data);
+          break;
+        case "Error":
+          console.error(msg.data);
+          break;
         }
       };
-      ctrl.newMessage = function (msg) {
+      ctrl.newMessage = function(msg) {
         msg.msgField = angular.copy(ctrl.msgField);
         ctrl.messages.items.push(msg);
         $scope.$apply();
       };
-      ctrl.newMember = function (member) {
+      ctrl.newMember = function(member) {
         var m = $rootScope.findObjectByKey(ctrl.members, "id", member.id);
         if (!m) {
           ctrl.members.push(member);
         }
         $scope.$apply();
       };
-      ctrl.join = async function () {
+      ctrl.join = async function() {
         ctrl.request.action = "join_group";
         ctrl.request.uid = ctrl.user.connection.id;
         ctrl.request.data = ctrl.user.connection;
@@ -160,7 +157,7 @@
         await ctrl.loadData();
         $scope.$apply();
       };
-      ctrl.initListMember = function (data) {
+      ctrl.initListMember = function(data) {
         data.forEach((member) => {
           var index = ctrl.members.findIndex((x) => x.id === member.id);
           if (index < 0) {
@@ -170,25 +167,23 @@
 
         $scope.$apply();
       };
-      ctrl.updateDataType = function () {
-        ctrl.attrData.data.data_type = ctrl.msgField.dataType;
-      };
-      ctrl.checkLoginStatus = function () {
-        FB.getLoginStatus(function (response) {
+      ctrl.updateDataType =
+          function() { ctrl.attrData.data.data_type = ctrl.msgField.dataType; };
+      ctrl.checkLoginStatus = function() {
+        FB.getLoginStatus(function(response) {
           if (response.status === "connected") {
             // The user is logged in and has authenticated your
             // app, and response.authResponse supplies
             // the user's ID, a valid access token, a signed
             // request, and the time the access token
             // and signed request each expire.
-            FB.api("/me", function (response) {
+            FB.api("/me", function(response) {
               ctrl.user.connection.name = response.name;
               ctrl.user.connection.id = response.id;
               ctrl.user.connection.connectionId = ctrl.connection.connectionId;
-              ctrl.user.connection.avatar =
-                "//graph.facebook.com/" +
-                response.id +
-                "/picture?width=32&height=32";
+              ctrl.user.connection.avatar = "//graph.facebook.com/" +
+                                            response.id +
+                                            "/picture?width=32&height=32";
               ctrl.user.loggedIn = true;
               ctrl.join();
             });
@@ -211,23 +206,22 @@
           }
         });
       };
-      ctrl.logout = function () {
-        FB.logout(function (response) {
+      ctrl.logout = function() {
+        FB.logout(function(response) {
           // user is now logged out
           ctrl.user.loggedIn = false;
         });
       };
-      ctrl.login = function () {
-        FB.login(function (response) {
+      ctrl.login = function() {
+        FB.login(function(response) {
           if (response.authResponse) {
-            FB.api("/me", function (response) {
+            FB.api("/me", function(response) {
               ctrl.user.connection.name = response.name;
               ctrl.user.connection.id = response.id;
               ctrl.user.connection.connectionId = ctrl.connection.connectionId;
-              ctrl.user.connection.avatar =
-                "//graph.facebook.com/" +
-                response.id +
-                "/picture?width=32&height=32";
+              ctrl.user.connection.avatar = "//graph.facebook.com/" +
+                                            response.id +
+                                            "/picture?width=32&height=32";
               ctrl.user.loggedIn = true;
               ctrl.join();
               $scope.$apply();

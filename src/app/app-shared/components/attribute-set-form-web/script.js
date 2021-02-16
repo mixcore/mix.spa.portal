@@ -1,28 +1,28 @@
 ﻿modules.component("mixDatabaseFormWeb", {
-  templateUrl:
-    "/mix-app/views/app-shared/components/mix-database-form-web/view.html",
-  bindings: {
-    attrSetId: "=",
-    attrSetName: "=",
-    attrDataId: "=?",
-    attrData: "=?",
-    parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
-    parentId: "=?",
-    defaultId: "=",
-    saveData: "&?",
+  templateUrl :
+      "/mix-app/views/app-shared/components/mix-database-form-web/view.html",
+  bindings : {
+    attrSetId : "=",
+    attrSetName : "=",
+    attrDataId : "=?",
+    attrData : "=?",
+    parentType : "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
+    parentId : "=?",
+    defaultId : "=",
+    saveData : "&?",
   },
-  controller: [
+  controller : [
     "$rootScope",
     "$scope",
     "RestMixDatabasePortalService",
-    function ($rootScope, $scope, service) {
+    function($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
-      ctrl.$onInit = async function () {
+      ctrl.$onInit = async function() {
         ctrl.defaultData = await service.getSingle("web", [
           ctrl.defaultId,
           ctrl.attrSetId,
@@ -30,10 +30,10 @@
         ]);
         ctrl.loadData();
       };
-      ctrl.loadData = async function () {
+      ctrl.loadData = async function() {
         /*
-                    If input is data id => load ctrl.attrData from service and handle it independently
-                    Else modify input ctrl.attrData
+                    If input is data id => load ctrl.attrData from service and
+           handle it independently Else modify input ctrl.attrData
                 */
         $rootScope.isBusy = true;
         if (ctrl.attrDataId) {
@@ -62,12 +62,11 @@
           $scope.$apply();
         }
       };
-      ctrl.reload = async function () {
-        ctrl.attrData = angular.copy(ctrl.defaultData);
-      };
-      ctrl.submit = async function () {
-        angular.forEach(ctrl.attrData.values, function (e) {
-          //Encrypt field before send
+      ctrl.reload =
+          async function() { ctrl.attrData = angular.copy(ctrl.defaultData); };
+      ctrl.submit = async function() {
+        angular.forEach(ctrl.attrData.values, function(e) {
+          // Encrypt field before send
           if (e.field.isEncrypt) {
             var encryptData = $rootScope.encrypt(e.stringValue);
             e.encryptKey = encryptData.key;
@@ -77,14 +76,15 @@
         });
         if (ctrl.saveData) {
           ctrl.isBusy = true;
-          var result = await ctrl.saveData({ data: ctrl.attrData });
+          var result = await ctrl.saveData({data : ctrl.attrData});
           if (result && result.isSucceed) {
             ctrl.isBusy = false;
             ctrl.attrData = result.data;
             $scope.$apply();
           } else {
             ctrl.isBusy = false;
-            // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
+            // ctrl.attrData = await service.getSingle('portal',
+            // [ctrl.defaultId, ctrl.attrSetId, ctrl.attrSetName]);
             $scope.$apply();
           }
         } else {
@@ -102,21 +102,13 @@
         }
       };
 
-      ctrl.filterData = function (attributeName) {
+      ctrl.filterData = function(attributeName) {
         if (ctrl.attrData) {
           var attr = $rootScope.findObjectByKey(
-            ctrl.attrData.data,
-            "mixDatabaseColumnName",
-            attributeName
-          );
+              ctrl.attrData.data, "mixDatabaseColumnName", attributeName);
           if (!attr) {
-            attr = angular.copy(
-              $rootScope.findObjectByKey(
-                ctrl.defaultData.data,
-                "mixDatabaseColumnName",
-                attributeName
-              )
-            );
+            attr = angular.copy($rootScope.findObjectByKey(
+                ctrl.defaultData.data, "mixDatabaseColumnName", attributeName));
             ctrl.attrData.data.push(attr);
           }
           return attr;

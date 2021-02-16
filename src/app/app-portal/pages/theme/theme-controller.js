@@ -7,35 +7,22 @@ app.controller("ThemeController", [
   "$location",
   "ThemeService",
   "CommonService",
-  function (
-    $scope,
-    $rootScope,
-    ngAppSettings,
-    $routeParams,
-    $location,
-    service,
-    commonService
-  ) {
-    BaseCtrl.call(
-      this,
-      $scope,
-      $rootScope,
-      $routeParams,
-      ngAppSettings,
-      service
-    );
+  function($scope, $rootScope, ngAppSettings, $routeParams, $location, service,
+           commonService) {
+    BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings,
+                  service);
     $scope.exportData = null;
     $scope.selectedExport = {
-      pages: [],
-      modules: [],
-      mixDatabases: [],
+      pages : [],
+      modules : [],
+      mixDatabases : [],
     };
 
-    $scope.getSingleSuccessCallback = function () {
+    $scope.getSingleSuccessCallback = function() {
       $scope.assets = null;
       $scope.theme = null;
     };
-    $scope.save = async function (viewModel) {
+    $scope.save = async function(viewModel) {
       var form = document.getElementById("form-portal");
       var frm = new FormData();
       var url = service.prefixUrl + "/save";
@@ -59,7 +46,7 @@ app.controller("ThemeController", [
         $scope.$apply();
       }
     };
-    $scope.syncTemplates = async function (id) {
+    $scope.syncTemplates = async function(id) {
       $rootScope.isBusy = true;
       var response = await service.syncTemplates(id);
       if (response.isSucceed) {
@@ -73,7 +60,7 @@ app.controller("ThemeController", [
       }
     };
 
-    $scope.export = async function () {
+    $scope.export = async function() {
       var id = $routeParams.id;
       $rootScope.isBusy = true;
       var response = await service.export(id, $scope.selectedExport);
@@ -87,20 +74,19 @@ app.controller("ThemeController", [
         $scope.$apply();
       }
     };
-    $scope.saveSuccessCallback = function () {
-      commonService.initAllSettings().then(function () {
+    $scope.saveSuccessCallback = function() {
+      commonService.initAllSettings().then(function() {
         $location.path("/portal/theme/list");
         $rootScope.isBusy = false;
         $scope.$apply();
       });
     };
-    $scope.removeCallback = function () {
-      commonService.initAllSettings().then(function () {
-        $location.path("/portal/theme/list");
-      });
+    $scope.removeCallback = function() {
+      commonService.initAllSettings().then(
+          function() { $location.path("/portal/theme/list"); });
     };
 
-    $scope.getExportData = async function () {
+    $scope.getExportData = async function() {
       var id = $routeParams.id;
       var resp = await service.getExportData(id);
       if (resp && resp.isSucceed) {
@@ -116,11 +102,9 @@ app.controller("ThemeController", [
       }
     };
 
-    $scope.generateSEO = function () {
-      $scope.viewModel.name = $rootScope.generateKeyword(
-        $scope.viewModel.title,
-        "-"
-      );
+    $scope.generateSEO = function() {
+      $scope.viewModel.name =
+          $rootScope.generateKeyword($scope.viewModel.title, "-");
     };
   },
 ]);

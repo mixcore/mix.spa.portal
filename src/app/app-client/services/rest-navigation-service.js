@@ -2,19 +2,19 @@
 app.factory("RestNavigationService", [
   "BaseRestService",
   "CommonService",
-  function (baseService, commonService) {
+  function(baseService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("mix-database-data/navigation");
-    var _initData = async function (attrSetName) {
+    var _initData = async function(attrSetName) {
       var url = this.prefixUrl + "/init/" + attrSetName;
       var req = {
-        method: "GET",
-        url: url,
+        method : "GET",
+        url : url,
       };
       return await commonService.getRestApiResult(req);
     };
 
-    var _export = async function (objData) {
+    var _export = async function(objData) {
       var data = serviceFactory.parseQuery(objData);
       var url = this.prefixUrl;
 
@@ -23,8 +23,8 @@ app.factory("RestNavigationService", [
         url = url.concat(data);
       }
       var req = {
-        method: "GET",
-        url: url,
+        method : "GET",
+        url : url,
       };
       return await commonService.getRestApiResult(req);
     };

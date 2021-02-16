@@ -1,38 +1,38 @@
 ﻿modules.component("mixDatabaseDataFilter", {
-  templateUrl:
-    "/mix-app/views/app-portal/components/mix-database-data-filter/view.html",
-  bindings: {
-    query: "=",
-    mixDatabaseName: "=?",
-    mixDatabaseId: "=?",
-    selectedList: "=",
-    initData: "=?",
-    fields: "=?",
-    selected: "=",
-    callback: "&?",
-    save: "&?",
+  templateUrl :
+      "/mix-app/views/app-portal/components/mix-database-data-filter/view.html",
+  bindings : {
+    query : "=",
+    mixDatabaseName : "=?",
+    mixDatabaseId : "=?",
+    selectedList : "=",
+    initData : "=?",
+    fields : "=?",
+    selected : "=",
+    callback : "&?",
+    save : "&?",
   },
-  controller: [
+  controller : [
     "$rootScope",
     "$scope",
     "ngAppSettings",
     "RestMixDatabaseDataPortalService",
-    function ($rootScope, $scope, ngAppSettings, dataService) {
+    function($rootScope, $scope, ngAppSettings, dataService) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
-      ctrl.types = ["Page", "Post"];
+      ctrl.types = [ "Page", "Post" ];
       ctrl.type = "Page";
       ctrl.navs = [];
-      ctrl.data = { items: [] };
+      ctrl.data = {items : []};
       ctrl.goToPath = $rootScope.goToPath;
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         if (ctrl.initData) {
           ctrl.data = ctrl.initData;
         } else {
           ctrl.loadData();
         }
       };
-      ctrl.loadData = async function (pageIndex) {
+      ctrl.loadData = async function(pageIndex) {
         ctrl.isBusy = true;
 
         // ctrl.request.query = ctrl.query + ctrl.srcId;
@@ -67,51 +67,42 @@
           $scope.$apply();
         }
       };
-      ctrl.edit = function (nav) {
+      ctrl.edit = function(nav) {
         switch (ctrl.type) {
-          case "Page":
-            ctrl.goToPath(`/portal/page/details/${nav.id}`);
-            break;
-          case "Post":
-            ctrl.goToPath(`/portal/post/details/${nav.id}`);
-            break;
-          case "Module":
-            ctrl.goToPath(`/portal/module/details/${nav.id}`);
-            break;
+        case "Page":
+          ctrl.goToPath(`/portal/page/details/${nav.id}`);
+          break;
+        case "Post":
+          ctrl.goToPath(`/portal/post/details/${nav.id}`);
+          break;
+        case "Module":
+          ctrl.goToPath(`/portal/module/details/${nav.id}`);
+          break;
         }
       };
-      ctrl.onClose = function () {
-        ctrl.callback();
-      };
-      ctrl.select = function (nav) {
+      ctrl.onClose = function() { ctrl.callback(); };
+      ctrl.select = function(nav) {
         var current = $rootScope.findObjectByKey(ctrl.data.items, "id", nav.id);
         if (!nav.isActive && ctrl.callback) {
-          ctrl.callback({ nav: nav });
+          ctrl.callback({nav : nav});
         }
         if (ctrl.isMultiple) {
           current.isActive = !current.isActive;
         } else {
           if (!nav.isActive) {
-            angular.forEach(ctrl.data.items, (element) => {
-              element.isActive = false;
-            });
+            angular.forEach(ctrl.data.items,
+                            (element) => { element.isActive = false; });
           }
           current.isActive = !nav.isActive;
         }
       };
-      ctrl.saveSelected = function () {
-        ctrl.selected = $rootScope.filterArray(
-          ctrl.data,
-          ["isActived"],
-          [true]
-        );
-        setTimeout(() => {
-          ctrl.save().then(() => {
-            ctrl.loadPosts();
-          });
-        }, 500);
+      ctrl.saveSelected = function() {
+        ctrl.selected =
+            $rootScope.filterArray(ctrl.data, [ "isActived" ], [ true ]);
+        setTimeout(() => { ctrl.save().then(() => { ctrl.loadPosts(); }); },
+                   500);
       };
-      ctrl.limString = function (str, max) {
+      ctrl.limString = function(str, max) {
         if (str) {
           return str.length > max ? str.substring(0, max) + " ..." : str;
         }

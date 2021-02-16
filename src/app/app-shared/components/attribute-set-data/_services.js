@@ -3,18 +3,12 @@ app.factory("RestMixDatabasePortalService", [
   "$rootScope",
   "CommonService",
   "BaseRestService",
-  function ($rootScope, commonService, baseService) {
+  function($rootScope, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("mix-database-data");
 
-    var _getList = async function (
-      viewType,
-      objData,
-      mixDatabaseId,
-      mixDatabaseName,
-      parentType,
-      parentId
-    ) {
+    var _getList = async function(viewType, objData, mixDatabaseId,
+                                  mixDatabaseName, parentType, parentId) {
       objData.filter = "";
       if (mixDatabaseId) {
         objData.filter += "mixDatabaseId eq " + mixDatabaseId;
@@ -43,20 +37,14 @@ app.factory("RestMixDatabasePortalService", [
         url = url.concat(data);
       }
       var req = {
-        method: "GET",
-        url: url,
+        method : "GET",
+        url : url,
       };
       return await commonService.getApiResult(req);
     };
 
-    var _export = async function (
-      viewType,
-      objData,
-      mixDatabaseId,
-      mixDatabaseName,
-      parentType,
-      parentId
-    ) {
+    var _export = async function(viewType, objData, mixDatabaseId,
+                                 mixDatabaseName, parentType, parentId) {
       objData.filter = "";
       if (mixDatabaseId) {
         objData.filter += "mixDatabaseId eq " + mixDatabaseId;
@@ -85,8 +73,8 @@ app.factory("RestMixDatabasePortalService", [
         url = url.concat(data);
       }
       var req = {
-        method: "GET",
-        url: url,
+        method : "GET",
+        url : url,
       };
       return await commonService.getApiResult(req);
     };

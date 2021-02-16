@@ -9,34 +9,18 @@ app.controller("PostController", [
   "PostRestService",
   "UrlAliasService",
   "RestMixDatabaseDataPortalService",
-  function (
-    $scope,
-    $rootScope,
-    $location,
-    $filter,
-    ngAppSettings,
-    $routeParams,
-    service,
-    urlAliasService,
-    dataService
-  ) {
-    BaseRestCtrl.call(
-      this,
-      $scope,
-      $rootScope,
-      $location,
-      $routeParams,
-      ngAppSettings,
-      service
-    );
+  function($scope, $rootScope, $location, $filter, ngAppSettings, $routeParams,
+           service, urlAliasService, dataService) {
+    BaseRestCtrl.call(this, $scope, $rootScope, $location, $routeParams,
+                      ngAppSettings, service);
     $scope.additionalData = null;
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.postTypes = [
       {
-        title: "All",
-        attribute_set_name: "",
+        title : "All",
+        attribute_set_name : "",
       },
     ];
 
@@ -45,35 +29,32 @@ app.controller("PostController", [
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
 
-    $scope.initList = async function () {
+    $scope.initList = async function() {
       if ($routeParams.template) {
-        $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
+        $scope.createUrl =
+            `${$scope.createUrl}?template=${$routeParams.template}`;
       }
       $scope.pageName = "postList";
       $scope.loadPostTypes();
       $scope.getList();
     };
-    $scope.loadPostTypes = async function () {
+    $scope.loadPostTypes = async function() {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes.concat(
-          getTypes.data.items.map((m) => m.obj)
-        );
+        $scope.postTypes =
+            $scope.postTypes.concat(getTypes.data.items.map((m) => m.obj));
         $scope.postType = $rootScope.findObjectByKey(
-          $scope.postTypes,
-          "attribute_set_name",
-          $scope.request.type
-        );
+            $scope.postTypes, "attribute_set_name", $scope.request.type);
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
     };
-    $scope.getDefault = async function (type = null) {
+    $scope.getDefault = async function(type = null) {
       $rootScope.isBusy = true;
       type = type || $routeParams.type;
       var resp = await service.getDefault({
-        type: type || "",
-        template: $routeParams.template || "",
+        type : type || "",
+        template : $routeParams.template || "",
       });
       if (resp.isSucceed) {
         $scope.viewModel = resp.data;
@@ -93,11 +74,11 @@ app.controller("PostController", [
         $scope.$apply();
       }
     };
-    $scope.preview = function (item) {
+    $scope.preview = function(item) {
       item.editUrl = "/portal/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
-    $scope.onSelectType = function () {
+    $scope.onSelectType = function() {
       $scope.viewModel.type = $scope.postType.attribute_set_name;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
       if ($routeParams.template) {
@@ -111,7 +92,7 @@ app.controller("PostController", [
       }
     };
 
-    $scope.getListRelated = async function (pageIndex) {
+    $scope.getListRelated = async function(pageIndex) {
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
@@ -126,19 +107,16 @@ app.controller("PostController", [
       var resp = await service.getList($scope.request);
       if (resp && resp.isSucceed) {
         $scope.viewModel.postNavs = $rootScope.filterArray(
-          $scope.viewModel.postNavs,
-          ["isActived"],
-          [true]
-        );
+            $scope.viewModel.postNavs, [ "isActived" ], [ true ]);
         angular.forEach(resp.data.items, (element) => {
           var obj = {
-            description: element.title,
-            destinationId: element.id,
-            image: element.image,
-            isActived: false,
-            sourceId: $scope.viewModel.id,
-            specificulture: $scope.viewModel.specificulture,
-            status: "Published",
+            description : element.title,
+            destinationId : element.id,
+            image : element.image,
+            isActived : false,
+            sourceId : $scope.viewModel.id,
+            specificulture : $scope.viewModel.specificulture,
+            status : "Published",
           };
           $scope.viewModel.postNavs.push(obj);
         });
@@ -150,17 +128,15 @@ app.controller("PostController", [
         $scope.$apply();
       }
     };
-    $scope.saveFailCallback = function () {
-      angular.forEach($scope.viewModel.mixDatabaseNavs, function (nav) {
+    $scope.saveFailCallback = function() {
+      angular.forEach($scope.viewModel.mixDatabaseNavs, function(nav) {
         if (nav.isActived) {
-          $rootScope.decryptMixDatabase(
-            nav.mixDatabase.attributes,
-            nav.mixDatabase.postData.items
-          );
+          $rootScope.decryptMixDatabase(nav.mixDatabase.attributes,
+                                        nav.mixDatabase.postData.items);
         }
       });
     };
-    $scope.saveSuccessCallback = async function () {
+    $scope.saveSuccessCallback = async function() {
       if ($scope.additionalData) {
         $scope.additionalData.parentId = $scope.viewModel.id;
         $scope.additionalData.parentType = "Post";
@@ -176,24 +152,23 @@ app.controller("PostController", [
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-    $scope.getSingleSuccessCallback = async function () {
+    $scope.getSingleSuccessCallback = async function() {
       $scope.imgW = ngAppSettings.settings.post_image_width;
       $scope.imgH = ngAppSettings.settings.post_image_height;
       $scope.request.type = $scope.viewModel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       if ($scope.viewModel.id) {
-        $scope.viewModel.detailsUrl = `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${$scope.viewModel.seoName}`;
+        $scope.viewModel.detailsUrl =
+            `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${
+                $scope.viewModel.seoName}`;
       }
       await $scope.loadPostTypes();
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
-          var moduleNav = $rootScope.findObjectByKey(
-            $scope.viewModel.modules,
-            "moduleId",
-            moduleId
-          );
+          var moduleNav = $rootScope.findObjectByKey($scope.viewModel.modules,
+                                                     "moduleId", moduleId);
           if (moduleNav) {
             moduleNav.isActived = true;
           }
@@ -201,46 +176,39 @@ app.controller("PostController", [
       }
       if (pageIds) {
         for (var pageId of pageIds.split(",")) {
-          var pageNav = $rootScope.findObjectByKey(
-            $scope.viewModel.categories,
-            "pageId",
-            pageId
-          );
+          var pageNav = $rootScope.findObjectByKey($scope.viewModel.categories,
+                                                   "pageId", pageId);
           if (pageNav) {
             pageNav.isActived = true;
           }
         }
       }
       if ($scope.viewModel.sysCategories) {
-        angular.forEach($scope.viewModel.sysCategories, function (e) {
+        angular.forEach($scope.viewModel.sysCategories, function(e) {
           e.attributeData.obj.isActived = true;
           $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
 
       if ($scope.viewModel.sysTags) {
-        angular.forEach($scope.viewModel.sysTags, function (e) {
+        angular.forEach($scope.viewModel.sysTags, function(e) {
           e.attributeData.obj.isActived = true;
           $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
       if ($routeParams.template) {
         $scope.viewModel.view = $rootScope.findObjectByKey(
-          $scope.viewModel.templates,
-          "fileName",
-          $routeParams.template
-        );
+            $scope.viewModel.templates, "fileName", $routeParams.template);
       }
-      $scope.viewModel.publishedDateTime = $filter("utcToLocalTime")(
-        $scope.viewModel.publishedDateTime
-      );
+      $scope.viewModel.publishedDateTime =
+          $filter("utcToLocalTime")($scope.viewModel.publishedDateTime);
     };
 
-    $scope.loadAdditionalData = async function () {
+    $scope.loadAdditionalData = async function() {
       const obj = {
-        parentType: "Post",
-        parentId: $scope.viewModel.id,
-        databaseName: $scope.viewModel.type,
+        parentType : "Post",
+        parentId : $scope.viewModel.id,
+        databaseName : $scope.viewModel.type,
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {
@@ -248,38 +216,28 @@ app.controller("PostController", [
         $scope.$apply();
       }
     };
-    $scope.generateSeo = function () {
+    $scope.generateSeo = function() {
       if ($scope.viewModel) {
-        if (
-          $scope.viewModel.seoName === null ||
-          $scope.viewModel.seoName === ""
-        ) {
-          $scope.viewModel.seoName = $rootScope.generateKeyword(
-            $scope.viewModel.title,
-            "-"
-          );
+        if ($scope.viewModel.seoName === null ||
+            $scope.viewModel.seoName === "") {
+          $scope.viewModel.seoName =
+              $rootScope.generateKeyword($scope.viewModel.title, "-");
         }
-        if (
-          $scope.viewModel.seoTitle === null ||
-          $scope.viewModel.seoTitle === ""
-        ) {
+        if ($scope.viewModel.seoTitle === null ||
+            $scope.viewModel.seoTitle === "") {
           $scope.viewModel.seoTitle = $scope.viewModel.title;
         }
-        if (
-          $scope.viewModel.seoDescription === null ||
-          $scope.viewModel.seoDescription === ""
-        ) {
+        if ($scope.viewModel.seoDescription === null ||
+            $scope.viewModel.seoDescription === "") {
           $scope.viewModel.seoDescription = $scope.viewModel.excerpt;
         }
-        if (
-          $scope.viewModel.seoKeywords === null ||
-          $scope.viewModel.seoKeywords === ""
-        ) {
+        if ($scope.viewModel.seoKeywords === null ||
+            $scope.viewModel.seoKeywords === "") {
           $scope.viewModel.seoKeywords = $scope.viewModel.title;
         }
       }
     };
-    $scope.addAlias = async function () {
+    $scope.addAlias = async function() {
       var getAlias = await urlAliasService.getSingle();
       if (getAlias.isSucceed) {
         $scope.viewModel.urlAliases.push(getAlias.data);
@@ -292,54 +250,46 @@ app.controller("PostController", [
       }
     };
 
-    $scope.removeAliasCallback = async function (index) {
+    $scope.removeAliasCallback = async function(index) {
       $scope.viewModel.urlAliases.splice(index, 1);
       $scope.$apply();
     };
 
-    $scope.updateSysCategories = function (data) {
+    $scope.updateSysCategories = function(data) {
       // Loop selected categories
-      angular.forEach($scope.selectedCategories, function (e) {
+      angular.forEach($scope.selectedCategories, function(e) {
         // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewModel.sysCategories,
-          "id",
-          e.id
-        );
+        var current = $rootScope.findObjectByKey($scope.viewModel.sysCategories,
+                                                 "id", e.id);
         if (!current) {
           $scope.viewModel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewModel.id,
-            mixDatabaseName: "sys_category",
+            id : e.id,
+            parentId : $scope.viewModel.id,
+            mixDatabaseName : "sys_category",
           });
         }
       });
     };
-    $scope.updateSysTags = function (data) {
+    $scope.updateSysTags = function(data) {
       // Loop selected categories
-      angular.forEach($scope.selectedTags, function (e) {
+      angular.forEach($scope.selectedTags, function(e) {
         // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewModel.sysTags,
-          "id",
-          e.id
-        );
+        var current =
+            $rootScope.findObjectByKey($scope.viewModel.sysTags, "id", e.id);
         if (!current) {
           $scope.viewModel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewModel.id,
-            mixDatabaseName: "sys_tag",
+            id : e.id,
+            parentId : $scope.viewModel.id,
+            mixDatabaseName : "sys_tag",
           });
         }
       });
     };
-    $scope.validate = function () {
-      angular.forEach($scope.viewModel.mixDatabaseNavs, function (nav) {
+    $scope.validate = function() {
+      angular.forEach($scope.viewModel.mixDatabaseNavs, function(nav) {
         if (nav.isActived) {
-          $rootScope.encryptMixDatabase(
-            nav.mixDatabase.attributes,
-            nav.mixDatabase.postData.items
-          );
+          $rootScope.encryptMixDatabase(nav.mixDatabase.attributes,
+                                        nav.mixDatabase.postData.items);
         }
       });
       return true;
