@@ -1,10 +1,10 @@
 "use strict";
-app.factory("RestAttributeSetDataPortalService", [
+app.factory("RestMixDatabaseDataPortalService", [
   "BaseRestService",
   "CommonService",
   function (baseService, commonService) {
     var serviceFactory = angular.copy(baseService);
-    serviceFactory.init("attribute-set-data/portal");
+    serviceFactory.init("mix-database-data/portal");
 
     var _saveAdditionalData = async function (objData) {
       var url = this.prefixUrl + "/save-additional-data";
@@ -54,11 +54,11 @@ app.factory("RestAttributeSetDataPortalService", [
       return await commonService.getRestApiResult(req);
     };
 
-    var _import = async function (attributeSetName, file) {
+    var _import = async function (mixDatabaseName, file) {
       var url =
         (this.prefixUrl || "/" + this.lang + "/" + this.modelName) +
         "/import-data/" +
-        attributeSetName;
+        mixDatabaseName;
       var frm = new FormData();
       frm.append("file", file);
       return serviceFactory.ajaxSubmitForm(frm, url);

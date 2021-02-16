@@ -1,10 +1,10 @@
 "use strict";
-app.factory("RestAttributeFieldPortalService", [
+app.factory("RestMixDatabaseColumnPortalService", [
   "BaseRestService",
   "CommonService",
   function (baseService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("attribute-field/portal", true);
+    serviceFactory.init("mix-database-column/portal", true);
     var _initData = async function (attrSetName) {
       var url = this.prefixUrl + "/init/" + attrSetName;
       var req = {

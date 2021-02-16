@@ -591,9 +591,9 @@ app.run([
         function (resp) {
           console.log(
             "Success " +
-            resp.config.data.file.name +
-            "uploaded. Response: " +
-            resp.data
+              resp.config.data.file.name +
+              "uploaded. Response: " +
+              resp.data
           );
         },
         function (resp) {
@@ -613,7 +613,7 @@ app.run([
     $rootScope.goToPath = function (url) {
       $location.url(url.trim());
     };
-    $rootScope.encryptAttributeSet = function (attributes, data) {
+    $rootScope.encryptMixDatabase = function (attributes, data) {
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
@@ -632,7 +632,7 @@ app.run([
         }
       });
     };
-    $rootScope.decryptAttributeSet = function (attributes, data) {
+    $rootScope.decryptMixDatabase = function (attributes, data) {
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
@@ -705,10 +705,17 @@ app.run([
 
     $rootScope.showHelper = function (url) {
       $rootScope.helperUrl = url;
-      $("#dev-helper-modal").modal('show');
-    }
+      $("#dev-helper-modal").modal("show");
+    };
 
-    $rootScope.openModal = function (templateUrl, controllerName, resolve, size = 'lg', successCallback = null, failCallback = null) {
+    $rootScope.openModal = function (
+      templateUrl,
+      controllerName,
+      resolve,
+      size = "lg",
+      successCallback = null,
+      failCallback = null
+    ) {
       var modalInstance = $uibModal.open({
         animation: true,
         windowClass: "show",
@@ -727,7 +734,7 @@ app.run([
           failCallback(error);
         }
       );
-    }
+    };
   },
 ]);
 

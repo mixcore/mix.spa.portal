@@ -1,8 +1,10 @@
-'use strict';
-app.factory('RestRelatedAttributeSetPortalService', ['BaseRestService', 'CommonService', function (baseService, commonService) {
-
+"use strict";
+app.factory("RestRelatedMixDatabasePortalService", [
+  "BaseRestService",
+  "CommonService",
+  function (baseService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init('related-attribute-set/portal');
+    serviceFactory.init("related-mix-database/portal");
     return serviceFactory;
-
-}]);
+  },
+]);

@@ -8,7 +8,7 @@ app.controller("UserController", [
   "$location",
   "AuthService",
   "UserServices",
-  "RestAttributeSetDataPortalService",
+  "RestMixDatabaseDataPortalService",
   function (
     $scope,
     $rootScope,

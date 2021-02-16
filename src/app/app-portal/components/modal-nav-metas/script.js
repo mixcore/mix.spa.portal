@@ -2,8 +2,8 @@
   templateUrl: "/mix-app/views/app-portal/components/modal-nav-metas/view.html",
   bindings: {
     header: "=",
-    attributeSetId: "=?",
-    attributeSetName: "=?",
+    mixDatabaseId: "=?",
+    mixDatabaseName: "=?",
     parentId: "=?",
     parentType: "=?",
     type: "=?",
@@ -18,9 +18,9 @@
     "$scope",
     "$routeParams",
     "ngAppSettings",
-    "RestAttributeSetDataPortalService",
+    "RestMixDatabaseDataPortalService",
     "RestRelatedAttributeDataPortalService",
-    "RestAttributeFieldPortalService",
+    "RestMixDatabaseColumnPortalService",
     function (
       $rootScope,
       $scope,
@@ -44,11 +44,11 @@
         angular.forEach(ctrl.selectedList, function (e) {
           e.isActived = true;
         });
-        if (ctrl.attributeSetId) {
-          ctrl.request.attributeSetId = ctrl.attributeSetId;
+        if (ctrl.mixDatabaseId) {
+          ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
-        if (ctrl.attributeSetName) {
-          ctrl.request.attributeSetName = ctrl.attributeSetName;
+        if (ctrl.mixDatabaseName) {
+          ctrl.request.mixDatabaseName = ctrl.mixDatabaseName;
         }
         ctrl.loadDefaultModel();
       };
@@ -59,8 +59,8 @@
           dataId: null,
           parentId: ctrl.parentId,
           parentType: ctrl.parentType,
-          attributeSetId: ctrl.attributeSetId,
-          attributeSetName: ctrl.attributeSetName,
+          mixDatabaseId: ctrl.mixDatabaseId,
+          mixDatabaseName: ctrl.mixDatabaseName,
           status: "Published",
           attributeData: null,
         };
@@ -72,7 +72,7 @@
         }
         if (!ctrl.fields) {
           var getFields = await fieldService.initData(
-            ctrl.attributeSetName || ctrl.attributeSetId
+            ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
             ctrl.fields = getFields.data;
@@ -80,12 +80,12 @@
           }
         }
         var getDefault = await dataService.initData(
-          ctrl.attributeSetName || ctrl.attributeSetId
+          ctrl.mixDatabaseName || ctrl.mixDatabaseId
         );
         ctrl.defaultData = getDefault.data;
         if (ctrl.defaultData) {
-          ctrl.defaultData.attributeSetId = ctrl.attributeSetId || 0;
-          ctrl.defaultData.attributeSetName = ctrl.attributeSetName;
+          ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseId || 0;
+          ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseName;
           // ctrl.defaultData.parentId = ctrl.parentId;
           // ctrl.defaultData.parentType = ctrl.parentType;
         }
@@ -111,11 +111,11 @@
           var d = new Date(ctrl.request.toDate);
           ctrl.request.toDate = d.toISOString();
         }
-        if (ctrl.attributeSetId) {
-          ctrl.request.attributeSetId = ctrl.attributeSetId;
+        if (ctrl.mixDatabaseId) {
+          ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
-        if (ctrl.attributeSetName) {
-          ctrl.request.attributeSetName = ctrl.attributeSetName;
+        if (ctrl.mixDatabaseName) {
+          ctrl.request.mixDatabaseName = ctrl.mixDatabaseName;
         }
         if (ctrl.type) {
           ctrl.request.type = ctrl.type;
@@ -134,11 +134,11 @@
             // Not show data if there's in selected list
             ctrl.data.items.push({
               specificulture: e.specificulture,
-              attributesetName: ctrl.attributeSetName,
+              attributesetName: ctrl.mixDatabaseName,
               parentId: ctrl.parentId,
               parentType: ctrl.parentType,
               dataId: e.id,
-              attributeData: e
+              attributeData: e,
             });
           });
           ctrl.filterData();
@@ -154,7 +154,8 @@
         angular.forEach(ctrl.data.items, function (e) {
           // Not show data if there's in selected list
           e.disabled =
-            $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.dataId) != null;
+            $rootScope.findObjectByKey(ctrl.selectedList, "dataId", e.dataId) !=
+            null;
           e.attributeData.disabled = e.disabled;
         });
       };
@@ -248,7 +249,7 @@
         if (!tmp) {
           ctrl.isBusy = true;
           ctrl.attrData.parentId = 0;
-          ctrl.attrData.parentType = 'Set';
+          ctrl.attrData.parentType = "Set";
           ctrl.attrData.obj.title = ctrl.newTitle;
           ctrl.attrData.obj.slug = $rootScope.generateKeyword(
             ctrl.newTitle,

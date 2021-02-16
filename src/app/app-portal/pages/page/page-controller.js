@@ -9,7 +9,7 @@ app.controller("PageController", [
   "PagePostRestService",
   "PagePageRestService",
   "UrlAliasService",
-  "RestAttributeSetDataPortalService",
+  "RestMixDatabaseDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -193,7 +193,7 @@ app.controller("PageController", [
           $scope.viewModel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewModel.id,
-            attributeSetName: "sys_category",
+            mixDatabaseName: "sys_category",
           });
         }
       });
@@ -211,7 +211,7 @@ app.controller("PageController", [
           $scope.viewModel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewModel.id,
-            attributeSetName: "sys_tag",
+            mixDatabaseName: "sys_tag",
           });
         }
       });

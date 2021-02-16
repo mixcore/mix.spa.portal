@@ -1,9 +1,9 @@
-app.controller("AttributeSetFormController", [
+app.controller("MixDatabaseFormController", [
   "$rootScope",
   "$scope",
   "ngAppSettings",
   "RestRelatedAttributeDataPortalService",
-  "RestAttributeSetDataPortalService",
+  "RestMixDatabaseDataPortalService",
   function ($rootScope, $scope, ngAppSettings, navService, dataService) {
     $scope.defaultData = null;
     $scope.formData = null;
@@ -26,14 +26,14 @@ app.controller("AttributeSetFormController", [
       $scope.successHandler = successHandler;
       $scope.failHandler = failHandler;
       $scope.formName = formName;
-      $scope.navRequest.attributeSetName = formName;
+      $scope.navRequest.mixDatabaseName = formName;
       $scope.navRequest.parentType = parentType;
       $scope.navRequest.parentId = parentId;
-      dataService.init("attribute-set-data/portal");
+      dataService.init("mix-database-data/portal");
       var getDefault = await dataService.initData($scope.formName);
       $scope.defaultData = getDefault.data;
       if ($scope.defaultData) {
-        $scope.defaultData.attributeSetName = $scope.formName;
+        $scope.defaultData.mixDatabaseName = $scope.formName;
         $scope.defaultData.parentType = parentType || "Set";
         $scope.defaultData.parentId = parentId;
         $scope.formData = angular.copy($scope.defaultData);
@@ -59,11 +59,16 @@ app.controller("AttributeSetFormController", [
       if ($scope.loadingHandler) {
         $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
       }
-      if (!$scope.validateHandler || $rootScope.executeFunctionByName($scope.validateHandler, [data])) {
+      if (
+        !$scope.validateHandler ||
+        $rootScope.executeFunctionByName($scope.validateHandler, [data])
+      ) {
         var saveResult = await dataService.save(data);
         if (saveResult.isSucceed) {
           if ($scope.successHandler) {
-            $rootScope.executeFunctionByName($scope.successHandler, [saveResult]);
+            $rootScope.executeFunctionByName($scope.successHandler, [
+              saveResult,
+            ]);
           } else {
             alert($scope.successMsg);
           }
@@ -77,7 +82,10 @@ app.controller("AttributeSetFormController", [
         } else {
           if (saveResult.errors && saveResult.errors.length) {
             if ($scope.failHandler) {
-              $rootScope.executeFunctionByName($scope.failHandler, [data, saveResult]);
+              $rootScope.executeFunctionByName($scope.failHandler, [
+                data,
+                saveResult,
+              ]);
             } else {
               alert(errMsg);
             }

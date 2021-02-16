@@ -1,5 +1,6 @@
 ﻿modules.component("mixFieldEditor", {
-  templateUrl: "/mix-app/views/app-shared/components/mix-field-editor/view.html",
+  templateUrl:
+    "/mix-app/views/app-shared/components/mix-field-editor/view.html",
   bindings: {
     model: "=",
     field: "=",
@@ -76,12 +77,10 @@
       ctrl.$onInit = function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.field.referenceId) {
           var backUrl = encodeURIComponent($location.url());
-          ctrl.createUrl = `/portal/attribute-set-data/create?attributeSetId=${ctrl.field.referenceId
-            }&dataId=default&parentId=${ctrl.model.id
-            }&parentType=Set&backUrl=${backUrl}`;
+          ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.field.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
         }
         if (!ctrl.updateUrl) {
-          ctrl.updateUrl = "/portal/attribute-set-data/details";
+          ctrl.updateUrl = "/portal/mix-database-data/details";
         }
       };
       ctrl.initData = async function () {
@@ -102,7 +101,7 @@
               // if(ctrl.field.referenceId && ctrl.model.id){
               //     ctrl.model[ctrl.field.name] = ctrl.field.referenceId;
               //     navService.getSingle(['default']).then(resp=>{
-              //         resp.attributeSetId = ctrl.field.referenceId;
+              //         resp.mixDatabaseId = ctrl.field.referenceId;
               //         resp.parentId = ctrl.parentId;
               //         resp.parentType = ctrl.parentType;
               //         ctrl.defaultDataModel = resp;
