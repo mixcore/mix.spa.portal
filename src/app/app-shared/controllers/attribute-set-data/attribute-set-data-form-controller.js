@@ -4,16 +4,22 @@ app.controller("MixDatabaseFormController", [
   "ngAppSettings",
   "RestRelatedAttributeDataPortalService",
   "RestMixDatabaseDataPortalService",
-  function($rootScope, $scope, ngAppSettings, navService, dataService) {
+  function ($rootScope, $scope, ngAppSettings, navService, dataService) {
     $scope.defaultData = null;
     $scope.formData = null;
     $scope.formRecords = null;
     $scope.formName = null;
     $scope.navRequest = angular.copy(ngAppSettings.request);
     $scope.successMsg = "Thành công";
-    $scope.init =
-        async function(formName, parentId, parentType, validateHandler,
-                       loadingHandler, successHandler, failHandler) {
+    $scope.init = async function (
+      formName,
+      parentId,
+      parentType,
+      validateHandler,
+      loadingHandler,
+      successHandler,
+      failHandler
+    ) {
       $scope.successMsg = "Thành công";
       $scope.validateHandler = validateHandler;
       $scope.loadingHandler = loadingHandler;
@@ -35,7 +41,7 @@ app.controller("MixDatabaseFormController", [
 
       $scope.$apply();
     };
-    $scope.loadData = function() {
+    $scope.loadData = function () {
       navService.getList($scope.navRequest).then((resp) => {
         if (resp) {
           $scope.formRecords = resp.data;
@@ -51,10 +57,12 @@ app.controller("MixDatabaseFormController", [
     $scope.submit = async (data) => {
       $rootScope.isBusy = true;
       if ($scope.loadingHandler) {
-        $rootScope.executeFunctionByName($scope.loadingHandler, [ true ]);
+        $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
       }
-      if (!$scope.validateHandler ||
-          $rootScope.executeFunctionByName($scope.validateHandler, [ data ])) {
+      if (
+        !$scope.validateHandler ||
+        $rootScope.executeFunctionByName($scope.validateHandler, [data])
+      ) {
         var saveResult = await dataService.save(data);
         if (saveResult.isSucceed) {
           if ($scope.successHandler) {
@@ -68,7 +76,7 @@ app.controller("MixDatabaseFormController", [
           $rootScope.isBusy = false;
           $scope.loadData();
           if ($scope.loadingHandler) {
-            $rootScope.executeFunctionByName($scope.loadingHandler, [ false ]);
+            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
           }
           $scope.$apply();
         } else {
@@ -83,7 +91,7 @@ app.controller("MixDatabaseFormController", [
             }
           }
           if ($scope.loadingHandler) {
-            $rootScope.executeFunctionByName($scope.loadingHandler, [ false ]);
+            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
           }
           $rootScope.isBusy = false;
           $scope.$apply();

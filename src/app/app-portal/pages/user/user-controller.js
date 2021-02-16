@@ -9,44 +9,52 @@ app.controller("UserController", [
   "AuthService",
   "UserServices",
   "RestMixDatabaseDataPortalService",
-  function($scope, $rootScope, ngAppSettings, $routeParams, $timeout, $location,
-           authService, userServices, dataService) {
+  function (
+    $scope,
+    $rootScope,
+    ngAppSettings,
+    $routeParams,
+    $timeout,
+    $location,
+    authService,
+    userServices,
+    dataService
+  ) {
     $scope.request = {
-      pageSize : "10",
-      pageIndex : 0,
-      status : "Published",
-      orderBy : "CreatedDateTime",
-      direction : "Desc",
-      fromDate : null,
-      toDate : null,
-      keyword : "",
+      pageSize: "10",
+      pageIndex: 0,
+      status: "Published",
+      orderBy: "CreatedDateTime",
+      direction: "Desc",
+      fromDate: null,
+      toDate: null,
+      keyword: "",
     };
 
     $scope.mediaFile = {
-      file : null,
-      fullPath : "",
-      folder : "User",
-      title : "",
-      description : "",
+      file: null,
+      fullPath: "",
+      folder: "User",
+      title: "",
+      description: "",
     };
     $scope.activedUser = null;
     $scope.relatedUsers = [];
     $rootScope.isBusy = false;
     $scope.data = {
-      pageIndex : 0,
-      pageSize : 1,
-      totalItems : 0,
+      pageIndex: 0,
+      pageSize: 1,
+      totalItems: 0,
     };
     $scope.errors = [];
 
-    $scope.range = function(max) {
+    $scope.range = function (max) {
       var input = [];
-      for (var i = 1; i <= max; i += 1)
-        input.push(i);
+      for (var i = 1; i <= max; i += 1) input.push(i);
       return input;
     };
 
-    $scope.loadUser = async function() {
+    $scope.loadUser = async function () {
       $rootScope.isBusy = true;
       var id = $routeParams.id;
       var response = await userServices.getUser(id, "portal");
@@ -61,7 +69,7 @@ app.controller("UserController", [
       }
     };
 
-    $scope.loadMyProfile = async function() {
+    $scope.loadMyProfile = async function () {
       $rootScope.isBusy = true;
       var response = await userServices.getMyProfile();
       if (response.isSucceed) {
@@ -75,7 +83,7 @@ app.controller("UserController", [
       }
     };
 
-    $scope.loadUsers = async function(pageIndex) {
+    $scope.loadUsers = async function (pageIndex) {
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
@@ -83,8 +91,8 @@ app.controller("UserController", [
       var resp = await userServices.getUsers($scope.request);
       if (resp && resp.isSucceed) {
         $scope.data = resp.data;
-        $.each($scope.data.items, function(i, user) {
-          $.each($scope.data, function(i, e) {
+        $.each($scope.data.items, function (i, user) {
+          $.each($scope.data, function (i, e) {
             if (e.userId === user.id) {
               user.isHidden = true;
             }
@@ -101,13 +109,18 @@ app.controller("UserController", [
       }
     };
 
-    $scope.removeUser = function(id) {
+    $scope.removeUser = function (id) {
       $rootScope.showConfirm(
-          $scope, "removeUserConfirmed", [ id ], null, "Remove User",
-          "Deleted data will not able to recover, are you sure you want to delete this item?");
+        $scope,
+        "removeUserConfirmed",
+        [id],
+        null,
+        "Remove User",
+        "Deleted data will not able to recover, are you sure you want to delete this item?"
+      );
     };
 
-    $scope.removeUserConfirmed = async function(id) {
+    $scope.removeUserConfirmed = async function (id) {
       $rootScope.isBusy = true;
       var result = await userServices.removeUser(id);
       if (result.isSucceed) {
@@ -119,7 +132,7 @@ app.controller("UserController", [
       }
     };
 
-    $scope.save = async function() {
+    $scope.save = async function () {
       // if (user.avatar !== user.avatarUrl) {
       //    user.avatar = user.avatarUrl;
       //}
@@ -128,8 +141,11 @@ app.controller("UserController", [
       if (resp && resp.isSucceed) {
         $rootScope.showMessage("Update successfully!", "success");
         if ($scope.activedUser.id == authService.authentication.id) {
-          authService.refreshToken(authService.authentication.refresh_token)
-              .then(() => { window.location = window.location; });
+          authService
+            .refreshToken(authService.authentication.refresh_token)
+            .then(() => {
+              window.location = window.location;
+            });
         }
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -142,7 +158,7 @@ app.controller("UserController", [
       }
     };
 
-    $scope.saveUserData = async function() {
+    $scope.saveUserData = async function () {
       if ($scope.activedUser.userData) {
         $scope.activedUser.userData.parentId = $scope.activedUser.id;
         $scope.activedUser.userData.parentType = "User";
@@ -150,7 +166,7 @@ app.controller("UserController", [
       }
     };
 
-    $scope.register = async function(user) {
+    $scope.register = async function (user) {
       $rootScope.isBusy = true;
       var resp = await userServices.register(user);
       if (resp && resp.isSucceed) {
@@ -167,12 +183,12 @@ app.controller("UserController", [
       }
     };
 
-    $scope.updateRoleStatus = async function(nav) {
+    $scope.updateRoleStatus = async function (nav) {
       var userRole = {
-        userId : nav.userId,
-        roleId : nav.roleId,
-        roleName : nav.description,
-        isUserInRole : nav.isActived,
+        userId: nav.userId,
+        roleId: nav.roleId,
+        roleName: nav.description,
+        isUserInRole: nav.isActived,
       };
       $rootScope.isBusy = true;
       var resp = await userServices.updateRoleStatus(userRole);

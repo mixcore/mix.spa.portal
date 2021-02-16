@@ -1,29 +1,35 @@
 modules.component("mixDatabaseForm", {
-  templateUrl :
-      "/mix-app/views/app-portal/components/mix-database-form/view.html",
-  bindings : {
-    mixDatabaseId : "=",
-    mixDatabaseName : "=",
-    fields : "=?",
-    attrDataId : "=?",
-    attrData : "=?",
-    parentType : "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
-    parentId : "=?",
-    defaultId : "=",
-    backUrl : "=?",
-    level : "=?",
-    hideAction : "=?",
-    saveData : "&?",
+  templateUrl:
+    "/mix-app/views/app-portal/components/mix-database-form/view.html",
+  bindings: {
+    mixDatabaseId: "=",
+    mixDatabaseName: "=",
+    fields: "=?",
+    attrDataId: "=?",
+    attrData: "=?",
+    parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
+    parentId: "=?",
+    defaultId: "=",
+    backUrl: "=?",
+    level: "=?",
+    hideAction: "=?",
+    saveData: "&?",
   },
-  controller : [
+  controller: [
     "$rootScope",
     "$scope",
     "$location",
     "$routeParams",
     "RestMixDatabaseDataPortalService",
     "RestMixDatabaseColumnPortalService",
-    function($rootScope, $scope, $location, $routeParams, service,
-             fieldService) {
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      $routeParams,
+      service,
+      fieldService
+    ) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -31,11 +37,11 @@ modules.component("mixDatabaseForm", {
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.settings = $rootScope.globalSettings;
-      ctrl.$onInit = async function() {
+      ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
         ctrl.loadData();
       };
-      ctrl.loadData = async function() {
+      ctrl.loadData = async function () {
         /*
             If input is data id => load ctrl.attrData from service and handle it
            independently
@@ -43,7 +49,7 @@ modules.component("mixDatabaseForm", {
         ctrl.isBusy = true;
 
         if (ctrl.attrDataId) {
-          var getData = await service.getSingle([ ctrl.attrDataId ]);
+          var getData = await service.getSingle([ctrl.attrDataId]);
           ctrl.attrData = getData.data;
           if (ctrl.attrData) {
             ctrl.attrData.parentId = ctrl.parentId;
@@ -68,7 +74,7 @@ modules.component("mixDatabaseForm", {
           $scope.$apply();
         }
       };
-      ctrl.loadDefaultModel = async function() {
+      ctrl.loadDefaultModel = async function () {
         if ($routeParams.parentId) {
           ctrl.parentId = $routeParams.parentId;
         }
@@ -78,25 +84,23 @@ modules.component("mixDatabaseForm", {
         if (!ctrl.backUrl) {
           if (ctrl.parentType) {
             switch (ctrl.parentType) {
-            case "Post":
-            case "Page":
-            case "Module":
-              ctrl.backUrl = `/portal/${
-                  ctrl.parentType.toLowerCase()}/details/${ctrl.parentId}`;
-              break;
+              case "Post":
+              case "Page":
+              case "Module":
+                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                  ctrl.parentId
+                }`;
+                break;
 
-            default:
-              ctrl.backUrl = `/portal/mix-database-data/details?dataId=${
-                  ctrl.parentId}&mixDatabaseId=${
-                  ctrl.mixDatabaseId}&mixDatabaseName=${
-                  ctrl.mixDatabaseName}&mixDatabaseTitle=${
-                  $routeParams.mixDatabaseTitle}`;
-              break;
+              default:
+                ctrl.backUrl = `/portal/mix-database-data/details?dataId=${ctrl.parentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
+                break;
             }
           }
         }
-        var getDefault =
-            await service.initData(ctrl.mixDatabaseName || ctrl.mixDatabaseId);
+        var getDefault = await service.initData(
+          ctrl.mixDatabaseName || ctrl.mixDatabaseId
+        );
         ctrl.defaultData = getDefault.data;
         if (ctrl.defaultData) {
           ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseId || 0;
@@ -112,9 +116,10 @@ modules.component("mixDatabaseForm", {
         }
       };
 
-      ctrl.reload =
-          async function() { ctrl.attrData = angular.copy(ctrl.defaultData); };
-      ctrl.loadSelected = function() {
+      ctrl.reload = async function () {
+        ctrl.attrData = angular.copy(ctrl.defaultData);
+      };
+      ctrl.loadSelected = function () {
         if (ctrl.selectedList.data.length) {
           ctrl.attrData = ctrl.selectedList.data[0];
           ctrl.attrData.mixDatabaseId = ctrl.mixDatabaseId;
@@ -123,11 +128,11 @@ modules.component("mixDatabaseForm", {
           ctrl.attrData.parentType = ctrl.parentType;
         }
       };
-      ctrl.submit = async function() {
+      ctrl.submit = async function () {
         if (ctrl.validate()) {
           if (ctrl.saveData) {
             ctrl.isBusy = true;
-            var result = await ctrl.saveData({data : ctrl.attrData});
+            var result = await ctrl.saveData({ data: ctrl.attrData });
             if (result && result.isSucceed) {
               ctrl.isBusy = false;
               ctrl.attrData = result.data;
@@ -147,12 +152,9 @@ modules.component("mixDatabaseForm", {
               ctrl.isBusy = false;
               $rootScope.showMessage("success");
               if ($location.path() == "/portal/mix-database-data/create") {
-                const url = ctrl.backUrl ||
-                            `/portal/mix-database-data/details?dataId=${
-                                ctrl.attrData.id}&mixDatabaseId=${
-                                ctrl.mixDatabaseId}&mixDatabaseName=${
-                                ctrl.mixDatabaseName}&mixDatabaseTitle=${
-                                $routeParams.mixDatabaseTitle}`;
+                const url =
+                  ctrl.backUrl ||
+                  `/portal/mix-database-data/details?dataId=${ctrl.attrData.id}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
                 $location.url(url);
               }
               $scope.$apply();
@@ -166,10 +168,10 @@ modules.component("mixDatabaseForm", {
           }
         }
       };
-      ctrl.validate = function() {
+      ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.fields, function(field) {
+        angular.forEach(ctrl.fields, function (field) {
           if (field.regex) {
             var regex = RegExp(field.regex, "g");
             isValid = regex.test(ctrl.attrData.obj[field.name]);
@@ -181,15 +183,17 @@ modules.component("mixDatabaseForm", {
             $rootScope.showErrors(ctrl.errors);
           }
           if (isValid && field.isEncrypt) {
-            ctrl.attrData.obj[field.name] =
-                $rootScope.encrypt(ctrl.attrData.obj[field.name]);
+            ctrl.attrData.obj[field.name] = $rootScope.encrypt(
+              ctrl.attrData.obj[field.name]
+            );
           }
         });
         return isValid;
       };
-      ctrl.showContentFilter = function(
-          $event) { $rootScope.showContentFilter(ctrl.loadSelectedLink); };
-      ctrl.loadSelectedLink = function(data, type) {
+      ctrl.showContentFilter = function ($event) {
+        $rootScope.showContentFilter(ctrl.loadSelectedLink);
+      };
+      ctrl.loadSelectedLink = function (data, type) {
         if (data) {
           ctrl.attrData.obj.target_id = data.id;
           ctrl.attrData.obj.title = data.title;
@@ -197,13 +201,21 @@ modules.component("mixDatabaseForm", {
           ctrl.attrData.obj.uri = data.detailsUrl;
         }
       };
-      ctrl.filterData = function(attributeName) {
+      ctrl.filterData = function (attributeName) {
         if (ctrl.attrData) {
           var attr = $rootScope.findObjectByKey(
-              ctrl.attrData.obj, "attributeFieldName", attributeName);
+            ctrl.attrData.obj,
+            "attributeFieldName",
+            attributeName
+          );
           if (!attr) {
-            attr = angular.copy($rootScope.findObjectByKey(
-                ctrl.defaultData.data, "attributeFieldName", attributeName));
+            attr = angular.copy(
+              $rootScope.findObjectByKey(
+                ctrl.defaultData.data,
+                "attributeFieldName",
+                attributeName
+              )
+            );
             mixDatabaseColumn;
             ctrl.attrData.obj.push(attr);
           }

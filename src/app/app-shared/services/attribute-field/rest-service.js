@@ -2,14 +2,14 @@
 app.factory("RestMixDatabaseColumnPortalService", [
   "BaseRestService",
   "CommonService",
-  function(baseService, commonService) {
+  function (baseService, commonService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("mix-database-column/portal", true);
-    var _initData = async function(attrSetName) {
+    var _initData = async function (attrSetName) {
       var url = this.prefixUrl + "/init/" + attrSetName;
       var req = {
-        method : "GET",
-        url : url,
+        method: "GET",
+        url: url,
       };
       return await commonService.getRestApiResult(req);
     };
