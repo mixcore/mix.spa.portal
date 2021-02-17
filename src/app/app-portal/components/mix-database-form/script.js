@@ -56,6 +56,9 @@ modules.component("mixDatabaseForm", {
             ctrl.mixDatabaseId = ctrl.attrData.mixDatabaseId;
             ctrl.mixDatabaseName = ctrl.attrData.mixDatabaseName;
             ctrl.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
+            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.attrData.mixDatabaseId}
+            &mixDatabaseName=${ctrl.attrData.mixDatabaseName}
+            &mixDatabaseTitle=test`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
