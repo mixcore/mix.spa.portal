@@ -203,14 +203,14 @@ modules.component("mixDatabaseForm", {
         if (ctrl.attrData) {
           var attr = $rootScope.findObjectByKey(
             ctrl.attrData.obj,
-            "attributeFieldName",
+            "mixDatabaseColumnName",
             attributeName
           );
           if (!attr) {
             attr = angular.copy(
               $rootScope.findObjectByKey(
                 ctrl.defaultData.data,
-                "attributeFieldName",
+                "mixDatabaseColumnName",
                 attributeName
               )
             );
