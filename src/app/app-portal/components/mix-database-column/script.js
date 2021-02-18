@@ -1,9 +1,8 @@
-modules.component("additionalField", {
+modules.component("mixDatabaseColumn", {
   templateUrl:
-    "/mix-app/views/app-portal/components/additional-field/view.html",
+    "/mix-app/views/app-portal/components/mix-database-column/view.html",
   bindings: {
-    model: "=",
-    additionalData: "=",
+    column: "="
   },
   controller: [
     "$rootScope",

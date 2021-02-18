@@ -182,9 +182,6 @@ app.controller("PostController", [
       $scope.request.type = $scope.viewModel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
-      if ($scope.viewModel.id) {
-        $scope.viewModel.detailsUrl = `/post/${$scope.viewModel.specificulture}/${$scope.viewModel.id}/${$scope.viewModel.seoName}`;
-      }
       await $scope.loadPostTypes();
       $scope.loadAdditionalData();
       if (moduleIds) {
