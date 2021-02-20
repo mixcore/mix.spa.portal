@@ -25,10 +25,11 @@ app.controller("ConfigurationController", [
       ngAppSettings,
       service
     );
-    $scope.cates = ngAppSettings.enums.configuration_cates;
-    $scope.settings = $rootScope.globalSettings;
-    $scope.request.category = $routeParams.category || "";
+   
     $scope.getSingleSuccessCallback = function () {
+      $scope.cates = ngAppSettings.enums.configuration_cates;
+      $scope.settings = $rootScope.globalSettings;
+      $scope.request.category = $routeParams.category || "";
       if (!$scope.viewModel.category) {
         $scope.viewModel.category = "Site";
       }
