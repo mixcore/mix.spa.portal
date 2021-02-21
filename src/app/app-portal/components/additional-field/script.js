@@ -7,7 +7,7 @@ modules.component("additionalField", {
     controller: [
       "$rootScope",
       "$scope",
-      "RestAttributeFieldPortalService",
+      "RestMixDatabaseColumnPortalService",
       function ($rootScope, $scope, fieldService) {
         var ctrl = this;
         ctrl.value = {};
