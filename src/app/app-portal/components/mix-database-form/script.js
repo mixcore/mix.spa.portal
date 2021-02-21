@@ -21,14 +21,12 @@ modules.component("mixDatabaseForm", {
     "$location",
     "$routeParams",
     "RestMixDatabaseDataPortalService",
-    "RestMixDatabaseColumnPortalService",
     function (
       $rootScope,
       $scope,
       $location,
       $routeParams,
-      service,
-      fieldService
+      service
     ) {
       var ctrl = this;
       ctrl.isBusy = false;

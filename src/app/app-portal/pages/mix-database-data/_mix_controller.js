@@ -40,7 +40,7 @@ app.controller("MixDatabaseDataController", [
       title: "",
       description: "",
     };
-    $scope.init = async function () {
+    $scope.initRouteParams = () =>{
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
@@ -61,6 +61,9 @@ app.controller("MixDatabaseDataController", [
         };
       }
 
+    }
+    $scope.init = async function () {
+      $scope.initRouteParams();
       if ($scope.mixDatabaseName || $scope.mixDatabaseId) {
         var getFields = await fieldService.initData(
           $scope.mixDatabaseName || $scope.mixDatabaseId
