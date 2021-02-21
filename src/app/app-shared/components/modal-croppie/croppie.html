@@ -3,23 +3,19 @@
 </div>
 <div class="modal-body" ng-init="$ctrl.init()">
   <div class="panel panel-default">
-    <div class="panel-body">
+    <div class="panel-body mb-4">
       <div class="input-group mb-3 hidden">
-        <span class="input-group-text">URL</span>
-        <input type="text" onclick="this.select()" ng-model="$ctrl.srcUrl" class="form-control hidden"
-          placeholder="https://your-image-url..." ng-change="$ctrl.loadFromUrl()" />
+        <div class="input-group-prepend"><span class="input-group-text">URL</span></div><input type="text"
+          onclick="this.select()" ng-model="$ctrl.srcUrl" class="form-control hidden"
+          placeholder="https://your-image-url..." ng-change="$ctrl.loadFromUrl()">
       </div>
       <div class="input-group">
-        <div class="custom-file">
-          <input id="{{$ctrl.id}}" accept="image/*" type="file" name="pic-{{$ctrl.id}}" data-files="file.files"
-            ngf-select="$ctrl.selectFile($files)" class="hidden" />
-          <label class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label>
-        </div>
+        <div class="custom-file"><input id="{{$ctrl.id}}" accept="image/*" type="file" name="pic-{{$ctrl.id}}"
+            data-files="file.files" ngf-select="$ctrl.selectFile($files)" class="hidden"> <label
+            class="custom-file-label" for="{{$ctrl.id}}">Upload file...</label></div>
       </div>
     </div>
     <div class="row">
-      <!-- Croppie needs a container -> using 'boundary' option -->
-
       <div class="col-sm-12" ng-if="$ctrl.options && $ctrl.cropped.source">
         <croppie ng-if="$ctrl.cropped.source" src="$ctrl.cropped.source" ng-model="$ctrl.cropped.image"
           boundary-w="$ctrl.options.boundary.width" boundary-h="$ctrl.options.boundary.height"
@@ -30,7 +26,5 @@
     </div>
   </div>
 </div>
-<div class="modal-footer">
-  <button class="btn btn-success" ng-click="$ctrl.ok()">Save</button>
-  <button class="btn btn-default" ng-click="$ctrl.cancel()">Cancel</button>
-</div>
+<div class="modal-footer"><button class="btn btn-success" ng-click="$ctrl.ok()">Save</button> <button
+    class="btn btn-default" ng-click="$ctrl.cancel()">Cancel</button></div>
