@@ -112,7 +112,7 @@ modules.component("mixDatabaseNavValues", {
           `${ctrl.updateUrl}?dataId=${nav.dataId}&mixDatabaseId=${nav.mixDatabaseId}&parentId=${ctrl.parentId}&parentType=${ctrl.parentType}`
         );
         // ctrl.refDataModel = nav;
-        // var e = $(".pane-form-" + ctrl.attributeValue.field.referenceId)[0];
+        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.field.referenceId)[0];
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
@@ -135,7 +135,7 @@ modules.component("mixDatabaseNavValues", {
                 }
                 ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 var e = $(
-                  ".pane-data-" + ctrl.attributeValue.field.referenceId
+                  ".pane-data-" + ctrl.mixDatabaseDataValue.field.referenceId
                 )[0];
                 angular.element(e).triggerHandler("click");
                 $rootScope.isBusy = false;

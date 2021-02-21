@@ -12,7 +12,7 @@ modules.component("additionalValue", {
     "$rootScope",
     "$scope",
     "RestMixDatabaseDataPortalService",
-    "RestAttributeValuePortalService",
+    "RestMixDatabaseDataValuePortalService",
     function ($rootScope, $scope, dataService, valueService) {
       var ctrl = this;
       ctrl.value = {};

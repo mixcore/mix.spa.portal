@@ -130,21 +130,21 @@
           case "time":
             if (ctrl.field.defaultValue) {
               ctrl.model[ctrl.field.name] = new Date(
-                ctrl.attributeValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.field.defaultValue
               );
             }
             break;
           case "double":
             if (ctrl.field.defaultValue) {
               ctrl.model[ctrl.field.name] = parseFloat(
-                ctrl.attributeValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.field.defaultValue
               );
             }
             break;
           case "boolean":
             if (ctrl.field.defaultValue) {
               ctrl.model[ctrl.field.name] =
-                ctrl.attributeValue.field.defaultValue == "true";
+                ctrl.mixDatabaseDataValue.field.defaultValue == "true";
             }
             break;
 
