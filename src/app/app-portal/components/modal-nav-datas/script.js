@@ -92,7 +92,7 @@
           if (ctrl.parentId) {
             var nav = {
               specificulture: data.specificulture,
-              attributesetName: ctrl.mixDatabaseName,
+              mixDatabaseName: ctrl.mixDatabaseName,
               parentId: ctrl.parentId,
               parentType: ctrl.parentType,
               id: data.id,

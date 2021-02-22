@@ -134,7 +134,7 @@
             // Not show data if there's in selected list
             ctrl.data.items.push({
               specificulture: e.specificulture,
-              attributesetName: ctrl.mixDatabaseName,
+              mixDatabaseName: ctrl.mixDatabaseName,
               parentId: ctrl.parentId,
               parentType: ctrl.parentType,
               dataId: e.id,
