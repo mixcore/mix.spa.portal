@@ -107,18 +107,18 @@ app.factory("AuthService", [
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
               window.top.location = $routeParams.ReturnUrl;
-            }, 500);
+            }, 200);
           } else if (
             document.referrer &&
             document.referrer.indexOf("init") === -1
           ) {
             setTimeout(() => {
               window.top.location = document.referrer;
-            }, 500);
+            }, 200);
           } else {
             setTimeout(() => {
               window.top.location = "/";
-            }, 500);
+            }, 200);
           }
         });
       } else {

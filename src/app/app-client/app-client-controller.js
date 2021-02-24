@@ -9,7 +9,7 @@
     "localStorageService",
     "TranslatorService",
     "SharedModuleDataService",
-    "RestAttributeSetDataClientService",
+    "RestMixDatabaseDataClientService",
     function (
       $rootScope,
       $scope,
@@ -138,7 +138,7 @@
         }, 500);
       };
 
-      $scope.initAttributeSetForm = async function (formName) {
+      $scope.initMixDatabaseForm = async function (formName) {
         return await attrDataService.initData(formName).data;
       };
 
@@ -187,7 +187,7 @@
             method: "share",
             href: url,
           },
-          function (response) { }
+          function (response) {}
         );
       };
       $scope.shareTwitter = function (url, content) {

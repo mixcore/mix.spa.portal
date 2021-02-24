@@ -11,7 +11,7 @@ app.controller("Step3Controller", [
       isCreateDefault: true,
       theme: null,
     };
-    $scope.themeType = "cleanblog";
+    $scope.themeType = "materialkit";
     $scope.init = async function () {
       $scope.form = document.getElementById("frm-theme");
       $(".preventUncheck").on("change", function (e) {
@@ -27,7 +27,7 @@ app.controller("Step3Controller", [
       $rootScope.isBusy = true;
       var frm = new FormData();
       var url = "/init/init-cms/step-3";
-      $scope.data.isCreateDefault = $scope.themeType === "cleanblog";
+      $scope.data.isCreateDefault = $scope.themeType === "materialkit";
       $rootScope.isBusy = true;
       // Looping over all files and add it to FormData object
       frm.append("theme", $scope.form["theme"].files[0]);

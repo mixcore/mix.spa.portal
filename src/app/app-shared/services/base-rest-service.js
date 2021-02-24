@@ -6,8 +6,11 @@ app.factory("BaseRestService", [
   "localStorageService",
   function ($rootScope, $routeParams, commonService) {
     var serviceFactory = {};
-    var _init = function (modelName, isGlobal, lang) {
+    var _init = function (modelName, isGlobal, lang, serviceBase) {
       this.modelName = modelName;
+      if(serviceBase){
+        this.serviceBase = serviceBase;
+      }
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.settings || lang) {
           this.lang = lang || $rootScope.settings.lang;

@@ -8,10 +8,10 @@
   <form id="frm-theme">
     <div class="mb-5">
       <div class="form-check form-switch">
-        <input class="form-check-input" type="radio" id="customRadio_theme-cleanblog" ng-model="themeType"
-          value="cleanblog" />
-        <label class="form-check-label" for="customRadio_theme-cleanblog">
-          Clean simple Blog theme
+        <input class="form-check-input" type="radio" id="customRadio_theme-materialkit" ng-model="themeType"
+          value="materialkit" />
+        <label class="form-check-label" for="customRadio_theme-materialkit">
+          Mixcore Material Kit
         </label>
       </div>
 
@@ -30,8 +30,8 @@
     </div>
     <div class="mb-3 mb-5" ng-show="themeType ==='custom'">
       <api-file form-name="'theme'" posted-file="theme"></api-file>
-      <small class="form-text text-muted">Awesome Mixcore theme
-        <a target="_blank" href="https://github.com/mixcore/awesome-mixcore#themes">list</a>.</small>
+      <small class="form-text text-muted">Mixcore Themes
+        <a target="_blank" href="https://themes.mixcore.org/">list</a>.</small>
     </div>
     <div class="text-end">
       <button ng-disabled="themeType ==='custom' && !form['theme'].files.length" class="btn btn-primary"

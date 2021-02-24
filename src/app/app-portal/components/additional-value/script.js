@@ -1,5 +1,6 @@
 modules.component("additionalValue", {
-  templateUrl: "/mix-app/views/app-portal/components/additional-value/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/additional-value/view.html",
   bindings: {
     additionalData: "=?",
     additionalDataId: "=?",
@@ -10,8 +11,8 @@ modules.component("additionalValue", {
   controller: [
     "$rootScope",
     "$scope",
-    "RestAttributeSetDataPortalService",
-    "RestAttributeValuePortalService",
+    "RestMixDatabaseDataPortalService",
+    "RestMixDatabaseDataValuePortalService",
     function ($rootScope, $scope, dataService, valueService) {
       var ctrl = this;
       ctrl.value = {};
@@ -29,7 +30,7 @@ modules.component("additionalValue", {
             const getData = await dataService.getAdditionalData(obj);
             if (getData.isSucceed) {
               ctrl.additionalData = getData.data;
-              ctrl.additionalData.attributeSetName = ctrl.databaseName;
+              ctrl.additionalData.mixDatabaseName = ctrl.databaseName;
               ctrl.additionalData.parentType = ctrl.parentType;
               ctrl.additionalData.parentId = ctrl.parentId;
               $scope.$apply();
