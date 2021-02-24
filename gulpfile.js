@@ -337,7 +337,6 @@ paths.appPortalRequired = {
     `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
     `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
     paths.scriptLib + "portal/prism/prism.min.js",
-    paths.scriptLib + "portal/Trumbowyg/**/*.*.js",
     paths.webapp + "app-portal/shared/**/*.js",
   ],
   dest: paths.webroot + "js/app-portal-required.min.js",

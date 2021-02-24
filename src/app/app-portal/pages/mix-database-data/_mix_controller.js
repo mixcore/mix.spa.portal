@@ -40,7 +40,7 @@ app.controller("MixDatabaseDataController", [
       title: "",
       description: "",
     };
-    $scope.initRouteParams = () =>{
+    $scope.initRouteParams = () => {
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
@@ -60,8 +60,7 @@ app.controller("MixDatabaseDataController", [
           parentType: $scope.parentType,
         };
       }
-
-    }
+    };
     $scope.init = async function () {
       $scope.initRouteParams();
       if ($scope.mixDatabaseName || $scope.mixDatabaseId) {
@@ -90,10 +89,14 @@ app.controller("MixDatabaseDataController", [
           `/portal/mix-database-data/details?dataId=${$scope.viewModel.id}`;
         $rootScope.goToSiteUrl(backUrl);
       } else {
-        let backUrl =
-          $scope.backUrl ||
-          `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewModel.mixDatabaseId}&mixDatabaseName=${$scope.viewModel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewModel.mixDatabaseName}`;
-        $rootScope.goToSiteUrl(backUrl);
+        if ($scope.parentId && $scope.parentType == 'Set') {
+          $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
+        } else {
+          let backUrl =
+            $scope.backUrl ||
+            `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewModel.mixDatabaseId}&mixDatabaseName=${$scope.viewModel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewModel.mixDatabaseName}`;
+          $rootScope.goToSiteUrl(backUrl);
+        }
       }
     };
 
