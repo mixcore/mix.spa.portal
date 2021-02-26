@@ -12,7 +12,7 @@
 
         <div
           class="col-sm-12"
-          ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+          ng-repeat="field in $ctrl.columns | orderBy:'priority' track by $index"
         >
           <mix-field-preview
             ng-if="field.name!='data_type' && field.name!='message'"
@@ -63,18 +63,18 @@
                   </option>
                 </select>
                 <div
-                  ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+                  ng-repeat="field in $ctrl.columns | orderBy:'priority' track by $index"
                 >
-                  <mix-field-editor
+                  <mix-column-editor
                     ng-if="field.name!='data_type' && field.name=='message'"
                     model="$ctrl.attrData"
-                    field="$ctrl.msgField"
-                  ></mix-field-editor>
-                  <mix-field-editor
+                    column="$ctrl.msgField"
+                  ></mix-column-editor>
+                  <mix-column-editor
                     ng-if="field.name!='data_type' && field.name!='message'"
                     model="$ctrl.attrData"
-                    field="field"
-                  ></mix-field-editor>
+                    column="field"
+                  ></mix-column-editor>
                 </div>
               </div>
               <div class="col-sm-12">

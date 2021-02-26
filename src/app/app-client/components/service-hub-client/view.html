@@ -12,7 +12,7 @@
 
         <div
           class="col-sm-12"
-          ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+          ng-repeat="field in $ctrl.columns | orderBy:'priority' track by $index"
         >
           <mix-field-preview
             model="msg.data[field.name]"
@@ -45,12 +45,12 @@
               </div>
               <div class="col-sm-12">
                 <div
-                  ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+                  ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
                 >
-                  <mix-field-editor
+                  <mix-column-editor
                     model="$ctrl.attrData"
-                    field="field"
-                  ></mix-field-editor>
+                    column="column"
+                  ></mix-column-editor>
                 </div>
               </div>
               <div class="col-sm-12">

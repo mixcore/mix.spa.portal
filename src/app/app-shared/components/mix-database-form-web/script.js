@@ -6,7 +6,7 @@
     attrSetName: "=",
     attrDataId: "=?",
     attrData: "=?",
-    parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
+    parentType: "=?",
     parentId: "=?",
     defaultId: "=",
     saveData: "&?",

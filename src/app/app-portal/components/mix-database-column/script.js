@@ -22,19 +22,19 @@ modules.component("mixDatabaseColumn", {
       ctrl.addAttr = async function () {
         if (ctrl.field.name) {
           var current = $rootScope.findObjectByKey(
-            ctrl.additionalData.fields,
+            ctrl.additionalData.columns,
             "name",
             ctrl.field.name
           );
           if (current) {
             $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
           } else {
-            ctrl.field.priority = ctrl.additionalData.fields.length + 1;
+            ctrl.field.priority = ctrl.additionalData.columns.length + 1;
             $rootScope.isBusy = true;
             var saveField = await fieldService.create(ctrl.field);
             $rootScope.isBusy = false;
             if (saveField.isSucceed) {
-              ctrl.additionalData.fields.push(saveField.data);
+              ctrl.additionalData.columns.push(saveField.data);
 
               //reset field option
               ctrl.field.title = "";
@@ -64,11 +64,11 @@ modules.component("mixDatabaseColumn", {
       };
       ctrl.updateOrders = function (index) {
         if (index > ctrl.dragStartIndex) {
-          ctrl.fields.splice(ctrl.dragStartIndex, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex, 1);
         } else {
-          ctrl.fields.splice(ctrl.dragStartIndex + 1, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
         }
-        angular.forEach(ctrl.fields, function (e, i) {
+        angular.forEach(ctrl.columns, function (e, i) {
           e.priority = i;
         });
       };
@@ -92,7 +92,7 @@ modules.component("mixDatabaseColumn", {
           $rootScope.isBusy = true;
           var result = await fieldService.delete([val.id]);
           if (result.isSucceed) {
-            ctrl.additionalData.fields.splice(index, 1);
+            ctrl.additionalData.columns.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -101,7 +101,7 @@ modules.component("mixDatabaseColumn", {
             $scope.$apply();
           }
         } else {
-          ctrl.additionalData.fields.splice(index, 1);
+          ctrl.additionalData.columns.splice(index, 1);
         }
       };
     },

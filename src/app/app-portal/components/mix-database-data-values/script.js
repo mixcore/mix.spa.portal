@@ -11,7 +11,7 @@ modules.component("mixDatabaseDataValues", {
     filterType: "=?",
     selectedList: "=",
     selectSingle: "=?",
-    fields: "=?",
+    columns: "=?",
     onFilterList: "&?",
     onApplyList: "&?",
     onSendMail: "&?",
@@ -37,12 +37,12 @@ modules.component("mixDatabaseDataValues", {
             data: [],
           };
         }
-        if (!ctrl.fields) {
+        if (!ctrl.columns) {
           var getFields = await fieldService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
+            ctrl.columns = getFields.data;
             $scope.$apply();
           }
         }
@@ -152,7 +152,7 @@ modules.component("mixDatabaseDataValues", {
 
       ctrl.view = function (item) {
         var obj = {
-          fields: ctrl.fields,
+          columns: ctrl.columns,
           item: item,
         };
         $rootScope.preview("mix-database-data", obj, null, "modal-lg");

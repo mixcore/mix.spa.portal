@@ -4,7 +4,7 @@ modules.component("mixDatabaseForm", {
   bindings: {
     mixDatabaseId: "=",
     mixDatabaseName: "=",
-    fields: "=?",
+    columns: "=?",
     attrDataId: "=?",
     attrData: "=?",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -106,7 +106,7 @@ modules.component("mixDatabaseForm", {
           ctrl.defaultData.parentId = ctrl.parentId;
           ctrl.defaultData.parentType = ctrl.parentType;
 
-          ctrl.fields = ctrl.fields || ctrl.defaultData.fields;
+          ctrl.columns = ctrl.columns || ctrl.defaultData.columns;
         }
 
         if (!ctrl.attrData) {
@@ -168,7 +168,7 @@ modules.component("mixDatabaseForm", {
       ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.fields, function (field) {
+        angular.forEach(ctrl.columns, function (field) {
           if (field.regex) {
             var regex = RegExp(field.regex, "g");
             isValid = regex.test(ctrl.attrData.obj[field.name]);

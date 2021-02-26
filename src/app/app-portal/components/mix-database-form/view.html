@@ -83,13 +83,13 @@
       <div class="row">
         <div class="col-sm-12">
           <div
-            ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+            ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
           >
-            <mix-field-editor
+            <mix-column-editor
               level="$ctrl.level + 1"
               model="$ctrl.attrData"
-              field="field"
-            ></mix-field-editor>
+              column="column"
+            ></mix-column-editor>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@
   mix-database-id="$ctrl.mixDatabaseId"
   mix-database-name="$ctrl.mixDatabaseName"
   selected-list="$ctrl.selectedList"
-  fields="$ctrl.fields"
+  columns="$ctrl.columns"
 ></mix-database-data-filter>
 <modal-content-filter
   ng-if="$ctrl.attrData"

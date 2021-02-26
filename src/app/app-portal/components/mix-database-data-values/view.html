@@ -13,7 +13,7 @@
         </div>
       </div>
       <div
-        ng-repeat="col in $ctrl.fields | orderBy:'priority' track by $index"
+        ng-repeat="col in $ctrl.columns | orderBy:'priority' track by $index"
         ng-if="$index < 3"
         class="col-md-2"
       >
@@ -83,7 +83,7 @@
             </div>
             <div
               ng-if="$index < 3"
-              ng-repeat="field in $ctrl.fields | orderBy: 'priority' track by $index"
+              ng-repeat="field in $ctrl.columns | orderBy: 'priority' track by $index"
               class="col-md-2"
             >
               <mix-field-preview

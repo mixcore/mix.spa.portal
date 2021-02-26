@@ -14,9 +14,15 @@
     </div>
     <div class="row">
         <div class="col-12" ng-repeat="item in $ctrl.selectedList">
-            <checkbox-switch data="item" callback="$ctrl.select(data)"
+            <checkbox-switch data="item" 
+                callback="$ctrl.select(data)"
                 description="item.attributeData.obj[$ctrl.fieldDisplay]">
             </checkbox-switch>
+            <div class="col-md-12 mx-2" ng-repeat="sub in item.attributeData.obj.sub_categories">
+                <checkbox-switch data="sub" callback="$ctrl.select(data)"
+                    description="sub[$ctrl.fieldDisplay]">
+                </checkbox-switch>
+            </div>
         </div>
     </div>
     <div class="row mb-3">

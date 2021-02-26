@@ -7,7 +7,7 @@
     mixDatabaseId: "=?",
     selectedList: "=",
     initData: "=?",
-    fields: "=?",
+    columns: "=?",
     selected: "=",
     callback: "&?",
     save: "&?",

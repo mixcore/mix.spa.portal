@@ -70,12 +70,12 @@
         if ($routeParams.parentType) {
           ctrl.parentType = $routeParams.parentType;
         }
-        if (!ctrl.fields) {
+        if (!ctrl.columns) {
           var getFields = await fieldService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
+            ctrl.columns = getFields.data;
             $scope.$apply();
           }
         }
@@ -86,8 +86,6 @@
         if (ctrl.defaultData) {
           ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseId || 0;
           ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseName;
-          // ctrl.defaultData.parentId = ctrl.parentId;
-          // ctrl.defaultData.parentType = ctrl.parentType;
         }
 
         if (!ctrl.attrData) {

@@ -23,19 +23,19 @@
     <div
       class="alert alert-warning mb-0"
       role="alert"
-      ng-if="!$ctrl.fields || !$ctrl.fields.length"
+      ng-if="!$ctrl.columns || !$ctrl.columns.length"
     >
       <i class="fas fa-exclamation-triangle text-warning me-3"></i> No column
       has been created for this table yet!
     </div>
     <div
-      dnd-list="$ctrl.fields"
+      dnd-list="$ctrl.columns"
       dnd-inserted="$ctrl.updateOrders(index)"
-      ng-if="$ctrl.fields.length"
+      ng-if="$ctrl.columns.length"
       class=""
     >
       <div
-        ng-repeat="col in $ctrl.fields track by $index"
+        ng-repeat="col in $ctrl.columns track by $index"
         dnd-draggable="col"
         dnd-type="'col'"
         dnd-effect-allowed="copyMove"

@@ -4,29 +4,29 @@
   </div>
 </div>
 <div
-  ng-if="$ctrl.model && $ctrl.field && !$ctrl.field.isSelect"
+  ng-if="$ctrl.model && $ctrl.column && !$ctrl.column.isSelect"
   ng-init="$ctrl.initData()"
   class="mb-3 row"
 >
   <div class="col-2">
     <h6
       class="control-label m-0"
-      ng-bind="$ctrl.translate($ctrl.field.title)"
+      ng-bind="$ctrl.translate($ctrl.column.title)"
     ></h6>
     <div>
       <small class="text-muted">
-        ({{$ctrl.translate($ctrl.field.dataType)}})
+        ({{$ctrl.translate($ctrl.column.dataType)}})
       </small>
     </div>
   </div>
-  <div ng-switch="$ctrl.field.dataType.toLowerCase()" class="col-10">
+  <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-10">
     <div class="text-muted" ng-switch-default>
       <!--text-->
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="text"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="datetime">
@@ -34,8 +34,8 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="datetime-local"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="date">
@@ -43,8 +43,8 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="date"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="time">
@@ -52,8 +52,8 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="time"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="phonenumber">
@@ -61,8 +61,8 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="tel"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div ng-switch-when="integer|double|currency">
@@ -70,12 +70,12 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="number"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
       />
       <label
         class="control-label"
-        ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"
+        ng-bind="$ctrl.model.obj[$ctrl.column.name] | currency:''"
       ></label>
     </div>
     <div ng-switch-when="double">
@@ -83,12 +83,12 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="number"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
       />
       <label
         class="control-label"
-        ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"
+        ng-bind="$ctrl.model.obj[$ctrl.column.name] | currency:''"
       ></label>
     </div>
     <div ng-switch-when="currency">
@@ -96,25 +96,25 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="number"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
       />
       <label
         class="control-label"
-        ng-bind="$ctrl.model.obj[$ctrl.field.name] | currency:''"
+        ng-bind="$ctrl.model.obj[$ctrl.column.name] | currency:''"
       ></label>
     </div>
     <div class="text-muted" ng-switch-when="html">
       <!--Html-->
-      <quill-editor content="$ctrl.model.obj[$ctrl.field.name]"></quill-editor>
+      <quill-editor content="$ctrl.model.obj[$ctrl.column.name]"></quill-editor>
     </div>
     <div class="text-muted" ng-switch-when="multilinetext">
       <!--TextArea-->
       <textarea
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         rows="5"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       ></textarea>
     </div>
     <div class="text-muted" ng-switch-when="emailaddress">
@@ -122,8 +122,8 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="email"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="password">
@@ -131,48 +131,48 @@
       <input
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="password"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="imageurl">
       <!--ImageUrl-->
       <input
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="url"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div
       class="text-muted col-8 card p-0"
       ng-switch-when="upload"
-      ng-if="$ctrl.field.fieldConfigurations"
+      ng-if="$ctrl.column.fieldConfigurations"
     >
       <!--upload-->
       <media-file-upload
-        ng-if="!$ctrl.field.fieldConfigurations.upload.isCrop"
+        ng-if="!$ctrl.column.fieldConfigurations.upload.isCrop"
         header="'Media Upload'"
         type="'Medias'"
         folder="'Medias'"
         auto="'true'"
-        accept-types="$ctrl.field.fieldConfigurations.upload.accepts"
-        src-url="$ctrl.model.obj[$ctrl.field.name]"
-        src="$ctrl.model.obj[$ctrl.field.name]"
+        accept-types="$ctrl.column.fieldConfigurations.upload.accepts"
+        src-url="$ctrl.model.obj[$ctrl.column.name]"
+        src="$ctrl.model.obj[$ctrl.column.name]"
         media-file="$ctrl.mediaFile"
         form-file="formFile"
       >
       </media-file-upload>
       <custom-image
-        ng-if="$ctrl.field.fieldConfigurations.upload.isCrop"
+        ng-if="$ctrl.column.fieldConfigurations.upload.isCrop"
         header="'Image'"
         type="'Medias'"
-        w="$ctrl.field.fieldConfigurations.upload.width"
-        h="$ctrl.field.fieldConfigurations.upload.height"
+        w="$ctrl.column.fieldConfigurations.upload.width"
+        h="$ctrl.column.fieldConfigurations.upload.height"
         folder="'Medias'"
-        src-url="$ctrl.model.obj[$ctrl.field.name]"
-        src="$ctrl.model.obj[$ctrl.field.name]"
+        src-url="$ctrl.model.obj[$ctrl.column.name]"
+        src="$ctrl.model.obj[$ctrl.column.name]"
         auto="'true'"
       >
       </custom-image>
@@ -182,15 +182,15 @@
       <input
         class="form-control form-control-sm col-6 {{$ctrl.inputClass}}"
         type="color"
-        value="{{$ctrl.model.obj[$ctrl.field.name]}}"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        value="{{$ctrl.model.obj[$ctrl.column.name]}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
       <input
         class="form-control form-control-sm  col-6 {{$ctrl.inputClass}}"
         type="text"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="boolean">
@@ -198,24 +198,24 @@
       <input
         class="{{$ctrl.inputClass}}"
         type="checkbox"
-        placeholder="{{$ctrl.translate($ctrl.field.title)}}"
-        ng-model="$ctrl.model.obj[$ctrl.field.name]"
-        ng-checked="$ctrl.model.obj[$ctrl.field.name]"
+        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
+        ng-model="$ctrl.model.obj[$ctrl.column.name]"
+        ng-checked="$ctrl.model.obj[$ctrl.column.name]"
       />
     </div>
     <div class="text-muted" ng-switch-when="icon">
       <mix-select-icons
         prefix="'fab'"
         options="$ctrl.icons"
-        data="$ctrl.model.obj[$ctrl.field.name]"
+        data="$ctrl.model.obj[$ctrl.column.name]"
       >
       </mix-select-icons>
     </div>
     <div class="text-muted" ng-switch-when="videoyoutube">
-      <youtube-editor code="$ctrl.model.obj[$ctrl.field.name]"></youtube-editor>
+      <youtube-editor code="$ctrl.model.obj[$ctrl.column.name]"></youtube-editor>
     </div>
     <div class="text-muted" ng-switch-when="tuieditor">
-      <tui-editor content="$ctrl.model.obj[$ctrl.field.name]"></tui-editor>
+      <tui-editor content="$ctrl.model.obj[$ctrl.column.name]"></tui-editor>
     </div>
     <div class="text-muted" ng-switch-when="reference">
       <!-- Referrence -->
@@ -234,7 +234,7 @@
         </div>
         <div class="col-md-12">
           <mix-database-nav-values
-            mix-database-id="$ctrl.field.referenceId"
+            mix-database-id="$ctrl.column.referenceId"
             parent-id="$ctrl.model.id"
             parent-type="'Set'"
             create-url="$ctrl.createUrl"
@@ -248,27 +248,27 @@
     </div>
     <div class="text-muted" ng-switch-when="qrcode">
       <!--Text-->
-      <qr-code model="$ctrl.model.obj[$ctrl.field.name]"></qr-code>
+      <qr-code model="$ctrl.model.obj[$ctrl.column.name]"></qr-code>
     </div>
   </div>
 </div>
 <!-- TODO: Only allow stringValue -->
 <div
-  ng-if="$ctrl.model && $ctrl.field.isSelect"
+  ng-if="$ctrl.model && $ctrl.column.isSelect"
   ng-init="$ctrl.initData()"
   class="mb-3 row"
 >
   <div class="col-2">
-    <h6 class="control-label" ng-bind="$ctrl.translate($ctrl.field.title)"></h6>
+    <h6 class="control-label" ng-bind="$ctrl.translate($ctrl.column.title)"></h6>
   </div>
   <div class="col-10">
     <select
-      ng-if="$ctrl.field.dataType!='icon'"
+      ng-if="$ctrl.column.dataType!='icon'"
       class="form-select form-control"
-      ng-model="$ctrl.model.obj[$ctrl.field.name]"
+      ng-model="$ctrl.model.obj[$ctrl.column.name]"
     >
       <option
-        ng-repeat="item in $ctrl.field.options track by $index"
+        ng-repeat="item in $ctrl.column.options track by $index"
         ng-value="item.value"
       >
         {{item.value}}

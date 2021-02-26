@@ -31,7 +31,7 @@
         });
       };
       ctrl.getProfile = function () {
-        FB.api("/me", "GET", { fields: "id,name,email" }, function (response) {
+        FB.api("/me", "GET", { columns: "id,name,email" }, function (response) {
           ctrl.profile = response;
           ctrl.loggedIn = true;
           $scope.$apply();

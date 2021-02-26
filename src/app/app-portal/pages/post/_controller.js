@@ -110,7 +110,6 @@ app.controller("PostController", [
         $scope.getList();
       }
     };
-
     $scope.getListRelated = async function (pageIndex) {
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;

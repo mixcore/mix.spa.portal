@@ -101,7 +101,7 @@ app.controller('SocialFeedController',
             $scope.loadFeeds = function (url) {
                 $scope.socialSettings.errors = '';
                 $scope.socialSettings.posts = [];
-                url = url || '/' + $scope.socialSettings.page_id + '/posts?access_token=' + $scope.socialSettings.access_token + '&fields=type,name,story,full_picture,created_time,permalink_url,message,description,caption,attachments{media,type,target,subattachments},shares.summary(true).limit(0),likes.summary(true).limit(0),comments.summary(true).limit(0)&limit=10';
+                url = url || '/' + $scope.socialSettings.page_id + '/posts?access_token=' + $scope.socialSettings.access_token + '&columns=type,name,story,full_picture,created_time,permalink_url,message,description,caption,attachments{media,type,target,subattachments},shares.summary(true).limit(0),likes.summary(true).limit(0),comments.summary(true).limit(0)&limit=10';
                 $rootScope.isBusy = true;
                 FB.api(url, function (response) {
                     if (response.data) {
@@ -127,7 +127,7 @@ app.controller('SocialFeedController',
             }
             $scope.loadPages = function () {
                 $scope.socialSettings.errors = '';
-                var url = '/me/accounts?access_token=' + $scope.socialSettings.access_token + '&fields=id,name';
+                var url = '/me/accounts?access_token=' + $scope.socialSettings.access_token + '&columns=id,name';
                 FB.api(url, function (response) {
                     if (response.data) {
                         $scope.socialSettings.pages = response.data;

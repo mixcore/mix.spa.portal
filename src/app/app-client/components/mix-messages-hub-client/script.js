@@ -21,7 +21,7 @@
       ctrl.attrData = null;
       ctrl.isHide = true;
       ctrl.hideContact = true;
-      ctrl.fields = [];
+      ctrl.columns = [];
       ctrl.members = [];
       ctrl.errors = [];
       ctrl.messages = {
@@ -68,9 +68,9 @@
         }
         var getFields = await fieldService.initData(ctrl.attrSetName);
         if (getFields.isSucceed) {
-          ctrl.fields = getFields.data;
+          ctrl.columns = getFields.data;
           ctrl.msgField = $rootScope.findObjectByKey(
-            ctrl.fields,
+            ctrl.columns,
             "name",
             "message"
           );
@@ -89,7 +89,7 @@
       ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.fields, function (field) {
+        angular.forEach(ctrl.columns, function (field) {
           if (field.regex) {
             var regex = RegExp(field.regex, "g");
             isValid = regex.test(ctrl.attrData.data[field.name]);

@@ -6,7 +6,7 @@ modules.component("mixDatabaseNavValues", {
     mixDatabaseName: "=",
     parentId: "=",
     parentType: "=",
-    fields: "=?",
+    columns: "=?",
     header: "=",
     data: "=?",
     maxCol: "=?",
@@ -38,12 +38,12 @@ modules.component("mixDatabaseNavValues", {
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/mix-database-data/details";
         }
-        if (!ctrl.fields) {
+        if (!ctrl.columns) {
           var getFields = await fieldService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
+            ctrl.columns = getFields.data;
             $scope.$apply();
           }
         }
@@ -178,7 +178,7 @@ modules.component("mixDatabaseNavValues", {
       };
       ctrl.view = function (item) {
         var obj = {
-          fields: ctrl.fields,
+          columns: ctrl.columns,
           item: item,
         };
         $rootScope.preview("mix-database-data", obj, null, "modal-lg");

@@ -58,7 +58,7 @@
             </div>
             <div ng-switch-when="mix-database-data">
               <div
-                ng-repeat="field in $ctrl.previewObject.data.fields | orderBy: 'priority' track by $index"
+                ng-repeat="field in $ctrl.previewObject.data.columns | orderBy: 'priority' track by $index"
                 class="py-2 row"
               >
                 <div class="col-md-3">
