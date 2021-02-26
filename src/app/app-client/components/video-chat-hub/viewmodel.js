@@ -1,6 +1,6 @@
 app.factory('ViewModel', ['$rootScope',
     function ($rootScope) {
-        var viewModel = {
+        var viewmodel = {
             Users: [], // List of users that are logged in and ready for connections
             Username: 'not logged in.', // My username, to be reflected in UI
             MyConnectionId: '', // My connection Id, so I can tell who I am
@@ -10,12 +10,12 @@ app.factory('ViewModel', ['$rootScope',
         };
 
         // The user that represents me
-        viewModel.Me = function () {
-            return $rootScope.findObjectByKey(this.Users, 'MyConnectionId', viewModel.MyConnectionId);
+        viewmodel.Me = function () {
+            return $rootScope.findObjectByKey(this.Users, 'MyConnectionId', viewmodel.MyConnectionId);
         };
 
         // The readable status of the UI
-        viewModel.CallStatus = function () {
+        viewmodel.CallStatus = function () {
             var callStatus;
 
             if (this.Mode == 'idle') {
@@ -29,18 +29,18 @@ app.factory('ViewModel', ['$rootScope',
             return callStatus;
         };
 
-        // Set a new array of users.  We could simply do viewModel.Users([array]),
+        // Set a new array of users.  We could simply do viewmodel.Users([array]),
         // but the mapping plugin converts all the user props to observables for us.
-        viewModel.setUsers = function (userArray) {
-            viewModel.Users = userArray;
+        viewmodel.setUsers = function (userArray) {
+            viewmodel.Users = userArray;
         };
 
         // Retreives the css class that should be used to represent the user status.
         // I can't get this to work as just a dynamic class property for some reason.
-        viewModel.getUserStatus = function (user) {
+        viewmodel.getUserStatus = function (user) {
             var css;
 
-            if (user == viewModel.Me()) {
+            if (user == viewmodel.Me()) {
                 css = 'icon-user';
             } else if (user.InCall()) {
                 css = 'icon-phone-3';
@@ -52,5 +52,5 @@ app.factory('ViewModel', ['$rootScope',
         };
 
         // Return the viewmodel so that we can change props later
-        return viewModel;
+        return viewmodel;
     }]);

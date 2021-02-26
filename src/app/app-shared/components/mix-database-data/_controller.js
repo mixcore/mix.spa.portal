@@ -56,11 +56,11 @@ app.controller("MixDatabaseDataClientController", [
     };
     $scope.saveSuccessCallback = function () {
       if ($scope.refDataModel) {
-        $scope.refDataModel.id = $scope.viewModel.id;
-        $scope.refDataModel.mixDatabaseId = $scope.viewModel.mixDatabaseId;
-        $scope.refDataModel.mixDatabaseName = $scope.viewModel.mixDatabaseName;
-        $scope.refDataModel.specificulture = $scope.viewModel.specificulture;
-        $scope.refDataModel.data = $scope.viewModel;
+        $scope.refDataModel.id = $scope.viewmodel.id;
+        $scope.refDataModel.mixDatabaseId = $scope.viewmodel.mixDatabaseId;
+        $scope.refDataModel.mixDatabaseName = $scope.viewmodel.mixDatabaseName;
+        $scope.refDataModel.specificulture = $scope.viewmodel.specificulture;
+        $scope.refDataModel.data = $scope.viewmodel;
         $rootScope.isBusy = true;
         navService.save("portal", $scope.refDataModel).then((resp) => {
           if (resp.isSucceed) {
@@ -152,9 +152,9 @@ app.controller("MixDatabaseDataClientController", [
         $scope.mixDatabaseName,
       ]);
       if (resp) {
-        $scope.viewModel = resp;
-        $scope.viewModel.parentType = $scope.parentType;
-        $scope.viewModel.parentId = $scope.parentId;
+        $scope.viewmodel = resp;
+        $scope.viewmodel.parentType = $scope.parentType;
+        $scope.viewmodel.parentId = $scope.parentId;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

@@ -30,8 +30,8 @@ app.controller("ConfigurationController", [
       $scope.cates = ngAppSettings.enums.configuration_cates;
       $scope.settings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
-      if (!$scope.viewModel.category) {
-        $scope.viewModel.category = "Site";
+      if (!$scope.viewmodel.category) {
+        $scope.viewmodel.category = "Site";
       }
     };
     $scope.saveSuccessCallback = function () {

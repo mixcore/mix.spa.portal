@@ -42,7 +42,7 @@ app.controller("LocalizeController", [
       $scope.cate = $scope.cates[0];
     });
     $scope.getSingleSuccessCallback = function () {
-      $scope.viewModel.category = "Site";
+      $scope.viewmodel.category = "Site";
     };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {
@@ -57,9 +57,9 @@ app.controller("LocalizeController", [
       });
     };
     $scope.generateDefault = function (text, cate) {
-      if (!$routeParams.id && !$scope.viewModel.keyword) {
-        $scope.viewModel.defaultValue = text;
-        $scope.viewModel.keyword =
+      if (!$routeParams.id && !$scope.viewmodel.keyword) {
+        $scope.viewmodel.defaultValue = text;
+        $scope.viewmodel.keyword =
           cate.prefix +
           text
             .replace(/[^a-zA-Z0-9]+/g, "_")

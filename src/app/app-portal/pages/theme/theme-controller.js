@@ -35,7 +35,7 @@ app.controller("ThemeController", [
       $scope.assets = null;
       $scope.theme = null;
     };
-    $scope.save = async function (viewModel) {
+    $scope.save = async function (viewmodel) {
       var form = document.getElementById("form-portal");
       var frm = new FormData();
       var url = service.prefixUrl + "/save";
@@ -45,11 +45,11 @@ app.controller("ThemeController", [
       frm.append("assets", form["assets"].files[0]);
       frm.append("theme", form["theme"].files[0]);
       // Adding one more key to FormData object
-      frm.append("model", angular.toJson(viewModel || $scope.viewModel));
+      frm.append("model", angular.toJson(viewmodel || $scope.viewmodel));
 
       var response = await service.ajaxSubmitForm(frm, url);
       if (response.isSucceed) {
-        $scope.viewModel = response.data;
+        $scope.viewmodel = response.data;
         $rootScope.isBusy = false;
         $location.url($scope.referrerUrl);
         $scope.$apply();
@@ -63,7 +63,7 @@ app.controller("ThemeController", [
       $rootScope.isBusy = true;
       var response = await service.syncTemplates(id);
       if (response.isSucceed) {
-        $scope.viewModel = response.data;
+        $scope.viewmodel = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
@@ -117,8 +117,8 @@ app.controller("ThemeController", [
     };
 
     $scope.generateSEO = function () {
-      $scope.viewModel.name = $rootScope.generateKeyword(
-        $scope.viewModel.title,
+      $scope.viewmodel.name = $rootScope.generateKeyword(
+        $scope.viewmodel.title,
         "-"
       );
     };

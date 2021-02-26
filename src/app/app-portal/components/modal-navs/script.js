@@ -13,7 +13,7 @@
             var ctrl = this;
             ctrl.request = angular.copy(ngAppSettings.request);
             ctrl.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-            ctrl.viewModel = null;
+            ctrl.viewmodel = null;
             ctrl.data = null;
             ctrl.isInit = false;
             ctrl.isValid = true;
@@ -43,7 +43,7 @@
                 if (resp.isSucceed) {
                     ctrl.data = resp.data;
                     $.each(ctrl.data.items, function (i, data) {
-                        $.each(ctrl.viewModels, function (i, e) {
+                        $.each(ctrl.viewmodels, function (i, e) {
                             if (e.dataId === data.id) {
                                 data.isHidden = true;
                             }

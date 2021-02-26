@@ -1,12 +1,12 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
     <actions
-      preview-url="viewModel.detailsUrl"
+      preview-url="viewmodel.detailsUrl"
       content-url="contentUrl"
       back-url="referrerUrl"
     ></actions>
     <div class="mb-3"></div>
-    <statuses status="viewModel.status"></statuses>
+    <statuses status="viewmodel.status"></statuses>
   </nav>
 </aside>
 
@@ -18,7 +18,7 @@
       Dynamic database to allow you design any web/mobile applications.
     </p>
 
-    <form ng-class="{'submitted': submitted}" ng-submit="save(viewModel)">
+    <form ng-class="{'submitted': submitted}" ng-submit="save(viewmodel)">
       <nav class="mb-3">
         <div
           class="nav nav-tabs justify-content-end"
@@ -56,15 +56,15 @@
         >
           <div class="card mb-5">
             <div class="card-body">
-              <mix-database-main model="viewModel"> </mix-database-main>
+              <mix-database-main model="viewmodel"> </mix-database-main>
             </div>
           </div>
 
           <!-- app-portal/components/attribute-list -->
           <list-mix-column
             header="'Attributes'"
-            fields="viewModel.fields"
-            remove-attributes="viewModel.removeAttributes"
+            fields="viewmodel.fields"
+            remove-attributes="viewmodel.removeAttributes"
           >
           </list-mix-column>
         </div>
@@ -76,13 +76,13 @@
         >
           <div class="card mb-5">
             <div class="card-body">
-              <mix-database-edm model="viewModel"> </mix-database-edm>
+              <mix-database-edm model="viewmodel"> </mix-database-edm>
             </div>
           </div>
 
           <mix-template-editor
             folder-type="'Edms'"
-            template="viewModel.edmView"
+            template="viewmodel.edmView"
             hide-js="'true'"
             hide-css="'true'"
             ng-if="isAdmin"
@@ -91,7 +91,7 @@
           <div class="mb-5"></div>
           <mix-template-editor
             folder-type="'Forms'"
-            template="viewModel.formView"
+            template="viewmodel.formView"
             ng-if="isAdmin"
           >
           </mix-template-editor>

@@ -17,7 +17,7 @@ function BaseRestCtrl(
     toDate: null,
   };
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-  $scope.viewModel = null;
+  $scope.viewmodel = null;
   $scope.isScrollTop = true;
   $scope.defaultId = 0;
   $scope.data = null;
@@ -80,7 +80,7 @@ function BaseRestCtrl(
       params.splice(0, 0, id);
       var resp = await service.getSingle([id]);
       if (resp.isSucceed) {
-        $scope.viewModel = resp.data;
+        $scope.viewmodel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
@@ -103,7 +103,7 @@ function BaseRestCtrl(
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
     if (resp.isSucceed) {
-      $scope.viewModel = resp.data;
+      $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
       }
@@ -138,7 +138,7 @@ function BaseRestCtrl(
     if (resp && resp.isSucceed) {
       $scope.data = resp.data;
       $.each($scope.data, function (i, data) {
-        $.each($scope.viewModels, function (i, e) {
+        $.each($scope.viewmodels, function (i, e) {
           if (e.dataId === data.id) {
             data.isHidden = true;
           }
@@ -205,15 +205,15 @@ function BaseRestCtrl(
     }
     if ($scope.isValid) {
       var resp = null;
-      if ($scope.viewModel.id == 0 || $scope.viewModel.id == null) {
-        resp = await service.create($scope.viewModel);
+      if ($scope.viewmodel.id == 0 || $scope.viewmodel.id == null) {
+        resp = await service.create($scope.viewmodel);
       } else {
-        resp = await service.update($scope.viewModel.id, $scope.viewModel);
+        resp = await service.update($scope.viewmodel.id, $scope.viewmodel);
       }
       $rootScope.isBusy = false;
       $scope.$apply();
       if (resp.isSucceed) {
-        $scope.viewModel = resp.data;
+        $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
 
         if ($scope.saveSuccessCallback) {
@@ -298,9 +298,9 @@ function BaseRestCtrl(
     }
   };
   $scope.clearCache = async function () {
-    if ($scope.viewModel) {
+    if ($scope.viewmodel) {
       $rootScope.isBusy = true;
-      var resp = await service.clearCache([$scope.viewModel.id]);
+      var resp = await service.clearCache([$scope.viewmodel.id]);
       if (resp.isSucceed) {
         $rootScope.showMessage("success", "success");
       } else {

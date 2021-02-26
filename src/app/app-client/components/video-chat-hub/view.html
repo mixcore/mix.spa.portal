@@ -1,4 +1,4 @@
-<div ng-init="$ctrl.init()" data-mode="{{$ctrl.viewModel.Mode}}">
+<div ng-init="$ctrl.init()" data-mode="{{$ctrl.viewmodel.Mode}}">
     <!-- Invalid browser alert, and reminder to enable media things -->
     <div class="container-fluid">
         <div class="row-fluid instructions">
@@ -25,10 +25,10 @@
         <div class="navbar-inner">
             <div class="container-fluid">
                 <a class="brand pull-left" href="#">WebRTC Video Caller</a>
-                <span class="loading-indicator icon-spinner-3" ng-show="$ctrl.viewModel.Loading"></span>
+                <span class="loading-indicator icon-spinner-3" ng-show="$ctrl.viewmodel.Loading"></span>
                 <div class="nav-collapse collapse">
                     <p class="navbar-text pull-right">
-                        You are <span ng-bind="$ctrl.viewModel.Username"></span>
+                        You are <span ng-bind="$ctrl.viewmodel.Username"></span>
                     </p>
                 </div>
             </div>
@@ -41,21 +41,21 @@
             <div class="span3">
                 <!-- In Call Actions -->
                 <div class="well actions">
-                    <div class="status" ng-bind="$ctrl.viewModel.Mode"></div>
+                    <div class="status" ng-bind="$ctrl.viewmodel.Mode"></div>
                     <button class="btn btn-danger hangup" ng-click="$ctrl.hangup()">Hang Up</button>
                 </div>
                 <!-- User List -->
                 <div class="well user-list">
                     <ul class="nav nav-list">
-                        <li class="nav-header">Online Users <small ng-bind="$ctrl.viewModel.Users.length"></small></li>
+                        <li class="nav-header">Online Users <small ng-bind="$ctrl.viewmodel.Users.length"></small></li>
                         <!-- ko foreach: Users -->
-                        <li class="user" ng-repeat="user in $ctrl.viewModel.Users"
+                        <li class="user" ng-repeat="user in $ctrl.viewmodel.Users"
                             ng-click="$ctrl.callUser(user.ConnectionId)" data-cid="{{user.ConnectionId}}"
                             title="{{user.Username}}">
                             <a class="btn">
                                 <!-- only using an a here for bootstrap styling -->
                                 <div class="username" ng-bind="user.Username"></div>
-                                <div class="helper" class="$ctrl.viewModel.getUserStatus(user)"></div>
+                                <div class="helper" class="$ctrl.viewmodel.getUserStatus(user)"></div>
                             </a>
                         </li>
                         <!-- /ko -->

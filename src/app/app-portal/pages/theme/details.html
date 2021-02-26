@@ -1,7 +1,7 @@
 <aside class="bd-sidebar sub-sidebar">
 
     <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-        <!-- <actions preview-url="viewModel.detailsUrl" back-url="'/portal/theme/list'"></actions> -->
+        <!-- <actions preview-url="viewmodel.detailsUrl" back-url="'/portal/theme/list'"></actions> -->
 
         <div class="btn-group w-100 mb-3" role="group">
             <button id="btnToSubmit" type="button" ng-click="save()" class="btn btn-outline-primary">
@@ -12,8 +12,8 @@
 
         <div class="card">
             <div class="card-body">
-                <custom-image header="'Theme Image'" type="'Themes'" folder="viewModel.name"
-                    src-url="viewModel.imageUrl" src="viewModel.image" auto="'true'"></custom-image>
+                <custom-image header="'Theme Image'" type="'Themes'" folder="viewmodel.name"
+                    src-url="viewmodel.imageUrl" src="viewmodel.image" auto="'true'"></custom-image>
             </div>
         </div>
     </nav>
@@ -32,18 +32,18 @@
             <div class="card-body">
 
 
-                <form id="frm-theme" ng-class="{'submitted': submitted}" ng-submit="save()" ng-if="viewModel">
+                <form id="frm-theme" ng-class="{'submitted': submitted}" ng-submit="save()" ng-if="viewmodel">
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="mb-3">
                         <label class="form-label">Theme title</label><br />
-                        <input type="text" ng-model="viewModel.title" ng-change="generateSEO()" class="form-control"
+                        <input type="text" ng-model="viewmodel.title" ng-change="generateSEO()" class="form-control"
                             placeholder="Enter your theme name here...">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Preview URL</label><br />
-                        <input type="text" ng-model="viewModel.previewUrl" class="form-control"
+                        <input type="text" ng-model="viewmodel.previewUrl" class="form-control"
                             placeholder="Preview Url">
                     </div>
                     <div class="row">
@@ -66,13 +66,13 @@
                     <hr>
                     <div class="">
                         <div class="form-check form-switch" ng-show="!theme">
-                            <input type="checkbox" class="form-check-input" ng-model="viewModel.isCloneFromCurrentTheme"
+                            <input type="checkbox" class="form-check-input" ng-model="viewmodel.isCloneFromCurrentTheme"
                                 id="isCloneFromCurrentTheme">
                             <label class="custom-control-label" for="isCloneFromCurrentTheme">Clone Template
                                 from current theme!</label>
                         </div>
                         <div class="form-check form-switch">
-                            <input type="checkbox" class="form-check-input" ng-model="viewModel.isActived"
+                            <input type="checkbox" class="form-check-input" ng-model="viewmodel.isActived"
                                 id="isActived">
                             <label class="custom-control-label" for="isActived">Activate this theme for your
                                 site!</label>

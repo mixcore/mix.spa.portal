@@ -10,7 +10,7 @@ app.controller('ImportFileController',
                 frm.append('assets', form['assets'].files[0]);
                 var response = await service.saveImportFile(frm);
                 if (response.isSucceed) {
-                    $scope.viewModel = response.data;
+                    $scope.viewmodel = response.data;
                     $rootScope.isBusy = false;
                     $scope.$apply();
                 }

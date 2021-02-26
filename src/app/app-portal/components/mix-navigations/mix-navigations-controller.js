@@ -3,7 +3,7 @@ app.controller('MixNavigationController', ['$scope', '$rootScope', 'ngAppSetting
     function ($scope, $rootScope, ngAppSettings, $routeParams, service, commonService) {
         BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
 
-        $scope.viewModel = {
+        $scope.viewmodel = {
             title: '',
             description: '',
             status: 'Published',

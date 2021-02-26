@@ -38,8 +38,8 @@ app.controller("PermissionController", [
     $scope.initCurrentPath = async function () {
       var resp = await service.getDefault();
       if (resp && resp.isSucceed) {
-        $scope.viewModel = resp.data;
-        $scope.viewModel.url = $location.url();
+        $scope.viewmodel = resp.data;
+        $scope.viewmodel.url = $location.url();
         $rootScope.isBusy = false;
         $scope.$applyAsync();
       } else {

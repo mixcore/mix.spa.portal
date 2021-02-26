@@ -1,6 +1,6 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-    <actions on-clear-cache="clearCache()" preview-url="viewModel.detailsUrl" back-url="'/portal/page/list'">
+    <actions on-clear-cache="clearCache()" preview-url="viewmodel.detailsUrl" back-url="'/portal/page/list'">
     </actions>
     <div class="mb-3"></div>
     <div class="accordion accordion-flush-x" id="accordionFlushExample">
@@ -16,13 +16,13 @@
           <div class="accordion-body">
 
             <div class="mb-3">
-              <statuses status="viewModel.status"></statuses>
+              <statuses status="viewmodel.status"></statuses>
             </div>
-            <div class="mb-3" ng-if="viewModel.status == 4">
+            <div class="mb-3" ng-if="viewmodel.status == 4">
               <label class="form-label">Published Date Time</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-                <input value="{{viewModel.publishedDateTime}}" ng-model="viewModel.publishedDateTime"
+                <input value="{{viewmodel.publishedDateTime}}" ng-model="viewmodel.publishedDateTime"
                   type="datetime-local" class="form-control" />
               </div>
             </div>
@@ -30,7 +30,7 @@
               <label class="form-label">Created Date Time</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-                <input ng-model="viewModel.createdDateTime" type="text" class="form-control" readonly="readonly" />
+                <input ng-model="viewmodel.createdDateTime" type="text" class="form-control" readonly="readonly" />
               </div>
             </div>
 
@@ -38,7 +38,7 @@
               <label class="form-label">Author</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>
-                <input ng-model="viewModel.createdBy" class="form-control" readonly="readonly" />
+                <input ng-model="viewmodel.createdBy" class="form-control" readonly="readonly" />
               </div>
             </div>
 
@@ -47,8 +47,8 @@
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
                 <select class="form-select"
-                  ng-options="item as item.fileName for item in viewModel.templates track by item.id"
-                  ng-model="viewModel.view"></select>
+                  ng-options="item as item.fileName for item in viewmodel.templates track by item.id"
+                  ng-model="viewmodel.view"></select>
               </div>
             </div>
 
@@ -57,8 +57,8 @@
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
                 <select class="form-select"
-                  ng-options="item as item.fileName for item in viewModel.masters track by item.id"
-                  ng-model="viewModel.master"></select>
+                  ng-options="item as item.fileName for item in viewmodel.masters track by item.id"
+                  ng-model="viewmodel.master"></select>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
-            <cultures is-clone="viewModel.isClone" data="viewModel.cultures"></cultures>
+            <cultures is-clone="viewmodel.isClone" data="viewmodel.cultures"></cultures>
           </div>
         </div>
       </div>
@@ -89,16 +89,16 @@
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
-            <tabs-v ng-if="viewModel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
+            <tabs-v ng-if="viewmodel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
               <pane-v header="Feature">
-                <custom-image header="'Image upload'" type="'Pages'" folder="viewModel.seoName" title="viewModel.title"
-                  description="viewModel.excerpt" src-url="viewModel.imageUrl" src="viewModel.image" auto="'true'">
+                <custom-image header="'Image upload'" type="'Pages'" folder="viewmodel.seoName" title="viewmodel.title"
+                  description="viewmodel.excerpt" src-url="viewmodel.imageUrl" src="viewmodel.image" auto="'true'">
                 </custom-image>
               </pane-v>
               <pane-v header="Thumbnail">
-                <custom-image header="'Thumbnail upload'" type="'Pages'" folder="viewModel.seoName"
-                  title="viewModel.title" description="viewModel.excerpt" src-url="viewModel.thumbnailUrl"
-                  src="viewModel.thumbnail" auto="'true'"></custom-image>
+                <custom-image header="'Thumbnail upload'" type="'Pages'" folder="viewmodel.seoName"
+                  title="viewmodel.title" description="viewmodel.excerpt" src-url="viewmodel.thumbnailUrl"
+                  src="viewmodel.thumbnail" auto="'true'"></custom-image>
               </pane-v>
             </tabs-v>
           </div>
@@ -118,7 +118,7 @@
             <button class="btn btn-link text-primary btn-sm py-0" type="button" ng-click="addAlias()">
               <span class="fas fa-plus text-primary"></span> Add slugs
             </button>
-            <url-alias ng-repeat="alias in viewModel.urlAliases" index="$index" url-alias="alias"
+            <url-alias ng-repeat="alias in viewmodel.urlAliases" index="$index" url-alias="alias"
               remove-callback="removeAliasCallback(index)"></url-alias>
           </div>
         </div>
@@ -141,10 +141,10 @@
       <section class="pr-3">
         <tabs-v class="mb-3">
           <pane-v header="Content input">
-            <page-content model="viewModel" additional-data="additionalData"></page-content>
+            <page-content model="viewmodel" additional-data="additionalData"></page-content>
           </pane-v>
           <pane-v header="Configuration" ng-if="isAdmin">
-            <page-advanced model="viewModel" additional-data="additionalData"></page-advanced>
+            <page-advanced model="viewmodel" additional-data="additionalData"></page-advanced>
           </pane-v>
         </tabs-v>
       </section>

@@ -1,6 +1,6 @@
 'use strict';
 app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
-    function (viewModel, connectionManager) {
+    function (viewmodel, connectionManager) {
         var serviceFactory = {};
         var _mediaStream,
             _hub,
@@ -35,7 +35,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
             },
             _start = function (vm) {
                 // Show warning if WebRTC support is not detected
-                viewModel = vm;
+                viewmodel = vm;
                 if (webrtcDetectedBrowser == null) {
                     console.log('Your browser doesnt appear to support WebRTC.');
                     $('.browser-warning').show();
@@ -57,8 +57,8 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
             },
 
             _startSession = function (username) {
-                viewModel.Username = username; // Set the selected username in the UI
-                viewModel.Loading = true; // Turn on the loading indicator
+                viewmodel.Username = username; // Set the selected username in the UI
+                viewmodel.Loading = true; // Turn on the loading indicator
 
                 // Ask the user for permissions to access the webcam and mic
                 getUserMedia(
@@ -74,7 +74,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
                         _connect(username,
                             function (hub) {
                                 // tell the viewmodel our conn id, so we can be treated like the special person we are.
-                                viewModel.MyConnectionId = hub.connectionId;
+                                viewmodel.MyConnectionId = hub.connectionId;
 
                                 // Initialize our client signal manager, giving it a signaler (the SignalR hub) and some callbacks
                                 console.log('initializing connection manager');
@@ -90,41 +90,41 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
 
                                 // Hook up the UI
 
-                                viewModel.Loading = false;
+                                viewmodel.Loading = false;
                             }, function (event) {
                                 alertify.alert('<h4>Failed SignalR Connection</h4> We were not able to connect you to the signaling server.<br/><br/>Error: ' + JSON.stringify(event));
-                                viewModel.Loading = false;
+                                viewmodel.Loading = false;
                             });
                     },
                     function (error) { // error callback
                         alertify.alert('<h4>Failed to get hardware access!</h4> Do you have another browser type open and using your cam/mic?<br/><br/>You were not connected to the server, because I didn\'t code to make browsers without media access work well. <br/><br/>Actual Error: ' + JSON.stringify(error));
-                        viewModel.Loading = false;
+                        viewmodel.Loading = false;
                     }
                 );
             },
             _callUser = function (targetConnectionId) {
                 // Make sure we are in a state where we can make a call
-                if (viewModel.Mode !== 'idle') {
+                if (viewmodel.Mode !== 'idle') {
                     alertify.error('Sorry, you are already in a call.  Conferencing is not yet implemented.');
                     return;
                 }
                 // Then make sure we aren't calling ourselves.
-                if (targetConnectionId != viewModel.MyConnectionId) {
+                if (targetConnectionId != viewmodel.MyConnectionId) {
                     // Initiate a call
                     _hub.server.invoke('callUser', targetConnectionId);
 
                     // UI in calling mode
-                    viewModel.Mode = 'calling';
+                    viewmodel.Mode = 'calling';
                 } else {
                     alertify.error("Ah, nope.  Can't call yourself.");
                 }
             },
             _hangup = function () {
                 // Only allow hangup if we are not idle
-                if (viewModel.Mode != 'idle') {
+                if (viewmodel.Mode != 'idle') {
                     _hub.server.invoke('hangUp');
                     connectionManager.closeAllConnections();
-                    viewModel.Mode = 'idle';
+                    viewmodel.Mode = 'idle';
                 }
             },
 
@@ -141,7 +141,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
                             hub.server.answerCall(true, callingUser.ConnectionId);
 
                             // So lets go into call mode on the UI
-                            viewModel.Mode = 'incall';
+                            viewmodel.Mode = 'incall';
                         } else {
                             // Go away, I don't want to chat with you
                             hub.server.answerCall(false, callingUser.ConnectionId);
@@ -157,7 +157,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
                     connectionManager.initiateOffer(acceptingUser.ConnectionId, _mediaStream);
 
                     // Set UI into call mode
-                    viewModel.Mode = 'incall';
+                    viewmodel.Mode = 'incall';
                 });
 
                 // Hub Callback: Call Declined
@@ -168,7 +168,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
                     alertify.error(reason);
 
                     // Back to an idle UI
-                    viewModel.Mode = 'idle';
+                    viewmodel.Mode = 'idle';
                 });
 
                 // Hub Callback: Call Ended
@@ -182,11 +182,11 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
                     connectionManager.closeConnection(connectionId);
 
                     // Set the UI back into idle mode
-                    viewModel.Mode = 'idle';
+                    viewmodel.Mode = 'idle';
                 });
                 // Hub Callback: Update User List
                 hub.on("updateUserList", (userList) => {
-                    viewModel.setUsers(userList);
+                    viewmodel.setUsers(userList);
                 });
                 // Hub Callback: WebRTC Signal Received
                 hub.on("receiveSignal", (callingUser, data) => {
@@ -227,7 +227,7 @@ app.factory('VideoChatService', ['ViewModel', 'ConnectionManager',
         // serviceFactory._mediaStream = _mediaStream;
         // serviceFactory._hub = _hub;
         // Define more service methods here
-        serviceFactory.viewModel = viewModel;
+        serviceFactory.viewmodel = viewmodel;
         serviceFactory.callUser = _callUser; // Starts the UI process
         serviceFactory.hangup = _hangup; // Starts the UI process
         serviceFactory.start = _start; // Starts the UI process

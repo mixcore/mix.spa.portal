@@ -44,7 +44,7 @@ app.controller("ServiceController", [
       //     $location.url('/portal/mix-database-data/details?dataId='+ $scope.parentId);
       // }
       // else{
-      //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewModel.mixDatabaseId);
+      //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewmodel.mixDatabaseId);
       // }
     };
     $scope.getList = async function () {
@@ -85,9 +85,9 @@ app.controller("ServiceController", [
         $scope.mixDatabaseName,
       ]);
       if (resp) {
-        $scope.viewModel = resp;
-        $scope.viewModel.parentType = $scope.parentType;
-        $scope.viewModel.parentId = $scope.parentId;
+        $scope.viewmodel = resp;
+        $scope.viewmodel.parentType = $scope.parentType;
+        $scope.viewmodel.parentId = $scope.parentId;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

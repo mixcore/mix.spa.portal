@@ -5,25 +5,25 @@
         isSave: '=?'
     },
     controller: ['$rootScope', '$scope', 'VideoChatService', 'ViewModel', 'ConnectionManager',
-        function ($rootScope, $scope, service, viewModel, connectionManager) {
+        function ($rootScope, $scope, service, viewmodel, connectionManager) {
             var ctrl = this;
             BaseHub.call(this, ctrl);
             ctrl.settings = $rootScope.globalSettings;
 
             ctrl.init = function () {
-                ctrl.viewModel = viewModel;
+                ctrl.viewmodel = viewmodel;
                 _start();
             };
             ctrl.toogleMute = function () {
                 if (ctrl._mediaStream != null && ctrl._mediaStream.getAudioTracks().length > 0) {
-                    ctrl.viewModel.muted = !ctrl.viewModel.muted;
-                    ctrl._mediaStream.getAudioTracks()[0].enabled = ctrl.viewModel.muted;
+                    ctrl.viewmodel.muted = !ctrl.viewmodel.muted;
+                    ctrl._mediaStream.getAudioTracks()[0].enabled = ctrl.viewmodel.muted;
                 }
             };
             ctrl.toogleVideo = function () {
                 if (ctrl._mediaStream != null && ctrl._mediaStream.getVideoTracks().length > 0) {
-                    ctrl.viewModel.video = !ctrl.viewModel.video;
-                    ctrl._mediaStream.getVideoTracks()[0].enabled = ctrl.viewModel.video;
+                    ctrl.viewmodel.video = !ctrl.viewmodel.video;
+                    ctrl._mediaStream.getVideoTracks()[0].enabled = ctrl.viewmodel.video;
                 }
             };
 
@@ -83,8 +83,8 @@
                 },
 
                 _startSession = function (username) {
-                    ctrl.viewModel.Username = username; // Set the selected username in the UI
-                    ctrl.viewModel.Loading = true; // Turn on the loading indicator
+                    ctrl.viewmodel.Username = username; // Set the selected username in the UI
+                    ctrl.viewmodel.Loading = true; // Turn on the loading indicator
                     $scope.$apply();
                     // Ask the user for permissions to access the webcam and mic
                     getUserMedia(
@@ -100,7 +100,7 @@
                             _connect(username,
                                 function (hub) {
                                     // tell the viewmodel our conn id, so we can be treated like the special person we are.
-                                    ctrl.viewModel.MyConnectionId = hub.connectionId;
+                                    ctrl.viewmodel.MyConnectionId = hub.connectionId;
 
                                     // Initialize our client signal manager, giving it a signaler (the SignalR hub) and some callbacks
                                     console.log('initializing connection manager');
@@ -120,15 +120,15 @@
                                     attachMediaStream(videoElement, ctrl._mediaStream);
 
                                     // Hook up the UI
-                                    ctrl.viewModel.Loading = false;
+                                    ctrl.viewmodel.Loading = false;
                                 }, function (event) {
                                     alertify.alert('<h4>Failed SignalR Connection</h4> We were not able to connect you to the signaling server.<br/><br/>Error: ' + JSON.stringify(event));
-                                    ctrl.viewModel.Loading = false;
+                                    ctrl.viewmodel.Loading = false;
                                 });
                         },
                         function (error) { // error callback
                             alertify.alert('<h4>Failed to get hardware access!</h4> Do you have another browser type open and using your cam/mic?<br/><br/>You were not connected to the server, because I didn\'t code to make browsers without media access work well. <br/><br/>Actual Error: ' + JSON.stringify(error));
-                            ctrl.viewModel.Loading = false;
+                            ctrl.viewmodel.Loading = false;
                         }
                     );
                 },
@@ -144,7 +144,7 @@
                                 hub.invoke('answerCall', true, callingUser.ConnectionId);
 
                                 // So lets go into call mode on the UI
-                                ctrl.viewModel.Mode = 'incall';
+                                ctrl.viewmodel.Mode = 'incall';
                             } else {
                                 // Go away, I don't want to chat with you
                                 hub.invoke('answerCall', false, callingUser.ConnectionId);
@@ -160,7 +160,7 @@
                         connectionManager.initiateOffer(acceptingUser.ConnectionId, ctrl._mediaStream);
 
                         // Set UI into call mode
-                        ctrl.viewModel.Mode = 'incall';
+                        ctrl.viewmodel.Mode = 'incall';
                     });
 
                     // Hub Callback: Call Declined
@@ -171,7 +171,7 @@
                         alertify.error(reason);
 
                         // Back to an idle UI
-                        ctrl.viewModel.Mode = 'idle';
+                        ctrl.viewmodel.Mode = 'idle';
                     });
 
                     // Hub Callback: Call Ended
@@ -185,11 +185,11 @@
                         connectionManager.closeConnection(connectionId);
 
                         // Set the UI back into idle mode
-                        ctrl.viewModel.Mode = 'idle';
+                        ctrl.viewmodel.Mode = 'idle';
                     });
                     // Hub Callback: Update User List
                     hub.on("updateUserList", (userList) => {
-                        ctrl.viewModel.Users = JSON.parse(userList);
+                        ctrl.viewmodel.Users = JSON.parse(userList);
                         $scope.$apply();
                     });
                     // Hub Callback: WebRTC Signal Received
@@ -224,27 +224,27 @@
                 };
             ctrl.callUser = function (targetConnectionId) {
                 // Make sure we are in a state where we can make a call
-                if (ctrl.viewModel.Mode !== 'idle') {
+                if (ctrl.viewmodel.Mode !== 'idle') {
                     alertify.error('Sorry, you are already in a call.  Conferencing is not yet implemented.');
                     return;
                 }
                 // Then make sure we aren't calling ourselves.
-                if (targetConnectionId != ctrl.viewModel.MyConnectionId) {
+                if (targetConnectionId != ctrl.viewmodel.MyConnectionId) {
                     // Initiate a call
                     _hub.invoke('callUser', targetConnectionId);
 
                     // UI in calling mode
-                    ctrl.viewModel.Mode = 'calling';
+                    ctrl.viewmodel.Mode = 'calling';
                 } else {
                     alertify.error("Ah, nope.  Can't call yourself.");
                 }
             };
             ctrl.hangup = function () {
                 // Only allow hangup if we are not idle
-                if (ctrl.viewModel.Mode != 'idle') {
+                if (ctrl.viewmodel.Mode != 'idle') {
                     _hub.invoke('hangUp');
                     connectionManager.closeAllConnections();
-                    ctrl.viewModel.Mode = 'idle';
+                    ctrl.viewmodel.Mode = 'idle';
                 }
             };
         }]

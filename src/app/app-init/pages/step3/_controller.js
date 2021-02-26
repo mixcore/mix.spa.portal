@@ -35,7 +35,7 @@ app.controller("Step3Controller", [
       frm.append("model", angular.toJson($scope.data));
       var response = await service.ajaxSubmitForm(frm, url);
       if (response.isSucceed) {
-        $scope.viewModel = response.data;
+        $scope.viewmodel = response.data;
         authService.initSettings().then(function () {
           $rootScope.isBusy = false;
           setTimeout(() => {

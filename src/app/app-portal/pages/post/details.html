@@ -3,7 +3,7 @@
     <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
       <actions
         on-clear-cache="clearCache()"
-        preview-url="viewModel.detailsUrl"
+        preview-url="viewmodel.detailsUrl"
         back-url="referrerUrl"
       ></actions>
 
@@ -29,16 +29,16 @@
             data-bs-parent="#accordionFlushExample"
           >
             <div class="accordion-body">
-              <statuses status="viewModel.status"></statuses>
-              <div class="mb-3" ng-if="viewModel.status == 'Schedule'">
+              <statuses status="viewmodel.status"></statuses>
+              <div class="mb-3" ng-if="viewmodel.status == 'Schedule'">
                 <label class="form-label">Published Date Time</label>
                 <div class="input-group input-group-sm">
                   <span class="input-group-text" id="basic-addon1">
                     <i class="mi mi-Calendar"></i>
                   </span>
                   <input
-                    value="{{viewModel.publishedDateTime}}"
-                    ng-model="viewModel.publishedDateTime"
+                    value="{{viewmodel.publishedDateTime}}"
+                    ng-model="viewmodel.publishedDateTime"
                     type="datetime-local"
                     class="form-control"
                   />
@@ -51,7 +51,7 @@
                     ><i class="mi mi-Calendar"></i
                   ></span>
                   <input
-                    ng-model="viewModel.createdDateTime"
+                    ng-model="viewmodel.createdDateTime"
                     type="text"
                     class="form-control"
                     readonly="readonly"
@@ -65,7 +65,7 @@
                     ><i class="mi mi-Contact"></i
                   ></span>
                   <input
-                    ng-model="viewModel.createdBy"
+                    ng-model="viewmodel.createdBy"
                     class="form-control"
                     readonly="readonly"
                   />
@@ -101,8 +101,8 @@
                   ></span>
                   <select
                     class="form-select"
-                    ng-options="item as item.fileName for item in viewModel.templates track by item.id"
-                    ng-model="viewModel.view"
+                    ng-options="item as item.fileName for item in viewmodel.templates track by item.id"
+                    ng-model="viewmodel.view"
                   ></select>
                 </div>
               </div>
@@ -130,8 +130,8 @@
           >
             <div class="accordion-body">
               <cultures
-                is-clone="viewModel.isClone"
-                data="viewModel.cultures"
+                is-clone="viewmodel.isClone"
+                data="viewmodel.cultures"
               ></cultures>
             </div>
           </div>
@@ -157,7 +157,7 @@
           >
             <div class="accordion-body">
               <tabs-v
-                ng-if="viewModel"
+                ng-if="viewmodel"
                 select-callback="selectPane(pane)"
                 class="mb-4 nav-fill"
               >
@@ -167,11 +167,11 @@
                     h="imgH"
                     header="'Feature Upload'"
                     type="'Posts'"
-                    folder="viewModel.seoName"
-                    header="viewModel.title"
-                    description="viewModel.excerpt"
-                    src-url="viewModel.imageUrl"
-                    src="viewModel.image"
+                    folder="viewmodel.seoName"
+                    header="viewmodel.title"
+                    description="viewmodel.excerpt"
+                    src-url="viewmodel.imageUrl"
+                    src="viewmodel.image"
                     auto="'true'"
                   ></custom-image>
                 </pane-v>
@@ -181,11 +181,11 @@
                     h="imgH"
                     header="'Thumbnail Upload'"
                     type="'Posts'"
-                    folder="viewModel.seoName"
-                    title="viewModel.title"
-                    description="viewModel.excerpt"
-                    src-url="viewModel.thumbnailUrl"
-                    src="viewModel.thumbnail"
+                    folder="viewmodel.seoName"
+                    title="viewmodel.title"
+                    description="viewmodel.excerpt"
+                    src-url="viewmodel.thumbnailUrl"
+                    src="viewmodel.thumbnail"
                     auto="'true'"
                   ></custom-image>
                 </pane-v>
@@ -224,7 +224,7 @@
               </button>
               <div id="slug-tab" class="card-body collapse-x">
                 <url-alias
-                  ng-repeat="alias in viewModel.urlAliases"
+                  ng-repeat="alias in viewmodel.urlAliases"
                   ng-if="alias"
                   index="$index"
                   url-alias="alias"
@@ -255,15 +255,15 @@
           >
             <div class="accordion-body">
               <modal-nav-metas
-                ng-if="viewModel.sysCategories"
+                ng-if="viewmodel.sysCategories"
                 header="'Categories'"
-                parent-id="viewModel.id"
+                parent-id="viewmodel.id"
                 is-open="'show'"
                 parent-type="'Post'"
                 type="''"
                 mix-database-name="'sys_category'"
                 field-display="'title'"
-                selected-list="viewModel.sysCategories"
+                selected-list="viewmodel.sysCategories"
               ></modal-nav-metas>
             </div>
           </div>
@@ -289,15 +289,15 @@
           >
             <div class="accordion-body">
               <modal-nav-metas
-                ng-if="viewModel.sysTags"
+                ng-if="viewmodel.sysTags"
                 header="'Tags'"
-                parent-id="viewModel.id"
+                parent-id="viewmodel.id"
                 is-open="'show'"
                 parent-type="'Post'"
                 type="''"
                 mix-database-name="'sys_tag'"
                 field-display="'title'"
-                selected-list="viewModel.sysTags"
+                selected-list="viewmodel.sysTags"
               ></modal-nav-metas>
             </div>
           </div>
@@ -318,13 +318,13 @@
       <tabs-v class="mb-3">
         <pane-v header="Content input">
           <post-content
-            model="viewModel"
+            model="viewmodel"
             additional-data="additionalData"
           ></post-content>
         </pane-v>
         <pane-v header="Configuration">
           <post-advanced
-            model="viewModel"
+            model="viewmodel"
             additional-data="additionalData"
           ></post-advanced>
         </pane-v>

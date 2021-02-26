@@ -3,7 +3,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
 
     $scope.request = angular.copy(ngAppSettings.request);
     $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-    $scope.viewModel = null;
+    $scope.viewmodel = null;
     $scope.defaultId = 0;
     $scope.data = null;
     $scope.isInit = false;
@@ -38,7 +38,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
         params.splice(0, 0, id);
         var resp = await service.getSingle('portal', [id]);
         if (resp) {
-            $scope.viewModel = resp;
+            $scope.viewmodel = resp;
             if ($scope.getSingleSuccessCallback) {
                 $scope.getSingleSuccessCallback();
             }
@@ -90,7 +90,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
             $scope.data = resp;
             $scope.count(params);
             $.each($scope.data, function (i, data) {
-                $.each($scope.viewModels, function (i, e) {
+                $.each($scope.viewmodels, function (i, e) {
                     if (e.dataId === data.id) {
                         data.isHidden = true;
                     }
@@ -141,7 +141,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
         if ($scope.isValid) {
             var resp = await service.save('portal', data);
             if (resp.isSucceed) {
-                $scope.viewModel = resp.data;
+                $scope.viewmodel = resp.data;
                 $rootScope.showMessage('success', 'success');
 
                 if ($scope.saveSuccessCallback) {
@@ -195,7 +195,7 @@ function BaseODataCtrl($scope, $rootScope, $routeParams, ngAppSettings, service)
         $rootScope.isBusy = true;
         var resp = await service.applyList('read', $scope.selectedList);
         if (resp && resp.isSucceed) {
-            $scope.viewModel = resp.data;
+            $scope.viewmodel = resp.data;
             $rootScope.showMessage('success', 'success');
             switch ($scope.selectedList.action) {
                 case 'Delete':

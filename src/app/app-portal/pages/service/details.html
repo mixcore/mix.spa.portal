@@ -2,7 +2,7 @@
     <form ng-class="{'submitted': submitted}" ng-submit="save()">
         <div class="row">
             <div class="col-8">
-                <service-main model="viewModel">
+                <service-main model="viewmodel">
                 </service-main>
                 <div class=" mb-3"></div>
 
@@ -21,7 +21,7 @@
 
             </div>
             <div class="col-4">
-                <actions preview-url="viewModel.detailsUrl" back-url="referrerUrl"></actions>
+                <actions preview-url="viewmodel.detailsUrl" back-url="referrerUrl"></actions>
             </div>
         </div>
     </form>

@@ -3,7 +3,7 @@
 function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.request = angular.copy(ngAppSettings.request);
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-  $scope.viewModel = null;
+  $scope.viewmodel = null;
   $scope.data = null;
   $scope.isInit = false;
   $scope.isValid = true;
@@ -34,7 +34,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     var id = $routeParams.id;
     var resp = await service.getSingle([id, "portal"]);
     if (resp && resp.isSucceed) {
-      $scope.viewModel = resp.data;
+      $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
       }
@@ -68,7 +68,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     if (resp && resp.isSucceed) {
       $scope.data = resp.data;
       $.each($scope.data.items, function (i, data) {
-        $.each($scope.viewModels, function (i, e) {
+        $.each($scope.viewmodels, function (i, e) {
           if (e.dataId === data.id) {
             data.isHidden = true;
           }
@@ -136,7 +136,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
     if (resp && resp.isSucceed) {
-      $scope.viewModel = resp.data;
+      $scope.viewmodel = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
         case "Delete":
@@ -168,11 +168,11 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
       );
     }
     $rootScope.isBusy = true;
-    $scope.viewModel = data || $scope.viewModel;
+    $scope.viewmodel = data || $scope.viewmodel;
     if ($scope.isValid) {
-      var resp = await service.save($scope.viewModel);
+      var resp = await service.save($scope.viewmodel);
       if (resp && resp.isSucceed) {
-        $scope.viewModel = resp.data;
+        $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
 
         if ($scope.saveSuccessCallback) {
@@ -236,7 +236,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
     if (resp && resp.isSucceed) {
-      $scope.viewModel = resp.data;
+      $scope.viewmodel = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
         case "Delete":

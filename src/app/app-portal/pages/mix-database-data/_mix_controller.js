@@ -74,19 +74,19 @@ app.controller("MixDatabaseDataController", [
       }
     };
     $scope.saveData = function (data) {
-      $scope.viewModel = data;
+      $scope.viewmodel = data;
       $scope.save();
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
-        $scope.viewModel = $scope.selectedList.data[0];
+        $scope.viewmodel = $scope.selectedList.data[0];
       }
     };
     $scope.saveSuccessCallback = function () {
       if ($location.path() == "/portal/mix-database-data/create") {
         let backUrl =
           $scope.backUrl ||
-          `/portal/mix-database-data/details?dataId=${$scope.viewModel.id}`;
+          `/portal/mix-database-data/details?dataId=${$scope.viewmodel.id}`;
         $rootScope.goToSiteUrl(backUrl);
       } else {
         if ($scope.parentId && $scope.parentType == 'Set') {
@@ -94,7 +94,7 @@ app.controller("MixDatabaseDataController", [
         } else {
           let backUrl =
             $scope.backUrl ||
-            `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewModel.mixDatabaseId}&mixDatabaseName=${$scope.viewModel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewModel.mixDatabaseName}`;
+            `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
           $rootScope.goToSiteUrl(backUrl);
         }
       }

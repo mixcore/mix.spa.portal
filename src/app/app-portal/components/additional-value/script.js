@@ -12,8 +12,7 @@ modules.component("additionalValue", {
     "$rootScope",
     "$scope",
     "RestMixDatabaseDataPortalService",
-    "RestMixDatabaseDataValuePortalService",
-    function ($rootScope, $scope, dataService, valueService) {
+    function ($rootScope, $scope, dataService) {
       var ctrl = this;
       ctrl.value = {};
       ctrl.field = { dataType: "Text" };

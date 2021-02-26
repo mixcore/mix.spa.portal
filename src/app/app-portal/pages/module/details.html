@@ -1,7 +1,7 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
 
-    <actions on-clear-cache="clearCache()" preview-url="viewModel.detailsUrl" back-url="'/portal/module/list'">
+    <actions on-clear-cache="clearCache()" preview-url="viewmodel.detailsUrl" back-url="'/portal/module/list'">
     </actions>
 
     <div class="mb-3"></div>
@@ -17,12 +17,12 @@
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
-            <statuses status="viewModel.status"></statuses>
-            <div class="mb-3" ng-if="viewModel.status == 4">
+            <statuses status="viewmodel.status"></statuses>
+            <div class="mb-3" ng-if="viewmodel.status == 4">
               <label class="form-label">Published Date Time</label>
               <div class="input-group input-group-sm">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-                <input value="{{viewModel.publishedDateTime}}" ng-model="viewModel.publishedDateTime"
+                <input value="{{viewmodel.publishedDateTime}}" ng-model="viewmodel.publishedDateTime"
                   type="datetime-local" class="form-control" />
               </div>
             </div>
@@ -30,7 +30,7 @@
               <label class="form-label">Created Date Time</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-                <input ng-model="viewModel.createdDateTime" type="text" class="form-control" readonly="readonly" />
+                <input ng-model="viewmodel.createdDateTime" type="text" class="form-control" readonly="readonly" />
               </div>
             </div>
 
@@ -38,7 +38,7 @@
               <label class="form-label">Author</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Contact"></i></span>
-                <input ng-model="viewModel.createdBy" class="form-control" readonly="readonly" />
+                <input ng-model="viewmodel.createdBy" class="form-control" readonly="readonly" />
               </div>
             </div>
             <div class="mb-3 mb-0">
@@ -46,8 +46,8 @@
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="mi mi-Layout"></i></span>
                 <select class="form-select"
-                  ng-options="item as item.fileName for item in viewModel.templates track by item.id"
-                  ng-model="viewModel.view"></select>
+                  ng-options="item as item.fileName for item in viewmodel.templates track by item.id"
+                  ng-model="viewmodel.view"></select>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
-            <cultures is-clone="viewModel.isClone" data="viewModel.cultures"></cultures>
+            <cultures is-clone="viewmodel.isClone" data="viewmodel.cultures"></cultures>
           </div>
         </div>
       </div>
@@ -78,17 +78,17 @@
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
-            <tabs-v ng-if="viewModel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
+            <tabs-v ng-if="viewmodel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
               <pane-v header="Feature Img">
-                <custom-image header="'Feature upload'" type="'Modules'" folder="viewModel.seoName"
-                  src-url="viewModel.image" title="viewModel.title" description="viewModel.description"
-                  src="viewModel.image" auto="'true'">
+                <custom-image header="'Feature upload'" type="'Modules'" folder="viewmodel.seoName"
+                  src-url="viewmodel.image" title="viewmodel.title" description="viewmodel.description"
+                  src="viewmodel.image" auto="'true'">
                 </custom-image>
               </pane-v>
               <pane-v header="Thumbnail Img">
-                <custom-image header="'Thumnail upload'" type="'Modules'" folder="viewModel.seoName"
-                  title="viewModel.title" description="viewModel.description" src-url="viewModel.thumbnail"
-                  src="viewModel.thumbnail" auto="'true'">
+                <custom-image header="'Thumnail upload'" type="'Modules'" folder="viewmodel.seoName"
+                  title="viewmodel.title" description="viewmodel.description" src-url="viewmodel.thumbnail"
+                  src="viewmodel.thumbnail" auto="'true'">
                 </custom-image>
               </pane-v>
             </tabs-v>
@@ -115,11 +115,11 @@
       <p class="text-subtitle text-muted">Fill all of the following fields to create a new module.</p>
       <tabs-v class="mb-3">
         <pane-v header="Module description">
-          <module-content model="viewModel" additional-data="additionalData">
+          <module-content model="viewmodel" additional-data="additionalData">
           </module-content>
         </pane-v>
         <pane-v header="Configuration">
-          <module-advanced model="viewModel" additional-data="additionalData">
+          <module-advanced model="viewmodel" additional-data="additionalData">
           </module-advanced>
         </pane-v>
       </tabs-v>

@@ -50,7 +50,7 @@ modules.component("listMixColumn", {
       ctrl.generateForm = function () {
         var formHtml = document.createElement("module-form");
         formHtml.setAttribute("class", "row");
-        angular.forEach(ctrl.viewModel.attributes, function (e, i) {
+        angular.forEach(ctrl.viewmodel.attributes, function (e, i) {
           var el;
           var label = document.createElement("label");
           label.setAttribute("class", "form-label");
@@ -103,7 +103,7 @@ modules.component("listMixColumn", {
           formHtml.appendChild(label);
           formHtml.appendChild(el);
         });
-        ctrl.viewModel.formView.content = formHtml.innerHTML;
+        ctrl.viewmodel.formView.content = formHtml.innerHTML;
       };
 
       ctrl.generateName = function (col) {

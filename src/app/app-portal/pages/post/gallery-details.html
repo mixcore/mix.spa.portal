@@ -3,7 +3,7 @@
 <section class="" ng-init="getSingle()">
   <form ng-class="{'submitted': submitted}" ng-submit="save()">
     <actions
-      preview-url="viewModel.detailsUrl"
+      preview-url="viewmodel.detailsUrl"
       back-url="referrerUrl"
     ></actions>
     <div class="row">
@@ -15,7 +15,7 @@
               <input
                 type="text"
                 class="form-control form-control-lg"
-                ng-model="viewModel.title"
+                ng-model="viewmodel.title"
                 ng-blur="$ctrl.generateSEO()"
               />
             </div>
@@ -23,9 +23,9 @@
               <label class="form-label">Excerpt</label>
               <textarea
                 class="form-control form-control-lg"
-                ng-model="viewModel.excerpt"
+                ng-model="viewmodel.excerpt"
               >
-{{viewModel.excerpt}}</textarea
+{{viewmodel.excerpt}}</textarea
               >
             </div>
           </div>
@@ -33,8 +33,8 @@
         <div class="row">
           <div class="col-lg-12">
             <post-medias
-              post="viewModel"
-              medias="viewModel.mediaNavs"
+              post="viewmodel"
+              medias="viewmodel.mediaNavs"
             ></post-medias>
           </div>
         </div>
@@ -42,24 +42,24 @@
         <div class="row">
           <tabs-v class="col-lg-12">
             <pane-v header="General">
-              <post-general post="viewModel"></post-general>
+              <post-general post="viewmodel"></post-general>
             </pane-v>
             <pane-v header="Seo">
-              <post-seo post="viewModel"></post-seo>
+              <post-seo post="viewmodel"></post-seo>
             </pane-v>
             <pane-v header="Parents">
-              <post-parents post="viewModel"></post-parents>
+              <post-parents post="viewmodel"></post-parents>
             </pane-v>
             <pane-v header="Modules">
-              <post-modules post="viewModel"></post-modules>
+              <post-modules post="viewmodel"></post-modules>
             </pane-v>
             <pane-v header="Layout">
               <div class="tab-pane">
                 <template-editor
                   is-readonly="'true'"
                   folder-type="'Posts'"
-                  template="viewModel.view"
-                  templates="viewModel.templates"
+                  template="viewmodel.view"
+                  templates="viewmodel.templates"
                   enable-rename="'true'"
                 ></template-editor>
               </div>
@@ -67,10 +67,10 @@
             <pane-v header="Related">
               <related-navs
                 request="request"
-                source-id="viewModel.id"
-                culture="viewModel.specificulture"
+                source-id="viewmodel.id"
+                culture="viewmodel.specificulture"
                 prefix="'post'"
-                navs="viewModel.postNavs"
+                navs="viewmodel.postNavs"
                 data="data"
                 load-data="getList(pageIndex)"
               >
@@ -81,24 +81,24 @@
       </section>
       <section class="col-sm-4" style="padding-left: 0;">
         <cultures
-          is-clone="viewModel.isClone"
-          data="viewModel.cultures"
+          is-clone="viewmodel.isClone"
+          data="viewmodel.cultures"
         ></cultures>
         <div class="card mb-4">
           <h6 class="card-header">
             Info
           </h6>
           <div class="card-body">
-            <statuses status="viewModel.status"></statuses>
-            <div class="mb-3" ng-if="viewModel.status == 4">
+            <statuses status="viewmodel.status"></statuses>
+            <div class="mb-3" ng-if="viewmodel.status == 4">
               <label class="form-label">Published Date Time</label>
               <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text" id="basic-addon1"
                   ><i class="mi mi-Calendar"></i
                 ></span>
                 <input
-                  value="{{viewModel.publishedDateTime}}"
-                  ng-model="viewModel.publishedDateTime"
+                  value="{{viewmodel.publishedDateTime}}"
+                  ng-model="viewmodel.publishedDateTime"
                   type="datetime-local"
                   class="form-control"
                 />
@@ -111,7 +111,7 @@
                   ><i class="mi mi-Calendar"></i
                 ></span>
                 <input
-                  ng-model="viewModel.createdDateTime"
+                  ng-model="viewmodel.createdDateTime"
                   type="text"
                   class="form-control"
                   readonly="readonly"
@@ -125,7 +125,7 @@
                   ><i class="mi mi-Contact"></i
                 ></span>
                 <input
-                  ng-model="viewModel.createdBy"
+                  ng-model="viewmodel.createdBy"
                   class="form-control"
                   readonly="readonly"
                 />
@@ -139,34 +139,34 @@
                 ></span>
                 <select
                   class="form-select"
-                  ng-options="item as item.fileName for item in viewModel.templates track by item.id"
-                  ng-model="viewModel.view"
+                  ng-options="item as item.fileName for item in viewmodel.templates track by item.id"
+                  ng-model="viewmodel.view"
                 ></select>
               </div>
             </div>
           </div>
         </div>
         <modal-nav-metas
-          ng-if="viewModel.sysCategories"
+          ng-if="viewmodel.sysCategories"
           header="'Categories'"
-          parent-id="viewModel.id"
+          parent-id="viewmodel.id"
           is-open="'show'"
           parent-type="'Post'"
           type="''"
           mix-database-name="'sys_category'"
           field-display="'title'"
-          selected-list="viewModel.sysCategories"
+          selected-list="viewmodel.sysCategories"
         ></modal-nav-metas>
         <modal-nav-metas
-          ng-if="viewModel.sysTags"
+          ng-if="viewmodel.sysTags"
           header="'Tags'"
-          parent-id="viewModel.id"
+          parent-id="viewmodel.id"
           is-open="'show'"
           parent-type="'Post'"
           type="''"
           mix-database-name="'sys_tag'"
           field-display="'title'"
-          selected-list="viewModel.sysTags"
+          selected-list="viewmodel.sysTags"
         ></modal-nav-metas>
         <div class="card mb-4">
           <h6
@@ -194,7 +194,7 @@
           </h6>
           <div id="slug-tab" class="card-body collapse-x">
             <url-alias
-              ng-repeat="alias in viewModel.urlAliases"
+              ng-repeat="alias in viewmodel.urlAliases"
               ng-if="alias"
               index="$index"
               url-alias="alias"
@@ -205,17 +205,17 @@
         <custom-image
           header="'Image'"
           type="'Posts'"
-          folder="viewModel.seoName"
-          src-url="viewModel.imageUrl"
-          src="viewModel.image"
+          folder="viewmodel.seoName"
+          src-url="viewmodel.imageUrl"
+          src="viewmodel.image"
           auto="'true'"
         ></custom-image>
         <custom-image
           header="'Thumnail'"
           type="'Posts'"
-          folder="viewModel.seoName"
-          src-url="viewModel.thumbnailUrl"
-          src="viewModel.thumbnail"
+          folder="viewmodel.seoName"
+          src-url="viewmodel.thumbnailUrl"
+          src="viewmodel.thumbnail"
           auto="'true'"
         ></custom-image>
       </section>
