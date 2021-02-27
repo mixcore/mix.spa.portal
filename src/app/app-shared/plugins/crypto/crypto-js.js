@@ -65,7 +65,7 @@
 				 * @example
 				 *
 				 *     var MyType = CryptoJS.lib.Base.extend({
-				 *         field: 'value',
+				 *         column: 'value',
 				 *
 				 *         method: function () {
 				 *         }
@@ -138,7 +138,7 @@
 				 * @example
 				 *
 				 *     MyType.mixIn({
-				 *         field: 'value'
+				 *         column: 'value'
 				 *     });
 				 */
 				mixIn: function (properties) {

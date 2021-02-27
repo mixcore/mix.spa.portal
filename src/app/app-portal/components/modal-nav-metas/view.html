@@ -5,7 +5,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </label> -->
-<div id="{{$ctrl.header}}-tab" class="{{$ctrl.isOpen}}" ng-init="$ctrl.loadData()">
+<div id="{{$ctrl.header}}-tab" class="{{$ctrl.isOpen}}">
     <div class="row">
         <div class="col-12">
             <input type="text" class="form-control mb-4" placeholder="Press enter to create..."
@@ -14,21 +14,23 @@
     </div>
     <div class="row">
         <div class="col-12" ng-repeat="item in $ctrl.selectedList">
-            <checkbox-switch data="item" 
-                callback="$ctrl.select(data)"
-                description="item.attributeData.obj[$ctrl.fieldDisplay]">
+            <checkbox-switch value="item.dataId" is-selected="$ctrl.isSelected(item.dataId)"
+                callback="$ctrl.select(value, isSelected)"
+                description="item.attributeData.obj[$ctrl.columnDisplay]">
             </checkbox-switch>
             <div class="col-md-12 mx-2" ng-repeat="sub in item.attributeData.obj.sub_categories">
-                <checkbox-switch data="sub" callback="$ctrl.select(data)"
-                    description="sub[$ctrl.fieldDisplay]">
+                <checkbox-switch value="sub.id" is-selected="$ctrl.isSelected(sub.id)"
+                    callback="$ctrl.select(value, isSelected)"
+                    description="sub[$ctrl.columnDisplay]">
                 </checkbox-switch>
             </div>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col-12" ng-repeat="item in $ctrl.data.items| filter:$ctrl.newTitle" ng-hide="item.disabled">
-            <checkbox-switch data="item" callback="$ctrl.select(item)"
-                description="item.attributeData.obj[$ctrl.fieldDisplay]">
+            <checkbox-switch value="item.id" is-selected="$ctrl.isSelected(item.id)"
+                callback="$ctrl.select(value, isSelected)"
+                description="item.obj[$ctrl.columnDisplay]">
             </checkbox-switch>
         </div>
     </div>

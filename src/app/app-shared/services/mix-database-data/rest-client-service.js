@@ -5,8 +5,8 @@ app.factory("RestMixDatabaseDataClientService", [
   function (baseService, commonService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("mix-database-data/client");
-    var _initData = async function (attrSetName) {
-      var url = this.prefixUrl + "/init/" + attrSetName;
+    var _initData = async function (mixDatabaseName) {
+      var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {
         method: "GET",
         url: url,

@@ -8,38 +8,38 @@ modules.component("mixDatabaseColumn", {
     "$rootScope",
     "$scope",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, fieldService) {
+    function ($rootScope, $scope, columnService) {
       var ctrl = this;
       ctrl.value = {};
-      ctrl.field = {
+      ctrl.column = {
         dataType: "Text",
-        mixDatabaseName: "sys_additional_field",
+        mixDatabaseName: "sys_additional_column",
         mixDatabaseId: 6,
       };
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
-        if (ctrl.field.name) {
+        if (ctrl.column.name) {
           var current = $rootScope.findObjectByKey(
             ctrl.additionalData.columns,
             "name",
-            ctrl.field.name
+            ctrl.column.name
           );
           if (current) {
-            $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
+            $rootScope.showErrors(["Field " + ctrl.column.name + " existed!"]);
           } else {
-            ctrl.field.priority = ctrl.additionalData.columns.length + 1;
+            ctrl.column.priority = ctrl.additionalData.columns.length + 1;
             $rootScope.isBusy = true;
-            var saveField = await fieldService.create(ctrl.field);
+            var saveField = await columnService.create(ctrl.column);
             $rootScope.isBusy = false;
             if (saveField.isSucceed) {
               ctrl.additionalData.columns.push(saveField.data);
 
-              //reset field option
-              ctrl.field.title = "";
-              ctrl.field.name = "";
-              ctrl.field.dataType = "Text";
+              //reset column option
+              ctrl.column.title = "";
+              ctrl.column.name = "";
+              ctrl.column.dataType = "Text";
               $scope.$apply();
             }
           }
@@ -90,7 +90,7 @@ modules.component("mixDatabaseColumn", {
       ctrl.removeAttributeConfirmed = async function (val, index) {
         if (val.id) {
           $rootScope.isBusy = true;
-          var result = await fieldService.delete([val.id]);
+          var result = await columnService.delete([val.id]);
           if (result.isSucceed) {
             ctrl.additionalData.columns.splice(index, 1);
             $rootScope.isBusy = false;

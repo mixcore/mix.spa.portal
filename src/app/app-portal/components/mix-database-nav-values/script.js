@@ -21,7 +21,7 @@ modules.component("mixDatabaseNavValues", {
     "ngAppSettings",
     "RestRelatedAttributeDataPortalService",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, ngAppSettings, navService, fieldService) {
+    function ($rootScope, $scope, ngAppSettings, navService, columnService) {
       var ctrl = this;
       ctrl.selectedProp = null;
       ctrl.request = angular.copy(ngAppSettings.restRequest);
@@ -39,7 +39,7 @@ modules.component("mixDatabaseNavValues", {
           ctrl.updateUrl = "/portal/mix-database-data/details";
         }
         if (!ctrl.columns) {
-          var getFields = await fieldService.initData(
+          var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
@@ -112,7 +112,7 @@ modules.component("mixDatabaseNavValues", {
           `${ctrl.updateUrl}?dataId=${nav.dataId}&mixDatabaseId=${nav.mixDatabaseId}&parentId=${ctrl.parentId}&parentType=${ctrl.parentType}`
         );
         // ctrl.refDataModel = nav;
-        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.field.referenceId)[0];
+        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
@@ -135,7 +135,7 @@ modules.component("mixDatabaseNavValues", {
                 }
                 ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 var e = $(
-                  ".pane-data-" + ctrl.mixDatabaseDataValue.field.referenceId
+                  ".pane-data-" + ctrl.mixDatabaseDataValue.column.referenceId
                 )[0];
                 angular.element(e).triggerHandler("click");
                 $rootScope.isBusy = false;

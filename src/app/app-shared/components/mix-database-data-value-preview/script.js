@@ -5,7 +5,7 @@
     function ($rootScope) {
       var ctrl = this;
       ctrl.$onInit = function () {
-        if (ctrl.data.field && ctrl.data.field.isEncrypt) {
+        if (ctrl.data.column && ctrl.data.column.isEncrypt) {
           var encryptedData = {
             key: ctrl.data.encryptKey,
             data: ctrl.data.encryptValue,

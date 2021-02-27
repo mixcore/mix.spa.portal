@@ -30,8 +30,8 @@ app.factory("RestMixDatabaseDataPortalService", [
       return await commonService.getRestApiResult(req);
     };
 
-    var _initData = async function (attrSetName) {
-      var url = this.prefixUrl + "/init/" + attrSetName;
+    var _initData = async function (mixDatabaseName) {
+      var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {
         method: "GET",
         url: url,

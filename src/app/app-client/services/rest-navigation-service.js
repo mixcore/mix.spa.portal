@@ -5,8 +5,8 @@ app.factory("RestNavigationService", [
   function (baseService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("mix-database-data/navigation");
-    var _initData = async function (attrSetName) {
-      var url = this.prefixUrl + "/init/" + attrSetName;
+    var _initData = async function (mixDatabaseName) {
+      var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {
         method: "GET",
         url: url,

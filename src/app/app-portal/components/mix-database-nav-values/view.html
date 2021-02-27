@@ -29,9 +29,9 @@
             <!-- <input class="ml-1 form-control form-control-sm" ng-model="item.priority" style="width:30px" /> -->
           </div>
         </div>
-        <div ng-if="$index < $ctrl.maxCol" ng-repeat="field in $ctrl.columns | orderBy: 'priority' track by $index"
+        <div ng-if="$index < $ctrl.maxCol" ng-repeat="column in $ctrl.columns | orderBy: 'priority' track by $index"
           class="col-md-3">
-          <mix-field-preview model="item.attributeData.obj[field.name]" field="field"></mix-field-preview>
+          <mix-column-preview model="item.attributeData.obj[column.name]" column="column"></mix-column-preview>
         </div>
         <div class="col text-end">
           <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">

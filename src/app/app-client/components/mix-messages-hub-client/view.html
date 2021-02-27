@@ -12,18 +12,18 @@
 
         <div
           class="col-sm-12"
-          ng-repeat="field in $ctrl.columns | orderBy:'priority' track by $index"
+          ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
         >
-          <mix-field-preview
-            ng-if="field.name!='data_type' && field.name!='message'"
-            model="msg.data[field.name]"
-            field="field"
-          ></mix-field-preview>
-          <mix-field-preview
-            ng-if="field.name!='data_type' && field.name=='message'"
-            model="msg.data[field.name]"
-            field="msg.msgField"
-          ></mix-field-preview>
+          <mix-column-preview
+            ng-if="column.name!='data_type' && column.name!='message'"
+            model="msg.data[column.name]"
+            column="column"
+          ></mix-column-preview>
+          <mix-column-preview
+            ng-if="column.name!='data_type' && column.name=='message'"
+            model="msg.data[column.name]"
+            column="msg.msgField"
+          ></mix-column-preview>
         </div>
       </li>
     </ul>
@@ -36,12 +36,12 @@
       <form
         ng-show="$ctrl.user.loggedIn"
         ng-class="{'submitted': submitted}"
-        ng-if="$ctrl.attrData"
+        ng-if="$ctrl.mixDatabaseData"
         ng-submit="$ctrl.submit()"
       >
         <div class="card">
           <div
-            id="mixDatabaseId_{{$ctrl.attrData.mixDatabaseId}}"
+            id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}"
             class="card-body show"
           >
             <div class="row">
@@ -63,17 +63,17 @@
                   </option>
                 </select>
                 <div
-                  ng-repeat="field in $ctrl.columns | orderBy:'priority' track by $index"
+                  ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
                 >
                   <mix-column-editor
-                    ng-if="field.name!='data_type' && field.name=='message'"
-                    model="$ctrl.attrData"
+                    ng-if="column.name!='data_type' && column.name=='message'"
+                    model="$ctrl.mixDatabaseData"
                     column="$ctrl.msgField"
                   ></mix-column-editor>
                   <mix-column-editor
-                    ng-if="field.name!='data_type' && field.name!='message'"
-                    model="$ctrl.attrData"
-                    column="field"
+                    ng-if="column.name!='data_type' && column.name!='message'"
+                    model="$ctrl.mixDatabaseData"
+                    column="column"
                   ></mix-column-editor>
                 </div>
               </div>

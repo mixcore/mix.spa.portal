@@ -5,7 +5,7 @@
     datatype: "=?",
     inputClass: "=",
     isShowTitle: "=",
-    fieldTitle: "=",
+    columnTitle: "=",
   },
   controller: [
     "$rootScope",

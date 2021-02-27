@@ -61,13 +61,13 @@
               }
               break;
             case "reference": // reference
-              if (ctrl.mixDatabaseDataValue.field.referenceId && ctrl.parentId) {
+              if (ctrl.mixDatabaseDataValue.column.referenceId && ctrl.parentId) {
                 ctrl.mixDatabaseDataValue.integerValue =
-                  ctrl.mixDatabaseDataValue.field.referenceId;
+                  ctrl.mixDatabaseDataValue.column.referenceId;
                 // navService.getSingle(["default"]).then((resp) => {
                 //   ctrl.defaultDataModel = resp;
                 //   ctrl.defaultDataModel.mixDatabaseId =
-                //     ctrl.mixDatabaseDataValue.field.referenceId;
+                //     ctrl.mixDatabaseDataValue.column.referenceId;
                 //   ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 // });
                 // ctrl.loadRefData();
@@ -75,8 +75,8 @@
               break;
             default:
               if (
-                ctrl.mixDatabaseDataValue.field &&
-                ctrl.mixDatabaseDataValue.field.isEncrypt &&
+                ctrl.mixDatabaseDataValue.column &&
+                ctrl.mixDatabaseDataValue.column.isEncrypt &&
                 ctrl.mixDatabaseDataValue.encryptValue
               ) {
                 var encryptedData = {
@@ -88,11 +88,11 @@
                 );
               }
               if (
-                ctrl.mixDatabaseDataValue.field &&
+                ctrl.mixDatabaseDataValue.column &&
                 !ctrl.mixDatabaseDataValue.stringValue
               ) {
                 ctrl.mixDatabaseDataValue.stringValue =
-                  ctrl.mixDatabaseDataValue.field.defaultValue;
+                  ctrl.mixDatabaseDataValue.column.defaultValue;
                 $scope.$apply();
               }
               break;
@@ -104,36 +104,36 @@
           case "datetime":
           case "date":
           case "time":
-            if (ctrl.mixDatabaseDataValue.field.defaultValue) {
+            if (ctrl.mixDatabaseDataValue.column.defaultValue) {
               ctrl.mixDatabaseDataValue.dateObj = new Date(
-                ctrl.mixDatabaseDataValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.column.defaultValue
               );
               ctrl.mixDatabaseDataValue.stringValue =
-                ctrl.mixDatabaseDataValue.field.defaultValue;
+                ctrl.mixDatabaseDataValue.column.defaultValue;
             }
             break;
           case "double":
-            if (ctrl.mixDatabaseDataValue.field.defaultValue) {
+            if (ctrl.mixDatabaseDataValue.column.defaultValue) {
               ctrl.mixDatabaseDataValue.doubleValue = parseFloat(
-                ctrl.mixDatabaseDataValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.column.defaultValue
               );
               ctrl.mixDatabaseDataValue.stringValue =
-                ctrl.mixDatabaseDataValue.field.defaultValue;
+                ctrl.mixDatabaseDataValue.column.defaultValue;
             }
             break;
           case "boolean":
-            if (ctrl.mixDatabaseDataValue.field.defaultValue) {
+            if (ctrl.mixDatabaseDataValue.column.defaultValue) {
               ctrl.mixDatabaseDataValue.booleanValue =
-                ctrl.mixDatabaseDataValue.field.defaultValue == "true";
+                ctrl.mixDatabaseDataValue.column.defaultValue == "true";
               ctrl.mixDatabaseDataValue.stringValue =
-                ctrl.mixDatabaseDataValue.field.defaultValue;
+                ctrl.mixDatabaseDataValue.column.defaultValue;
             }
             break;
 
           default:
-            if (ctrl.mixDatabaseDataValue.field.defaultValue) {
+            if (ctrl.mixDatabaseDataValue.column.defaultValue) {
               ctrl.mixDatabaseDataValue.stringValue =
-                ctrl.mixDatabaseDataValue.field.defaultValue;
+                ctrl.mixDatabaseDataValue.column.defaultValue;
             }
             break;
         }
@@ -171,7 +171,7 @@
                 &parentId=${ctrl.parentId}
                 &parentType=${ctrl.parentType}`);
         // ctrl.refDataModel = nav;
-        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.field.referenceId)[0];
+        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };

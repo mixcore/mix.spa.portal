@@ -58,18 +58,18 @@
             </div>
             <div ng-switch-when="mix-database-data">
               <div
-                ng-repeat="field in $ctrl.previewObject.data.columns | orderBy: 'priority' track by $index"
+                ng-repeat="column in $ctrl.previewObject.data.columns | orderBy: 'priority' track by $index"
                 class="py-2 row"
               >
                 <div class="col-md-3">
-                  <p><b ng-bind="field.title"></b>:</p>
+                  <p><b ng-bind="column.title"></b>:</p>
                 </div>
                 <div class="col-md-9">
-                  <mix-field-preview
-                    model="$ctrl.previewObject.data.item.obj[field.name]"
-                    field="field"
+                  <mix-column-preview
+                    model="$ctrl.previewObject.data.item.obj[column.name]"
+                    column="column"
                   >
-                  </mix-field-preview>
+                  </mix-column-preview>
                 </div>
               </div>
             </div>

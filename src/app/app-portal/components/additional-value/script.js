@@ -15,7 +15,7 @@ modules.component("additionalValue", {
     function ($rootScope, $scope, dataService) {
       var ctrl = this;
       ctrl.value = {};
-      ctrl.field = { dataType: "Text" };
+      ctrl.column = { dataType: "Text" };
       ctrl.selectedCol = null;
       ctrl.settings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {

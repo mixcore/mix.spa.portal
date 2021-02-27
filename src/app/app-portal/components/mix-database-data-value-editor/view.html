@@ -1,9 +1,9 @@
-<div ng-if="!$ctrl.mixDatabaseDataValue.field.isSelect" class="mb-3 row">
+<div ng-if="!$ctrl.mixDatabaseDataValue.column.isSelect" class="mb-3 row">
   <div class="col-3">
     <h6
       class="control-label m-0"
       ng-if="$ctrl.isShowTitle=='true'"
-      ng-bind="$ctrl.mixDatabaseDataValue.field.title || $ctrl.mixDatabaseDataValue.field.name"
+      ng-bind="$ctrl.mixDatabaseDataValue.column.title || $ctrl.mixDatabaseDataValue.column.name"
     ></h6>
     <smal>({{$ctrl.mixDatabaseDataValue.dataType}})</smal>
   </div>
@@ -17,7 +17,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="text"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="datetime">
@@ -27,7 +27,7 @@
         ng-change="$ctrl.updateStringValue($ctrl.mixDatabaseDataValue.dataType)"
         type="datetime-local"
         ng-model="$ctrl.mixDatabaseDataValue.dateObj"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="date">
@@ -37,7 +37,7 @@
         ng-change="$ctrl.updateStringValue($ctrl.mixDatabaseDataValue.dataType)"
         type="date"
         ng-model="$ctrl.mixDatabaseDataValue.dateObj"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="time">
@@ -47,7 +47,7 @@
         ng-change="$ctrl.updateStringValue($ctrl.mixDatabaseDataValue.dataType)"
         type="time"
         ng-model="$ctrl.mixDatabaseDataValue.dateObj"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="text">
@@ -56,7 +56,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="text"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="html">
@@ -74,7 +74,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         rows="5"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       ></textarea>
     </div>
     <div class="text-muted" ng-switch-when="emailaddress">
@@ -83,7 +83,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="email"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="password">
@@ -92,7 +92,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="password"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="url">
@@ -101,17 +101,17 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="text"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="imageurl">
       <!--ImageUrl-->
       <input
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="url"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted col-8 card p-0" ng-switch-when="upload">
@@ -122,8 +122,8 @@
         folder="'Attributes'"
         src-url="$ctrl.mixDatabaseDataValue.stringValue"
         src="$ctrl.mixDatabaseDataValue.stringValue"
-        w="$ctrl.mixDatabaseDataValue.field.fieldConfigurations.upload.width"
-        h="$ctrl.mixDatabaseDataValue.field.fieldConfigurations.upload.height"
+        w="$ctrl.mixDatabaseDataValue.column.columnConfigurations.upload.width"
+        h="$ctrl.mixDatabaseDataValue.column.columnConfigurations.upload.height"
         auto="'true'"
       >
       </custom-image>
@@ -135,7 +135,7 @@
         type="color"
         value="{{$ctrl.mixDatabaseDataValue.stringValue}}"
         ng-model="$ctrl.mixDatabaseDataValue.stringValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
     </div>
     <div class="text-muted" ng-switch-when="boolean">
@@ -143,7 +143,7 @@
       <input
         class="{{$ctrl.inputClass}}"
         type="checkbox"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
         ng-change="$ctrl.updateStringValue($ctrl.mixDatabaseDataValue.dataType)"
         ng-model="$ctrl.mixDatabaseDataValue.booleanValue"
         ng-checked="$ctrl.mixDatabaseDataValue.booleanValue"
@@ -169,7 +169,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="number"
         ng-model="$ctrl.mixDatabaseDataValue.integerValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
       <label
         class="form-label"
@@ -182,7 +182,7 @@
         class="form-control form-control-sm {{$ctrl.inputClass}}"
         type="number"
         ng-model="$ctrl.mixDatabaseDataValue.doubleValue"
-        placeholder="{{$ctrl.mixDatabaseDataValue.field.title}}"
+        placeholder="{{$ctrl.mixDatabaseDataValue.column.title}}"
       />
       <label
         class="form-label"
@@ -209,7 +209,7 @@
     </div>
     <div class="text-muted" ng-switch-when="reference">
       <!-- Referrence -->
-      <!-- <a ng-if="$ctrl.parentId" href="/portal/mix-database-data/details?dataId=default&mixDatabaseId={{$ctrl.mixDatabaseDataValue.field.referenceId}}&parentType={{$ctrl.parentType}}&parentId={{$ctrl.parentId}}" 
+      <!-- <a ng-if="$ctrl.parentId" href="/portal/mix-database-data/details?dataId=default&mixDatabaseId={{$ctrl.mixDatabaseDataValue.column.referenceId}}&parentType={{$ctrl.parentType}}&parentId={{$ctrl.parentId}}" 
                 class="btn btn-sm btn-primary px-4 mt-3 ng-scope">
                 <i class="fas fa-plus"></i> Add
             </a> -->
@@ -220,7 +220,7 @@
       <div class="row" ng-if="$ctrl.parentId">
         <div class="col-md-12">
           <a
-            href="/portal/mix-database-data/create?mixDatabaseId={{$ctrl.mixDatabaseDataValue.field.referenceId}}&dataId=default&parentId={{$ctrl.parentId}}&parentType={{$ctrl.parentType}}"
+            href="/portal/mix-database-data/create?mixDatabaseId={{$ctrl.mixDatabaseDataValue.column.referenceId}}&dataId=default&parentId={{$ctrl.parentId}}&parentType={{$ctrl.parentType}}"
             class="btn btn-sm btn-primary float-end px-4 me-2"
           >
             <i class="fas fa-plus"></i> Create data
@@ -229,7 +229,7 @@
         <div class="col-md-12">
           <mix-database-nav-values
             max-col="2"
-            mix-database-id="$ctrl.mixDatabaseDataValue.field.referenceId"
+            mix-database-id="$ctrl.mixDatabaseDataValue.column.referenceId"
             parent-id="$ctrl.parentId"
             parent-type="$ctrl.parentType"
             on-update="$ctrl.updateRefData(data)"
@@ -242,12 +242,12 @@
   </div>
 </div>
 <!-- TODO: Only allow stringValue -->
-<div ng-if="$ctrl.mixDatabaseDataValue.field.isSelect" class="mb-3 row">
+<div ng-if="$ctrl.mixDatabaseDataValue.column.isSelect" class="mb-3 row">
   <div class="col-3">
     <h6
       class="form-label"
       ng-if="$ctrl.isShowTitle"
-      ng-bind="$ctrl.mixDatabaseDataValue.field.title"
+      ng-bind="$ctrl.mixDatabaseDataValue.column.title"
     ></h6>
   </div>
   <div class="col-9">
@@ -257,7 +257,7 @@
       ng-model="$ctrl.mixDatabaseDataValue.stringValue"
     >
       <option
-        ng-repeat="item in $ctrl.mixDatabaseDataValue.field.options track by $index"
+        ng-repeat="item in $ctrl.mixDatabaseDataValue.column.options track by $index"
         ng-value="item.value"
       >
         {{item.value}}

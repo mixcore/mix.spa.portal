@@ -1,7 +1,7 @@
 ﻿modules.component('videoChatHub', {
     templateUrl: '/mix-app/views/app-client/components/video-chat-hub/view.html',
     bindings: {
-        attrSetName: '=',
+        mixDatabaseName: '=',
         isSave: '=?'
     },
     controller: ['$rootScope', '$scope', 'VideoChatService', 'ViewModel', 'ConnectionManager',

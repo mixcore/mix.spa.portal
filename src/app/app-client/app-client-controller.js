@@ -19,7 +19,7 @@
       localStorageService,
       translatorService,
       moduleDataService,
-      attrDataService
+      mixDatabaseDataService
     ) {
       $scope.lang = "";
       $scope.isInit = false;
@@ -40,7 +40,7 @@
       $rootScope.globalSettingsService = globalSettingsService;
       $scope.changeLang = $rootScope.changeLang;
       $scope.init = function (lang) {
-        attrDataService.init(attrDataService.modelName, false, lang);
+        mixDatabaseDataService.init(mixDatabaseDataService.modelName, false, lang);
         if (!$rootScope.isBusy) {
           $rootScope.isBusy = true;
           // globalSettingsService.fillGlobalSettings().then(function (response) {
@@ -139,7 +139,7 @@
       };
 
       $scope.initMixDatabaseForm = async function (formName) {
-        return await attrDataService.initData(formName).data;
+        return await mixDatabaseDataService.initData(formName).data;
       };
 
       $scope.saveModuleData = async function () {

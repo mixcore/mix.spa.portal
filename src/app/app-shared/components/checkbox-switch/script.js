@@ -5,6 +5,7 @@ modules.component('checkboxSwitch', {
         var ctrl = this;
         ctrl.guid = $rootScope.generateUUID();
         ctrl.$onInit = function () {
+            ctrl.isSelected = ctrl.isSelected || false;
         };
         ctrl.limString = function (str, max) {
             if (str) {
@@ -14,7 +15,8 @@ modules.component('checkboxSwitch', {
     }],
 
     bindings: {
-        data: '=',
+        value: '=',
+        isSelected: '=?',
         detailsUrl: '=',
         callback: '&',
         description: '='

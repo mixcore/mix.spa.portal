@@ -2,7 +2,7 @@
   templateUrl:
     "/mix-app/views/app-client/components/mix-messages-hub-client/view.html",
   bindings: {
-    attrSetName: "=",
+    mixDatabaseName: "=",
     isSave: "=?",
   },
   controller: [
@@ -10,7 +10,7 @@
     "$scope",
     "RestMixDatabaseColumnPortalService",
     "RestMixDatabaseDataClientService",
-    function ($rootScope, $scope, fieldService, service) {
+    function ($rootScope, $scope, columnService, service) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
       ctrl.settings = $rootScope.globalSettings;
@@ -18,7 +18,7 @@
         loggedIn: false,
         connection: {},
       };
-      ctrl.attrData = null;
+      ctrl.mixDatabaseData = null;
       ctrl.isHide = true;
       ctrl.hideContact = true;
       ctrl.columns = [];
@@ -39,34 +39,34 @@
         isSave: false,
       };
       ctrl.init = function () {
-        ctrl.attrSetId = ctrl.attrSetId || 0;
+        ctrl.mixDatabaseId = ctrl.mixDatabaseId || 0;
         ctrl.request.specificulture = service.lang;
-        ctrl.request.room = ctrl.attrSetName;
+        ctrl.request.room = ctrl.mixDatabaseName;
         ctrl.request.isSave = ctrl.isSave || false;
         ctrl.startConnection("serviceHub", ctrl.checkLoginStatus);
       };
       ctrl.loadData = async function () {
         /*
-                    If input is data id => load ctrl.attrData from service and handle it independently
-                    Else modify input ctrl.attrData
+                    If input is data id => load ctrl.mixDatabaseData from service and handle it independently
+                    Else modify input ctrl.mixDatabaseData
                 */
         $rootScope.isBusy = true;
-        var getDefault = await service.initData(ctrl.attrSetName);
+        var getDefault = await service.initData(ctrl.mixDatabaseName);
         if (getDefault.isSucceed) {
           ctrl.defaultData = getDefault.data;
           ctrl.defaultData.data.user_name = ctrl.user.connection.name;
           ctrl.defaultData.data.user_id = ctrl.user.connection.id;
           ctrl.defaultData.data.user_avatar = ctrl.user.connection.avatar;
           ctrl.defaultData.data.data_type = 9;
-          ctrl.defaultData.field = {
-            dataType: 9,
+          ctrl.defaultData.column = {
+            dataType: 'Text',
             title: "Message",
             name: "message",
           };
-          ctrl.attrData = angular.copy(ctrl.defaultData);
+          ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
           $rootScope.isBusy = false;
         }
-        var getFields = await fieldService.initData(ctrl.attrSetName);
+        var getFields = await columnService.initData(ctrl.mixDatabaseName);
         if (getFields.isSucceed) {
           ctrl.columns = getFields.data;
           ctrl.msgField = $rootScope.findObjectByKey(
@@ -80,30 +80,30 @@
         if (ctrl.validate()) {
           ctrl.request.action = "send_group_message";
           ctrl.request.uid = ctrl.user.connection.id;
-          ctrl.request.data = ctrl.attrData.data;
+          ctrl.request.data = ctrl.mixDatabaseData.data;
           ctrl.request.connection = ctrl.user.connection;
           ctrl.connection.invoke("HandleRequest", JSON.stringify(ctrl.request));
-          ctrl.attrData = angular.copy(ctrl.defaultData);
+          ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
         }
       };
       ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.columns, function (field) {
-          if (field.regex) {
-            var regex = RegExp(field.regex, "g");
-            isValid = regex.test(ctrl.attrData.data[field.name]);
+        angular.forEach(ctrl.columns, function (column) {
+          if (column.regex) {
+            var regex = RegExp(column.regex, "g");
+            isValid = regex.test(ctrl.mixDatabaseData.data[column.name]);
             if (!isValid) {
-              if (field.name == "message") {
+              if (column.name == "message") {
                 ctrl.errors.push("Please don't use bad words in your message");
               } else {
-                ctrl.errors.push(`${field.name} is not match Regex`);
+                ctrl.errors.push(`${column.name} is not match Regex`);
               }
             }
           }
-          if (isValid && field.isEncrypt) {
-            ctrl.attrData.data[field.name] = $rootScope.encrypt(
-              ctrl.attrData.data[field.name]
+          if (isValid && column.isEncrypt) {
+            ctrl.mixDatabaseData.data[column.name] = $rootScope.encrypt(
+              ctrl.mixDatabaseData.data[column.name]
             );
           }
         });
@@ -171,7 +171,7 @@
         $scope.$apply();
       };
       ctrl.updateDataType = function () {
-        ctrl.attrData.data.data_type = ctrl.msgField.dataType;
+        ctrl.mixDatabaseData.data.data_type = ctrl.msgField.dataType;
       };
       ctrl.checkLoginStatus = function () {
         FB.getLoginStatus(function (response) {

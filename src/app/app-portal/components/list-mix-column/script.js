@@ -23,7 +23,7 @@ modules.component("listMixColumn", {
         }
       };
       ctrl.removeAttribute = async function (attr, index) {
-        if (confirm("Remove this field ?")) {
+        if (confirm("Remove this column ?")) {
           if (attr.id) {
             $rootScope.isBusy = true;
             var remove = await service.delete([attr.id]);

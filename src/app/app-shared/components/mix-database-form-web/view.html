@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div ng-repeat="prop in $ctrl.data.dataProperties track by $index">
-                                <module-form-editor is-show-title="$ctrl.isShowTitle" field-title="prop.title"
+                                <module-form-editor is-show-title="$ctrl.isShowTitle" column-title="prop.title"
                                     data="$ctrl.data.jItem[prop.name]" ng-if="!prop.isSelect"></module-form-editor>
                                 <div ng-if="prop.isSelect" class="mb-3">
 

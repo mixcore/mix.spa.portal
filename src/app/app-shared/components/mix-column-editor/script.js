@@ -128,21 +128,21 @@
           case "time":
             if (ctrl.column.defaultValue) {
               ctrl.model[ctrl.column.name] = new Date(
-                ctrl.mixDatabaseDataValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
             break;
           case "double":
             if (ctrl.column.defaultValue) {
               ctrl.model[ctrl.column.name] = parseFloat(
-                ctrl.mixDatabaseDataValue.field.defaultValue
+                ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
             break;
           case "boolean":
             if (ctrl.column.defaultValue) {
               ctrl.model[ctrl.column.name] =
-                ctrl.mixDatabaseDataValue.field.defaultValue == "true";
+                ctrl.mixDatabaseDataValue.column.defaultValue == "true";
             }
             break;
 

@@ -14,7 +14,7 @@ app.controller("MixDatabaseDataController", [
     $routeParams,
     $location,
     service,
-    fieldService
+    columnService
   ) {
     BaseRestCtrl.call(
       this,
@@ -64,7 +64,7 @@ app.controller("MixDatabaseDataController", [
     $scope.init = async function () {
       $scope.initRouteParams();
       if ($scope.mixDatabaseName || $scope.mixDatabaseId) {
-        var getFields = await fieldService.initData(
+        var getFields = await columnService.initData(
           $scope.mixDatabaseName || $scope.mixDatabaseId
         );
         if (getFields.isSucceed) {

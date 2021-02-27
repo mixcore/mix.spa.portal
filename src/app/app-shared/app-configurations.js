@@ -617,16 +617,16 @@ app.run([
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
-            var fieldData = $rootScope.findObjectByKey(
+            var columnData = $rootScope.findObjectByKey(
               item.data,
               "attributeName",
               attr.name
             );
-            if (fieldData) {
-              var encryptedData = $rootScope.encrypt(fieldData.stringValue);
-              fieldData.encryptValue = encryptedData.data;
-              fieldData.encryptKey = encryptedData.key;
-              fieldData.stringValue = "";
+            if (columnData) {
+              var encryptedData = $rootScope.encrypt(columnData.stringValue);
+              columnData.encryptValue = encryptedData.data;
+              columnData.encryptKey = encryptedData.key;
+              columnData.stringValue = "";
             }
           });
         }
@@ -636,17 +636,17 @@ app.run([
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
-            var fieldData = $rootScope.findObjectByKey(
+            var columnData = $rootScope.findObjectByKey(
               item.data,
               "attributeName",
               attr.name
             );
-            if (fieldData) {
+            if (columnData) {
               var encryptedData = {
-                key: fieldData.encryptKey,
-                data: fieldData.encryptValue,
+                key: columnData.encryptKey,
+                data: columnData.encryptValue,
               };
-              fieldData.stringValue = $rootScope.decrypt(encryptedData);
+              columnData.stringValue = $rootScope.decrypt(encryptedData);
             }
           });
         }

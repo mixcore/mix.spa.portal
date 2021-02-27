@@ -30,10 +30,10 @@ angular.module('bw.paging', []).directive('paging', function () {
         restrict: 'EA',
 
         // Assign the angular link function
-        link: fieldLink,
+        link: columnLink,
 
         // Assign the angular directive template HTML
-        template: fieldTemplate,
+        template: columnTemplate,
 
         // Assign the angular scope attribute formatting
         scope: {
@@ -74,7 +74,7 @@ angular.module('bw.paging', []).directive('paging', function () {
      * @param {object} el - Angular link element
      * @param {object} attrs - Angular link attribute
      */
-    function fieldLink(scope, el, attrs) {
+    function columnLink(scope, el, attrs) {
 
         // Hook in our watched items
         scope.$watchCollection('[page,pageSize,total,disabled]', function () {
@@ -90,7 +90,7 @@ angular.module('bw.paging', []).directive('paging', function () {
      * @param {object} el - Angular link element
      * @param {object} attrs - Angular link attribute
      */
-    function fieldTemplate(el, attrs) {
+    function columnTemplate(el, attrs) {
         return '<ul data-ng-hide="Hide" data-ng-class="ulClass"> ' +
             '<li class="page-item"' +
             'title="{{item.title}}" ' +

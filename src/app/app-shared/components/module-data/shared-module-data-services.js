@@ -83,7 +83,7 @@ app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', 
     };
     var _saveFields = async function (id, propertyName, propertyValue) {
         var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
-        var field = [
+        var column = [
             {
                 propertyName: propertyName,
                 propertyValue: propertyValue
@@ -92,7 +92,7 @@ app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', 
         var req = {
             method: 'POST',
             url: apiUrl + 'save/' + id,
-            data: JSON.stringify(field)
+            data: JSON.stringify(column)
         };
         return await commonService.getApiResult(req)
     };

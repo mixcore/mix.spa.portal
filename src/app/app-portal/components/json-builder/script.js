@@ -2,7 +2,7 @@
 modules.component('jsonBuilder', {
     templateUrl: '/mix-app/views/app-portal/components/json-builder/view.html',
     bindings: {
-        'data': '=?', // json obj (ex: { field1: 'some val' })
+        'data': '=?', // json obj (ex: { column1: 'some val' })
         'folder': '=?', // filepath (ex: 'data/jsonfile.json')
         'filename': '=?', // filepath (ex: 'data/jsonfile.json')
         'allowedTypes': '=?', // string array ( ex: [ 'type1', 'type2' ] )
@@ -168,9 +168,9 @@ modules.component('jsonBuilder', {
                 ctrl.timestamp = Math.random();
             };
             ctrl.addField = function (item) {
-                var field = angular.copy(ctrl.templates[0]);
-                field.name = 'f' + (item.columns[0].items.length + 1);
-                item.columns[0].items.push(field);
+                var column = angular.copy(ctrl.templates[0]);
+                column.name = 'f' + (item.columns[0].items.length + 1);
+                item.columns[0].items.push(column);
                 item.showMenu = false;
             };
             ctrl.addObj = function (item) {

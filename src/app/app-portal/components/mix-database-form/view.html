@@ -32,7 +32,7 @@
         <i class="fas fa-chevron-left"></i> Back to list
       </a>
       <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
-        aria-controls="mixDatabaseId_{{$ctrl.attrData.mixDatabaseId}} collapse">
+        aria-controls="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}} collapse">
         <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
       <a
         href="#"
@@ -77,7 +77,7 @@
       </button>
     </h6>
     <div
-      id="mixDatabaseId_{{$ctrl.attrData.mixDatabaseId}}"
+      id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}"
       class="card-body show"
     >
       <div class="row">
@@ -87,7 +87,7 @@
           >
             <mix-column-editor
               level="$ctrl.level + 1"
-              model="$ctrl.attrData"
+              model="$ctrl.mixDatabaseData"
               column="column"
             ></mix-column-editor>
           </div>
@@ -123,6 +123,6 @@
   columns="$ctrl.columns"
 ></mix-database-data-filter>
 <modal-content-filter
-  ng-if="$ctrl.attrData"
+  ng-if="$ctrl.mixDatabaseData"
   callback="$ctrl.loadSelectedLink(nav,type)"
 ></modal-content-filter>

@@ -6,7 +6,7 @@
     parentId: "=?",
     parentType: "=?",
     type: "=?",
-    fieldDisplay: "=?",
+    columnDisplay: "=?",
     selectedList: "=?",
     selectCallback: "&",
     save: "&",

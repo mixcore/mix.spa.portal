@@ -5,8 +5,8 @@ modules.component("mixDatabaseForm", {
     mixDatabaseId: "=",
     mixDatabaseName: "=",
     columns: "=?",
-    attrDataId: "=?",
-    attrData: "=?",
+    mixDatabaseDataId: "=?",
+    mixDatabaseData: "=?",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     parentId: "=?",
     defaultId: "=",
@@ -41,20 +41,20 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.loadData = async function () {
         /*
-            If input is data id => load ctrl.attrData from service and handle it independently
+            If input is data id => load ctrl.mixDatabaseData from service and handle it independently
         */
         ctrl.isBusy = true;
 
-        if (ctrl.attrDataId) {
-          var getData = await service.getSingle([ctrl.attrDataId]);
-          ctrl.attrData = getData.data;
-          if (ctrl.attrData) {
-            ctrl.attrData.parentId = ctrl.parentId;
-            ctrl.attrData.parentType = ctrl.parentType;
-            ctrl.mixDatabaseId = ctrl.attrData.mixDatabaseId;
-            ctrl.mixDatabaseName = ctrl.attrData.mixDatabaseName;
+        if (ctrl.mixDatabaseDataId) {
+          var getData = await service.getSingle([ctrl.mixDatabaseDataId]);
+          ctrl.mixDatabaseData = getData.data;
+          if (ctrl.mixDatabaseData) {
+            ctrl.mixDatabaseData.parentId = ctrl.parentId;
+            ctrl.mixDatabaseData.parentType = ctrl.parentType;
+            ctrl.mixDatabaseId = ctrl.mixDatabaseData.mixDatabaseId;
+            ctrl.mixDatabaseName = ctrl.mixDatabaseData.mixDatabaseName;
             ctrl.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
-            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.attrData.mixDatabaseId}&mixDatabaseName=${ctrl.attrData.mixDatabaseName}&mixDatabaseTitle=test`;
+            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=test`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
@@ -109,49 +109,49 @@ modules.component("mixDatabaseForm", {
           ctrl.columns = ctrl.columns || ctrl.defaultData.columns;
         }
 
-        if (!ctrl.attrData) {
-          ctrl.attrData = angular.copy(ctrl.defaultData);
+        if (!ctrl.mixDatabaseData) {
+          ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
         }
       };
 
       ctrl.reload = async function () {
-        ctrl.attrData = angular.copy(ctrl.defaultData);
+        ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
       };
       ctrl.loadSelected = function () {
         if (ctrl.selectedList.data.length) {
-          ctrl.attrData = ctrl.selectedList.data[0];
-          ctrl.attrData.mixDatabaseId = ctrl.mixDatabaseId;
-          ctrl.attrData.mixDatabaseName = ctrl.mixDatabaseName;
-          ctrl.attrData.parentId = ctrl.parentId;
-          ctrl.attrData.parentType = ctrl.parentType;
+          ctrl.mixDatabaseData = ctrl.selectedList.data[0];
+          ctrl.mixDatabaseData.mixDatabaseId = ctrl.mixDatabaseId;
+          ctrl.mixDatabaseData.mixDatabaseName = ctrl.mixDatabaseName;
+          ctrl.mixDatabaseData.parentId = ctrl.parentId;
+          ctrl.mixDatabaseData.parentType = ctrl.parentType;
         }
       };
       ctrl.submit = async function () {
         if (ctrl.validate()) {
           if (ctrl.saveData) {
             ctrl.isBusy = true;
-            var result = await ctrl.saveData({ data: ctrl.attrData });
+            var result = await ctrl.saveData({ data: ctrl.mixDatabaseData });
             if (result && result.isSucceed) {
               ctrl.isBusy = false;
-              ctrl.attrData = result.data;
+              ctrl.mixDatabaseData = result.data;
               $scope.$apply();
             } else {
               ctrl.isBusy = false;
-              // ctrl.attrData = await service.getSingle('portal', [ctrl.defaultId, ctrl.mixDatabaseId, ctrl.mixDatabaseName]);
+              // ctrl.mixDatabaseData = await service.getSingle('portal', [ctrl.defaultId, ctrl.mixDatabaseId, ctrl.mixDatabaseName]);
               $scope.$apply();
             }
           } else {
             ctrl.isBusy = true;
 
-            var saveResult = await service.save(ctrl.attrData);
+            var saveResult = await service.save(ctrl.mixDatabaseData);
             if (saveResult.isSucceed) {
-              ctrl.attrData.id = saveResult.data.id;
+              ctrl.mixDatabaseData.id = saveResult.data.id;
               ctrl.isBusy = false;
               $rootScope.showMessage("success");
               if ($location.path() == "/portal/mix-database-data/create") {
                 const url =
                   ctrl.backUrl ||
-                  `/portal/mix-database-data/details?dataId=${ctrl.attrData.id}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
+                  `/portal/mix-database-data/details?dataId=${ctrl.mixDatabaseData.id}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
                 $location.url(url);
               }
               $scope.$apply();
@@ -168,20 +168,20 @@ modules.component("mixDatabaseForm", {
       ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.columns, function (field) {
-          if (field.regex) {
-            var regex = RegExp(field.regex, "g");
-            isValid = regex.test(ctrl.attrData.obj[field.name]);
+        angular.forEach(ctrl.columns, function (column) {
+          if (column.regex) {
+            var regex = RegExp(column.regex, "g");
+            isValid = regex.test(ctrl.mixDatabaseData.obj[column.name]);
             if (!isValid) {
-              ctrl.errors.push(`${field.name} is not match Regex`);
+              ctrl.errors.push(`${column.name} is not match Regex`);
             }
           }
           if (!isValid) {
             $rootScope.showErrors(ctrl.errors);
           }
-          if (isValid && field.isEncrypt) {
-            ctrl.attrData.obj[field.name] = $rootScope.encrypt(
-              ctrl.attrData.obj[field.name]
+          if (isValid && column.isEncrypt) {
+            ctrl.mixDatabaseData.obj[column.name] = $rootScope.encrypt(
+              ctrl.mixDatabaseData.obj[column.name]
             );
           }
         });
@@ -192,16 +192,16 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.loadSelectedLink = function (data, type) {
         if (data) {
-          ctrl.attrData.obj.target_id = data.id;
-          ctrl.attrData.obj.title = data.title;
-          ctrl.attrData.obj.type = type;
-          ctrl.attrData.obj.uri = data.detailsUrl;
+          ctrl.mixDatabaseData.obj.target_id = data.id;
+          ctrl.mixDatabaseData.obj.title = data.title;
+          ctrl.mixDatabaseData.obj.type = type;
+          ctrl.mixDatabaseData.obj.uri = data.detailsUrl;
         }
       };
       ctrl.filterData = function (attributeName) {
-        if (ctrl.attrData) {
+        if (ctrl.mixDatabaseData) {
           var attr = $rootScope.findObjectByKey(
-            ctrl.attrData.obj,
+            ctrl.mixDatabaseData.obj,
             "mixDatabaseColumnName",
             attributeName
           );
@@ -214,7 +214,7 @@ modules.component("mixDatabaseForm", {
               )
             );
             mixDatabaseColumn;
-            ctrl.attrData.obj.push(attr);
+            ctrl.mixDatabaseData.obj.push(attr);
           }
           return attr;
         }

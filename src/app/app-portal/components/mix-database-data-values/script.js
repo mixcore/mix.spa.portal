@@ -24,7 +24,7 @@ modules.component("mixDatabaseDataValues", {
     "$scope",
     "RestMixDatabaseColumnPortalService",
     "RestMixDatabaseDataPortalService",
-    function ($rootScope, $scope, fieldService, dataService) {
+    function ($rootScope, $scope, columnService, dataService) {
       var ctrl = this;
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];
@@ -38,7 +38,7 @@ modules.component("mixDatabaseDataValues", {
           };
         }
         if (!ctrl.columns) {
-          var getFields = await fieldService.initData(
+          var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
