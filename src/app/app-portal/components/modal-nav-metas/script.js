@@ -43,8 +43,6 @@
           ctrl.selectedList = [];
         }
         ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
-        angular.forEach(ctrl.selectedList, function (e) {
-        });
         if (ctrl.mixDatabaseId) {
           ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
@@ -146,27 +144,44 @@
           // Not show data if there's in selected list
           e.disabled = ctrl.selectedValues.indexOf(e.id) >= 0;
         });
+        angular.forEach(ctrl.selectedList, function (e) {
+          var subIds = [];
+          if (e.attributeData && e.attributeData.obj.sub_categories) {
+            subIds = e.attributeData.obj.sub_categories.map((m) => m.id);
+          }
+          else if(e.sub_categories){
+            subIds = e.sub_categories.map((m) => m.id);
+          }
+          var subData = ctrl.selectedList.filter(
+            (m) => subIds.indexOf(m.dataId) >= 0
+          );
+          angular.forEach(subData, function (s) {
+            s.disabled = true;
+          });
+        });
       };
       ctrl.select = function (value, isSelected) {
         let idx = ctrl.selectedValues.indexOf(value);
         var nav = ctrl.selectedList[idx];
-        if(!nav){
+        if (!nav) {
           nav = angular.copy(ctrl.defaultNav);
           nav.dataId = value;
-          nav.attributeData = $rootScope.findObjectByKey(ctrl.data.items, "id", value);
+          nav.attributeData = $rootScope.findObjectByKey(
+            ctrl.data.items,
+            "id",
+            value
+          );
         }
         if (isSelected) {
           if (!nav.id && ctrl.parentId) {
             navService.save(nav).then((resp) => {
               if (resp.isSucceed) {
                 nav.id = resp.data.id;
-                if (idx >= 0) {
-                  ctrl.selectedList.push(nav);
-                }
+                ctrl.selectedList.push(nav);
                 ctrl.selectedValues.push(value);
-                ctrl.disableNavitem(nav, true);
                 $rootScope.showMessage("success", "success");
                 ctrl.isBusy = false;
+                ctrl.filterData();
                 $scope.$apply();
               } else {
                 $rootScope.showMessage("failed");
@@ -175,11 +190,9 @@
               }
             });
           } else {
-            if (idx < 0) {
-              ctrl.selectedList.push(nav);
-              ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
-              ctrl.disableNavitem(nav, true);
-            }
+            ctrl.selectedList.push(nav);
+            ctrl.selectedValues.push(value);
+            ctrl.filterData();
           }
         } else {
           if (ctrl.parentId) {
@@ -187,15 +200,20 @@
               if (resp.isSucceed) {
                 nav.disabled = false;
                 nav.id = null;
-                $rootScope.removeObjectByKey(ctrl.selectedList,"dataId", value);
+                $rootScope.removeObjectByKey(
+                  ctrl.selectedList,
+                  "dataId",
+                  value
+                );
                 ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
-                ctrl.disableNavitem(nav, false);
+                ctrl.filterData();
                 $rootScope.showMessage("success", "success");
                 ctrl.isBusy = false;
                 $scope.$apply();
               } else {
                 $rootScope.showMessage("failed");
                 ctrl.isBusy = false;
+                ctrl.filterData();
                 $scope.$apply();
               }
             });
@@ -210,45 +228,46 @@
           ctrl.selectCallback({ data: nav });
         }
       };
-      ctrl.disableNavitem = function (nav, isDisable){
+      ctrl.disableNavitem = function (nav, isDisable) {
         nav.disabled = isDisable;
-        // nav.attributeData.disabled = isDisable;
-      }
+      };
       ctrl.createData = function () {
-        var tmp = $rootScope.findObjectByKey(
-          ctrl.data.items,
-          "title",
-          ctrl.newTitle
-        );
-        if (!tmp) {
-          ctrl.isBusy = true;
-          ctrl.mixDatabaseData.parentId = 0;
-          ctrl.mixDatabaseData.parentType = "Set";
-          ctrl.mixDatabaseData.obj.title = ctrl.newTitle;
-          ctrl.mixDatabaseData.obj.slug = $rootScope.generateKeyword(
-            ctrl.newTitle,
-            "-"
+        if (ctrl.newTitle) {
+          var tmp = $rootScope.findObjectByKey(
+            ctrl.data.items,
+            "title",
+            ctrl.newTitle
           );
-          ctrl.mixDatabaseData.obj.type = ctrl.type;
-          var nav = angular.copy(ctrl.defaultNav);
-          nav.attributeData = ctrl.mixDatabaseData;
-          navService.save(nav).then((resp) => {
-            if (resp.isSucceed) {
-              ctrl.data.items.push(resp.data);
-              ctrl.reload();
-              resp.data.isActived = true;
-              ctrl.select(resp.data);
-              ctrl.isBusy = false;
-              $scope.$apply();
-            } else {
-              $rootScope.showErrors(resp.errors);
-              ctrl.isBusy = false;
-              $scope.$apply();
-            }
-          });
-        } else {
-          tmp.isActived = true;
-          ctrl.select(tmp);
+          if (!tmp) {
+            ctrl.isBusy = true;
+            ctrl.mixDatabaseData.parentId = 0;
+            ctrl.mixDatabaseData.parentType = "Set";
+            ctrl.mixDatabaseData.obj.title = ctrl.newTitle;
+            ctrl.mixDatabaseData.obj.slug = $rootScope.generateKeyword(
+              ctrl.newTitle,
+              "-"
+            );
+            ctrl.mixDatabaseData.obj.type = ctrl.type;
+            var nav = angular.copy(ctrl.defaultNav);
+            nav.attributeData = ctrl.mixDatabaseData;
+            navService.save(nav).then((resp) => {
+              if (resp.isSucceed) {
+                ctrl.data.items.push(resp.data);
+                ctrl.reload();
+                resp.data.isActived = true;
+                ctrl.select(resp.data);
+                ctrl.isBusy = false;
+                $scope.$apply();
+              } else {
+                $rootScope.showErrors(resp.errors);
+                ctrl.isBusy = false;
+                $scope.$apply();
+              }
+            });
+          } else {
+            tmp.isActived = true;
+            ctrl.select(tmp);
+          }
         }
       };
     },

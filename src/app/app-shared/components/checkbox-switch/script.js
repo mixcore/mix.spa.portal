@@ -17,7 +17,7 @@ modules.component('checkboxSwitch', {
     bindings: {
         value: '=',
         isSelected: '=?',
-        detailsUrl: '=',
+        detailsUrl: '=?',
         callback: '&',
         description: '='
     }
