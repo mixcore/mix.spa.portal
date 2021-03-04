@@ -149,7 +149,7 @@
           if (e.attributeData && e.attributeData.obj.sub_categories) {
             subIds = e.attributeData.obj.sub_categories.map((m) => m.id);
           }
-          else if(e.sub_categories){
+          else if (e.sub_categories) {
             subIds = e.sub_categories.map((m) => m.id);
           }
           var subData = ctrl.selectedList.filter(

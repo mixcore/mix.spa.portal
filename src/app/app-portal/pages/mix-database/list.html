@@ -1,17 +1,16 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-    <div class="btn-group w-100 mb-3" role="group" aria-label="Basic example">
-      <a href="/portal/mix-database/create" class="btn btn-outline-primary m-0">
-        <i class="fas fa-plus"></i> Create Database
-      </a>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <filter-list
-          request="request"
-          orders="orders"
-          callback="getList(pageIndex)"
-        ></filter-list>
+
+    <div class="card card-body">
+      <div class="btn-group w-100 mb-3" role="group" aria-label="Basic example">
+        <a href="/portal/mix-database/create" class="btn btn-primary text-white m-0">
+          <i class="fas fa-plus"></i> Create Database
+        </a>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <filter-list request="request" orders="orders" callback="getList(pageIndex)"></filter-list>
+        </div>
       </div>
     </div>
   </nav>
@@ -25,21 +24,14 @@
     <div class="card-body">
       <div class="row">
         <div class="col-12">
-          <table
-            class="table table-sm table-hover"
-            cellspacing="0"
-            ng-init="getList()"
-          >
+          <table class="table table-sm table-hover" cellspacing="0" ng-init="getList()">
             <thead class="thead-light">
               <tr>
                 <!-- <th scope="col" style="width: 3%;">
                     </th> -->
                 <th scope="col" style="width: 4%;">
-                  <input
-                    type="checkbox"
-                    ng-model="selectedList.isSelectAll"
-                    ng-change="selectAll(selectedList.isSelectAll)"
-                  />
+                  <input type="checkbox" ng-model="selectedList.isSelectAll"
+                    ng-change="selectAll(selectedList.isSelectAll)" />
                 </th>
                 <th scope="col" style="width: 25%;">
                   Database
@@ -58,23 +50,15 @@
             </thead>
 
             <tbody class="sortable">
-              <tr
-                ng-repeat="item in data.items track by $index"
-                class="sortable-item"
-                sort-model="mix-database"
-                sort-model-id="{{item.id}}"
-              >
+              <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="mix-database"
+                sort-model-id="{{item.id}}">
                 <!-- <td style="cursor:move;" class="drag-header">
                         <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
                     </td> -->
                 <td>
                   <div class="form-check">
-                    <input
-                      type="checkbox"
-                      ng-model="item.isSelected"
-                      ng-change="select(item.id, item.isSelected)"
-                      class="form-check-input"
-                    />
+                    <input type="checkbox" ng-model="item.isSelected" ng-change="select(item.id, item.isSelected)"
+                      class="form-check-input" />
                   </div>
                 </td>
                 <td>
@@ -92,40 +76,24 @@
                   </small>
                 </td>
                 <td>
-                  <div
-                    class="btn-group btn-group-sm btn-group-sm float-end"
-                    role="group"
-                    aria-label="Actions"
-                  >
+                  <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
                     <!-- <a class="btn btn-link" data-bs-toggle="collapse" href="#attribute-childs" role="button"
                         aria-expanded="false" aria-controls="attribute-childs">
                         <i class="fas fa-folder"></i>
                     </a> -->
-                    <a
-                      href="/portal/mix-database-data/create?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}&dataId=default"
-                      title="Add Data"
-                      class="btn btn-link text-primary"
-                    >
+                    <a href="/portal/mix-database-data/create?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}&dataId=default"
+                      title="Add Data" class="btn btn-link text-primary">
                       <span class="fas fa-plus"></span>
                     </a>
-                    <a
-                      href="/portal/mix-database-data/list?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}"
-                      title="List Data"
-                      class="btn btn-link text-primary"
-                    >
+                    <a href="/portal/mix-database-data/list?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}"
+                      title="List Data" class="btn btn-link text-primary">
                       <span class="fas fa-database"></span>
                     </a>
-                    <a
-                      href="/portal/mix-database/details/{{item.id}}"
-                      title="Edit table"
-                      class="btn btn-link text-primary"
-                    >
+                    <a href="/portal/mix-database/details/{{item.id}}" title="Edit table"
+                      class="btn btn-link text-primary">
                       <span class="fas fa-tools"></span>
                     </a>
-                    <a
-                      ng-click="remove(item.id);"
-                      class="btn btn-link text-danger"
-                    >
+                    <a ng-click="remove(item.id);" class="btn btn-link text-danger">
                       <span class="fas fa-trash-alt"></span>
                     </a>
                   </div>
@@ -141,33 +109,20 @@
   <div class="row">
     <div class="col-4">
       <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01"
-          >Bulk action</label
-        >
+        <label class="input-group-text" for="inputGroupSelect01">Bulk action</label>
 
         <select class="form-select" ng-model="selectedList.action">
           <option selected>-- select --</option>
           <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
         </select>
-        <a
-          class="btn btn-sm btn-primary"
-          ng-if="selectedList.data.length > 0 && selectedList.action"
-          ng-click="applyList()"
-          >Apply</a
-        >
+        <a class="btn btn-sm btn-primary" ng-if="selectedList.data.length > 0 && selectedList.action"
+          ng-click="applyList()">Apply</a>
       </div>
     </div>
     <div class="col">
-      <paging
-        class="small"
-        page="request.pageIndex + 1"
-        page-size="request.pageSize"
-        total="data.totalItems"
-        ul-class="pagination justify-content-end m-0"
-        a-class="page-link"
-        paging-action="getList(page-1)"
-        scroll-top="true"
-      >
+      <paging class="small" page="request.pageIndex + 1" page-size="request.pageSize" total="data.totalItems"
+        ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)"
+        scroll-top="true">
       </paging>
     </div>
   </div>

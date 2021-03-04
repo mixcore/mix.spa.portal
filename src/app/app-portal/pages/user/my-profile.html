@@ -1,8 +1,11 @@
 <aside class="bd-sidebar sub-sidebar" ng-if="activedUser">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-    <actions preview-url="activedUser.user.fullPath" back-url="'/portal/user/list'"></actions>
-    <custom-image header="'Avatar'" auto="'true'" type="'Users'" folder="'Avatars'" src-url="activedUser.user.avatar"
-      src="activedUser.user.avatar" posted-file="activedUser.mediaFile"></custom-image>
+
+    <div class="card card-body">
+      <actions preview-url="activedUser.user.fullPath" back-url="'/portal/user/list'"></actions>
+      <custom-image header="'Avatar'" auto="'true'" type="'Users'" folder="'Avatars'" src-url="activedUser.user.avatar"
+        src="activedUser.user.avatar" posted-file="activedUser.mediaFile"></custom-image>
+    </div>
   </nav>
 </aside>
 
