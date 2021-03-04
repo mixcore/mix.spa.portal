@@ -11,7 +11,7 @@ app.controller('LoginController', ['$rootScope', '$scope', '$routeParams', '$loc
         $scope.loginData = {
             userName: "",
             password: "",
-            rememberMe: false
+            rememberMe: true
         };
 
         $scope.message = "";

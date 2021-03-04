@@ -10,7 +10,7 @@ app.controller('loginController', ['$rootScope', '$scope', 'ngAppSettings', '$lo
     $scope.loginData = {
         username: "",
         password: "",
-        rememberme: false
+        rememberme: true
     };
 
     $scope.message = "";

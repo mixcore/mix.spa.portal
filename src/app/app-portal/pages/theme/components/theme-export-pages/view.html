@@ -19,7 +19,11 @@
     <hr>
     <div class="row justify-content-md-left">
         <div class="col-md-4 mb-2" ng-repeat="page in $ctrl.exportData.pages track by page.id">
-            <checkbox-switch data="page" callback="$ctrl.updatePageExport()" description="page.title"></checkbox-switch>
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" ng-model="page.isActived"
+                    ng-change="$ctrl.updatePageExport()" id="page-{{page.id}}" />
+                <label class="custom-control-label" for="page-{{page.id}}">{{page.title}}</label>
+            </div>
 
             <!-- <div class="col-md-11" ng-bind="page.title"></div> -->
             <div class="col-md-1"></div>
