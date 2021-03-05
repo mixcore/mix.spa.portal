@@ -1,7 +1,7 @@
 ﻿modules.component('modalNavPosts', {
     templateUrl: '/mix-app/views/app-portal/components/modal-nav-posts/modal-nav-posts.html',
     bindings: {
-        srcField: '=',
+        srcColumn: '=',
         srcId: '=',
         query: '=',
         selected: '=',
@@ -41,7 +41,7 @@
                             status: 'Published',
                             isActived: false
                         };
-                        item[ctrl.srcField] = ctrl.srcId;
+                        item[ctrl.srcColumn] = ctrl.srcId;
                         ctrl.navs.push(item);
                     });
                     $rootScope.isBusy = false;
@@ -55,7 +55,6 @@
             }
             ctrl.saveSelected = function () {
                 ctrl.selected = $rootScope.filterArray(ctrl.navs, ['isActived'], [true]);
-                console.log(ctrl.selected);
                 setTimeout(() => {
                     ctrl.save().then(() => {
                         ctrl.loadPosts();

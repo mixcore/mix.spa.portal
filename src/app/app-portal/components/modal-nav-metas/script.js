@@ -39,6 +39,7 @@
       ctrl.data = { items: [] };
       ctrl.selectedValues = [];
       ctrl.$onInit = function () {
+        ctrl.request.isGroup = true;
         if (!ctrl.selectedList) {
           ctrl.selectedList = [];
         }

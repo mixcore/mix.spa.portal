@@ -82,23 +82,23 @@ app.controller("MixDatabaseDataController", [
         $scope.viewmodel = $scope.selectedList.data[0];
       }
     };
-    $scope.saveSuccessCallback = function () {
-      if ($location.path() == "/portal/mix-database-data/create") {
-        let backUrl =
-          $scope.backUrl ||
-          `/portal/mix-database-data/details?dataId=${$scope.viewmodel.id}`;
-        $rootScope.goToSiteUrl(backUrl);
-      } else {
-        if ($scope.parentId && $scope.parentType == 'Set') {
-          $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
-        } else {
-          let backUrl =
-            $scope.backUrl ||
-            `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
-          $rootScope.goToSiteUrl(backUrl);
-        }
-      }
-    };
+    // $scope.saveSuccessCallback = function () {
+    //   if ($location.path() == "/portal/mix-database-data/create") {
+    //     let backUrl =
+    //       $scope.backUrl ||
+    //       `/portal/mix-database-data/details?dataId=${$scope.viewmodel.id}`;
+    //     $rootScope.goToSiteUrl(backUrl);
+    //   } else {
+    //     if ($scope.parentId && $scope.parentType == 'Set') {
+    //       $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
+    //     } else {
+    //       let backUrl =
+    //         $scope.backUrl ||
+    //         `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
+    //       $rootScope.goToSiteUrl(backUrl);
+    //     }
+    //   }
+    // };
 
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;

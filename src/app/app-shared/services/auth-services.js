@@ -76,7 +76,9 @@ app.factory("AuthService", [
           userRoles: data.info.userRoles,
           token: data.access_token,
           userName: data.info.user.username,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
+          roleNames: data.info.userRoles
+            .filter((m) => m.isActived)
+            .map((i) => i.role.normalizedName),
           avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
           userId: data.info.user.id,
@@ -315,7 +317,7 @@ app.factory("AuthService", [
                 if (
                   !$rootScope.globalSettings.lastUpdateConfiguration ||
                   $rootScope.globalSettings.lastUpdateConfiguration <
-                  data.lastUpdateConfiguration
+                    data.lastUpdateConfiguration
                 ) {
                   _initSettings();
                 }
@@ -384,9 +386,9 @@ app.factory("AuthService", [
       $http
         .post(
           appSettings.serviceBase +
-          "/" +
-          appSettings.apiVersion +
-          "/account/registerexternal",
+            "/" +
+            appSettings.apiVersion +
+            "/account/registerexternal",
           registerExternalData
         )
         .success(function (response) {
