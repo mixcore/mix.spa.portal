@@ -11,13 +11,15 @@
         </div>
         <div class="row">
             <div class="col-12" ng-repeat="item in $ctrl.selectedList">
-                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item.data[$ctrl.columnDisplay]">
+                <checkbox-switch value="item.dataId" is-selected="$ctrl.isSelected(item.dataId)"
+                    callback="$ctrl.select(value, isSelected)" description="item.data[$ctrl.columnDisplay]">
                 </checkbox-switch>
             </div>
         </div>
         <div class="row">
             <div class="col-12" ng-repeat="item in $ctrl.data.items" ng-hide="item.disabled">
-                <checkbox-switch data="item" callback="$ctrl.select(data)" description="item.data[$ctrl.columnDisplay]">
+                <checkbox-switch value="item.dataId" is-selected="$ctrl.isSelected(item.dataId)"
+                callback="$ctrl.select(value, isSelected)" description="item.data[$ctrl.columnDisplay]">>
                 </checkbox-switch>
             </div>
         </div>
