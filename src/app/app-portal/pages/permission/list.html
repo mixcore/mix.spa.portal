@@ -1,10 +1,13 @@
 <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-        <filter-list request="request" callback="getList()" create-url="'/portal/permission/create'"
-            create-text="'Create Permission'"></filter-list>
-        <!-- TODO: Hoang to check search by level not work -->
-        <label class="form-label mt-3">Permission Level</label>
-        <input type="number" class="form-control mb-4" ng-enger="getList()" ng-model="request.level" />
+
+        <div class="card card-body">
+            <filter-list request="request" callback="getList()" create-url="'/portal/permission/create'"
+                create-text="'Create Permission'"></filter-list>
+            <!-- TODO: Hoang to check search by level not work -->
+            <label class="form-label mt-3">Permission Level</label>
+            <input type="number" class="form-control mb-4" ng-enger="getList()" ng-model="request.level" />
+        </div>
     </nav>
 </aside>
 

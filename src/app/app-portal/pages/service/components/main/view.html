@@ -17,7 +17,7 @@
             <label class="form-label">Type</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-bs-toggle="buttons">
                 <label ng-repeat="type in $ctrl.settings.serviceTypes track by $index" ng-switch="type"
-                    ng-class="{active: $index === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
+                    ng-class="{active: $index === $ctrl.model.type}" class="btn btn-primary text-white btn-block mt-0"
                     ng-click="$ctrl.model.type=$index;">
                     <input ng-model="$ctrl.model.type" type="radio" value="{{$index}}" class="form-check-input"
                         id="model_type_{{$index}}">

@@ -1,13 +1,15 @@
 <aside class="bd-sidebar sub-sidebar w-50">
     <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-        <actions preview-url="viewmodel.detailsUrl" back-url="'/portal/permission/list'"></actions>
-        <div class="card mt-3">
-            <h6 class="card-header">
-                Role Assignment
-            </h6>
-            <div class="card-body">
-                <permission-plug-play search-text="request.keyword" pages="data" page="viewmodel"
-                    prefix-parent="'perm_parent_'" prefix-child="'perm_child_'"></permission-plug-play>
+        <div class="card card-body">
+            <actions preview-url="viewmodel.detailsUrl" back-url="'/portal/permission/list'"></actions>
+            <div class="card mt-3">
+                <h6 class="card-header">
+                    Role Assignment
+                </h6>
+                <div class="card-body">
+                    <permission-plug-play search-text="request.keyword" pages="data" page="viewmodel"
+                        prefix-parent="'perm_parent_'" prefix-child="'perm_child_'"></permission-plug-play>
+                </div>
             </div>
         </div>
     </nav>
