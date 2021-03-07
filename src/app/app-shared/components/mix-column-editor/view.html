@@ -194,13 +194,16 @@
     </div>
     <div class="text-muted" ng-switch-when="boolean">
       <!--Boolean-->
-      <input
-        class="{{$ctrl.inputClass}}"
-        type="checkbox"
-        placeholder="{{$ctrl.translate($ctrl.column.title)}}"
-        ng-model="$ctrl.model.obj[$ctrl.column.name]"
-        ng-checked="$ctrl.model.obj[$ctrl.column.name]"
-      />
+      <div class="form-check">
+        <input
+          class="form-check-input {{$ctrl.inputClass}}"
+          type="checkbox"
+          placeholder="{{$ctrl.translate($ctrl.column.title)}}"
+          ng-model="$ctrl.model.obj[$ctrl.column.name]"
+          ng-checked="$ctrl.model.obj[$ctrl.column.name]"
+        />
+        <lable ng-bind="$ctrl.model.obj[$ctrl.column.name]" class="form-check-label"></label>
+      </div>
     </div>
     <div class="text-muted" ng-switch-when="icon">
       <mix-select-icons
@@ -226,7 +229,7 @@
         <div class="col-md-12 mb-3">
           <a
             href="{{$ctrl.createUrl}}"
-            class="btn btn-sm btn-primary float-end px-4 me-2"
+            class="btn btn-sm btn-primary float-end px-4 me-2 text-white"
           >
             <i class="fas fa-plus"></i> Create data
           </a>
