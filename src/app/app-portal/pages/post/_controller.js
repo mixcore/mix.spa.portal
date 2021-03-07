@@ -178,8 +178,8 @@ app.controller("PostController", [
       $scope.defaultThumbnailImgWidth = ngAppSettings.settings.DefaultThumbnailImgWidth;
       $scope.defaultThumbnailImgHeight = ngAppSettings.settings.DefaultThumbnailImgHeight;
 
-      $scope.DefaultFeatureImgWidth = ngAppSettings.settings.DefaultFeatureImgWidth;
-      $scope.DefaultFeatureImgHeight = ngAppSettings.settings.DefaultFeatureImgHeight;
+      $scope.defaultFeatureImgWidth = ngAppSettings.settings.DefaultFeatureImgWidth;
+      $scope.defaultFeatureImgHeight = ngAppSettings.settings.DefaultFeatureImgHeight;
 
       $scope.request.type = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
