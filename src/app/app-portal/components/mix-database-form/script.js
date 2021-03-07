@@ -6,14 +6,14 @@ modules.component("mixDatabaseForm", {
     mixDatabaseName: "=",
     columns: "=?",
     mixDatabaseDataId: "=?",
-    mixDatabaseData: "=?",
+    mixDatabaseData: "=",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     parentId: "=?",
     defaultId: "=",
     backUrl: "=?",
     level: "=?",
     hideAction: "=?",
-    saveData: "&?",
+    saveSuccess: "&?",
   },
   controller: [
     "$rootScope",
@@ -21,13 +21,7 @@ modules.component("mixDatabaseForm", {
     "$location",
     "$routeParams",
     "RestMixDatabaseDataPortalService",
-    function (
-      $rootScope,
-      $scope,
-      $location,
-      $routeParams,
-      service
-    ) {
+    function ($rootScope, $scope, $location, $routeParams, service) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -128,40 +122,23 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.submit = async function () {
         if (ctrl.validate()) {
-          if (ctrl.saveData) {
-            ctrl.isBusy = true;
-            var result = await ctrl.saveData({ data: ctrl.mixDatabaseData });
-            if (result && result.isSucceed) {
-              ctrl.isBusy = false;
-              ctrl.mixDatabaseData = result.data;
-              $scope.$apply();
-            } else {
-              ctrl.isBusy = false;
-              // ctrl.mixDatabaseData = await service.getSingle('portal', [ctrl.defaultId, ctrl.mixDatabaseId, ctrl.mixDatabaseName]);
-              $scope.$apply();
-            }
-          } else {
-            ctrl.isBusy = true;
+          ctrl.isBusy = true;
 
-            var saveResult = await service.save(ctrl.mixDatabaseData);
-            if (saveResult.isSucceed) {
-              ctrl.mixDatabaseData.id = saveResult.data.id;
-              ctrl.isBusy = false;
-              $rootScope.showMessage("success");
-              if ($location.path() == "/portal/mix-database-data/create") {
-                const url =
-                  ctrl.backUrl ||
-                  `/portal/mix-database-data/details?dataId=${ctrl.mixDatabaseData.id}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
-                $location.url(url);
-              }
-              $scope.$apply();
-            } else {
-              ctrl.isBusy = false;
-              if (saveResult) {
-                $rootScope.showErrors(saveResult.errors);
-              }
-              $scope.$apply();
+          var saveResult = await service.save(ctrl.mixDatabaseData);
+          if (saveResult.isSucceed) {
+            ctrl.mixDatabaseData = saveResult.data;
+            if (ctrl.saveSuccess) {
+              ctrl.saveSuccess({ data: ctrl.mixDatabaseData });
             }
+            ctrl.isBusy = false;
+            $rootScope.showMessage("success");
+            $scope.$apply();
+          } else {
+            ctrl.isBusy = false;
+            if (saveResult) {
+              $rootScope.showErrors(saveResult.errors);
+            }
+            $scope.$apply();
           }
         }
       };

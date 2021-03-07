@@ -143,14 +143,7 @@ app.controller("PageController", [
       if ($scope.additionalData) {
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Page";
-        var saveData = await dataService.save($scope.additionalData);
-        if (saveData.isSucceed) {
-          if ($location.path() == "/portal/page/create") {
-            $scope.goToDetail($scope.viewmodel.id, "page");
-          } else {
-            $scope.additionalData = saveData.data;
-          }
-        }
+        await dataService.save($scope.additionalData);
       }
       $rootScope.isBusy = false;
       $scope.$apply();

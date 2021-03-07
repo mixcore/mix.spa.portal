@@ -20,7 +20,7 @@
     "ngAppSettings",
     "RestMixDatabaseDataPortalService",
     "RestRelatedAttributeDataPortalService",
-    "RestMixDatabaseColumnPortalService",
+    "RestMixDatabasePortalService",
     function (
       $rootScope,
       $scope,
@@ -28,7 +28,7 @@
       ngAppSettings,
       dataService,
       navService,
-      columnService
+      databaseService
     ) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
@@ -72,11 +72,15 @@
           ctrl.parentType = $routeParams.parentType;
         }
         if (!ctrl.columns) {
-          var getFields = await columnService.initData(
+          var getMixDatbase = await databaseService.getSingle([
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
-          );
-          if (getFields.isSucceed) {
-            ctrl.columns = getFields.data;
+          ]);
+          if (getMixDatbase.isSucceed) {
+            ctrl.columns = getMixDatbase.data.columns;
+            ctrl.mixDatabaseId = getMixDatbase.data.id;
+            ctrl.mixDatabaseName = getMixDatbase.data.name;
+            ctrl.defaultNav.mixDatabaseId = getMixDatbase.data.id;
+            ctrl.defaultNav.mixDatabaseName = getMixDatbase.data.name;
             $scope.$apply();
           }
         }

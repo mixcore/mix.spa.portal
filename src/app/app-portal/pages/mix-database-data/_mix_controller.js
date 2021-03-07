@@ -47,6 +47,7 @@ app.controller("MixDatabaseDataController", [
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
+      $scope.request.isGroup = $routeParams.isGroup || false;
       if ($routeParams.backUrl) {
         $scope.backUrl = decodeURIComponent($routeParams.backUrl);
       }
@@ -73,9 +74,8 @@ app.controller("MixDatabaseDataController", [
         }
       }
     };
-    $scope.saveData = function (data) {
+    $scope.saveSuccess = function (data) {
       $scope.viewmodel = data;
-      $scope.save();
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {

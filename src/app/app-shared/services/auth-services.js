@@ -68,7 +68,7 @@ app.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await _getApiResult(req);
+      var resp = await _getRestApiResult(req);
 
       if (resp.isSucceed) {
         data = resp.data;
@@ -147,7 +147,7 @@ app.factory("AuthService", [
       var resp = await _getApiResult(req);
 
       if (resp.isSucceed) {
-        data = resp.data;
+        data = resp;
         var authData = {
           userRoles: data.info.userRoles,
           token: data.access_token,
@@ -433,6 +433,85 @@ app.factory("AuthService", [
         }
       );
     };
+
+    var _getRestApiResult = async function (req, serviceBase) {
+
+      var serviceUrl =
+        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
+      if (serviceBase || req.serviceBase) {
+        serviceUrl =
+          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
+      }
+
+      req.url = serviceUrl + req.url;
+      if (!req.headers) {
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+      }
+      return $http(req).then(
+        function (resp) {
+          return { isSucceed: true, data: resp.data };
+        },
+        function (error) {
+          if (error.status === 401) {
+            //Try again with new token from previous Request (optional)
+            return authService
+              .refreshToken(authService.authentication.refresh_token)
+              .then(
+                function () {
+                  req.headers.Authorization =
+                    "Bearer " + authService.authentication.token;
+                  return $http(req).then(
+                    function (results) {
+                      return { isSucceed: true, data: results.data };
+                    },
+                    function (err) {
+                      authService.logOut();
+                      authService.authentication.token = null;
+                      authService.authentication.refresh_token = null;
+                      authService.referredUrl = $location.$$url;
+                      $rootScope.showLogin(req, "rest");
+                      // window.top.location.href = '/security/login';
+                    }
+                  );
+                },
+                function (err) {
+                  var t = { isSucceed: false };
+
+                  authService.logOut();
+                  authService.authentication.token = null;
+                  authService.authentication.refresh_token = null;
+                  authService.referredUrl = $location.$$url;
+                  $rootScope.showLogin(req, "rest");
+                  // window.top.location.href = '/security/login';
+                  return t;
+                }
+              );
+          } else if (
+            error.status === 200 ||
+            error.status === 204 ||
+            error.status === 205
+          ) {
+            return {
+              isSucceed: true,
+              status: err.status,
+              errors: [error.statusText || error.status],
+            };
+          } else {
+            if (error.data) {
+              return { isSucceed: false, errors: [error.data] };
+            } else {
+              return {
+                isSucceed: false,
+                errors: [error.statusText || error.status],
+              };
+            }
+          }
+        }
+      );
+    };
+
 
     var _isInRole = function (roleName) {
       return this.authentication.roleNames.includes(roleName.toUpperCase());

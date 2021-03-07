@@ -50,7 +50,7 @@ app.controller("PostController", [
         $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
       }
       $scope.pageName = "postList";
-      $scope.loadPostTypes();
+      await $scope.loadPostTypes();
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
@@ -163,14 +163,7 @@ app.controller("PostController", [
       if ($scope.additionalData) {
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
-        var saveData = await dataService.save($scope.additionalData);
-        if (saveData.isSucceed) {
-          if ($location.path() == "/portal/post/create") {
-            $scope.goToDetail($scope.viewmodel.id, "post");
-          } else {
-            $scope.additionalData = saveData.data;
-          }
-        }
+        await dataService.save($scope.additionalData);
       }
       $rootScope.isBusy = false;
       $scope.$apply();

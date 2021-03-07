@@ -210,8 +210,7 @@ function BaseRestCtrl(
       } else {
         resp = await service.update($scope.viewmodel.id, $scope.viewmodel);
       }
-      $rootScope.isBusy = false;
-      $scope.$apply();
+     
       if (resp.isSucceed) {
         $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
@@ -235,6 +234,8 @@ function BaseRestCtrl(
           $rootScope.showErrors(resp.errors);
         }
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
       return resp;
     } else {
       $rootScope.showErrors(["invalid model"]);
