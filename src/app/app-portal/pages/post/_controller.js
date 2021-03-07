@@ -174,8 +174,13 @@ app.controller("PostController", [
       $scope.$apply();
     };
     $scope.getSingleSuccessCallback = async function () {
-      $scope.imgW = ngAppSettings.settings.post_image_width;
-      $scope.imgH = ngAppSettings.settings.post_image_height;
+
+      $scope.defaultThumbnailImgWidth = ngAppSettings.settings.DefaultThumbnailImgWidth;
+      $scope.defaultThumbnailImgHeight = ngAppSettings.settings.DefaultThumbnailImgHeight;
+
+      $scope.DefaultFeatureImgWidth = ngAppSettings.settings.DefaultFeatureImgWidth;
+      $scope.DefaultFeatureImgHeight = ngAppSettings.settings.DefaultFeatureImgHeight;
+
       $scope.request.type = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
