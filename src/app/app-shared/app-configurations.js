@@ -218,19 +218,31 @@ app.run([
       return input;
     };
 
-    $rootScope.generateKeyword = function (src, character) {
+    $rootScope.generateKeyword = function (src, character, isCamelCase = false) {
       if (src) {
         src = $rootScope.parseUnsignString(src);
-        return (
-          src
-            .replace(/[^a-zA-Z0-9]+/g, character)
-            .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-            .replace(/([a-z])([A-Z])/g, "$1-$2")
-            // .replace(/([0-9])([^0-9])/g, "$1-$2")
-            // .replace(/([^0-9])([0-9])/g, "$1-$2")
-            .replace(/-+/g, character)
-            .toLowerCase()
-        );
+
+        if(isCamelCase){
+          src = src
+          .replace(
+            /\w\S*/g,
+            function(txt) {
+              return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+          )
+          .replace(/[^a-zA-Z0-9]+/g, "");
+        }else{
+          src = src
+          .replace(/[^a-zA-Z0-9]+/g, character)
+          .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+          .replace(/([a-z])([A-Z])/g, "$1-$2")
+          // .replace(/([0-9])([^0-9])/g, "$1-$2")
+          // .replace(/([^0-9])([0-9])/g, "$1-$2")
+          .replace(/-+/g, character)
+          .toLowerCase();
+        }
+
+        return (src);
       }
     };
 

@@ -52,16 +52,19 @@
             ></small>
           </div>
           <div style="width: 20%;">
-            <small class="form-label"
-              >Column name:
-              <span class="text-black-50" ng-bind="col.name"></span
-            ></small>
-            <input
-              ng-model="col.title"
-              placeholder="Title"
-              ng-change="$ctrl.generateName(col)"
-              class="form-control form-control-sm"
-            />
+            <small class="form-label">Column title:
+            </small>
+            <input ng-model="col.title" placeholder="Title" ng-change="$ctrl.generateName(col)"
+              class="form-control form-control-sm" />
+          </div>
+          <div style="width: 20%;">
+            <small class="form-label">Column name:
+            </small>
+            <!-- <span class="text-black-50" ng-bind="col.name"></span> -->
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-sm text-black-50" ng-model="col.name"/>
+              <button class="btn btn-outline-secondary" type="button" ng-click="$ctrl.generateName(col,true)">R</button>
+            </div>
           </div>
           <div style="width: 15%;">
             <small class="form-label">Type {{col.dataType}}</small>
@@ -78,7 +81,7 @@
               </option>
             </select>
           </div>
-          <div style="width: 50%;">
+          <div style="width: 30%;">
             <div class="" ng-if="col.dataType != 'Reference'">
               <small class="form-label">Value</small>
               <input
