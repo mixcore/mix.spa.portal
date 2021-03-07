@@ -80,8 +80,13 @@ app.controller("PostController", [
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
+
+        // $scope.viewmodel.createdDateTime = Date.now();
+        $scope.viewmodel.createdBy = $rootScope.authentication.userName;
+
         $rootScope.isBusy = false;
         $scope.$apply();
+        
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

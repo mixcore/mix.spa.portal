@@ -49,6 +49,7 @@ app.controller("PageController", [
       var id = $routeParams.id;
       $scope.postRequest.query += "&page_id=" + id;
       var response = await pagePostRestService.getList($scope.postRequest);
+      
       if (response.isSucceed) {
         $scope.pageData.posts = response.data;
         $rootScope.isBusy = false;
@@ -67,6 +68,7 @@ app.controller("PageController", [
           "fileName",
           $routeParams.template
         );
+        
       }
     };
     $scope.getListSuccessCallback = function () {

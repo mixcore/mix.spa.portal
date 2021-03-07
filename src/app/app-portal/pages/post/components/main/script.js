@@ -7,6 +7,7 @@
     "$rootScope",
     "$scope",
     function ($rootScope, $scope) {
+      
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
       ctrl.generateSeo = function () {

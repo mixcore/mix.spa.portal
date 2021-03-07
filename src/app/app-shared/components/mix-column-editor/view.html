@@ -15,7 +15,7 @@
     ></h6>
     <div>
       <small class="text-muted">
-        ({{$ctrl.translate($ctrl.column.dataType)}})
+        {{$ctrl.translate($ctrl.column.name)}}: {{$ctrl.translate($ctrl.column.dataType)}}
       </small>
     </div>
   </div>
@@ -23,7 +23,7 @@
     <div class="text-muted" ng-switch-default>
       <!--text-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="text"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -32,7 +32,7 @@
     <div class="text-muted" ng-switch-when="datetime">
       <!--datetime-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="datetime-local"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -41,7 +41,7 @@
     <div class="text-muted" ng-switch-when="date">
       <!--date-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="date"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -50,7 +50,7 @@
     <div class="text-muted" ng-switch-when="time">
       <!--time-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="time"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -59,7 +59,7 @@
     <div class="text-muted" ng-switch-when="phonenumber">
       <!--phonenumber-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="tel"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -68,7 +68,7 @@
     <div ng-switch-when="integer|double|currency">
       <!-- Number -->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="number"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
@@ -81,7 +81,7 @@
     <div ng-switch-when="double">
       <!-- Number -->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="number"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
@@ -94,7 +94,7 @@
     <div ng-switch-when="currency">
       <!-- Number -->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="number"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.title}}"
@@ -111,7 +111,7 @@
     <div class="text-muted" ng-switch-when="multilinetext">
       <!--TextArea-->
       <textarea
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         rows="5"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -120,7 +120,7 @@
     <div class="text-muted" ng-switch-when="emailaddress">
       <!--Email-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="email"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -129,7 +129,7 @@
     <div class="text-muted" ng-switch-when="password">
       <!--Password-->
       <input
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="password"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -139,7 +139,7 @@
       <!--ImageUrl-->
       <input
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
-        class="form-control form-control-sm {{$ctrl.inputClass}}"
+        class="form-control {{$ctrl.inputClass}}"
         type="url"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
@@ -179,14 +179,14 @@
     <div class="text-muted" ng-switch-when="color">
       <!--Color-->
       <input
-        class="form-control form-control-sm col-6 {{$ctrl.inputClass}}"
+        class="form-control col-6 {{$ctrl.inputClass}}"
         type="color"
         value="{{$ctrl.model.obj[$ctrl.column.name]}}"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"
       />
       <input
-        class="form-control form-control-sm  col-6 {{$ctrl.inputClass}}"
+        class="form-control  col-6 {{$ctrl.inputClass}}"
         type="text"
         ng-model="$ctrl.model.obj[$ctrl.column.name]"
         placeholder="{{$ctrl.translate($ctrl.column.title)}}"

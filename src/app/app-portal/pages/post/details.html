@@ -16,14 +16,16 @@
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
               data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <statuses status="viewmodel.status"></statuses>
+                <div class="mb-3">
+                  <statuses status="viewmodel.status"></statuses>
+                </div>
                 <div class="mb-3" ng-if="viewmodel.status == 'Schedule'">
                   <label class="form-label">Published Date Time</label>
                   <div class="input-group input-group-sm">
                     <span class="input-group-text" id="basic-addon1">
                       <i class="mi mi-Calendar"></i>
                     </span>
-                    <input value="{{viewmodel.publishedDateTime}}" ng-model="viewmodel.publishedDateTime"
+                    <input value="{{viewmodel.publishedDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}" ng-model="viewmodel.publishedDateTime"
                       type="datetime-local" class="form-control" />
                   </div>
                 </div>
@@ -31,7 +33,7 @@
                   <label class="form-label">Created Date Time</label>
                   <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="mi mi-Calendar"></i></span>
-                    <input ng-model="viewmodel.createdDateTime" type="text" class="form-control" readonly="readonly" />
+                    <input ng-model="viewmodel.createdDateTime" type="datetime" class="form-control" readonly="readonly" />
                   </div>
                 </div>
                 <div class="mb-3">

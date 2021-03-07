@@ -75,7 +75,7 @@ app.factory("AuthService", [
         var authData = {
           userRoles: data.info.userRoles,
           token: data.access_token,
-          userName: data.info.user.username,
+          userName: data.info.user.userName,
           roleNames: data.info.userRoles
             .filter((m) => m.isActived)
             .map((i) => i.role.normalizedName),
@@ -87,7 +87,7 @@ app.factory("AuthService", [
         localStorageService.set("authorizationData", encrypted);
         _authentication = {
           isAuth: true,
-          userName: data.info.user.username,
+          userName: data.info.user.userName,
           userId: data.info.user.id,
           roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
           token: data.access_token,
@@ -151,7 +151,7 @@ app.factory("AuthService", [
         var authData = {
           userRoles: data.info.userRoles,
           token: data.access_token,
-          userName: data.info.user.username,
+          userName: data.info.user.userName,
           roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
           avatar: data.info.user.avatar,
           refresh_token: data.refresh_token,
