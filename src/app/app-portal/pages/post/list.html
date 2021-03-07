@@ -42,8 +42,11 @@
           <th scope="col">
             Post
           </th>
-          <th scope="col" width="15%">
-            Image
+          <th scope="col" width="10%">
+            Thumb
+          </th>
+          <th scope="col" width="10%">
+            Feature
           </th>
           <th scope="col" width="15%">
             Created Date
@@ -78,7 +81,12 @@
             </div>
           </td>
           <td>
-            <small>{{item.title}}</small>
+            <a href="" ng-click="goToPath('/portal/post/details/' + item.id)" class="" title="{{item.excerpt}}" data-bs-toggle="tooltip">
+              <small>{{item.title}}</small>
+            </a>
+          </td>
+          <td>
+            <preview-image img-height="25" img-src="item.thumbnailUrl"></preview-image>
           </td>
           <td>
             <preview-image img-height="25" img-src="item.imageUrl"></preview-image>

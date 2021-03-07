@@ -40,8 +40,17 @@
           <th scope="col" width="20%">
             Page
           </th>
-          <th scope="col">
+          <th scope="col" width="20%">
+            Slug
+          </th>
+          <!-- <th scope="col">
             Excerpt
+          </th> -->
+          <th scope="col" width="10%">
+            Thumb
+          </th>
+          <th scope="col" width="10%">
+            Feature
           </th>
           <th scope="col" width="15%">
             Created Date
@@ -77,15 +86,24 @@
             </div>
           </td>
           <td class="">
-            <a href="" ng-click="goToPath('/portal/page/details/' + item.id)" class="">
+            <a href="" ng-click="goToPath('/portal/page/details/' + item.id)" class="" title="{{item.excerpt}}">
               {{item.title}}
             </a>
           </td>
-          <td class="text-secondary">
+          <td class="">
+            <small>{{item.detailsUrl}}</small>
+          </td>
+          <td>
+            <preview-image img-height="25" img-src="item.thumbnailUrl"></preview-image>
+          </td>
+          <td>
+            <preview-image img-height="25" img-src="item.imageUrl"></preview-image>
+          </td>
+          <!-- <td class="text-secondary">
             <small>
               {{shortString(item.excerpt,50)}}
             </small>
-          </td>
+          </td> -->
           <td class="text-secondary">
             <small>
               {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}

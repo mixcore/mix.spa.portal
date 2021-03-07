@@ -12,3 +12,4 @@ var app = angular.module("MixPortal", [
   "ngSanitize",
 ]);
 var modules = angular.module("components", []);
+
