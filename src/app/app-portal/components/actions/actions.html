@@ -3,13 +3,13 @@
     <i class="fa fa-chevron-left"></i>
     <span ng-bind="$ctrl.translate('Back')"></span>
   </a> -->
-  <a ng-if="$ctrl.previewUrl" target="_blank" href="{{$ctrl.previewUrl}}" class="btn btn-primary">
+  <a ng-if="$ctrl.previewUrl" target="_blank" href="{{$ctrl.previewUrl}}" class="btn btn-primary text-white">
     <i class="fas fa-eye"></i>
-    <span ng-bind="$ctrl.translate('Preview')">Preview</span>
+    <span>Preview</span>
   </a>
-  <a ng-if="$ctrl.contentUrl" href="{{$ctrl.contentUrl}}" class="btn btn-primary">
+  <a ng-if="$ctrl.contentUrl" href="{{$ctrl.contentUrl}}" class="btn btn-primary text-white">
     <i class="fa fa-align-justify"></i>
-    <span ng-bind="$ctrl.translate('Data')">Data</span>
+    <span>Data</span>
   </a>
   <button id="btnToSubmit" type="submit" class="btn btn-primary">
     <i class="fa fa-save"></i>
