@@ -16,7 +16,7 @@
             <thead class="thead-light">
                 <tr>
                     <th>
-                        <span class="fa fa-grip-vertical text-black-50-numeric-down"></span>
+                        <span class="fa fa-grip-vertical fa-xs text-black-50-numeric-down"></span>
                     </th>
                     <th>Title</th>
                     <!--<th >Name</th>-->
@@ -36,7 +36,7 @@
                     dnd-selected="$ctrl.selectedCol = col" dnd-dragstart="$ctrl.dragStart($index)"
                     ng-class="{'selected': $ctrl.selectedCol === col}">
                     <td style="cursor:grab;" class="drag-header">
-                        <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
+                        <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small>
                     </td>
                     <td>
                         <input ng-model="col.title" placeholder="Title" ng-change="$ctrl.generateName(col)"
@@ -61,8 +61,8 @@
                         <input class="" type="checkbox" ng-model="col.isRequired">
                     </td>
                     <!--<td>
-                                        <span class="switch">
-                                            <input id="isGroupBy_{{$index}}" type="checkbox" class="switch" ng-model="col.isGroupBy">
+                                        <span class="form-check-input">
+                                            <input id="isGroupBy_{{$index}}" type="checkbox" class="form-check-input" ng-model="col.isGroupBy">
                                             <label for="isGroupBy_{{$index}}">&nbsp;</label>
                                         </span>
                                     </td>-->

@@ -1,4 +1,4 @@
-<div class="btn-group w-100" role="group" aria-label="Basic example">
+<div ng-if="$ctrl.createUrl" class="btn-group w-100" role="group" aria-label="Basic example">
     <a ng-if="$ctrl.createUrl" href="{{$ctrl.createUrl}}" class="btn btn-primary text-white m-0 mb-3">
         <i class="fas fa-plus"></i> {{$ctrl.createText}}
     </a>

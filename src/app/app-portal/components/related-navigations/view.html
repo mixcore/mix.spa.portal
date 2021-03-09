@@ -1,10 +1,11 @@
 <div class="row">
-    <navs class="col-12 mb-2" data="$ctrl.navs" prefix="'module-nav'" model="'nav-related'"></navs>
+    <navs class="col-12" data="$ctrl.navs" prefix="'module-nav'" model="'nav-related'"></navs>
 </div>
+<hr>
 <div class="row">
     <div class="col-8">
 
-        <table class="table table-sm table-hover mt-2">
+        <table class="table table-sm table-hover">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">
@@ -14,7 +15,7 @@
                         Image
                     </th>
                     <th scope="col" width="5%">
-                        Actived
+                        
                     </th>
                 </tr>
             </thead>
@@ -27,10 +28,10 @@
                         <img class="rounded" height="25" ng-src="{{item.image}}">
                     </td>
                     <td>
-                        <span class="switch switch-sm position-absolute">
-                            <input type="checkbox" class="switch" ng-model="item.isActived"
+                        <span class="form-check form-switch position-absolute">
+                            <input type="checkbox" class="form-check-input" ng-model="item.isActived"
                                 ng-change="$ctrl.activeItem(item)" id="{{$ctrl.prefix}}_{{item.id}}" value="true">
-                            <label class="switch m-0 small" for="{{$ctrl.prefix}}_{{item.id}}">
+                            <label class="custom-control-label m-0 small" for="{{$ctrl.prefix}}_{{item.id}}">
                             </label>
                         </span>
                     </td>
@@ -38,7 +39,7 @@
             </tbody>
         </table>
         <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize" total="$ctrl.data.totalItems"
-            ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="callback(page-1)"
+            ul-class="pagination pagination-sm justify-content-end m-0" a-class="page-link" paging-action="callback(page-1)"
             scroll-top="true"></paging>
     </div>
     <div class="col-4">

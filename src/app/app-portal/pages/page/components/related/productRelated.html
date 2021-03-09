@@ -37,11 +37,11 @@
                             </a>
                         </td>
                         <td style="position:relative">
-                            <span class="switch switch-sm" style="position: absolute;top: 10px;">
-                                <input type="checkbox" class="switch" data-val="{{item.isActived}}"
+                            <span class="form-check form-switch" style="position: absolute;top: 10px;">
+                                <input type="checkbox" class="form-check-input" data-val="{{item.isActived}}"
                                     id="ProductNavs_{{item.relatedProductId}}" name="ProductNavs[{{$index}}].IsActived"
                                     ng-model="item.isActived" value="{{item.isActived}}">
-                                <label class="switch" for="ProductNavs_{{item.relatedProductId}}">
+                                <label class="form-check-input" for="ProductNavs_{{item.relatedProductId}}">
                                 </label>
                             </span>
                         </td>
@@ -121,10 +121,10 @@
                         <img height="50" ng-src="{{product.image}}">
                     </td>
                     <td>
-                        <span class="switch switch-sm">
-                            <input type="checkbox" class="switch" id="ProductNavs_{{product.id}}"
+                        <span class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" id="ProductNavs_{{product.id}}"
                                 ng-model="product.isActived" ng-change="$ctrl.activeProduct(product)">
-                            <label class="switch" for="ProductNavs_{{product.id}}">
+                            <label class="form-check-input" for="ProductNavs_{{product.id}}">
                             </label>
                         </span>
                     </td>

@@ -15,7 +15,7 @@
     <div class="col-sm-12">
       <div class="row card-header">
         <div class="col-1">
-          <!-- <small class="fa fa-grip-vertical text-black-50 align-middle"></small> -->
+          <!-- <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small> -->
         </div>
         <div scope="col" ng-if="$index < 3" class="col-sm-2" ng-repeat="col in $ctrl.columns track by $index">
           <strong ng-bind="$ctrl.translate(col.title)"> </strong>
@@ -35,7 +35,7 @@
       dnd-moved="$ctrl.updateOrders($index,$ctrl.data.items)" ng-class="{'selected': $ctrl.selected === nav}">
       <div class="row">
         <div class="col-1 drag-header" style="cursor: grab;">
-          <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
+          <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small>
         </div>
         <div class="col-2 small preview-container" ng-if="$index < 3" ng-repeat="col in $ctrl.columns track by $index">
           <module-data-preview data="nav.jItem[col.name]" datatype="col.datatype" width="50" class="mb-0">
