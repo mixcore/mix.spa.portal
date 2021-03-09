@@ -12,8 +12,13 @@
                 ng-model="$ctrl.newTitle" ng-enter="$ctrl.createData()" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-12" ng-repeat="item in $ctrl.selectedList">
+    <div class="row" dnd-list="$ctrl.selectedList">
+        <div class="col-12" ng-repeat="item in $ctrl.selectedList"
+            dnd-draggable="item"
+            dnd-effect-allowed="move"
+            dnd-moved="$ctrl.selectedList.splice($index, 1)"
+            dnd-selected="$ctrl.models.selected = item"
+        >
             <div class="drag-header float-start me-3">
                 <!-- <div class="drag-header float-start me-3" dnd-draggable="nav" dnd-type="'nav'" dnd-effect-allowed="move"
                 dnd-selected="$ctrl.selected = nav" dnd-moved="$ctrl.updateOrders($index)"
