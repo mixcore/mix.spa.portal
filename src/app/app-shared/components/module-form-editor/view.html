@@ -4,22 +4,22 @@
   <div ng-if="$ctrl.data" ng-switch="$ctrl.dataType">
     <div ng-switch-default>
       <!--custom-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="datetime">
       <!--datetime-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="datetime-local" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="datetime-local" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="date">
       <!--date-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="time">
       <!--time-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="html">
@@ -28,27 +28,27 @@
     </div>
     <div ng-switch-when="multilinetext">
       <!--TextArea-->
-      <textarea class="form-control form-control-sm {{$ctrl.inputClass}}" rows="5" ng-model="$ctrl.data.value"
+      <textarea class="form-control {{$ctrl.inputClass}}" rows="5" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}"></textarea>
     </div>
     <div ng-switch-when="emailaddress">
       <!--Email-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="email" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="email" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="password">
       <!--Password-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="password" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="password" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="url">
       <!--Url-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="url" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="url" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="imageurl">
       <!--ImageUrl-->
-      <input placeholder="{{$ctrl.columnTitle}}" class="form-control form-control-sm {{$ctrl.inputClass}}" type="url"
+      <input placeholder="{{$ctrl.columnTitle}}" class="form-control {{$ctrl.inputClass}}" type="url"
         ng-model="$ctrl.data.value" placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="upload">
@@ -59,7 +59,7 @@
     </div>
     <div ng-switch-when="color">
       <!--Color-->
-      <input class="form-control form-control-sm {{$ctrl.inputClass}}" type="color" ng-model="$ctrl.data.value"
+      <input class="form-control {{$ctrl.inputClass}}" type="color" ng-model="$ctrl.data.value"
         placeholder="{{$ctrl.columnTitle}}" />
     </div>
     <div ng-switch-when="boolean">

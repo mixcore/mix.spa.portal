@@ -1,10 +1,10 @@
 ﻿'use trick';
-modules.directive('paneV', function () {
+modules.directive('pane', function () {
     return {
-        require: '^tabs-v',
+        require: '^tabs',
         restrict: 'E',
         transclude: true,
-        scope: { header: '@', id: '@', icon: '@' },
+        scope: { header: '@', id: '@' },
         link: function (scope, element, attrs, tabsController) {
             tabsController.addPane(scope);
         },

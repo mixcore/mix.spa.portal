@@ -108,7 +108,7 @@ modules.component("listMixColumn", {
 
       ctrl.generateName = function (col, isForce = false) {
         if(isForce || !col.name){
-          col.name = $rootScope.generateKeyword(col.title, "_", true);
+          col.name = $rootScope.generateKeyword(col.title, "_", true, true);
         }
       };
       ctrl.removeAttr = function (index) {

@@ -46,5 +46,9 @@ app.controller("ConfigurationController", [
         $location.url($scope.referrerUrl);
       });
     };
+    
+    $scope.generateName = function () {
+      $scope.viewmodel.keyword = $rootScope.generateKeyword($scope.viewmodel.keyword, "_", true);
+    };
   },
 ]);

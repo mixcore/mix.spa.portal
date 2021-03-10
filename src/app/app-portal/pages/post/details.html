@@ -93,18 +93,18 @@
             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
               data-bs-parent="#accordionFlushExample">
               <div class="accordion-body">
-                <tabs-v ng-if="viewmodel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
-                  <pane-v header="Feature">
+                <pills ng-if="viewmodel" select-callback="selectPane(pane)" class="mb-4 nav-fill">
+                  <pill header="Feature">
                     <custom-image w="defaultFeatureImgWidth" h="defaultFeatureImgHeight" header="'Feature Upload'" type="'Posts'" folder="viewmodel.seoName"
                       header="viewmodel.title" description="viewmodel.excerpt" src-url="viewmodel.imageUrl"
                       src="viewmodel.image" auto="'true'"></custom-image>
-                  </pane-v>
-                  <pane-v header="Thumbnail">
+                  </pill>
+                  <pill header="Thumbnail">
                     <custom-image w="defaultThumbnailImgWidth" h="defaultThumbnailImgHeight" header="'Thumbnail Upload'" type="'Posts'"
                       folder="viewmodel.seoName" title="viewmodel.title" description="viewmodel.excerpt"
                       src-url="viewmodel.thumbnailUrl" src="viewmodel.thumbnail" auto="'true'"></custom-image>
-                  </pane-v>
-                </tabs-v>
+                  </pill>
+                </pills>
               </div>
             </div>
           </div>
@@ -178,10 +178,10 @@
       </p>
 
       <tabs-v class="mb-3">
-        <pane-v header="Content input">
+        <pane-v icon="fas fa-pen" header="Content input">
           <post-content model="viewmodel" additional-data="additionalData"></post-content>
         </pane-v>
-        <pane-v header="Configuration">
+        <pane-v icon="fas fa-tools" header="Configuration">
           <post-advanced model="viewmodel" additional-data="additionalData"></post-advanced>
         </pane-v>
       </tabs-v>

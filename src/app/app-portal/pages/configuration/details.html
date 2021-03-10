@@ -45,7 +45,7 @@
                     </div>
                     <div class="mb-3" ng-if="isAdmin">
                         <label class="form-label">Keyword</label>
-                        <input type="text" required class="form-control" ng-model="viewmodel.keyword">
+                        <input type="text" required class="form-control" ng-model="viewmodel.keyword" ng-blur="generateName()">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Value</label>

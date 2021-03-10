@@ -218,7 +218,7 @@ app.run([
       return input;
     };
 
-    $rootScope.generateKeyword = function (src, character, isCamelCase = false) {
+    $rootScope.generateKeyword = function (src, character, isCamelCase = false, isLowerFirst = false) {
       if (src) {
         src = $rootScope.parseUnsignString(src);
 
@@ -231,6 +231,11 @@ app.run([
             }
           )
           .replace(/[^a-zA-Z0-9]+/g, "");
+
+          if(isLowerFirst){
+            src = src
+            .replace(/^./, str => str.toLowerCase()); // first to lowercase
+          }
         }else{
           src = src
           .replace(/[^a-zA-Z0-9]+/g, character)
