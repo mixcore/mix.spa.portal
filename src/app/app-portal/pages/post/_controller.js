@@ -33,13 +33,7 @@ app.controller("PostController", [
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
-    $scope.postTypes = [
-      {
-        title: "All",
-        attribute_set_name: "",
-      },
-    ];
-
+   
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.mixDatabaseName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
@@ -54,6 +48,12 @@ app.controller("PostController", [
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
+      $scope.postTypes = [
+        {
+          title: "All",
+          databaseName: "",
+        },
+      ];
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
         $scope.postTypes = $scope.postTypes.concat(
@@ -61,7 +61,7 @@ app.controller("PostController", [
         );
         $scope.postType = $rootScope.findObjectByKey(
           $scope.postTypes,
-          "attribute_set_name",
+          "databaseName",
           $scope.request.type
         );
         $scope.request.type = $routeParams.type || "";
