@@ -1,5 +1,5 @@
 <div class="row mb-3">
-  <div class="col-5">
+  <div class="col">
     <label class="form-label">Database title</label>
     <input
       type="text"
@@ -8,6 +8,8 @@
       ng-blur="$ctrl.gennerateName()"
     />
   </div>
+</div>
+<div class="row mb-3">
   <div class="col">
     <label class="form-label">Database system name</label>
     <div class="input-group">
@@ -15,6 +17,8 @@
       <button class="btn btn-outline-primary" type="button" ng-click="$ctrl.generateName(col,true)"><span class="fa fa-redo"></span></button>
     </div>
   </div>
+</div>
+<div class="row mb-3">
   <div class="col">
     <label class="form-label">Type</label>
     <input type="text" class="form-control" ng-model="$ctrl.model.type" />

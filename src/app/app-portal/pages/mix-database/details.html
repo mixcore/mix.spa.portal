@@ -5,6 +5,24 @@
       <actions preview-url="viewmodel.detailsUrl" content-url="contentUrl" back-url="referrerUrl"></actions>
       <div class="mb-3"></div>
       <statuses status="viewmodel.status"></statuses>
+      <div class="mb-3"></div>
+      
+      <div class="accordion accordion-flush-x">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Basic informations
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse" aria-labelledby="flush-headingOne"
+            data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <mix-database-main model="viewmodel"> </mix-database-main>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </aside>
@@ -28,11 +46,10 @@
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-          <div class="card mb-5">
+          <!-- <div class="card mb-5">
             <div class="card-body">
-              <mix-database-main model="viewmodel"> </mix-database-main>
             </div>
-          </div>
+          </div> -->
 
           <!-- app-portal/components/attribute-list -->
           <list-mix-column header="'Attributes'" columns="viewmodel.columns"
