@@ -17,7 +17,6 @@ sass.compiler = require("node-sass");
 
 var uglifyjs = require("uglify-es"); // can be a git checkout
 // or another module (such as `uglify-es` for ES6 support)
-
 var composer = require("gulp-uglify/composer");
 var pump = require("pump");
 
@@ -333,7 +332,7 @@ paths.appPortal = {
 };
 paths.appPortalRequired = {
   src: [
-    `${paths.nodeModules}jquery/dist/jquery.min.js`,
+    // `${paths.nodeModules}jquery/dist/jquery.min.js`,
     `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
     `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
     paths.scriptLib + "portal/prism/prism.min.js",
