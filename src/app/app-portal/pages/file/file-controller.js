@@ -115,5 +115,7 @@ app.controller('FileController', ['$scope', '$rootScope', 'ngAppSettings', '$rou
                 $scope.$apply();
             }
         };
-
+        $scope.updateTemplateContent = function (content) {
+            $scope.activedFile.content = content;
+          };
     }]);

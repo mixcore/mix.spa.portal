@@ -104,9 +104,9 @@
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
           const file = files[0];
-          ctrl.mediaFile.folder = ctrl.folder ? ctrl.folder : "Media";
-          ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
-          ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";
+          ctrl.mediaFile.fileFolder = ctrl.folder || "Media";
+          ctrl.mediaFile.title = ctrl.title || "";
+          ctrl.mediaFile.description = ctrl.description || "";
           ctrl.mediaFile.file = file;
           if (ctrl.w || ctrl.h || ctrl.rto) {
             ctrl.openCroppie(file);
@@ -123,10 +123,7 @@
       ctrl.uploadFile = async function (file) {
         if (file !== null) {
           $rootScope.isBusy = true;
-          var reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = async function () {
-            var getMedia = await mediaService.getSingle(["portal"]);
+          var getMedia = await mediaService.getSingle(["portal"]);
             if (getMedia.isSucceed) {
               ctrl.mediaFile.fileName = file.name.substring(
                 0,
@@ -135,10 +132,10 @@
               ctrl.mediaFile.extension = file.name.substring(
                 file.name.lastIndexOf(".")
               );
-              ctrl.mediaFile.fileStream = reader.result;
               var media = getMedia.data;
-              media.title = ctrl.title;
-              media.description = ctrl.description;
+              media.fileFolder = ctrl.folder || "Media";
+              media.title = ctrl.title || "";
+              media.description = ctrl.description || "";
               media.mediaFile = ctrl.mediaFile;
               var resp = await mediaService.save(media);
               if (resp && resp.isSucceed) {
@@ -157,8 +154,6 @@
                 $scope.$apply();
               }
             }
-          };
-          reader.onerror = function (error) { };
         } else {
           return null;
         }

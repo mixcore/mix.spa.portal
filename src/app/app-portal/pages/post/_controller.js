@@ -48,15 +48,9 @@ app.controller("PostController", [
       $scope.getList();
     };
     $scope.loadPostTypes = async function () {
-      $scope.postTypes = [
-        {
-          title: "All",
-          databaseName: "",
-        },
-      ];
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes.concat(
+        $scope.postTypes = $scope.postTypes = (
           getTypes.data.items.map((m) => m.obj)
         );
         $scope.postType = $rootScope.findObjectByKey(
@@ -184,7 +178,7 @@ app.controller("PostController", [
       $scope.request.type = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
-      await $scope.loadPostTypes();
+      // await $scope.loadPostTypes();
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {

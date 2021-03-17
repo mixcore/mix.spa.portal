@@ -14,10 +14,10 @@ app.factory("BaseRestService", [
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.settings || lang) {
           this.lang = lang || $rootScope.settings.lang;
-          this.prefixUrl = "/rest/" + this.lang + "/" + modelName;
+          this.prefixUrl = `/rest/${this.lang}/${modelName}`;
         }
       } else {
-        this.prefixUrl = "/rest/" + modelName;
+        this.prefixUrl = `/rest/${modelName}`;
       }
     };
 
@@ -30,6 +30,7 @@ app.factory("BaseRestService", [
       }
       var querystring = _parseQuery(queries);
       var req = {
+        serviceBase: this.serviceBase,
         method: "GET",
         url: `${url}?${querystring}`,
       };
@@ -97,6 +98,7 @@ app.factory("BaseRestService", [
         url = url.concat(data);
       }
       var req = {
+        serviceBase: this.serviceBase,
         method: "GET",
         url: url,
       };
@@ -112,6 +114,7 @@ app.factory("BaseRestService", [
         url = url.concat(data);
       }
       var req = {
+        serviceBase: this.serviceBase,
         method: "GET",
         url: url,
       };
@@ -126,6 +129,7 @@ app.factory("BaseRestService", [
         }
       }
       var req = {
+        serviceBase: this.serviceBase,
         method: "DELETE",
         url: url,
       };
@@ -141,6 +145,7 @@ app.factory("BaseRestService", [
     var _create = async function (objData) {
       var url = this.prefixUrl;
       var req = {
+        serviceBase: this.serviceBase,
         method: "POST",
         url: url,
         data: JSON.stringify(objData),
@@ -151,6 +156,7 @@ app.factory("BaseRestService", [
     var _update = async function (id, objData) {
       var url = this.prefixUrl + "/" + id;
       var req = {
+        serviceBase: this.serviceBase,
         method: "PUT",
         url: url,
         data: objData,
@@ -161,6 +167,7 @@ app.factory("BaseRestService", [
     var _saveFields = async function (id, objData) {
       var url = this.prefixUrl + "/" + id;
       var req = {
+        serviceBase: this.serviceBase,
         method: "PATCH",
         url: url,
         data: JSON.stringify(objData),
@@ -171,6 +178,7 @@ app.factory("BaseRestService", [
     var _applyList = async function (objData) {
       var url = this.prefixUrl + "/list-action";
       var req = {
+        serviceBase: this.serviceBase,
         method: "POST",
         url: url,
         data: JSON.stringify(objData),
@@ -180,6 +188,7 @@ app.factory("BaseRestService", [
 
     var _ajaxSubmitForm = async function (form, url) {
       var req = {
+        serviceBase: this.serviceBase,
         method: "POST",
         url: url,
         headers: { "Content-Type": undefined },
