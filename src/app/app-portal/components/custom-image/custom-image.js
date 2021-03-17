@@ -137,7 +137,7 @@
               media.title = ctrl.title || "";
               media.description = ctrl.description || "";
               media.mediaFile = ctrl.mediaFile;
-              var resp = await mediaService.save(media);
+              var resp = await mediaService.save(media, null, ctrl.onUploadFileProgress);
               if (resp && resp.isSucceed) {
                 ctrl.src = resp.data.fullPath;
                 ctrl.srcUrl = resp.data.fullPath;
@@ -158,6 +158,7 @@
           return null;
         }
       };
+
       ctrl.getBase64 = function (file) {
         if (file !== null) {
           $rootScope.isBusy = true;
@@ -194,6 +195,10 @@
           return null;
         }
       };
+
+      ctrl.onUploadFileProgress = function(progress){
+        ctrl.progress = progress;
+      }
     },
   ],
 });

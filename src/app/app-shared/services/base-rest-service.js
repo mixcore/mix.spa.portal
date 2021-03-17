@@ -2,13 +2,21 @@
 app.factory("BaseRestService", [
   "$rootScope",
   "$routeParams",
+  "AppSettings",
+  "AuthService",
   "CommonService",
   "localStorageService",
-  function ($rootScope, $routeParams, commonService) {
+  function (
+    $rootScope,
+    $routeParams,
+    appSettings,
+    authService,
+    commonService
+  ) {
     var serviceFactory = {};
     var _init = function (modelName, isGlobal, lang, serviceBase) {
       this.modelName = modelName;
-      if(serviceBase){
+      if (serviceBase) {
         this.serviceBase = serviceBase;
       }
       if (!isGlobal && isGlobal != "true") {
@@ -34,7 +42,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: `${url}?${querystring}`,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _getSingle = async function (params = [], queries) {
@@ -49,7 +57,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: `${url}?${querystring}`,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _clearCache = async function (params = [], queries) {
@@ -64,7 +72,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: `${url}?${querystring}`,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _getDefault = async function (queriesObj) {
@@ -74,7 +82,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: `${url}?${querystring}`,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
     var _count = async function (params = []) {
       var url = this.prefixUrl + "/count";
@@ -87,7 +95,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
     var _getList = async function (objData) {
       var data = serviceFactory.parseQuery(objData);
@@ -102,7 +110,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _export = async function (objData) {
@@ -118,7 +126,7 @@ app.factory("BaseRestService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _delete = async function (params = []) {
@@ -133,7 +141,7 @@ app.factory("BaseRestService", [
         method: "DELETE",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
     var _save = async function (objData) {
       if (objData.id == 0 || objData.id == null) {
@@ -150,7 +158,7 @@ app.factory("BaseRestService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _update = async function (id, objData) {
@@ -161,7 +169,7 @@ app.factory("BaseRestService", [
         url: url,
         data: objData,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _saveFields = async function (id, objData) {
@@ -172,7 +180,7 @@ app.factory("BaseRestService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
     var _applyList = async function (objData) {
@@ -183,10 +191,10 @@ app.factory("BaseRestService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req);
     };
 
-    var _ajaxSubmitForm = async function (form, url) {
+    var _ajaxSubmitForm = async function (form, url, onUploadFileProgress) {
       var req = {
         serviceBase: this.serviceBase,
         method: "POST",
@@ -196,8 +204,9 @@ app.factory("BaseRestService", [
         processData: false, // Not to process data
         data: form,
       };
-      return await commonService.getRestApiResult(req);
+      return await this.getRestApiResult(req, this.serviceBase, onUploadFileProgress || _onUploadFileProgress);
     };
+
     var _parseQuery = function (req) {
       var result = "";
       if (req) {
@@ -213,6 +222,38 @@ app.factory("BaseRestService", [
       } else {
         return result;
       }
+    };
+
+    var _onUploadFileProgress = function (progress) {
+      console.log(`loaded ${progress}%`)
+    };
+
+    var _getRestApiResult = async function (req, serviceBase) {
+      if (!authService.authentication) {
+        await authService.fillAuthData();
+      }
+      if (authService.authentication) {
+        req.Authorization = authService.authentication.token;
+      }
+
+      var serviceUrl =
+        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
+      if (serviceBase || req.serviceBase) {
+        serviceUrl =
+          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
+      }
+
+      req.url = serviceUrl + req.url;
+      if (!req.headers) {
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+      }
+      req.headers.Authorization = "Bearer " + req.Authorization || "";
+
+      return commonService.sendRestRequest(req).then(function (resp) {
+        return resp;
+      });
     };
 
     serviceFactory.lang = "";
@@ -233,6 +274,7 @@ app.factory("BaseRestService", [
     serviceFactory.delete = _delete;
     serviceFactory.ajaxSubmitForm = _ajaxSubmitForm;
     serviceFactory.parseQuery = _parseQuery;
+    serviceFactory.getRestApiResult = _getRestApiResult;
     return serviceFactory;
   },
 ]);

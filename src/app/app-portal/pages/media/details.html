@@ -16,6 +16,7 @@
                         accept="'audio/*,video/*,image/*'" src-url="viewmodel.fullPath" src="viewmodel.fullPath"
                         media-file="viewmodel.mediaFile" form-file="formFile">
                     </media-file-upload>
+                    <h5 class="text-primary" ng-if="progress">Loaded {{progress}}%</h5>
                 </div>
             </div>
         </div>

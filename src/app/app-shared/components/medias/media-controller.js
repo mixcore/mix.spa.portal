@@ -28,7 +28,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
                 $scope.isValid = await $rootScope.executeFunctionByName('validate', $scope.validateArgs, $scope)
             }
             if ($scope.isValid) {
-                var resp = await service.save(data, $scope.formFile);
+                var resp = await service.save(data, $scope.formFile, $scope.onUploadFileProgress);
                 if (resp && resp.isSucceed) {
                     $scope.viewmodel = resp.data;
                     $rootScope.showMessage('success', 'success');
@@ -139,4 +139,7 @@ app.controller('MediaController', ['$scope', '$rootScope', 'ngAppSettings', '$ro
         $scope.removeCallback = function () {
             $scope.getList();
         }
+        $scope.onUploadFileProgress = function(progress){
+            $scope.progress = progress;
+          }
     }]);

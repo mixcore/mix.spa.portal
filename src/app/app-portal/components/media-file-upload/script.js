@@ -45,7 +45,7 @@
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
           const file = files[0];
-          ctrl.mediaFile.folder = ctrl.folder ? ctrl.folder : "Media";
+          ctrl.mediaFile.fileFolder = ctrl.folder ? ctrl.folder : "Media";
           ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
           ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";
           ctrl.mediaFile.file = file;
@@ -53,6 +53,7 @@
           if (ctrl.auto == "true") {
             ctrl.uploadFile(file);
           } else {
+            ctrl.formFile = file;
             ctrl.srcUrl = null;
             ctrl.src = null;
             ctrl.isImage = file.name.match(
@@ -68,8 +69,8 @@
       ctrl.uploadFile = async function (file) {
         if (file !== null) {
           $rootScope.isBusy = true;
-          if (ctrl.mediaFile) {
-            var response = await mediaService.uploadMedia(ctrl.mediaFile, file);
+          if (file) {
+            var response = await mediaService.uploadMedia(file, ctrl.onUploadFileProgress);
             if (response.isSucceed) {
               ctrl.media = response.data;
               $rootScope.isBusy = false;
@@ -119,6 +120,9 @@
           return null;
         }
       };
+      ctrl.onUploadFileProgress = function(progress){
+        ctrl.progress = progress;
+      }
     },
   ],
 });

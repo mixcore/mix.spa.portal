@@ -29,6 +29,7 @@
             <button class="btn btn-outline-secondary btn-clipboard" type="button"
                 data-clipboard-target="#img-url-{{$ctrl.id}}"><i class="mi mi-Copy"></i></button>
         </div>
+        <h3 class="text-primary" ng-if="$ctrl.progress">Loaded {{$ctrl.progress}}%</h3>
         <!-- <div class="input-group input-group-sm">
             <input id="path-modal-{{$index}}" value="{{item.webPath}}" onclick="this.select()"
                 class="form-control" readonly="readonly">

@@ -11,24 +11,24 @@ app.factory('MediaService', ['$rootScope', 'CommonService', 'BaseService',
             };
             return await commonService.getApiResult(req);
         };
-        var _save = async function (objData, file) {
+        var _save = async function (objData, file, onUploadFileProgress) {
             var url = this.prefixUrl + '/save';
             var fd = new FormData();
             var file = objData.mediaFile.file;
             objData.mediaFile.file = null;
             fd.append('model', angular.toJson(objData));
             fd.append('file', file);
-            return await serviceFactory.ajaxSubmitForm(fd, url);
+            return await serviceFactory.ajaxSubmitForm(fd, url, onUploadFileProgress);
         }
-        var _uploadMedia = async function (mediaFile, file) {
+        var _uploadMedia = async function (file, onUploadFileProgress) {
             //var container = $(this).parents('.model-media').first().find('.custom-file').first();
-            if (mediaFile.file !== undefined && mediaFile.file !== null) {
+            if (file !== null) {
                 // Create FormData object
                 var url = this.prefixUrl + '/upload-media';
                 var fd = new FormData();
 
                 fd.append('file', file);
-                return await serviceFactory.ajaxSubmitForm(fd, url);
+                return await serviceFactory.ajaxSubmitForm(fd, url, onUploadFileProgress);
             }
         };
         serviceFactory.cloneMedia = _cloneMedia;
