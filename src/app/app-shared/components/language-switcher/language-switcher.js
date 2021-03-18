@@ -1,5 +1,5 @@
 ﻿(function (angular) {
-    app.component('languageSwitcher', {
+    appShared.component('languageSwitcher', {
         templateUrl: '/mix-app/views/app-shared/components/language-switcher/language-switcher.html',
         controller: ['$rootScope', '$scope', '$location',
             'CommonService', 'TranslatorService', 'GlobalSettingsService',

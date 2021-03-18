@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('MessengerController', ['$scope', function ($scope) {
+appShared.controller('MessengerController', ['$scope', function ($scope) {
     BaseHub.call(this, $scope);
     $scope.user = {
         loggedIn: false,

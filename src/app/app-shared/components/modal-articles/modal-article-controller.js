@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('ModalPostController', [
+appShared.controller('ModalPostController', [
     '$scope', '$rootScope', '$location', 'ngAppSettings', '$routeParams', 'PostRestService',
     function (
         $scope, $rootScope, $location, ngAppSettings, $routeParams, service) {

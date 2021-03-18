@@ -1,5 +1,5 @@
 'use strict';
-app.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonService',
+appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonService',
     function ($rootScope, $routeParams, commonService) {
         var serviceFactory = {};
 

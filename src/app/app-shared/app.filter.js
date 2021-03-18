@@ -1,5 +1,5 @@
 'use strict';
-app.filter('utcToLocal', FilterUtcDate)
+appShared.filter('utcToLocal', FilterUtcDate)
     .filter('utcToLocalTime', FilterUtcDateTime)
     .filter('phoneNumber', FilterPhoneNumber)
     .filter('money', FilterMoney)

@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('GlobalSettingsService', ['$rootScope', 'CommonService', 'localStorageService', 'AppSettings',
+appShared.factory('GlobalSettingsService', ['$rootScope', 'CommonService', 'localStorageService', 'AppSettings',
     function ($rootScope, commonService, localStorageService, appSettings) {
         var factory = {};
         var _globalSettings = {

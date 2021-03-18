@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('ModalPostRestService', ['$rootScope', 'CommonService', 'BaseService',
+appShared.factory('ModalPostRestService', ['$rootScope', 'CommonService', 'BaseService',
     function ($rootScope, commonService, baseService) {
 
         var serviceFactory = Object.create(baseService);

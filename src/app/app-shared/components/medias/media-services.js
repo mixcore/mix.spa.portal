@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('MediaService', ['$rootScope', 'CommonService', 'BaseService',
+appShared.factory('MediaService', ['$rootScope', 'CommonService', 'BaseService',
     function ($rootScope, commonService, baseService) {
 
         var serviceFactory = Object.create(baseService);

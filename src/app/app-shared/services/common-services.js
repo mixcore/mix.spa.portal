@@ -1,5 +1,5 @@
 "use strict";
-app.factory("CommonService", [
+appShared.factory("CommonService", [
   "$location",
   "$http",
   "$q",

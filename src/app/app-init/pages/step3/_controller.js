@@ -4,16 +4,31 @@ app.controller("Step3Controller", [
   "$rootScope",
   "CommonService",
   "AuthService",
+  "StoreService",
   "Step3Services",
-  function ($scope, $rootScope, commonService, authService, service) {
+  function ($scope, $rootScope, commonService, authService, storeService, service) {
     var rand = Math.random();
     $scope.data = {
       isCreateDefault: true,
       theme: null,
     };
+    $scope.request = {
+      pageSize: "20",
+      pageIndex: 0,
+      status: "Published",
+      orderBy: "CreatedDateTime",
+      direction: "Desc",
+      fromDate: null,
+      toDate: null,
+    };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
       $scope.form = document.getElementById("frm-theme");
+      var getThemes = await storeService.getList($scope.request);
+      if (getThemes.isSucceed) {
+        $scope.themes = getThemes.data;
+        $scope.$apply();
+      }
       $(".preventUncheck").on("change", function (e) {
         if ($(".preventUncheck:checked").length == 0 && !this.checked)
           this.checked = true;

@@ -28,6 +28,14 @@
         <label class="form-check-label" for="customRadio_theme-import">Upload your theme from local PC</label>
       </div>
     </div>
+    <div class="mb-5">
+      <div class="row">
+        <div class="col-4" ng-repeat="item in themes.items">
+          <h6 ng-bind="item.title"></h6>
+          <img ng-src="{{item.thumbnailUrl}}" width="100%">
+        </div>
+      </div>
+    </div>
     <div class="mb-3 mb-5" ng-show="themeType ==='custom'">
       <api-file form-name="'theme'" posted-file="theme"></api-file>
       <small class="form-text text-muted">Mixcore Themes

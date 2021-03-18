@@ -10,6 +10,6 @@ var app = angular.module("MixPortal", [
   "dndLists",
   "ngTagsInput",
   "ngSanitize",
+  "MixShared",
 ]);
 var modules = angular.module("components", []);
-

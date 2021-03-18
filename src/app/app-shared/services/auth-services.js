@@ -1,5 +1,5 @@
 ﻿"use strict";
-app.factory("AuthService", [
+appShared.factory("AuthService", [
   "$http",
   "$rootScope",
   "$routeParams",

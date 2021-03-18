@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('TranslatorService', ['$rootScope', 'CommonService', 'localStorageService', function ($rootScope, commonService, localStorageService) {
+appShared.factory('TranslatorService', ['$rootScope', 'CommonService', 'localStorageService', function ($rootScope, commonService, localStorageService) {
     var factory = {};
     var _translator = {
         lang: '',

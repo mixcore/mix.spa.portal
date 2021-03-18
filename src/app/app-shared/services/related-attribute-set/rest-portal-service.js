@@ -1,5 +1,5 @@
 "use strict";
-app.factory("RestRelatedMixDatabasePortalService", [
+appShared.factory("RestRelatedMixDatabasePortalService", [
   "BaseRestService",
   "CommonService",
   function (baseService, commonService) {

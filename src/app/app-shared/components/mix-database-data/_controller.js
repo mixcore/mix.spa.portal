@@ -1,5 +1,5 @@
 ﻿"use strict";
-app.controller("MixDatabaseDataClientController", [
+appShared.controller("MixDatabaseDataClientController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",

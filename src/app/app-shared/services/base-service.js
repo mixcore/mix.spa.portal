@@ -1,5 +1,5 @@
 "use strict";
-app.factory("BaseService", [
+appShared.factory("BaseService", [
   "$rootScope",
   "$routeParams",
   "CommonService",

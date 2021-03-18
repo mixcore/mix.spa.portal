@@ -1,5 +1,5 @@
 "use strict";
-app.controller("MvcPostController", [
+appShared.controller("MvcPostController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",

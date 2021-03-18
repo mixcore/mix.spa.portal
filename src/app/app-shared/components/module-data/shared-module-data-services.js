@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', function ($http, $rootScope, commonService) {
+appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonService', function ($http, $rootScope, commonService) {
 
 
     var moduleDatasServiceFactory = {};

@@ -1,5 +1,5 @@
 "use strict";
-app.controller("MvcModuleDataController", [
+appShared.controller("MvcModuleDataController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",

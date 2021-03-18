@@ -1,8 +1,8 @@
-app.constant("AppSettings", {
+appShared.constant("AppSettings", {
   serviceBase: "",
   apiVersion: "v1",
 });
-app.constant("ngAppSettings", {
+appShared.constant("ngAppSettings", {
   serviceBase: "",
   clientId: "ngAuthApp",
   facebookAppId: "464285300363325",
@@ -161,7 +161,7 @@ app.constant("ngAppSettings", {
   ],
   icons: [],
 });
-app.run([
+appShared.run([
   "$http",
   "$rootScope",
   "ngAppSettings",

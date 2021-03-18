@@ -1,5 +1,5 @@
 'use strict';
-app.factory('FileService', ['BaseService',
+appShared.factory('FileService', ['BaseService',
     function (baseService) {
 
         var serviceFactory = Object.create(baseService);

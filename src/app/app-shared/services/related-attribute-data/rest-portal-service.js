@@ -1,5 +1,5 @@
 "use strict";
-app.factory("RestRelatedAttributeDataPortalService", [
+appShared.factory("RestRelatedAttributeDataPortalService", [
   "BaseRestService",
   "CommonService",
   function (baseService, commonService) {

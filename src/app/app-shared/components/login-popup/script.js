@@ -1,9 +1,9 @@
-﻿app.component("loginPopup", {
+﻿appShared.component("loginPopup", {
   templateUrl: "/mix-app/views/app-shared/components/login-popup/view.html",
   controller: "LoginPopupController",
 });
 
-app.controller("LoginPopupController", [
+appShared.controller("LoginPopupController", [
   "$scope",
   "$rootScope",
   "AuthService",

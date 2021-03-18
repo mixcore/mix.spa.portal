@@ -1,5 +1,5 @@
 'use strict';
-app.factory('RestMvcPostService', ['BaseRestService',
+appShared.factory('RestMvcPostService', ['BaseRestService',
     function (baseService) {
         var serviceFactory = Object.create(baseService);
         serviceFactory.init('post/mvc');

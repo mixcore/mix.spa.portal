@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('SharedModuleDataController', ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$timeout', '$location', 'AuthService', 'SharedModuleDataService',
+appShared.controller('SharedModuleDataController', ['$scope', '$rootScope', 'ngAppSettings', '$routeParams', '$timeout', '$location', 'AuthService', 'SharedModuleDataService',
     function ($scope, $rootScope, ngAppSettings, $routeParams, $timeout, $location, authService, moduleDataService) {
         $scope.request = {
             pageSize: '10',

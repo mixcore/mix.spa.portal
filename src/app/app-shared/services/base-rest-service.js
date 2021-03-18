@@ -1,5 +1,5 @@
 "use strict";
-app.factory("BaseRestService", [
+appShared.factory("BaseRestService", [
   "$rootScope",
   "$routeParams",
   "AppSettings",
@@ -23,6 +23,8 @@ app.factory("BaseRestService", [
         if ($rootScope.settings || lang) {
           this.lang = lang || $rootScope.settings.lang;
           this.prefixUrl = `/rest/${this.lang}/${modelName}`;
+        }else {
+          this.prefixUrl = `/rest/${modelName}`;
         }
       } else {
         this.prefixUrl = `/rest/${modelName}`;

@@ -84,8 +84,14 @@ paths.clientAppRequired = {
 
 paths.sharedApp = {
   src: [
-    paths.webapp + "app-shared/**/*.js",
-    paths.webapp + "app-shared/**/*.*.js",
+    paths.webapp + "app-shared/app.js",
+    paths.webapp + "app-shared/app-configurations.js",
+    paths.webapp + "app-shared/app.directive.js",
+    paths.webapp + "app-shared/app.filter.js",
+    paths.webapp + "app-shared/services/**/*.js",
+    paths.webapp + "app-shared/controllers/**/*.js",
+    paths.webapp + "app-shared/components/**/*.js",
+    paths.webapp + "app-shared/plugins/**/*.js",
     `${paths.nodeModules}/html2canvas/dist/html2canvas.min.js`,
   ],
   dest: paths.webroot + "js/app-shared.min.js",
@@ -332,7 +338,7 @@ paths.appPortal = {
 };
 paths.appPortalRequired = {
   src: [
-    // `${paths.nodeModules}jquery/dist/jquery.min.js`,
+    `${paths.nodeModules}jquery/dist/jquery.min.js`,
     `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
     `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
     paths.scriptLib + "portal/prism/prism.min.js",

@@ -1,5 +1,5 @@
 ﻿'use strict';
-app.controller('VideoCallController', ['$scope', function ($scope) {
+appShared.controller('VideoCallController', ['$scope', function ($scope) {
     BaseHub.call(this, $scope);
     $scope.user = {
         loggedIn: false,
