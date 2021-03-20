@@ -33,7 +33,10 @@ app.controller("PostController", [
     $scope.createUrl = "/portal/post/create";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
-   
+    $scope.postType = {
+      databaseName: "",
+      title: "All",
+    };
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.mixDatabaseName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
@@ -50,14 +53,26 @@ app.controller("PostController", [
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.isSucceed) {
-        $scope.postTypes = $scope.postTypes = (
-          getTypes.data.items.map((m) => m.obj)
+        $scope.postTypes = getTypes.data.items.map((m) => m.obj);
+        $scope.postTypes.splice(
+          0,
+          0,
+          {
+            databaseName: "",
+            title: "All",
+          },
+          {
+            databaseName: "sys_additional_field_post",
+            title: "Default",
+          }
         );
-        $scope.postType = $rootScope.findObjectByKey(
-          $scope.postTypes,
-          "databaseName",
-          $scope.request.type
-        );
+        if ($scope.request.type) {
+          $scope.postType = $rootScope.findObjectByKey(
+            $scope.postTypes,
+            "databaseName",
+            $scope.request.type
+          );
+        }
         $scope.request.type = $routeParams.type || "";
         $scope.$apply();
       }
@@ -80,7 +95,6 @@ app.controller("PostController", [
 
         $rootScope.isBusy = false;
         $scope.$apply();
-        
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);
@@ -97,7 +111,11 @@ app.controller("PostController", [
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {
-      $scope.viewmodel.type = $scope.postType;
+      if ($scope.viewmodel) {
+        $scope.viewmodel.type = $scope.postType.databaseName;
+        $scope.loadAdditionalData();
+      }
+      $scope.request.type = $scope.postType.databaseName;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
@@ -168,17 +186,24 @@ app.controller("PostController", [
       $scope.$apply();
     };
     $scope.getSingleSuccessCallback = async function () {
+      $scope.defaultThumbnailImgWidth =
+        ngAppSettings.settings.DefaultThumbnailImgWidth;
+      $scope.defaultThumbnailImgHeight =
+        ngAppSettings.settings.DefaultThumbnailImgHeight;
 
-      $scope.defaultThumbnailImgWidth = ngAppSettings.settings.DefaultThumbnailImgWidth;
-      $scope.defaultThumbnailImgHeight = ngAppSettings.settings.DefaultThumbnailImgHeight;
-
-      $scope.defaultFeatureImgWidth = ngAppSettings.settings.DefaultFeatureImgWidth;
-      $scope.defaultFeatureImgHeight = ngAppSettings.settings.DefaultFeatureImgHeight;
+      $scope.defaultFeatureImgWidth =
+        ngAppSettings.settings.DefaultFeatureImgWidth;
+      $scope.defaultFeatureImgHeight =
+        ngAppSettings.settings.DefaultFeatureImgHeight;
 
       $scope.request.type = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
-      // await $scope.loadPostTypes();
+      $scope.postType = $rootScope.findObjectByKey(
+        $scope.postTypes,
+        "databaseName",
+        $scope.request.type
+      );
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
@@ -228,7 +253,6 @@ app.controller("PostController", [
         $scope.viewmodel.publishedDateTime
       );
     };
-
     $scope.loadAdditionalData = async function () {
       const obj = {
         parentType: "Post",
@@ -284,12 +308,10 @@ app.controller("PostController", [
         $scope.$apply();
       }
     };
-
     $scope.removeAliasCallback = async function (index) {
       $scope.viewmodel.urlAliases.splice(index, 1);
       $scope.$apply();
     };
-
     $scope.updateSysCategories = function (data) {
       // Loop selected categories
       angular.forEach($scope.selectedCategories, function (e) {

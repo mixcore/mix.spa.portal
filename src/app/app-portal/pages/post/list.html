@@ -6,8 +6,8 @@
       </filter-list>
   
       <select class="form-select my-3"
-        ng-options="item.attribute_set_name as item.title for item in postTypes track by item.id"
-        ng-change="onSelectType();" ng-model="request.type"></select>
+        ng-options="item as item.title for item in postTypes track by item.title"
+        ng-change="onSelectType();" ng-model="postType"></select>
       <select class="form-select mb-3" ng-model="selectedList.action">
         <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
       </select>

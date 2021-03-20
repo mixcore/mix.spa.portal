@@ -53,7 +53,7 @@
                     </a>
                     ]</label>
                   <select ng-init="loadPostTypes()" class="form-select"
-                    ng-options="item.databaseName as item.title for item in postTypes track by item.id"
+                    ng-options="item as item.title for item in postTypes track by item.id"
                     ng-change="onSelectType()" ng-model="postType"></select>
                 </div>
 
