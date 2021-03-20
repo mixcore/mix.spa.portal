@@ -1,5 +1,5 @@
 "use strict";
-app
+appShared
   .directive("ngEnter", function () {
     return function (scope, element, attrs) {
       element.bind("keydown keypress", function (event) {

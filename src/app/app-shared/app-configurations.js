@@ -4,8 +4,9 @@ appShared.constant("AppSettings", {
 });
 appShared.constant("ngAppSettings", {
   serviceBase: "",
+  secretKey: "3s6v9y$B&E)H@McQ",
   clientId: "ngAuthApp",
-  facebookAppId: "464285300363325",
+  facebookAppId: "",
   request: {
     pageSize: "20",
     pageIndex: 0,
@@ -218,36 +219,37 @@ appShared.run([
       return input;
     };
 
-    $rootScope.generateKeyword = function (src, character, isCamelCase = false, isLowerFirst = false) {
+    $rootScope.generateKeyword = function (
+      src,
+      character,
+      isCamelCase = false,
+      isLowerFirst = false
+    ) {
       if (src) {
         src = $rootScope.parseUnsignString(src);
 
-        if(isCamelCase){
+        if (isCamelCase) {
           src = src
-          .replace(
-            /\w\S*/g,
-            function(txt) {
+            .replace(/\w\S*/g, function (txt) {
               return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-            }
-          )
-          .replace(/[^a-zA-Z0-9]+/g, "");
+            })
+            .replace(/[^a-zA-Z0-9]+/g, "");
 
-          if(isLowerFirst){
-            src = src
-            .replace(/^./, str => str.toLowerCase()); // first to lowercase
+          if (isLowerFirst) {
+            src = src.replace(/^./, (str) => str.toLowerCase()); // first to lowercase
           }
-        }else{
+        } else {
           src = src
-          .replace(/[^a-zA-Z0-9]+/g, character)
-          .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-          .replace(/([a-z])([A-Z])/g, "$1-$2")
-          // .replace(/([0-9])([^0-9])/g, "$1-$2")
-          // .replace(/([^0-9])([0-9])/g, "$1-$2")
-          .replace(/-+/g, character)
-          .toLowerCase();
+            .replace(/[^a-zA-Z0-9]+/g, character)
+            .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+            .replace(/([a-z])([A-Z])/g, "$1-$2")
+            // .replace(/([0-9])([^0-9])/g, "$1-$2")
+            // .replace(/([^0-9])([0-9])/g, "$1-$2")
+            .replace(/-+/g, character)
+            .toLowerCase();
         }
 
-        return (src);
+        return src;
       }
     };
 
@@ -515,13 +517,14 @@ appShared.run([
       ) {
         d += performance.now(); //use high-precision timer if available
       }
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
-        c
-      ) {
-        var r = (d + Math.random() * 16) % 16 | 0;
-        d = Math.floor(d / 16);
-        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      });
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          var r = (d + Math.random() * 16) % 16 | 0;
+          d = Math.floor(d / 16);
+          return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      );
     };
     $rootScope.filterArray = function (array, keys, values) {
       var result = [];

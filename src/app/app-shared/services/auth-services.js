@@ -5,6 +5,7 @@ appShared.factory("AuthService", [
   "$routeParams",
   "$q",
   "localStorageService",
+  "CryptoService",
   "AppSettings",
   function (
     $http,
@@ -12,6 +13,7 @@ appShared.factory("AuthService", [
     $routeParams,
     $q,
     localStorageService,
+    cryptoService,
     appSettings
   ) {
     var authServiceFactory = {};
@@ -62,11 +64,13 @@ appShared.factory("AuthService", [
         Email: "",
         ReturnUrl: "",
       };
+      var message = cryptoService.encryptSHA(JSON.stringify(data));
+      var decrypt = cryptoService.decryptSHA(message);
       var apiUrl = "/account/login";
       var req = {
         method: "POST",
         url: apiUrl,
-        data: JSON.stringify(data),
+        data: JSON.stringify({ message: message }),
       };
       var resp = await _getRestApiResult(req);
 
@@ -435,7 +439,6 @@ appShared.factory("AuthService", [
     };
 
     var _getRestApiResult = async function (req, serviceBase) {
-
       var serviceUrl =
         appSettings.serviceBase + "/api/" + appSettings.apiVersion;
       if (serviceBase || req.serviceBase) {
@@ -511,7 +514,6 @@ appShared.factory("AuthService", [
         }
       );
     };
-
 
     var _isInRole = function (roleName) {
       return this.authentication.roleNames.includes(roleName.toUpperCase());
