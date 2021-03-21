@@ -4,7 +4,8 @@ appShared.constant("AppSettings", {
 });
 appShared.constant("ngAppSettings", {
   serviceBase: "",
-  secretKey: "3s6v9y$B&E)H@McQ",
+  encryptKey: "MbQeThWmZq4t7w!z$C&F)J@NcRfUjXn2",
+  encryptIV: "3s6v9y$B&E)H@McQ",
   clientId: "ngAuthApp",
   facebookAppId: "",
   request: {

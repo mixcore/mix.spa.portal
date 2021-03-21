@@ -3,12 +3,13 @@ appShared.factory("CryptoService", [
   "ngAppSettings",
   function (ngAppSettings) {
     var factory = {};
-    var size = 128;
-    //size: 128 / 256 / 512
-    var _encryptSHA = function (message) {
-      var key = _getKey(size);
+    var size = 256;
+    //size: 128 / 192 / 256
+    var _encryptAES = function (message) {
+      var key = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptKey);
+      var iv = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptIV);
       var options = {
-        iv: key,
+        iv: iv,
         keySize: size / 8,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
@@ -18,9 +19,9 @@ appShared.factory("CryptoService", [
     };
 
     //size: 128 / 256 / 512
-    var _decryptSHA = function (ciphertext) {
-      var key = _getKey(size);
-      var iv = _getKey(size);
+    var _decryptAES = function (ciphertext) {
+      var key = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptKey);
+      var iv = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptIV);
       var cipherParams = CryptoJS.lib.CipherParams.create({
         ciphertext: CryptoJS.enc.Base64.parse(ciphertext),
       });
@@ -34,13 +35,8 @@ appShared.factory("CryptoService", [
       return decrypted.toString(CryptoJS.enc.Utf8);
     };
 
-    var _getKey = function () {
-      return CryptoJS.enc.Utf8.parse(ngAppSettings.secretKey);
-    };
-
-    factory.encryptSHA = _encryptSHA;
-    factory.decryptSHA = _decryptSHA;
-    factory.getKey = _getKey;
+    factory.encryptAES = _encryptAES;
+    factory.decryptAES = _decryptAES;
     return factory;
   },
 ]);

@@ -8,8 +8,9 @@ app.controller("StoreController", [
     $scope.categories = [];
     $scope.init = async function () {
       $scope.themeRequest = angular.copy(ngAppSettings.request);
+      $scope.themeRequest.orderBy = 'createdDatetime';
+      $scope.themeRequest.postType = 'theme';
       $scope.cateRequest = angular.copy(ngAppSettings.request);
-
       $scope.cateRequest.mixDatabaseName = "sys_category";
       $scope.cateRequest.pageSize = null;
 
@@ -21,11 +22,9 @@ app.controller("StoreController", [
       $scope.$apply();
     };
 
-    $scope.getThemes = async function (pageIndex) {
+    $scope.getThemes = async function () {
       $rootScope.isBusy = true;
-      if (pageIndex !== undefined) {
-        $scope.themeRequest.pageIndex = pageIndex;
-      }
+      
       if ($scope.themeRequest.fromDate !== null) {
         var d = new Date($scope.themeRequest.fromDate);
         $scope.themeRequest.fromDate = d.toISOString();

@@ -64,8 +64,7 @@ appShared.factory("AuthService", [
         Email: "",
         ReturnUrl: "",
       };
-      var message = cryptoService.encryptSHA(JSON.stringify(data));
-      var decrypt = cryptoService.decryptSHA(message);
+      var message = cryptoService.encryptAES(JSON.stringify(data));
       var apiUrl = "/account/login";
       var req = {
         method: "POST",

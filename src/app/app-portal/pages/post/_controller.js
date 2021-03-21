@@ -180,7 +180,10 @@ app.controller("PostController", [
       if ($scope.additionalData) {
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
-        await dataService.save($scope.additionalData);
+        let result = await dataService.save($scope.additionalData);
+        if(!result.isSucceed){
+          $rootScope.showErrors(result.errors);
+        }
       }
       $rootScope.isBusy = false;
       $scope.$apply();
