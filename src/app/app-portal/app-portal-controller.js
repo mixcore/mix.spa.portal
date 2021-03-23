@@ -50,13 +50,11 @@ app.controller("AppPortalController", [
             authService.fillAuthData().then(function (response) {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth =
-                authService.authentication != null &&
-                authService.authentication.isAuth;
+                authService.authentication != null
               if (
-                authService.authentication &&
-                authService.authentication.isAuth
+                authService.authentication
               ) {
-                $scope.isAdmin = authService.authentication.isAdmin;
+                $scope.isAdmin = authService.isInRole('SuperAdmin');
               } else {
                 window.top.location.href = "/security/login";
               }

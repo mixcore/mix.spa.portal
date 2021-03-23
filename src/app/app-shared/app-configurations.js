@@ -423,7 +423,7 @@ appShared.run([
       var iv = CryptoJS.lib.WordArray.random(ivSize / 8);
 
       var options = {
-        mode: CryptoJS.mode.ECB,
+        mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
         iv: iv,
       };
@@ -442,7 +442,7 @@ appShared.run([
       var key = CryptoJS.enc.Base64.parse(encryptedData.key);
       var iv = CryptoJS.lib.WordArray.random(ivSize / 8);
       var options = {
-        mode: CryptoJS.mode.ECB,
+        mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
         iv: iv,
       };

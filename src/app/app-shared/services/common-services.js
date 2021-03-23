@@ -16,7 +16,7 @@ appShared.factory("CommonService", [
     localStorageService,
     appSettings
   ) {
-    var adminCommonFactory = {};
+    var factory = {};
     var _settings = {
       lang: "",
       cultures: [],
@@ -49,14 +49,14 @@ appShared.factory("CommonService", [
               .then(
                 function () {
                   req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
+                    "Bearer " + authService.authentication.access_token;
                   return _sendRestRequest(req, false);
                 },
                 function (err) {
                   var t = { isSucceed: false };
 
                   authService.logOut();
-                  authService.authentication.token = null;
+                  authService.authentication.access_token = null;
                   authService.authentication.refresh_token = null;
                   authService.referredUrl = $location.$$url;
                   $rootScope.showLogin(req, "rest");
@@ -132,14 +132,14 @@ appShared.factory("CommonService", [
               .then(
                 function () {
                   req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
+                    "Bearer " + authService.authentication.access_token;
                   return _sendRequest(req, onUploadFileProgress, false);
                 },
                 function (err) {
                   var t = { isSucceed: false };
 
                   authService.logOut();
-                  authService.authentication.token = null;
+                  authService.authentication.access_token = null;
                   authService.authentication.refresh_token = null;
                   authService.referredUrl = $location.$$url;
                   window.top.location.href = "/security/login";
@@ -393,7 +393,7 @@ appShared.factory("CommonService", [
     ) {
       await authService.fillAuthData();
       if (authService.authentication) {
-        req.Authorization = authService.authentication.token;
+        req.Authorization = authService.authentication.access_token;
       }
 
       var serviceUrl =
@@ -420,7 +420,7 @@ appShared.factory("CommonService", [
         await authService.fillAuthData();
       }
       if (authService.authentication) {
-        req.Authorization = authService.authentication.token;
+        req.Authorization = authService.authentication.access_token;
       }
 
       var serviceUrl =
@@ -458,14 +458,14 @@ appShared.factory("CommonService", [
               .then(
                 function () {
                   req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
+                    "Bearer " + authService.authentication.access_token;
                   return $http(req).then(
                     function (results) {
                       return { isSucceed: true, data: results.data };
                     },
                     function (err) {
                       authService.logOut();
-                      authService.authentication.token = null;
+                      authService.authentication.access_token = null;
                       authService.authentication.refresh_token = null;
                       authService.referredUrl = $location.$$url;
                       $rootScope.showLogin(req, "rest");
@@ -477,7 +477,7 @@ appShared.factory("CommonService", [
                   var t = { isSucceed: false };
 
                   authService.logOut();
-                  authService.authentication.token = null;
+                  authService.authentication.access_token = null;
                   authService.authentication.refresh_token = null;
                   authService.referredUrl = $location.$$url;
                   $rootScope.showLogin(req, "rest");
@@ -529,25 +529,25 @@ appShared.factory("CommonService", [
         }
       );
     };
-    adminCommonFactory.sendRestRequest = _sendRestRequest;
-    adminCommonFactory.sendRequest = _sendRequest;
-    adminCommonFactory.sendMail = _sendMail;
-    adminCommonFactory.getApiResult = _getApiResult;
-    adminCommonFactory.getRestApiResult = _getRestApiResult;
-    adminCommonFactory.getAnonymousApiResult = _getAnonymousApiResult;
-    adminCommonFactory.getSettings = _getSettings;
-    adminCommonFactory.setSettings = _setSettings;
-    adminCommonFactory.initAllSettings = _initAllSettings;
-    adminCommonFactory.fillAllSettings = _fillAllSettings;
-    adminCommonFactory.removeSettings = _removeSettings;
-    adminCommonFactory.removeTranslator = _removeTranslator;
-    adminCommonFactory.showAlertMsg = _showAlertMsg;
-    adminCommonFactory.checkfile = _checkfile;
-    adminCommonFactory.fillSettings = _fillSettings;
-    adminCommonFactory.settings = _settings;
-    adminCommonFactory.genrateSitemap = _genrateSitemap;
-    adminCommonFactory.loadJArrayData = _loadJArrayData;
-    adminCommonFactory.loadJsonData = _loadJsonData;
-    return adminCommonFactory;
+    factory.sendRestRequest = _sendRestRequest;
+    factory.sendRequest = _sendRequest;
+    factory.sendMail = _sendMail;
+    factory.getApiResult = _getApiResult;
+    factory.getRestApiResult = _getRestApiResult;
+    factory.getAnonymousApiResult = _getAnonymousApiResult;
+    factory.getSettings = _getSettings;
+    factory.setSettings = _setSettings;
+    factory.initAllSettings = _initAllSettings;
+    factory.fillAllSettings = _fillAllSettings;
+    factory.removeSettings = _removeSettings;
+    factory.removeTranslator = _removeTranslator;
+    factory.showAlertMsg = _showAlertMsg;
+    factory.checkfile = _checkfile;
+    factory.fillSettings = _fillSettings;
+    factory.settings = _settings;
+    factory.genrateSitemap = _genrateSitemap;
+    factory.loadJArrayData = _loadJArrayData;
+    factory.loadJsonData = _loadJsonData;
+    return factory;
   },
 ]);

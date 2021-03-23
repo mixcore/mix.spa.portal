@@ -74,40 +74,8 @@ appShared.factory("AuthService", [
       var resp = await _getRestApiResult(req);
 
       if (resp.isSucceed) {
-        data = resp.data;
-        var authData = {
-          userRoles: data.info.userRoles,
-          token: data.access_token,
-          userName: data.info.user.userName,
-          roleNames: data.info.userRoles
-            .filter((m) => m.isActived)
-            .map((i) => i.role.normalizedName),
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          userId: data.info.user.id,
-        };
-        var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-        localStorageService.set("authorizationData", encrypted);
-        _authentication = {
-          isAuth: true,
-          userName: data.info.user.userName,
-          userId: data.info.user.id,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          token: data.access_token,
-          useRefreshTokens: loginData.rememberme,
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(data.info.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
-        this.authentication = _authentication;
+        let encryptedData = resp.data;
+        this.updateAuthData(encryptedData);
         _initSettings().then(function () {
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
@@ -134,62 +102,7 @@ appShared.factory("AuthService", [
     };
 
     var _loginPopup = async function (loginData) {
-      var data = {
-        UserName: loginData.userName,
-        Password: loginData.password,
-        RememberMe: loginData.rememberMe,
-        Email: "",
-        ReturnUrl: "",
-      };
-      var apiUrl = "/account/login";
-      var req = {
-        method: "POST",
-        url: apiUrl,
-        data: JSON.stringify(data),
-      };
-      var resp = await _getApiResult(req);
-
-      if (resp.isSucceed) {
-        data = resp;
-        var authData = {
-          userRoles: data.info.userRoles,
-          token: data.access_token,
-          userName: data.info.user.userName,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          userId: data.info.user.id,
-        };
-        var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-        localStorageService.set("authorizationData", encrypted);
-        _authentication = {
-          isAuth: true,
-          userName: data.info.user.NickName,
-          userId: data.info.user.id,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          token: data.access_token,
-          useRefreshTokens: loginData.rememberme,
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(data.info.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
-        this.authentication = _authentication;
-        _initSettings().then(function () {
-          return resp;
-        });
-      } else {
-        $rootScope.isBusy = false;
-        $rootScope.showErrors(resp.errors);
-      }
-      return resp;
+      return await this.login(loginData);
     };
 
     var _logOut = async function () {
@@ -210,26 +123,9 @@ appShared.factory("AuthService", [
       var encryptedAuthData = localStorageService.get("authorizationData");
 
       if (encryptedAuthData) {
-        var authData = JSON.parse($rootScope.decrypt(encryptedAuthData));
-        _authentication = {
-          isAuth: true,
-          userName: authData.userName,
-          userId: authData.userId,
-          roleNames: authData.roleNames,
-          token: authData.token,
-          useRefreshTokens: authData.useRefreshTokens,
-          avatar: authData.avatar,
-          refresh_token: authData.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(authData.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
+        _authentication = JSON.parse(
+          cryptoService.decryptAES(encryptedAuthData.data, encryptedAuthData.k)
+        );
         this.authentication = _authentication;
       }
     };
@@ -253,6 +149,13 @@ appShared.factory("AuthService", [
           return response.data;
         });
       }
+    };
+
+    var _updateAuthData = async function (encryptedData) {
+      localStorageService.set("authorizationData", encryptedData);
+      this.authentication = JSON.parse(
+        cryptoService.decryptAES(encryptedData.data, encryptedData.k)
+      );
     };
 
     var _fillSettings = async function (culture) {
@@ -285,63 +188,23 @@ appShared.factory("AuthService", [
       return response;
     };
 
-    var _refreshToken = function (id) {
-      var deferred = $q.defer();
+    var _refreshToken = async function (id) {
       if (id) {
-        var url =
-          appSettings.serviceBase +
-          "/api/" +
-          appSettings.apiVersion +
-          "/account/refresh-token/" +
-          id;
-        $http.get(url).then(
-          function (response) {
-            var data = response.data.data;
-
-            if (data) {
-              try {
-                var authData = {
-                  userRoles: data.info.userRoles,
-                  token: data.access_token,
-                  userName: data.info.user.firstName,
-                  roleNames: data.info.userRoles.map(
-                    (i) => i.role.normalizedName
-                  ),
-                  avatar: data.info.user.avatar,
-                  refresh_token: data.refresh_token,
-                  userId: data.info.user.id,
-                };
-                var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-                localStorageService.set("authorizationData", encrypted);
-                authData.token = data.access_token;
-                authData.refresh_token = data.refresh_token;
-                _authentication.token = data.access_token;
-                _authentication.refresh_token = data.refresh_token;
-                if (
-                  !$rootScope.globalSettings.lastUpdateConfiguration ||
-                  $rootScope.globalSettings.lastUpdateConfiguration <
-                    data.lastUpdateConfiguration
-                ) {
-                  _initSettings();
-                }
-              } catch (e) {
-                _logOut();
-                deferred.reject(e);
-              }
-            }
-
-            deferred.resolve(response);
-          },
-          function (error) {
-            _logOut();
-            deferred.reject(error);
-          }
-        );
+        var apiUrl = `/account/refresh-token/${id}`;
+        var req = {
+          method: "GET",
+          url: apiUrl,
+        };
+        var resp = await _getApiResult(req);
+        if (resp.isSucceed) {
+          let encryptedData = resp.data;
+          return this.updateAuthData(encryptedData);
+        } else {
+          _logOut();
+        }
       } else {
         _logOut();
-        deferred.reject();
       }
-      return deferred.promise;
     };
 
     var _obtainAccessToken = function (externalData) {
@@ -364,14 +227,12 @@ appShared.factory("AuthService", [
             userName: response.userName,
             roleName: response.userData.roleNames,
             refresh_token: response.refresh_token,
-            useRefreshTokens: true,
           });
 
           _authentication.isAuth = true;
           _authentication.isAdmin = _authentication.isAdmin =
             $.inArray("SuperAdmin", response.userData.RoleNames) >= 0;
           _authentication.userName = response.userName;
-          _authentication.useRefreshTokens = false;
 
           deferred.resolve(response);
         })
@@ -399,12 +260,10 @@ appShared.factory("AuthService", [
             token: response.access_token,
             userName: response.userName,
             refresh_token: response.refresh_token,
-            useRefreshTokens: true,
           });
 
           _authentication.isAuth = true;
           _authentication.userName = response.userName;
-          _authentication.useRefreshTokens = false;
 
           deferred.resolve(response);
         })
@@ -463,14 +322,14 @@ appShared.factory("AuthService", [
               .then(
                 function () {
                   req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
+                    "Bearer " + authService.authentication.access_token;
                   return $http(req).then(
                     function (results) {
                       return { isSucceed: true, data: results.data };
                     },
                     function (err) {
                       authService.logOut();
-                      authService.authentication.token = null;
+                      authService.authentication.access_token = null;
                       authService.authentication.refresh_token = null;
                       authService.referredUrl = $location.$$url;
                       $rootScope.showLogin(req, "rest");
@@ -482,7 +341,7 @@ appShared.factory("AuthService", [
                   var t = { isSucceed: false };
 
                   authService.logOut();
-                  authService.authentication.token = null;
+                  authService.authentication.access_token = null;
                   authService.authentication.refresh_token = null;
                   authService.referredUrl = $location.$$url;
                   $rootScope.showLogin(req, "rest");
@@ -515,7 +374,13 @@ appShared.factory("AuthService", [
     };
 
     var _isInRole = function (roleName) {
-      return this.authentication.roleNames.includes(roleName.toUpperCase());
+      if (!this.authentication) {
+        return false;
+      }
+      var role = this.authentication.info.userRoles.filter(
+        (m) => m.description == roleName
+      );
+      return role != null;
     };
 
     authServiceFactory.saveRegistration = _saveRegistration;
@@ -527,6 +392,7 @@ appShared.factory("AuthService", [
     authServiceFactory.loginPopup = _loginPopup;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.referredUrl = _referredUrl;
+    authServiceFactory.updateAuthData = _updateAuthData;
     authServiceFactory.fillAuthData = _fillAuthData;
     authServiceFactory.authentication = _authentication;
     authServiceFactory.refreshToken = _refreshToken;

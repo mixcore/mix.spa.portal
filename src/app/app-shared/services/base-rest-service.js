@@ -235,7 +235,7 @@ appShared.factory("BaseRestService", [
         await authService.fillAuthData();
       }
       if (authService.authentication) {
-        req.Authorization = authService.authentication.token;
+        req.Authorization = authService.authentication.access_token;
       }
 
       var serviceUrl =
