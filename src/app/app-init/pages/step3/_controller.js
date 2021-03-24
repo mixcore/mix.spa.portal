@@ -20,11 +20,12 @@ app.controller("Step3Controller", [
       direction: "Desc",
       fromDate: null,
       toDate: null,
+      postType:"theme"
     };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
       $scope.form = document.getElementById("frm-theme");
-      var getThemes = await storeService.getList($scope.request);
+      var getThemes = await storeService.getThemes($scope.request);
       if (getThemes.isSucceed) {
         $scope.themes = getThemes.data;
         $scope.$apply();

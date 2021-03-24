@@ -3,13 +3,14 @@ app.controller("StoreController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",
+  "ThemeService",
   "StoreService",
-  function ($scope, $rootScope, ngAppSettings, service) {
+  function ($scope, $rootScope, ngAppSettings, themeService, service) {
     $scope.categories = [];
     $scope.init = async function () {
       $scope.themeRequest = angular.copy(ngAppSettings.request);
-      $scope.themeRequest.orderBy = 'createdDatetime';
-      $scope.themeRequest.postType = 'theme';
+      $scope.themeRequest.orderBy = "createdDatetime";
+      $scope.themeRequest.postType = "theme";
       $scope.cateRequest = angular.copy(ngAppSettings.request);
       $scope.cateRequest.mixDatabaseName = "sys_category";
       $scope.cateRequest.pageSize = null;
@@ -24,7 +25,7 @@ app.controller("StoreController", [
 
     $scope.getThemes = async function () {
       $rootScope.isBusy = true;
-      
+
       if ($scope.themeRequest.fromDate !== null) {
         var d = new Date($scope.themeRequest.fromDate);
         $scope.themeRequest.fromDate = d.toISOString();
@@ -60,6 +61,19 @@ app.controller("StoreController", [
         }
         $rootScope.isBusy = false;
         $scope.$apply();
+      }
+    };
+
+    $scope.installTheme = async function (theme) {
+      $rootScope.isBusy = true;
+      var result = await themeService.install(theme);
+      if(result.isSucceed){
+        $rootScope.isBusy = false;
+        $rootScope.showMessage('success');
+      }
+      else{
+        $rootScope.isBusy = false;
+        $rootScope.showErrors(result.errors);
       }
     };
   },

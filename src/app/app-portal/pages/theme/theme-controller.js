@@ -16,10 +16,11 @@ app.controller("ThemeController", [
     service,
     commonService
   ) {
-    BaseCtrl.call(
+    BaseRestCtrl.call(
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service
