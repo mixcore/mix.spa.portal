@@ -125,27 +125,34 @@ appShared.factory("CommonService", [
           return resp.data;
         },
         function (error) {
-          if (error.status === 401 && isRetry) {
+          if (error.status === 401) {
             //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(authService.authentication.refresh_token)
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + authService.authentication.access_token;
-                  return _sendRequest(req, onUploadFileProgress, false);
-                },
-                function (err) {
-                  var t = { isSucceed: false };
+            if (isRetry) {
+              return authService
+                .refreshToken(authService.authentication.refresh_token)
+                .then(
+                  function () {
+                    req.headers.Authorization =
+                      "Bearer " + authService.authentication.access_token;
+                    return _sendRequest(req, onUploadFileProgress, false);
+                  },
+                  function (err) {
+                    var t = { isSucceed: false };
 
-                  authService.logOut();
-                  authService.authentication.access_token = null;
-                  authService.authentication.refresh_token = null;
-                  authService.referredUrl = $location.$$url;
-                  window.top.location.href = "/security/login";
-                  return t;
-                }
-              );
+                    authService.logOut();
+                    authService.authentication.access_token = null;
+                    authService.authentication.refresh_token = null;
+                    authService.referredUrl = $location.$$url;
+                    window.top.location.href = "/security/login";
+                    return t;
+                  }
+                );
+            } else {
+              return {
+                isSucceed: false,
+                errors: [error.statusText || error.status],
+              };
+            }
           } else if (error.status === 403) {
             var t = { isSucceed: false, errors: ["Forbidden"] };
             $rootScope.showLogin(req, "rest");

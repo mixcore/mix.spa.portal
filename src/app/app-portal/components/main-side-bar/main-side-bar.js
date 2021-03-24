@@ -5,7 +5,7 @@
             var ctrl = this;
             ctrl.items = [];
             ctrl.init = function () {
-                var routes = $.parseJSON($('#portal-menus').val());
+                var routes = JSON.parse($('#portal-menus').val());
                 ctrl.items = routes.data;
             };
         }],

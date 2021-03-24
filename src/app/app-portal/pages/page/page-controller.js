@@ -80,7 +80,7 @@ app.controller("PageController", [
       const obj = {
         parentType: "Page",
         parentId: $scope.viewmodel.id,
-        databaseName: "sys_additional_column_page",
+        databaseName: "sys_additional_field_page",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {

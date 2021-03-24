@@ -1,34 +1,30 @@
 ﻿"use strict";
 appShared.factory("CryptoService", [
+  "$rootScope",
   "ngAppSettings",
-  function (ngAppSettings) {
+  function ($rootScope, ngAppSettings) {
     var factory = {};
     //size: 128 / 192 / 256
     var size = 256;
 
     var _encryptAES = function (message, iCompleteEncodedKey = null) {
       var key, iv;
-      if (iCompleteEncodedKey) {
-        var keys = _parseKeys(iCompleteEncodedKey);
-        key = keys.key;
-        iv = keys.iv;
-      } else {
-        key = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptKey);
-        iv = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptIV);
-      }
+      ngAppSettings;
+      iCompleteEncodedKey =
+        iCompleteEncodedKey || $rootScope.globalSettings.apiEncryptKey;
+      var keys = _parseKeys(iCompleteEncodedKey);
+      key = keys.key;
+      iv = keys.iv;
       return _encryptMessage(message, key, iv);
     };
 
     var _decryptAES = function (ciphertext, iCompleteEncodedKey = null) {
       var key, iv;
-      if (iCompleteEncodedKey) {
-        var keys = _parseKeys(iCompleteEncodedKey);
-        key = keys.key;
-        iv = keys.iv;
-      } else {
-        key = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptKey);
-        iv = CryptoJS.enc.Utf8.parse(ngAppSettings.encryptIV);
-      }
+      iCompleteEncodedKey =
+        iCompleteEncodedKey || $rootScope.globalSettings.apiEncryptKey;
+      var keys = _parseKeys(iCompleteEncodedKey);
+      key = keys.key;
+      iv = keys.iv;
       return _decryptMessage(ciphertext, key, iv);
     };
 

@@ -278,7 +278,7 @@ app.controller("ModuleController", [
       const obj = {
         parentType: "Module",
         parentId: $scope.viewmodel.id,
-        databaseName: "sys_additional_column_module",
+        databaseName: "sys_additional_field_module",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {
