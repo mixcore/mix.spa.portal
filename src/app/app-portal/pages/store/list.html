@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="row" data-masonry='{"percentPosition": true }'>
-                        <div ng-repeat="post in data.items" class="col-md-4">
+                        <div ng-repeat="post in data.items track by $index" class="col-md-4">
                             <div class="card mb-4 shadow-sm">
                                 <img class="bd-placeholder-img card-img-top" src="{{post.thumbnailUrl}}" />
                                 <div class="card-body">
@@ -70,7 +70,7 @@
                                         <div class="col-5 p-0">
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-striped bg-warning"
-                                                    role="progressbar" style="width: {{post.properties.avg_rating}}%"
+                                                    role="progressbar" style="width: {{post.progress}}%"
                                                     aria-valuenow="{{post.properties.avg_rating}}" aria-valuemin="0"
                                                     aria-valuemax="100">
                                                 </div>
@@ -81,7 +81,7 @@
                                         <div class="col-7 justify-content-end text-end p-0">
                                             <a target="_blank" href="{{post.additionalData.previewLink}}"
                                                 class="btn btn-sm btn-outline-secondary mr-1">Preview</a>
-                                            <a ng-click="installTheme(post.additionalData)" target="_blank"
+                                            <a ng-click="installTheme(post.additionalData, post.id)" target="_blank"
                                                 class="btn btn-sm btn-outline-primary"><i
                                                     class="fas fa-cloud-download-alt"></i></a>
                                         </div>

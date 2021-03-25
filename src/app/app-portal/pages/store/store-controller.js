@@ -7,7 +7,12 @@ app.controller("StoreController", [
   "StoreService",
   function ($scope, $rootScope, ngAppSettings, themeService, service) {
     $scope.categories = [];
+    BaseHub.call(this, $scope);
     $scope.init = async function () {
+      $scope.startConnection("portalhub", () => {
+        $scope.joinRoom("Theme");
+      });
+
       $scope.themeRequest = angular.copy(ngAppSettings.request);
       $scope.themeRequest.orderBy = "createdDatetime";
       $scope.themeRequest.postType = "theme";
@@ -21,6 +26,22 @@ app.controller("StoreController", [
       $scope.categories = getCategories.data.items;
       await $scope.getThemes($scope.themeRequest);
       $scope.$apply();
+    };
+    $scope.currentTheme;
+    $scope.receiveMessage = function (msg) {
+      switch (msg.action) {
+        case "Downloading":
+          var index = $scope.data.items.findIndex((m) => m.id == $scope.id);
+          if (index >= 0) {
+            $scope.data.items[index].progress = msg.message;
+            $scope.$apply();
+          }
+          break;
+
+        default:
+          console.log(msg);
+          break;
+      }
     };
 
     $scope.getThemes = async function () {
@@ -64,14 +85,14 @@ app.controller("StoreController", [
       }
     };
 
-    $scope.installTheme = async function (theme) {
-      $rootScope.isBusy = true;
+    $scope.installTheme = async function (theme, id) {
+      $rootScope.isBusy = false;
+      $scope.id = id;
       var result = await themeService.install(theme);
-      if(result.isSucceed){
+      if (result.isSucceed) {
         $rootScope.isBusy = false;
-        $rootScope.showMessage('success');
-      }
-      else{
+        $rootScope.showMessage("success");
+      } else {
         $rootScope.isBusy = false;
         $rootScope.showErrors(result.errors);
       }
