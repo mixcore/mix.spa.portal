@@ -32,8 +32,12 @@ app.controller("StoreController", [
       switch (msg.action) {
         case "Downloading":
           var index = $scope.data.items.findIndex((m) => m.id == $scope.id);
+          var progress = Math.round(msg.message);
           if (index >= 0) {
-            $scope.data.items[index].progress = msg.message;
+            $scope.data.items[index].progress = progress;
+            if(progress == 100){
+              $scope.data.items[index].additionalData.installStatus = 'installing';
+            }
             $scope.$apply();
           }
           break;
@@ -87,15 +91,19 @@ app.controller("StoreController", [
 
     $scope.installTheme = async function (theme, id) {
       $rootScope.isBusy = false;
+      theme.installStatus = 'downloading';
       $scope.id = id;
       var result = await themeService.install(theme);
       if (result.isSucceed) {
         $rootScope.isBusy = false;
+        theme.installStatus = 'finished';
         $rootScope.showMessage("success");
       } else {
         $rootScope.isBusy = false;
+        theme.installStatus = 'failed';
         $rootScope.showErrors(result.errors);
       }
+      $scope.$apply();
     };
   },
 ]);

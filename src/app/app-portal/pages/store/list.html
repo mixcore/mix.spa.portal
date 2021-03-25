@@ -75,15 +75,20 @@
                                                     aria-valuemax="100">
                                                 </div>
                                             </div>
-                                            <small class="text-muted">{{post.additionalData.download_count}}
-                                                download</small>
+                                            <small class="text-muted"
+                                                ng-bind="post.additionalData.installStatus"></small>
                                         </div>
                                         <div class="col-7 justify-content-end text-end p-0">
                                             <a target="_blank" href="{{post.additionalData.previewLink}}"
                                                 class="btn btn-sm btn-outline-secondary mr-1">Preview</a>
-                                            <a ng-click="installTheme(post.additionalData, post.id)" target="_blank"
+                                            <a ng-if="!post.additionalData.installStatus"
+                                                ng-click="installTheme(post.additionalData, post.id)" target="_blank"
                                                 class="btn btn-sm btn-outline-primary"><i
                                                     class="fas fa-cloud-download-alt"></i></a>
+                                            <a ng-if="post.additionalData.installStatus == 'downloading'"
+                                                class="spinner-border text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

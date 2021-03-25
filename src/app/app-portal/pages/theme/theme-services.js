@@ -11,7 +11,7 @@ app.factory('ThemeService', ['CommonService', 'BaseRestService',
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req, '');
+            return await commonService.getRestApiResult(req, '');
         };
         var _install = async function (objData) {
             var url = this.prefixUrl + '/install';
@@ -20,7 +20,7 @@ app.factory('ThemeService', ['CommonService', 'BaseRestService',
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await commonService.getRestApiResult(req);
         };
         var _export = async function (id, objData) {
             var url = this.prefixUrl + '/export/' + id;
@@ -29,7 +29,7 @@ app.factory('ThemeService', ['CommonService', 'BaseRestService',
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await commonService.getRestApiResult(req);
         };
         var _getExportData = async function (id) {
             var url = (this.prefixUrl || '/' + this.lang + '/' + this.modelName) + '/export/' + id;
@@ -37,7 +37,7 @@ app.factory('ThemeService', ['CommonService', 'BaseRestService',
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req);
+            return await commonService.getRestApiResult(req);
         };
         serviceFactory.install = _install;
         serviceFactory.export = _export;
