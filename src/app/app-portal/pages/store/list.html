@@ -64,11 +64,14 @@
                                     </h6>
 
                                     <div class="d-flex justify-content-left">
-                                        <h5 class="text-success">$ {{post.additionalData.price }}</h5>
+                                        <h5 class="text-success">$ {{ post.additionalData.price }}</h5>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <div class="col-5 p-0">
-                                            <div class="progress">
+                                            <google-pay 
+                                            total-price="post.additionalData.price"
+                                            total-price-status="'FINAL'"></google-pay>
+                                            <div class="progress" ng-if="post.progress">
                                                 <div class="progress-bar progress-bar-striped bg-warning"
                                                     role="progressbar" style="width: {{post.progress}}%"
                                                     aria-valuenow="{{post.properties.avg_rating}}" aria-valuemin="0"

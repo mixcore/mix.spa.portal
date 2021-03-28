@@ -1,4 +1,6 @@
-<div class="card mb-4 ga-container" ng-init="$ctrl.init()">
+<div 
+ng-if="$rootScope.settings.data.Google_Client_Id"
+class="card mb-4 ga-container" ng-init="$ctrl.init()">
     <div class="card-header">
         <h6>
             Google Analytics
