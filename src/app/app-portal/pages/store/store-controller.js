@@ -3,11 +3,21 @@ app.controller("StoreController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",
+  "CryptoService",
   "ThemeService",
   "StoreService",
-  function ($scope, $rootScope, ngAppSettings, themeService, service) {
+  function (
+    $scope,
+    $rootScope,
+    ngAppSettings,
+    cryptoService,
+    themeService,
+    service
+  ) {
     $scope.categories = [];
     BaseHub.call(this, $scope);
+    $scope.current = null;
+    $scope.viewMode = "list";
     $scope.init = async function () {
       $scope.startConnection("portalhub", () => {
         $scope.joinRoom("Theme");
@@ -27,7 +37,6 @@ app.controller("StoreController", [
       await $scope.getThemes($scope.themeRequest);
       $scope.$apply();
     };
-    $scope.currentTheme;
     $scope.receiveMessage = function (msg) {
       switch (msg.action) {
         case "Downloading":
@@ -35,8 +44,9 @@ app.controller("StoreController", [
           var progress = Math.round(msg.message);
           if (index >= 0) {
             $scope.data.items[index].progress = progress;
-            if(progress == 100){
-              $scope.data.items[index].additionalData.installStatus = 'installing';
+            if (progress == 100) {
+              $scope.data.items[index].additionalData.installStatus =
+                "installing";
             }
             $scope.$apply();
           }
@@ -47,7 +57,6 @@ app.controller("StoreController", [
           break;
       }
     };
-
     $scope.getThemes = async function () {
       $rootScope.isBusy = true;
 
@@ -88,19 +97,32 @@ app.controller("StoreController", [
         $scope.$apply();
       }
     };
-
+    $scope.preview = function (theme) {
+      $scope.current = theme;
+      $scope.viewMode = "detail";
+    };
+    $scope.back = function () {
+      $scope.viewMode = "list";
+    };
+    $scope.processPaymentData = async function (paymentData) {
+      console.log(paymentData);
+      var encrypted = cryptoService.encryptAES(paymentData);
+      $scope.current.canInstall = true;
+      $scope.$apply();
+      return encrypted;
+    };
     $scope.installTheme = async function (theme, id) {
       $rootScope.isBusy = false;
-      theme.installStatus = 'downloading';
+      theme.installStatus = "downloading";
       $scope.id = id;
       var result = await themeService.install(theme);
       if (result.isSucceed) {
         $rootScope.isBusy = false;
-        theme.installStatus = 'finished';
+        theme.installStatus = "finished";
         $rootScope.showMessage("success");
       } else {
         $rootScope.isBusy = false;
-        theme.installStatus = 'failed';
+        theme.installStatus = "failed";
         $rootScope.showErrors(result.errors);
       }
       $scope.$apply();

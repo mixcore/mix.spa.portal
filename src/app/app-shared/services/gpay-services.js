@@ -86,12 +86,6 @@ appShared.factory("gpayService", [
      */
     let paymentsClient = null;
 
-    var _init = function (env, merchantId, merchantName) {
-      this.environment = env;
-      this.merchantId = merchantId;
-      this.merchantName = merchantName;
-    };
-
     /**
      * Configure your site's support for payment methods supported by the Google Pay
      * API.
@@ -114,13 +108,16 @@ appShared.factory("gpayService", [
      * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#PaymentDataRequest|PaymentDataRequest}
      * @returns {object} PaymentDataRequest fields
      */
-    var _getGooglePaymentDataRequest = function (merchantInfo, transactionInfo) {
+    var _getGooglePaymentDataRequest = function (
+      merchantInfo,
+      transactionInfo
+    ) {
       const paymentDataRequest = Object.assign({}, baseRequest);
       paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
       paymentDataRequest.transactionInfo = transactionInfo;
       paymentDataRequest.merchantInfo = merchantInfo;
-
       paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
+      paymentDataRequest.emailRequired = true;
       paymentDataRequest.shippingOptionRequired = false;
       paymentDataRequest.shippingAddressRequired = false;
 
@@ -133,54 +130,20 @@ appShared.factory("gpayService", [
      * @see {@link https://developers.google.com/pay/api/web/reference/client#PaymentsClient|PaymentsClient constructor}
      * @returns {google.payments.api.PaymentsClient} Google Pay API client
      */
-    var _getGooglePaymentsClient = function (merchantInfo) {
+    var _getGooglePaymentsClient = function (
+      merchantInfo,
+      onPaymentAuthorized
+    ) {
       if (paymentsClient === null) {
         paymentsClient = new google.payments.api.PaymentsClient({
           environment: this.environment,
           merchantInfo: merchantInfo,
           paymentDataCallbacks: {
-            onPaymentAuthorized: this.onPaymentAuthorized,
+            onPaymentAuthorized: onPaymentAuthorized,
           },
         });
       }
       return paymentsClient;
-    };
-
-    var _onPaymentAuthorized = function (paymentData) {
-      return new Promise(function (resolve, reject) {
-        // handle the response
-        this.processPayment(paymentData)
-          .then(function () {
-            resolve({ transactionState: "SUCCESS" });
-          })
-          .catch(function () {
-            resolve({
-              transactionState: "ERROR",
-              error: {
-                intent: "PAYMENT_AUTHORIZATION",
-                message: "Insufficient funds",
-                reason: "PAYMENT_DATA_INVALID",
-              },
-            });
-          });
-      });
-    };
-
-    /**
-     * Provide Google Pay API with a payment amount, currency, and amount status
-     *
-     * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#TransactionInfo|TransactionInfo}
-     * @returns {object} transaction info, suitable for use as transactionInfo property of PaymentDataRequest
-     */
-    var _getGoogleTransactionInfo = function () {
-      return {
-        displayItems: [],
-        countryCode: "US",
-        currencyCode: "USD",
-        totalPriceStatus: "FINAL",
-        totalPrice: "0",
-        totalPriceLabel: "Total",
-      };
     };
 
     /**
@@ -199,45 +162,10 @@ appShared.factory("gpayService", [
       paymentsClient.prefetchPaymentData(paymentDataRequest);
     };
 
-    /**
-     * Show Google Pay payment sheet when Google Pay payment button is clicked
-     */
-    var _onGooglePaymentButtonClicked = function (scope) {
-      const paymentDataRequest = scope.getGooglePaymentDataRequest();
-      paymentDataRequest.transactionInfo = scope.getGoogleTransactionInfo();
-
-      const paymentsClient = scope.getGooglePaymentsClient();
-      paymentsClient.loadPaymentData(paymentDataRequest);
-    };
-
-    /**
-     * Process payment data returned by the Google Pay API
-     *
-     * @param {object} paymentData response from Google Pay API after user approves payment
-     * @see {@link https://developers.google.com/pay/api/web/reference/response-objects#PaymentData|PaymentData object reference}
-     */
-    var _processPayment = function (paymentData) {
-      return new Promise(function (resolve, reject) {
-        setTimeout(function () {
-          // show returned data in developer console for debugging
-          console.log(paymentData);
-          // @todo pass payment token to your gateway to process payment
-          paymentToken = paymentData.paymentMethodData.tokenizationData.token;
-
-          resolve({});
-        }, 3000);
-      });
-    };
-
-    factory.init = _init;
     factory.prefetchGooglePaymentData = _prefetchGooglePaymentData;
     factory.getGooglePaymentsClient = _getGooglePaymentsClient;
-    factory.getGoogleTransactionInfo = _getGoogleTransactionInfo;
-    factory.onGooglePaymentButtonClicked = _onGooglePaymentButtonClicked;
     factory.getGooglePaymentDataRequest = _getGooglePaymentDataRequest;
     factory.getGoogleIsReadyToPayRequest = _getGoogleIsReadyToPayRequest;
-    factory.onPaymentAuthorized = _onPaymentAuthorized;
-    factory.processPayment = _processPayment;
     return factory;
   },
 ]);

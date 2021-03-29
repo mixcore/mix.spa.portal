@@ -1,9 +1,11 @@
 ﻿modules.component("googlePay", {
   templateUrl: "/mix-app/views/app-shared/components/google-pay/view.html",
   bindings: {
-    totalPriceStatus: "=",
+    items: "=",
     currencyCode: "=",
+    totalPriceStatus: "=",
     totalPrice: "=",
+    processPaymentData: "&",
   },
   controller: [
     "$rootScope",
@@ -12,8 +14,22 @@
     function ($rootScope, $element, service) {
       var ctrl = this;
       ctrl.merchantInfo = {
-        merchantId: "01234567890123456789",
-        merchantName: "Example Merchant",
+        merchantId: "BCR2DN6TV7RIL73C",
+        merchantName: "Mixcore",
+      };
+      ctrl.payPalPaymentMethod = {
+        type: "PAYPAL",
+        parameters: {
+          purchase_context: {
+            purchase_units: [
+              {
+                payee: {
+                  merchant_id: "08975416670814987822",
+                },
+              },
+            ],
+          },
+        },
       };
       ctrl.environment = "TEST";
 
@@ -23,7 +39,8 @@
 
       ctrl.onGooglePayLoaded = function (element) {
         const paymentsClient = service.getGooglePaymentsClient(
-          ctrl.merchantInfo
+          ctrl.merchantInfo,
+          ctrl.onPaymentAuthorized
         );
         paymentsClient
           .isReadyToPay(service.getGoogleIsReadyToPayRequest())
@@ -40,9 +57,15 @@
           });
       };
 
+      /**
+       * Provide Google Pay API with a payment amount, currency, and amount status
+       *
+       * @see {@link https://developers.google.com/pay/api/web/reference/request-objects#TransactionInfo|TransactionInfo}
+       * @returns {object} transaction info, suitable for use as transactionInfo property of PaymentDataRequest
+       */
       ctrl.getGoogleTransactionInfo = function () {
         return {
-          displayItems: [],
+          displayItems: ctrl.items,
           countryCode: "US",
           currencyCode: "USD",
           totalPriceStatus: "FINAL",
@@ -58,7 +81,10 @@
        * @see {@link https://developers.google.com/pay/api/web/guides/brand-guidelines|Google Pay brand guidelines}
        */
       ctrl.addGooglePayButton = function (element) {
-        const paymentsClient = service.getGooglePaymentsClient();
+        const paymentsClient = service.getGooglePaymentsClient(
+          ctrl.merchantInfo,
+          ctrl.onPaymentAuthorized
+        );
         const button = paymentsClient.createButton({
           buttonColor: "default",
           buttonType: "plain",
@@ -82,9 +108,42 @@
         paymentDataRequest.transactionInfo = transactionInfo;
 
         const paymentsClient = service.getGooglePaymentsClient(
-          ctrl.merchantInfo
+          ctrl.merchantInfo,
+          ctrl.onPaymentAuthorized
         );
         paymentsClient.loadPaymentData(paymentDataRequest);
+      };
+
+      ctrl.onPaymentAuthorized = function (paymentData) {
+        return new Promise(function (resolve, reject) {
+          // handle the response
+          ctrl
+            .processPayment(paymentData)
+            .then(function (resp) {
+              console.log(resp);
+              resolve({ transactionState: "SUCCESS" });
+            })
+            .catch(function () {
+              resolve({
+                transactionState: "ERROR",
+                error: {
+                  intent: "PAYMENT_AUTHORIZATION",
+                  message: "Insufficient funds",
+                  reason: "PAYMENT_DATA_INVALID",
+                },
+              });
+            });
+        });
+      };
+
+      /**
+       * Process payment data returned by the Google Pay API
+       *
+       * @param {object} paymentData response from Google Pay API after user approves payment
+       * @see {@link https://developers.google.com/pay/api/web/reference/response-objects#PaymentData|PaymentData object reference}
+       */
+      ctrl.processPayment = async function (paymentData) {
+        return await ctrl.processPaymentData({ paymentData: paymentData });
       };
     },
   ],

@@ -49,6 +49,9 @@ appShared.factory("CryptoService", [
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
       };
+      if (angular.isObject(message)) {
+        message = JSON.stringify(message);
+      }
       var encrypted = CryptoJS.AES.encrypt(message, key, options);
       return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     };
