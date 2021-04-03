@@ -37,10 +37,10 @@ app.controller('SocialFeedController',
                     });
                 };
                 $scope.socialSettings = {
-                    app_id: $rootScope.settings.data.FacebookAppId,
-                    page_id: $rootScope.settings.data.Facebook_Page_Id,
-                    app_secret: $rootScope.settings.data.FacebookAppSecret,
-                    access_token: $rootScope.settings.data.FacebookAccessToken,
+                    app_id: $rootScope.localizeSettings.data.FacebookAppId,
+                    page_id: $rootScope.localizeSettings.data.Facebook_Page_Id,
+                    app_secret: $rootScope.localizeSettings.data.FacebookAppSecret,
+                    access_token: $rootScope.localizeSettings.data.FacebookAccessToken,
                     show_login: true,
                     errors: []
                 };
@@ -163,7 +163,7 @@ app.controller('SocialFeedController',
                     if (media) {
                         post.mediaNavs.push({
                             media: media,
-                            specificulture: $rootScope.settings.lang,
+                            specificulture: $rootScope.localizeSettings.lang,
                             image: media.fullPath
                         });
                     }
@@ -174,7 +174,7 @@ app.controller('SocialFeedController',
                     angular.forEach(medias, function (e, i) {
                         post.mediaNavs.push({
                             media: e,
-                            specificulture: $rootScope.settings.lang,
+                            specificulture: $rootScope.localizeSettings.lang,
                             image: e.fullPath
                         })
                     })

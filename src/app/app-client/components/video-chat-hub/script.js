@@ -8,7 +8,7 @@
         function ($rootScope, $scope, service, viewmodel, connectionManager) {
             var ctrl = this;
             BaseHub.call(this, ctrl);
-            ctrl.settings = $rootScope.globalSettings;
+            ctrl.localizeSettings = $rootScope.globalSettings;
 
             ctrl.init = function () {
                 ctrl.viewmodel = viewmodel;

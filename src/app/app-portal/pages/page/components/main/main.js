@@ -3,7 +3,7 @@ app.component('pageMain', {
     templateUrl: '/mix-app/views/app-portal/pages/page/components/main/main.html',
     controller: ['$rootScope', '$scope', 'ngAppSettings', function ($rootScope, $scope) {
         var ctrl = this;
-        ctrl.settings = $rootScope.globalSettings;
+        ctrl.localizeSettings = $rootScope.globalSettings;
         // ctrl.setPageType = function (type) {
         //     ctrl.page.type = $index;
         // }

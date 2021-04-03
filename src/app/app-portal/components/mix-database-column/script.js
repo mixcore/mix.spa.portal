@@ -17,7 +17,7 @@ modules.component("mixDatabaseColumn", {
         mixDatabaseId: 6,
       };
       ctrl.selectedCol = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
         if (ctrl.column.name) {

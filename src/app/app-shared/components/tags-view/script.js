@@ -12,7 +12,7 @@ modules.component('tagsView', {
             }
             angular.forEach(ctrl.data, function (e, i) {
                 e.url = $rootScope.globalSettings.domain + '/'
-                    + $rootScope.settings.lang + '/tag/' + e.text;
+                    + $rootScope.localizeSettings.lang + '/tag/' + e.text;
             });
             $scope.$apply();
         }

@@ -31,9 +31,9 @@ appShared.factory("CommonService", [
       return $http(req).then(
         function (resp) {
           if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.settings ||
-              $rootScope.settings.lastUpdateConfiguration <
+            req.url.indexOf("localizeSettings") == -1 &&
+            (!$rootScope.localizeSettings ||
+              $rootScope.localizeSettings.lastUpdateConfiguration <
                 resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
@@ -45,7 +45,10 @@ appShared.factory("CommonService", [
           if (error.status === 401 && isRetry) {
             //Try again with new token from previous Request (optional)
             return authService
-              .refreshToken(authService.authentication.refresh_token)
+              .refreshToken(
+                authService.authentication.refresh_token,
+                authService.authentication.access_token
+              )
               .then(
                 function () {
                   req.headers.Authorization =
@@ -114,9 +117,9 @@ appShared.factory("CommonService", [
       return $http(req).then(
         function (resp) {
           if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.settings ||
-              $rootScope.settings.lastUpdateConfiguration <
+            req.url.indexOf("localizeSettings") == -1 &&
+            (!$rootScope.localizeSettings ||
+              $rootScope.localizeSettings.lastUpdateConfiguration <
                 resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
@@ -129,7 +132,10 @@ appShared.factory("CommonService", [
             //Try again with new token from previous Request (optional)
             if (isRetry) {
               return authService
-                .refreshToken(authService.authentication.refresh_token)
+                .refreshToken(
+                  authService.authentication.refresh_token,
+                  authService.authentication.access_token
+                )
                 .then(
                   function () {
                     req.headers.Authorization =
@@ -224,28 +230,8 @@ appShared.factory("CommonService", [
       });
     };
 
-    var _getSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      // && culture !== undefined && settings.lang === culture
-      if (settings) {
-        return settings;
-      } else {
-        var url = "/portal";
-        if (culture) {
-          url += "/" + culture;
-        }
-        url += "/settings";
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return _getApiResult(req).then(function (response) {
-          return response.data;
-        });
-      }
-    };
     var _getAllSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       var globalSettings = localStorageService.get("globalSettings");
       var translator = localStorageService.get("translator");
       if (
@@ -254,27 +240,30 @@ appShared.factory("CommonService", [
         translator &&
         settings.lang === culture
       ) {
-        $rootScope.settings = settings;
+        $rootScope.localizeSettings = settings;
         $rootScope.globalSettings = globalSettings;
         $rootScope.translator.translator = translator;
       } else {
-        var url = "/portal";
+        var url = "/rest/shared";
         if (culture) {
           url += "/" + culture;
         }
-        url += "/all-settings";
+        url += "/get-shared-settings";
         var req = {
           method: "GET",
           url: url,
         };
-        return _getApiResult(req).then(function (response) {
-          localStorageService.set("settings", response.data.settings);
+        return _getRestApiResult(req).then(function (response) {
+          localStorageService.set(
+            "localizeSettings",
+            response.data.localizeSettings
+          );
           localStorageService.set(
             "globalSettings",
             response.data.globalSettings
           );
           localStorageService.set("translator", response.data.translator);
-          $rootScope.settings = response.data.settings;
+          $rootScope.localizeSettings = response.data.localizeSettings;
           $rootScope.globalSettings = response.data.globalSettings;
           $rootScope.translator.translator = response.data.translator;
         });
@@ -283,7 +272,7 @@ appShared.factory("CommonService", [
 
     var _checkConfig = async function (lastSync) {
       if (lastSync) {
-        var url = "/portal/check-config/" + lastSync;
+        var url = "/rest/shared/check-config/" + lastSync;
         var req = {
           method: "GET",
           url: url,
@@ -292,19 +281,24 @@ appShared.factory("CommonService", [
           if (response.data) {
             _removeSettings().then(() => {
               _removeTranslator().then(() => {
-                localStorageService.set("settings", response.data.settings);
+                localStorageService.set(
+                  "localizeSettings",
+                  response.data.localizeSettings
+                );
                 localStorageService.set(
                   "globalSettings",
                   response.data.globalSettings
                 );
                 localStorageService.set("translator", response.data.translator);
-                $rootScope.settings = response.data.settings;
+                $rootScope.localizeSettings = response.data.localizeSettings;
                 $rootScope.globalSettings = response.data.globalSettings;
                 $rootScope.translator.translator = response.data.translator;
               });
             });
           } else {
-            $rootScope.settings = localStorageService.get("settings");
+            $rootScope.localizeSettings = localStorageService.get(
+              "localizeSettings"
+            );
             $rootScope.globalSettings = localStorageService.get(
               "globalSettings"
             );
@@ -328,51 +322,30 @@ appShared.factory("CommonService", [
       });
     };
 
-    var _setSettings = async function (settings) {
-      if (settings && settings.cultures.length > 0) {
-        localStorageService.set("settings", settings);
-      }
-    };
-
     var _initAllSettings = async function (culture) {
-      localStorageService.remove("settings");
+      localStorageService.remove("localizeSettings");
       localStorageService.remove("translator");
       localStorageService.remove("globalSettings");
 
-      var response = await _getSettings(culture);
-      localStorageService.set("settings", response.settings);
-      localStorageService.set("translator", response.translator);
-      localStorageService.set("globalSettings", response.globalSettings);
-
+      var response = await _getAllSettings();
+      if (response) {
+        localStorageService.set("localizeSettings", response.localizeSettings);
+        localStorageService.set("translator", response.translator);
+        localStorageService.set("globalSettings", response.globalSettings);
+      }
       return response;
     };
 
     var _removeSettings = async function (settings) {
-      localStorageService.remove("settings");
+      localStorageService.remove("localizeSettings");
     };
 
     var _removeTranslator = async function () {
       localStorageService.remove("translator");
     };
 
-    var _fillSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      if (settings && settings.lang === culture) {
-        _settings = settings;
-        return settings;
-      } else {
-        if (culture && settings && settings.lang !== culture) {
-          await _removeSettings();
-          await _removeTranslator();
-        }
-        settings = await _getSettings(culture);
-        localStorageService.set("settings", settings);
-        //window.top.location = location.href;
-        return settings;
-      }
-    };
     var _fillAllSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       var globalSettings = localStorageService.get("globalSettings");
       var translator = localStorageService.get("translator");
       if (
@@ -381,7 +354,7 @@ appShared.factory("CommonService", [
         translator &&
         (!culture || settings.lang === culture)
       ) {
-        $rootScope.settings = settings;
+        $rootScope.localizeSettings = settings;
         $rootScope.globalSettings = globalSettings;
         $rootScope.translator.translator = translator;
         await _checkConfig(globalSettings.lastUpdateConfiguration);
@@ -393,6 +366,7 @@ appShared.factory("CommonService", [
         await _getAllSettings(culture);
       }
     };
+
     var _getApiResult = async function (
       req,
       serviceBase,
@@ -447,9 +421,9 @@ appShared.factory("CommonService", [
       return $http(req).then(
         function (resp) {
           if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.settings ||
-              $rootScope.settings.lastUpdateConfiguration <
+            req.url.indexOf("localizeSettings") == -1 &&
+            (!$rootScope.localizeSettings ||
+              $rootScope.localizeSettings.lastUpdateConfiguration <
                 resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
@@ -461,7 +435,10 @@ appShared.factory("CommonService", [
           if (error.status === 401) {
             //Try again with new token from previous Request (optional)
             return authService
-              .refreshToken(authService.authentication.refresh_token)
+              .refreshToken(
+                authService.authentication.refresh_token,
+                authService.authentication.access_token
+              )
               .then(
                 function () {
                   req.headers.Authorization =
@@ -542,16 +519,12 @@ appShared.factory("CommonService", [
     factory.getApiResult = _getApiResult;
     factory.getRestApiResult = _getRestApiResult;
     factory.getAnonymousApiResult = _getAnonymousApiResult;
-    factory.getSettings = _getSettings;
-    factory.setSettings = _setSettings;
     factory.initAllSettings = _initAllSettings;
     factory.fillAllSettings = _fillAllSettings;
     factory.removeSettings = _removeSettings;
     factory.removeTranslator = _removeTranslator;
     factory.showAlertMsg = _showAlertMsg;
     factory.checkfile = _checkfile;
-    factory.fillSettings = _fillSettings;
-    factory.settings = _settings;
     factory.genrateSitemap = _genrateSitemap;
     factory.loadJArrayData = _loadJArrayData;
     factory.loadJsonData = _loadJsonData;

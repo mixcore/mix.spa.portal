@@ -29,7 +29,7 @@ app.controller("ServiceController", [
     $scope.parentType = null;
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.init = async function () {

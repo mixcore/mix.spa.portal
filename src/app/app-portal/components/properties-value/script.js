@@ -21,7 +21,7 @@ modules.component('propertiesValue', {
                 width: 3
             };
             ctrl.selectedProp = null;
-            ctrl.settings = $rootScope.globalSettings;
+            ctrl.localizeSettings = $rootScope.globalSettings;
 
             ctrl.$doCheck = function () {
                 if (angular.toJson(ctrl.columns) != angular.toJson(ctrl.trackedColumns)) {

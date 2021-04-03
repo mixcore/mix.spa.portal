@@ -10,7 +10,7 @@
       ctrl.init = function () {
         if (gapi) {
           gapi.analytics.ready(function () {
-            if ($rootScope.settings.data.Google_Client_Id) {
+            if ($rootScope.localizeSettings.data.Google_Client_Id) {
               /**
                * Authorize the user immediately if the user has already granted access.
                * If no access has been created, render an authorize button inside the
@@ -19,7 +19,7 @@
               gapi.analytics.auth.authorize({
                 container: "embed-api-auth-container",
                 //REPLACE WITH YOUR CLIENT ID
-                clientid: $rootScope.settings.data.Google_Client_Id,
+                clientid: $rootScope.localizeSettings.data.Google_Client_Id,
               });
 
               /**
@@ -88,7 +88,7 @@
                */
               var dataChart1 = new gapi.analytics.googleCharts.DataChart({
                 query: {
-                  // ids: $rootScope.settings.data.Google_Analytic_Ids,
+                  // ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
                   metrics: "ga:sessions",
                   dimensions: "ga:date",
                   "start-date": "30daysAgo",
@@ -130,7 +130,7 @@
                */
               var dataChart2 = new gapi.analytics.googleCharts.DataChart({
                 query: {
-                  // ids: $rootScope.settings.data.Google_Analytic_Ids,
+                  // ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
                   metrics: "ga:sessions",
                   dimensions: "ga:country",
                   "start-date": "90daysAgo",
@@ -150,16 +150,16 @@
 
               dataChart1
                 .set({
-                  query: { ids: $rootScope.settings.data.Google_Analytic_Ids },
+                  query: { ids: $rootScope.localizeSettings.data.Google_Analytic_Ids },
                 })
                 .execute();
               dataChart2
                 .set({
-                  query: { ids: $rootScope.settings.data.Google_Analytic_Ids },
+                  query: { ids: $rootScope.localizeSettings.data.Google_Analytic_Ids },
                 })
                 .execute();
               activeUsers
-                .set({ ids: $rootScope.settings.data.Google_Analytic_Ids })
+                .set({ ids: $rootScope.localizeSettings.data.Google_Analytic_Ids })
                 .execute();
 
               // /**

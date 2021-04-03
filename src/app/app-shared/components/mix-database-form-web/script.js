@@ -21,7 +21,7 @@
       ctrl.attributes = [];
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.defaultData = await service.getSingle("web", [
           ctrl.defaultId,

@@ -156,7 +156,7 @@
             );
           } else {
             var msg =
-              $rootScope.settings.data["employee_success_msg"] ||
+              $rootScope.localizeSettings.data["employee_success_msg"] ||
               "Thank you for submitting! Your lovely photo is well received 😊";
             $rootScope.showConfirm($scope, "", [], null, "", msg);
           }

@@ -13,10 +13,10 @@ function PageDetailsController($scope, $element, $attrs) {
     ctrl.loadPage = function (pageId) {
         ctrl.isBusy = true;
         var url = '/' + ctrl.currentLanguage + '/page/details/be/' + pageId;//byPage/' + pageId;
-        ctrl.settings.method = "GET";
-        ctrl.settings.url = url;// + '/true';
-        ctrl.settings.data = ctrl.request;
-        $.ajax(ctrl.settings).done(function (response) {
+        ctrl.localizeSettings.method = "GET";
+        ctrl.localizeSettings.url = url;// + '/true';
+        ctrl.localizeSettings.data = ctrl.request;
+        $.ajax(ctrl.localizeSettings).done(function (response) {
             if (response.isSucceed) {
                 ctrl.activedPage = response.data;
                 ctrl.initEditor();
@@ -37,10 +37,10 @@ function PageDetailsController($scope, $element, $attrs) {
             ctrl.request.toDate = ctrl.request.toDate.toISOString();
         }
         var url = '/' + ctrl.currentLanguage + '/page/list';//byPage/' + pageId;
-        ctrl.settings.method = "POST";
-        ctrl.settings.url = url;// + '/true';
-        ctrl.settings.data = ctrl.request;
-        $.ajax(ctrl.settings).done(function (response) {
+        ctrl.localizeSettings.method = "POST";
+        ctrl.localizeSettings.url = url;// + '/true';
+        ctrl.localizeSettings.data = ctrl.request;
+        $.ajax(ctrl.localizeSettings).done(function (response) {
             (ctrl.data = response.data);
 
             $.each(ctrl.data.items, function (i, page) {

@@ -78,7 +78,7 @@ app.controller("ModuleController", [
     };
     $scope.type = "-1";
 
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.viewmodel = null;
     $scope.editDataUrl = "";
 

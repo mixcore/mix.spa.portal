@@ -91,7 +91,6 @@
                                     <h5 class="text-success">$ {{ current.additionalData.price }}</h5>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    
                                     <div class="col-5 p-0">
                                         <div class="progress" ng-if="current.progress">
                                             <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
@@ -106,8 +105,7 @@
                                     <div class="col-7 justify-content-end text-end p-0">
                                         <a target="_blank" ng-click="back()"
                                             class="btn btn-sm btn-outline-secondary mr-1">Back</a>
-                                        <google-pay ng-if="!current.canInstall"
-                                            class="btn btn-sm  mr-1"
+                                        <google-pay ng-if="!current.canInstall" class="btn btn-sm  mr-1"
                                             total-price="current.additionalData.price" total-price-status="'FINAL'"
                                             process-payment-data="processPaymentData(paymentData)"></google-pay>
                                         <a ng-if="current.canInstall"

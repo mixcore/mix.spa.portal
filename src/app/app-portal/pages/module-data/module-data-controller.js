@@ -31,7 +31,7 @@ app.controller("ModuleDataController", [
     $scope.request.direction = "Asc";
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.moduleId = $routeParams.moduleId;
     $scope.backUrl = `/portal/module-data/list/${$scope.moduleId}`;
     $scope.module = null;

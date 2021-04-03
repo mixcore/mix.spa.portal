@@ -29,7 +29,7 @@ modules.component("mixDatabaseNavValues", {
       ctrl.request.query = "{}";
 
       ctrl.request.direction = 0;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.maxCol = ctrl.maxCol || 3;
         if (!ctrl.createUrl) {

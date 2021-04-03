@@ -20,7 +20,7 @@ modules.component("mixDatabaseNavData", {
       ctrl.selected = null;
       ctrl.navRequest = angular.copy(ngAppSettings.request);
       ctrl.setRequest = angular.copy(ngAppSettings.request);
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = function () {
         navService
           .getDefault([ctrl.parentId, ctrl.parentType, "default"])

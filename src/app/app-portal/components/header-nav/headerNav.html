@@ -1,7 +1,7 @@
 <header class="navbar navbar-expand-md bd-navbar">
   <div class="container-fluid d-flex align-items-center">
     <h1 class="d-flex align-items-center fs-4 text-white mb-0">
-      <!-- <a class="navbar-brand ml-2" href="/{{$ctrl.settings.lang}}/" target="_blank" aria-label="mixcore"> -->
+      <!-- <a class="navbar-brand ml-2" href="/{{$ctrl.localizeSettings.lang}}/" target="_blank" aria-label="mixcore"> -->
       <a class="navbar-brand ml-2" href="/" target="_blank" aria-label="mixcore">
         <div class="mixcore-logo" style="
             width: 120px;
@@ -18,7 +18,7 @@
               50%;
           "></div>
 
-        <!-- <img src="{{$ctrl.settings.data.Logo}}" alt="Kiwi standing on oval" height="25px"> -->
+        <!-- <img src="{{$ctrl.localizeSettings.data.Logo}}" alt="Kiwi standing on oval" height="25px"> -->
       </a>
 
       <button type="button" id="sidebarCollapse" data-bs-toggle="collapse" data-bs-target="#sw-docs-nav"
@@ -28,7 +28,7 @@
     </h1>
   </div>
   <div class="d-flex pe-2">
-    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" ng-if="$ctrl.settings">
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex" ng-if="$ctrl.localizeSettings">
       <li class="nav-item me-2">
         <a class="nav-link p-2 text-primary" href="#" ng-click="$ctrl.generateSitemap()">
           <i class="mi mi-Relationship"></i>
@@ -83,11 +83,11 @@
       <li class="nav-item dropdown me-2">
         <!-- <div class="language-switcher portal"></div> -->
         <a class="btn nav-link p-2" ng-click="$ctrl.showLanguages = !$ctrl.showLanguages">
-          <span class="flag-icon {{$ctrl.settings.langIcon}}"></span>
+          <span class="flag-icon {{$ctrl.localizeSettings.langIcon}}"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-end" ng-class="{show: $ctrl.showLanguages}">
-          <a class="dropdown-item" href="" ng-repeat="culture in $ctrl.settings.cultures"
-            ng-class="{active: culture.specificulture === $ctrl.settings.lang}"
+          <a class="dropdown-item" href="" ng-repeat="culture in $ctrl.localizeSettings.cultures"
+            ng-class="{active: culture.specificulture === $ctrl.localizeSettings.lang}"
             ng-click="$ctrl.changeLang(culture.specificulture, culture.icon);">
             <span class="flag-icon {{culture.icon}}"></span>
             <span ng-bind="culture.description"></span>

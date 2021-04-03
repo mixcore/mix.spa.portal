@@ -26,7 +26,7 @@ app.controller("LocalizeController", [
       service
     );
     $scope.cates = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.defaultId = "default";
     $scope.languageFile = {
       file: null,
@@ -38,7 +38,7 @@ app.controller("LocalizeController", [
     $scope.dataTypes = $rootScope.globalSettings.dataTypes;
     $scope.$on("$viewContentLoaded", function () {
       $scope.cates = ngAppSettings.enums.language_cates;
-      $scope.settings = $rootScope.globalSettings;
+      $scope.localizeSettings = $rootScope.globalSettings;
       $scope.cate = $scope.cates[0];
     });
     $scope.getSingleSuccessCallback = function () {

@@ -26,7 +26,7 @@
             };
             ctrl.init = async function () {
                 if (ctrl.folderType) {
-                    var themeId = $rootScope.settings.data.ThemeId;
+                    var themeId = $rootScope.localizeSettings.data.ThemeId;
                     ctrl.request.key = ctrl.folderType;
                     var resp = await service.getList(ctrl.request, [themeId]);
 

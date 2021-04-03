@@ -26,7 +26,7 @@ app.controller("ModulePostController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.translate = $rootScope.translate;

@@ -29,7 +29,7 @@ modules.component("mixDatabaseDataValues", {
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];
       ctrl.selectedProp = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.selectedList) {
           ctrl.selectedList = {

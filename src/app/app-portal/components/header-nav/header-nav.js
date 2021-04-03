@@ -23,23 +23,22 @@
         }
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
-          ctrl.settings = $rootScope.settings;
-          ctrl.settings.cultures = $rootScope.globalSettings.cultures;
+          ctrl.localizeSettings = $rootScope.localizeSettings;
+          ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
         };
         ctrl.translate = $rootScope.translate;
         ctrl.getConfiguration = function (keyword, isWrap, defaultText) {
           return $rootScope.getConfiguration(keyword, isWrap, defaultText);
         };
         ctrl.changeLang = function (lang, langIcon) {
-          ctrl.settings.lang = lang;
-          ctrl.settings.langIcon = langIcon;
+          ctrl.localizeSettings.lang = lang;
+          ctrl.localizeSettings.langIcon = langIcon;
           commonService.fillAllSettings(lang).then(function () {
             window.top.location = location.href;
           });
         };
         ctrl.logOut = function () {
           $rootScope.logOut();
-          window.top.location = "/security/login";
         };
         ctrl.addPermission = function () {
           $("#dlg-permission").modal("show");

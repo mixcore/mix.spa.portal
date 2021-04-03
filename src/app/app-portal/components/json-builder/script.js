@@ -15,7 +15,7 @@ modules.component('jsonBuilder', {
             var ctrl = this;
             ctrl.file = null;
             ctrl.translate = $rootScope.translate;
-            ctrl.settings = $rootScope.globalSettings;
+            ctrl.localizeSettings = $rootScope.globalSettings;
             ctrl.timestamp = Math.random();
             ctrl.templates = [
                 { type: 'item', name: 'i1', dataType: 7, value: '' },

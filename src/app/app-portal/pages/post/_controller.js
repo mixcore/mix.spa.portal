@@ -190,14 +190,14 @@ app.controller("PostController", [
     };
     $scope.getSingleSuccessCallback = async function () {
       $scope.defaultThumbnailImgWidth =
-        ngAppSettings.settings.DefaultThumbnailImgWidth;
+        ngAppSettings.localizeSettings.DefaultThumbnailImgWidth;
       $scope.defaultThumbnailImgHeight =
-        ngAppSettings.settings.DefaultThumbnailImgHeight;
+        ngAppSettings.localizeSettings.DefaultThumbnailImgHeight;
 
       $scope.defaultFeatureImgWidth =
-        ngAppSettings.settings.DefaultFeatureImgWidth;
+        ngAppSettings.localizeSettings.DefaultFeatureImgWidth;
       $scope.defaultFeatureImgHeight =
-        ngAppSettings.settings.DefaultFeatureImgHeight;
+        ngAppSettings.localizeSettings.DefaultFeatureImgHeight;
 
       $scope.request.type = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;

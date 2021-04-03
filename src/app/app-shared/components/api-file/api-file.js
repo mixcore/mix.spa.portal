@@ -28,7 +28,7 @@
         files.append("title", title);
         files.append("description", description);
         $.ajax({
-          url: "/" + $rootScope.settings.lang + "/media/upload", //'/tts/UploadImage',
+          url: "/" + $rootScope.localizeSettings.lang + "/media/upload", //'/tts/UploadImage',
           type: "POST",
           contentType: false, // Not to set any content header
           processData: false, // Not to process data

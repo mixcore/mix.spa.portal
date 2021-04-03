@@ -6,17 +6,17 @@
             function ($rootScope, $scope, $location,
                 commonService, translatorService, globalSettingsService) {
                 var ctrl = this;
-                ctrl.settings = {};
+                ctrl.localizeSettings = {};
                 this.$onInit = function () {
-                    ctrl.settings = $rootScope.settings;
+                    ctrl.localizeSettings = $rootScope.localizeSettings;
                     if ($rootScope.globalSettings) {
-                        ctrl.settings.cultures = $rootScope.globalSettings.cultures;
+                        ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
                     }
                 };
 
                 ctrl.changeLang = async function (lang, langIcon) {
-                    ctrl.settings.lang = lang;
-                    ctrl.settings.langIcon = langIcon;
+                    ctrl.localizeSettings.lang = lang;
+                    ctrl.localizeSettings.langIcon = langIcon;
                     // await commonService.removeSettings();
                     // await commonService.removeTranslator();
                     // commonService.fillSettings(lang).then(function () {

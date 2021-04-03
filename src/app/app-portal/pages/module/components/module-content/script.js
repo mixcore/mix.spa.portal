@@ -7,6 +7,6 @@ app.component('moduleContent', {
     },
     controller: ['$rootScope', function ($rootScope) {
         var ctrl = this;
-        ctrl.settings = $rootScope.globalSettings;
+        ctrl.localizeSettings = $rootScope.globalSettings;
     }]
 });

@@ -56,7 +56,7 @@ app.controller("AppSettingsController", [
 
       var result = await commonService.getSettings();
       if (result.isSucceed) {
-        $scope.settings = result.data;
+        $scope.localizeSettings = result.data;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

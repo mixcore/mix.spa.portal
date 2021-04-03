@@ -28,7 +28,7 @@ modules.component("mixDatabaseForm", {
 
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
         ctrl.loadData();

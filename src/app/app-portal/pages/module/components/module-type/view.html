@@ -4,7 +4,7 @@
     </h6>
     <div class="card-body collapse-x show">
         <div class="form-check form-switch custom-control-inline col-3"
-            ng-repeat="type in $ctrl.settings.moduleTypes track by $index" ng-switch="type.name"
+            ng-repeat="type in $ctrl.localizeSettings.moduleTypes track by $index" ng-switch="type.name"
             ng-class="{active: type.name == ($ctrl.model)}" ng-click="$ctrl.model=type.name;">
             <input type="radio" ng-model="$ctrl.model" class="form-check-input" ng-value="type.name"
                 id="module_type_{{type.name}}" name="module_type_{{type.name}}">

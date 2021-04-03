@@ -20,8 +20,8 @@ appShared.factory("BaseRestService", [
         this.serviceBase = serviceBase;
       }
       if (!isGlobal && isGlobal != "true") {
-        if ($rootScope.settings || lang) {
-          this.lang = lang || $rootScope.settings.lang;
+        if ($rootScope.localizeSettings || lang) {
+          this.lang = lang || $rootScope.localizeSettings.lang;
           this.prefixUrl = `/rest/${this.lang}/${modelName}`;
         }else {
           this.prefixUrl = `/rest/${modelName}`;

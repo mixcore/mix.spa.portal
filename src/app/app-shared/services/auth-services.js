@@ -105,17 +105,46 @@ appShared.factory("AuthService", [
       return await this.login(loginData);
     };
 
+    var _externalLogin = async function (loginData, provider) {
+      var data = {
+        provider: provider,
+        userName: loginData.userName,
+        email: loginData.email,
+        externalAccessToken: loginData.accessToken,
+      };
+      var message = cryptoService.encryptAES(JSON.stringify(data));
+      var apiUrl = "/account/external-login";
+      var req = {
+        method: "POST",
+        url: apiUrl,
+        data: JSON.stringify({ message: message }),
+      };
+      var resp = await _getRestApiResult(req);
+
+      if (resp.isSucceed) {
+        let encryptedData = resp.data;
+        this.updateAuthData(encryptedData);
+        _initSettings().then(function () {
+          return resp;
+        });
+      } else {
+        $rootScope.isBusy = false;
+        $rootScope.showErrors(resp.errors);
+      }
+      return resp;
+    };
+
     var _logOut = async function () {
       var apiUrl = "/account/logout";
       var req = {
         method: "GET",
         url: apiUrl,
       };
+      localStorageService.remove("authorizationData");
+      _authentication = null;
       var resp = await _getApiResult(req);
       if (resp.isSucceed) {
-        localStorageService.remove("authorizationData");
-        _authentication = null;
-        // window.top.location.href = '/security/login';
+        window.top.location.href = "/security/login";
       }
     };
 
@@ -131,16 +160,16 @@ appShared.factory("AuthService", [
     };
 
     var _getSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       // && culture !== undefined && settings.lang === culture
       if (settings) {
         return settings;
       } else {
-        var url = "/portal";
+        var url = "/rest/shared";
         if (culture) {
           url += "/" + culture;
         }
-        url += "/all-settings";
+        url += "/get-shared-settings";
         var req = {
           method: "GET",
           url: url,
@@ -159,7 +188,7 @@ appShared.factory("AuthService", [
     };
 
     var _fillSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       if (settings && settings.lang === culture) {
         _settings = settings;
         return settings;
@@ -169,31 +198,36 @@ appShared.factory("AuthService", [
           await _removeTranslator();
         }
         settings = await _getSettings(culture);
-        localStorageService.set("settings", settings);
+        localStorageService.set("localizeSettings", settings);
         //window.top.location = location.href;
         return settings;
       }
     };
 
     var _initSettings = async function (culture) {
-      localStorageService.remove("settings");
+      localStorageService.remove("localizeSettings");
       localStorageService.remove("translator");
       localStorageService.remove("globalSettings");
 
       var response = await _getSettings(culture);
-      localStorageService.set("settings", response.settings);
+      localStorageService.set("localizeSettings", response.localizeSettings);
       localStorageService.set("translator", response.translator);
       localStorageService.set("globalSettings", response.globalSettings);
 
       return response;
     };
 
-    var _refreshToken = async function (id) {
+    var _refreshToken = async function (id, accessToken) {
+      let data = {
+        refreshToken: id,
+        accessToken: accessToken,
+      };
       if (id) {
-        var apiUrl = `/account/refresh-token/${id}`;
+        var apiUrl = `/account/refresh-token`;
         var req = {
-          method: "GET",
+          method: "POST",
           url: apiUrl,
+          data: JSON.stringify(data),
         };
         var resp = await _getApiResult(req);
         if (resp.isSucceed) {
@@ -318,7 +352,10 @@ appShared.factory("AuthService", [
           if (error.status === 401) {
             //Try again with new token from previous Request (optional)
             return authService
-              .refreshToken(authService.authentication.refresh_token)
+              .refreshToken(
+                authService.authentication.refresh_token,
+                authService.authentication.access_token
+              )
               .then(
                 function () {
                   req.headers.Authorization =
@@ -378,9 +415,9 @@ appShared.factory("AuthService", [
         return false;
       }
       var role = this.authentication.info.userRoles.filter(
-        (m) => m.description == roleName
+        (m) => m.description == roleName && m.isActived
       );
-      return role != null;
+      return role.length > 0;
     };
 
     authServiceFactory.saveRegistration = _saveRegistration;
@@ -389,6 +426,7 @@ appShared.factory("AuthService", [
     authServiceFactory.resetPassword = _resetPassword;
     authServiceFactory.initSettings = _initSettings;
     authServiceFactory.login = _login;
+    authServiceFactory.externalLogin = _externalLogin;
     authServiceFactory.loginPopup = _loginPopup;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.referredUrl = _referredUrl;

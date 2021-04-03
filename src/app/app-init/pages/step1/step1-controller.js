@@ -19,7 +19,7 @@ app.controller("Step1Controller", [
     step1Services
   ) {
     var rand = Math.floor(Math.random() * 10000) + 1;
-    $scope.settings = {
+    $scope.localizeSettings = {
       providers: [
         {
           text: "MySQL Database",
@@ -52,9 +52,9 @@ app.controller("Step1Controller", [
       step1Services.saveDefaultSettings();
       var getCultures = await commonService.loadJArrayData("cultures.json");
       if (getCultures.isSucceed) {
-        $scope.settings.cultures = getCultures.data;
-        $scope.initCmsModel.culture = $scope.settings.cultures[0];
-        $scope.dbProvider = $scope.settings.providers[0];
+        $scope.localizeSettings.cultures = getCultures.data;
+        $scope.initCmsModel.culture = $scope.localizeSettings.cultures[0];
+        $scope.dbProvider = $scope.localizeSettings.providers[0];
         $scope.initCmsModel.databaseProvider = $scope.dbProvider.value;
         $scope.initCmsModel.databasePort = $scope.dbProvider.port;
         $rootScope.isBusy = false;
@@ -98,7 +98,7 @@ app.controller("Step1Controller", [
       lang: "en-us",
       isMysql: false,
       databaseProvider: "",
-      culture: $scope.settings.cultures[0],
+      culture: $scope.localizeSettings.cultures[0],
     };
 
     $scope.updateLocalDbName = function () {

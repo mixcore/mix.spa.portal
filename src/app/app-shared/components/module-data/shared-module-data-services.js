@@ -5,7 +5,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
     var moduleDatasServiceFactory = {};
 
     var _updateInfos = async function (pages) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data';
         var req = {
             method: 'POST',
             url: apiUrl + '/update-infos',
@@ -15,7 +15,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
     };
 
     var _getModuleData = async function (moduleId, id, type) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var url = apiUrl + 'details/' + type;
         if (id) {
             url += '/' + moduleId + '/' + id;
@@ -31,7 +31,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
 
 
     var _getModuleDatas = async function (request) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var req = {
             method: 'POST',
             url: apiUrl + 'list',
@@ -42,7 +42,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
     };
 
     var _exportModuleData = async function (request) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var req = {
             method: 'POST',
             url: apiUrl + 'export',
@@ -54,7 +54,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
 
     var _initModuleForm = async function (name) {
 
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var req = {
             method: 'GET',
             url: apiUrl + 'init-by-name/' + name,
@@ -64,7 +64,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
     };
 
     var _removeModuleData = async function (id) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var req = {
             method: 'GET',
             url: apiUrl + 'delete/' + id
@@ -73,7 +73,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
     };
 
     var _saveModuleData = async function (moduleData) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var req = {
             method: 'POST',
             url: apiUrl + 'save',
@@ -82,7 +82,7 @@ appShared.factory('SharedModuleDataService', ['$http', '$rootScope', 'CommonServ
         return await commonService.getApiResult(req);
     };
     var _saveFields = async function (id, propertyName, propertyValue) {
-        var apiUrl = '/' + $rootScope.settings.lang + '/module-data/';
+        var apiUrl = '/' + $rootScope.localizeSettings.lang + '/module-data/';
         var column = [
             {
                 propertyName: propertyName,

@@ -9,7 +9,7 @@ modules.component('urlAlias', {
             }
             ctrl.updateUrl = function () {
                 ctrl.url = $rootScope.globalSettings.domain + '/'
-                    + $rootScope.settings.lang + '/' + ctrl.urlAlias.alias;
+                    + $rootScope.localizeSettings.lang + '/' + ctrl.urlAlias.alias;
             }
             ctrl.remove = function () {
                 if (ctrl.urlAlias.id > 0) {

@@ -8,7 +8,7 @@ app.controller('PagePositionController',
             BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings, service);
             $scope.cates = ['Site', 'System'];
             $scope.others = [];
-            $scope.settings = $rootScope.globalSettings;
+            $scope.localizeSettings = $rootScope.globalSettings;
             $scope.pageId = $routeParams.id;
             $scope.canDrag = $scope.request.orderBy !== 'Priority' || $scope.request.direction !== '0';
             $scope.getList = async function () {

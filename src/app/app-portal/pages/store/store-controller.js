@@ -31,7 +31,7 @@ app.controller("StoreController", [
       $scope.cateRequest.pageSize = null;
 
       $scope.cates = ngAppSettings.enums.configuration_cates;
-      $scope.settings = $rootScope.globalSettings;
+      $scope.localizeSettings = $rootScope.globalSettings;
       let getCategories = await service.getCategories($scope.cateRequest);
       $scope.categories = getCategories.data.items;
       await $scope.getThemes($scope.themeRequest);
