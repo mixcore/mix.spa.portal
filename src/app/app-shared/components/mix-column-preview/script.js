@@ -1,5 +1,6 @@
 ﻿modules.component("mixColumnPreview", {
-  templateUrl: "/mix-app/views/app-shared/components/mix-column-preview/view.html",
+  templateUrl:
+    "/mix-app/views/app-shared/components/mix-column-preview/view.html",
   bindings: {
     model: "=",
     column: "=",
@@ -26,8 +27,8 @@
           // youtube video
           ctrl.model = $sce.trustAsResourceUrl(
             "https://www.youtube.com/embed/" +
-            ctrl.model +
-            "?rel=0&showinfo=0&autoplay=0"
+              ctrl.model +
+              "?rel=0&showinfo=0&autoplay=0"
           );
         }
         // if(ctrl.column.dataType == 24 && ctrl.model) // youtube video

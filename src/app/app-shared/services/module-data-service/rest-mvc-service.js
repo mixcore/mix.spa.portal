@@ -10,7 +10,7 @@ appShared.factory("RestMvcModuleDataService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
     serviceFactory.initForm = _initForm;
     return serviceFactory;

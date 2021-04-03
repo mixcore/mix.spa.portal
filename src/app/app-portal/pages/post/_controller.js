@@ -181,7 +181,7 @@ app.controller("PostController", [
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
         let result = await dataService.save($scope.additionalData);
-        if(!result.isSucceed){
+        if (!result.isSucceed) {
           $rootScope.showErrors(result.errors);
         }
       }

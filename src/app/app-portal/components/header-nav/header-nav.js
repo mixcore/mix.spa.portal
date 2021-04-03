@@ -1,9 +1,11 @@
 ﻿(function (angular) {
   app.component("headerNav", {
-    templateUrl: "/mix-app/views/app-portal/components/header-nav/headerNav.html",
+    templateUrl:
+      "/mix-app/views/app-portal/components/header-nav/headerNav.html",
     controller: [
       "$rootScope",
       "$location",
+      "ApiService",
       "CommonService",
       "AuthService",
       "TranslatorService",
@@ -11,6 +13,7 @@
       function (
         $rootScope,
         $location,
+        apiService,
         commonService,
         authService,
         translatorService,

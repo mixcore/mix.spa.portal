@@ -4,6 +4,7 @@ app.controller("LoginController", [
   "$scope",
   "$location",
   "$routeParams",
+  "ApiService",
   "CommonService",
   "AuthService",
   function (
@@ -11,6 +12,7 @@ app.controller("LoginController", [
     $scope,
     $location,
     $routeParams,
+    apiService,
     commonService,
     authService
   ) {

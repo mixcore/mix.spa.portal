@@ -17,11 +17,11 @@
   margin-top: -70px;
   margin-left: -65px;
 }
-.haiyen-loader .spinner>div {
+.haiyen-loader .spinner > div {
   background-color: #ff0000;
   height: 100%;
   width: 6px;
-  margin-right:5px;
+  margin-right: 5px;
   display: inline-block;
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
@@ -35,31 +35,35 @@
   animation-delay: -1s;
 }
 .haiyen-loader .spinner .rect4 {
-  -webkit-animation-delay: -.9s;
-  animation-delay: -.9s;
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
 }
 .haiyen-loader .spinner .rect5 {
-  -webkit-animation-delay: -.8s;
-  animation-delay: -.8s;
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
 }
 @-webkit-keyframes sk-stretchdelay {
-  0%,100%,40% {
-      -webkit-transform: scaleY(.4)
+  0%,
+  100%,
+  40% {
+    -webkit-transform: scaleY(0.4);
   }
 
   20% {
-      -webkit-transform: scaleY(1)
+    -webkit-transform: scaleY(1);
   }
 }
 
 @keyframes sk-stretchdelay {
-  0%,100%,40% {
-      transform: scaleY(.4);
-      -webkit-transform: scaleY(.4)
+  0%,
+  100%,
+  40% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
   }
 
   20% {
-      transform: scaleY(1);
-      -webkit-transform: scaleY(1)
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
   }
 }

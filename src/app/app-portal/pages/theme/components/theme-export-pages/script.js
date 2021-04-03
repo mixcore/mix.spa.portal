@@ -9,10 +9,9 @@
       var ctrl = this;
       ctrl.updatePageExport = function (value, isSelected) {
         // Filter actived page
-        var idx = 
-        ctrl.selectedExport.pages = angular.copy(
+        var idx = (ctrl.selectedExport.pages = angular.copy(
           $rootScope.filterArray(ctrl.exportData.pages, ["isActived"], [true])
-        );
+        ));
 
         // // Loop actived page
         // angular.forEach(ctrl.selectedExport.pages, function (e) {

@@ -39,7 +39,15 @@
     </div>
   </div>
   <div class="col-9" ng-if="$ctrl.column.isEncrypt && $ctrl.encryptedData">
-    <a class="btn btn-info text-white" ng-click="$ctrl.showDecrypt = !$ctrl.showDecrypt">Decrypt</a>
-    <p ng-if="$ctrl.showDecrypt" class="text-info" ng-bind="$ctrl.decrypted"></p>
+    <a
+      class="btn btn-info text-white"
+      ng-click="$ctrl.showDecrypt = !$ctrl.showDecrypt"
+      >Decrypt</a
+    >
+    <p
+      ng-if="$ctrl.showDecrypt"
+      class="text-info"
+      ng-bind="$ctrl.decrypted"
+    ></p>
   </div>
 </div>

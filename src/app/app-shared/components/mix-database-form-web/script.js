@@ -44,7 +44,8 @@
           ]);
           if (ctrl.mixDatabaseData) {
             ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseData.mixDatabaseId;
-            ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseData.mixDatabaseName;
+            ctrl.defaultData.mixDatabaseName =
+              ctrl.mixDatabaseData.mixDatabaseName;
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {

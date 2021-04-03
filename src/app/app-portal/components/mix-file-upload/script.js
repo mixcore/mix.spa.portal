@@ -59,7 +59,7 @@
             }
             var image = new Image();
             image.src = reader.result;
-  
+
             image.onload = function () {
               // access image size here
               ctrl.w = ctrl.w || this.width;
@@ -108,7 +108,8 @@
         var modalInstance = $uibModal.open({
           animation: true,
           windowClass: "show",
-          templateUrl: "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
+          templateUrl:
+            "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
           controller: "ModalCroppieController",
           controllerAs: "$ctrl",
           size: "lg",
@@ -127,15 +128,15 @@
           function (result) {
             ctrl.srcUrl = result.fullPath;
           },
-          function () { }
+          function () {}
         );
       };
 
       ctrl.isImage = function (filename) {
         filename
-            .toLowerCase()
-            .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
-      }
+          .toLowerCase()
+          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+      };
     },
   ],
 });

@@ -1,10 +1,8 @@
 #modal-content-filter {
-
-    @media (min-width: 992px) {
-        .modal-lg,
-        .modal-xl {
-            max-width: 80vw;
-        }
+  @media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+      max-width: 80vw;
     }
-
+  }
 }

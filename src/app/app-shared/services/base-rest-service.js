@@ -4,15 +4,10 @@ appShared.factory("BaseRestService", [
   "$routeParams",
   "AppSettings",
   "AuthService",
+  "ApiService",
   "CommonService",
   "localStorageService",
-  function (
-    $rootScope,
-    $routeParams,
-    appSettings,
-    authService,
-    commonService
-  ) {
+  function ($rootScope, $routeParams, appSettings, authService, commonService) {
     var serviceFactory = {};
     var _init = function (modelName, isGlobal, lang, serviceBase) {
       this.modelName = modelName;
@@ -23,7 +18,7 @@ appShared.factory("BaseRestService", [
         if ($rootScope.localizeSettings || lang) {
           this.lang = lang || $rootScope.localizeSettings.lang;
           this.prefixUrl = `/rest/${this.lang}/${modelName}`;
-        }else {
+        } else {
           this.prefixUrl = `/rest/${modelName}`;
         }
       } else {
@@ -206,7 +201,11 @@ appShared.factory("BaseRestService", [
         processData: false, // Not to process data
         data: form,
       };
-      return await this.getRestApiResult(req, this.serviceBase, onUploadFileProgress || _onUploadFileProgress);
+      return await this.getRestApiResult(
+        req,
+        this.serviceBase,
+        onUploadFileProgress || _onUploadFileProgress
+      );
     };
 
     var _parseQuery = function (req) {
@@ -227,7 +226,7 @@ appShared.factory("BaseRestService", [
     };
 
     var _onUploadFileProgress = function (progress) {
-      console.log(`loaded ${progress}%`)
+      console.log(`loaded ${progress}%`);
     };
 
     var _getRestApiResult = async function (req, serviceBase) {

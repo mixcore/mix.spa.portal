@@ -7,6 +7,7 @@ app.controller("PagePostController", [
   "$location",
   "PagePostRestService",
   "PostRestService",
+  "ApiService",
   "CommonService",
   function (
     $scope,

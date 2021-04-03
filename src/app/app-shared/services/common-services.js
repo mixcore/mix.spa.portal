@@ -1,200 +1,27 @@
 "use strict";
 appShared.factory("CommonService", [
-  "$location",
-  "$http",
-  "$q",
   "$rootScope",
-  "AuthService",
+  "ApiService",
   "localStorageService",
-  "AppSettings",
-  function (
-    $location,
-    $http,
-    $q,
-    $rootScope,
-    authService,
-    localStorageService,
-    appSettings
-  ) {
+  function ($rootScope, apiService, localStorageService) {
     var factory = {};
-    var _settings = {
-      lang: "",
-      cultures: [],
-    };
-    var _sendRestRequest = async function (req, isRetry = true) {
-      var defer = $q.defer();
-      req.uploadEventHandlers = {
-        progress: function (e) {
-          defer.notify((e.loaded * 100) / e.total);
-        },
-      };
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("localizeSettings") == -1 &&
-            (!$rootScope.localizeSettings ||
-              $rootScope.localizeSettings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return { isSucceed: true, data: resp.data };
-        },
-        function (error) {
-          if (error.status === 401 && isRetry) {
-            //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(
-                authService.authentication.refresh_token,
-                authService.authentication.access_token
-              )
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + authService.authentication.access_token;
-                  return _sendRestRequest(req, false);
-                },
-                function (err) {
-                  var t = { isSucceed: false };
-
-                  authService.logOut();
-                  authService.authentication.access_token = null;
-                  authService.authentication.refresh_token = null;
-                  authService.referredUrl = $location.$$url;
-                  $rootScope.showLogin(req, "rest");
-                  // window.top.location.href = '/security/login';
-                  return t;
-                }
-              );
-          } else if (
-            error.status === 200 ||
-            error.status === 204 ||
-            error.status === 205
-          ) {
-            return {
-              isSucceed: true,
-              status: err.status,
-              errors: [error.statusText || error.status],
-            };
-          } else {
-            if (error.data) {
-              return { isSucceed: false, errors: [error.data] };
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        },
-        function (progress) {
-          console.log("uploading: " + Math.floor(progress) + "%");
-        }
-      );
-    };
-
-    var _sendRequest = async function (
-      req,
-      onUploadFileProgress = null,
-      isRetry = true
-    ) {
-      if (onUploadFileProgress) {
-        req.uploadEventHandlers = {
-          progress: function (e) {
-            if (e.lengthComputable) {
-              progress = Math.round((e.loaded * 100) / e.total);
-              onUploadFileProgress(progress);
-              console.log("progress: " + progress + "%");
-              if (e.loaded == e.total) {
-                console.log("File upload finished!");
-                console.log("Server will perform extra work now...");
-              }
-            }
-          },
-        };
-      }
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("localizeSettings") == -1 &&
-            (!$rootScope.localizeSettings ||
-              $rootScope.localizeSettings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return resp.data;
-        },
-        function (error) {
-          if (error.status === 401) {
-            //Try again with new token from previous Request (optional)
-            if (isRetry) {
-              return authService
-                .refreshToken(
-                  authService.authentication.refresh_token,
-                  authService.authentication.access_token
-                )
-                .then(
-                  function () {
-                    req.headers.Authorization =
-                      "Bearer " + authService.authentication.access_token;
-                    return _sendRequest(req, onUploadFileProgress, false);
-                  },
-                  function (err) {
-                    var t = { isSucceed: false };
-
-                    authService.logOut();
-                    authService.authentication.access_token = null;
-                    authService.authentication.refresh_token = null;
-                    authService.referredUrl = $location.$$url;
-                    window.top.location.href = "/security/login";
-                    return t;
-                  }
-                );
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          } else if (error.status === 403) {
-            var t = { isSucceed: false, errors: ["Forbidden"] };
-            $rootScope.showLogin(req, "rest");
-            // window.top.location.href = '/security/login';
-            return t;
-          } else {
-            if (error.data) {
-              return error.data;
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        },
-        function (progress) {
-          console.log("uploading: " + Math.floor(progress) + "%");
-        }
-      );
-    };
 
     var _loadJArrayData = async function (name) {
       var req = {
         method: "GET",
         url: "/portal/jarray-data/" + name,
       };
-      return await _getAnonymousApiResult(req);
+      return await apiService.getAnonymousApiResult(req);
     };
+
     var _loadJsonData = async function (name) {
       var req = {
         method: "GET",
         url: "/portal/json-data/" + name,
       };
-      return await _getAnonymousApiResult(req);
+      return await apiService.getAnonymousApiResult(req);
     };
+
     var _showAlertMsg = function (title, message) {
       $rootScope.message = {
         title: title,
@@ -225,7 +52,7 @@ appShared.factory("CommonService", [
         url: url,
         data: { subject: subject, body: body },
       };
-      return _getApiResult(req).then(function (response) {
+      return apiService.getApiResult(req).then(function (response) {
         return response.data;
       });
     };
@@ -253,7 +80,7 @@ appShared.factory("CommonService", [
           method: "GET",
           url: url,
         };
-        return _getRestApiResult(req).then(function (response) {
+        return apiService.getRestApiResult(req).then(function (response) {
           localStorageService.set(
             "localizeSettings",
             response.data.localizeSettings
@@ -277,7 +104,7 @@ appShared.factory("CommonService", [
           method: "GET",
           url: url,
         };
-        return _getApiResult(req).then(function (response) {
+        return apiService.getApiResult(req).then(function (response) {
           if (response.data) {
             _removeSettings().then(() => {
               _removeTranslator().then(() => {
@@ -317,7 +144,7 @@ appShared.factory("CommonService", [
         method: "GET",
         url: url,
       };
-      return _getApiResult(req).then(function (response) {
+      return apiService.getApiResult(req).then(function (response) {
         return response.data;
       });
     };
@@ -367,158 +194,7 @@ appShared.factory("CommonService", [
       }
     };
 
-    var _getApiResult = async function (
-      req,
-      serviceBase,
-      onUploadFileProgress = null
-    ) {
-      await authService.fillAuthData();
-      if (authService.authentication) {
-        req.Authorization = authService.authentication.access_token;
-      }
-
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
-
-      req.url = serviceUrl + req.url;
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return _sendRequest(req, onUploadFileProgress).then(function (resp) {
-        return resp;
-      });
-    };
-
-    var _getRestApiResult = async function (req, serviceBase) {
-      if (!authService.authentication) {
-        await authService.fillAuthData();
-      }
-      if (authService.authentication) {
-        req.Authorization = authService.authentication.access_token;
-      }
-
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
-
-      req.url = serviceUrl + req.url;
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("localizeSettings") == -1 &&
-            (!$rootScope.localizeSettings ||
-              $rootScope.localizeSettings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return { isSucceed: true, data: resp.data };
-        },
-        function (error) {
-          if (error.status === 401) {
-            //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(
-                authService.authentication.refresh_token,
-                authService.authentication.access_token
-              )
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + authService.authentication.access_token;
-                  return $http(req).then(
-                    function (results) {
-                      return { isSucceed: true, data: results.data };
-                    },
-                    function (err) {
-                      authService.logOut();
-                      authService.authentication.access_token = null;
-                      authService.authentication.refresh_token = null;
-                      authService.referredUrl = $location.$$url;
-                      $rootScope.showLogin(req, "rest");
-                      // window.top.location.href = '/security/login';
-                    }
-                  );
-                },
-                function (err) {
-                  var t = { isSucceed: false };
-
-                  authService.logOut();
-                  authService.authentication.access_token = null;
-                  authService.authentication.refresh_token = null;
-                  authService.referredUrl = $location.$$url;
-                  $rootScope.showLogin(req, "rest");
-                  // window.top.location.href = '/security/login';
-                  return t;
-                }
-              );
-          } else if (
-            error.status === 200 ||
-            error.status === 204 ||
-            error.status === 205
-          ) {
-            return {
-              isSucceed: true,
-              status: err.status,
-              errors: [error.statusText || error.status],
-            };
-          } else {
-            if (error.data) {
-              return { isSucceed: false, errors: [error.data] };
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        }
-      );
-    };
-
-    var _getAnonymousApiResult = async function (req) {
-      $rootScope.isBusy = true;
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      req.url = serviceUrl + req.url;
-      req.headers = {
-        "Content-Type": "application/json",
-      };
-      return $http(req).then(
-        function (resp) {
-          return resp.data;
-        },
-        function (error) {
-          return {
-            isSucceed: false,
-            errors: [error.statusText || error.status],
-          };
-        }
-      );
-    };
-    factory.sendRestRequest = _sendRestRequest;
-    factory.sendRequest = _sendRequest;
     factory.sendMail = _sendMail;
-    factory.getApiResult = _getApiResult;
-    factory.getRestApiResult = _getRestApiResult;
-    factory.getAnonymousApiResult = _getAnonymousApiResult;
     factory.initAllSettings = _initAllSettings;
     factory.fillAllSettings = _fillAllSettings;
     factory.removeSettings = _removeSettings;

@@ -6,6 +6,7 @@ app.controller("ServiceController", [
   "$routeParams",
   "$location",
   "RestMixDatabasePortalService",
+  "ApiService",
   "CommonService",
   function (
     $scope,

@@ -36,7 +36,10 @@
       ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.$doCheck = function () {
-        if (ctrl.mixDatabaseDataValue && ctrl.previousId !== ctrl.mixDatabaseDataValue.id) {
+        if (
+          ctrl.mixDatabaseDataValue &&
+          ctrl.previousId !== ctrl.mixDatabaseDataValue.id
+        ) {
           ctrl.previousId = ctrl.mixDatabaseDataValue.id;
           ctrl.initData();
         }
@@ -61,7 +64,10 @@
               }
               break;
             case "reference": // reference
-              if (ctrl.mixDatabaseDataValue.column.referenceId && ctrl.parentId) {
+              if (
+                ctrl.mixDatabaseDataValue.column.referenceId &&
+                ctrl.parentId
+              ) {
                 ctrl.mixDatabaseDataValue.integerValue =
                   ctrl.mixDatabaseDataValue.column.referenceId;
                 // navService.getSingle(["default"]).then((resp) => {

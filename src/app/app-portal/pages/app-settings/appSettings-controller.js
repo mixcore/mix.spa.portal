@@ -7,6 +7,7 @@ app.controller("AppSettingsController", [
   "$timeout",
   "$location",
   "AuthService",
+  "ApiService",
   "CommonService",
   "AppSettingsServices",
   function (
@@ -17,6 +18,7 @@ app.controller("AppSettingsController", [
     $timeout,
     $location,
     authService,
+    apiService,
     commonService,
     appSettingsServices
   ) {
@@ -54,7 +56,7 @@ app.controller("AppSettingsController", [
         $scope.$apply();
       }
 
-      var result = await commonService.getSettings();
+      var result = await apiService.getSettings();
       if (result.isSucceed) {
         $scope.localizeSettings = result.data;
         $rootScope.isBusy = false;

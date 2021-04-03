@@ -1,5 +1,6 @@
 ﻿modules.component("mediaFileUpload", {
-  templateUrl: "/mix-app/views/app-portal/components/media-file-upload/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/media-file-upload/view.html",
   bindings: {
     header: "=?",
     description: "=?",
@@ -70,7 +71,10 @@
         if (file !== null) {
           $rootScope.isBusy = true;
           if (file) {
-            var response = await mediaService.uploadMedia(file, ctrl.onUploadFileProgress);
+            var response = await mediaService.uploadMedia(
+              file,
+              ctrl.onUploadFileProgress
+            );
             if (response.isSucceed) {
               ctrl.media = response.data;
               $rootScope.isBusy = false;
@@ -120,9 +124,9 @@
           return null;
         }
       };
-      ctrl.onUploadFileProgress = function(progress){
+      ctrl.onUploadFileProgress = function (progress) {
         ctrl.progress = progress;
-      }
+      };
     },
   ],
 });

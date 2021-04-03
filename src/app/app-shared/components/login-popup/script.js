@@ -7,6 +7,7 @@ appShared.controller("LoginPopupController", [
   "$scope",
   "$rootScope",
   "AuthService",
+  "ApiService",
   "CommonService",
   function LoginPopupController(
     $scope,
@@ -29,16 +30,15 @@ appShared.controller("LoginPopupController", [
 
         if ($rootScope.loginCallbackRequest) {
           if ($rootScope.loginCallbackType == "rest") {
-            commonService.getRestApiResult($rootScope.loginCallbackRequest);
+            apiService.getRestApiResult($rootScope.loginCallbackRequest);
           } else {
-            commonService.getRestResult($rootScope.loginCallbackRequest);
+            apiService.getRestResult($rootScope.loginCallbackRequest);
           }
           $rootScope.loginCallbackRequest = null;
           $rootScope.loginCallbackType = null;
         }
-      }
-      else {
-        $rootScope.goToSiteUrl('/security/login');
+      } else {
+        $rootScope.goToSiteUrl("/security/login");
       }
     };
     $scope.closeDialog = function () {

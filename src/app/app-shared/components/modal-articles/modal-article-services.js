@@ -1,10 +1,12 @@
-﻿'use strict';
-appShared.factory('ModalPostRestService', ['$rootScope', 'CommonService', 'BaseService',
-    function ($rootScope, commonService, baseService) {
-
-        var serviceFactory = Object.create(baseService);
-        serviceFactory.init('page-post');
-        return serviceFactory;
-
-    }
+﻿"use strict";
+appShared.factory("ModalPostRestService", [
+  "$rootScope",
+  "ApiService",
+  "CommonService",
+  "BaseService",
+  function ($rootScope, apiService, commonService, baseService) {
+    var serviceFactory = Object.create(baseService);
+    serviceFactory.init("page-post");
+    return serviceFactory;
+  },
 ]);

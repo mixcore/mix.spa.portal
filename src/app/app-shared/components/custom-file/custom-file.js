@@ -1,6 +1,7 @@
 ﻿//modules.controller('ImageController', );
 modules.component("customFile", {
-  templateUrl: "/mix-app/views/app-shared/components/custom-file/custom-file.html",
+  templateUrl:
+    "/mix-app/views/app-shared/components/custom-file/custom-file.html",
   bindings: {
     header: "=",
     title: "=",
@@ -67,7 +68,7 @@ modules.component("customFile", {
               }
             }
           };
-          reader.onerror = function (error) { };
+          reader.onerror = function (error) {};
         } else {
           return null;
         }

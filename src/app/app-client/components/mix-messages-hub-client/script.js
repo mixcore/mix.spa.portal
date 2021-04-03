@@ -59,7 +59,7 @@
           ctrl.defaultData.data.user_avatar = ctrl.user.connection.avatar;
           ctrl.defaultData.data.data_type = 9;
           ctrl.defaultData.column = {
-            dataType: 'Text',
+            dataType: "Text",
             title: "Message",
             name: "message",
           };

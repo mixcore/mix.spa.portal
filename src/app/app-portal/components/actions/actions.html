@@ -3,11 +3,20 @@
     <i class="fa fa-chevron-left"></i>
     <span>Back</span>
   </a>
-  <a ng-if="$ctrl.previewUrl" target="_blank" href="{{$ctrl.previewUrl}}" class="btn btn-primary text-white">
+  <a
+    ng-if="$ctrl.previewUrl"
+    target="_blank"
+    href="{{$ctrl.previewUrl}}"
+    class="btn btn-primary text-white"
+  >
     <i class="fas fa-eye"></i>
     <span>Preview</span>
   </a>
-  <a ng-if="$ctrl.contentUrl" href="{{$ctrl.contentUrl}}" class="btn btn-primary text-white">
+  <a
+    ng-if="$ctrl.contentUrl"
+    href="{{$ctrl.contentUrl}}"
+    class="btn btn-primary text-white"
+  >
     <i class="fa fa-align-justify"></i>
     <span>Data</span>
   </a>
@@ -15,7 +24,12 @@
     <i class="fa fa-save"></i>
     <span>Save</span>
   </button>
-  <button type="button" ng-click="$ctrl.clearCache()" ng-if="$ctrl.onClearCache" class="btn btn-primary">
+  <button
+    type="button"
+    ng-click="$ctrl.clearCache()"
+    ng-if="$ctrl.onClearCache"
+    class="btn btn-primary"
+  >
     <i class="fa fa-recycle"></i>
     <span>Cache</span>
   </button>

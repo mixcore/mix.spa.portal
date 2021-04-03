@@ -6,6 +6,7 @@ app.controller("ConfigurationController", [
   "$routeParams",
   "$location",
   "ConfigurationService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -25,7 +26,7 @@ app.controller("ConfigurationController", [
       ngAppSettings,
       service
     );
-   
+
     $scope.getSingleSuccessCallback = function () {
       $scope.cates = ngAppSettings.enums.configuration_cates;
       $scope.localizeSettings = $rootScope.globalSettings;
@@ -46,9 +47,13 @@ app.controller("ConfigurationController", [
         $location.url($scope.referrerUrl);
       });
     };
-    
+
     $scope.generateName = function () {
-      $scope.viewmodel.keyword = $rootScope.generateKeyword($scope.viewmodel.keyword, "_", true);
+      $scope.viewmodel.keyword = $rootScope.generateKeyword(
+        $scope.viewmodel.keyword,
+        "_",
+        true
+      );
     };
   },
 ]);

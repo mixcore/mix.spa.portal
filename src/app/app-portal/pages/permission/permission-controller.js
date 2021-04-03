@@ -5,6 +5,7 @@ app.controller("PermissionController", [
   "ngAppSettings",
   "$routeParams",
   "$location",
+  "ApiService",
   "CommonService",
   "PermissionService",
   "RestPortalPageNavigationService",
@@ -14,6 +15,7 @@ app.controller("PermissionController", [
     ngAppSettings,
     $routeParams,
     $location,
+    apiService,
     commonService,
     service,
     navService

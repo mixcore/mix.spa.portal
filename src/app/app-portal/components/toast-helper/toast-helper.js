@@ -1,5 +1,6 @@
 ﻿modules.component("toastHelper", {
-  templateUrl: "/mix-app/views/app-portal/components/toast-helper/toast-helper.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/toast-helper/toast-helper.html",
   bindings: {
     url: "=?",
     title: "=?",

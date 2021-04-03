@@ -9,10 +9,9 @@
       var ctrl = this;
       ctrl.updatePostExport = function (value, isSelected) {
         // Filter actived post
-        var idx = 
-        ctrl.selectedExport.posts = angular.copy(
+        var idx = (ctrl.selectedExport.posts = angular.copy(
           $rootScope.filterArray(ctrl.exportData.posts, ["isActived"], [true])
-        );
+        ));
       };
       ctrl.isSelected = function (value) {
         return ctrl.selectedValues.indexOf(value) >= 0;

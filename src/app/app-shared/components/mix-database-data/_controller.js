@@ -7,6 +7,7 @@ appShared.controller("MixDatabaseDataClientController", [
   "$location",
   "RestMixDatabaseDataPortalService",
   "RestRelatedMixDatabasePortalService",
+  "ApiService",
   "CommonService",
   function (
     $scope,

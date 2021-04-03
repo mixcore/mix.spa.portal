@@ -2,7 +2,7 @@ modules.component("mixDatabaseColumn", {
   templateUrl:
     "/mix-app/views/app-portal/components/mix-database-column/view.html",
   bindings: {
-    column: "="
+    column: "=",
   },
   controller: [
     "$rootScope",

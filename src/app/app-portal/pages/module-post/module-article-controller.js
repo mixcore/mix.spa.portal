@@ -6,6 +6,7 @@ app.controller("ModulePostController", [
   "$routeParams",
   "$location",
   "ModulePostRestService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -86,7 +87,7 @@ app.controller("ModulePostController", [
       }
     };
 
-    $scope.removeCallback = function () { };
+    $scope.removeCallback = function () {};
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);

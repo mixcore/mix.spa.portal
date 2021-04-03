@@ -1,11 +1,11 @@
 ﻿modules.component("googleAnalytic", {
   templateUrl: "/mix-app/views/app-portal/components/google-analytic/view.html",
-  bindings: {
-  },
+  bindings: {},
   controller: [
     "$rootScope",
+    "ApiService",
     "CommonService",
-    function ($rootScope, commonService) {
+    function ($rootScope, apiService, commonService) {
       var ctrl = this;
       ctrl.init = function () {
         if (gapi) {
@@ -150,16 +150,22 @@
 
               dataChart1
                 .set({
-                  query: { ids: $rootScope.localizeSettings.data.Google_Analytic_Ids },
+                  query: {
+                    ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                  },
                 })
                 .execute();
               dataChart2
                 .set({
-                  query: { ids: $rootScope.localizeSettings.data.Google_Analytic_Ids },
+                  query: {
+                    ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                  },
                 })
                 .execute();
               activeUsers
-                .set({ ids: $rootScope.localizeSettings.data.Google_Analytic_Ids })
+                .set({
+                  ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                })
                 .execute();
 
               // /**
@@ -191,5 +197,5 @@
         }
       };
     },
-  ]
+  ],
 });

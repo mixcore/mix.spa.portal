@@ -169,6 +169,7 @@ appShared.run([
   "ngAppSettings",
   "$location",
   "BaseRestService",
+  "ApiService",
   "CommonService",
   "AuthService",
   "TranslatorService",
@@ -178,6 +179,7 @@ appShared.run([
     ngAppSettings,
     $location,
     baseRestService,
+    apiService,
     commonService,
     authService,
     translatorService
@@ -463,7 +465,7 @@ appShared.run([
         processData: false, // Not to process data
         data: form,
       };
-      return await commonService.getApiResult(req);
+      return await apiService.getApiResult(req);
     };
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {

@@ -2,11 +2,20 @@
 app.controller("Step3Controller", [
   "$scope",
   "$rootScope",
+  "ApiService",
   "CommonService",
   "AuthService",
   "StoreService",
   "Step3Services",
-  function ($scope, $rootScope, commonService, authService, storeService, service) {
+  function (
+    $scope,
+    $rootScope,
+    apiService,
+    commonService,
+    authService,
+    storeService,
+    service
+  ) {
     var rand = Math.random();
     $scope.data = {
       isCreateDefault: true,
@@ -20,7 +29,7 @@ app.controller("Step3Controller", [
       direction: "Desc",
       fromDate: null,
       toDate: null,
-      postType:"theme"
+      postType: "theme",
     };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
@@ -52,7 +61,7 @@ app.controller("Step3Controller", [
       var response = await service.ajaxSubmitForm(frm, url);
       if (response.isSucceed) {
         $scope.viewmodel = response.data;
-        authService.initSettings().then(function () {
+        commonService.initAllSettings().then(function () {
           $rootScope.isBusy = false;
           setTimeout(() => {
             $rootScope.goToSiteUrl("/portal");

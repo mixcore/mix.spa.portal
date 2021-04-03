@@ -1,8 +1,9 @@
 "use strict";
 appShared.factory("RestMixDatabaseDataClientService", [
   "BaseRestService",
+  "ApiService",
   "CommonService",
-  function (baseService, commonService) {
+  function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("mix-database-data/client");
     var _initData = async function (mixDatabaseName) {
@@ -11,7 +12,7 @@ appShared.factory("RestMixDatabaseDataClientService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
     serviceFactory.initData = _initData;
     return serviceFactory;

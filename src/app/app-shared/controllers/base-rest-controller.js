@@ -210,7 +210,7 @@ function BaseRestCtrl(
       } else {
         resp = await service.update($scope.viewmodel.id, $scope.viewmodel);
       }
-     
+
       if (resp.isSucceed) {
         $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");

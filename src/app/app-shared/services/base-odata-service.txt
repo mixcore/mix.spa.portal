@@ -1,6 +1,6 @@
 'use strict';
-appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonService',
-    function ($rootScope, $routeParams, commonService) {
+appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'ApiService', 'CommonService',
+    function ($rootScope, $routeParams ,apiService, commonService) {
         var serviceFactory = {};
 
         var _init = function (modelName, isGlobal) {
@@ -25,7 +25,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
         var _count = async function (viewType, params = []) {
             var url = this.prefixUrl + '/' + viewType + '/count';
@@ -38,7 +38,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
         var _getList = async function (viewType, objData, params = []) {
 
@@ -56,7 +56,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 method: 'GET',
                 url: url
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
         var _delete = async function (params = []) {
@@ -70,7 +70,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 method: 'DELETE',
                 url: url
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
         var _save = async function (viewType, objData) {
@@ -80,7 +80,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
         var _saveFields = async function (viewType, id, objData) {
@@ -90,7 +90,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
         var _saveProperties = async function (viewType, objData) {
             var url = this.prefixUrl + '/' + viewType + '/save-properties';
@@ -99,7 +99,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
         var _saveList = async function (viewType, objData) {
@@ -109,7 +109,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
         var _applyList = async function (viewType, objData) {
@@ -119,7 +119,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 url: url,
                 data: JSON.stringify(objData)
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
 
 
@@ -132,7 +132,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'CommonServ
                 processData: false, // Not to process data
                 data: form
             };
-            return await commonService.getApiResult(req);
+            return await apiService.getApiResult(req);
         };
         var _parseODataQuery = function (req) {
             if (req) {

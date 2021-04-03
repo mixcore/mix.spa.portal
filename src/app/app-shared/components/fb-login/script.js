@@ -18,7 +18,8 @@
       ctrl.showLogin = false;
       ctrl.$onInit = function () {
         // ctrl.checkLoginState();
-        ctrl.showLogin = $rootScope.globalSettings.externalLoginProviders.Facebook != "";
+        ctrl.showLogin =
+          $rootScope.globalSettings.externalLoginProviders.Facebook != "";
       };
       ctrl.translate = $rootScope.translate;
       ctrl.login = function () {

@@ -12,7 +12,11 @@
           ctrl.model.name === null ||
           ctrl.model.name === ""
         ) {
-          ctrl.model.name = $rootScope.generateKeyword(ctrl.model.title, "_", true);
+          ctrl.model.name = $rootScope.generateKeyword(
+            ctrl.model.title,
+            "_",
+            true
+          );
         }
       };
     },

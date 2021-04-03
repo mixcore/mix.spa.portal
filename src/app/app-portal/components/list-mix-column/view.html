@@ -1,5 +1,5 @@
 <div class="card mb-4">
-  <div class="card-header position-sticky" style="top: 3.9rem; z-index: 12;">
+  <div class="card-header position-sticky" style="top: 3.9rem; z-index: 12">
     <h6 class="m-0">
       Entity
       <span ng-bind="$ctrl.title"></span>
@@ -45,28 +45,39 @@
         class="mb-3"
       >
         <div class="row border-top pt-1">
-          <div style="width: 5%;">
+          <div style="width: 5%">
             <small
               class="fa fa-grip-vertical fa-xs text-black-50 align-middle"
-              style="cursor: grab;"
+              style="cursor: grab"
             ></small>
           </div>
-          <div style="width: 20%;">
-            <small class="form-label">Column title:
-            </small>
-            <input ng-model="col.title" placeholder="Title" ng-blur="$ctrl.generateName(col)"
-              class="form-control form-control-sm" />
+          <div style="width: 20%">
+            <small class="form-label">Column title: </small>
+            <input
+              ng-model="col.title"
+              placeholder="Title"
+              ng-blur="$ctrl.generateName(col)"
+              class="form-control form-control-sm"
+            />
           </div>
-          <div style="width: 20%;">
-            <small class="form-label">Column name:
-            </small>
+          <div style="width: 20%">
+            <small class="form-label">Column name: </small>
             <!-- <span class="text-black-50" ng-bind="col.name"></span> -->
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-sm text-black-50" ng-model="col.name"/>
-              <button class="btn btn-outline-primary" type="button" ng-click="$ctrl.generateName(col,true)"><span class="fa fa-redo"></span></button>
+              <input
+                class="form-control form-control-sm text-black-50"
+                ng-model="col.name"
+              />
+              <button
+                class="btn btn-outline-primary"
+                type="button"
+                ng-click="$ctrl.generateName(col,true)"
+              >
+                <span class="fa fa-redo"></span>
+              </button>
             </div>
           </div>
-          <div style="width: 15%;">
+          <div style="width: 15%">
             <small class="form-label">Type {{col.dataType}}</small>
             <select
               class="form-select form-select-sm"
@@ -81,7 +92,7 @@
               </option>
             </select>
           </div>
-          <div style="width: 30%;">
+          <div style="width: 30%">
             <div class="" ng-if="col.dataType != 'Reference'">
               <small class="form-label">Value</small>
               <input
@@ -138,7 +149,7 @@
 
         <div class="my-2" ng-show="col.showAdvanced">
           <div class="row">
-            <div style="width: 5%;"></div>
+            <div style="width: 5%"></div>
             <div class="col-md form-check-inline px-2">
               <div class="form-check form-switch mx-2 float-start">
                 <input
@@ -220,7 +231,10 @@
                 Crop
               </label>
             </div>
-            <div class="col-md-3" ng-if="col.columnConfigurations.upload.isCrop">
+            <div
+              class="col-md-3"
+              ng-if="col.columnConfigurations.upload.isCrop"
+            >
               <small>Width</small>
               <input
                 type="number"
@@ -228,7 +242,10 @@
                 class="sm-control"
               />
             </div>
-            <div class="col-md-3" ng-if="col.columnConfigurations.upload.isCrop">
+            <div
+              class="col-md-3"
+              ng-if="col.columnConfigurations.upload.isCrop"
+            >
               <small>Height</small>
               <input
                 type="number"
@@ -240,7 +257,7 @@
         </div>
         <div class="mix-database-entity">
           <div class="row mb-2" ng-show="col.isRegex && col.showAdvanced">
-            <div style="width: 5%;"></div>
+            <div style="width: 5%"></div>
             <div class="col-10">
               <div class="input-group">
                 <span class="input-group-text">Regular Expression</span>
@@ -255,7 +272,7 @@
           </div>
           <div ng-show="col.isSelect">
             <div class="row my-2">
-              <div style="width: 5%;"></div>
+              <div style="width: 5%"></div>
               <div class="col-10">
                 <div class="input-group mb-3">
                   <span class="input-group-text">Input option value</span>
@@ -289,7 +306,7 @@
                                           </option>
                                       </select>
                                   </div> -->
-                  <div style="width: 5%;">
+                  <div style="width: 5%">
                     <a
                       class="btn btn-sm"
                       ng-click="col.options.splice($index,1)"
@@ -332,7 +349,8 @@
             <option
               ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
               ng-value="item.value"
-              >{{item.name}}
+            >
+              {{item.name}}
             </option>
           </select>
 

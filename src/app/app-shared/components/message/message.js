@@ -1,6 +1,6 @@
-﻿modules.component('message', {
-    templateUrl: '/mix-app/views/app-shared/components/message/message.html',
-    bindings: {
-        message: '='
-    }
+﻿modules.component("message", {
+  templateUrl: "/mix-app/views/app-shared/components/message/message.html",
+  bindings: {
+    message: "=",
+  },
 });

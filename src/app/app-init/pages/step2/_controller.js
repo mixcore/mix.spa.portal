@@ -3,6 +3,7 @@ app.controller("Step2Controller", [
   "$scope",
   "$rootScope",
   "$location",
+  "ApiService",
   "CommonService",
   "Step2Services",
   "AuthService",
@@ -10,6 +11,7 @@ app.controller("Step2Controller", [
     $scope,
     $rootScope,
     $location,
+    apiService,
     commonService,
     services,
     authService
@@ -21,9 +23,7 @@ app.controller("Step2Controller", [
       confirmPassword: "",
       isAgreed: false,
     };
-    $scope.init = async function () {
-      
-    };
+    $scope.init = async function () {};
     $scope.register = async function () {
       if (!$scope.user.isAgreed) {
         var ele = document.getElementById("notTNCYetChecked");

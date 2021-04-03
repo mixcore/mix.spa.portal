@@ -1,6 +1,10 @@
-﻿modules.component('aceEditor', {
-  templateUrl: '/mix-app/views/app-portal/components/ace-editor/ace-editor.html',
-  controller: ['$rootScope', '$scope', 'ngAppSettings',
+﻿modules.component("aceEditor", {
+  templateUrl:
+    "/mix-app/views/app-portal/components/ace-editor/ace-editor.html",
+  controller: [
+    "$rootScope",
+    "$scope",
+    "ngAppSettings",
     function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;
       ctrl.previousId = null;
@@ -24,31 +28,30 @@
           ctrl.updateEditors();
           $scope.$apply();
         }, 200);
-
       };
       ctrl.updateContent = function (content) {
         ctrl.editor.setValue(content);
       };
       ctrl.updateEditors = function () {
-        $.each($('#code-editor-' + ctrl.id), function (i, e) {
+        $.each($("#code-editor-" + ctrl.id), function (i, e) {
           //var container = $(this);
           ace.require("ace/ext/language_tools");
           if (e) {
             var editor = ace.edit(e);
             switch (ctrl.ext) {
-              case '.json':
+              case ".json":
                 editor.session.setMode("ace/mode/json");
                 break;
-              case '.js':
+              case ".js":
                 editor.session.setMode("ace/mode/javascript");
                 break;
-              case '.css':
+              case ".css":
                 editor.session.setMode("ace/mode/css");
                 break;
-              case '.cshtml':
+              case ".cshtml":
                 editor.session.setMode("ace/mode/razor");
                 break;
-              case '.cs':
+              case ".cs":
                 editor.session.setMode("ace/mode/csharp");
                 break;
               default:
@@ -67,38 +70,37 @@
               enableSnippets: true,
               enableLiveAutocompletion: false,
               maxLines: 50,
-              fontSize: 11
+              fontSize: 11,
             });
-            editor.getSession().on('change', function (e) {
+            editor.getSession().on("change", function (e) {
               // e.type, etc
               ctrl.content = editor.getValue();
             });
-            editor.getSession().on('paste', function (e) {
+            editor.getSession().on("paste", function (e) {
               // e.type, etc
               ctrl.content = editor.getValue();
             });
             editor.commands.addCommand({
-              name: 'saveFile',
+              name: "saveFile",
               bindKey: {
-                win: 'Ctrl-S',
-                mac: 'Command-S',
-                sender: 'editor|cli'
+                win: "Ctrl-S",
+                mac: "Command-S",
+                sender: "editor|cli",
               },
               exec: function (env, args, request) {
-
-                var btn = document.getElementById('btnToSubmit');
+                var btn = document.getElementById("btnToSubmit");
                 btn.click();
-              }
+              },
             });
             ctrl.editor = editor;
           }
         });
       };
-    }
+    },
   ],
   bindings: {
-    content: '=',
-    contentId: '=',
-    ext: '='
-  }
+    content: "=",
+    contentId: "=",
+    ext: "=",
+  },
 });

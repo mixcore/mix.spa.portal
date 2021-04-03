@@ -6,6 +6,7 @@ app.controller("LocalizeController", [
   "$routeParams",
   "$location",
   "LocalizeService",
+  "ApiService",
   "CommonService",
   function (
     $scope,

@@ -73,7 +73,7 @@
         }
         if (!ctrl.columns) {
           var getMixDatbase = await databaseService.getSingle([
-            ctrl.mixDatabaseName || ctrl.mixDatabaseId
+            ctrl.mixDatabaseName || ctrl.mixDatabaseId,
           ]);
           if (getMixDatbase.isSucceed) {
             ctrl.columns = getMixDatbase.data.columns;
@@ -153,8 +153,7 @@
           var subIds = [];
           if (e.attributeData && e.attributeData.obj.sub_categories) {
             subIds = e.attributeData.obj.sub_categories.map((m) => m.id);
-          }
-          else if (e.sub_categories) {
+          } else if (e.sub_categories) {
             subIds = e.sub_categories.map((m) => m.id);
           }
           var subData = ctrl.selectedList.filter(

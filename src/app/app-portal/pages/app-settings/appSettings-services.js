@@ -1,6 +1,10 @@
-﻿'use strict';
-app.factory('AppSettingsServices', ['$http', '$rootScope', 'CommonService', function ($http, $rootScope, commonService) {
-
+﻿"use strict";
+app.factory("AppSettingsServices", [
+  "$http",
+  "$rootScope",
+  "ApiService",
+  "CommonService",
+  function ($http, $rootScope, apiService, commonService) {
     //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
 
     var appSettingssServiceFactory = {};
@@ -8,37 +12,37 @@ app.factory('AppSettingsServices', ['$http', '$rootScope', 'CommonService', func
     var settings = $rootScope.globalSettings;
 
     var _getAppSettings = async function () {
-        var url = '/portal/app-settings/details';
+      var url = "/portal/app-settings/details";
 
-        var req = {
-            method: 'GET',
-            url: url
-        };
-        return await commonService.getApiResult(req);
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await apiService.getApiResult(req);
     };
 
     var _saveAppSettings = async function (appSettings) {
-        var apiUrl = '/portal/app-settings/save';
-        var req = {
-            method: 'POST',
-            url: apiUrl,
-            data: JSON.stringify(appSettings)
-        };
-        return await commonService.getApiResult(req);
+      var apiUrl = "/portal/app-settings/save";
+      var req = {
+        method: "POST",
+        url: apiUrl,
+        data: JSON.stringify(appSettings),
+      };
+      return await apiService.getApiResult(req);
     };
     var _saveGlobalSettings = async function (name, content) {
-        var apiUrl = '/portal/app-settings/save-global/' + name;
-        var req = {
-            method: 'POST',
-            url: apiUrl,
-            data: JSON.stringify(content)
-        };
-        return await commonService.getApiResult(req);
+      var apiUrl = "/portal/app-settings/save-global/" + name;
+      var req = {
+        method: "POST",
+        url: apiUrl,
+        data: JSON.stringify(content),
+      };
+      return await apiService.getApiResult(req);
     };
 
     appSettingssServiceFactory.getAppSettings = _getAppSettings;
     appSettingssServiceFactory.saveAppSettings = _saveAppSettings;
     appSettingssServiceFactory.saveGlobalSettings = _saveGlobalSettings;
     return appSettingssServiceFactory;
-
-}]);
+  },
+]);

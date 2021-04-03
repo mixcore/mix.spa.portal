@@ -17,13 +17,7 @@
     "$location",
     "ngAppSettings",
     "$filter",
-    function (
-      $rootScope,
-      $scope,
-      $location,
-      ngAppSettings,
-      $filter,
-    ) {
+    function ($rootScope, $scope, $location, ngAppSettings, $filter) {
       var ctrl = this;
       ctrl.mediaFile = {};
       ctrl.icons = ngAppSettings.icons;

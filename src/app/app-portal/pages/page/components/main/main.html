@@ -1,16 +1,24 @@
 <div class="mb-3">
-    <label class="form-label">Your page title</label>
-    <input type="text" class="form-control form-control-lg" ng-model="$ctrl.page.title" ng-blur="$ctrl.generateSeo()"
-        placeholder="..." required>
-    <!-- <small class="form-text text-muted">This page title will show on..</small> -->
+  <label class="form-label">Your page title</label>
+  <input
+    type="text"
+    class="form-control form-control-lg"
+    ng-model="$ctrl.page.title"
+    ng-blur="$ctrl.generateSeo()"
+    placeholder="..."
+    required
+  />
+  <!-- <small class="form-text text-muted">This page title will show on..</small> -->
 </div>
 <div class="mb-3">
-    <label class="form-label">Excerpt</label>
-    <textarea class="form-control" ng-model="$ctrl.page.excerpt">{{$ctrl.page.excerpt}}</textarea>
+  <label class="form-label">Excerpt</label>
+  <textarea class="form-control" ng-model="$ctrl.page.excerpt">
+{{$ctrl.page.excerpt}}</textarea
+  >
 </div>
 <div class="mb-3">
-    <!-- <label class="form-label">Full description</label> -->
-    <!-- <trumbowyg options="{}" ng-model="$ctrl.page.content"></trumbowyg> -->
+  <!-- <label class="form-label">Full description</label> -->
+  <!-- <trumbowyg options="{}" ng-model="$ctrl.page.content"></trumbowyg> -->
 
-    <quill-editor content="$ctrl.page.content"></quill-editor>
+  <quill-editor content="$ctrl.page.content"></quill-editor>
 </div>

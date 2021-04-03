@@ -6,6 +6,7 @@ app.controller("ThemeController", [
   "$routeParams",
   "$location",
   "ThemeService",
+  "ApiService",
   "CommonService",
   function (
     $scope,

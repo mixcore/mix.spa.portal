@@ -1,5 +1,6 @@
 ﻿modules.component("customImage", {
-  templateUrl: "/mix-app/views/app-portal/components/custom-image/custom-image.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/custom-image/custom-image.html",
   bindings: {
     header: "=?",
     description: "=?",
@@ -61,7 +62,8 @@
         var modalInstance = $uibModal.open({
           animation: true,
           windowClass: "show",
-          templateUrl: "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
+          templateUrl:
+            "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
           controller: "ModalCroppieController",
           controllerAs: "$ctrl",
           size: "lg",
@@ -80,7 +82,7 @@
           function (result) {
             ctrl.srcUrl = result.fullPath;
           },
-          function () { }
+          function () {}
         );
       };
 
@@ -124,36 +126,40 @@
         if (file !== null) {
           $rootScope.isBusy = true;
           var getMedia = await mediaService.getSingle(["portal"]);
-            if (getMedia.isSucceed) {
-              ctrl.mediaFile.fileName = file.name.substring(
-                0,
-                file.name.lastIndexOf(".")
-              );
-              ctrl.mediaFile.extension = file.name.substring(
-                file.name.lastIndexOf(".")
-              );
-              var media = getMedia.data;
-              media.fileFolder = ctrl.folder || "Media";
-              media.title = ctrl.title || "";
-              media.description = ctrl.description || "";
-              media.mediaFile = ctrl.mediaFile;
-              var resp = await mediaService.save(media, null, ctrl.onUploadFileProgress);
-              if (resp && resp.isSucceed) {
-                ctrl.src = resp.data.fullPath;
-                ctrl.srcUrl = resp.data.fullPath;
-                ctrl.isImage = ctrl.srcUrl
-                  .toLowerCase()
-                  .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
-                $rootScope.isBusy = false;
-                $scope.$apply();
-              } else {
-                if (resp) {
-                  $rootScope.showErrors(resp.errors);
-                }
-                $rootScope.isBusy = false;
-                $scope.$apply();
+          if (getMedia.isSucceed) {
+            ctrl.mediaFile.fileName = file.name.substring(
+              0,
+              file.name.lastIndexOf(".")
+            );
+            ctrl.mediaFile.extension = file.name.substring(
+              file.name.lastIndexOf(".")
+            );
+            var media = getMedia.data;
+            media.fileFolder = ctrl.folder || "Media";
+            media.title = ctrl.title || "";
+            media.description = ctrl.description || "";
+            media.mediaFile = ctrl.mediaFile;
+            var resp = await mediaService.save(
+              media,
+              null,
+              ctrl.onUploadFileProgress
+            );
+            if (resp && resp.isSucceed) {
+              ctrl.src = resp.data.fullPath;
+              ctrl.srcUrl = resp.data.fullPath;
+              ctrl.isImage = ctrl.srcUrl
+                .toLowerCase()
+                .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+              $rootScope.isBusy = false;
+              $scope.$apply();
+            } else {
+              if (resp) {
+                $rootScope.showErrors(resp.errors);
               }
+              $rootScope.isBusy = false;
+              $scope.$apply();
             }
+          }
         } else {
           return null;
         }
@@ -196,9 +202,9 @@
         }
       };
 
-      ctrl.onUploadFileProgress = function(progress){
+      ctrl.onUploadFileProgress = function (progress) {
         ctrl.progress = progress;
-      }
+      };
     },
   ],
 });

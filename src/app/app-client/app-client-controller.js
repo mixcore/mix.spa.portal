@@ -4,6 +4,7 @@
     "$rootScope",
     "$scope",
     "GlobalSettingsService",
+    "ApiService",
     "CommonService",
     "AuthService",
     "localStorageService",
@@ -14,6 +15,7 @@
       $rootScope,
       $scope,
       globalSettingsService,
+      apiService,
       commonService,
       authService,
       localStorageService,
@@ -40,7 +42,11 @@
       $rootScope.globalSettingsService = globalSettingsService;
       $scope.changeLang = $rootScope.changeLang;
       $scope.init = function (lang) {
-        mixDatabaseDataService.init(mixDatabaseDataService.modelName, false, lang);
+        mixDatabaseDataService.init(
+          mixDatabaseDataService.modelName,
+          false,
+          lang
+        );
         if (!$rootScope.isBusy) {
           $rootScope.isBusy = true;
           // globalSettingsService.fillGlobalSettings().then(function (response) {

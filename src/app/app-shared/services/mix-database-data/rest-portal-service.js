@@ -1,8 +1,9 @@
 "use strict";
 appShared.factory("RestMixDatabaseDataPortalService", [
   "BaseRestService",
+  "ApiService",
   "CommonService",
-  function (baseService, commonService) {
+  function (baseService, apiService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("mix-database-data/portal");
 
@@ -13,7 +14,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _getAdditionalData = async function (data) {
@@ -27,7 +28,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _initData = async function (mixDatabaseName) {
@@ -36,7 +37,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _export = async function (objData) {
@@ -51,7 +52,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _import = async function (mixDatabaseName, file) {
