@@ -105,7 +105,6 @@ app.controller("StoreController", [
       $scope.viewMode = "list";
     };
     $scope.processPaymentData = async function (paymentData) {
-      console.log(paymentData);
       var encrypted = cryptoService.encryptAES(paymentData);
       $scope.current.canInstall = true;
       $scope.$apply();

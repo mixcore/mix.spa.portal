@@ -119,7 +119,7 @@ appShared.factory("AuthService", [
       if (resp.isSucceed) {
         let encryptedData = resp.data;
         this.updateAuthData(encryptedData);
-        _initSettings().then(function () {
+        apiService.initAllSettings().then(function () {
           return resp;
         });
       } else {

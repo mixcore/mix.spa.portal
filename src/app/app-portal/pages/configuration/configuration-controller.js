@@ -29,8 +29,11 @@ app.controller("ConfigurationController", [
 
     $scope.getSingleSuccessCallback = function () {
       $scope.cates = ngAppSettings.enums.configuration_cates;
-      $scope.localizeSettings = $rootScope.globalSettings;
+      $scope.globalSettings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
+      if(!$scope.viewmodel.id){
+        $scope.viewmodel.property.dataType = 'Text';
+      }
       if (!$scope.viewmodel.category) {
         $scope.viewmodel.category = "Site";
       }

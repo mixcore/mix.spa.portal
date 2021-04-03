@@ -21,8 +21,6 @@
           function (resp) {
             if (resp.status == "200") {
               ctrl.items = resp.data.items;
-            } else {
-              console.log(resp);
             }
           },
           function (error) {

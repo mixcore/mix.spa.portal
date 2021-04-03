@@ -17,14 +17,14 @@ appShared.factory("ApiService", [
     appSettings
   ) {
     var factory = {};
-    var _authentication = null;
 
     var _refreshToken = async function () {
+      let _authentication = await _fillAuthData();
       let data = {
-        refreshToken: id,
-        accessToken: accessToken,
+        refreshToken: _authentication.refresh_token,
+        accessToken: _authentication.access_token,
       };
-      if (id) {
+      if (_authentication) {
         var apiUrl = `/account/refresh-token`;
         var req = {
           method: "POST",
@@ -34,7 +34,7 @@ appShared.factory("ApiService", [
         var resp = await _getApiResult(req);
         if (resp.isSucceed) {
           let encryptedData = resp.data;
-          return this.updateAuthData(encryptedData);
+          return _updateAuthData(encryptedData);
         } else {
           _logOut();
         }
@@ -47,18 +47,14 @@ appShared.factory("ApiService", [
       var encryptedAuthData = localStorageService.get("authorizationData");
 
       if (encryptedAuthData) {
-        _authentication = JSON.parse(
+        return JSON.parse(
           cryptoService.decryptAES(encryptedAuthData.data, encryptedAuthData.k)
         );
-        this.authentication = _authentication;
       }
     };
 
     var _updateAuthData = async function (encryptedData) {
       localStorageService.set("authorizationData", encryptedData);
-      this.authentication = JSON.parse(
-        cryptoService.decryptAES(encryptedData.data, encryptedData.k)
-      );
     };
 
     var _getAllSettings = async function (culture) {
@@ -84,7 +80,7 @@ appShared.factory("ApiService", [
           method: "GET",
           url: url,
         };
-        return this.getRestApiResult(req).then(function (response) {
+        return _getRestApiResult(req).then(function (response) {
           localStorageService.set(
             "localizeSettings",
             response.data.localizeSettings
@@ -115,13 +111,24 @@ appShared.factory("ApiService", [
       return response;
     };
 
-    var _sendRestRequest = async function (req, isRetry = true) {
+    var _sendRestRequest = async function (req, retry = true, skipAuthorize = false) {
       var defer = $q.defer();
       req.uploadEventHandlers = {
         progress: function (e) {
           defer.notify((e.loaded * 100) / e.total);
         },
       };
+      if (!req.headers) {
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+      }
+      
+      if (!skipAuthorize) {
+        var _authentication = await _fillAuthData();
+        req.headers.Authorization = `Bearer ${_authentication.access_token}`;
+      }
+      
       return $http(req).then(
         function (resp) {
           if (
@@ -135,30 +142,11 @@ appShared.factory("ApiService", [
 
           return { isSucceed: true, data: resp.data };
         },
-        function (error) {
-          if (error.status === 401 && isRetry) {
+        async function (error) {
+          if (error.status === 401 && retry) {
             //Try again with new token from previous Request (optional)
-            return this.refreshToken(
-              this.authentication.refresh_token,
-              this.authentication.access_token
-            ).then(
-              function () {
-                req.headers.Authorization =
-                  "Bearer " + this.authentication.access_token;
-                return _sendRestRequest(req, false);
-              },
-              function (err) {
-                var t = { isSucceed: false };
-
-                this.logOut();
-                this.authentication.access_token = null;
-                this.authentication.refresh_token = null;
-                this.referredUrl = $location.$$url;
-                $rootScope.showLogin(req, "rest");
-                // window.top.location.href = '/security/login';
-                return t;
-              }
-            );
+            let _authentication = await _fillAuthData();
+            return _refreshToken().then(() => _sendRestRequest(req, false, skipAuthorize));
           } else if (
             error.status === 200 ||
             error.status === 204 ||
@@ -188,22 +176,23 @@ appShared.factory("ApiService", [
 
     var _sendRequest = async function (
       req,
+      retry = true,
+      skipAuthorize = false,
       onUploadFileProgress = null,
-      isRetry = true
     ) {
+      if (!req.headers) {
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+      }
+      
+      if (!skipAuthorize) {
+        var _authentication = await _fillAuthData();
+        req.headers.Authorization = `Bearer ${_authentication.access_token}`;
+      }
       if (onUploadFileProgress) {
         req.uploadEventHandlers = {
-          progress: function (e) {
-            if (e.lengthComputable) {
-              progress = Math.round((e.loaded * 100) / e.total);
-              onUploadFileProgress(progress);
-              console.log("progress: " + progress + "%");
-              if (e.loaded == e.total) {
-                console.log("File upload finished!");
-                console.log("Server will perform extra work now...");
-              }
-            }
-          },
+          progress: (e) => _progressHandler(e)
         };
       }
       return $http(req).then(
@@ -219,32 +208,13 @@ appShared.factory("ApiService", [
 
           return resp.data;
         },
-        function (error) {
+        async function (error) {
           if (error.status === 401) {
             //Try again with new token from previous Request (optional)
-            if (isRetry) {
-              return authService
-                .refreshToken(
-                  this.authentication.refresh_token,
-                  this.authentication.access_token
-                )
-                .then(
-                  function () {
-                    req.headers.Authorization =
-                      "Bearer " + this.authentication.access_token;
-                    return _sendRequest(req, onUploadFileProgress, false);
-                  },
-                  function (err) {
-                    var t = { isSucceed: false };
-
-                    this.logOut();
-                    this.authentication.access_token = null;
-                    this.authentication.refresh_token = null;
-                    this.referredUrl = $location.$$url;
-                    window.top.location.href = "/security/login";
-                    return t;
-                  }
-                );
+            if (retry) {
+              return _refreshToken().then(() =>
+                _sendRequest(req, false, skipAuthorize, onUploadFileProgress)
+              );
             } else {
               return {
                 isSucceed: false,
@@ -273,15 +243,25 @@ appShared.factory("ApiService", [
       );
     };
 
+    var _progressHandler = function (e) {
+      if (e.lengthComputable) {
+        progress = Math.round((e.loaded * 100) / e.total);
+        onUploadFileProgress(progress);
+        console.log("progress: " + progress + "%");
+        if (e.loaded == e.total) {
+          console.log("File upload finished!");
+          console.log("Server will perform extra work now...");
+        }
+      }
+    };
+    
     var _getApiResult = async function (
       req,
+      retry = true,
+      skipAuthorize = false,
       serviceBase,
       onUploadFileProgress = null
     ) {
-      await this.fillAuthData();
-      if (this.authentication) {
-        req.Authorization = this.authentication.access_token;
-      }
 
       var serviceUrl =
         appSettings.serviceBase + "/api/" + appSettings.apiVersion;
@@ -297,108 +277,39 @@ appShared.factory("ApiService", [
         };
       }
       req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return _sendRequest(req, onUploadFileProgress).then(function (resp) {
+      return _sendRequest(req, retry, skipAuthorize, onUploadFileProgress)
+      .then(function (resp) {
         return resp;
       });
     };
 
-    var _getRestApiResult = async function (req, skipAuthorize = false, serviceBase) {
-      if (!this.authentication) {
-        await this.fillAuthData();
-      }
-      if (!skipAuthorize && this.authentication) {
-        req.Authorization = this.authentication.access_token;
-      }
-
+    var _getRestApiResult = async function (
+      req,
+      retry = true,
+      skipAuthorize = false,
+      serviceBase
+    ) {
       var serviceUrl =
         appSettings.serviceBase + "/api/" + appSettings.apiVersion;
       if (serviceBase || req.serviceBase) {
         serviceUrl =
           (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
       }
-
       req.url = serviceUrl + req.url;
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("localizeSettings") == -1 &&
-            (!$rootScope.localizeSettings ||
-              $rootScope.localizeSettings.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return { isSucceed: true, data: resp.data };
-        },
-        function (error) {
-          if (error.status === 401) {
-            //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(
-                this.authentication.refresh_token,
-                this.authentication.access_token
-              )
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + this.authentication.access_token;
-                  return $http(req).then(
-                    function (results) {
-                      return { isSucceed: true, data: results.data };
-                    },
-                    function (err) {
-                      this.logOut();
-                      this.authentication.access_token = null;
-                      this.authentication.refresh_token = null;
-                      this.referredUrl = $location.$$url;
-                      $rootScope.showLogin(req, "rest");
-                      // window.top.location.href = '/security/login';
-                    }
-                  );
-                },
-                function (err) {
-                  var t = { isSucceed: false };
-
-                  this.logOut();
-                  this.authentication.access_token = null;
-                  this.authentication.refresh_token = null;
-                  this.referredUrl = $location.$$url;
-                  $rootScope.showLogin(req, "rest");
-                  // window.top.location.href = '/security/login';
-                  return t;
-                }
-              );
-          } else if (
-            error.status === 200 ||
-            error.status === 204 ||
-            error.status === 205
-          ) {
-            return {
-              isSucceed: true,
-              status: err.status,
-              errors: [error.statusText || error.status],
-            };
-          } else {
-            if (error.data) {
-              return { isSucceed: false, errors: [error.data] };
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        }
-      );
+      return _sendRestRequest(req, retry, skipAuthorize);
     };
-
+    var _logOut = async function () {
+      var apiUrl = "/account/logout";
+      var req = {
+        method: "GET",
+        url: apiUrl,
+      };
+      localStorageService.remove("authorizationData");
+      var resp = await _getRestApiResult(req, false);
+      if (resp.isSucceed) {
+        window.top.location.href = "/security/login";
+      }
+    };
     var _getAnonymousApiResult = async function (req) {
       $rootScope.isBusy = true;
       var serviceUrl =
