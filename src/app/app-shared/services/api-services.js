@@ -51,6 +51,7 @@ appShared.factory("ApiService", [
           cryptoService.decryptAES(encryptedAuthData.data, encryptedAuthData.k)
         );
       }
+      return {};
     };
 
     var _updateAuthData = async function (encryptedData) {

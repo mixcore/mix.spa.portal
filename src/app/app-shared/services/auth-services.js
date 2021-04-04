@@ -70,7 +70,7 @@ appShared.factory("AuthService", [
 
       if (resp.isSucceed) {
         let encryptedData = resp.data;
-        this.updateAuthData(encryptedData);
+        apiService.updateAuthData(encryptedData);
         apiService.initAllSettings().then(function () {
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
@@ -144,21 +144,7 @@ appShared.factory("AuthService", [
     };
 
     var _fillAuthData = async function () {
-      var encryptedAuthData = localStorageService.get("authorizationData");
-
-      if (encryptedAuthData) {
-        _authentication = JSON.parse(
-          cryptoService.decryptAES(encryptedAuthData.data, encryptedAuthData.k)
-        );
-        this.authentication = _authentication;
-      }
-    };
-
-    var _updateAuthData = async function (encryptedData) {
-      localStorageService.set("authorizationData", encryptedData);
-      this.authentication = JSON.parse(
-        cryptoService.decryptAES(encryptedData.data, encryptedData.k)
-      );
+      this.authentication = await apiService.fillAuthData();
     };
 
     var _refreshToken = async function (id, accessToken) {
@@ -203,7 +189,6 @@ appShared.factory("AuthService", [
     authServiceFactory.externalLogin = _externalLogin;
     authServiceFactory.loginPopup = _loginPopup;
     authServiceFactory.logOut = _logOut;
-    authServiceFactory.updateAuthData = _updateAuthData;
     authServiceFactory.fillAuthData = _fillAuthData;
     authServiceFactory.refreshToken = _refreshToken;
     return authServiceFactory;
