@@ -112,7 +112,11 @@ appShared.factory("ApiService", [
       return response;
     };
 
-    var _sendRestRequest = async function (req, retry = true, skipAuthorize = false) {
+    var _sendRestRequest = async function (
+      req,
+      retry = true,
+      skipAuthorize = false
+    ) {
       var defer = $q.defer();
       req.uploadEventHandlers = {
         progress: function (e) {
@@ -124,16 +128,16 @@ appShared.factory("ApiService", [
           "Content-Type": "application/json",
         };
       }
-      
+
       if (!skipAuthorize) {
-        var _authentication = await _fillAuthData();
+        let _authentication = await _fillAuthData();
         req.headers.Authorization = `Bearer ${_authentication.access_token}`;
       }
-      
+
       return $http(req).then(
         function (resp) {
           if (
-            req.url.indexOf("localizeSettings") == -1 &&
+            req.url.indexOf("settings") == -1 &&
             (!$rootScope.localizeSettings ||
               $rootScope.localizeSettings.lastUpdateConfiguration <
                 resp.data.lastUpdateConfiguration)
@@ -145,9 +149,9 @@ appShared.factory("ApiService", [
         },
         async function (error) {
           if (error.status === 401 && retry) {
-            //Try again with new token from previous Request (optional)
-            let _authentication = await _fillAuthData();
-            return _refreshToken().then(() => _sendRestRequest(req, false, skipAuthorize));
+            return _refreshToken().then(() =>
+              _sendRestRequest(req, false, skipAuthorize)
+            );
           } else if (
             error.status === 200 ||
             error.status === 204 ||
@@ -179,21 +183,21 @@ appShared.factory("ApiService", [
       req,
       retry = true,
       skipAuthorize = false,
-      onUploadFileProgress = null,
+      onUploadFileProgress = null
     ) {
       if (!req.headers) {
         req.headers = {
           "Content-Type": "application/json",
         };
       }
-      
+
       if (!skipAuthorize) {
         var _authentication = await _fillAuthData();
         req.headers.Authorization = `Bearer ${_authentication.access_token}`;
       }
       if (onUploadFileProgress) {
         req.uploadEventHandlers = {
-          progress: (e) => _progressHandler(e)
+          progress: (e) => _progressHandler(e),
         };
       }
       return $http(req).then(
@@ -255,7 +259,7 @@ appShared.factory("ApiService", [
         }
       }
     };
-    
+
     var _getApiResult = async function (
       req,
       retry = true,
@@ -263,7 +267,6 @@ appShared.factory("ApiService", [
       serviceBase,
       onUploadFileProgress = null
     ) {
-
       var serviceUrl =
         appSettings.serviceBase + "/api/" + appSettings.apiVersion;
       if (serviceBase || req.serviceBase) {
@@ -278,10 +281,11 @@ appShared.factory("ApiService", [
         };
       }
       req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return _sendRequest(req, retry, skipAuthorize, onUploadFileProgress)
-      .then(function (resp) {
-        return resp;
-      });
+      return _sendRequest(req, retry, skipAuthorize, onUploadFileProgress).then(
+        function (resp) {
+          return resp;
+        }
+      );
     };
 
     var _getRestApiResult = async function (

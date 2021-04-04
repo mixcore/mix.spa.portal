@@ -173,7 +173,7 @@
                   >
                   <google-pay
                     ng-if="!current.canInstall"
-                    class="btn btn-sm mr-1"
+                    class="btn btn-sm mx-1"
                     total-price="current.additionalData.price"
                     total-price-status="'FINAL'"
                     process-payment-data="processPaymentData(paymentData)"
@@ -182,7 +182,7 @@
                     ng-if="current.canInstall"
                     ng-click="installTheme(current.additionalData, current.id)"
                     target="_blank"
-                    class="btn btn-sm btn-outline-primary"
+                    class="btn btn-sm btn-outline-primary mx-1"
                     ><i class="fas fa-cloud-download-alt"></i
                   ></a>
                   <a

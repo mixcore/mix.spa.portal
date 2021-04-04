@@ -16,7 +16,7 @@
       var ctrl = this;
       ctrl.loginStatus = null;
       ctrl.showLogin = false;
-      ctrl.$onInit = function () {
+      ctrl.init = function () {
         // ctrl.checkLoginState();
         ctrl.showLogin =
           $rootScope.globalSettings.externalLoginProviders.Facebook != "";

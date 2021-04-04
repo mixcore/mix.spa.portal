@@ -99,6 +99,8 @@ app.controller("StoreController", [
     };
     $scope.preview = function (theme) {
       $scope.current = theme;
+      // TODO: verify user - theme to enable install
+      $scope.current.canInstall = true;
       $scope.viewMode = "detail";
     };
     $scope.back = function () {
