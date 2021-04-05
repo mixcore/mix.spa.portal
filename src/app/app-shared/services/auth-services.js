@@ -67,7 +67,6 @@ appShared.factory("AuthService", [
         data: JSON.stringify({ message: message }),
       };
       var resp = await apiService.getRestApiResult(req, true);
-
       if (resp.isSucceed) {
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);

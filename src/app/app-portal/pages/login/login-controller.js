@@ -41,10 +41,20 @@ app.controller("loginController", [
       }
       $rootScope.isBusy = true;
       var result = await authService.login($scope.loginData);
-      if (result) {
-        $rootScope.isBusy = false;
-        $scope.$apply();
+      if (result.isSucceed) {
+        if ($routeParams.ReturnUrl) {
+          window.top.location = $routeParams.ReturnUrl;
+        } else if (
+          document.referrer &&
+          document.referrer.indexOf("init") === -1
+        ) {
+          window.top.location = document.referrer;
+        } else {
+          window.top.location = "/";
+        }
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
     };
 
     $scope.authExternalProvider = function (provider) {
