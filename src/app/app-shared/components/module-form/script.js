@@ -1,4 +1,4 @@
-﻿modules.component("moduleForm", {
+﻿sharedComponents.component("moduleForm", {
   templateUrl: "/mix-app/views/app-shared/components/module-form/view.html",
   bindings: {
     moduleId: "=",

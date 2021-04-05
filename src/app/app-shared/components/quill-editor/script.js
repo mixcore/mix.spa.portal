@@ -1,4 +1,4 @@
-﻿modules.component("quillEditor", {
+﻿sharedComponents.component("quillEditor", {
   templateUrl: "/mix-app/views/app-shared/components/quill-editor/view.html",
   controller: [
     "$rootScope",

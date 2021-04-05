@@ -1,4 +1,4 @@
-﻿modules.component("youtubeEditor", {
+﻿sharedComponents.component("youtubeEditor", {
   templateUrl:
     "/mix-app/views/app-shared/components/youtube-editor/youtube-editor.html",
   controller: [

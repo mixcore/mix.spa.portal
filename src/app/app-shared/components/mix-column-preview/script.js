@@ -1,4 +1,4 @@
-﻿modules.component("mixColumnPreview", {
+﻿sharedComponents.component("mixColumnPreview", {
   templateUrl:
     "/mix-app/views/app-shared/components/mix-column-preview/view.html",
   bindings: {

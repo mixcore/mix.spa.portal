@@ -6,68 +6,22 @@
   <!-- <hr> -->
 
   <form id="frm-theme">
-    <div class="mb-5">
-      <div class="form-check form-switch">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="customRadio_theme-default"
-          ng-model="themeType"
-          value="materialkit"
-        />
-        <label class="form-check-label" for="customRadio_theme-default">
-          Default Theme
-        </label>
-      </div>
-
-      <div class="form-check form-switch">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="customRadio_theme-blank"
-          ng-model="themeType"
-          value="blank"
-        />
-        <label class="form-check-label" for="customRadio_theme-blank">
-          A blank theme
-        </label>
-      </div>
-
-      <div class="form-check form-switch">
-        <input
-          class="form-check-input"
-          type="radio"
-          id="customRadio_theme-import"
-          ng-model="themeType"
-          value="custom"
-        />
-        <label class="form-check-label" for="customRadio_theme-import"
-          >Upload your theme from local PC</label
-        >
-      </div>
-    </div>
-    <div class="mb-5">
-      <div class="row">
-        <div class="col-4" ng-repeat="item in themes.items">
-          <h6 ng-bind="item.title"></h6>
-          <img ng-src="{{item.thumbnailUrl}}" width="100%" />
-        </div>
-      </div>
-    </div>
-    <div class="mb-3 mb-5" ng-show="themeType ==='custom'">
-      <api-file form-name="'theme'" posted-file="theme"></api-file>
-      <small class="form-text text-muted"
-        >Mixcore Themes
-        <a target="_blank" href="https://themes.mixcore.org/">list</a>.</small
-      >
-    </div>
+    <tabs-h>
+      <pane-h header="From Mixcore Store">
+        <mix-store install-callback="install(data)"></mix-store>
+      </pane-h>
+      <pane-h header="A blank theme">
+        <h1>Blank</h1>
+      </pane-h>
+      <pane-h header="Upload your theme from local PC">
+        <api-file form-name="'theme'" posted-file="theme"></api-file>
+        <small class="form-text text-muted">Mixcore Themes
+          <a target="_blank" href="https://themes.mixcore.org/">list</a>.</small>
+      </pane-h>
+    </tabs-h>
     <div class="text-end">
-      <button
-        ng-disabled="themeType ==='custom' && !form['theme'].files.length"
-        class="btn btn-primary"
-        style="min-width: 200px"
-        ng-click="submit()"
-      >
+      <button ng-disabled="themeType ==='custom' && !form['theme'].files.length" class="btn btn-primary"
+        style="min-width: 200px" ng-click="submit()">
         Continue to my portal <i class="fa fa-angle-right"></i>
       </button>
     </div>

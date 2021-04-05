@@ -1,4 +1,4 @@
-﻿modules.component("uploadCroppie", {
+﻿sharedComponents.component("uploadCroppie", {
   templateUrl:
     "/mix-app/views/app-shared/components/upload-croppie/view.html?v=1",
   bindings: {

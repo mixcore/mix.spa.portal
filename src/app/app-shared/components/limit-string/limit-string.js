@@ -1,4 +1,4 @@
-﻿modules.component("limitString", {
+﻿sharedComponents.component("limitString", {
   templateUrl:
     "/mix-app/views/app-shared/components/limit-string/limit-string.html",
   controller: [

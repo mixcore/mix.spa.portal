@@ -1,4 +1,4 @@
-﻿modules.component("tuiEditor", {
+﻿sharedComponents.component("tuiEditor", {
   templateUrl: "/mix-app/views/app-shared/components/tui-editor/view.html",
   controller: [
     "$rootScope",

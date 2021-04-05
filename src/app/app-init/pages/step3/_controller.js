@@ -74,5 +74,33 @@ app.controller("Step3Controller", [
         $scope.$apply();
       }
     };
+    $scope.install = function (resp) {
+      if (resp.isSucceed) {
+        $scope.activeTheme(resp.data);
+      } else {
+        $rootScope.showErrors(["Cannot install theme"]);
+      }
+    };
+    $scope.activeTheme = async function (data) {
+      $rootScope.isBusy = true;
+      var url = "/init/init-cms/step-3/active";
+      $rootScope.isBusy = true;
+      // Looping over all files and add it to FormData object
+      var response = await service.activeTheme(data);
+      if (response.isSucceed) {
+        $scope.viewmodel = response.data;
+        commonService.initAllSettings().then(function () {
+          $rootScope.isBusy = false;
+          setTimeout(() => {
+            $rootScope.goToSiteUrl("/portal");
+          }, 500);
+          $scope.$apply();
+        });
+      } else {
+        $rootScope.showErrors(response.errors);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
   },
 ]);

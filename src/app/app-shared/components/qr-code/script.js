@@ -1,4 +1,4 @@
-﻿modules.component("qrCode", {
+﻿sharedComponents.component("qrCode", {
   templateUrl: "/mix-app/views/app-shared/components/qr-code/view.html",
   controller: [
     "$location",

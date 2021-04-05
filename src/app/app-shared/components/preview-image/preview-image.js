@@ -1,4 +1,4 @@
-﻿modules.component("previewImage", {
+﻿sharedComponents.component("previewImage", {
   templateUrl:
     "/mix-app/views/app-shared/components/preview-image/preview-image.html",
   controller: [

@@ -1,4 +1,4 @@
-﻿modules.component("mixLoader", {
+﻿sharedComponents.component("mixLoader", {
   templateUrl: "/mix-app/views/app-shared/components/mix-loader/view.html",
   controller: [
     "$rootScope",

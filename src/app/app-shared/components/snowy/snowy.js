@@ -1,4 +1,4 @@
-﻿modules.component("snowy", {
+﻿sharedComponents.component("snowy", {
   templateUrl: "/mix-app/views/app-shared/components/snowy/index.html",
   controller: [
     "$scope",

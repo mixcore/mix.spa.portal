@@ -1,4 +1,4 @@
-﻿modules.component("videoCall", {
+﻿sharedComponents.component("videoCall", {
   templateUrl: "/mix-app/views/app-shared/components/video-call/index.html",
   controller: [
     function () {

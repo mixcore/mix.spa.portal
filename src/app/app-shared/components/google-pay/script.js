@@ -1,4 +1,4 @@
-﻿modules.component("googlePay", {
+﻿sharedComponents.component("googlePay", {
   templateUrl: "/mix-app/views/app-shared/components/google-pay/view.html",
   bindings: {
     items: "=",

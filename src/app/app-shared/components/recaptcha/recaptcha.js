@@ -1,4 +1,4 @@
-﻿modules.component("recaptcha", {
+﻿sharedComponents.component("recaptcha", {
   templateUrl: "/mix-app/views/app-shared/components/recaptcha/recaptcha.html",
   controller: [
     "$rootScope",

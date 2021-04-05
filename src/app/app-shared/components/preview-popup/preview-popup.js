@@ -1,4 +1,4 @@
-﻿modules.component("previewPopup", {
+﻿sharedComponents.component("previewPopup", {
   templateUrl:
     "/mix-app/views/app-shared/components/preview-popup/preview-popup.html",
   controller: [

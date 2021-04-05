@@ -1,4 +1,4 @@
-﻿modules.component("mixPaging", {
+﻿sharedComponents.component("mixPaging", {
   templateUrl: "/mix-app/views/app-shared/components/paging/paging.html",
   controller: [
     "$rootScope",

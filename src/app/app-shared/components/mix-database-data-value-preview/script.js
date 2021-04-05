@@ -1,4 +1,4 @@
-﻿modules.component("mixDatabaseDataValuePreview", {
+﻿sharedComponents.component("mixDatabaseDataValuePreview", {
   templateUrl:
     "/mix-app/views/app-shared/components/mix-database-data-value-preview/view.html",
   controller: [

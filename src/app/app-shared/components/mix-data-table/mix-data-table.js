@@ -1,4 +1,4 @@
-﻿modules.component("mixDataTable", {
+﻿sharedComponents.component("mixDataTable", {
   templateUrl:
     "/mix-app/views/app-shared/components/mix-data-table/mix-data-table.html",
   controller: [

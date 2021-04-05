@@ -1,4 +1,4 @@
-﻿modules.component("mixColumnEditor", {
+﻿sharedComponents.component("mixColumnEditor", {
   templateUrl:
     "/mix-app/views/app-shared/components/mix-column-editor/view.html",
   bindings: {

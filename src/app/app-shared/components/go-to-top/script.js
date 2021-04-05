@@ -1,4 +1,4 @@
-﻿modules.component("goToTop", {
+﻿sharedComponents.component("goToTop", {
   templateUrl: "/mix-app/views/app-shared/components/go-to-top/view.html",
   controller: [
     "$rootScope",

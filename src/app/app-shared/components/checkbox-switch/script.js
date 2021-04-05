@@ -1,4 +1,4 @@
-﻿modules.component("checkboxSwitch", {
+﻿sharedComponents.component("checkboxSwitch", {
   templateUrl: "/mix-app/views/app-shared/components/checkbox-switch/view.html",
   controller: [
     "$rootScope",

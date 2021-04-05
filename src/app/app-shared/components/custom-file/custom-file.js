@@ -1,5 +1,5 @@
 ﻿//modules.controller('ImageController', );
-modules.component("customFile", {
+sharedComponents.component("customFile", {
   templateUrl:
     "/mix-app/views/app-shared/components/custom-file/custom-file.html",
   bindings: {

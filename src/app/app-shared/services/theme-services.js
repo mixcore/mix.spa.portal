@@ -1,5 +1,5 @@
 ﻿"use strict";
-app.factory("ThemeService", [
+appShared.factory("ThemeService", [
   "ApiService",
   "CommonService",
   "BaseRestService",

@@ -1,4 +1,4 @@
-﻿modules.component("azureStorage", {
+﻿sharedComponents.component("azureStorage", {
   templateUrl: "/mix-app/views/app-shared/components/azure-storage/view.html",
   bindings: {
     data: "=",

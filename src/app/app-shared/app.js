@@ -5,4 +5,4 @@ var appShared = angular.module("MixShared", [
   "LocalStorageModule",
   "SharedComponents",
 ]);
-var modules = angular.module("SharedComponents", []);
+var sharedComponents = angular.module("SharedComponents", []);

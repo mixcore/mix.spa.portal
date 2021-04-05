@@ -1,4 +1,4 @@
-﻿modules.component("statuses", {
+﻿sharedComponents.component("statuses", {
   templateUrl: "/mix-app/views/app-shared/components/statuses/statuses.html",
   controller: [
     "$rootScope",

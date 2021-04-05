@@ -1,4 +1,4 @@
-﻿modules.component("starRating", {
+﻿sharedComponents.component("starRating", {
   templateUrl:
     "/mix-app/views/app-shared/components/star-rating/star-rating.html",
   controller: [

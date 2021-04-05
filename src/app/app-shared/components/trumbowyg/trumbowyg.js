@@ -1,4 +1,4 @@
-modules.component("trumbowyg", {
+sharedComponents.component("trumbowyg", {
   templateUrl: "/mix-app/views/app-shared/components/trumbowyg/trumbowyg.html",
   bindings: {
     options: "<?",

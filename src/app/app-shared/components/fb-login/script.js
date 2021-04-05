@@ -1,4 +1,4 @@
-﻿modules.component("fbLogin", {
+﻿sharedComponents.component("fbLogin", {
   templateUrl: "/mix-app/views/app-shared/components/fb-login/view.html",
   bindings: {
     fbPageId: "=",

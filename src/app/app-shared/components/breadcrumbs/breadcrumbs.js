@@ -1,4 +1,4 @@
-﻿modules.component("breadcrumbs", {
+﻿sharedComponents.component("breadcrumbs", {
   templateUrl:
     "/mix-app/views/app-shared/components/breadcrumbs/breadcrumbs.html",
   controller: [

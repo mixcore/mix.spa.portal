@@ -1,4 +1,4 @@
-﻿modules.component("apiFile", {
+﻿sharedComponents.component("apiFile", {
   templateUrl: "/mix-app/views/app-shared/components/api-file/api-file.html",
   controller: [
     "$rootScope",

@@ -1,4 +1,4 @@
-﻿// modules.component('modalConfirm', {
+﻿// sharedComponents.component('modalConfirm', {
 //     templateUrl: '/mix-app/views/app-shared/components/modal-confirm/modal-confirm.html',
 //     controller: ModalConfirmController,
 //     bindings: {

@@ -1,4 +1,4 @@
-﻿modules.component("tagsView", {
+﻿sharedComponents.component("tagsView", {
   templateUrl: "/mix-app/views/app-shared/components/tags-view/view.html",
   controller: [
     "$rootScope",

@@ -1,4 +1,4 @@
-﻿modules.component("mixDatabaseFormWeb", {
+﻿sharedComponents.component("mixDatabaseFormWeb", {
   templateUrl:
     "/mix-app/views/app-shared/components/mix-database-form-web/view.html",
   bindings: {
