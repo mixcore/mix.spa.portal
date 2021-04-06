@@ -4,30 +4,26 @@
       "/mix-app/views/app-portal/components/header-nav/headerNav.html",
     controller: [
       "$rootScope",
-      "$location",
-      "ApiService",
       "CommonService",
       "AuthService",
-      "TranslatorService",
-      "GlobalSettingsService",
       function (
         $rootScope,
-        $location,
-        apiService,
         commonService,
         authService,
-        translatorService,
-        globalSettingsService
       ) {
         var ctrl = this;
         ctrl.globalSettings = $rootScope.globalSettings;
-        if (authService.authentication) {
-          ctrl.avatar = authService.authentication.avatar;
-        }
+        
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
           ctrl.localizeSettings = $rootScope.localizeSettings;
           ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
+          authService.fillAuthData().then(()=>{
+            if (authService.authentication) {
+              ctrl.avatar = authService.authentication.info.user.Avatar;
+            }
+          })
+          
         };
         ctrl.translate = $rootScope.translate;
         ctrl.getConfiguration = function (keyword, isWrap, defaultText) {

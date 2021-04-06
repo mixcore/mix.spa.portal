@@ -33,13 +33,13 @@
         </div>
         <div ng-show="$ctrl.viewMode == 'detail'" class="row">
           <div class="card mb-4 shadow-sm col-md-12">
-            <img class="bd-placeholder-img card-img-top" src="{{$ctrl.current.thumbnailUrl}}" />
+            <img class="bd-placeholder-img card-img-top" src="{{$ctrl.current.thumbnailUrl | trustUrl}}" />
             <div class="card-body">
               <h6 class="small mb-4">
                 {{$ctrl.current.title}}
                 <br />
                 <small class="text-muted">by
-                  <b><a href="{{$ctrl.current.additionalData.authorUrl}}"
+                  <b><a href="{{$ctrl.current.additionalData.authorUrl | trustUrl}}"
                       target="_blank">{{$ctrl.current.additionalData.authorName}}</a></b>
                   in <b>{{$ctrl.current.additionalData.category}}</b></small>
               </h6>
@@ -73,7 +73,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12" ng-bind-html="$ctrl.current.content"></div>
+                <div class="col-md-12" ng-bind-html="$ctrl.current.content | trustHtml"></div>
               </div>
             </div>
           </div>

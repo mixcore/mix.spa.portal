@@ -5,6 +5,8 @@ appShared
   .filter("phoneNumber", FilterPhoneNumber)
   .filter("money", FilterMoney)
   .filter("markdown", MarkdownToHtml)
+  .filter("trustUrl", trustUrl)
+  .filter("trustHtml", trustHtml)
   .constant("ngAppSettings", {
     serviceBase: "",
     clientId: "ngAuthApp",
@@ -69,6 +71,14 @@ appShared
       { title: "Upload", value: 16 },
     ],
   });
+
+function trustUrl($sce) {
+  return (url) => $sce.trustAsResourceUrl(url);
+}
+
+function trustHtml($sce) {
+  return (html) => $sce.trustAsHtml(html);
+}
 
 function MarkdownToHtml($filter) {
   return function (mdContent) {
