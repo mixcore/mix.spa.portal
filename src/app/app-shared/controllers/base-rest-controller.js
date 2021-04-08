@@ -311,6 +311,15 @@ function BaseRestCtrl(
       $scope.$apply();
     }
   };
+
+  $scope.handleResult = function (result) {
+    if (result.isSucceed) {
+      $rootScope.showMessage("Success");
+    } else {
+      $rootScope.showErrors(result.errors);
+    }
+  };
+  
   $scope.shortString = function (msg, max) {
     if (msg) {
       var data = decodeURIComponent(msg);

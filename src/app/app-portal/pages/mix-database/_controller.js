@@ -42,5 +42,14 @@ app.controller("MixDatabaseController", [
       }
       $scope.$apply();
     };
+    $scope.migrate = async function () {
+      if ($scope.viewmodel.id) {
+        $rootScope.isBusy = true;
+        var result = await service.migrate($scope.viewmodel);
+        $scope.handleResult(result);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
   },
 ]);

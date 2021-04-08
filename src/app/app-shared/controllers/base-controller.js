@@ -272,4 +272,12 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
       return "";
     }
   };
+
+  $scope.handleResult = function (result) {
+    if (result.isSucceed) {
+      $rootScope.showMessage("Success");
+    } else {
+      $rootScope.showErrors(result.errors);
+    }
+  };
 }

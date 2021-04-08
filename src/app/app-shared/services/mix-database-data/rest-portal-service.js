@@ -65,6 +65,16 @@ appShared.factory("RestMixDatabaseDataPortalService", [
       return serviceFactory.ajaxSubmitForm(frm, url);
     };
 
+    var _migrate = async function (mixDatabaseId) {
+      var url = this.prefixUrl + "/migrate-data/" + mixDatabaseId;
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await apiService.getRestApiResult(req);
+    };
+
+    serviceFactory.migrate = _migrate;
     serviceFactory.initData = _initData;
     serviceFactory.getAdditionalData = _getAdditionalData;
     serviceFactory.saveAdditionalData = _saveAdditionalData;

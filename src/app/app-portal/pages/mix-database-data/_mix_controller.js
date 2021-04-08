@@ -331,5 +331,15 @@ app.controller("MixDatabaseDataController", [
         $scope.$apply();
       }
     };
+
+    $scope.migrate = async function () {
+      if ($routeParams.mixDatabaseId) {
+        $rootScope.isBusy = true;
+        var result = await service.migrate($routeParams.mixDatabaseId);
+        $scope.handleResult(result);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
   },
 ]);
