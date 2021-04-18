@@ -18,6 +18,8 @@ function BaseRestCtrl(
   };
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
   $scope.viewmodel = null;
+  $scope.viewmodelType = 'post';
+
   $scope.isScrollTop = true;
   $scope.defaultId = 0;
   $scope.data = null;
@@ -56,7 +58,7 @@ function BaseRestCtrl(
     } else {
       var resp = await service.duplicate([id]);
       if (resp.isSucceed) {
-        $scope.goToDetail(resp.data.id, "post");
+        $scope.goToDetail(resp.data.id, $scope.viewmodelType);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

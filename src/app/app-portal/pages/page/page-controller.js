@@ -31,6 +31,7 @@ app.controller("PageController", [
       ngAppSettings,
       service
     );
+    $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
     $scope.pageType = "";
     $scope.pageTypes = $rootScope.globalSettings.pageTypes;

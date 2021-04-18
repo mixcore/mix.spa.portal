@@ -43,17 +43,17 @@
             );
           }
         }
-        // check encrypt data
-        if (
-          ctrl.model &&
-          ctrl.column &&
-          ctrl.column.isEncrypt &&
-          ctrl.model.obj[ctrl.column.name] &&
-          $rootScope.testJSON(ctrl.model.obj[ctrl.column.name])
-        ) {
-          ctrl.model.obj[ctrl.column.name] = ctrl.parseEncryptedData(
-            ctrl.model.obj[ctrl.column.name]
-          );
+        if (ctrl.model && ctrl.column) {
+          // check encrypt data
+          if (
+            ctrl.column.isEncrypt &&
+            ctrl.model.obj[ctrl.column.name] &&
+            $rootScope.testJSON(ctrl.model.obj[ctrl.column.name])
+          ) {
+            ctrl.model.obj[ctrl.column.name] = ctrl.parseEncryptedData(
+              ctrl.model.obj[ctrl.column.name]
+            );
+          }
         }
       }.bind(ctrl);
       ctrl.refData = null;
@@ -66,6 +66,7 @@
 
       ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
+      ctrl.options = [];
       ctrl.$onInit = function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.column.referenceId) {
           var backUrl = encodeURIComponent($location.url());
@@ -73,6 +74,43 @@
         }
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/mix-database-data/details";
+        }
+        if (ctrl.model && ctrl.column.isSelect) {
+          // Load options from system configutation by name if exist else load options from column configurations
+          if (ctrl.column.columnConfigurations.optionsConfigurationName) {
+            // load options if not belong to other column value
+            if (!ctrl.column.columnConfigurations.belongTo) {
+              let options = JSON.parse(
+                $rootScope.localizeSettings.data[
+                  ctrl.column.columnConfigurations.optionsConfigurationName
+                ]
+              );
+              ctrl.options = options;
+            } else {
+              $rootScope.$watch(
+                () => {
+                  return ctrl.model.obj[
+                    ctrl.column.columnConfigurations.belongTo
+                  ];
+                },
+                function (newVal, oldVal) {
+                  if (newVal != oldVal) {
+                    let options = JSON.parse(
+                      $rootScope.localizeSettings.data[
+                        ctrl.column.columnConfigurations
+                          .optionsConfigurationName
+                      ]
+                    );
+                    let index = options.findIndex((m) => m.value == newVal);
+                    ctrl.options = options[index][`${ctrl.column.name}s`];
+                    console.log(options.filter((m) => (m.value = newVal)));
+                  }
+                }
+              );
+            }
+          } else {
+            ctrl.options = ctrl.column.options;
+          }
         }
       };
       ctrl.initData = async function () {

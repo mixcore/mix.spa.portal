@@ -270,7 +270,7 @@
       ng-model="$ctrl.model.obj[$ctrl.column.name]"
     >
       <option
-        ng-repeat="item in $ctrl.column.options track by $index"
+        ng-repeat="item in $ctrl.options track by $index"
         ng-value="item.value"
       >
         {{item.value}}

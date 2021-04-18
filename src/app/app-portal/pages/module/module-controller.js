@@ -30,6 +30,7 @@ app.controller("ModuleController", [
       moduleServices,
       "product"
     );
+    $scope.viewmodelType = "module";
     $scope.contentUrl = "";
     $scope.getSingleSuccessCallback = function () {
       $scope.loadAdditionalData();
