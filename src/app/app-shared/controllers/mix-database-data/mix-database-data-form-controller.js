@@ -3,7 +3,7 @@ appShared.controller("MixDatabaseFormController", [
   "$scope",
   "ngAppSettings",
   "RestRelatedAttributeDataPortalService",
-  "RestMixDatabaseDataPortalService",
+  "RestMixDatabaseDataClientService",
   function ($rootScope, $scope, ngAppSettings, navService, dataService) {
     $scope.defaultData = null;
     $scope.formData = null;
@@ -29,7 +29,6 @@ appShared.controller("MixDatabaseFormController", [
       $scope.navRequest.mixDatabaseName = formName;
       $scope.navRequest.parentType = parentType;
       $scope.navRequest.parentId = parentId;
-      dataService.init("mix-database-data/portal");
       var getDefault = await dataService.initData($scope.formName);
       $scope.defaultData = getDefault.data;
       if ($scope.defaultData) {

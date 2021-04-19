@@ -1,5 +1,5 @@
 ﻿"use trick";
-modules.directive("pill", function () {
+sharedComponents.directive("pill", function () {
   return {
     require: "^pills",
     restrict: "E",

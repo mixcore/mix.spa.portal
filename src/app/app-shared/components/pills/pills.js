@@ -1,4 +1,4 @@
-﻿modules.directive("pills", function () {
+﻿sharedComponents.directive("pills", function () {
   return {
     restrict: "E",
     transclude: true,

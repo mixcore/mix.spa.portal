@@ -1,4 +1,4 @@
-﻿//modules.controller('ImageController', );
+﻿//sharedComponents.controller('ImageController', );
 sharedComponents.component("customFile", {
   templateUrl:
     "/mix-app/views/app-shared/components/custom-file/custom-file.html",

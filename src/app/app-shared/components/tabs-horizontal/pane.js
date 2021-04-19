@@ -1,5 +1,5 @@
 ﻿"use trick";
-modules.directive("paneH", function () {
+sharedComponents.directive("paneH", function () {
   return {
     require: "^tabs-h",
     restrict: "E",

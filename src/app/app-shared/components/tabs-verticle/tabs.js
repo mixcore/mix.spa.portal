@@ -1,4 +1,4 @@
-﻿modules.directive("tabsV", function () {
+﻿sharedComponents.directive("tabsV", function () {
   return {
     restrict: "E",
     transclude: true,

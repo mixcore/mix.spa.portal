@@ -5,7 +5,7 @@ appShared.factory("RestMixDatabaseDataClientService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-database-data/client");
+    serviceFactory.init("mix-database-data/form", false);
     var _initData = async function (mixDatabaseName) {
       var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {

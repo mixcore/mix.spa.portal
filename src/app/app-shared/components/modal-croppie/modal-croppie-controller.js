@@ -1,4 +1,4 @@
-﻿modules.controller(
+﻿sharedComponents.controller(
   "ModalCroppieController",
   function (
     $rootScope,

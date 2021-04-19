@@ -1,5 +1,5 @@
 ﻿"use trick";
-modules.directive("paneV", function () {
+sharedComponents.directive("paneV", function () {
   return {
     require: "^tabs-v",
     restrict: "E",
