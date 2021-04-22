@@ -25,7 +25,7 @@ modules.component("mixDatabaseNavValues", {
       var ctrl = this;
       ctrl.selectedProp = null;
       ctrl.request = angular.copy(ngAppSettings.restRequest);
-      ctrl.request.orderBy = "priority";
+      ctrl.request.orderBy = "Priority";
       ctrl.request.query = "{}";
 
       ctrl.request.direction = 0;

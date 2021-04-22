@@ -9,6 +9,7 @@ var app = angular.module("MixClient", [
   "ui.bootstrap",
   "cart",
   "ngSanitize",
+  'MixShared'
 ]);
 
 var serviceBase = "";

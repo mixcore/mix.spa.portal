@@ -1,4 +1,4 @@
-modules.component("additionalField", {
+modules.component("additionalColumn", {
   templateUrl:
     "/mix-app/views/app-portal/components/additional-column/view.html",
   bindings: {

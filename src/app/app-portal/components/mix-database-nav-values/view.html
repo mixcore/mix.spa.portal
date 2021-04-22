@@ -29,7 +29,7 @@
   <div class="card-body py-0" ng-if="$ctrl.data">
     <div dnd-list="$ctrl.data.items" dnd-inserted="$ctrl.updateOrders(index)">
       <div
-        ng-repeat="item in $ctrl.data.items track by $index"
+        ng-repeat="item in $ctrl.data.items | orderBy:'priority' track by $index"
         dnd-draggable="item"
         dnd-type="'item'"
         dnd-effect-allowed="copyMove"
@@ -47,8 +47,7 @@
         <div
           ng-if="$index < $ctrl.maxCol"
           ng-repeat="column in $ctrl.columns | orderBy: 'priority' track by $index"
-          class="col-md-3"
-        >
+          class="col-md-3">
           <mix-column-preview
             model="item.attributeData.obj[column.name]"
             column="column"

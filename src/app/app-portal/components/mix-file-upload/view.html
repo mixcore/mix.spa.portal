@@ -3,7 +3,7 @@
     <input id="{{$ctrl.id}}" type="file" class="form-control" accept="{{$ctrl.accept}}"
       ngf-select="$ctrl.selectFile($files)" data-files="file.files" />
     <!-- <label class="input-group-text" for="{{$ctrl.id}}" aria-describedby="{{$ctrl.id}}_addon">Choose file</label> -->
-    <button class="btn btn-primary text-white" id="{{$ctrl.id}}_addon" ng-click="$ctrl.uploadFile()"
+    <button class="btn btn-primary text-white" id="{{$ctrl.id}}_addon" ng-if="$ctrl.file" ng-click="$ctrl.uploadFile($ctrl.file)"
       type="button">Upload</span>
   </div>
 </div>
