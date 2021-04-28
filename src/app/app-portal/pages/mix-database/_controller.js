@@ -5,6 +5,7 @@ app.controller("MixDatabaseController", [
   "$location",
   "ngAppSettings",
   "$routeParams",
+  "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
   "RestMixDatabasePortalService",
   function (
@@ -13,8 +14,9 @@ app.controller("MixDatabaseController", [
     $location,
     ngAppSettings,
     $routeParams,
-    mixDatabaseColumnService,
-    service
+    databaseDataService,
+    databaseColumnService,
+    databaseService
   ) {
     BaseRestCtrl.call(
       this,
@@ -23,7 +25,7 @@ app.controller("MixDatabaseController", [
       $location,
       $routeParams,
       ngAppSettings,
-      service
+      databaseService
     );
     $scope.defaultAttr = null;
     $scope.actions = ["Delete"];
@@ -35,7 +37,7 @@ app.controller("MixDatabaseController", [
     ];
     $scope.request.orderBy = "createdDateTime";
     $scope.getSingleSuccessCallback = async function () {
-      var getDefaultAttr = await mixDatabaseColumnService.getDefault();
+      var getDefaultAttr = await databaseColumnService.getDefault();
       if (getDefaultAttr.isSucceed) {
         $scope.defaultAttr = getDefaultAttr.data;
         $scope.defaultAttr.options = [];
@@ -45,10 +47,19 @@ app.controller("MixDatabaseController", [
     $scope.migrate = async function () {
       if ($scope.viewmodel.id) {
         $rootScope.isBusy = true;
-        var result = await service.migrate($scope.viewmodel);
-        $scope.handleResult(result);
-        $rootScope.isBusy = false;
-        $scope.$apply();
+        var result = await databaseService.migrate($scope.viewmodel);
+        if (result.isSucceed) {
+          var migrateData = await databaseDataService.migrate(
+            $scope.viewmodel.id
+          );
+          $scope.handleResult(migrateData);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          $rootScope.showErrors(["Cannot migrate database"]);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
       }
     };
   },

@@ -73,7 +73,7 @@ appShared.controller("MixDatabaseFormController", [
           }
           $scope.formData = angular.copy($scope.defaultData);
           $rootScope.isBusy = false;
-          $scope.loadData();
+          // $scope.loadData();
           if ($scope.loadingHandler) {
             $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
           }

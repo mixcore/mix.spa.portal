@@ -80,7 +80,7 @@
 
         modalInstance.result.then(
           function (result) {
-            ctrl.srcUrl = result.fullPath;
+            ctrl.srcUrl = result.filePath;
           },
           function () {}
         );
@@ -145,8 +145,8 @@
               ctrl.onUploadFileProgress
             );
             if (resp && resp.isSucceed) {
-              ctrl.src = resp.data.fullPath;
-              ctrl.srcUrl = resp.data.fullPath;
+              ctrl.src = resp.data.filePath;
+              ctrl.srcUrl = resp.data.filePath;
               ctrl.isImage = ctrl.srcUrl
                 .toLowerCase()
                 .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
