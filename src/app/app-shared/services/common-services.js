@@ -81,6 +81,7 @@ appShared.factory("CommonService", [
           url: url,
         };
         return apiService.getRestApiResult(req).then(function (response) {
+          response.data.globalSettings.lastUpdateConfiguration = new Date();
           localStorageService.set(
             "localizeSettings",
             response.data.localizeSettings
@@ -88,7 +89,7 @@ appShared.factory("CommonService", [
           localStorageService.set(
             "globalSettings",
             response.data.globalSettings
-          );
+          );          
           localStorageService.set("translator", response.data.translator);
           $rootScope.localizeSettings = response.data.localizeSettings;
           $rootScope.globalSettings = response.data.globalSettings;
@@ -98,43 +99,45 @@ appShared.factory("CommonService", [
     };
 
     var _checkConfig = async function (lastSync) {
-      if (lastSync) {
-        var url = "/rest/shared/check-config/" + lastSync;
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return apiService.getApiResult(req).then(function (response) {
-          if (response.data) {
-            _removeSettings().then(() => {
-              _removeTranslator().then(() => {
-                localStorageService.set(
-                  "localizeSettings",
-                  response.data.localizeSettings
-                );
-                localStorageService.set(
-                  "globalSettings",
-                  response.data.globalSettings
-                );
-                localStorageService.set("translator", response.data.translator);
-                $rootScope.localizeSettings = response.data.localizeSettings;
-                $rootScope.globalSettings = response.data.globalSettings;
-                $rootScope.translator.translator = response.data.translator;
-              });
-            });
-          } else {
-            $rootScope.localizeSettings = localStorageService.get(
-              "localizeSettings"
-            );
-            $rootScope.globalSettings = localStorageService.get(
-              "globalSettings"
-            );
-            $rootScope.translator.translator = localStorageService.get(
-              "translator"
-            );
-          }
-        });
+      if (!lastSync) {
+        _renewSettings();
+      } else {
+        var d = new Date(lastSync);
+        d.setMinutes(d.getMinutes() + 20);
+        let now = new Date();
+        if (now > d) {
+          _renewSettings();
+        } else {
+          var url = "/rest/shared/check-config/" + lastSync;
+          var req = {
+            method: "GET",
+            url: url,
+          };
+          return apiService.getApiResult(req).then(function (response) {
+            if (response.data) {
+              _renewSettings();
+            } else {
+              $rootScope.localizeSettings = localStorageService.get(
+                "localizeSettings"
+              );
+              $rootScope.globalSettings = localStorageService.get(
+                "globalSettings"
+              );
+              $rootScope.translator.translator = localStorageService.get(
+                "translator"
+              );
+            }
+          });
+        }
       }
+    };
+
+    var _renewSettings = function () {
+      _removeSettings().then(() => {
+        _removeTranslator().then(() => {
+          _getAllSettings();
+        });
+      });
     };
 
     var _genrateSitemap = async function () {

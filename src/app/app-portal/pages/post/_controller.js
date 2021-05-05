@@ -46,6 +46,9 @@ app.controller("PostController", [
       if ($routeParams.template) {
         $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
       }
+      if ($routeParams.category) {
+        $scope.request.category = $routeParams.category;
+      }
       $scope.pageName = "postList";
       await $scope.loadPostTypes();
       $scope.getList();

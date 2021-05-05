@@ -11,7 +11,7 @@
           <i class="fa fa-save"></i>
           <span ng-bind="translate('Save')"></span>
         </button>
-        <a ng-if="viewmodel.id" ng-click="migrate()" class="btn btn-primary text-white">
+        <a ng-if="isAdmin && viewmodel.id" ng-click="migrate()" class="btn btn-primary text-white">
           <i class="fa fa-chevron-up"></i>
           <span>Migrate</span>
         </a>

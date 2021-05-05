@@ -19,7 +19,7 @@
       ctrl.navs = [];
       ctrl.data = { items: [] };
       ctrl.loadPosts = async function (pageIndex) {
-        ctrl.request.query = ctrl.query + ctrl.srcId;
+        // ctrl.request.query = ctrl.query + ctrl.srcId;
         if (pageIndex !== undefined) {
           ctrl.request.pageIndex = pageIndex;
         }

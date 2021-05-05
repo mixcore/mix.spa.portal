@@ -75,7 +75,7 @@
             }
             ctrl.updateContent();
           });
-        }, 100);
+        }, 300);
       };
       window.fsClick = function () {
         $(".quill-editor-defaultUI").toggleClass("fs");

@@ -21,7 +21,7 @@ tags-input .tags {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 tags-input .tags .tag-item {
-  color: #fff;
+  color: #000;
   background: #428bca;
   border: 1px solid #357ebd;
   border-radius: 4px;

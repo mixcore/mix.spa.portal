@@ -82,6 +82,7 @@ appShared.factory("ApiService", [
           url: url,
         };
         return _getRestApiResult(req).then(function (response) {
+          response.data.globalSettings.lastUpdateConfiguration = new Date();
           localStorageService.set(
             "localizeSettings",
             response.data.localizeSettings
