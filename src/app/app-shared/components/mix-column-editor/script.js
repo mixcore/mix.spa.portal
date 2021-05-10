@@ -78,7 +78,7 @@
         if (ctrl.model && ctrl.column.isSelect) {
           // Load options from system configutation by name if exist else load options from column configurations
           if (ctrl.column.columnConfigurations.optionsConfigurationName) {
-            // load options if not belong to other column value            
+            // load options if not belong to other column value
             if (!ctrl.column.columnConfigurations.belongTo) {
               let options = JSON.parse(
                 $rootScope.localizeSettings.data[
@@ -89,12 +89,17 @@
             } else {
               let options = JSON.parse(
                 $rootScope.localizeSettings.data[
-                  ctrl.column.columnConfigurations
-                    .optionsConfigurationName
+                  ctrl.column.columnConfigurations.optionsConfigurationName
                 ]
               );
-              let index = options.findIndex((m) => m.value == ctrl.model.obj[ctrl.column.columnConfigurations.belongTo]);
-              ctrl.options = options[index][`${ctrl.column.name}s`];
+              let index = options.findIndex(
+                (m) =>
+                  m.value ==
+                  ctrl.model.obj[ctrl.column.columnConfigurations.belongTo]
+              );
+              if (index >= 0) {
+                ctrl.options = options[index][`${ctrl.column.name}s`];
+              }
               $rootScope.$watch(
                 () => {
                   return ctrl.model.obj[
@@ -110,8 +115,9 @@
                       ]
                     );
                     let index = options.findIndex((m) => m.value == newVal);
-                    ctrl.options = options[index][`${ctrl.column.name}s`];
-                    console.log(options.filter((m) => (m.value = newVal)));
+                    if (index >= 0) {
+                      ctrl.options = options[index][`${ctrl.column.name}s`];
+                    }
                   }
                 }
               );

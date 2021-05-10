@@ -28,8 +28,8 @@ app.controller("ModuleDataController", [
       ngAppSettings,
       service
     );
-    $scope.request.orderBy = "Priority";
-    $scope.request.direction = "Asc";
+    // $scope.request.orderBy = "Priority";
+    // $scope.request.direction = "Asc";
     $scope.cates = ["Site", "System"];
     $scope.others = [];
     $scope.localizeSettings = $rootScope.globalSettings;

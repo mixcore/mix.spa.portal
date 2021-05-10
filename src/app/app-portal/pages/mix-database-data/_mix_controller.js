@@ -29,8 +29,8 @@ app.controller("MixDatabaseDataController", [
     $scope.data = {};
     $scope.exportAll = true;
     $scope.localizeSettings = $rootScope.globalSettings;
-    $scope.request.orderBy = "Priority";
-    $scope.request.direction = "Asc";
+    // $scope.request.orderBy = "Priority";
+    // $scope.request.direction = "Asc";
     $scope.filterType = "contain";
     $scope.defaultId = "default";
     $scope.importFile = {
