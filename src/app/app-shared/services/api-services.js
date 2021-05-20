@@ -337,6 +337,7 @@ appShared.factory("ApiService", [
       );
     };
     factory.initAllSettings = _initAllSettings;
+    factory.getAllSettings = _getAllSettings;
     factory.refreshToken = _refreshToken;
     factory.fillAuthData = _fillAuthData;
     factory.updateAuthData = _updateAuthData;
