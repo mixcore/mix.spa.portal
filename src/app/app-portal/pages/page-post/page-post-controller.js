@@ -7,6 +7,7 @@ app.controller("PagePostController", [
   "$location",
   "PagePostRestService",
   "PostRestService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -28,7 +29,7 @@ app.controller("PagePostController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.init = function () {
       $scope.pageId = $routeParams.id;
       $scope.type = $routeParams.type;

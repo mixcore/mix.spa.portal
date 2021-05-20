@@ -1,8 +1,9 @@
 "use strict";
-app.factory("RestMixDatabaseDataPortalService", [
+appShared.factory("RestMixDatabaseDataPortalService", [
   "BaseRestService",
+  "ApiService",
   "CommonService",
-  function (baseService, commonService) {
+  function (baseService, apiService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("mix-database-data/portal");
 
@@ -13,7 +14,7 @@ app.factory("RestMixDatabaseDataPortalService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _getAdditionalData = async function (data) {
@@ -27,16 +28,16 @@ app.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
-    var _initData = async function (attrSetName) {
-      var url = this.prefixUrl + "/init/" + attrSetName;
+    var _initData = async function (mixDatabaseName) {
+      var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _export = async function (objData) {
@@ -51,7 +52,7 @@ app.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
 
     var _import = async function (mixDatabaseName, file) {
@@ -64,6 +65,16 @@ app.factory("RestMixDatabaseDataPortalService", [
       return serviceFactory.ajaxSubmitForm(frm, url);
     };
 
+    var _migrate = async function (mixDatabaseId) {
+      var url = this.prefixUrl + "/migrate-data/" + mixDatabaseId;
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await apiService.getRestApiResult(req);
+    };
+
+    serviceFactory.migrate = _migrate;
     serviceFactory.initData = _initData;
     serviceFactory.getAdditionalData = _getAdditionalData;
     serviceFactory.saveAdditionalData = _saveAdditionalData;

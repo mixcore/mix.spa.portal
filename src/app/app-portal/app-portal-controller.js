@@ -4,6 +4,7 @@ app.controller("AppPortalController", [
   "$scope",
   "ngAppSettings",
   "$location",
+  "ApiService",
   "CommonService",
   "AuthService",
   "TranslatorService",
@@ -14,6 +15,7 @@ app.controller("AppPortalController", [
     $scope,
     ngAppSettings,
     $location,
+    apiService,
     commonService,
     authService,
     translatorService,
@@ -28,7 +30,7 @@ app.controller("AppPortalController", [
     $scope.translator = translatorService;
     $rootScope.globalSettingsService = globalSettingsService;
     $scope.lang = null;
-    $scope.settings = {};
+    $scope.localizeSettings = {};
     $scope.portalThemeSettings = {};
     $scope.init = function () {
       new ClipboardJS(".btn-clipboard");
@@ -43,20 +45,15 @@ app.controller("AppPortalController", [
           ngAppSettings.enums = resp.data;
         });
         commonService.fillAllSettings($scope.lang).then(function (response) {
-          ngAppSettings.settings = $rootScope.settings.data;
+          ngAppSettings.localizeSettings = $rootScope.localizeSettings.data;
           if ($rootScope.globalSettings) {
             $scope.portalThemeSettings =
               $rootScope.globalSettings.portalThemeSettings;
             authService.fillAuthData().then(function (response) {
               $rootScope.authentication = authService.authentication;
-              $scope.isAuth =
-                authService.authentication != null &&
-                authService.authentication.isAuth;
-              if (
-                authService.authentication &&
-                authService.authentication.isAuth
-              ) {
-                $scope.isAdmin = authService.authentication.isAdmin;
+              $scope.isAuth = authService.authentication != null;
+              if (authService.authentication) {
+                $scope.isAdmin = authService.isInRole("SuperAdmin");
               } else {
                 window.top.location.href = "/security/login";
               }
@@ -64,18 +61,24 @@ app.controller("AppPortalController", [
             $rootScope.isInit = true;
             $scope.isInit = true;
             $rootScope.isBusy = false;
-            // $scope.$apply();
+            $scope.$apply();
           } else {
             window.top.location.href = "/security/login";
           }
         });
       }
     };
-    $scope.alert = function (message) {
-      ons.notification.alert(message);
-    };
-    $scope.prettyJsonObj = function (obj) {
-      return JSON.stringify(obj, null, "\t");
+    $scope.initFB = function () {
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "1958592154434745",
+          cookie: true,
+          xfbml: true,
+          version: "v10.0",
+        });
+
+        FB.AppEvents.logPageView();
+      };
     };
     $scope.$on("$routeChangeStart", function ($event, next, current) {
       // ... you could trigger something here ...

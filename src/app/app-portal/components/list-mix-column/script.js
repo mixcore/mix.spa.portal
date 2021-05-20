@@ -7,7 +7,7 @@ modules.component("listMixColumn", {
     function ($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         var getDefaultAttr = await service.getDefault();
         if (getDefaultAttr.isSucceed) {
@@ -16,24 +16,24 @@ modules.component("listMixColumn", {
         }
       };
       ctrl.addAttr = function () {
-        if (ctrl.fields) {
+        if (ctrl.columns) {
           var t = angular.copy(ctrl.defaultAttr);
-          t.priority = ctrl.fields.length + 1;
-          ctrl.fields.push(t);
+          t.priority = ctrl.columns.length + 1;
+          ctrl.columns.push(t);
         }
       };
       ctrl.removeAttribute = async function (attr, index) {
-        if (confirm("Remove this field ?")) {
+        if (confirm("Remove this column ?")) {
           if (attr.id) {
             $rootScope.isBusy = true;
             var remove = await service.delete([attr.id]);
             if (remove.isSucceed) {
-              ctrl.fields.splice(index, 1);
+              ctrl.columns.splice(index, 1);
             }
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
-            ctrl.fields.splice(index, 1);
+            ctrl.columns.splice(index, 1);
           }
         }
       };
@@ -50,7 +50,7 @@ modules.component("listMixColumn", {
       ctrl.generateForm = function () {
         var formHtml = document.createElement("module-form");
         formHtml.setAttribute("class", "row");
-        angular.forEach(ctrl.viewModel.attributes, function (e, i) {
+        angular.forEach(ctrl.viewmodel.attributes, function (e, i) {
           var el;
           var label = document.createElement("label");
           label.setAttribute("class", "form-label");
@@ -103,24 +103,26 @@ modules.component("listMixColumn", {
           formHtml.appendChild(label);
           formHtml.appendChild(el);
         });
-        ctrl.viewModel.formView.content = formHtml.innerHTML;
+        ctrl.viewmodel.formView.content = formHtml.innerHTML;
       };
 
-      ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+      ctrl.generateName = function (col, isForce = false) {
+        if (isForce || !col.name) {
+          col.name = $rootScope.generateKeyword(col.title, "_", true, true);
+        }
       };
       ctrl.removeAttr = function (index) {
-        if (ctrl.fields) {
-          ctrl.fields.splice(index, 1);
+        if (ctrl.columns) {
+          ctrl.columns.splice(index, 1);
         }
       };
       ctrl.updateOrders = function (index) {
         if (index > ctrl.dragStartIndex) {
-          ctrl.fields.splice(ctrl.dragStartIndex, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex, 1);
         } else {
-          ctrl.fields.splice(ctrl.dragStartIndex + 1, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
         }
-        angular.forEach(ctrl.fields, function (e, i) {
+        angular.forEach(ctrl.columns, function (e, i) {
           e.priority = i;
         });
       };
@@ -142,7 +144,7 @@ modules.component("listMixColumn", {
   ],
   bindings: {
     header: "=",
-    fields: "=",
+    columns: "=",
     removeAttributes: "=",
   },
 });

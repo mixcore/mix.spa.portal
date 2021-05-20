@@ -1,4 +1,4 @@
-﻿modules.controller(
+﻿sharedComponents.controller(
   "ModalCroppieController",
   function (
     $rootScope,
@@ -66,6 +66,7 @@
     };
 
     ctrl.ok = async function () {
+      ctrl.media.fileFolder = ctrl.folder || "Media";
       ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
       var result = await mediaService.save(ctrl.media);
       if (result.isSucceed) {

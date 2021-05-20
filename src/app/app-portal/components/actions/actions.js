@@ -8,8 +8,9 @@
       var ctrl = this;
       ctrl.visible = $rootScope.visible;
       ctrl.back = function () {
-        ctrl.backUrl = ctrl.backUrl || "/admin";
-        $location.url(ctrl.backUrl);
+        // ctrl.backUrl = ctrl.backUrl || "/admin";
+        // $location.url(ctrl.backUrl);
+        window.history.back();
       };
       ctrl.$onInit = function () {
         ctrl.isAdmin = $rootScope.isAdmin;

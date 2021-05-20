@@ -1,10 +1,13 @@
 <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-        <filter-list request="request" callback="getList()" create-url="'/portal/permission/create'"
-            create-text="'Create Permission'"></filter-list>
-        <!-- TODO: Hoang to check search by level not work -->
-        <label class="form-label mt-3">Permission Level</label>
-        <input type="number" class="form-control mb-4" ng-enger="getList()" ng-model="request.level" />
+
+        <div class="card card-body">
+            <filter-list request="request" callback="getList()" create-url="'/portal/permission/create'"
+                create-text="'Create Permission'"></filter-list>
+            <!-- TODO: Hoang to check search by level not work -->
+            <label class="form-label mt-3">Permission Level</label>
+            <input type="number" class="form-control mb-4" ng-enger="getList()" ng-model="request.level" />
+        </div>
     </nav>
 </aside>
 
@@ -24,10 +27,10 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col" style="width: 3%;">
-                            <!-- <small class="fa fa-grip-vertical text-black-50 align-middle"></small> -->
+                            <!-- <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small> -->
                         </th>
                         <th scope="col" style="width: 4%;">
-                            <!-- <span class="fa fa-grip-vertical text-black-50-numeric-down"></span> -->
+                            <!-- <span class="fa fa-grip-vertical fa-xs text-black-50-numeric-down"></span> -->
                         </th>
                         <th scope="col" style="width: 25%;">
                             Keyword
@@ -57,7 +60,7 @@
                         dnd-moved="updateInfos($index)" ng-class="{'selected': selected === item}"
                         dnd-effect-allowed="copyMove" dnd-selected="selected = item" dnd-dragstart="dragStart($index)">
                         <td style="cursor:grab;" class="drag-header small">
-                            <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
+                            <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small>
                         </td>
                         <td>
                             <input type="text" value="{{item.pageId}}"
@@ -73,7 +76,7 @@
                             <span ng-bind-html="item.url"></span>
                         </td>
                         <td class="small">
-                            {{item.post.createdDateTime | utcToLocal}}
+                            {{item.post.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
                         </td>
 
                         <td>

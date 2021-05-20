@@ -17,7 +17,9 @@ function BaseRestCtrl(
     toDate: null,
   };
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
-  $scope.viewModel = null;
+  $scope.viewmodel = null;
+  $scope.viewmodelType = 'post';
+
   $scope.isScrollTop = true;
   $scope.defaultId = 0;
   $scope.data = null;
@@ -56,7 +58,7 @@ function BaseRestCtrl(
     } else {
       var resp = await service.duplicate([id]);
       if (resp.isSucceed) {
-        $scope.goToDetail(resp.data.id, "post");
+        $scope.goToDetail(resp.data.id, $scope.viewmodelType);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);
@@ -80,7 +82,7 @@ function BaseRestCtrl(
       params.splice(0, 0, id);
       var resp = await service.getSingle([id]);
       if (resp.isSucceed) {
-        $scope.viewModel = resp.data;
+        $scope.viewmodel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
@@ -103,7 +105,7 @@ function BaseRestCtrl(
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
     if (resp.isSucceed) {
-      $scope.viewModel = resp.data;
+      $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
       }
@@ -138,7 +140,7 @@ function BaseRestCtrl(
     if (resp && resp.isSucceed) {
       $scope.data = resp.data;
       $.each($scope.data, function (i, data) {
-        $.each($scope.viewModels, function (i, e) {
+        $.each($scope.viewmodels, function (i, e) {
           if (e.dataId === data.id) {
             data.isHidden = true;
           }
@@ -205,15 +207,14 @@ function BaseRestCtrl(
     }
     if ($scope.isValid) {
       var resp = null;
-      if ($scope.viewModel.id == 0 || $scope.viewModel.id == null) {
-        resp = await service.create($scope.viewModel);
+      if ($scope.viewmodel.id == 0 || $scope.viewmodel.id == null) {
+        resp = await service.create($scope.viewmodel);
       } else {
-        resp = await service.update($scope.viewModel.id, $scope.viewModel);
+        resp = await service.update($scope.viewmodel.id, $scope.viewmodel);
       }
-      $rootScope.isBusy = false;
-      $scope.$apply();
+
       if (resp.isSucceed) {
-        $scope.viewModel = resp.data;
+        $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
 
         if ($scope.saveSuccessCallback) {
@@ -235,6 +236,8 @@ function BaseRestCtrl(
           $rootScope.showErrors(resp.errors);
         }
       }
+      $rootScope.isBusy = false;
+      $scope.$apply();
       return resp;
     } else {
       $rootScope.showErrors(["invalid model"]);
@@ -298,9 +301,9 @@ function BaseRestCtrl(
     }
   };
   $scope.clearCache = async function () {
-    if ($scope.viewModel) {
+    if ($scope.viewmodel) {
       $rootScope.isBusy = true;
-      var resp = await service.clearCache([$scope.viewModel.id]);
+      var resp = await service.clearCache([$scope.viewmodel.id]);
       if (resp.isSucceed) {
         $rootScope.showMessage("success", "success");
       } else {
@@ -310,6 +313,15 @@ function BaseRestCtrl(
       $scope.$apply();
     }
   };
+
+  $scope.handleResult = function (result) {
+    if (result.isSucceed) {
+      $rootScope.showMessage("Success");
+    } else {
+      $rootScope.showErrors(result.errors);
+    }
+  };
+  
   $scope.shortString = function (msg, max) {
     if (msg) {
       var data = decodeURIComponent(msg);

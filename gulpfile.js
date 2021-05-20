@@ -17,7 +17,6 @@ sass.compiler = require("node-sass");
 
 var uglifyjs = require("uglify-es"); // can be a git checkout
 // or another module (such as `uglify-es` for ES6 support)
-
 var composer = require("gulp-uglify/composer");
 var pump = require("pump");
 
@@ -85,8 +84,14 @@ paths.clientAppRequired = {
 
 paths.sharedApp = {
   src: [
-    paths.webapp + "app-shared/**/*.js",
-    paths.webapp + "app-shared/**/*.*.js",
+    paths.webapp + "app-shared/app.js",
+    paths.webapp + "app-shared/app-configurations.js",
+    paths.webapp + "app-shared/app.directive.js",
+    paths.webapp + "app-shared/app.filter.js",
+    paths.webapp + "app-shared/services/**/*.js",
+    paths.webapp + "app-shared/controllers/**/*.js",
+    paths.webapp + "app-shared/components/**/*.js",
+    paths.webapp + "app-shared/plugins/**/*.js",
     `${paths.nodeModules}/html2canvas/dist/html2canvas.min.js`,
   ],
   dest: paths.webroot + "js/app-shared.min.js",

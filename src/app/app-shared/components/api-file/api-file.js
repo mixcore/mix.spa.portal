@@ -1,4 +1,4 @@
-﻿modules.component("apiFile", {
+﻿sharedComponents.component("apiFile", {
   templateUrl: "/mix-app/views/app-shared/components/api-file/api-file.html",
   controller: [
     "$rootScope",
@@ -28,7 +28,7 @@
         files.append("title", title);
         files.append("description", description);
         $.ajax({
-          url: "/" + $rootScope.settings.lang + "/media/upload", //'/tts/UploadImage',
+          url: "/" + $rootScope.localizeSettings.lang + "/media/upload", //'/tts/UploadImage',
           type: "POST",
           contentType: false, // Not to set any content header
           processData: false, // Not to process data
@@ -61,7 +61,7 @@
             $rootScope.isBusy = false;
             $scope.$apply();
           };
-          reader.onerror = function (error) { };
+          reader.onerror = function (error) {};
         } else {
           return null;
         }

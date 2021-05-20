@@ -37,7 +37,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-          style="z-index: 999;"
+          style="z-index: 999"
         >
           <!--  -->
         </button>
@@ -50,7 +50,7 @@
                 <a class="" href="{{$ctrl.previewObject.data}}" target="_blank">
                   <img
                     class="img mr-auto ml-auto"
-                    style="display: block;"
+                    style="display: block"
                     ng-src="{{$ctrl.previewObject.data}}"
                   />
                 </a>
@@ -58,18 +58,18 @@
             </div>
             <div ng-switch-when="mix-database-data">
               <div
-                ng-repeat="field in $ctrl.previewObject.data.fields | orderBy: 'priority' track by $index"
+                ng-repeat="column in $ctrl.previewObject.data.columns | orderBy: 'priority' track by $index"
                 class="py-2 row"
               >
                 <div class="col-md-3">
-                  <p><b ng-bind="field.title"></b>:</p>
+                  <p><b ng-bind="column.title"></b>:</p>
                 </div>
                 <div class="col-md-9">
-                  <mix-field-preview
-                    model="$ctrl.previewObject.data.item.obj[field.name]"
-                    field="field"
+                  <mix-column-preview
+                    model="$ctrl.previewObject.data.item.obj[column.name]"
+                    column="column"
                   >
-                  </mix-field-preview>
+                  </mix-column-preview>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                   <h1 ng-bind="$ctrl.previewObject.data.title"></h1>
                   <img
                     class="img mr-auto ml-auto"
-                    style="display: block;"
+                    style="display: block"
                     ng-src="{{$ctrl.previewObject.data.imageUrl}}"
                   />
                   <p></p>

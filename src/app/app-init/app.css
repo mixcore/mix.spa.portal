@@ -433,42 +433,42 @@ body {
   height: 100%;
 }
 
-  body::before {
-      content: "";
-      background: black;
-      opacity: 0.8;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      position: fixed;
-      z-index: -1;
-      background-image: url("/mix-app/img/background.jpg");
-      background-repeat: no-repeat;
-      background-position: right top;
-      background-attachment: fixed;
-      background-size: cover;
-  }
+body::before {
+  content: "";
+  background: black;
+  opacity: 0.8;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+  background-image: url("/mix-app/img/background.jpg");
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
-  body::after {
-      content: "";
-      background: black;
-      opacity: 0.5;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      position: fixed;
-      z-index: -1;
-      /* background-image: url("/mix-app/img/background.jpg"); */
-      background-repeat: no-repeat;
-      background-position: right top;
-      background-attachment: fixed;
-      background-size: cover;
-      /* Add the blur effect */
-      filter: blur(8px);
-      -webkit-filter: blur(8px);
-  }
+body::after {
+  content: "";
+  background: black;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
+  z-index: -1;
+  /* background-image: url("/mix-app/img/background.jpg"); */
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: fixed;
+  background-size: cover;
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
 
 hr {
   border: none !important;
@@ -477,11 +477,4 @@ hr {
 .container {
   grid-template-columns: 40px 50px auto 50px 40px;
   grid-template-rows: 25% 100px auto;
-}
-
-.form-init {
-  width: 100%;
-  max-width: 530px;
-  padding: 15px;
-  margin: auto;
 }

@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,41 +11,41 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm i
-        gulp build:portal --gulpfile gulpfile-dist.js
-      env:
-        CI: true
-    - name: Commit files
-      run: |
-        git config --local user.email "i.love.to.smile.around@gmail.com"
-        git config --local user.name "GitHub Action"
-        git commit -m "[GH Action] Add changes" -a
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Trigger copy
-      run: |
-        curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core/dispatches --data '{"event_type": "build_application"}'
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build, and test
+        run: |
+          npm i
+          gulp build:portal --gulpfile gulpfile-dist.js
+        env:
+          CI: true
+      - name: Commit files
+        run: |
+          git config --local user.email "i.love.to.smile.around@gmail.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "[GH Action] Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Trigger copy
+        run: |
+          curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/mixcore/mix.core/dispatches --data '{"event_type": "build_application"}'
 
-    - name: FTP Deploy
-      uses: SamKirkland/FTP-Deploy-Action@3.0.0
-      with:
-        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
-        ftp-server: ftp://115.79.139.90:2121/ #${{ secrets.FTP_SERVER }}
-        # FTP account username
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        # FTP account password
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
-        # The local folder to copy, defaults to root project folder
-        # local-dir: dist/Mix.Cms.Web/wwwroot/ # optional
-        # remoteDir: /mixcore.org/dev/wwwroot/
-        # Passes through options into git-ftp
-        git-ftp-args: --syncroot dist/Mix.Cms.Web/wwwroot/ --remote-root /mixcore.org/dev/wwwroot/ --verbose # optional
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@3.0.0
+        with:
+          # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+          ftp-server: ftp://115.79.139.90:2121/ #${{ secrets.FTP_SERVER }}
+          # FTP account username
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          # FTP account password
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          # The local folder to copy, defaults to root project folder
+          # local-dir: dist/Mix.Cms.Web/wwwroot/ # optional
+          # remoteDir: /mixcore.org/dev/wwwroot/
+          # Passes through options into git-ftp
+          git-ftp-args: --syncroot dist/Mix.Cms.Web/wwwroot/ --remote-root /mixcore.org/dev/wwwroot/ --verbose # optional

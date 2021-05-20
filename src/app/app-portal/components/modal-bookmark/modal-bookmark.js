@@ -1,5 +1,6 @@
 ﻿modules.component("modalBookmark", {
-  templateUrl: "/mix-app/views/app-portal/components/modal-bookmark/modal-bookmark.html",
+  templateUrl:
+    "/mix-app/views/app-portal/components/modal-bookmark/modal-bookmark.html",
   controller: [
     "$rootScope",
     "$scope",

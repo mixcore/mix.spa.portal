@@ -1,5 +1,5 @@
 <div class="row mb-3">
-  <div class="col-7">
+  <div class="col">
     <label class="form-label">Database title</label>
     <input
       type="text"
@@ -8,16 +8,33 @@
       ng-blur="$ctrl.gennerateName()"
     />
   </div>
+</div>
+<div class="row mb-3">
   <div class="col">
     <label class="form-label">Database system name</label>
-    <input type="text" class="form-control" ng-model="$ctrl.model.name" />
+    <div class="input-group">
+      <input type="text" class="form-control" ng-model="$ctrl.model.name" />
+      <button
+        class="btn btn-outline-primary"
+        type="button"
+        ng-click="$ctrl.generateName(col,true)"
+      >
+        <span class="fa fa-redo"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
+    <label class="form-label">Type</label>
+    <input type="text" class="form-control" ng-model="$ctrl.model.type" />
   </div>
 </div>
 <!-- <div class="mb-3">
             <label class="form-label">Type</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-bs-toggle="buttons">
-                <label ng-repeat="type in $ctrl.settings.mixDatabaseTypes track by $index" ng-switch="type.name"
-                    ng-class="{active: type.value === $ctrl.model.type}" class="btn btn-outline-primary btn-block mt-0"
+                <label ng-repeat="type in $ctrl.localizeSettings.mixDatabaseTypes track by $index" ng-switch="type.name"
+                    ng-class="{active: type.value === $ctrl.model.type}" class="btn btn-primary text-white btn-block mt-0"
                     ng-click="$ctrl.model.type=type.value;">
                     <input ng-model="$ctrl.model.type" type="radio" value="{{type.value}}" class="form-check-input"
                         id="model_type_{{type.value}}">

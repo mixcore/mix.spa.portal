@@ -98,13 +98,14 @@ modules.component("tclOrder", {
                     item.id = saveItem.data.id;
                     item.obj.id = saveItem.data.id;
                     item.mixDatabaseId = saveItem.data.mixDatabaseId;
-                    angular.forEach(item.obj.products, async function (
-                      product
-                    ) {
-                      product.parentId = item.id;
-                      product.parentType = "Set";
-                      await ctrl.saveData(product);
-                    });
+                    angular.forEach(
+                      item.obj.products,
+                      async function (product) {
+                        product.parentId = item.id;
+                        product.parentType = "Set";
+                        await ctrl.saveData(product);
+                      }
+                    );
                   }
                 });
               }

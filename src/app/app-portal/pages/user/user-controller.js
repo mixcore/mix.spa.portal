@@ -142,7 +142,10 @@ app.controller("UserController", [
         $rootScope.showMessage("Update successfully!", "success");
         if ($scope.activedUser.id == authService.authentication.id) {
           authService
-            .refreshToken(authService.authentication.refresh_token)
+            .refreshToken(
+              authService.authentication.refresh_token,
+              authService.authentication.access_token
+            )
             .then(() => {
               window.location = window.location;
             });

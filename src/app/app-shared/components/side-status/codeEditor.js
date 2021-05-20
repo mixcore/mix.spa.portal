@@ -1,9 +1,8 @@
-﻿
-modules.component('codeEditor', {
-    templateUrl: 'codeEditor.html',
-    bindings: {
-        product: '=',
-        onDelete: '&',
-        onUpdate: '&'
-    }
+﻿sharedComponents.component("codeEditor", {
+  templateUrl: "codeEditor.html",
+  bindings: {
+    product: "=",
+    onDelete: "&",
+    onUpdate: "&",
+  },
 });

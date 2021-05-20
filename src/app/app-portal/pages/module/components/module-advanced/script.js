@@ -9,7 +9,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = function () {
         ctrl.isAdmin = $rootScope.isAdmin;
       };

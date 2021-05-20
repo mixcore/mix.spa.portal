@@ -11,7 +11,7 @@ modules.component("mixDatabaseDataValues", {
     filterType: "=?",
     selectedList: "=",
     selectSingle: "=?",
-    fields: "=?",
+    columns: "=?",
     onFilterList: "&?",
     onApplyList: "&?",
     onSendMail: "&?",
@@ -24,12 +24,12 @@ modules.component("mixDatabaseDataValues", {
     "$scope",
     "RestMixDatabaseColumnPortalService",
     "RestMixDatabaseDataPortalService",
-    function ($rootScope, $scope, fieldService, dataService) {
+    function ($rootScope, $scope, columnService, dataService) {
       var ctrl = this;
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];
       ctrl.selectedProp = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.selectedList) {
           ctrl.selectedList = {
@@ -37,12 +37,12 @@ modules.component("mixDatabaseDataValues", {
             data: [],
           };
         }
-        if (!ctrl.fields) {
-          var getFields = await fieldService.initData(
+        if (!ctrl.columns) {
+          var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
+            ctrl.columns = getFields.data;
             $scope.$apply();
           }
         }
@@ -152,7 +152,7 @@ modules.component("mixDatabaseDataValues", {
 
       ctrl.view = function (item) {
         var obj = {
-          fields: ctrl.fields,
+          columns: ctrl.columns,
           item: item,
         };
         $rootScope.preview("mix-database-data", obj, null, "modal-lg");

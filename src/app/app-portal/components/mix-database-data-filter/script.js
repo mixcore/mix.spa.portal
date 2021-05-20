@@ -7,7 +7,7 @@
     mixDatabaseId: "=?",
     selectedList: "=",
     initData: "=?",
-    fields: "=?",
+    columns: "=?",
     selected: "=",
     callback: "&?",
     save: "&?",
@@ -51,7 +51,9 @@
         if (ctrl.mixDatabaseId) {
           ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
-        ctrl.request.mixDatabaseName = ctrl.mixDatabaseName;
+        if (ctrl.mixDatabaseName) {
+          ctrl.request.mixDatabaseName = ctrl.mixDatabaseName;
+        }
         if (ctrl.filterType) {
           ctrl.request.filterType = ctrl.filterType;
         }

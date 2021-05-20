@@ -12,13 +12,12 @@ modules.component("additionalValue", {
     "$rootScope",
     "$scope",
     "RestMixDatabaseDataPortalService",
-    "RestMixDatabaseDataValuePortalService",
-    function ($rootScope, $scope, dataService, valueService) {
+    function ($rootScope, $scope, dataService) {
       var ctrl = this;
       ctrl.value = {};
-      ctrl.field = { dataType: "Text" };
+      ctrl.column = { dataType: "Text" };
       ctrl.selectedCol = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.additionalData) {
           if (!ctrl.additionalDataId) {

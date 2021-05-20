@@ -2,18 +2,43 @@
 app.controller("Step3Controller", [
   "$scope",
   "$rootScope",
+  "ApiService",
   "CommonService",
   "AuthService",
+  "StoreService",
   "Step3Services",
-  function ($scope, $rootScope, commonService, authService, service) {
+  function (
+    $scope,
+    $rootScope,
+    apiService,
+    commonService,
+    authService,
+    storeService,
+    service
+  ) {
     var rand = Math.random();
     $scope.data = {
       isCreateDefault: true,
       theme: null,
     };
+    $scope.request = {
+      pageSize: "20",
+      pageIndex: 0,
+      status: "Published",
+      orderBy: "CreatedDateTime",
+      direction: "Desc",
+      fromDate: null,
+      toDate: null,
+      postType: "theme",
+    };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
       $scope.form = document.getElementById("frm-theme");
+      var getThemes = await storeService.getThemes($scope.request);
+      if (getThemes.isSucceed) {
+        $scope.themes = getThemes.data;
+        $scope.$apply();
+      }
       $(".preventUncheck").on("change", function (e) {
         if ($(".preventUncheck:checked").length == 0 && !this.checked)
           this.checked = true;
@@ -35,8 +60,36 @@ app.controller("Step3Controller", [
       frm.append("model", angular.toJson($scope.data));
       var response = await service.ajaxSubmitForm(frm, url);
       if (response.isSucceed) {
-        $scope.viewModel = response.data;
-        authService.initSettings().then(function () {
+        $scope.viewmodel = response.data;
+        commonService.initAllSettings().then(function () {
+          $rootScope.isBusy = false;
+          setTimeout(() => {
+            $rootScope.goToSiteUrl("/portal");
+          }, 500);
+          $scope.$apply();
+        });
+      } else {
+        $rootScope.showErrors(response.errors);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
+    $scope.install = function (resp) {
+      if (resp.isSucceed) {
+        $scope.activeTheme(resp.data);
+      } else {
+        $rootScope.showErrors(["Cannot install theme"]);
+      }
+    };
+    $scope.activeTheme = async function (data) {
+      $rootScope.isBusy = true;
+      var url = "/init/init-cms/step-3/active";
+      $rootScope.isBusy = true;
+      // Looping over all files and add it to FormData object
+      var response = await service.activeTheme(data);
+      if (response.isSucceed) {
+        $scope.viewmodel = response.data;
+        commonService.initAllSettings().then(function () {
           $rootScope.isBusy = false;
           setTimeout(() => {
             $rootScope.goToSiteUrl("/portal");

@@ -1,5 +1,5 @@
 "use strict";
-app.controller("MvcModuleDataController", [
+appShared.controller("MvcModuleDataController", [
   "$scope",
   "$rootScope",
   "ngAppSettings",
@@ -25,7 +25,7 @@ app.controller("MvcModuleDataController", [
     );
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.moduleId = null;
     $scope.module = null;
     $scope.allData = [];

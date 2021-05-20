@@ -7,6 +7,7 @@ app.controller("ModuleDataController", [
   "$location",
   "ModuleDataRestService",
   "ModuleRestService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -27,11 +28,11 @@ app.controller("ModuleDataController", [
       ngAppSettings,
       service
     );
-    $scope.request.orderBy = "Priority";
-    $scope.request.direction = "Asc";
+    // $scope.request.orderBy = "Priority";
+    // $scope.request.direction = "Asc";
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.moduleId = $routeParams.moduleId;
     $scope.backUrl = `/portal/module-data/list/${$scope.moduleId}`;
     $scope.module = null;
@@ -134,7 +135,7 @@ app.controller("ModuleDataController", [
       }
     };
 
-    $scope.removeCallback = function () { };
+    $scope.removeCallback = function () {};
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);

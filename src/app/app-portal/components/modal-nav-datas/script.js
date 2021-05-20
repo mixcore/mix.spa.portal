@@ -6,7 +6,7 @@
     parentId: "=?",
     parentType: "=?",
     type: "=?",
-    fieldDisplay: "=?",
+    columnDisplay: "=?",
     selectedList: "=?",
     selectCallback: "&",
     save: "&",
@@ -87,15 +87,14 @@
           $scope.$apply();
         }
       };
-      ctrl.select = function (data) {
-        if (data.isActived) {
+      ctrl.select = function (value, isSelected) {
+        if (isSelected) {
           if (ctrl.parentId) {
             var nav = {
-              specificulture: data.specificulture,
               mixDatabaseName: ctrl.mixDatabaseName,
               parentId: ctrl.parentId,
               parentType: ctrl.parentType,
-              id: data.id,
+              id: value,
             };
             navService.save(nav).then((resp) => {
               if (resp.isSucceed) {

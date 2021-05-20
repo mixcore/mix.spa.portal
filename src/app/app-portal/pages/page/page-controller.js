@@ -31,6 +31,7 @@ app.controller("PageController", [
       ngAppSettings,
       service
     );
+    $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
     $scope.pageType = "";
     $scope.pageTypes = $rootScope.globalSettings.pageTypes;
@@ -49,6 +50,7 @@ app.controller("PageController", [
       var id = $routeParams.id;
       $scope.postRequest.query += "&page_id=" + id;
       var response = await pagePostRestService.getList($scope.postRequest);
+
       if (response.isSucceed) {
         $scope.pageData.posts = response.data;
         $rootScope.isBusy = false;
@@ -62,8 +64,8 @@ app.controller("PageController", [
     $scope.getSingleSuccessCallback = function () {
       $scope.loadAdditionalData();
       if ($routeParams.template) {
-        $scope.viewModel.view = $rootScope.findObjectByKey(
-          $scope.viewModel.templates,
+        $scope.viewmodel.view = $rootScope.findObjectByKey(
+          $scope.viewmodel.templates,
           "fileName",
           $routeParams.template
         );
@@ -77,7 +79,7 @@ app.controller("PageController", [
     $scope.loadAdditionalData = async function () {
       const obj = {
         parentType: "Page",
-        parentId: $scope.viewModel.id,
+        parentId: $scope.viewmodel.id,
         databaseName: "sys_additional_field_page",
       };
       const getData = await dataService.getAdditionalData(obj);
@@ -141,25 +143,18 @@ app.controller("PageController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
-        $scope.additionalData.parentId = $scope.viewModel.id;
+        $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Page";
-        var saveData = await dataService.save($scope.additionalData);
-        if (saveData.isSucceed) {
-          if ($location.path() == "/portal/page/create") {
-            $scope.goToDetail($scope.viewModel.id, "page");
-          } else {
-            $scope.additionalData = saveData.data;
-          }
-        }
+        await dataService.save($scope.additionalData);
       }
       $rootScope.isBusy = false;
       $scope.$apply();
     };
     $scope.validate = async function () {
       // Add default alias if create new page
-      if (!$scope.viewModel.id && !$scope.viewModel.urlAliases.length) {
+      if (!$scope.viewmodel.id && !$scope.viewmodel.urlAliases.length) {
         // Ex: en-us/page-seo-name
-        // await $scope.addAlias($scope.viewModel.specificulture + '/' + $scope.viewModel.seoName);
+        // await $scope.addAlias($scope.viewmodel.specificulture + '/' + $scope.viewmodel.seoName);
         return true;
       } else {
         return true;
@@ -171,7 +166,7 @@ app.controller("PageController", [
         if (alias) {
           getAlias.data.alias = alias;
         }
-        $scope.viewModel.urlAliases.push(getAlias.data);
+        $scope.viewmodel.urlAliases.push(getAlias.data);
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
@@ -185,14 +180,14 @@ app.controller("PageController", [
       angular.forEach($scope.selectedCategories, function (e) {
         // add if not exist in sysCategories
         var current = $rootScope.findObjectByKey(
-          $scope.viewModel.sysCategories,
+          $scope.viewmodel.sysCategories,
           "id",
           e.id
         );
         if (!current) {
-          $scope.viewModel.sysCategories.push({
+          $scope.viewmodel.sysCategories.push({
             id: e.id,
-            parentId: $scope.viewModel.id,
+            parentId: $scope.viewmodel.id,
             mixDatabaseName: "sys_category",
           });
         }
@@ -203,21 +198,21 @@ app.controller("PageController", [
       angular.forEach($scope.selectedTags, function (e) {
         // add if not exist in sysCategories
         var current = $rootScope.findObjectByKey(
-          $scope.viewModel.sysTags,
+          $scope.viewmodel.sysTags,
           "id",
           e.id
         );
         if (!current) {
-          $scope.viewModel.sysCategories.push({
+          $scope.viewmodel.sysCategories.push({
             id: e.id,
-            parentId: $scope.viewModel.id,
+            parentId: $scope.viewmodel.id,
             mixDatabaseName: "sys_tag",
           });
         }
       });
     };
     $scope.removeAliasCallback = async function (index) {
-      $scope.viewModel.urlAliases.splice(index, 1);
+      $scope.viewmodel.urlAliases.splice(index, 1);
       $scope.$apply();
     };
   },

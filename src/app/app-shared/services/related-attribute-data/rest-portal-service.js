@@ -1,8 +1,9 @@
 "use strict";
-app.factory("RestRelatedAttributeDataPortalService", [
+appShared.factory("RestRelatedAttributeDataPortalService", [
   "BaseRestService",
+  "ApiService",
   "CommonService",
-  function (baseService, commonService) {
+  function (baseService, apiService, commonService) {
     var serviceFactory = angular.copy(baseService);
     serviceFactory.init("mix-database-data-association/portal");
     return serviceFactory;

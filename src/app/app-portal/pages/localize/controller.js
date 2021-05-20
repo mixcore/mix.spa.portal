@@ -6,6 +6,7 @@ app.controller("LocalizeController", [
   "$routeParams",
   "$location",
   "LocalizeService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -26,7 +27,7 @@ app.controller("LocalizeController", [
       service
     );
     $scope.cates = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.defaultId = "default";
     $scope.languageFile = {
       file: null,
@@ -38,11 +39,11 @@ app.controller("LocalizeController", [
     $scope.dataTypes = $rootScope.globalSettings.dataTypes;
     $scope.$on("$viewContentLoaded", function () {
       $scope.cates = ngAppSettings.enums.language_cates;
-      $scope.settings = $rootScope.globalSettings;
+      $scope.localizeSettings = $rootScope.globalSettings;
       $scope.cate = $scope.cates[0];
     });
     $scope.getSingleSuccessCallback = function () {
-      $scope.viewModel.category = "Site";
+      $scope.viewmodel.category = "Site";
     };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {
@@ -57,9 +58,9 @@ app.controller("LocalizeController", [
       });
     };
     $scope.generateDefault = function (text, cate) {
-      if (!$routeParams.id && !$scope.viewModel.keyword) {
-        $scope.viewModel.defaultValue = text;
-        $scope.viewModel.keyword =
+      if (!$routeParams.id && !$scope.viewmodel.keyword) {
+        $scope.viewmodel.defaultValue = text;
+        $scope.viewmodel.keyword =
           cate.prefix +
           text
             .replace(/[^a-zA-Z0-9]+/g, "_")

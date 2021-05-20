@@ -13,12 +13,12 @@
         <div
           class="col-sm-3"
           ng-if="$index < 4"
-          ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+          ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
         >
-          <mix-field-preview
-            model="msg.data[field.name]"
-            field="field"
-          ></mix-field-preview>
+          <mix-column-preview
+            model="msg.data[column.name]"
+            column="column"
+          ></mix-column-preview>
         </div>
       </li>
     </ul>
@@ -31,12 +31,12 @@
       <form
         ng-show="$ctrl.user.loggedIn"
         ng-class="{'submitted': submitted}"
-        ng-if="$ctrl.attrData"
+        ng-if="$ctrl.mixDatabaseData"
         ng-submit="$ctrl.submit()"
       >
         <div class="card">
           <div
-            id="mixDatabaseId_{{$ctrl.attrData.mixDatabaseId}}"
+            id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}"
             class="card-body show"
           >
             <div class="row">
@@ -46,12 +46,12 @@
               </div>
               <div class="col-sm-12">
                 <div
-                  ng-repeat="field in $ctrl.fields | orderBy:'priority' track by $index"
+                  ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
                 >
-                  <mix-field-editor
-                    model="$ctrl.attrData"
-                    field="field"
-                  ></mix-field-editor>
+                  <mix-column-editor
+                    model="$ctrl.mixDatabaseData"
+                    column="column"
+                  ></mix-column-editor>
                 </div>
               </div>
               <div class="col-sm-12">

@@ -6,6 +6,7 @@ app.controller("ConfigurationController", [
   "$routeParams",
   "$location",
   "ConfigurationService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -25,13 +26,16 @@ app.controller("ConfigurationController", [
       ngAppSettings,
       service
     );
-   
+
     $scope.getSingleSuccessCallback = function () {
       $scope.cates = ngAppSettings.enums.configuration_cates;
-      $scope.settings = $rootScope.globalSettings;
+      $scope.globalSettings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
-      if (!$scope.viewModel.category) {
-        $scope.viewModel.category = "Site";
+      if(!$scope.viewmodel.id){
+        $scope.viewmodel.property.dataType = 'Text';
+      }
+      if (!$scope.viewmodel.category) {
+        $scope.viewmodel.category = "Site";
       }
     };
     $scope.saveSuccessCallback = function () {
@@ -45,6 +49,14 @@ app.controller("ConfigurationController", [
       commonService.initAllSettings().then(function () {
         $location.url($scope.referrerUrl);
       });
+    };
+
+    $scope.generateName = function () {
+      $scope.viewmodel.keyword = $rootScope.generateKeyword(
+        $scope.viewmodel.keyword,
+        "_",
+        true
+      );
     };
   },
 ]);

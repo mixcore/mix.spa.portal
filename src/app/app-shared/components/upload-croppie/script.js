@@ -1,5 +1,6 @@
-﻿modules.component("uploadCroppie", {
-  templateUrl: "/mix-app/views/app-shared/components/upload-croppie/view.html?v=1",
+﻿sharedComponents.component("uploadCroppie", {
+  templateUrl:
+    "/mix-app/views/app-shared/components/upload-croppie/view.html?v=1",
   bindings: {
     header: "=",
     description: "=",
@@ -47,7 +48,7 @@
         ctrl.cropped = {
           source: ctrl.image_placeholder,
         };
-        // var frameUrl = '/content/templates/tsets/uploads/2019-10/730149275529721421464195891692074859757568n0037047f8f6f4adab55211aee3538155.png';//$rootScope.settings.data['frame_url']
+        // var frameUrl = '/content/templates/tsets/uploads/2019-10/730149275529721421464195891692074859757568n0037047f8f6f4adab55211aee3538155.png';//$rootScope.localizeSettings.data['frame_url']
         if (ctrl.frameUrl) {
           ctrl.frame = ctrl.loadImage(frameUrl);
         }

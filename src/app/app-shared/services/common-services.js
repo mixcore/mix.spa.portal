@@ -1,38 +1,27 @@
 "use strict";
-app.factory("CommonService", [
-  "$location",
-  "$http",
+appShared.factory("CommonService", [
   "$rootScope",
-  "AuthService",
+  "ApiService",
   "localStorageService",
-  "AppSettings",
-  function (
-    $location,
-    $http,
-    $rootScope,
-    authService,
-    localStorageService,
-    appSettings
-  ) {
-    var adminCommonFactory = {};
-    var _settings = {
-      lang: "",
-      cultures: [],
-    };
+  function ($rootScope, apiService, localStorageService) {
+    var factory = {};
+
     var _loadJArrayData = async function (name) {
       var req = {
         method: "GET",
         url: "/portal/jarray-data/" + name,
       };
-      return await _getAnonymousApiResult(req);
+      return await apiService.getAnonymousApiResult(req);
     };
+
     var _loadJsonData = async function (name) {
       var req = {
         method: "GET",
         url: "/portal/json-data/" + name,
       };
-      return await _getAnonymousApiResult(req);
+      return await apiService.getAnonymousApiResult(req);
     };
+
     var _showAlertMsg = function (title, message) {
       $rootScope.message = {
         title: title,
@@ -48,8 +37,8 @@ app.factory("CommonService", [
         _showAlertMsg(
           "",
           "Invalid file selected, valid files are of " +
-          validExts.toString() +
-          " types."
+            validExts.toString() +
+            " types."
         );
         sender.value = "";
         return false;
@@ -63,33 +52,13 @@ app.factory("CommonService", [
         url: url,
         data: { subject: subject, body: body },
       };
-      return _getApiResult(req).then(function (response) {
+      return apiService.getApiResult(req).then(function (response) {
         return response.data;
       });
     };
 
-    var _getSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      // && culture !== undefined && settings.lang === culture
-      if (settings) {
-        return settings;
-      } else {
-        var url = "/portal";
-        if (culture) {
-          url += "/" + culture;
-        }
-        url += "/settings";
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return _getApiResult(req).then(function (response) {
-          return response.data;
-        });
-      }
-    };
     var _getAllSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       var globalSettings = localStorageService.get("globalSettings");
       var translator = localStorageService.get("translator");
       if (
@@ -98,27 +67,31 @@ app.factory("CommonService", [
         translator &&
         settings.lang === culture
       ) {
-        $rootScope.settings = settings;
+        $rootScope.localizeSettings = settings;
         $rootScope.globalSettings = globalSettings;
         $rootScope.translator.translator = translator;
       } else {
-        var url = "/portal";
+        var url = "/rest/shared";
         if (culture) {
           url += "/" + culture;
         }
-        url += "/all-settings";
+        url += "/get-shared-settings";
         var req = {
           method: "GET",
           url: url,
         };
-        return _getApiResult(req).then(function (response) {
-          localStorageService.set("settings", response.data.settings);
+        return apiService.getRestApiResult(req).then(function (response) {
+          response.data.globalSettings.lastUpdateConfiguration = new Date();
+          localStorageService.set(
+            "localizeSettings",
+            response.data.localizeSettings
+          );
           localStorageService.set(
             "globalSettings",
             response.data.globalSettings
-          );
+          );          
           localStorageService.set("translator", response.data.translator);
-          $rootScope.settings = response.data.settings;
+          $rootScope.localizeSettings = response.data.localizeSettings;
           $rootScope.globalSettings = response.data.globalSettings;
           $rootScope.translator.translator = response.data.translator;
         });
@@ -126,38 +99,45 @@ app.factory("CommonService", [
     };
 
     var _checkConfig = async function (lastSync) {
-      if (lastSync) {
-        var url = "/portal/check-config/" + lastSync;
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return _getApiResult(req).then(function (response) {
-          if (response.data) {
-            _removeSettings().then(() => {
-              _removeTranslator().then(() => {
-                localStorageService.set("settings", response.data.settings);
-                localStorageService.set(
-                  "globalSettings",
-                  response.data.globalSettings
-                );
-                localStorageService.set("translator", response.data.translator);
-                $rootScope.settings = response.data.settings;
-                $rootScope.globalSettings = response.data.globalSettings;
-                $rootScope.translator.translator = response.data.translator;
-              });
-            });
-          } else {
-            $rootScope.settings = localStorageService.get("settings");
-            $rootScope.globalSettings = localStorageService.get(
-              "globalSettings"
-            );
-            $rootScope.translator.translator = localStorageService.get(
-              "translator"
-            );
-          }
-        });
+      if (!lastSync) {
+        _renewSettings();
+      } else {
+        var d = new Date(lastSync);
+        d.setMinutes(d.getMinutes() + 20);
+        let now = new Date();
+        if (now > d) {
+          _renewSettings();
+        } else {
+          var url = "/rest/shared/check-config/" + lastSync;
+          var req = {
+            method: "GET",
+            url: url,
+          };
+          return apiService.getApiResult(req).then(function (response) {
+            if (response.data) {
+              _renewSettings();
+            } else {
+              $rootScope.localizeSettings = localStorageService.get(
+                "localizeSettings"
+              );
+              $rootScope.globalSettings = localStorageService.get(
+                "globalSettings"
+              );
+              $rootScope.translator.translator = localStorageService.get(
+                "translator"
+              );
+            }
+          });
+        }
       }
+    };
+
+    var _renewSettings = function () {
+      _removeSettings().then(() => {
+        _removeTranslator().then(() => {
+          _getAllSettings();
+        });
+      });
     };
 
     var _genrateSitemap = async function () {
@@ -167,56 +147,35 @@ app.factory("CommonService", [
         method: "GET",
         url: url,
       };
-      return _getApiResult(req).then(function (response) {
+      return apiService.getApiResult(req).then(function (response) {
         return response.data;
       });
     };
 
-    var _setSettings = async function (settings) {
-      if (settings && settings.cultures.length > 0) {
-        localStorageService.set("settings", settings);
-      }
-    };
-
     var _initAllSettings = async function (culture) {
-      localStorageService.remove("settings");
+      localStorageService.remove("localizeSettings");
       localStorageService.remove("translator");
       localStorageService.remove("globalSettings");
 
-      var response = await _getSettings(culture);
-      localStorageService.set("settings", response.settings);
-      localStorageService.set("translator", response.translator);
-      localStorageService.set("globalSettings", response.globalSettings);
-
+      var response = await _getAllSettings();
+      if (response) {
+        localStorageService.set("localizeSettings", response.localizeSettings);
+        localStorageService.set("translator", response.translator);
+        localStorageService.set("globalSettings", response.globalSettings);
+      }
       return response;
     };
 
     var _removeSettings = async function (settings) {
-      localStorageService.remove("settings");
+      localStorageService.remove("localizeSettings");
     };
 
     var _removeTranslator = async function () {
       localStorageService.remove("translator");
     };
 
-    var _fillSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      if (settings && settings.lang === culture) {
-        _settings = settings;
-        return settings;
-      } else {
-        if (culture && settings && settings.lang !== culture) {
-          await _removeSettings();
-          await _removeTranslator();
-        }
-        settings = await _getSettings(culture);
-        localStorageService.set("settings", settings);
-        //window.top.location = location.href;
-        return settings;
-      }
-    };
     var _fillAllSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
+      var settings = localStorageService.get("localizeSettings");
       var globalSettings = localStorageService.get("globalSettings");
       var translator = localStorageService.get("translator");
       if (
@@ -225,7 +184,7 @@ app.factory("CommonService", [
         translator &&
         (!culture || settings.lang === culture)
       ) {
-        $rootScope.settings = settings;
+        $rootScope.localizeSettings = settings;
         $rootScope.globalSettings = globalSettings;
         $rootScope.translator.translator = translator;
         await _checkConfig(globalSettings.lastUpdateConfiguration);
@@ -237,223 +196,17 @@ app.factory("CommonService", [
         await _getAllSettings(culture);
       }
     };
-    var _getApiResult = async function (req, serviceBase) {
-      await authService.fillAuthData();
-      if (authService.authentication) {
-        req.Authorization = authService.authentication.token;
-      }
 
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
-
-      req.url = serviceUrl + req.url;
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.settings ||
-              $rootScope.settings.lastUpdateConfiguration <
-              resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return resp.data;
-        },
-        function (error) {
-          if (error.status === 401) {
-            //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(authService.authentication.refresh_token)
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
-                  return $http(req).then(
-                    function (results) {
-                      return results.data;
-                    },
-                    function (err) {
-                      authService.logOut();
-                      authService.authentication.token = null;
-                      authService.authentication.refresh_token = null;
-                      authService.referredUrl = $location.$$url;
-                      $rootScope.showLogin(req);
-                      // window.top.location.href = '/security/login';
-                    }
-                  );
-                },
-                function (err) {
-                  var t = { isSucceed: false };
-
-                  authService.logOut();
-                  authService.authentication.token = null;
-                  authService.authentication.refresh_token = null;
-                  authService.referredUrl = $location.$$url;
-                  window.top.location.href = "/security/login";
-                  return t;
-                }
-              );
-          } else if (error.status === 403) {
-            var t = { isSucceed: false, errors: ["Forbidden"] };
-            $rootScope.showLogin(req, "rest");
-            // window.top.location.href = '/security/login';
-            return t;
-          } else {
-            if (error.data) {
-              return error.data;
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        }
-      );
-    };
-
-    var _getRestApiResult = async function (req, serviceBase) {
-      if (!authService.authentication) {
-        await authService.fillAuthData();
-      }
-      if (authService.authentication) {
-        req.Authorization = authService.authentication.token;
-      }
-
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
-
-      req.url = serviceUrl + req.url;
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-      return $http(req).then(
-        function (resp) {
-          if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.settings ||
-              $rootScope.settings.lastUpdateConfiguration <
-              resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
-          return { isSucceed: true, data: resp.data };
-        },
-        function (error) {
-          if (error.status === 401) {
-            //Try again with new token from previous Request (optional)
-            return authService
-              .refreshToken(authService.authentication.refresh_token)
-              .then(
-                function () {
-                  req.headers.Authorization =
-                    "Bearer " + authService.authentication.token;
-                  return $http(req).then(
-                    function (results) {
-                      return { isSucceed: true, data: results.data };
-                    },
-                    function (err) {
-                      authService.logOut();
-                      authService.authentication.token = null;
-                      authService.authentication.refresh_token = null;
-                      authService.referredUrl = $location.$$url;
-                      $rootScope.showLogin(req, "rest");
-                      // window.top.location.href = '/security/login';
-                    }
-                  );
-                },
-                function (err) {
-                  var t = { isSucceed: false };
-
-                  authService.logOut();
-                  authService.authentication.token = null;
-                  authService.authentication.refresh_token = null;
-                  authService.referredUrl = $location.$$url;
-                  $rootScope.showLogin(req, "rest");
-                  // window.top.location.href = '/security/login';
-                  return t;
-                }
-              );
-          } else if (
-            error.status === 200 ||
-            error.status === 204 ||
-            error.status === 205
-          ) {
-            return {
-              isSucceed: true,
-              status: err.status,
-              errors: [error.statusText || error.status],
-            };
-          } else {
-            if (error.data) {
-              return { isSucceed: false, errors: [error.data] };
-            } else {
-              return {
-                isSucceed: false,
-                errors: [error.statusText || error.status],
-              };
-            }
-          }
-        }
-      );
-    };
-
-    var _getAnonymousApiResult = async function (req) {
-      $rootScope.isBusy = true;
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      req.url = serviceUrl + req.url;
-      req.headers = {
-        "Content-Type": "application/json",
-      };
-      return $http(req).then(
-        function (resp) {
-          return resp.data;
-        },
-        function (error) {
-          return {
-            isSucceed: false,
-            errors: [error.statusText || error.status],
-          };
-        }
-      );
-    };
-    adminCommonFactory.sendMail = _sendMail;
-    adminCommonFactory.getApiResult = _getApiResult;
-    adminCommonFactory.getRestApiResult = _getRestApiResult;
-    adminCommonFactory.getAnonymousApiResult = _getAnonymousApiResult;
-    adminCommonFactory.getSettings = _getSettings;
-    adminCommonFactory.setSettings = _setSettings;
-    adminCommonFactory.initAllSettings = _initAllSettings;
-    adminCommonFactory.fillAllSettings = _fillAllSettings;
-    adminCommonFactory.removeSettings = _removeSettings;
-    adminCommonFactory.removeTranslator = _removeTranslator;
-    adminCommonFactory.showAlertMsg = _showAlertMsg;
-    adminCommonFactory.checkfile = _checkfile;
-    adminCommonFactory.fillSettings = _fillSettings;
-    adminCommonFactory.settings = _settings;
-    adminCommonFactory.genrateSitemap = _genrateSitemap;
-    adminCommonFactory.loadJArrayData = _loadJArrayData;
-    adminCommonFactory.loadJsonData = _loadJsonData;
-    return adminCommonFactory;
+    factory.sendMail = _sendMail;
+    factory.initAllSettings = _initAllSettings;
+    factory.fillAllSettings = _fillAllSettings;
+    factory.removeSettings = _removeSettings;
+    factory.removeTranslator = _removeTranslator;
+    factory.showAlertMsg = _showAlertMsg;
+    factory.checkfile = _checkfile;
+    factory.genrateSitemap = _genrateSitemap;
+    factory.loadJArrayData = _loadJArrayData;
+    factory.loadJsonData = _loadJsonData;
+    return factory;
   },
 ]);

@@ -1,13 +1,15 @@
 <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3 pt-4" aria-label="Docs navigation">
 
-        <div class="input-group mr-sm-2">
-            <div class="input-group-text"><i class="fas fa-user-tag"></i></div>
-            <input type="text" class="form-control" ng-model="role.name" ng-enter="createRole()"
-                placeholder="Enter new role name...">
-            <a href="#" class="btn btn-primary px-4" ng-click="createRole()"><i class="fas fa-plus"></i> Create</a>
+        <div class="card card-body">
+            <div class="input-group mr-sm-2">
+                <div class="input-group-text"><i class="fas fa-user-tag"></i></div>
+                <input type="text" class="form-control" ng-model="role.name" ng-enter="createRole()"
+                    placeholder="Enter new role name...">
+                <a href="#" class="btn btn-primary px-4" ng-click="createRole()"><i class="fas fa-plus"></i> Create</a>
+            </div>
+            <filter-list request="request" callback="getList(pageIndex)"></filter-list>
         </div>
-        <filter-list request="request" callback="getList(pageIndex)"></filter-list>
     </nav>
 </aside>
 

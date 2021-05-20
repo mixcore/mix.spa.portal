@@ -6,6 +6,7 @@ app.controller("Step1Controller", [
   "$timeout",
   "$location",
   "$http",
+  "ApiService",
   "CommonService",
   "Step1Services",
   function (
@@ -15,6 +16,7 @@ app.controller("Step1Controller", [
     $timeout,
     $location,
     $http,
+    apiService,
     commonService,
     step1Services
   ) {

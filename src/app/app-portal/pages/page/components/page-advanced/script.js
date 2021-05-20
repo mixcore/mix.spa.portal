@@ -1,5 +1,6 @@
 ﻿app.component("pageAdvanced", {
-  templateUrl: "/mix-app/views/app-portal/pages/page/components/page-advanced/view.html",
+  templateUrl:
+    "/mix-app/views/app-portal/pages/page/components/page-advanced/view.html",
   bindings: {
     model: "=",
     additionalData: "=",

@@ -1,8 +1,9 @@
 ﻿"use strict";
 app.factory("ConfigurationService", [
   "BaseRestService",
+  "ApiService",
   "CommonService",
-  function (baseService, commonService) {
+  function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("configuration");
 
@@ -32,7 +33,7 @@ app.factory("ConfigurationService", [
           data: files,
         };
 
-        return await commonService.getApiResult(req);
+        return await apiService.getApiResult(req);
       }
     };
     serviceFactory.uploadConfiguration = _uploadConfiguration;

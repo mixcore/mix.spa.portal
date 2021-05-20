@@ -6,6 +6,7 @@ app.controller("ServiceController", [
   "$routeParams",
   "$location",
   "RestMixDatabasePortalService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -29,7 +30,7 @@ app.controller("ServiceController", [
     $scope.parentType = null;
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.init = async function () {
@@ -44,7 +45,7 @@ app.controller("ServiceController", [
       //     $location.url('/portal/mix-database-data/details?dataId='+ $scope.parentId);
       // }
       // else{
-      //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewModel.mixDatabaseId);
+      //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewmodel.mixDatabaseId);
       // }
     };
     $scope.getList = async function () {
@@ -85,9 +86,9 @@ app.controller("ServiceController", [
         $scope.mixDatabaseName,
       ]);
       if (resp) {
-        $scope.viewModel = resp;
-        $scope.viewModel.parentType = $scope.parentType;
-        $scope.viewModel.parentId = $scope.parentId;
+        $scope.viewmodel = resp;
+        $scope.viewmodel.parentType = $scope.parentType;
+        $scope.viewmodel.parentId = $scope.parentId;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

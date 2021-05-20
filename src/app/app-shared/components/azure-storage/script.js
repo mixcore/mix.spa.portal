@@ -1,4 +1,4 @@
-﻿modules.component("azureStorage", {
+﻿sharedComponents.component("azureStorage", {
   templateUrl: "/mix-app/views/app-shared/components/azure-storage/view.html",
   bindings: {
     data: "=",
@@ -24,7 +24,7 @@
         status.scrollTop = status.scrollHeight;
       };
 
-      ctrl.$onInit = function () { };
+      ctrl.$onInit = function () {};
 
       ctrl.createContainer = async () => {
         try {

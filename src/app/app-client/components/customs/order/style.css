@@ -1,5 +1,5 @@
-.package-wrapper h2{
-  margin-top:20px;
+.package-wrapper h2 {
+  margin-top: 20px;
 }
 .tbl-package span {
   margin-left: 0;
@@ -21,8 +21,7 @@
   font-size: 20px;
 }
 
-.tbl-package-slot th
-{
+.tbl-package-slot th {
   height: 0;
   padding: 0 14px;
   font-size: 20px;
@@ -41,7 +40,8 @@
   border-bottom: none;
 }
 
-.btn-minus,.btn-plus {
+.btn-minus,
+.btn-plus {
   width: 50px;
   height: 20px;
   font-weight: 700;
@@ -56,7 +56,6 @@
 .btn-plus {
   color: #333;
   background-color: #fff;
-
 }
 
 .btn-minus-dark {
@@ -71,8 +70,7 @@
   background-color: #333;
 }
 
-.tbl-package-mobile
-{
+.tbl-package-mobile {
   font-size: medium;
 }
 
@@ -82,7 +80,7 @@
   padding: 5px 5px;
   font-size: medium;
 }
-.tbl-package-mobile th{
+.tbl-package-mobile th {
   height: 0;
 }
 .tbl-package-mobile .btn-minus,
@@ -94,16 +92,16 @@
   line-height: 5px;
 }
 
-.tbl-final{
+.tbl-final {
   width: 100%;
 }
-.tbl-final .gift-title{
+.tbl-final .gift-title {
   padding: 5px 10px;
   background-color: #ddd;
-  color:#000;
+  color: #000;
 }
-.tbl-final .gift-quantity{
+.tbl-final .gift-quantity {
   padding: 5px 10px;
   background-color: #000;
-  color:#fff;
+  color: #fff;
 }

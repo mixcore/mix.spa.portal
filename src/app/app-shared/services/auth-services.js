@@ -1,28 +1,23 @@
 ﻿"use strict";
-app.factory("AuthService", [
+appShared.factory("AuthService", [
   "$http",
   "$rootScope",
   "$routeParams",
   "$q",
   "localStorageService",
-  "AppSettings",
+  "CryptoService",
+  "ApiService",
   function (
     $http,
     $rootScope,
     $routeParams,
     $q,
     localStorageService,
-    appSettings
+    cryptoService,
+    apiService
   ) {
     var authServiceFactory = {};
-    var _referredUrl = "";
     var _authentication = null;
-
-    var _externalAuthData = {
-      provider: "",
-      userName: "",
-      externalAccessToken: "",
-    };
 
     var _saveRegistration = function (registration) {
       _logOut();
@@ -33,6 +28,7 @@ app.factory("AuthService", [
           return response;
         });
     };
+
     var _forgotPassword = async function (data) {
       var apiUrl = "/account/forgot-password";
       var req = {
@@ -40,9 +36,10 @@ app.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await _getApiResult(req);
+      var resp = await apiService.getRestApiResult(req);
       return resp;
     };
+
     var _resetPassword = async function (data) {
       var apiUrl = "/account/reset-password";
       var req = {
@@ -50,7 +47,7 @@ app.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await _getApiResult(req);
+      var resp = await apiService.getRestApiResult(req);
       return resp;
     };
 
@@ -62,48 +59,18 @@ app.factory("AuthService", [
         Email: "",
         ReturnUrl: "",
       };
+      var message = cryptoService.encryptAES(JSON.stringify(data));
       var apiUrl = "/account/login";
       var req = {
         method: "POST",
         url: apiUrl,
-        data: JSON.stringify(data),
+        data: JSON.stringify({ message: message }),
       };
-      var resp = await _getApiResult(req);
-
+      var resp = await apiService.getRestApiResult(req, true);
       if (resp.isSucceed) {
-        data = resp.data;
-        var authData = {
-          userRoles: data.info.userRoles,
-          token: data.access_token,
-          userName: data.info.user.username,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          userId: data.info.user.id,
-        };
-        var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-        localStorageService.set("authorizationData", encrypted);
-        _authentication = {
-          isAuth: true,
-          userName: data.info.user.username,
-          userId: data.info.user.id,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          token: data.access_token,
-          useRefreshTokens: loginData.rememberme,
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(data.info.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
-        this.authentication = _authentication;
-        _initSettings().then(function () {
+        let encryptedData = resp.data;
+        apiService.updateAuthData(encryptedData);
+        apiService.initAllSettings().then(function () {
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
               window.top.location = $routeParams.ReturnUrl;
@@ -129,55 +96,29 @@ app.factory("AuthService", [
     };
 
     var _loginPopup = async function (loginData) {
+      return await this.login(loginData);
+    };
+
+    var _externalLogin = async function (loginData, provider) {
       var data = {
-        UserName: loginData.userName,
-        Password: loginData.password,
-        RememberMe: loginData.rememberMe,
-        Email: "",
-        ReturnUrl: "",
+        provider: provider,
+        userName: loginData.userName,
+        email: loginData.email,
+        externalAccessToken: loginData.accessToken,
       };
-      var apiUrl = "/account/login";
+      var message = cryptoService.encryptAES(JSON.stringify(data));
+      var apiUrl = "/account/external-login";
       var req = {
         method: "POST",
         url: apiUrl,
-        data: JSON.stringify(data),
+        data: JSON.stringify({ message: message }),
       };
-      var resp = await _getApiResult(req);
+      var resp = await apiService.getRestApiResult(req, true);
 
       if (resp.isSucceed) {
-        data = resp.data;
-        var authData = {
-          userRoles: data.info.userRoles,
-          token: data.access_token,
-          userName: data.info.user.username,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          userId: data.info.user.id,
-        };
-        var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-        localStorageService.set("authorizationData", encrypted);
-        _authentication = {
-          isAuth: true,
-          userName: data.info.user.NickName,
-          userId: data.info.user.id,
-          roleNames: data.info.userRoles.map((i) => i.role.normalizedName),
-          token: data.access_token,
-          useRefreshTokens: loginData.rememberme,
-          avatar: data.info.user.avatar,
-          refresh_token: data.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(data.info.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
-        this.authentication = _authentication;
-        _initSettings().then(function () {
+        let encryptedData = resp.data;
+        this.updateAuthData(encryptedData);
+        apiService.initAllSettings().then(function () {
           return resp;
         });
       } else {
@@ -193,266 +134,62 @@ app.factory("AuthService", [
         method: "GET",
         url: apiUrl,
       };
-      var resp = await _getApiResult(req);
+      localStorageService.remove("authorizationData");
+      _authentication = null;
+      var resp = await apiService.getRestApiResult(req);
       if (resp.isSucceed) {
-        localStorageService.remove("authorizationData");
-        _authentication = null;
-        // window.top.location.href = '/security/login';
+        window.top.location.href = "/security/login";
       }
     };
 
     var _fillAuthData = async function () {
-      var encryptedAuthData = localStorageService.get("authorizationData");
-
-      if (encryptedAuthData) {
-        var authData = JSON.parse($rootScope.decrypt(encryptedAuthData));
-        _authentication = {
-          isAuth: true,
-          userName: authData.userName,
-          userId: authData.userId,
-          roleNames: authData.roleNames,
-          token: authData.token,
-          useRefreshTokens: authData.useRefreshTokens,
-          avatar: authData.avatar,
-          refresh_token: authData.refresh_token,
-          referredUrl: "/",
-        };
-        angular.forEach(authData.userRoles, function (value, key) {
-          if (
-            value.role.name === "SuperAdmin"
-            //|| value.role.name === 'Admin'
-          ) {
-            _authentication.isAdmin = true;
-          }
-        });
-        this.authentication = _authentication;
-      }
+      this.authentication = await apiService.fillAuthData();
     };
 
-    var _getSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      // && culture !== undefined && settings.lang === culture
-      if (settings) {
-        return settings;
-      } else {
-        var url = "/portal";
-        if (culture) {
-          url += "/" + culture;
-        }
-        url += "/all-settings";
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return _getApiResult(req).then(function (response) {
-          return response.data;
-        });
-      }
-    };
-
-    var _fillSettings = async function (culture) {
-      var settings = localStorageService.get("settings");
-      if (settings && settings.lang === culture) {
-        _settings = settings;
-        return settings;
-      } else {
-        if (culture !== undefined && settings && settings.lang !== culture) {
-          await _removeSettings();
-          await _removeTranslator();
-        }
-        settings = await _getSettings(culture);
-        localStorageService.set("settings", settings);
-        //window.top.location = location.href;
-        return settings;
-      }
-    };
-
-    var _initSettings = async function (culture) {
-      localStorageService.remove("settings");
-      localStorageService.remove("translator");
-      localStorageService.remove("globalSettings");
-
-      var response = await _getSettings(culture);
-      localStorageService.set("settings", response.settings);
-      localStorageService.set("translator", response.translator);
-      localStorageService.set("globalSettings", response.globalSettings);
-
-      return response;
-    };
-
-    var _refreshToken = function (id) {
-      var deferred = $q.defer();
+    var _refreshToken = async function (id, accessToken) {
+      let data = {
+        refreshToken: id,
+        accessToken: accessToken,
+      };
       if (id) {
-        var url =
-          appSettings.serviceBase +
-          "/api/" +
-          appSettings.apiVersion +
-          "/account/refresh-token/" +
-          id;
-        $http.get(url).then(
-          function (response) {
-            var data = response.data.data;
-
-            if (data) {
-              try {
-                var authData = {
-                  userRoles: data.info.userRoles,
-                  token: data.access_token,
-                  userName: data.info.user.firstName,
-                  roleNames: data.info.userRoles.map(
-                    (i) => i.role.normalizedName
-                  ),
-                  avatar: data.info.user.avatar,
-                  refresh_token: data.refresh_token,
-                  userId: data.info.user.id,
-                };
-                var encrypted = $rootScope.encrypt(JSON.stringify(authData));
-                localStorageService.set("authorizationData", encrypted);
-                authData.token = data.access_token;
-                authData.refresh_token = data.refresh_token;
-                _authentication.token = data.access_token;
-                _authentication.refresh_token = data.refresh_token;
-                if (
-                  !$rootScope.globalSettings.lastUpdateConfiguration ||
-                  $rootScope.globalSettings.lastUpdateConfiguration <
-                  data.lastUpdateConfiguration
-                ) {
-                  _initSettings();
-                }
-              } catch (e) {
-                _logOut();
-                deferred.reject(e);
-              }
-            }
-
-            deferred.resolve(response);
-          },
-          function (error) {
-            _logOut();
-            deferred.reject(error);
-          }
-        );
+        var apiUrl = `/account/refresh-token`;
+        var req = {
+          method: "POST",
+          url: apiUrl,
+          data: JSON.stringify(data),
+        };
+        var resp = await apiService.getRestApiResult(req);
+        if (resp.isSucceed) {
+          let encryptedData = resp.data;
+          return this.updateAuthData(encryptedData);
+        } else {
+          _logOut();
+        }
       } else {
         _logOut();
-        deferred.reject();
       }
-      return deferred.promise;
-    };
-
-    var _obtainAccessToken = function (externalData) {
-      var deferred = $q.defer();
-      var url =
-        appSettings.serviceBase +
-        "/" +
-        appSettings.apiVersion +
-        "/account/ObtainLocalAccessToken";
-      $http
-        .get(url, {
-          params: {
-            provider: externalData.provider,
-            externalAccessToken: externalData.externalAccessToken,
-          },
-        })
-        .success(function (response) {
-          localStorageService.set("authorizationData", {
-            token: response.access_token,
-            userName: response.userName,
-            roleName: response.userData.roleNames,
-            refresh_token: response.refresh_token,
-            useRefreshTokens: true,
-          });
-
-          _authentication.isAuth = true;
-          _authentication.isAdmin = _authentication.isAdmin =
-            $.inArray("SuperAdmin", response.userData.RoleNames) >= 0;
-          _authentication.userName = response.userName;
-          _authentication.useRefreshTokens = false;
-
-          deferred.resolve(response);
-        })
-        .error(function (err, status) {
-          _logOut();
-          deferred.reject(err);
-        });
-
-      return deferred.promise;
-    };
-
-    var _registerExternal = function (registerExternalData) {
-      var deferred = $q.defer();
-
-      $http
-        .post(
-          appSettings.serviceBase +
-          "/" +
-          appSettings.apiVersion +
-          "/account/registerexternal",
-          registerExternalData
-        )
-        .success(function (response) {
-          localStorageService.set("authorizationData", {
-            token: response.access_token,
-            userName: response.userName,
-            refresh_token: response.refresh_token,
-            useRefreshTokens: true,
-          });
-
-          _authentication.isAuth = true;
-          _authentication.userName = response.userName;
-          _authentication.useRefreshTokens = false;
-
-          deferred.resolve(response);
-        })
-        .error(function (err, status) {
-          _logOut();
-          deferred.reject(err);
-        });
-
-      return deferred.promise;
-    };
-
-    var _getApiResult = async function (req) {
-      $rootScope.isBusy = true;
-      req.url =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion + req.url;
-
-      return $http(req).then(
-        function (resp) {
-          //var resp = results.data;
-
-          return resp.data;
-        },
-        function (error) {
-          var t = {
-            isSucceed: false,
-            errors: error.data.errors || [error.statusText],
-          };
-          return t;
-        }
-      );
     };
 
     var _isInRole = function (roleName) {
-      return this.authentication.roleNames.includes(roleName.toUpperCase());
+      if (!this.authentication) {
+        return false;
+      }
+      var role = this.authentication.info.userRoles.filter(
+        (m) => m.description == roleName && m.isActived
+      );
+      return role.length > 0;
     };
 
     authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.isInRole = _isInRole;
     authServiceFactory.forgotPassword = _forgotPassword;
     authServiceFactory.resetPassword = _resetPassword;
-    authServiceFactory.initSettings = _initSettings;
     authServiceFactory.login = _login;
+    authServiceFactory.externalLogin = _externalLogin;
     authServiceFactory.loginPopup = _loginPopup;
     authServiceFactory.logOut = _logOut;
-    authServiceFactory.referredUrl = _referredUrl;
     authServiceFactory.fillAuthData = _fillAuthData;
-    authServiceFactory.authentication = _authentication;
     authServiceFactory.refreshToken = _refreshToken;
-
-    authServiceFactory.obtainAccessToken = _obtainAccessToken;
-    authServiceFactory.externalAuthData = _externalAuthData;
-    authServiceFactory.registerExternal = _registerExternal;
-
     return authServiceFactory;
   },
 ]);

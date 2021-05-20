@@ -6,7 +6,7 @@ modules.component("mixDatabaseNavValues", {
     mixDatabaseName: "=",
     parentId: "=",
     parentType: "=",
-    fields: "=?",
+    columns: "=?",
     header: "=",
     data: "=?",
     maxCol: "=?",
@@ -21,15 +21,15 @@ modules.component("mixDatabaseNavValues", {
     "ngAppSettings",
     "RestRelatedAttributeDataPortalService",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, ngAppSettings, navService, fieldService) {
+    function ($rootScope, $scope, ngAppSettings, navService, columnService) {
       var ctrl = this;
       ctrl.selectedProp = null;
       ctrl.request = angular.copy(ngAppSettings.restRequest);
-      ctrl.request.orderBy = "priority";
+      ctrl.request.orderBy = "Priority";
       ctrl.request.query = "{}";
 
       ctrl.request.direction = 0;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.maxCol = ctrl.maxCol || 3;
         if (!ctrl.createUrl) {
@@ -38,12 +38,12 @@ modules.component("mixDatabaseNavValues", {
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/mix-database-data/details";
         }
-        if (!ctrl.fields) {
-          var getFields = await fieldService.initData(
+        if (!ctrl.columns) {
+          var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
           if (getFields.isSucceed) {
-            ctrl.fields = getFields.data;
+            ctrl.columns = getFields.data;
             $scope.$apply();
           }
         }
@@ -112,7 +112,7 @@ modules.component("mixDatabaseNavValues", {
           `${ctrl.updateUrl}?dataId=${nav.dataId}&mixDatabaseId=${nav.mixDatabaseId}&parentId=${ctrl.parentId}&parentType=${ctrl.parentType}`
         );
         // ctrl.refDataModel = nav;
-        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.field.referenceId)[0];
+        // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
         // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
@@ -135,7 +135,7 @@ modules.component("mixDatabaseNavValues", {
                 }
                 ctrl.refDataModel = angular.copy(ctrl.defaultDataModel);
                 var e = $(
-                  ".pane-data-" + ctrl.mixDatabaseDataValue.field.referenceId
+                  ".pane-data-" + ctrl.mixDatabaseDataValue.column.referenceId
                 )[0];
                 angular.element(e).triggerHandler("click");
                 $rootScope.isBusy = false;
@@ -178,7 +178,7 @@ modules.component("mixDatabaseNavValues", {
       };
       ctrl.view = function (item) {
         var obj = {
-          fields: ctrl.fields,
+          columns: ctrl.columns,
           item: item,
         };
         $rootScope.preview("mix-database-data", obj, null, "modal-lg");

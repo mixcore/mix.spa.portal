@@ -7,6 +7,7 @@ app.controller("AppSettingsController", [
   "$timeout",
   "$location",
   "AuthService",
+  "ApiService",
   "CommonService",
   "AppSettingsServices",
   function (
@@ -17,6 +18,7 @@ app.controller("AppSettingsController", [
     $timeout,
     $location,
     authService,
+    apiService,
     commonService,
     appSettingsServices
   ) {
@@ -42,7 +44,6 @@ app.controller("AppSettingsController", [
     $scope.loadAppSettings = async function () {
       $rootScope.isBusy = true;
 
-      var id = $routeParams.id;
       var response = await appSettingsServices.getAppSettings();
       if (response && response.isSucceed) {
         $scope.appSettings = response.data;
@@ -54,14 +55,10 @@ app.controller("AppSettingsController", [
         $scope.$apply();
       }
 
-      var result = await commonService.getSettings();
-      if (result.isSucceed) {
-        $scope.settings = result.data;
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        $rootScope.isBusy = false;
-      }
+      await apiService.initAllSettings();
+      $scope.localizeSettings = $rootScope.localizeSettings;
+      $rootScope.isBusy = false;
+      $scope.$apply();
 
       // load portal menus
       commonService.loadJArrayData("portal-menus.json").then((resp) => {

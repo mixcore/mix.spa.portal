@@ -1,0 +1,10 @@
+quill-editor .ql-container {
+  min-height: 300px;
+  overflow: auto;
+}
+quill-editor .ql-toolbar {
+  position: sticky !important;
+  top: 3.9rem;
+  z-index: 12;
+  background-color: #fff;
+}

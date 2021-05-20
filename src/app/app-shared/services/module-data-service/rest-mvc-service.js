@@ -1,5 +1,5 @@
 "use strict";
-app.factory("RestMvcModuleDataService", [
+appShared.factory("RestMvcModuleDataService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
@@ -10,7 +10,7 @@ app.factory("RestMvcModuleDataService", [
         method: "GET",
         url: url,
       };
-      return await commonService.getRestApiResult(req);
+      return await apiService.getRestApiResult(req);
     };
     serviceFactory.initForm = _initForm;
     return serviceFactory;

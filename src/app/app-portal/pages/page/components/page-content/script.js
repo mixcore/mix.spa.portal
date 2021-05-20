@@ -12,7 +12,7 @@
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
       ctrl.generateSeo = function () {
-        if ($scope.viewModel) {
+        if ($scope.viewmodel) {
           if (ctrl.model.seoName === null || ctrl.model.seoName === "") {
             ctrl.model.seoName = $rootScope.generateKeyword(
               ctrl.model.title,

@@ -14,7 +14,7 @@ app.controller("MixDatabaseDataController", [
     $routeParams,
     $location,
     service,
-    fieldService
+    columnService
   ) {
     BaseRestCtrl.call(
       this,
@@ -28,9 +28,9 @@ app.controller("MixDatabaseDataController", [
     $scope.queries = {};
     $scope.data = {};
     $scope.exportAll = true;
-    $scope.settings = $rootScope.globalSettings;
-    $scope.request.orderBy = "Priority";
-    $scope.request.direction = "Asc";
+    $scope.localizeSettings = $rootScope.globalSettings;
+    // $scope.request.orderBy = "Priority";
+    // $scope.request.direction = "Asc";
     $scope.filterType = "contain";
     $scope.defaultId = "default";
     $scope.importFile = {
@@ -47,6 +47,7 @@ app.controller("MixDatabaseDataController", [
       $scope.parentId = $routeParams.parentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
+      $scope.request.isGroup = $routeParams.isGroup || false;
       if ($routeParams.backUrl) {
         $scope.backUrl = decodeURIComponent($routeParams.backUrl);
       }
@@ -64,41 +65,40 @@ app.controller("MixDatabaseDataController", [
     $scope.init = async function () {
       $scope.initRouteParams();
       if ($scope.mixDatabaseName || $scope.mixDatabaseId) {
-        var getFields = await fieldService.initData(
+        var getFields = await columnService.initData(
           $scope.mixDatabaseName || $scope.mixDatabaseId
         );
         if (getFields.isSucceed) {
-          $scope.fields = getFields.data;
+          $scope.columns = getFields.data;
           $scope.$apply();
         }
       }
     };
-    $scope.saveData = function (data) {
-      $scope.viewModel = data;
-      $scope.save();
+    $scope.saveSuccess = function (data) {
+      $scope.viewmodel = data;
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
-        $scope.viewModel = $scope.selectedList.data[0];
+        $scope.viewmodel = $scope.selectedList.data[0];
       }
     };
-    $scope.saveSuccessCallback = function () {
-      if ($location.path() == "/portal/mix-database-data/create") {
-        let backUrl =
-          $scope.backUrl ||
-          `/portal/mix-database-data/details?dataId=${$scope.viewModel.id}`;
-        $rootScope.goToSiteUrl(backUrl);
-      } else {
-        if ($scope.parentId && $scope.parentType == 'Set') {
-          $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
-        } else {
-          let backUrl =
-            $scope.backUrl ||
-            `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewModel.mixDatabaseId}&mixDatabaseName=${$scope.viewModel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewModel.mixDatabaseName}`;
-          $rootScope.goToSiteUrl(backUrl);
-        }
-      }
-    };
+    // $scope.saveSuccessCallback = function () {
+    //   if ($location.path() == "/portal/mix-database-data/create") {
+    //     let backUrl =
+    //       $scope.backUrl ||
+    //       `/portal/mix-database-data/details?dataId=${$scope.viewmodel.id}`;
+    //     $rootScope.goToSiteUrl(backUrl);
+    //   } else {
+    //     if ($scope.parentId && $scope.parentType == 'Set') {
+    //       $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
+    //     } else {
+    //       let backUrl =
+    //         $scope.backUrl ||
+    //         `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
+    //       $rootScope.goToSiteUrl(backUrl);
+    //     }
+    //   }
+    // };
 
     $scope.preview = function (item) {
       item.editUrl = "/portal/post/details/" + item.id;
@@ -327,6 +327,16 @@ app.controller("MixDatabaseDataController", [
         if (resp) {
           $rootScope.showErrors(resp.errors);
         }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
+
+    $scope.migrate = async function () {
+      if ($routeParams.mixDatabaseId) {
+        $rootScope.isBusy = true;
+        var result = await service.migrate($routeParams.mixDatabaseId);
+        $scope.handleResult(result);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

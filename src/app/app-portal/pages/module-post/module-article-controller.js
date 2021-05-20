@@ -6,6 +6,7 @@ app.controller("ModulePostController", [
   "$routeParams",
   "$location",
   "ModulePostRestService",
+  "ApiService",
   "CommonService",
   function (
     $scope,
@@ -26,7 +27,7 @@ app.controller("ModulePostController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.settings = $rootScope.globalSettings;
+    $scope.localizeSettings = $rootScope.globalSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.translate = $rootScope.translate;
@@ -86,7 +87,7 @@ app.controller("ModulePostController", [
       }
     };
 
-    $scope.removeCallback = function () { };
+    $scope.removeCallback = function () {};
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);

@@ -1,5 +1,5 @@
 "use strict";
-app.factory("RestMixDatabaseDataValuePortalService", [
+appShared.factory("RestMixDatabaseDataValuePortalService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);

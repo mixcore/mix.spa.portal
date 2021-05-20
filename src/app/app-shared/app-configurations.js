@@ -1,11 +1,13 @@
-app.constant("AppSettings", {
+appShared.constant("AppSettings", {
   serviceBase: "",
   apiVersion: "v1",
 });
-app.constant("ngAppSettings", {
+appShared.constant("ngAppSettings", {
   serviceBase: "",
+  encryptKey: "MbQeThWmZq4t7w!z$C&F)J@NcRfUjXn2",
+  encryptIV: "3s6v9y$B&E)H@McQ",
   clientId: "ngAuthApp",
-  facebookAppId: "464285300363325",
+  facebookAppId: "",
   request: {
     pageSize: "20",
     pageIndex: 0,
@@ -161,12 +163,13 @@ app.constant("ngAppSettings", {
   ],
   icons: [],
 });
-app.run([
+appShared.run([
   "$http",
   "$rootScope",
   "ngAppSettings",
   "$location",
   "BaseRestService",
+  "ApiService",
   "CommonService",
   "AuthService",
   "TranslatorService",
@@ -176,6 +179,7 @@ app.run([
     ngAppSettings,
     $location,
     baseRestService,
+    apiService,
     commonService,
     authService,
     translatorService
@@ -218,19 +222,37 @@ app.run([
       return input;
     };
 
-    $rootScope.generateKeyword = function (src, character) {
+    $rootScope.generateKeyword = function (
+      src,
+      character,
+      isCamelCase = false,
+      isLowerFirst = false
+    ) {
       if (src) {
         src = $rootScope.parseUnsignString(src);
-        return (
-          src
+
+        if (isCamelCase) {
+          src = src
+            .replace(/\w\S*/g, function (txt) {
+              return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            })
+            .replace(/[^a-zA-Z0-9]+/g, "");
+
+          if (isLowerFirst) {
+            src = src.replace(/^./, (str) => str.toLowerCase()); // first to lowercase
+          }
+        } else {
+          src = src
             .replace(/[^a-zA-Z0-9]+/g, character)
             .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
             .replace(/([a-z])([A-Z])/g, "$1-$2")
             // .replace(/([0-9])([^0-9])/g, "$1-$2")
             // .replace(/([^0-9])([0-9])/g, "$1-$2")
             .replace(/-+/g, character)
-            .toLowerCase()
-        );
+            .toLowerCase();
+        }
+
+        return src;
       }
     };
 
@@ -403,7 +425,7 @@ app.run([
       var iv = CryptoJS.lib.WordArray.random(ivSize / 8);
 
       var options = {
-        mode: CryptoJS.mode.ECB,
+        mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
         iv: iv,
       };
@@ -422,7 +444,7 @@ app.run([
       var key = CryptoJS.enc.Base64.parse(encryptedData.key);
       var iv = CryptoJS.lib.WordArray.random(ivSize / 8);
       var options = {
-        mode: CryptoJS.mode.ECB,
+        mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
         iv: iv,
       };
@@ -443,7 +465,7 @@ app.run([
         processData: false, // Not to process data
         data: form,
       };
-      return await commonService.getApiResult(req);
+      return await apiService.getApiResult(req);
     };
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {
@@ -498,13 +520,14 @@ app.run([
       ) {
         d += performance.now(); //use high-precision timer if available
       }
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (
-        c
-      ) {
-        var r = (d + Math.random() * 16) % 16 | 0;
-        d = Math.floor(d / 16);
-        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      });
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+        /[xy]/g,
+        function (c) {
+          var r = (d + Math.random() * 16) % 16 | 0;
+          d = Math.floor(d / 16);
+          return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+        }
+      );
     };
     $rootScope.filterArray = function (array, keys, values) {
       var result = [];
@@ -617,16 +640,16 @@ app.run([
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
-            var fieldData = $rootScope.findObjectByKey(
+            var columnData = $rootScope.findObjectByKey(
               item.data,
               "attributeName",
               attr.name
             );
-            if (fieldData) {
-              var encryptedData = $rootScope.encrypt(fieldData.stringValue);
-              fieldData.encryptValue = encryptedData.data;
-              fieldData.encryptKey = encryptedData.key;
-              fieldData.stringValue = "";
+            if (columnData) {
+              var encryptedData = $rootScope.encrypt(columnData.stringValue);
+              columnData.encryptValue = encryptedData.data;
+              columnData.encryptKey = encryptedData.key;
+              columnData.stringValue = "";
             }
           });
         }
@@ -636,17 +659,17 @@ app.run([
       angular.forEach(attributes, function (attr) {
         if (attr.isEncrypt) {
           angular.forEach(data, function (item) {
-            var fieldData = $rootScope.findObjectByKey(
+            var columnData = $rootScope.findObjectByKey(
               item.data,
               "attributeName",
               attr.name
             );
-            if (fieldData) {
+            if (columnData) {
               var encryptedData = {
-                key: fieldData.encryptKey,
-                data: fieldData.encryptValue,
+                key: columnData.encryptKey,
+                data: columnData.encryptValue,
               };
-              fieldData.stringValue = $rootScope.decrypt(encryptedData);
+              columnData.stringValue = $rootScope.decrypt(encryptedData);
             }
           });
         }

@@ -43,9 +43,9 @@ app.controller("TemplateController", [
     $scope.loadFolder = function (d) {
       $location.url(
         "/portal/template/list/" +
-        $routeParams.themeId +
-        "?folderType=" +
-        encodeURIComponent(d)
+          $routeParams.themeId +
+          "?folderType=" +
+          encodeURIComponent(d)
       );
     };
     $scope.loadParams = async function () {
@@ -69,10 +69,10 @@ app.controller("TemplateController", [
           themeId: themeId,
         });
         if (resp && resp.isSucceed) {
-          $scope.viewModel = resp.data;
+          $scope.viewmodel = resp.data;
           $scope.canRename =
-            $scope.viewModel.id === 0 ||
-            $scope.viewModel.fileName.indexOf("Copy") === 0;
+            $scope.viewmodel.id === 0 ||
+            $scope.viewmodel.fileName.indexOf("Copy") === 0;
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -87,7 +87,7 @@ app.controller("TemplateController", [
         if (resp && resp.isSucceed) {
           resp.data.themeId = themeId;
           resp.data.folderType = $scope.folderType;
-          $scope.viewModel = resp.data;
+          $scope.viewmodel = resp.data;
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -157,13 +157,13 @@ app.controller("TemplateController", [
     };
 
     $scope.updateTemplateContent = function (content) {
-      $scope.viewModel.content = content;
+      $scope.viewmodel.content = content;
     };
     $scope.updateStyleContent = function (content) {
-      $scope.viewModel.scripts = content;
+      $scope.viewmodel.scripts = content;
     };
     $scope.updateScriptContent = function (content) {
-      $scope.viewModel.styles = content;
+      $scope.viewmodel.styles = content;
     };
   },
 ]);

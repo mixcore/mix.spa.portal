@@ -2,44 +2,44 @@ modules.component("mixDatabaseColumn", {
   templateUrl:
     "/mix-app/views/app-portal/components/mix-database-column/view.html",
   bindings: {
-    column: "="
+    column: "=",
   },
   controller: [
     "$rootScope",
     "$scope",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, fieldService) {
+    function ($rootScope, $scope, columnService) {
       var ctrl = this;
       ctrl.value = {};
-      ctrl.field = {
+      ctrl.column = {
         dataType: "Text",
-        mixDatabaseName: "sys_additional_field",
+        mixDatabaseName: "sys_additional_column",
         mixDatabaseId: 6,
       };
       ctrl.selectedCol = null;
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
-        if (ctrl.field.name) {
+        if (ctrl.column.name) {
           var current = $rootScope.findObjectByKey(
-            ctrl.additionalData.fields,
+            ctrl.additionalData.columns,
             "name",
-            ctrl.field.name
+            ctrl.column.name
           );
           if (current) {
-            $rootScope.showErrors(["Field " + ctrl.field.name + " existed!"]);
+            $rootScope.showErrors(["Field " + ctrl.column.name + " existed!"]);
           } else {
-            ctrl.field.priority = ctrl.additionalData.fields.length + 1;
+            ctrl.column.priority = ctrl.additionalData.columns.length + 1;
             $rootScope.isBusy = true;
-            var saveField = await fieldService.create(ctrl.field);
+            var saveField = await columnService.create(ctrl.column);
             $rootScope.isBusy = false;
             if (saveField.isSucceed) {
-              ctrl.additionalData.fields.push(saveField.data);
+              ctrl.additionalData.columns.push(saveField.data);
 
-              //reset field option
-              ctrl.field.title = "";
-              ctrl.field.name = "";
-              ctrl.field.dataType = "Text";
+              //reset column option
+              ctrl.column.title = "";
+              ctrl.column.name = "";
+              ctrl.column.dataType = "Text";
               $scope.$apply();
             }
           }
@@ -64,11 +64,11 @@ modules.component("mixDatabaseColumn", {
       };
       ctrl.updateOrders = function (index) {
         if (index > ctrl.dragStartIndex) {
-          ctrl.fields.splice(ctrl.dragStartIndex, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex, 1);
         } else {
-          ctrl.fields.splice(ctrl.dragStartIndex + 1, 1);
+          ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
         }
-        angular.forEach(ctrl.fields, function (e, i) {
+        angular.forEach(ctrl.columns, function (e, i) {
           e.priority = i;
         });
       };
@@ -90,9 +90,9 @@ modules.component("mixDatabaseColumn", {
       ctrl.removeAttributeConfirmed = async function (val, index) {
         if (val.id) {
           $rootScope.isBusy = true;
-          var result = await fieldService.delete([val.id]);
+          var result = await columnService.delete([val.id]);
           if (result.isSucceed) {
-            ctrl.additionalData.fields.splice(index, 1);
+            ctrl.additionalData.columns.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -101,7 +101,7 @@ modules.component("mixDatabaseColumn", {
             $scope.$apply();
           }
         } else {
-          ctrl.additionalData.fields.splice(index, 1);
+          ctrl.additionalData.columns.splice(index, 1);
         }
       };
     },

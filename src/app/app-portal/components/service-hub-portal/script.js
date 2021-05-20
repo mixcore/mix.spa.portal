@@ -11,18 +11,18 @@
     "RestMixDatabaseColumnPortalService",
     "RestMixDatabaseDataClientService",
     "UserServices",
-    function ($rootScope, $scope, fieldService, service, userServices) {
+    function ($rootScope, $scope, columnService, service, userServices) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
-      ctrl.settings = $rootScope.globalSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.user = {
         loggedIn: false,
         connection: {},
       };
-      ctrl.attrData = null;
+      ctrl.mixDatabaseData = null;
       ctrl.isHide = true;
       ctrl.hideContact = true;
-      ctrl.fields = [];
+      ctrl.columns = [];
       ctrl.members = [];
       ctrl.errors = [];
       ctrl.messages = {
@@ -48,8 +48,8 @@
       };
       ctrl.loadData = async function () {
         /*
-                    If input is data id => load ctrl.attrData from service and handle it independently
-                    Else modify input ctrl.attrData
+                    If input is data id => load ctrl.mixDatabaseData from service and handle it independently
+                    Else modify input ctrl.mixDatabaseData
                 */
         $rootScope.isBusy = true;
         var getDefault = await service.initData(ctrl.mixDatabaseName);
@@ -59,38 +59,38 @@
           ctrl.defaultData.data.user_id = ctrl.user.connection.id;
           ctrl.defaultData.data.user_avatar = ctrl.user.connection.avatar;
           ctrl.defaultData.data.data_type = 9;
-          ctrl.attrData = angular.copy(ctrl.defaultData);
+          ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
           $rootScope.isBusy = false;
         }
-        var getFields = await fieldService.initData(ctrl.mixDatabaseName);
+        var getFields = await columnService.initData(ctrl.mixDatabaseName);
         if (getFields.isSucceed) {
-          ctrl.fields = getFields.data;
+          ctrl.columns = getFields.data;
         }
       };
       ctrl.submit = async function () {
         if (ctrl.validate()) {
           ctrl.request.action = "send_group_message";
           ctrl.request.uid = ctrl.user.connection.id;
-          ctrl.request.data = ctrl.attrData.data;
+          ctrl.request.data = ctrl.mixDatabaseData.data;
           ctrl.request.connection = ctrl.user.connection;
           ctrl.connection.invoke("HandleRequest", JSON.stringify(ctrl.request));
-          ctrl.attrData = angular.copy(ctrl.defaultData);
+          ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
         }
       };
       ctrl.validate = function () {
         var isValid = true;
         ctrl.errors = [];
-        angular.forEach(ctrl.fields, function (field) {
-          if (field.regex) {
-            var regex = RegExp(field.regex, "g");
-            isValid = regex.test(ctrl.attrData.data[field.name]);
+        angular.forEach(ctrl.columns, function (column) {
+          if (column.regex) {
+            var regex = RegExp(column.regex, "g");
+            isValid = regex.test(ctrl.mixDatabaseData.data[column.name]);
             if (!isValid) {
-              ctrl.errors.push(`${field.name} is not match Regex`);
+              ctrl.errors.push(`${column.name} is not match Regex`);
             }
           }
-          if (isValid && field.isEncrypt) {
-            ctrl.attrData.data[field.name] = $rootScope.encrypt(
-              ctrl.attrData.data[field.name]
+          if (isValid && column.isEncrypt) {
+            ctrl.mixDatabaseData.data[column.name] = $rootScope.encrypt(
+              ctrl.mixDatabaseData.data[column.name]
             );
           }
         });

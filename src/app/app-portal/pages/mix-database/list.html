@@ -1,17 +1,22 @@
 <aside class="bd-sidebar sub-sidebar">
   <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
-    <div class="btn-group w-100 mb-3" role="group" aria-label="Basic example">
-      <a href="/portal/mix-database/create" class="btn btn-outline-primary m-0">
-        <i class="fas fa-plus"></i> Create Database
-      </a>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <filter-list
-          request="request"
-          orders="orders"
-          callback="getList(pageIndex)"
-        ></filter-list>
+    <div class="card card-body">
+      <div class="btn-group w-100 mb-3" role="group" aria-label="Basic example">
+        <a
+          href="/portal/mix-database/create"
+          class="btn btn-primary text-white m-0"
+        >
+          <i class="fas fa-plus"></i> Create Database
+        </a>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <filter-list
+            request="request"
+            orders="orders"
+            callback="getList(pageIndex)"
+          ></filter-list>
+        </div>
       </div>
     </div>
   </nav>
@@ -34,26 +39,18 @@
               <tr>
                 <!-- <th scope="col" style="width: 3%;">
                     </th> -->
-                <th scope="col" style="width: 4%;">
+                <th scope="col" style="width: 4%">
                   <input
                     type="checkbox"
                     ng-model="selectedList.isSelectAll"
                     ng-change="selectAll(selectedList.isSelectAll)"
                   />
                 </th>
-                <th scope="col" style="width: 25%;">
-                  Database
-                </th>
-                <th scope="col" width="20%">
-                  Name
-                </th>
-                <th scope="col" width="10%">
-                  Type
-                </th>
-                <th scope="col" width="15%">
-                  Created Date
-                </th>
-                <th scope="col" style="width: 5%;"></th>
+                <th scope="col" style="width: 25%">Database</th>
+                <th scope="col" width="20%">Name</th>
+                <th scope="col" width="10%">Type</th>
+                <th scope="col" width="15%">Created Date</th>
+                <th scope="col" style="width: 5%"></th>
               </tr>
             </thead>
 
@@ -65,7 +62,7 @@
                 sort-model-id="{{item.id}}"
               >
                 <!-- <td style="cursor:move;" class="drag-header">
-                        <small class="fa fa-grip-vertical text-black-50 align-middle"></small>
+                        <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small>
                     </td> -->
                 <td>
                   <div class="form-check">
@@ -88,7 +85,7 @@
                 </td>
                 <td>
                   <small class="text-black-50">
-                    {{item.createdDateTime | utcToLocal}}
+                    {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
                   </small>
                 </td>
                 <td>

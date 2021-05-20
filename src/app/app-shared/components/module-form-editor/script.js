@@ -1,11 +1,12 @@
-﻿modules.component("moduleFormEditor", {
-  templateUrl: "/mix-app/views/app-shared/components/module-form-editor/view.html",
+﻿sharedComponents.component("moduleFormEditor", {
+  templateUrl:
+    "/mix-app/views/app-shared/components/module-form-editor/view.html",
   bindings: {
     data: "=",
     datatype: "=?",
     inputClass: "=",
     isShowTitle: "=",
-    fieldTitle: "=",
+    columnTitle: "=",
   },
   controller: [
     "$rootScope",
@@ -16,7 +17,8 @@
       ctrl.icons = ngAppSettings.icons;
       this.dataTypes = ngAppSettings.dataTypes;
       ctrl.$onInit = function () {
-        ctrl.dataType = ctrl.data.dataType.toLowerCase() || ctrl.dataType.toLowerCase();
+        ctrl.dataType =
+          ctrl.data.dataType.toLowerCase() || ctrl.dataType.toLowerCase();
       };
     },
   ],
