@@ -1,6 +1,6 @@
 appShared.constant("AppSettings", {
   serviceBase: "",
-  apiVersion: "v1",
+  apiVersion: "v2",
 });
 appShared.constant("ngAppSettings", {
   serviceBase: "",

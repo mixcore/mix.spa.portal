@@ -26,7 +26,7 @@ var dest = "."; //For publish folder use "./bin/Release/PublishOutput/";
 
 var paths = {
   //webroot: "./dist/Mix.Cms.Web/wwwroot/", // Use for current repo dist
-  webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/mix-app/", // Use for mix.core repo
+  webroot: "../mix.core.v2/src/applications/Mixcore/wwwroot/mix-app/", // Use for mix.core repo
   webapp: "./src/app/", //app
   libs: "./src/lib/",
   nodeModules: "./node_modules/",
