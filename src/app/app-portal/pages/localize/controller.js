@@ -26,51 +26,37 @@ app.controller("LocalizeController", [
       ngAppSettings,
       service
     );
-    $scope.cates = [];
-    $scope.localizeSettings = $rootScope.globalSettings;
-    $scope.defaultId = "default";
-    $scope.languageFile = {
-      file: null,
-      fullPath: "",
-      folder: "Language",
-      title: "",
-      description: "",
-    };
-    $scope.dataTypes = $rootScope.globalSettings.dataTypes;
-    $scope.$on("$viewContentLoaded", function () {
-      $scope.cates = ngAppSettings.enums.language_cates;
-      $scope.localizeSettings = $rootScope.globalSettings;
-      $scope.cate = $scope.cates[0];
-    });
+
     $scope.getSingleSuccessCallback = function () {
-      $scope.viewmodel.category = "Site";
+      $scope.cates = ngAppSettings.enums.configuration_cates;
+      $scope.globalSettings = $rootScope.globalSettings;
+      $scope.request.category = $routeParams.category || "";
+      if (!$scope.viewmodel.id) {
+        $scope.viewmodel.property.dataType = "Text";
+      }
+      if (!$scope.viewmodel.category) {
+        $scope.viewmodel.category = "Site";
+      }
     };
     $scope.saveSuccessCallback = function () {
       commonService.initAllSettings().then(function () {
-        $location.url($scope.referrerUrl || "/portal/localize/list");
+        // $location.url($scope.referrerUrl);
         $rootScope.isBusy = false;
         $scope.$apply();
       });
     };
     $scope.removeCallback = function () {
       commonService.initAllSettings().then(function () {
-        // $location.url($scope.referrerUrl);
+        $location.url($scope.referrerUrl);
       });
     };
-    $scope.generateDefault = function (text, cate) {
-      if (!$routeParams.id && !$scope.viewmodel.keyword) {
-        $scope.viewmodel.defaultValue = text;
-        $scope.viewmodel.keyword =
-          cate.prefix +
-          text
-            .replace(/[^a-zA-Z0-9]+/g, "_")
-            .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-            .replace(/([a-z])([A-Z])/g, "$1-$2")
-            .replace(/([0-9])([^0-9])/g, "$1-$2")
-            .replace(/([^0-9])([0-9])/g, "$1-$2")
-            .replace(/-+/g, "_")
-            .toLowerCase();
-      }
+
+    $scope.generateName = function () {
+      $scope.viewmodel.keyword = $rootScope.generateKeyword(
+        $scope.viewmodel.keyword,
+        "_",
+        true
+      );
     };
   },
 ]);

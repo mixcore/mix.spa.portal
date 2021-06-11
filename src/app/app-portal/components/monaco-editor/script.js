@@ -21,11 +21,11 @@
       ctrl.minHeight = 400;
       ctrl.isFull = false;
       ctrl.id = Math.floor(Math.random() * 100) + 1;
-      ctrl.$onChanges = (changes) => {
+      ctrl.$onChanges = function (changes) {
         if (changes.content) {
           ctrl.updateContent(changes.content);
         }
-        if (changes.isVisible) {
+        if (changes.isVisible || changes.isReadonly) {
           ctrl.updateEditors();
         }
       };
@@ -38,6 +38,10 @@
         if (ctrl.previousId != null && ctrl.previousId !== ctrl.contentId) {
           ctrl.previousId = ctrl.contentId;
           ctrl.updateContent(ctrl.content);
+        }
+        if (ctrl.isReadonly !== ctrl._readonly && ctrl.editor) {
+          ctrl._readonly = ctrl.isReadonly;
+          ctrl.editor.updateOptions({ readOnly: ctrl._readonly });
         }
         if (ctrl.isVisible && ctrl.editor) {
           setTimeout(() => {
@@ -53,7 +57,6 @@
         setTimeout(() => {
           ctrl.previousId = ctrl.contentId;
           ctrl.updateEditors();
-          $scope.$apply();
         }, 300);
       };
 
@@ -72,7 +75,7 @@
           if (e) {
             var model = {
               value: ctrl.content || ctrl.defaultContent,
-              readOnly: ctrl.isReadonly === "true" || false,
+              readOnly: ctrl.isReadonly === "true" || ctrl.isReadonly,
 
               lineNumbers: "on",
               roundedSelection: false,

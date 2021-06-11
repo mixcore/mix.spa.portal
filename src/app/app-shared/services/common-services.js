@@ -80,21 +80,23 @@ appShared.factory("CommonService", [
           method: "GET",
           url: url,
         };
-        return apiService.getRestApiResult(req).then(function (response) {
-          response.data.globalSettings.lastUpdateConfiguration = new Date();
-          localStorageService.set(
-            "localizeSettings",
-            response.data.localizeSettings
-          );
-          localStorageService.set(
-            "globalSettings",
-            response.data.globalSettings
-          );          
-          localStorageService.set("translator", response.data.translator);
-          $rootScope.localizeSettings = response.data.localizeSettings;
-          $rootScope.globalSettings = response.data.globalSettings;
-          $rootScope.translator.translator = response.data.translator;
-        });
+        return apiService
+          .getRestApiResult(req, false, true)
+          .then(function (response) {
+            response.data.globalSettings.lastUpdateConfiguration = new Date();
+            localStorageService.set(
+              "localizeSettings",
+              response.data.localizeSettings
+            );
+            localStorageService.set(
+              "globalSettings",
+              response.data.globalSettings
+            );
+            localStorageService.set("translator", response.data.translator);
+            $rootScope.localizeSettings = response.data.localizeSettings;
+            $rootScope.globalSettings = response.data.globalSettings;
+            $rootScope.translator.translator = response.data.translator;
+          });
       }
     };
 
@@ -113,21 +115,20 @@ appShared.factory("CommonService", [
             method: "GET",
             url: url,
           };
-          return apiService.getApiResult(req).then(function (response) {
-            if (response.data) {
-              _renewSettings();
-            } else {
-              $rootScope.localizeSettings = localStorageService.get(
-                "localizeSettings"
-              );
-              $rootScope.globalSettings = localStorageService.get(
-                "globalSettings"
-              );
-              $rootScope.translator.translator = localStorageService.get(
-                "translator"
-              );
-            }
-          });
+          return apiService
+            .getApiResult(req, true, true)
+            .then(function (response) {
+              if (response.data) {
+                _renewSettings();
+              } else {
+                $rootScope.localizeSettings =
+                  localStorageService.get("localizeSettings");
+                $rootScope.globalSettings =
+                  localStorageService.get("globalSettings");
+                $rootScope.translator.translator =
+                  localStorageService.get("translator");
+              }
+            });
         }
       }
     };

@@ -18,7 +18,7 @@ function BaseRestCtrl(
   };
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
   $scope.viewmodel = null;
-  $scope.viewmodelType = 'post';
+  $scope.viewmodelType = "post";
 
   $scope.isScrollTop = true;
   $scope.defaultId = 0;
@@ -240,7 +240,7 @@ function BaseRestCtrl(
       $scope.$apply();
       return resp;
     } else {
-      $rootScope.showErrors(["invalid model"]);
+      $rootScope.showErrors($scope.errors);
       $rootScope.isBusy = false;
       $scope.$apply();
     }
@@ -321,7 +321,7 @@ function BaseRestCtrl(
       $rootScope.showErrors(result.errors);
     }
   };
-  
+
   $scope.shortString = function (msg, max) {
     if (msg) {
       var data = decodeURIComponent(msg);
