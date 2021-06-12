@@ -28,6 +28,7 @@
         }
       };
       ctrl.load = function (pageIndex) {
+        ctrl.request = angular.copy(ngAppSettings.request);
         if (pageIndex) {
           ctrl.request.pageIndex = pageIndex;
         }
