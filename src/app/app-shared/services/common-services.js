@@ -14,6 +14,22 @@ appShared.factory("CommonService", [
       return await apiService.getAnonymousApiResult(req);
     };
 
+    var _stopApplication = async function () {
+      var req = {
+        method: "GET",
+        url: "/rest/shared/stop-application",
+      };
+      return await apiService.getRestApiResult(req, false, true);
+    };
+
+    var _clearCache = async function () {
+      var req = {
+        method: "GET",
+        url: "/rest/shared/clear-cache",
+      };
+      return await apiService.getRestApiResult(req, false, true);
+    };
+
     var _loadJsonData = async function (name) {
       var req = {
         method: "GET",
@@ -207,7 +223,9 @@ appShared.factory("CommonService", [
     factory.checkfile = _checkfile;
     factory.genrateSitemap = _genrateSitemap;
     factory.loadJArrayData = _loadJArrayData;
+    factory.stopApplication = _stopApplication;
     factory.loadJsonData = _loadJsonData;
+    factory.clearCache = _clearCache;
     return factory;
   },
 ]);

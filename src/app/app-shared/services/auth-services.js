@@ -117,7 +117,7 @@ appShared.factory("AuthService", [
 
       if (resp.isSucceed) {
         let encryptedData = resp.data;
-        this.updateAuthData(encryptedData);
+        apiService.updateAuthData(encryptedData);
         apiService.initAllSettings().then(function () {
           return resp;
         });
@@ -161,10 +161,10 @@ appShared.factory("AuthService", [
           url: apiUrl,
           data: JSON.stringify(data),
         };
-        var resp = await apiService.getRestApiResult(req);
+        var resp = await apiService.getApiResult(req);
         if (resp.isSucceed) {
           let encryptedData = resp.data;
-          return this.updateAuthData(encryptedData);
+          return apiService.updateAuthData(encryptedData);
         } else {
           _logOut();
         }
