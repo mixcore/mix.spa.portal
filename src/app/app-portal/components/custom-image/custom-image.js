@@ -136,6 +136,7 @@
             );
             var media = getMedia.data;
             media.fileFolder = ctrl.folder || "Media";
+            media.extension = ctrl.mediaFile.extension;
             media.title = ctrl.title || "";
             media.description = ctrl.description || "";
             media.mediaFile = ctrl.mediaFile;

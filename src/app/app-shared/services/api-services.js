@@ -305,16 +305,18 @@ appShared.factory("ApiService", [
       return _sendRestRequest(req, retry, skipAuthorize);
     };
     var _logOut = async function () {
-      var apiUrl = "/account/logout";
-      var req = {
-        method: "GET",
-        url: apiUrl,
-      };
       localStorageService.remove("authorizationData");
-      var resp = await _getRestApiResult(req, false);
-      if (resp.isSucceed) {
-        window.top.location.href = "/security/login";
-      }
+      window.top.location.href = "/security/login";
+      //   var apiUrl = "/account/logout";
+      //   var req = {
+      //     method: "GET",
+      //     url: apiUrl,
+      //   };
+      //   localStorageService.remove("authorizationData");
+      //   var resp = await _getRestApiResult(req, false);
+      //   if (resp.isSucceed) {
+      //     window.top.location.href = "/security/login";
+      //   }
     };
     var _getAnonymousApiResult = async function (req) {
       $rootScope.isBusy = true;

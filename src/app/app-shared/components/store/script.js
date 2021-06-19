@@ -20,14 +20,9 @@ sharedComponents.component("mixStore", {
     ) {
       var ctrl = this;
       ctrl.categories = [];
-      BaseHub.call(this, ctrl);
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.init = async function () {
-        ctrl.startConnection("portalhub", () => {
-          ctrl.joinRoom("Theme");
-        });
-
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
         ctrl.themeRequest.postType = "theme";

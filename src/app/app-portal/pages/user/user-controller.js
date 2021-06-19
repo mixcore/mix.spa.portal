@@ -61,6 +61,11 @@ app.controller("UserController", [
       if (response.isSucceed) {
         $scope.activedUser = response.data;
         $rootScope.isBusy = false;
+        if (!$rootScope.isInRole("SuperAdmin")) {
+          $scope.activedUser.userRoles = $scope.activedUser.userRoles.filter(
+            (role) => role.description != "SuperAdmin"
+          );
+        }
         $scope.$apply();
       } else {
         $rootScope.showErrors(response.errors);
@@ -91,6 +96,13 @@ app.controller("UserController", [
       var resp = await userServices.getUsers($scope.request);
       if (resp && resp.isSucceed) {
         $scope.data = resp.data;
+        if (!$rootScope.isInRole("SuperAdmin")) {
+          $scope.data.items = $scope.data.items.filter(
+            (user) =>
+              user.userRoles.length == 0 ||
+              user.userRoles[0].role.name != "SuperAdmin"
+          );
+        }
         $.each($scope.data.items, function (i, user) {
           $.each($scope.data, function (i, e) {
             if (e.userId === user.id) {

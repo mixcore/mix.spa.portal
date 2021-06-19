@@ -67,6 +67,8 @@
 
     ctrl.ok = async function () {
       ctrl.media.fileFolder = ctrl.folder || "Media";
+      ctrl.media.fileName = ctrl.media.mediaFile.fileName;
+      ctrl.media.extension = ctrl.media.mediaFile.extension;
       ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
       var result = await mediaService.save(ctrl.media);
       if (result.isSucceed) {

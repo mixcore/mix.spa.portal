@@ -41,7 +41,7 @@ function BaseHub(scope) {
     // https://docs.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-3.1&tabs=dotnet
     //It's not possible to configure JSON serialization in the JavaScript client at this time.
     scope.connection.on("receive_message", (resp) => {
-      scope.receiveMessage(JSON.parse(resp));
+      scope.receiveMessage(resp);
     });
     scope.connection
       .start()
@@ -56,35 +56,35 @@ function BaseHub(scope) {
         console.log(`Cannot start the connection use transport.`, error);
         return Promise.reject(error);
       });
-    // scope.connection.onclose(function (e) {
-    //     var count = 0;
-    //     setTimeout(function () {
+    scope.connection.onclose((error) => {
+      console.assert(
+        scope.connection.state === signalR.HubConnectionState.Disconnected
+      );
 
-    //         while (count < scope.totalReconnect) {
-    //             if (scope.reconnect()) {
-    //                 count = scope.totalReconnect;
-    //             } else {
-    //                 count++;
-    //             }
-    //         }
-    //     }, scope.timeDelay);
-    // });
+      let textContent = `Connection closed due to error "${error}". Try refreshing this page to restart the connection.`;
+      console.error(textContent);
+    });
 
-    // scope.reconnect = function () {
-    //     scope.connection.start()
-    //         .then(function () {
-    //             console.log('connection started', scope.connection);
-    //             return true;
-    //             //scope.$apply();
-    //         })
-    //         .catch(function (error) {
-    //             console.log(`Cannot start the connection use transport.`, error);
-    //             return false;
-    //         });
-    // };
+    scope.reconnect = function () {
+      scope.connection
+        .start()
+        .then(function () {
+          console.log("connection started", scope.connection);
+          return true;
+          //scope.$apply();
+        })
+        .catch(function (error) {
+          console.log(`Cannot start the connection use transport.`, error);
+          return false;
+        });
+    };
   };
-
-  scope.$onDestroy = function () {
-    scope.connection.stop();
-  };
+  if (scope.$on) {
+    scope.$on("$destroy", function () {
+      if (scope.onLeave) {
+        scope.onLeave();
+      }
+      scope.connection.stop();
+    });
+  }
 }

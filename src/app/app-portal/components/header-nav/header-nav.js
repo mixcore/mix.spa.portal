@@ -6,24 +6,19 @@
       "$rootScope",
       "CommonService",
       "AuthService",
-      function (
-        $rootScope,
-        commonService,
-        authService,
-      ) {
+      function ($rootScope, commonService, authService) {
         var ctrl = this;
         ctrl.globalSettings = $rootScope.globalSettings;
-        
+        ctrl.isInRole = $rootScope.isInRole;
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
           ctrl.localizeSettings = $rootScope.localizeSettings;
           ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
-          authService.fillAuthData().then(()=>{
-            if (authService.authentication) {
+          authService.fillAuthData().then(() => {
+            if (authService.authentication && authService.authentication.info) {
               ctrl.avatar = authService.authentication.info.user.Avatar;
             }
-          })
-          
+          });
         };
         ctrl.translate = $rootScope.translate;
         ctrl.getConfiguration = function (keyword, isWrap, defaultText) {

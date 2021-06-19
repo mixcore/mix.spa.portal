@@ -34,8 +34,9 @@
                                     <label class="form-label">Type</label>
                                     <select ng-change="initEditors()" class="form-select me-2"
                                         ng-model="viewmodel.property.dataType">
-                                        <option ng-repeat="item in settings.dataTypes track by $index"
-                                            ng-value="item.value">{{item.name}}</option>
+                                        <option ng-repeat="item in globalSettings.dataTypes track by $index"
+                                            ng-value="item.name">
+                                            {{item.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -46,8 +47,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Value</label>
-                            <module-form-editor data="viewmodel.property" column-title="viewmodel.title"
-                                input-class="me-2">
+                            <module-form-editor ng-if="viewmodel" data="viewmodel.property"
+                                column-title="viewmodel.title" input-class="me-2"></module-form-editor>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Default</label>

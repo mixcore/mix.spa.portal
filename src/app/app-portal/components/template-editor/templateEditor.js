@@ -35,6 +35,7 @@
         service
       );
       var ctrl = this;
+      BaseHub.call(this, ctrl);
       ctrl.isNull = false;
       ctrl.selectPane = function (pane) {
         ctrl.activedPane = pane;

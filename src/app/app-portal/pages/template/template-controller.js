@@ -5,6 +5,7 @@ app.controller("TemplateController", [
   "$routeParams",
   "$location",
   "ngAppSettings",
+  "AuthService",
   "TemplateService",
   function (
     $scope,
@@ -12,6 +13,7 @@ app.controller("TemplateController", [
     $routeParams,
     $location,
     ngAppSettings,
+    authService,
     service
   ) {
     BaseRestCtrl.call(
@@ -23,6 +25,7 @@ app.controller("TemplateController", [
       ngAppSettings,
       service
     );
+    BaseHub.call(this, $scope);
     $scope.folderTypes = [
       "Masters",
       "Layouts",
@@ -34,11 +37,28 @@ app.controller("TemplateController", [
       "Posts",
       "Widgets",
     ];
-
+    $scope.isInitHub = false;
+    $scope.room = null;
+    $scope.members = [];
     $scope.activedPane = null;
     $scope.canRename = true;
+    $scope.user = null;
     $scope.selectPane = function (pane) {
       $scope.activedPane = pane;
+    };
+    $scope.init = async function () {
+      authService.fillAuthData().then(function () {
+        $scope.user = {
+          username: authService.authentication.info.user.UserName,
+          avatar: authService.authentication.info.user.Avatar,
+        };
+        $scope.startConnection("editFileHub", () => {
+          if ($routeParams.id) {
+            $scope.room = `Template-${$routeParams.id}`;
+            $scope.joinRoom();
+          }
+        });
+      });
     };
     $scope.loadFolder = function (d) {
       $location.url(
@@ -155,7 +175,6 @@ app.controller("TemplateController", [
         $rootScope.isBusy = false;
       }
     };
-
     $scope.updateTemplateContent = function (content) {
       $scope.viewmodel.content = content;
     };
@@ -164,6 +183,29 @@ app.controller("TemplateController", [
     };
     $scope.updateScriptContent = function (content) {
       $scope.viewmodel.styles = content;
+    };
+    $scope.joinRoom = function () {
+      $scope.connection.invoke("JoinRoom", $scope.room, $scope.user);
+    };
+    $scope.receiveMessage = function (msg) {
+      switch (msg.type) {
+        case "MemberList":
+          $scope.members = msg.data;
+          $scope.isValid = $scope.members.length == 1;
+          if (!$scope.isValid) {
+            $scope.errors = [
+              "Cannot modify if there is another user opening this template",
+            ];
+          } else {
+            $scope.errors = [];
+          }
+          $scope.$apply();
+          break;
+
+        default:
+          break;
+      }
+      console.log(msg);
     };
   },
 ]);

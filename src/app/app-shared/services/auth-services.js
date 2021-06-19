@@ -129,17 +129,20 @@ appShared.factory("AuthService", [
     };
 
     var _logOut = async function () {
-      var apiUrl = "/account/logout";
-      var req = {
-        method: "GET",
-        url: apiUrl,
-      };
       localStorageService.remove("authorizationData");
-      _authentication = null;
-      var resp = await apiService.getRestApiResult(req);
-      if (resp.isSucceed) {
-        window.top.location.href = "/security/login";
-      }
+      window.top.location.href = "/security/login";
+
+      //     var apiUrl = "/account/logout";
+      //   var req = {
+      //     method: "GET",
+      //     url: apiUrl,
+      //   };
+
+      //   _authentication = null;
+      //   var resp = await apiService.getRestApiResult(req);
+      //   if (resp.isSucceed) {
+      //     window.top.location.href = "/security/login";
+      //   }
     };
 
     var _fillAuthData = async function () {
@@ -171,7 +174,7 @@ appShared.factory("AuthService", [
     };
 
     var _isInRole = function (roleName) {
-      if (!this.authentication) {
+      if (!this.authentication || !this.authentication.info) {
         return false;
       }
       var role = this.authentication.info.userRoles.filter(

@@ -52,6 +52,7 @@ app.controller("AppPortalController", [
             authService.fillAuthData().then(function (response) {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth = authService.authentication != null;
+              $rootScope.isAuth = authService.authentication != null;
               if (authService.authentication) {
                 $scope.isAdmin = authService.isInRole("SuperAdmin");
               } else {
