@@ -338,8 +338,8 @@ paths.appPortal = {
 };
 paths.appPortalRequired = {
   src: [
-    `${paths.nodeModules}jquery/dist/jquery.min.js`,
-    `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
+    // `${paths.nodeModules}jquery/dist/jquery.min.js`,
+    // `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
     `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
     paths.scriptLib + "portal/prism/prism.min.js",
     paths.webapp + "app-portal/shared/**/*.js",
