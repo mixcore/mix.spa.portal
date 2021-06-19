@@ -132,13 +132,7 @@
                             <div class="tab-pane active show" id="tabs-home-7">
 
 
-                                <div class="row row-deck row-cards" ng-if="isAdmin">
-                                    <div class="col-9">
-                                        <section class="" ng-init="getSingle()">
-                                            <post-content model="viewmodel" additional-data="additionalData">
-                                            </post-content>
-                                        </section>
-                                    </div>
+                                <div class="row row-deck row-cards flex-row-reverse" ng-if="isAdmin">
                                     <div class="col-3">
                                         <div class="card">
                                             <dvi class="card-body">
@@ -373,6 +367,12 @@
                                                 </div>
                                             </dvi>
                                         </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <section class="" ng-init="getSingle()">
+                                            <post-content model="viewmodel" additional-data="additionalData">
+                                            </post-content>
+                                        </section>
                                     </div>
                                 </div>
 
