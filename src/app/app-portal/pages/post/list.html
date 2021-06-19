@@ -73,10 +73,28 @@
 </div>
 <div class="page-body">
     <div class="container-xl">
-        <div class="row row-deck row-cards" xng-if="isAdmin">
+        <div class="row row-deck row-cards flex-row-reverse" xng-if="isAdmin">
+            <div class="col-3">
+                <div class="card">
+                    <dvi class="card-body">
+                        <filter-list request="request" callback="getList(pageIndex)">
+                        </filter-list>
+                        <select class="form-select my-3"
+                            ng-options="item as item.title for item in postTypes track by item.title"
+                            ng-change="onSelectType();" ng-model="postType"></select>
+                        <select class="form-select mb-3" ng-model="selectedList.action">
+                            <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
+                        </select>
+                        <button type="buttin" class="btn btn-sm btn-primary"
+                            ng-if="selectedList.data.length > 0 && selectedList.action" ng-click="applyList()">
+                            Apply
+                        </button>
+                    </dvi>
+                </div>
+            </div>
             <div class="col-9">
                 <div class="card">
-                    <div class="table">
+                    <div class="table-responsive">
                         <table class="table table-vcenter card-table table-hover" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
@@ -142,11 +160,19 @@
 
                                     <td>
                                         <div class="btn-list flex-nowrap">
-                                            <a href="/portal/post/details/{{item.id}}" class="btn btn-white">
+                                            <a href="/portal/post/details/{{item.id}}" class="btn btn-sm btn-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    class="icon icon-tabler icon-tabler-pencil" width="44" height="44"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                                                    <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                                                </svg>
                                                 Edit
                                             </a>
                                             <div class="dropdown">
-                                                <button class="btn dropdown-toggle align-text-top"
+                                                <button class="btn btn-sm dropdown-toggle align-text-top"
                                                     data-bs-boundary="viewport" data-bs-toggle="dropdown">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                         class="icon icon-tabler icon-tabler-dots" width="44" height="44"
@@ -206,24 +232,6 @@
                             scroll-top="true">
                         </paging>
                     </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card">
-                    <dvi class="card-body">
-                        <filter-list request="request" callback="getList(pageIndex)">
-                        </filter-list>
-                        <select class="form-select my-3"
-                            ng-options="item as item.title for item in postTypes track by item.title"
-                            ng-change="onSelectType();" ng-model="postType"></select>
-                        <select class="form-select mb-3" ng-model="selectedList.action">
-                            <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
-                        </select>
-                        <button type="buttin" class="btn btn-sm btn-primary"
-                            ng-if="selectedList.data.length > 0 && selectedList.action" ng-click="applyList()">
-                            Apply
-                        </button>
-                    </dvi>
                 </div>
             </div>
         </div>
