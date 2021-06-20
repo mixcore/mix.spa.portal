@@ -1,5 +1,3 @@
-<div
-  id="quill-editor-{{$ctrl.guid}}"
-  class="ql-container"
-  ng-init="$ctrl.init()"
-></div>
+<div ng-if="$ctrl.content!==undefined">
+    <div id="quill-editor-{{$ctrl.guid}}" class="ql-container" ng-init="$ctrl.init()"></div>
+</div>

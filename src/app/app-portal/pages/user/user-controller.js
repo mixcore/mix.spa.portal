@@ -89,6 +89,12 @@ app.controller("UserController", [
     };
 
     $scope.loadUsers = async function (pageIndex) {
+      authService.fillAuthData().then(() => {
+        if ($rootScope.isInRoles(["SuperAdmin", "Admin"])) {
+          $scope.createUrl = "/portal/user/create";
+        }
+      });
+
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
