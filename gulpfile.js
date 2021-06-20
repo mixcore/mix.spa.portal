@@ -213,7 +213,7 @@ paths.appCss = {
     paths.webapp + "app-init/**/*.css",
     paths.webroot + "css/app-vendor-scss.min.css",
     paths.styleLib + "**/*.css",
-    `${paths.nodeModules}angular-ui-bootstrap/dist/ui-bootstrap-csp.css`,
+    // `${paths.nodeModules}angular-ui-bootstrap/dist/ui-bootstrap-csp.css`,
   ],
   dest: paths.webroot + "css/app-vendor.min.css",
 };
@@ -382,7 +382,7 @@ gulp.task("min:portalAppRequired", function (cb) {
 // CSS
 paths.portalCss = {
   src: [
-    `${paths.nodeModules}bootstrap/dist/css/bootstrap.min.css`,
+    // `${paths.nodeModules}bootstrap/dist/css/bootstrap.min.css`,
     paths.libs + "portal/**/*.css",
     paths.libs + "portal/**/*.*.css",
   ],
