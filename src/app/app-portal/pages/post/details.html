@@ -383,7 +383,8 @@
 
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                Thumbnail
+                                                <h3 class="card-title">Thumbnail</h3>
+
                                             </div>
                                             <div class="card-body">
                                                 <custom-image w="defaultThumbnailImgWidth" h="defaultThumbnailImgHeight"
@@ -398,7 +399,8 @@
                                     <div class="col-md-8">
                                         <div class="card mb-3">
                                             <div class="card-header">
-                                                Feature Image
+                                                <h3 class="card-title">Feature Image</h3>
+
                                             </div>
                                             <div class="card-body">
                                                 <custom-image w="defaultFeatureImgWidth" h="defaultFeatureImgHeight"
@@ -417,7 +419,8 @@
                             <div class="tab-pane" id="tabs-rels">
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        Parents
+                                        <h3 class="card-title">Parents</h3>
+
                                     </div>
                                     <div class="card-body">
                                         <post-parents post="viewmodel"></post-parents>
@@ -425,7 +428,8 @@
                                 </div>
                                 <div class="card mb-3" ng-init="getListRelated()">
                                     <div class="card-header">
-                                        Related posts
+                                        <h3 class="card-title">Related posts</h3>
+
                                     </div>
                                     <div class="card-body">
                                         <related-navs request="$scope.request" source-id="viewmodel.id"
