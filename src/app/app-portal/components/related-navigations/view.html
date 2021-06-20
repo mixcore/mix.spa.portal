@@ -21,8 +21,8 @@
                     <td>
                         <span class="small" ng-bind="item.description"></span>
                     </td>
-                    <td class="align-middle position-relative">
-                        <span class="form-check form-switch position-absolute top-0 end-0">
+                    <td class="">
+                        <span class="form-check form-check-single form-switch">
                             <input type="checkbox" class="form-check-input me-1 mt-2" ng-model="item.isActived"
                                 ng-change="$ctrl.activeItem(item)" id="{{$ctrl.prefix}}_{{item.id}}" value="true" />
                             <label class="custom-control-label m-0 small" for="{{$ctrl.prefix}}_{{item.id}}">
