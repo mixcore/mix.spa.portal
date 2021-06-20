@@ -1,9 +1,8 @@
 <div class="row">
     <navs class="col-12" data="$ctrl.navs" prefix="'module-nav'" model="'nav-related'"></navs>
 </div>
-<hr />
 <div class="row">
-    <div class="col-8">
+    <div class="col-9">
         <table class="table table-sm table-hover">
             <thead class="thead-light">
                 <tr>
@@ -36,7 +35,7 @@
             ul-class="pagination pagination-sm justify-content-end m-0" a-class="page-link"
             paging-action="callback(page-1)" scroll-top="true"></paging>
     </div>
-    <div class="col-4">
+    <div class="col-3">
         <filter-list request="$ctrl.request" callback="$ctrl.load(pageIndex)"></filter-list>
     </div>
 </div>
