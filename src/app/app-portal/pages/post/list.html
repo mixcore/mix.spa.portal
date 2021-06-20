@@ -102,17 +102,17 @@
                                               </th> -->
                                     <!-- <th ng-if="!canDrag" scope="col" width="15px">
                                               </th> -->
-                                    <th scope="col" width="15px">
+                                    <th scope="col-auto">
                                         <input type="checkbox" class="" ng-model="selectedList.isSelectAll"
                                             ng-change="selectAll(selectedList.isSelectAll)" id="customCheck_all" />
                                     </th>
-                                    <th scope="col">Post</th>
-                                    <th scope="col" width="10%">Thumb</th>
-                                    <th scope="col" width="10%">Feature</th>
-                                    <th scope="col" width="15%">Created Date</th>
-                                    <th scope="col" width="15%">Author</th>
+                                    <th scope="col-auto">Thumb</th>
+                                    <th scope="col-auto">Post</th>
+                                    <th scope="col-auto">Feature</th>
+                                    <th scope="col-auto">Created Date</th>
+                                    <th scope="col-auto">Author</th>
 
-                                    <th scope="col" style="width: 5%"></th>
+                                    <th scope="col-auto"></th>
                                 </tr>
                             </thead>
 
@@ -138,16 +138,18 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="" ng-click="goToPath('/portal/post/details/' + item.id)" class=""
+                                        <preview-image img-src="item.thumbnailUrl"></preview-image>
+                                        </preview-image>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click="goToPath('/portal/post/details/' + item.id)"
                                             title="{{item.excerpt}}" data-bs-toggle="tooltip">
-                                            <small>{{item.title}}</small>
+                                            {{item.title}}
                                         </a>
                                     </td>
                                     <td>
-                                        <preview-image img-height="25" img-src="item.thumbnailUrl"></preview-image>
-                                    </td>
-                                    <td>
-                                        <preview-image img-height="25" img-src="item.imageUrl"></preview-image>
+                                        <preview-image img-src="item.imageUrl">
+                                        </preview-image>
                                     </td>
                                     <td class="text-black-50">
                                         <small>

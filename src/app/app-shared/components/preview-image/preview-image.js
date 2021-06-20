@@ -10,7 +10,7 @@
       ctrl.isImage = false;
       ctrl.init = function () {
         if (ctrl.imgSrc) {
-          ctrl.imgClass = ctrl.imgClass || "rounded";
+          ctrl.imgClass = ctrl.imgClass || "avatar";
           ctrl.isImage = ctrl.imgSrc
             .toLowerCase()
             .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
