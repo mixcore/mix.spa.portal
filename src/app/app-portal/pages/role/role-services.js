@@ -1,6 +1,6 @@
 ﻿"use strict";
 app.factory("RoleService", [
-  "BaseService",
+  "BaseRestService",
   "ApiService",
   "CommonService",
   function (baseService, apiService, commonService) {
@@ -30,7 +30,7 @@ app.factory("RoleService", [
         data: JSON.stringify(name),
       };
 
-      return apiService.getApiResult(req);
+      return apiService.getRestApiResult(req);
     };
     serviceFactory.createRole = _createRole;
     serviceFactory.getPermissions = _getPermissions;

@@ -6,7 +6,9 @@
                 <div class="input-group-text"><i class="fas fa-user-tag"></i></div>
                 <input type="text" class="form-control" ng-model="role.name" ng-enter="createRole()"
                     placeholder="Enter new role name...">
-                <a href="#" class="btn btn-primary px-4" ng-click="createRole()"><i class="fas fa-plus"></i> Create</a>
+                <a href="#" class="btn btn-primary px-4 text-white" ng-click="createRole()">
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
             <filter-list request="request" callback="getList(pageIndex)"></filter-list>
         </div>
@@ -47,7 +49,7 @@
                     </tr>
                 </thead>
                 <tbody class="sortable" ng-init="getList()">
-                    <tr ng-repeat="item in data track by $index" class="sortable-item" sort-model="role"
+                    <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="role"
                         sort-model-id="{{item.id}}">
                         <td>
                             <small ng-bind="item.name"></small>

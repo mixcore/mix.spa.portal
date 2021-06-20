@@ -2,19 +2,38 @@
 app.controller("RoleController", [
   "$scope",
   "$rootScope",
-  "ngAppSettings",
+  "$location",
   "$routeParams",
+  "ngAppSettings",
+  "RestMixDatabaseDataPortalService",
+  "RestMixDatabaseColumnPortalService",
   "RoleService",
-  function ($scope, $rootScope, ngAppSettings, $routeParams, service) {
-    BaseCtrl.call(
+  function (
+    $scope,
+    $rootScope,
+    $location,
+    $routeParams,
+    ngAppSettings,
+    dataService,
+    columnService,
+    service
+  ) {
+    BaseRestCtrl.call(
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service
     );
     $scope.role = { name: "" };
+    $scope.initPermissions = async function () {
+      let backUrl = "/portal/role/list";
+      $scope.createUrl = `/portal/mix-database-data/create?mixDatabaseName=sys_permission&dataId=default&parentId=${$scope.viewmodel.id}&parentType=Role&backUrl=${backUrl}`;
+      $scope.updateUrl = "/portal/mix-database-data/details";
+    };
+
     $scope.createRole = async function () {
       $rootScope.isBusy = true;
       var result = await service.createRole($scope.role.name);
@@ -22,7 +41,7 @@ app.controller("RoleController", [
         $scope.role.name = "";
         $scope.getList();
       } else {
-        $rootScope.showMessage(result.errors);
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

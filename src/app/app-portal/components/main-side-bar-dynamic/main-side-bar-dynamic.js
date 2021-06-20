@@ -5,25 +5,25 @@
     "$rootScope",
     "$scope",
     "ngAppSettings",
-    "RoleService",
+    "CommonService",
     "TranslatorService",
     "AuthService",
     function (
       $rootScope,
       $scope,
       ngAppSettings,
-      roleServices,
+      commonService,
       translatorService,
       authService
     ) {
       var ctrl = this;
       ctrl.init = function () {
-        roleServices.getPermissions().then(function (response) {
+        commonService.getPermissions().then(function (response) {
           if (response && response.isSucceed) {
             ctrl.isInit = true;
             ctrl.roles = response.data;
-            if (ctrl.roles) {
-              ctrl.role = ctrl.roles[0];
+            if (ctrl.roles.data) {
+              ctrl.role = ctrl.roles.data[0];
             }
             $rootScope.isBusy = false;
             $scope.$apply();

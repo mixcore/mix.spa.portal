@@ -169,6 +169,14 @@ appShared.factory("CommonService", [
       });
     };
 
+    var _getPermissions = async function () {
+      var req = {
+        method: "GET",
+        url: "/rest/shared/permissions",
+      };
+      return await apiService.getRestApiResult(req);
+    };
+
     var _initAllSettings = async function (culture) {
       localStorageService.remove("localizeSettings");
       localStorageService.remove("translator");
@@ -226,6 +234,7 @@ appShared.factory("CommonService", [
     factory.stopApplication = _stopApplication;
     factory.loadJsonData = _loadJsonData;
     factory.clearCache = _clearCache;
+    factory.getPermissions = _getPermissions;
     return factory;
   },
 ]);
