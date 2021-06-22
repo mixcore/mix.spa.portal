@@ -9,9 +9,11 @@
     file,
     w,
     h,
-    rto
+    rto,
+    autoSave
   ) {
     var ctrl = this;
+    ctrl.autoSave = autoSave;
     ctrl.maxW = 400;
     ctrl.file = file;
     ctrl.w = w;
@@ -67,13 +69,17 @@
     };
 
     ctrl.ok = async function () {
-      ctrl.media.fileFolder = ctrl.folder || "Media";
-      ctrl.media.fileName = ctrl.media.mediaFile.fileName;
-      ctrl.media.extension = ctrl.media.mediaFile.extension;
-      ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
-      var result = await mediaService.save(ctrl.media);
-      if (result.isSucceed) {
-        $uibModalInstance.close(result.data);
+      if (!ctrl.autoSave) {
+        $uibModalInstance.close(ctrl.cropped.image);
+      } else {
+        ctrl.media.fileFolder = ctrl.folder || "Media";
+        ctrl.media.fileName = ctrl.media.mediaFile.fileName;
+        ctrl.media.extension = ctrl.media.mediaFile.extension;
+        ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
+        var result = await mediaService.save(ctrl.media);
+        if (result.isSucceed) {
+          $uibModalInstance.close(result.data);
+        }
       }
     };
 

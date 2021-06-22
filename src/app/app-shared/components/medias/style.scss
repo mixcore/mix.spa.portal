@@ -1,0 +1,17 @@
+medias {
+  .modal {
+    z-index: 1049;
+  }
+  #modal-files {
+    .modal-body {
+      .table {
+        img {
+          height: 30px;
+        }
+        img.preview {
+          height: auto;
+        }
+      }
+    }
+  }
+}

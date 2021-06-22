@@ -39,7 +39,7 @@ appShared.factory("MediaService", [
         );
       }
     };
-    var _openCroppie = function (file, scope) {
+    var _openCroppie = function (file, scope, autoSave = true) {
       const w = parseInt(scope.w);
       const h = parseInt(scope.h);
       const rto = w && h ? scope.w / scope.h : null;
@@ -60,6 +60,7 @@ appShared.factory("MediaService", [
           w,
           h,
           rto,
+          autoSave,
         },
       });
       modalInstance.result.then(
