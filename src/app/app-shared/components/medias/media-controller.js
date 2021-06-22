@@ -43,6 +43,12 @@ appShared.controller("MediaController", [
     // multipart form
     $scope.formFile = null;
     $scope.relatedMedias = [];
+
+    $scope.init = function () {
+      $("#modal-files").on("shown.bs.modal", function () {
+        $scope.getList();
+      });
+    };
     $scope.save = async function () {
       var data = $scope.viewmodel;
       $rootScope.isBusy = true;
@@ -69,6 +75,8 @@ appShared.controller("MediaController", [
               $scope.saveSuccessCallbackArgs,
               $scope
             );
+          } else {
+            $rootScope.goToPath("/portal/media/list");
           }
           $rootScope.isBusy = false;
           $scope.$apply();
@@ -161,24 +169,7 @@ appShared.controller("MediaController", [
         $scope.$apply();
       }
     };
-    $scope.saveSuccessCallback = function () {
-      $scope.viewmodel = {
-        title: "",
-        description: "",
-        status: "Published",
-        mediaFile: {
-          file: null,
-          fullPath: "",
-          folderName: "Media",
-          fileFolder: "",
-          fileName: "",
-          extension: "",
-          content: "",
-          fileStream: "",
-        },
-      };
-      $scope.getList();
-    };
+
     $scope.removeCallback = function () {
       $scope.getList();
     };

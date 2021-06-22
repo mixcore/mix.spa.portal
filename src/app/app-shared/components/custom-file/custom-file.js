@@ -12,13 +12,13 @@ sharedComponents.component("customFile", {
     type: "=",
     folder: "=",
     auto: "=",
+    onInsert: "&?",
     onDelete: "&",
     save: "&",
   },
   controller: [
     "$rootScope",
     "$scope",
-    "ngAppSettings",
     "MediaService",
     function PortalTemplateController($rootScope, $scope, mediaService) {
       var ctrl = this;
@@ -29,7 +29,20 @@ sharedComponents.component("customFile", {
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
           const file = files[0];
-          ctrl.getBase64(file);
+          if ($rootScope.isImage(file)) {
+            ctrl.canUpload = false;
+            mediaService.openCroppie(file, ctrl, true);
+          } else {
+            ctrl.canUpload = true;
+            ctrl.getBase64(file);
+          }
+        }
+      };
+
+      ctrl.croppieCallback = function (result) {
+        ctrl.srcUrl = result.filePath;
+        if (ctrl.onInsert) {
+          ctrl.onInsert({ data: ctrl.srcUrl });
         }
       };
 
