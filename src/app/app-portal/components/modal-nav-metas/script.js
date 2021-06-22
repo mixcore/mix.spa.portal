@@ -97,7 +97,15 @@
           ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
         }
       };
-      ctrl.isSelected = function (value) {
+      ctrl.isSelected = function (value, level) {
+        let item = $rootScope.findObjectByKey(
+          ctrl.selectedList,
+          "dataId",
+          value
+        );
+        if (item) {
+          item.level = level;
+        }
         return ctrl.selectedValues.indexOf(value) >= 0;
       };
       ctrl.reload = async function () {
@@ -193,10 +201,6 @@
                 $scope.$apply();
               }
             });
-          } else {
-            ctrl.selectedList.push(nav);
-            ctrl.selectedValues.push(value);
-            ctrl.filterData();
           }
         } else {
           if (ctrl.parentId) {
@@ -256,10 +260,15 @@
             nav.attributeData = ctrl.mixDatabaseData;
             navService.save(nav).then((resp) => {
               if (resp.isSucceed) {
-                ctrl.data.items.push(resp.data);
+                ctrl.data.items.push(resp.data.attributeData);
                 ctrl.reload();
                 resp.data.isActived = true;
-                ctrl.select(resp.data);
+                ctrl.selectedList.push(resp.data);
+                ctrl.selectedValues.push(resp.data.dataId);
+                ctrl.filterData();
+                // debugger;
+                // ctrl.select(resp.data.dataId, true);
+
                 ctrl.isBusy = false;
                 $scope.$apply();
               } else {

@@ -1,10 +1,11 @@
 ﻿"use strict";
 appShared.factory("MediaService", [
   "$rootScope",
+  "$uibModal",
   "ApiService",
   "CommonService",
   "BaseService",
-  function ($rootScope, apiService, commonService, baseService) {
+  function ($rootScope, $uibModal, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("media");
     var _cloneMedia = async function (id) {
@@ -38,6 +39,38 @@ appShared.factory("MediaService", [
         );
       }
     };
+    var _openCroppie = function (file, scope, autoSave = true) {
+      const w = parseInt(scope.w);
+      const h = parseInt(scope.h);
+      const rto = w && h ? scope.w / scope.h : null;
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        windowClass: "show",
+        templateUrl:
+          "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
+        controller: "ModalCroppieController",
+        controllerAs: "$ctrl",
+        size: "lg",
+        resolve: {
+          mediaService: this,
+          file: function () {
+            return file;
+          },
+          w,
+          h,
+          rto,
+          autoSave,
+        },
+      });
+      modalInstance.result.then(
+        function (result) {
+          scope.croppieCallback(result);
+        },
+        function () {}
+      );
+    };
+    serviceFactory.openCroppie = _openCroppie;
     serviceFactory.cloneMedia = _cloneMedia;
     serviceFactory.uploadMedia = _uploadMedia;
     serviceFactory.save = _save;

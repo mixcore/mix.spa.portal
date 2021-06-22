@@ -9,9 +9,12 @@
     file,
     w,
     h,
-    rto
+    rto,
+    autoSave
   ) {
     var ctrl = this;
+    ctrl.autoSave = autoSave;
+    ctrl.maxW = 400;
     ctrl.file = file;
     ctrl.w = w;
     ctrl.h = h;
@@ -66,13 +69,17 @@
     };
 
     ctrl.ok = async function () {
-      ctrl.media.fileFolder = ctrl.folder || "Media";
-      ctrl.media.fileName = ctrl.media.mediaFile.fileName;
-      ctrl.media.extension = ctrl.media.mediaFile.extension;
-      ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
-      var result = await mediaService.save(ctrl.media);
-      if (result.isSucceed) {
-        $uibModalInstance.close(result.data);
+      if (!ctrl.autoSave) {
+        $uibModalInstance.close(ctrl.cropped.image);
+      } else {
+        ctrl.media.fileFolder = ctrl.folder || "Media";
+        ctrl.media.fileName = ctrl.media.mediaFile.fileName;
+        ctrl.media.extension = ctrl.media.mediaFile.extension;
+        ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
+        var result = await mediaService.save(ctrl.media);
+        if (result.isSucceed) {
+          $uibModalInstance.close(result.data);
+        }
       }
     };
 
@@ -161,6 +168,9 @@
         image.src = base64;
         image.onload = function () {
           // access image size here
+          ctrl.originW = this.width;
+          ctrl.originH = this.height;
+
           ctrl.loadImageSize(this.width, this.height);
           ctrl.cropped.source = base64;
           $scope.$apply();
@@ -190,6 +200,8 @@
 
           image.onload = function () {
             // access image size here
+            ctrl.originW = this.width;
+            ctrl.originH = this.height;
             ctrl.loadImageSize(this.width, this.height);
             ctrl.cropped.source = reader.result;
             $rootScope.isBusy = false;
@@ -206,23 +218,23 @@
     };
     ctrl.loadImageSize = function (w, h) {
       // const maxW = ctrl.w + 100;
-      const maxW = 600;
+      w = w || ctrl.originW;
+      h = h || ctrl.originH;
       var rto = w / h;
-      ctrl.w = ctrl.w || w;
-      ctrl.h = ctrl.h || h;
       ctrl.rto = ctrl.rto || rto;
+      ctrl.w = ctrl.w || w;
+      ctrl.h = ctrl.w / ctrl.rto;
       ctrl.options = {
-        boundary: { height: maxW / rto, width: maxW },
-        render: { height: maxW / rto, width: maxW },
+        boundary: { height: ctrl.maxW / rto, width: ctrl.maxW },
+        render: { height: ctrl.maxW / rto, width: ctrl.maxW },
         output: { height: ctrl.h, width: ctrl.h * ctrl.rto },
       };
       ctrl.loadViewport();
     };
     ctrl.loadViewport = function () {
       if (ctrl.w && ctrl.h) {
-        const maxW = 600;
         ctrl.rto = ctrl.w / ctrl.h;
-        let w = ctrl.w > maxW ? maxW * 0.6 : ctrl.w * 0.6;
+        let w = ctrl.w > ctrl.maxW ? ctrl.maxW * 0.6 : ctrl.w * 0.6;
         let h = w / ctrl.rto;
         if (w > ctrl.options.boundary.width) {
           w = ctrl.options.boundary.width;

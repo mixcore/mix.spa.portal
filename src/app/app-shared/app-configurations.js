@@ -758,6 +758,13 @@ appShared.run([
         }
       );
     };
+
+    $rootScope.isImage = function (file) {
+      let ext = file.name.substring(file.name.lastIndexOf("."));
+      return ext
+        .toLowerCase()
+        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+    };
   },
 ]);
 
