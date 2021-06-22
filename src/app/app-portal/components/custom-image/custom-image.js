@@ -54,36 +54,9 @@
           output: { width: ctrl.w, height: ctrl.h },
         };
       };
-      ctrl.openCroppie = function (file) {
-        const w = parseInt(ctrl.w);
-        const h = parseInt(ctrl.h);
-        const rto = ctrl.w / ctrl.h;
 
-        var modalInstance = $uibModal.open({
-          animation: true,
-          windowClass: "show",
-          templateUrl:
-            "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
-          controller: "ModalCroppieController",
-          controllerAs: "$ctrl",
-          size: "lg",
-          resolve: {
-            mediaService: mediaService,
-            file: function () {
-              return file;
-            },
-            w,
-            h,
-            rto,
-          },
-        });
-
-        modalInstance.result.then(
-          function (result) {
-            ctrl.srcUrl = result.filePath;
-          },
-          function () {}
-        );
+      ctrl.croppieCallback = function (result) {
+        ctrl.srcUrl = result.filePath;
       };
 
       ctrl.mediaFile = {
@@ -110,15 +83,7 @@
           ctrl.mediaFile.title = ctrl.title || "";
           ctrl.mediaFile.description = ctrl.description || "";
           ctrl.mediaFile.file = file;
-          if (ctrl.w || ctrl.h || ctrl.rto) {
-            ctrl.openCroppie(file);
-          } else {
-            if (ctrl.auto == "true") {
-              ctrl.uploadFile(file);
-            } else {
-              ctrl.getBase64(file);
-            }
-          }
+          mediaService.openCroppie(file, ctrl);
         }
       };
 

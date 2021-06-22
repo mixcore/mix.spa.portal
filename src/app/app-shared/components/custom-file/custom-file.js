@@ -41,8 +41,6 @@ sharedComponents.component("customFile", {
           reader.onload = async function () {
             var getMedia = await mediaService.getSingle(["portal"]);
             if (getMedia.isSucceed) {
-              var index = reader.result.indexOf(",") + 1;
-              var base64 = reader.result.substring(index);
               ctrl.data.mediaFile.fileName = file.name.substring(
                 0,
                 file.name.lastIndexOf(".")

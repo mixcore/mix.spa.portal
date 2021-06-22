@@ -13,6 +13,7 @@
         title: "",
         description: "",
         status: "Published",
+        fileFolder: "Medias",
         mediaFile: {
           file: null,
           fullPath: "",
