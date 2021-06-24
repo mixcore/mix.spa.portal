@@ -22,7 +22,7 @@
         style="background:url(/mix-app/assets/img/image_placeholder.jpg) no-repeat center;  cursor:pointer; min-height: 200px;">
         <img ng-if="$ctrl.isImage" imageonload ng-src="{{$ctrl.srcUrl}}" ng-if="$ctrl.srcUrl" name="pic"
             class="custom-file-img d-block ng-scope ml-auto mr-auto w-100" accept="{{$ctrl.acceptTypes}}">
-        <a ng-if="!$ctrl.isImage && $ctrl.srcUrl" href="{{$ctrl.srcUrl}}" target="_blank">View</a>
+        <a ng-if="!$ctrl.isImage && $ctrl.srcUrl !== '/'" href="{{$ctrl.srcUrl}}" target="_blank">View</a>
         <input type="hidden" value="{{$ctrl.type}}/{{$ctrl.folder}}" class="folder-val">
         <div class="input-group mb-3">
             <span class="input-group-text">URL</span>

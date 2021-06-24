@@ -19,6 +19,13 @@ modules.component("propertiesStructure", {
         isSelect: false,
         isDisplay: true,
         width: 3,
+        columnConfigurations: {
+          upload: {
+            isCrop: false,
+            width: null,
+            height: null,
+          },
+        },
       };
 
       ctrl.addAttr = function () {

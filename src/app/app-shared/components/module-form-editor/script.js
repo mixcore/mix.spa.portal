@@ -4,6 +4,7 @@
   bindings: {
     data: "=",
     datatype: "=?",
+    column: "=?",
     inputClass: "=",
     isShowTitle: "=",
     columnTitle: "=",
