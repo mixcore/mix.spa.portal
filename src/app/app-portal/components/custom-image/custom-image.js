@@ -83,7 +83,7 @@
           ctrl.mediaFile.title = ctrl.title || "";
           ctrl.mediaFile.description = ctrl.description || "";
           ctrl.mediaFile.file = file;
-          mediaService.openCroppie(file, ctrl);
+          mediaService.openCroppie(file, ctrl, true);
         }
       };
 
