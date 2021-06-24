@@ -41,7 +41,8 @@ function BaseHub(scope) {
     // https://docs.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-3.1&tabs=dotnet
     //It's not possible to configure JSON serialization in the JavaScript client at this time.
     scope.connection.on("receive_message", (resp) => {
-      scope.receiveMessage(resp);
+      let msg = JSON.parse(resp);
+      scope.receiveMessage(msg);
     });
     scope.connection
       .start()
