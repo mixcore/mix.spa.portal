@@ -16,10 +16,10 @@
             </div>
         </div>
     </div>
-    <div class="w-100">
+    <div class="">
         <img ng-if="$ctrl.isImage" imageonload ng-src="{{$ctrl.srcUrl}}" ng-if="$ctrl.srcUrl" name="pic"
-            class="custom-file-img d-block ng-scope ml-auto mr-auto w-100" accept="image/*">
-        <a ng-if="!$ctrl.isImage && $ctrl.srcUrl" href="{{$ctrl.srcUrl}}" target="_blank">View</a>
+            class="custom-file-img d-block ng-scope ml-auto mr-auto" accept="image/*">
+        <a ng-if="!$ctrl.isImage && $ctrl.srcUrl !== '/'" href="{{$ctrl.srcUrl}}" target="_blank">View</a>
         <input type="hidden" value="{{$ctrl.type}}/{{$ctrl.folder}}" class="folder-val">
 
         <div class="input-group input-group-sm mb-3">
