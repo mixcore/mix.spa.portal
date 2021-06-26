@@ -1,20 +1,52 @@
-<div class="content-body py-3 px-5" ng-init="initRouteParams()">
-  <h3>Create {{mixDatabaseTitle}}'s data</h3>
-  <p class="text-subtitle text-muted">
-    Fill all of the following columns to create a new data for
-    {{mixDatabaseTitle}} database.
-  </p>
-  <mix-database-form
-    ng-if="mixDatabaseId || mixDatabaseName || dataId"
-    mix-database-id="mixDatabaseId"
-    mix-database-name="mixDatabaseName"
-    default-id="defaultId"
-    mix-database-data="viewmodel"
-    mix-database-data-id="dataId"
-    parent-id="parentId"
-    parent-type="parentType"
-    save-success="saveSuccess(data)"
-    back-url="backUrl"
-  >
-  </mix-database-form>
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Create
+                </div>
+                <h2 class="page-title">
+                    {{mixDatabaseTitle}}'s data
+                </h2>
+            </div>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <!-- <actions ng-if="!$ctrl.hideAction" back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions> -->
+                    <!-- <a href="/portal/page/create" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                        Create new page
+                    </a>
+                    <a href="/portal/page/create" class="btn btn-primary d-sm-none btn-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg>
+                    </a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body" ng-init="initRouteParams()">
+    <div class="container-xl">
+        <div class="row row-deck row-cards flex-row-reverse" xng-if="isAdmin">
+            <mix-database-form ng-if="mixDatabaseId || mixDatabaseName || dataId" mix-database-id="mixDatabaseId"
+                mix-database-name="mixDatabaseName" default-id="defaultId" mix-database-data="viewmodel"
+                mix-database-data-id="dataId" parent-id="parentId" parent-type="parentType"
+                save-success="saveSuccess(data)" back-url="backUrl">
+            </mix-database-form>
+        </div>
+    </div>
 </div>

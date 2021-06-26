@@ -104,7 +104,7 @@
                             <div class="row row-deck row-cards flex-row-reverse" ng-if="isAdmin">
                                 <div class="col-3">
                                     <div class="card">
-                                        <dvi class="card-body">
+                                        <div class="card-body">
                                             <div class="accordion accordion-flush-x" id="accordionFlushExample">
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="flush-headingOne">
@@ -260,12 +260,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </dvi>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-9">
                                     <section class="" ng-init="getSingle()">
-                                        <page-content model="viewmodel" additional-data="additionalData"></page-content>
+                                        <page-content model="viewmodel" additional-data="additionalData">
+                                        </page-content>
                                     </section>
                                 </div>
                             </div>

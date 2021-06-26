@@ -76,7 +76,7 @@
         <div class="row row-deck row-cards flex-row-reverse" xng-if="isAdmin">
             <div class="col-3">
                 <div class="card">
-                    <dvi class="card-body">
+                    <div class="card-body">
                         <filter-list request="request" callback="getList(pageIndex)"></filter-list>
 
                         <select class="form-select col-2 mt-3" ng-model="type" ng-change="getListByType(pageIndex)">
@@ -92,7 +92,7 @@
 
                         <a class="btn btn-sm btn-primary" ng-if="selectedList.data.length > 0 && selectedList.action"
                             ng-click="applyList()">Apply</a>
-                    </dvi>
+                    </div>
                 </div>
             </div>
             <div class="col-9">

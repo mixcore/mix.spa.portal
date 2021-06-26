@@ -76,9 +76,9 @@
         <div class="row row-deck row-cards flex-row-reverse" xng-if="isAdmin">
             <div class="col-3">
                 <div class="card">
-                    <dvi class="card-body">
+                    <div class="card-body">
                         <filter-list class="" request="request" callback="getList(pageIndex)"></filter-list>
-                    </dvi>
+                    </div>
                 </div>
             </div>
             <div class="col-9">
@@ -220,7 +220,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr id="childs-{{item.id}}" class="collapse">
+                                <!-- Nested child pages -->
+                                <!-- <tr id="childs-{{item.id}}" class="collapse">
                                     <td colspan="7" style="padding: 0">
                                         <div class="pl-4">
                                             <table class="table table-sm table-hover mb-0 border" cellspacing="0"
@@ -229,7 +230,6 @@
                                                     <tr>
                                                         <th class="col-auto" style="cursor: grab"
                                                             class="drag-header align-middle">
-                                                            <!-- <small class="fa fa-grip-vertical fa-xs text-black-50"></small> -->
                                                         </th>
                                                         <th class="col-auto"></th>
                                                         <th class="col-auto">Title</th>
@@ -306,7 +306,7 @@
                                             </table>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

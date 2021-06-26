@@ -1,12 +1,13 @@
 <form ng-class="{'submitted': submitted}" ng-submit="$ctrl.submit()">
     <div class="row" ng-if="!$ctrl.hideAction">
-        <div class="col-8"></div>
-        <div class="col-4 mb-3">
+        <div class="col"></div>
+        <div class="col-auto mb-3">
             <actions ng-if="!$ctrl.hideAction" back-url="$ctrl.backUrl" ng-if="$ctrl.backUrl"></actions>
         </div>
     </div>
-    <div class="">
-        <div ng-if="!$ctrl.hideAction" class="card-header position-sticky" style="top: 3.9rem; z-index: 12">
+    <div class="card">
+        <div ng-if="!$ctrl.hideAction" class="card-header position-sticky"
+            style="top: 0rem; z-index: 12; background-color: white;">
             <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"
                 ng-if="$ctrl.isBusy"></span>
             <!-- <span ng-if="$ctrl.mixDatabaseName"
@@ -37,7 +38,7 @@
                 <i class="fas fa-save"></i> Save current
             </button>
         </div>
-        <div id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}" class="show">
+        <div id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}" class="card-body show">
             <div class="row">
                 <div class="col-sm-12">
                     <div ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index">
@@ -50,11 +51,18 @@
         </div>
 
         <div class="card-footer" ng-if="!$ctrl.hideAction">
-            <button type="button" ng-click="$ctrl.submit()" class="btn btn-sm btn-primary btn-round float-end px-4"
+            <button type="button" ng-click="$ctrl.submit()" class="btn btn-primary float-end px-4"
                 ng-disabled="$ctrl.isBusy">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ng-if="$ctrl.isBusy"
                     ng-show="!$ctrl.isBusy"></span>
-                <i class="fas fa-save"></i> Save current
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24"
+                    height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                    <circle cx="12" cy="14" r="2"></circle>
+                    <polyline points="14 4 14 8 8 8 8 4"></polyline>
+                </svg> Save current
             </button>
         </div>
     </div>
