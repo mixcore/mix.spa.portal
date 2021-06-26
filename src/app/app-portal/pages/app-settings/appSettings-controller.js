@@ -61,8 +61,8 @@ app.controller("AppSettingsController", [
       $scope.$apply();
 
       // load portal menus
-      commonService.loadJArrayData("portal-menus.json").then((resp) => {
-        $scope.menus = resp.data;
+      commonService.loadJsonData("portal-menus.json").then((resp) => {
+        $scope.menus = resp.data.items;
         $rootScope.isBusy = false;
         $scope.$apply();
       });

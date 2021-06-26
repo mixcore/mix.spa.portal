@@ -6,36 +6,12 @@ appShared.factory("CommonService", [
   function ($rootScope, apiService, localStorageService) {
     var factory = {};
 
-    var _loadJArrayData = async function (name) {
-      var req = {
-        method: "GET",
-        url: "/portal/jarray-data/" + name,
-      };
-      return await apiService.getAnonymousApiResult(req);
-    };
-
-    var _stopApplication = async function () {
-      var req = {
-        method: "GET",
-        url: "/rest/shared/stop-application",
-      };
-      return await apiService.getRestApiResult(req, false, true);
-    };
-
-    var _clearCache = async function () {
-      var req = {
-        method: "GET",
-        url: "/rest/shared/clear-cache",
-      };
-      return await apiService.getRestApiResult(req, false, true);
-    };
-
     var _loadJsonData = async function (name) {
       var req = {
         method: "GET",
-        url: "/portal/json-data/" + name,
+        url: "/shared/json-data/" + name,
       };
-      return await apiService.getAnonymousApiResult(req);
+      return await apiService.sendRequest(req, true);
     };
 
     var _showAlertMsg = function (title, message) {
@@ -96,23 +72,21 @@ appShared.factory("CommonService", [
           method: "GET",
           url: url,
         };
-        return apiService
-          .getRestApiResult(req, false, true)
-          .then(function (response) {
-            response.data.globalSettings.lastUpdateConfiguration = new Date();
-            localStorageService.set(
-              "localizeSettings",
-              response.data.localizeSettings
-            );
-            localStorageService.set(
-              "globalSettings",
-              response.data.globalSettings
-            );
-            localStorageService.set("translator", response.data.translator);
-            $rootScope.localizeSettings = response.data.localizeSettings;
-            $rootScope.globalSettings = response.data.globalSettings;
-            $rootScope.translator.translator = response.data.translator;
-          });
+        return apiService.getRestApiResult(req).then(function (response) {
+          response.data.globalSettings.lastUpdateConfiguration = new Date();
+          localStorageService.set(
+            "localizeSettings",
+            response.data.localizeSettings
+          );
+          localStorageService.set(
+            "globalSettings",
+            response.data.globalSettings
+          );
+          localStorageService.set("translator", response.data.translator);
+          $rootScope.localizeSettings = response.data.localizeSettings;
+          $rootScope.globalSettings = response.data.globalSettings;
+          $rootScope.translator.translator = response.data.translator;
+        });
       }
     };
 
@@ -131,20 +105,18 @@ appShared.factory("CommonService", [
             method: "GET",
             url: url,
           };
-          return apiService
-            .getApiResult(req, true, true)
-            .then(function (response) {
-              if (response.data) {
-                _renewSettings();
-              } else {
-                $rootScope.localizeSettings =
-                  localStorageService.get("localizeSettings");
-                $rootScope.globalSettings =
-                  localStorageService.get("globalSettings");
-                $rootScope.translator.translator =
-                  localStorageService.get("translator");
-              }
-            });
+          return apiService.getApiResult(req).then(function (response) {
+            if (response.data) {
+              _renewSettings();
+            } else {
+              $rootScope.localizeSettings =
+                localStorageService.get("localizeSettings");
+              $rootScope.globalSettings =
+                localStorageService.get("globalSettings");
+              $rootScope.translator.translator =
+                localStorageService.get("translator");
+            }
+          });
         }
       }
     };
@@ -230,8 +202,6 @@ appShared.factory("CommonService", [
     factory.showAlertMsg = _showAlertMsg;
     factory.checkfile = _checkfile;
     factory.genrateSitemap = _genrateSitemap;
-    factory.loadJArrayData = _loadJArrayData;
-    factory.stopApplication = _stopApplication;
     factory.loadJsonData = _loadJsonData;
     factory.clearCache = _clearCache;
     factory.getPermissions = _getPermissions;

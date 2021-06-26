@@ -17,9 +17,9 @@ app.controller("Step4Controller", [
     var rand = Math.random();
     $scope.data = [];
     $scope.init = async function () {
-      var getData = await commonService.loadJArrayData("languages.json");
+      var getData = await commonService.loadJsonData("languages.json");
       if (getData.isSucceed) {
-        $scope.data = getData.data;
+        $scope.data = getData.data.items;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

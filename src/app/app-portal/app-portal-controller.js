@@ -38,11 +38,11 @@ app.controller("AppPortalController", [
       if (!$rootScope.isBusy) {
         $rootScope.isBusy = true;
 
-        commonService.loadJArrayData("micon.json").then((resp) => {
-          ngAppSettings.icons = resp.data;
+        commonService.loadJsonData("micon").then((resp) => {
+          ngAppSettings.icons = resp.data.items;
         });
-        commonService.loadJsonData("enums.json").then((resp) => {
-          ngAppSettings.enums = resp.data;
+        commonService.loadJsonData("enums").then((resp) => {
+          ngAppSettings.enums = resp.data.items;
         });
         commonService.fillAllSettings($scope.lang).then(function (response) {
           ngAppSettings.localizeSettings = $rootScope.localizeSettings.data;

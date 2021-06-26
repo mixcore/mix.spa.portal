@@ -10,9 +10,9 @@ app.controller("Step5Controller", [
     var rand = Math.random();
     $scope.data = [];
     $scope.init = async function () {
-      var getData = await commonService.loadJArrayData("configurations.json");
+      var getData = await commonService.loadJsonData("configurations");
       if (getData.isSucceed) {
-        $scope.data = getData.data;
+        $scope.data = getData.data.items;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

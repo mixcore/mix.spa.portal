@@ -51,9 +51,9 @@ app.controller("Step1Controller", [
       cultures: [],
     };
     $scope.loadSettings = async function () {
-      var getCultures = await commonService.loadJArrayData("cultures.json");
+      var getCultures = await commonService.loadJsonData("cultures");
       if (getCultures) {
-        $scope.settings.cultures = getCultures;
+        $scope.settings.cultures = getCultures.data.items;
         $scope.initCmsModel.culture = $scope.settings.cultures[0];
         $scope.dbProvider = $scope.settings.providers[0];
         $scope.initCmsModel.databaseProvider = $scope.dbProvider.value;
