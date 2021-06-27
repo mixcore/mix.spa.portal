@@ -1,5 +1,5 @@
 <div class="row" ng-if="$ctrl.model">
-    <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-9">
+    <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-auto">
         <div ng-switch-default>
             <p ng-bind="$ctrl.model"></p>
         </div>
@@ -41,7 +41,7 @@
             <div id="{{$ctrl.uuid}}" ng-init="$ctrl.generateQRCode()"></div>
         </div>
     </div>
-    <div class="col-9" ng-if="$ctrl.column.isEncrypt && $ctrl.encryptedData">
+    <div class="col-auto" ng-if="$ctrl.column.isEncrypt && $ctrl.encryptedData">
         <a class="btn btn-info text-white" ng-click="$ctrl.showDecrypt = !$ctrl.showDecrypt">Decrypt</a>
         <p ng-if="$ctrl.showDecrypt" class="text-info" ng-bind="$ctrl.decrypted"></p>
     </div>
