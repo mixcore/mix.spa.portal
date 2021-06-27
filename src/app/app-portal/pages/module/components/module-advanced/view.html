@@ -1,36 +1,25 @@
 <div class="row">
-  <div class="tab-pane fade active show col-lg-12">
-    <module-type
-      class="mb-4"
-      ng-if="$ctrl.model"
-      model="$ctrl.model.type"
-    ></module-type>
-  </div>
+    <div class="tab-pane fade active show col-lg-12">
+        <module-type class="mb-3" ng-if="$ctrl.model" model="$ctrl.model.type"></module-type>
+    </div>
 </div>
 
 <input type="hidden" asp-for="Id" />
 <input type="hidden" asp-for="Specificulture" />
 <input type="hidden" asp-for="Priority" />
-<properties-structure
-  header="'Module Attributes'"
-  columns="$ctrl.model.columns"
->
+<properties-structure header="'Module Attributes'" columns="$ctrl.model.columns">
 </properties-structure>
 
 <div class="row">
-  <div class="tab-pane fade active show col-lg-12" ng-if="$ctrl.additionalData">
-    <additional-column
-      class="mb-4"
-      model="$ctrl.model"
-      additional-data="$ctrl.additionalData"
-    ></additional-column>
-  </div>
+    <div class="tab-pane fade active show col-lg-12" ng-if="$ctrl.additionalData">
+        <additional-column class="mb-3" model="$ctrl.model" additional-data="$ctrl.additionalData"></additional-column>
+    </div>
 </div>
 
 <!-- <div class="row">
     <div class="tab-pane fade active show col-lg-12" id="pills-general" role="tabpanel"
         aria-labelledby="pills-general-tab">
-        <div class="card mb-4">
+        <div class="card mb-3">
             <h6 class="card-header">
                 Add-in Attributes
                 <a class="btn-link text-primary btn-sm float-end py-0" data-bs-toggle="collapse"
@@ -52,36 +41,19 @@
     </div>
 </div> -->
 <tabs-v select-callback="selectPane(pane)" class="">
-  <pane-v header="Modules Layout">
-    <template-editor
-      is-readonly="'true'"
-      folder-type="'Modules'"
-      template="$ctrl.model.view"
-      templates="$ctrl.model.templates"
-      enable-rename="'true'"
-    >
-    </template-editor>
-  </pane-v>
-  <pane-v header="Form Layout">
-    <template-editor
-      is-readonly="'true'"
-      folder-type="'Forms'"
-      template="$ctrl.model.formView"
-      templates="$ctrl.model.forms"
-      enable-rename="'true'"
-    >
-    </template-editor>
-  </pane-v>
-  <pane-v header="eDM Layout">
-    <template-editor
-      is-readonly="'true'"
-      folder-type="'Edms'"
-      hide-css="'true'"
-      hide-js="'true'"
-      template="$ctrl.model.edmView"
-      templates="$ctrl.model.edms"
-      enable-rename="'true'"
-    >
-    </template-editor>
-  </pane-v>
+    <pane-v header="Modules Layout">
+        <template-editor is-readonly="'true'" folder-type="'Modules'" template="$ctrl.model.view"
+            templates="$ctrl.model.templates" enable-rename="'true'">
+        </template-editor>
+    </pane-v>
+    <pane-v header="Form Layout">
+        <template-editor is-readonly="'true'" folder-type="'Forms'" template="$ctrl.model.formView"
+            templates="$ctrl.model.forms" enable-rename="'true'">
+        </template-editor>
+    </pane-v>
+    <pane-v header="eDM Layout">
+        <template-editor is-readonly="'true'" folder-type="'Edms'" hide-css="'true'" hide-js="'true'"
+            template="$ctrl.model.edmView" templates="$ctrl.model.edms" enable-rename="'true'">
+        </template-editor>
+    </pane-v>
 </tabs-v>
