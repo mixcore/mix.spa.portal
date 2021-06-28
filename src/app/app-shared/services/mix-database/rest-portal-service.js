@@ -1,11 +1,9 @@
 "use strict";
 appShared.factory("RestMixDatabasePortalService", [
   "BaseRestService",
-  "ApiService",
-  "CommonService",
-  function (baseService, apiService, commonService) {
+  function (baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-database/portal", true);
+    serviceFactory.init("mix-database/portal");
     var _migrate = async function (data) {
       var url = `${this.prefixUrl}/migrate/${data.id}`;
       var req = {
