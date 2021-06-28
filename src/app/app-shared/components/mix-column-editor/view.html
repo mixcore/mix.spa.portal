@@ -150,10 +150,15 @@
 </div>
 <!-- TODO: Only allow stringValue -->
 <div ng-if="$ctrl.model && $ctrl.column.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
-    <div class="col-2">
+    <div class="col-3">
         <div class="control-label" ng-bind="$ctrl.translate($ctrl.column.title)"></div>
+        <div>
+            <small class="text-muted">
+                {{$ctrl.translate($ctrl.column.name)}}: {{$ctrl.translate($ctrl.column.dataType)}}
+            </small>
+        </div>
     </div>
-    <div class="col-10">
+    <div class="col-9">
         <select ng-if="$ctrl.column.dataType!='icon'" class="form-select form-control"
             ng-model="$ctrl.model.obj[$ctrl.column.name]">
             <option ng-repeat="item in $ctrl.options track by $index" ng-value="item.value">
