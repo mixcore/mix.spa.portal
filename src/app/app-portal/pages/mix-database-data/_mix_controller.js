@@ -41,7 +41,10 @@ app.controller("MixDatabaseDataController", [
       description: "",
     };
     $scope.initRouteParams = () => {
-      $scope.requestKey = `request${$location.$$path}_${$routeParams.mixDatabaseId}`;
+      $scope.requestKey = `request${$rootScope.generateKeyword(
+        $location.$$path,
+        "_"
+      )}_${$routeParams.mixDatabaseId}`;
       $scope.request = $rootScope.getRequest($scope.requestKey);
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;

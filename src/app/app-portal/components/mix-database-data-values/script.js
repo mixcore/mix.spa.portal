@@ -104,18 +104,20 @@ modules.component("mixDatabaseDataValues", {
       };
 
       ctrl.dragStart = function (index) {
-        ctrl.min = ctrl.data[0].priority;
         ctrl.dragStartIndex = index;
+        ctrl.minPriority = ctrl.data[0].priority;
       };
       ctrl.updateOrders = function (index, items) {
-        for (var i = 0; i < items.length; i++) {
-          items[i].priority = ctrl.min + i + 1;
+        if (index > ctrl.dragStartIndex) {
+          ctrl.data.splice(ctrl.dragStartIndex, 1);
+        } else {
+          ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
         }
-        items.splice(ctrl.dragStartIndex, 1);
-        ctrl.updateDataInfos(items);
+        ctrl.updateDataInfos();
       };
-      ctrl.updateDataInfos = async function (items) {
-        angular.forEach(items, async function (e) {
+      ctrl.updateDataInfos = async function () {
+        angular.forEach(ctrl.data, async function (e, i) {
+          e.priority = ctrl.minPriority + i;
           var resp = await dataService.saveFields(e.id, {
             priority: e.priority,
           });
@@ -128,27 +130,6 @@ modules.component("mixDatabaseDataValues", {
           }
         });
       };
-      // ctrl.updateOrders = function (index) {
-      //   if (index > ctrl.dragStartIndex) {
-      //     ctrl.data.splice(ctrl.dragStartIndex, 1);
-      //   } else {
-      //     ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
-      //   }
-      //   // angular.forEach(ctrl.data, async function (e, i) {
-      //   //   e.priority = ctrl.min + i;
-      //   //   var resp = await dataService.saveFields(e.id, {
-      //   //     priority: e.priority,
-      //   //   });
-      //   //   if (resp && resp.isSucceed) {
-      //   //     $scope.activedPage = resp.data;
-      //   //     $scope.$apply();
-      //   //   } else {
-      //   //     if (resp) {
-      //   //       $rootScope.showErrors(resp.errors);
-      //   //     }
-      //   //   }
-      //   // });
-      // };
 
       ctrl.view = function (item) {
         var obj = {
