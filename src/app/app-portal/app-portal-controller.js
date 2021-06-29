@@ -9,7 +9,7 @@ app.controller("AppPortalController", [
   "AuthService",
   "TranslatorService",
   "GlobalSettingsService",
-  "RoleService",
+  "localStorageService",
   function (
     $rootScope,
     $scope,
@@ -20,7 +20,7 @@ app.controller("AppPortalController", [
     authService,
     translatorService,
     globalSettingsService,
-    roleServices
+    localStorageService
   ) {
     $scope.isInit = false;
     $scope.pageTagName = "";
@@ -108,6 +108,23 @@ app.controller("AppPortalController", [
     });
     $rootScope.limString = function (str, max) {
       return str.substring(0, max);
+    };
+    $rootScope.getRequest = function (key) {
+      key =
+        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
+      let request = localStorageService.get(key);
+      if (!request) {
+        request = angular.copy(ngAppSettings.request);
+        localStorageService.set(key, request);
+      }
+      return request;
+    };
+    $rootScope.setRequest = function (req, key) {
+      key =
+        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
+      if (req) {
+        localStorageService.set(key, req);
+      }
     };
   },
 ]);

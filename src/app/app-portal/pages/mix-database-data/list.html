@@ -31,7 +31,7 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <filter-list class="bd-aside-right text-muted align-self-start mb-3 mb-xl-5 px-2"
-                                request="request" callback="getList(pageIndex)"></filter-list>
+                                key="requestKey" request="request" callback="getList(pageIndex)"></filter-list>
                             <div ng-if="columns" ng-repeat="column in columns" class="mb-3">
                                 <label class="form-label">{{column.title}}</label>
                                 <input ng-model="queries[column.name]" ng-enter="getList()" class="form-control">
