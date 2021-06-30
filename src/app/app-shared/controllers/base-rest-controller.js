@@ -7,18 +7,9 @@ function BaseRestCtrl(
   ngAppSettings,
   service
 ) {
-  $scope.request = {
-    pageSize: "20",
-    pageIndex: 0,
-    status: "Published",
-    orderBy: "CreatedDateTime",
-    direction: "Desc",
-    fromDate: null,
-    toDate: null,
-  };
+  $scope.request = $rootScope.getRequest();
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
   $scope.viewmodel = null;
-  $scope.viewmodelType = "post";
 
   $scope.isScrollTop = true;
   $scope.defaultId = 0;

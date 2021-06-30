@@ -29,6 +29,10 @@
           });
         });
       };
+      ctrl.apply = function (pageIndex) {
+        $rootScope.setRequest(ctrl.request, ctrl.key);
+        ctrl.callback({ pageIndex: pageIndex });
+      };
       ctrl.updateDate = function () {
         if (Date.parse(ctrl.dateRange.fromDate)) {
           ctrl.request.fromDate = new Date(
@@ -42,12 +46,14 @@
         } else {
           ctrl.request.toDate = null;
         }
+        $rootScope.setRequest(ctrl.request, ctrl.key);
         ctrl.callback({ pageIndex: 0 });
       };
     },
   ],
   bindings: {
     request: "=",
+    key: "=?",
     orders: "=?",
     createUrl: "=",
     createText: "=",
