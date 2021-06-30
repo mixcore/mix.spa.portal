@@ -6,7 +6,7 @@
     description: "=?",
     src: "=",
     srcUrl: "=",
-    mediaFile: "=",
+    mediaFile: "=?",
     formFile: "=",
     type: "=?",
     folder: "=?",
@@ -29,6 +29,7 @@
       ctrl.mediaNavs = [];
       ctrl.$onInit = function () {
         ctrl.srcUrl = ctrl.srcUrl || image_placeholder;
+        ctrl.mediaFile = ctrl.mediaFile || {};
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()
           .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
