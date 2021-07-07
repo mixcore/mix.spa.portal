@@ -7,50 +7,74 @@ appShared.controller("MediaController", [
   "MediaService",
   "ApiService",
   "CommonService",
-  function($scope, $rootScope, ngAppSettings, $routeParams, service, apiService,
-           commonService) {
-    BaseCtrl.call(this, $scope, $rootScope, $routeParams, ngAppSettings,
-                  service);
+  function (
+    $scope,
+    $rootScope,
+    ngAppSettings,
+    $routeParams,
+    service,
+    apiService,
+    commonService
+  ) {
+    BaseCtrl.call(
+      this,
+      $scope,
+      $rootScope,
+      $routeParams,
+      ngAppSettings,
+      service
+    );
 
     $scope.viewmodel = {
-      title : "",
-      description : "",
-      status : "Published",
-      mediaFile : {
-        file : null,
-        fullPath : "",
-        folderName : "Media",
-        fileFolder : "",
-        fileName : "",
-        extension : "",
-        content : "",
-        fileStream : "",
+      title: "",
+      description: "",
+      status: "Published",
+      mediaFile: {
+        file: null,
+        fullPath: "",
+        folderName: "Media",
+        fileFolder: "",
+        fileName: "",
+        extension: "",
+        content: "",
+        fileStream: "",
       },
     };
     // multipart form
     $scope.formFile = null;
     $scope.relatedMedias = [];
 
-    $scope.init = function() {
-      $("#modal-files").on("shown.bs.modal", function() { $scope.getList(); });
+    $scope.init = function () {
+      $("#modal-files").on("shown.bs.modal", function () {
+        $scope.getList();
+      });
     };
-    $scope.save = async function() {
+    $scope.save = async function () {
       var data = $scope.viewmodel;
       $rootScope.isBusy = true;
       if ($scope.validate) {
         $scope.isValid = await $rootScope.executeFunctionByName(
-            "validate", $scope.validateArgs, $scope);
+          "validate",
+          $scope.validateArgs,
+          $scope
+        );
       }
       if ($scope.isValid) {
-        var resp = await service.save(data, $scope.formFile,
-                                      $scope.onUploadFileProgress);
+        var resp = await service.save(
+          data,
+          $scope.formFile,
+          $scope.onUploadFileProgress
+        );
         if (resp && resp.isSucceed) {
           $scope.viewmodel = resp.data;
           $rootScope.showMessage("success", "success");
 
           if ($scope.saveSuccessCallback) {
             $rootScope.executeFunctionByName(
-                "saveSuccessCallback", $scope.saveSuccessCallbackArgs, $scope);
+              "saveSuccessCallback",
+              $scope.saveSuccessCallbackArgs,
+              $scope
+            );
           } else {
             $rootScope.goToPath("/portal/media/list");
           }
@@ -59,7 +83,10 @@ appShared.controller("MediaController", [
         } else {
           if ($scope.saveFailCallback) {
             $rootScope.executeFunctionByName(
-                "saveFailCallback", $scope.saveSuccessCallbackArgs, $scope);
+              "saveFailCallback",
+              $scope.saveSuccessCallbackArgs,
+              $scope
+            );
           }
           if (resp) {
             $rootScope.showErrors(resp.errors);
@@ -68,12 +95,12 @@ appShared.controller("MediaController", [
           $scope.$apply();
         }
       } else {
-        $rootScope.showErrors([ "invalid model" ]);
+        $rootScope.showErrors(["invalid model"]);
         $rootScope.isBusy = false;
         $scope.$apply();
       }
     };
-    $scope.uploadMedia = async function() {
+    $scope.uploadMedia = async function () {
       $rootScope.isBusy = true;
       var resp = await service.uploadMedia($scope.mediaFile);
       if (resp && resp.isSucceed) {
@@ -88,41 +115,44 @@ appShared.controller("MediaController", [
         $scope.$apply();
       }
     };
-    $scope.selectFile = function(file, errFiles) {
+    $scope.selectFile = function (file, errFiles) {
       if (file !== undefined && file !== null) {
         $scope.mediaFile.folder = "Media";
         $scope.mediaFile.file = file;
         $scope.getBase64(file);
       }
     };
-    $scope.getBase64 = function(file) {
+    $scope.getBase64 = function (file) {
       if (file !== null && $scope.postedFile) {
         $rootScope.isBusy = true;
         var reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function() {
+        reader.onload = function () {
           var index = reader.result.indexOf(",") + 1;
           var base64 = reader.result.substring(index);
           $scope.activedMedia.mediaFile.fileName = $rootScope.generateKeyword(
-              file.name.substring(0, file.name.lastIndexOf(".")), "-");
-          $scope.activedMedia.mediaFile.extension =
-              file.name.substring(file.name.lastIndexOf("."));
+            file.name.substring(0, file.name.lastIndexOf(".")),
+            "-"
+          );
+          $scope.activedMedia.mediaFile.extension = file.name.substring(
+            file.name.lastIndexOf(".")
+          );
           $scope.activedMedia.mediaFile.fileStream = reader.result;
           $rootScope.isBusy = false;
           $scope.$apply();
         };
-        reader.onerror = function(error) {
-          $rootScope.showErrors([ error ]);
+        reader.onerror = function (error) {
+          $rootScope.showErrors([error]);
           $rootScope.isBusy = false;
         };
       } else {
         return null;
       }
     };
-    $scope.togglePreview = function(item) {
+    $scope.togglePreview = function (item) {
       item.isPreview = item.isPreview === undefined ? true : !item.isPreview;
     };
-    $scope.clone = async function(id) {
+    $scope.clone = async function (id) {
       $rootScope.isBusy = true;
       var resp = await service.cloneMedia(id);
       if (resp && resp.isSucceed) {
@@ -140,8 +170,11 @@ appShared.controller("MediaController", [
       }
     };
 
-    $scope.removeCallback = function() { $scope.getList(); };
-    $scope.onUploadFileProgress = function(
-        progress) { $scope.progress = progress; };
+    $scope.removeCallback = function () {
+      $scope.getList();
+    };
+    $scope.onUploadFileProgress = function (progress) {
+      $scope.progress = progress;
+    };
   },
 ]);
