@@ -1,32 +1,24 @@
 sharedComponents.component("mixStore", {
-  templateUrl: "/mix-app/views/app-shared/components/store/view.html",
-  bindings: {
-    installCallback: "&?",
+  templateUrl : "/mix-app/views/app-shared/components/store/view.html",
+  bindings : {
+    installCallback : "&?",
   },
-  controller: [
+  controller : [
     "$scope",
     "$rootScope",
     "ngAppSettings",
     "CryptoService",
     "ThemeService",
     "StoreService",
-    function (
-      $scope,
-      $rootScope,
-      ngAppSettings,
-      cryptoService,
-      themeService,
-      service
-    ) {
+    function($scope, $rootScope, ngAppSettings, cryptoService, themeService,
+             service) {
       var ctrl = this;
       ctrl.categories = [];
       BaseHub.call(this, ctrl);
       ctrl.current = null;
       ctrl.viewMode = "list";
-      ctrl.init = async function () {
-        ctrl.startConnection("portalhub", () => {
-          ctrl.joinRoom("Theme");
-        });
+      ctrl.init = async function() {
+        ctrl.startConnection("portalhub", () => { ctrl.joinRoom("Theme"); });
 
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
@@ -41,30 +33,28 @@ sharedComponents.component("mixStore", {
         await ctrl.getThemes(ctrl.themeRequest);
         $scope.$apply();
       };
-      ctrl.receiveMessage = function (resp) {
+      ctrl.receiveMessage = function(resp) {
         let msg = JSON.parse(resp);
         switch (msg.action) {
-          case "Downloading":
-            var index = ctrl.data.items.findIndex(
-              (m) => m.id == ctrl.current.id
-            );
-            var progress = Math.round(msg.message);
-            if (index >= 0) {
-              ctrl.data.items[index].progress = progress;
-              if (progress == 100) {
-                ctrl.data.items[index].additionalData.installStatus =
+        case "Downloading":
+          var index = ctrl.data.items.findIndex((m) => m.id == ctrl.current.id);
+          var progress = Math.round(msg.message);
+          if (index >= 0) {
+            ctrl.data.items[index].progress = progress;
+            if (progress == 100) {
+              ctrl.data.items[index].additionalData.installStatus =
                   "Installing";
-              }
-              $scope.$apply();
             }
-            break;
+            $scope.$apply();
+          }
+          break;
 
-          default:
-            console.log(msg);
-            break;
+        default:
+          console.log(msg);
+          break;
         }
       };
-      ctrl.getThemes = async function () {
+      ctrl.getThemes = async function() {
         $rootScope.isBusy = true;
 
         if (ctrl.themeRequest.fromDate !== null) {
@@ -78,8 +68,8 @@ sharedComponents.component("mixStore", {
         var resp = await service.getThemes(ctrl.themeRequest);
         if (resp && resp.isSucceed) {
           ctrl.data = resp.data;
-          $.each(ctrl.data, function (i, data) {
-            $.each(ctrl.viewmodels, function (i, e) {
+          $.each(ctrl.data, function(i, data) {
+            $.each(ctrl.viewmodels, function(i, e) {
               if (e.dataId === data.id) {
                 data.isHidden = true;
               }
@@ -89,7 +79,7 @@ sharedComponents.component("mixStore", {
           $scope.$apply();
         } else {
           if (resp) {
-            $rootScope.showErrors(resp.errors || ["Failed"]);
+            $rootScope.showErrors(resp.errors || [ "Failed" ]);
           }
           if (ctrl.getListFailCallback) {
             ctrl.getListFailCallback();
@@ -98,22 +88,20 @@ sharedComponents.component("mixStore", {
           $scope.$apply();
         }
       };
-      ctrl.preview = function (theme) {
+      ctrl.preview = function(theme) {
         ctrl.current = theme;
         // TODO: verify user - theme to enable install
         ctrl.current.canInstall = true;
         ctrl.viewMode = "detail";
       };
-      ctrl.back = function () {
-        ctrl.viewMode = "list";
-      };
-      ctrl.processPaymentData = async function (paymentData) {
+      ctrl.back = function() { ctrl.viewMode = "list"; };
+      ctrl.processPaymentData = async function(paymentData) {
         var encrypted = cryptoService.encryptAES(paymentData);
         ctrl.current.canInstall = true;
         $scope.$apply();
         return encrypted;
       };
-      ctrl.installTheme = async function (theme, id) {
+      ctrl.installTheme = async function(theme, id) {
         $rootScope.isBusy = false;
         theme.installStatus = "downloading";
         ctrl.id = id;
@@ -130,7 +118,7 @@ sharedComponents.component("mixStore", {
         }
 
         if (ctrl.installCallback) {
-          ctrl.installCallback({ data: result });
+          ctrl.installCallback({data : result});
         }
         $scope.$apply();
       };

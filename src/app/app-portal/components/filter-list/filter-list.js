@@ -1,17 +1,17 @@
 ﻿modules.component("filterList", {
-  templateUrl:
-    "/mix-app/views/app-portal/components/filter-list/filter-list.html",
-  controller: [
+  templateUrl :
+      "/mix-app/views/app-portal/components/filter-list/filter-list.html",
+  controller : [
     "$scope",
     "$rootScope",
     "ngAppSettings",
-    function ($scope, $rootScope, ngAppSettings) {
+    function($scope, $rootScope, ngAppSettings) {
       var ctrl = this;
       ctrl.dateRange = {
-        fromDate: null,
-        toDate: null,
+        fromDate : null,
+        toDate : null,
       };
-      ctrl.init = function () {
+      ctrl.init = function() {
         if (!ctrl.orders) {
           ctrl.orders = ngAppSettings.orders;
         }
@@ -22,22 +22,21 @@
         if (ctrl.request && ctrl.request.contentStatuses) {
           statuses = ctrl.request.contentStatuses;
         }
-        angular.forEach(statuses, function (val, i) {
+        angular.forEach(statuses, function(val, i) {
           ctrl.statuses.push({
-            value: val,
-            title: val,
+            value : val,
+            title : val,
           });
         });
       };
-      ctrl.apply = function (pageIndex) {
+      ctrl.apply = function(pageIndex) {
         $rootScope.setRequest(ctrl.request, ctrl.key);
-        ctrl.callback({ pageIndex: pageIndex });
+        ctrl.callback({pageIndex : pageIndex});
       };
-      ctrl.updateDate = function () {
+      ctrl.updateDate = function() {
         if (Date.parse(ctrl.dateRange.fromDate)) {
-          ctrl.request.fromDate = new Date(
-            ctrl.dateRange.fromDate
-          ).toISOString();
+          ctrl.request.fromDate =
+              new Date(ctrl.dateRange.fromDate).toISOString();
         } else {
           $scope.request.fromDate = null;
         }
@@ -47,16 +46,16 @@
           ctrl.request.toDate = null;
         }
         $rootScope.setRequest(ctrl.request, ctrl.key);
-        ctrl.callback({ pageIndex: 0 });
+        ctrl.callback({pageIndex : 0});
       };
     },
   ],
-  bindings: {
-    request: "=",
-    key: "=?",
-    orders: "=?",
-    createUrl: "=",
-    createText: "=",
-    callback: "&",
+  bindings : {
+    request : "=",
+    key : "=?",
+    orders : "=?",
+    createUrl : "=",
+    createText : "=",
+    callback : "&",
   },
 });

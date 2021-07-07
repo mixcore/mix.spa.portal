@@ -1,12 +1,6 @@
 "use strict";
-function BaseRestCtrl(
-  $scope,
-  $rootScope,
-  $location,
-  $routeParams,
-  ngAppSettings,
-  service
-) {
+function BaseRestCtrl($scope, $rootScope, $location, $routeParams,
+                      ngAppSettings, service) {
   $scope.request = $rootScope.getRequest();
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
   $scope.viewmodel = null;
@@ -28,26 +22,26 @@ function BaseRestCtrl(
   $scope.getListFailCallback = null;
   $scope.saveFailCallback = null;
   $scope.selectedList = {
-    action: "",
-    data: [],
+    action : "",
+    data : [],
   };
-  $scope.actions = ["Delete", "Publish", "Export"];
+  $scope.actions = [ "Delete", "Publish", "Export" ];
   $scope.translate = $rootScope.translate;
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
   } else {
-    $scope.referrerUrl = `/portal/${service.modelName.substr(
-      0,
-      service.modelName.indexOf("/")
-    )}/list`; // document.referrer);
+    $scope.referrerUrl = `/portal/${
+        service.modelName.substr(
+            0,
+            service.modelName.indexOf("/"))}/list`; // document.referrer);
   }
 
-  $scope.duplicate = async function (id) {
+  $scope.duplicate = async function(id) {
     $rootScope.isBusy = true;
     if (!id) {
       return await this.getDefault();
     } else {
-      var resp = await service.duplicate([id]);
+      var resp = await service.duplicate([ id ]);
       if (resp.isSucceed) {
         $scope.goToDetail(resp.data.id, $scope.viewmodelType);
       } else {
@@ -60,18 +54,18 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.goToDetail = function (id, type) {
+  $scope.goToDetail = function(id, type) {
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
   };
-  $scope.getSingle = async function (params = []) {
+  $scope.getSingle = async function(params = []) {
     $rootScope.isBusy = true;
     var id = $routeParams.id;
     if (!id) {
       return await this.getDefault();
     } else {
       params.splice(0, 0, id);
-      var resp = await service.getSingle([id]);
+      var resp = await service.getSingle([ id ]);
       if (resp.isSucceed) {
         $scope.viewmodel = resp.data;
         if ($scope.getSingleSuccessCallback) {
@@ -92,7 +86,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.getDefault = async function () {
+  $scope.getDefault = async function() {
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
     if (resp.isSucceed) {
@@ -114,7 +108,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.getList = async function (pageIndex, params = []) {
+  $scope.getList = async function(pageIndex, params = []) {
     $rootScope.isBusy = true;
     if (pageIndex !== undefined) {
       $scope.request.pageIndex = pageIndex;
@@ -130,8 +124,8 @@ function BaseRestCtrl(
     var resp = await service.getList($scope.request, params);
     if (resp && resp.isSucceed) {
       $scope.data = resp.data;
-      $.each($scope.data, function (i, data) {
-        $.each($scope.viewmodels, function (i, e) {
+      $.each($scope.data, function(i, data) {
+        $.each($scope.viewmodels, function(i, e) {
           if (e.dataId === data.id) {
             data.isHidden = true;
           }
@@ -141,13 +135,13 @@ function BaseRestCtrl(
         $scope.getListSuccessCallback();
       }
       if ($scope.isScrollTop) {
-        $("html, body").animate({ scrollTop: "0px" }, 500);
+        $("html, body").animate({scrollTop : "0px"}, 500);
       }
       $rootScope.isBusy = false;
       $scope.$apply();
     } else {
       if (resp) {
-        $rootScope.showErrors(resp.errors || ["Failed"]);
+        $rootScope.showErrors(resp.errors || [ "Failed" ]);
       }
       if ($scope.getListFailCallback) {
         $scope.getListFailCallback();
@@ -157,27 +151,19 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.remove = function (id) {
+  $scope.remove = function(id) {
     $rootScope.showConfirm(
-      $scope,
-      "removeConfirmed",
-      [id],
-      null,
-      "Remove",
-      "Deleted data will not able to recover, are you sure you want to delete this item?"
-    );
+        $scope, "removeConfirmed", [ id ], null, "Remove",
+        "Deleted data will not able to recover, are you sure you want to delete this item?");
   };
 
-  $scope.removeConfirmed = async function (id) {
+  $scope.removeConfirmed = async function(id) {
     $rootScope.isBusy = true;
-    var result = await service.delete([id]);
+    var result = await service.delete([ id ]);
     if (result.isSucceed) {
       if ($scope.removeCallback) {
-        $rootScope.executeFunctionByName(
-          "removeCallback",
-          $scope.removeCallbackArgs,
-          $scope
-        );
+        $rootScope.executeFunctionByName("removeCallback",
+                                         $scope.removeCallbackArgs, $scope);
       }
       $scope.getList();
     } else {
@@ -187,14 +173,11 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.save = async function () {
+  $scope.save = async function() {
     $rootScope.isBusy = true;
     if ($scope.validate) {
       $scope.isValid = await $rootScope.executeFunctionByName(
-        "validate",
-        $scope.validateArgs,
-        $scope
-      );
+          "validate", $scope.validateArgs, $scope);
     }
     if ($scope.isValid) {
       var resp = null;
@@ -210,18 +193,12 @@ function BaseRestCtrl(
 
         if ($scope.saveSuccessCallback) {
           $rootScope.executeFunctionByName(
-            "saveSuccessCallback",
-            $scope.saveSuccessCallbackArgs,
-            $scope
-          );
+              "saveSuccessCallback", $scope.saveSuccessCallbackArgs, $scope);
         }
       } else {
         if ($scope.saveFailCallback) {
           $rootScope.executeFunctionByName(
-            "saveFailCallback",
-            $scope.saveSuccessCallbackArgs,
-            $scope
-          );
+              "saveFailCallback", $scope.saveSuccessCallbackArgs, $scope);
         }
         if (resp) {
           $rootScope.showErrors(resp.errors);
@@ -236,7 +213,7 @@ function BaseRestCtrl(
       $scope.$apply();
     }
   };
-  $scope.select = function (id, isSelected) {
+  $scope.select = function(id, isSelected) {
     if (isSelected) {
       $scope.selectedList.data.push(id);
     } else {
@@ -244,9 +221,9 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.selectAll = function (isSelected) {
+  $scope.selectAll = function(isSelected) {
     $scope.selectedList.data = [];
-    angular.forEach($scope.data.items, function (e) {
+    angular.forEach($scope.data.items, function(e) {
       e.isSelected = isSelected;
       if (isSelected) {
         $scope.selectedList.data.push(e.id);
@@ -254,34 +231,29 @@ function BaseRestCtrl(
     });
   };
 
-  $scope.applyList = async function () {
-    $rootScope.showConfirm(
-      $scope,
-      "applyListConfirmed",
-      [],
-      null,
-      "Remove",
-      "Are you sure to " + $scope.selectedList.action + " these items"
-    );
+  $scope.applyList = async function() {
+    $rootScope.showConfirm($scope, "applyListConfirmed", [], null, "Remove",
+                           "Are you sure to " + $scope.selectedList.action +
+                               " these items");
   };
 
-  $scope.applyListConfirmed = async function () {
+  $scope.applyListConfirmed = async function() {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
     if (resp && resp.isSucceed) {
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
-        case "Export":
-          window.top.location = resp.data.data.webPath;
-          $rootScope.isBusy = false;
-          $scope.$apply();
-          break;
-        case "Delete":
-        default:
-          $scope.selectedList.isSelectAll = false;
-          $scope.selectedList.data = [];
-          $scope.getList();
-          break;
+      case "Export":
+        window.top.location = resp.data.data.webPath;
+        $rootScope.isBusy = false;
+        $scope.$apply();
+        break;
+      case "Delete":
+      default:
+        $scope.selectedList.isSelectAll = false;
+        $scope.selectedList.data = [];
+        $scope.getList();
+        break;
       }
     } else {
       if (resp) {
@@ -291,10 +263,10 @@ function BaseRestCtrl(
       $scope.$apply();
     }
   };
-  $scope.clearCache = async function () {
+  $scope.clearCache = async function() {
     if ($scope.viewmodel) {
       $rootScope.isBusy = true;
-      var resp = await service.clearCache([$scope.viewmodel.id]);
+      var resp = await service.clearCache([ $scope.viewmodel.id ]);
       if (resp.isSucceed) {
         $rootScope.showMessage("success", "success");
       } else {
@@ -305,7 +277,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.handleResult = function (result) {
+  $scope.handleResult = function(result) {
     if (result.isSucceed) {
       $rootScope.showMessage("Success");
     } else {
@@ -313,7 +285,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.shortString = function (msg, max) {
+  $scope.shortString = function(msg, max) {
     if (msg) {
       var data = decodeURIComponent(msg);
 

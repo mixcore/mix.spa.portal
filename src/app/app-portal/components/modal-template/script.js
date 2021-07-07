@@ -1,22 +1,20 @@
 ﻿modules.component("modalTemplate", {
-  templateUrl: "/mix-app/views/app-portal/components/modal-template/view.html",
-  controller: [
+  templateUrl : "/mix-app/views/app-portal/components/modal-template/view.html",
+  controller : [
     "$rootScope",
     "$scope",
     "ngAppSettings",
     "TemplateService",
-    function ($rootScope, $scope, ngAppSettings, service) {
+    function($rootScope, $scope, ngAppSettings, service) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
-      ctrl.$onInit = function () {
+      ctrl.$onInit = function() {
         ctrl.modal = $("#modal-template");
         ctrl.request.status = null;
         ctrl.request.pageSize = 10;
-        ctrl.modal.on("shown.bs.modal", function () {
-          ctrl.search();
-        });
+        ctrl.modal.on("shown.bs.modal", function() { ctrl.search(); });
       };
-      ctrl.search = async function (pageIndex) {
+      ctrl.search = async function(pageIndex) {
         if (ctrl.request.keyword.indexOf("/") > 0) {
           let params = ctrl.request.keyword.split("/");
           ctrl.request.folderType = params[0];
@@ -31,8 +29,9 @@
         $rootScope.isBusy = false;
         $scope.$apply();
       };
-      ctrl.edit = function (item) {
-        let path = `/portal/template/details/${item.themeId}/${item.folderType}/${item.id}`;
+      ctrl.edit = function(item) {
+        let path = `/portal/template/details/${item.themeId}/${
+            item.folderType}/${item.id}`;
         ctrl.modal.modal("hide");
         $rootScope.goToPath(path);
       };
