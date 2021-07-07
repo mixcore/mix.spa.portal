@@ -48,7 +48,10 @@ appShared.factory("ApiService", [
 
       if (encryptedAuthData) {
         return JSON.parse(
-          cryptoService.decryptAES(encryptedAuthData.data, encryptedAuthData.k)
+          cryptoService.decryptAES(
+            encryptedAuthData.message,
+            encryptedAuthData.aesKey
+          )
         );
       }
       return {};
@@ -76,7 +79,7 @@ appShared.factory("ApiService", [
           method: "GET",
           url: url,
         };
-        return _sendRequest(req).then(function (response) {
+        return _sendRequest(req, true).then(function (response) {
           if (response.success) {
             response.data.appSettings.lastUpdateConfiguration = new Date();
             localStorageService.set(

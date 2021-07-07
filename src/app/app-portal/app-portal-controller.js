@@ -44,7 +44,7 @@ app.controller("AppPortalController", [
         commonService.loadJsonData("enums").then((resp) => {
           ngAppSettings.enums = resp.data.items;
         });
-        commonService.fillAllSettings($scope.lang).then(function (response) {
+        apiService.getAllSettings($scope.lang).then(function (response) {
           ngAppSettings.mixConfigurations = $rootScope.mixConfigurations;
           if ($rootScope.appSettings) {
             $scope.portalThemeSettings =

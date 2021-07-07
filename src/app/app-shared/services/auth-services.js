@@ -70,7 +70,7 @@ appShared.factory("AuthService", [
       if (resp.success) {
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);
-        apiService.initAllSettings().then(function () {
+        apiService.getAllSettings().then(function () {
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
               window.top.location = $routeParams.ReturnUrl;
