@@ -49,13 +49,18 @@ app.controller("Step3Controller", [
       });
     };
     $scope.submit = async function () {
+      let theme = $scope.form["theme"].files[0];
+      if ($scope.mode === "Upload your theme" && !theme) {
+        $rootScope.showErrors(["Please select theme file"]);
+        return;
+      }
       $rootScope.isBusy = true;
       var frm = new FormData();
       var url = "/init/init-cms/step-3";
       $scope.data.isCreateDefault = $scope.themeType === "materialkit";
       $rootScope.isBusy = true;
       // Looping over all files and add it to FormData object
-      frm.append("theme", $scope.form["theme"].files[0]);
+      frm.append("theme", theme);
       // Adding one more key to FormData object
       frm.append("model", angular.toJson($scope.data));
       var response = await service.ajaxSubmitForm(frm, url);
@@ -80,6 +85,10 @@ app.controller("Step3Controller", [
       } else {
         $rootScope.showErrors(["Cannot install theme"]);
       }
+    };
+    $scope.selectPane = function (pane) {
+      $scope.canContinue = pane.header !== "Mixcore Store";
+      $scope.mode = pane.header;
     };
     $scope.activeTheme = async function (data) {
       $rootScope.isBusy = true;

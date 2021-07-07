@@ -41,7 +41,8 @@ sharedComponents.component("mixStore", {
         await ctrl.getThemes(ctrl.themeRequest);
         $scope.$apply();
       };
-      ctrl.receiveMessage = function (msg) {
+      ctrl.receiveMessage = function (resp) {
+        let msg = JSON.parse(resp);
         switch (msg.action) {
           case "Downloading":
             var index = ctrl.data.items.findIndex(

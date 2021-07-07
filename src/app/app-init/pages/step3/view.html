@@ -20,7 +20,7 @@
                     </h1>
                     <!-- <hr> -->
 
-                    <tabs-h>
+                    <tabs-h select-callback="selectPane(pane)">
                         <pane-h header="Mixcore Store">
                             <mix-store install-callback="install(data)"></mix-store>
                         </pane-h>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="btn-list justify-content-end">
+                <div class="btn-list justify-content-end" ng-if="canContinue">
                     <!-- <a href="#" class="btn btn-link link-secondary">
                         Set up later
                     </a> -->
