@@ -2,20 +2,10 @@
 app.controller("Step2Controller", [
   "$scope",
   "$rootScope",
-  "$location",
   "ApiService",
-  "CommonService",
   "Step2Services",
   "AuthService",
-  function (
-    $scope,
-    $rootScope,
-    $location,
-    apiService,
-    commonService,
-    services,
-    authService
-  ) {
+  function ($scope, $rootScope, apiService, services, authService) {
     $scope.user = {
       userName: "",
       email: "",
@@ -28,7 +18,6 @@ app.controller("Step2Controller", [
       if (!$scope.user.isAgreed) {
         var ele = document.getElementById("notTNCYetChecked");
         ele.style.display = "block";
-        // $rootScope.showMessage('Please agreed with our policy', 'warning');
       } else {
         if ($scope.password !== $scope.confirmPassword) {
           $rootScope.showErrors(["Confirm Password is not matched"]);
@@ -36,7 +25,7 @@ app.controller("Step2Controller", [
           $rootScope.isBusy = true;
           var result = await services.register($scope.user);
           if (result.success) {
-            await commonService.fillAllSettings();
+            await apiService.fillAllSettings();
             var loginData = {
               userName: $scope.user.userName,
               password: $scope.user.password,
@@ -68,7 +57,6 @@ app.controller("Step2Controller", [
       if (!$scope.user.isAgreed) {
         var ele = document.getElementById("notTNCYetChecked");
         ele.style.display = "block";
-        // $rootScope.showMessage('Please agreed with our policy', 'warning');
       } else {
         if ($scope.password !== $scope.confirmPassword) {
           $rootScope.showErrors(["Confirm Password is not matched"]);
@@ -84,7 +72,6 @@ app.controller("Step2Controller", [
             var result = await authService.login(loginData);
             if (result) {
               $rootScope.isBusy = false;
-              // $location.url('/init/step3');
               $scope.$apply();
             } else {
               if (result) {

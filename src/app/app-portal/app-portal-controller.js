@@ -44,12 +44,11 @@ app.controller("AppPortalController", [
         commonService.loadJsonData("enums").then((resp) => {
           ngAppSettings.enums = resp.data.items;
         });
-        apiService.getAllSettings($scope.lang).then(function (response) {
-          ngAppSettings.mixConfigurations = $rootScope.mixConfigurations;
+        apiService.getAllSettings($scope.lang).then(function () {
           if ($rootScope.appSettings) {
             $scope.portalThemeSettings =
               $rootScope.appSettings.portalThemeSettings;
-            authService.fillAuthData().then(function (response) {
+            authService.fillAuthData().then(function () {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth = authService.authentication != null;
               $rootScope.isAuth = authService.authentication != null;

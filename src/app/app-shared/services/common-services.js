@@ -68,11 +68,7 @@ appShared.factory("CommonService", [
             if (response.data) {
               _renewSettings();
             } else {
-              $rootScope.mixConfigurations =
-                localStorageService.get("mixConfigurations");
               $rootScope.appSettings = localStorageService.get("appSettings");
-              $rootScope.translator.translator =
-                localStorageService.get("translator");
             }
           });
         }
@@ -107,23 +103,6 @@ appShared.factory("CommonService", [
       return await apiService.sendRequest(req);
     };
 
-    var _initAllSettings = async function (culture) {
-      localStorageService.remove("mixConfigurations");
-      localStorageService.remove("translator");
-      localStorageService.remove("appSettings");
-
-      var response = await apiService.getAllSettings();
-      if (response) {
-        localStorageService.set(
-          "mixConfigurations",
-          response.mixConfigurations
-        );
-        localStorageService.set("translator", response.translator);
-        localStorageService.set("appSettings", response.appSettings);
-      }
-      return response;
-    };
-
     var _removeSettings = async function (settings) {
       localStorageService.remove("mixConfigurations");
     };
@@ -132,32 +111,7 @@ appShared.factory("CommonService", [
       localStorageService.remove("translator");
     };
 
-    var _fillAllSettings = async function (culture) {
-      var settings = localStorageService.get("mixConfigurations");
-      var appSettings = localStorageService.get("appSettings");
-      var translator = localStorageService.get("translator");
-      if (
-        settings &&
-        appSettings &&
-        translator &&
-        (!culture || settings.lang === culture)
-      ) {
-        $rootScope.mixConfigurations = settings;
-        $rootScope.appSettings = appSettings;
-        $rootScope.translator.translator = translator;
-        await _checkConfig(appSettings.lastUpdateConfiguration);
-      } else {
-        if (culture && settings && settings.lang !== culture) {
-          await _removeSettings();
-          await _removeTranslator();
-        }
-        await apiService.getAllSettings(culture);
-      }
-    };
-
     factory.sendMail = _sendMail;
-    factory.initAllSettings = _initAllSettings;
-    factory.fillAllSettings = _fillAllSettings;
     factory.removeSettings = _removeSettings;
     factory.removeTranslator = _removeTranslator;
     factory.showAlertMsg = _showAlertMsg;

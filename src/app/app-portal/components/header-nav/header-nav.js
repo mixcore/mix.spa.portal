@@ -5,8 +5,9 @@
     controller: [
       "$rootScope",
       "CommonService",
+      "ApiService",
       "AuthService",
-      function ($rootScope, commonService, authService) {
+      function ($rootScope, commonService, apiService, authService) {
         var ctrl = this;
         ctrl.appSettings = $rootScope.appSettings;
         ctrl.isInRole = $rootScope.isInRole;
@@ -27,7 +28,7 @@
         ctrl.changeLang = function (lang, langIcon) {
           ctrl.mixConfigurations.lang = lang;
           ctrl.mixConfigurations.langIcon = langIcon;
-          commonService.fillAllSettings(lang).then(function () {
+          apiService.fillAllSettings(lang).then(function () {
             window.top.location = location.href;
           });
         };

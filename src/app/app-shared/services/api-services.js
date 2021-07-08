@@ -62,14 +62,11 @@ appShared.factory("ApiService", [
     };
 
     var _getAllSettings = async function (culture) {
-      var settings = localStorageService.get("mixConfigurations");
-      var appSettings = localStorageService.get("appSettings");
-      var translator = localStorageService.get("translator");
-      if (settings && appSettings && translator && settings.lang === culture) {
-        $rootScope.mixConfigurations = settings;
-        $rootScope.appSettings = appSettings;
-        $rootScope.translator.translator = translator;
-      } else {
+      $rootScope.appSettings = localStorageService.get("appSettings");
+      $rootScope.translator = localStorageService.get("translator");
+      $rootScope.mixConfigurations =
+        localStorageService.get("mixConfigurations");
+      if (!$rootScope.appSettings) {
         var url = "/shared";
         if (culture) {
           url += "/" + culture;
@@ -82,15 +79,34 @@ appShared.factory("ApiService", [
         return _sendRequest(req, true).then(function (response) {
           if (response.success) {
             response.data.appSettings.lastUpdateConfiguration = new Date();
+            localStorageService.set("appSettings", response.data.appSettings);
+            localStorageService.set("translator", response.data.translator);
             localStorageService.set(
               "mixConfigurations",
               response.data.mixConfigurations
             );
-            localStorageService.set("appSettings", response.data.appSettings);
-            localStorageService.set("translator", response.data.translator);
-            $rootScope.mixConfigurations = response.data.mixConfigurations;
             $rootScope.appSettings = response.data.appSettings;
-            $rootScope.translator.translator = response.data.translator;
+            $rootScope.mixConfigurations = response.data.mixConfigurations;
+            $rootScope.translator = response.data.translator;
+          } else {
+            $rootScope.showErrors(response.errors);
+          }
+        });
+      }
+    };
+
+    var _getTranslator = async function (culture) {
+      $rootScope.translator = localStorageService.get("translator");
+      if (!$rootScope.translator) {
+        var url = `/rest/shared/mix-common/mix-languague-content?lang=${culture}`;
+        var req = {
+          method: "GET",
+          url: url,
+        };
+        return _sendRequest(req, true).then(function (response) {
+          if (response.success) {
+            localStorageService.set("translator", response.data.translator);
+            $rootScope.translator = response.data.translator;
           } else {
             $rootScope.showErrors(response.errors);
           }
@@ -99,8 +115,6 @@ appShared.factory("ApiService", [
     };
 
     var _initAllSettings = async function (culture) {
-      localStorageService.remove("mixConfigurations");
-      localStorageService.remove("translator");
       localStorageService.remove("appSettings");
 
       var response = await _getAllSettings();
@@ -109,7 +123,6 @@ appShared.factory("ApiService", [
           "mixConfigurations",
           response.mixConfigurations
         );
-        localStorageService.set("translator", response.translator);
         localStorageService.set("appSettings", response.appSettings);
       }
       return response;
@@ -143,15 +156,6 @@ appShared.factory("ApiService", [
 
       return $http(req).then(
         function (resp) {
-          if (
-            req.url.indexOf("settings") == -1 &&
-            (!$rootScope.mixConfigurations ||
-              $rootScope.mixConfigurations.lastUpdateConfiguration <
-                resp.data.lastUpdateConfiguration)
-          ) {
-            _initAllSettings();
-          }
-
           return { success: true, data: resp.data };
         },
         async function (error) {
@@ -204,6 +208,7 @@ appShared.factory("ApiService", [
 
     factory.initAllSettings = _initAllSettings;
     factory.getAllSettings = _getAllSettings;
+    factory.getTranslator = _getTranslator;
     factory.refreshToken = _refreshToken;
     factory.fillAuthData = _fillAuthData;
     factory.updateAuthData = _updateAuthData;
