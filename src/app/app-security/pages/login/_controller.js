@@ -33,7 +33,7 @@ app.controller("LoginController", [
     $scope.message = "";
     $scope.$on("$viewContentLoaded", async function () {
       $rootScope.isBusy = false;
-      await commonService.fillAllSettings();
+      await apiService.getAllSettings();
     });
     $scope.login = async function () {
       $rootScope.isBusy = true;

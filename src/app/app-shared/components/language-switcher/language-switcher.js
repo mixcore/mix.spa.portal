@@ -23,7 +23,7 @@
           // await commonService.removeTranslator();
           // commonService.fillSettings(lang).then(function () {
           //     translatorService.reset(lang).then(function () {
-          apiService.fillAllSettings(lang).then(function (response) {
+          apiService.getAllSettings(lang).then(function (response) {
             translatorService.translateUrl(lang).then(function (url) {
               window.top.location = url;
             });

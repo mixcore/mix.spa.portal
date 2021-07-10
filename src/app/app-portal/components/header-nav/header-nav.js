@@ -28,7 +28,7 @@
         ctrl.changeLang = function (lang, langIcon) {
           ctrl.mixConfigurations.lang = lang;
           ctrl.mixConfigurations.langIcon = langIcon;
-          apiService.fillAllSettings(lang).then(function () {
+          apiService.getAllSettings(lang).then(function () {
             window.top.location = location.href;
           });
         };

@@ -62,7 +62,7 @@
               total: 0,
             };
           }
-          apiService.fillAllSettings(lang).then(function (response) {
+          apiService.getAllSettings(lang).then(function (response) {
             if ($rootScope.appSettings) {
               authService.fillAuthData().then(function (response) {
                 $rootScope.authentication = authService.authentication;

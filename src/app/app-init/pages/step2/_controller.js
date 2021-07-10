@@ -25,7 +25,7 @@ app.controller("Step2Controller", [
           $rootScope.isBusy = true;
           var result = await services.register($scope.user);
           if (result.success) {
-            await apiService.fillAllSettings();
+            await apiService.getAllSettings();
             var loginData = {
               userName: $scope.user.userName,
               password: $scope.user.password,
