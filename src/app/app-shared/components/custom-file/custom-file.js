@@ -53,7 +53,7 @@ sharedComponents.component("customFile", {
           reader.readAsDataURL(file);
           reader.onload = async function () {
             var getMedia = await mediaService.getSingle(["portal"]);
-            if (getMedia.isSucceed) {
+            if (getMedia.success) {
               ctrl.data.mediaFile.fileName = file.name.substring(
                 0,
                 file.name.lastIndexOf(".")
@@ -65,7 +65,7 @@ sharedComponents.component("customFile", {
               var media = getMedia.data;
               media.data.mediaFile = ctrl.data.mediaFile;
               var resp = await mediaService.save(media);
-              if (resp && resp.isSucceed) {
+              if (resp && resp.success) {
                 ctrl.src = resp.data.fullPath;
                 ctrl.srcUrl = resp.data.fullPath;
                 $rootScope.isBusy = false;

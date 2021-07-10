@@ -90,7 +90,7 @@
       ctrl.loadModules = async function () {
         $rootScope.isBusy = true;
         var response = await moduleService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           $rootScope.isBusy = false;
           $scope.$apply();
@@ -103,7 +103,7 @@
       ctrl.loadPosts = async function () {
         $rootScope.isBusy = true;
         var response = await postService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           $rootScope.isBusy = false;
           $scope.$apply();
@@ -116,7 +116,7 @@
       ctrl.loadPages = async function () {
         $rootScope.isBusy = true;
         var response = await pageService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           $rootScope.isBusy = false;
           $scope.$apply();

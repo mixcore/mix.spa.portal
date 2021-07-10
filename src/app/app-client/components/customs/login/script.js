@@ -23,7 +23,7 @@ modules.component("tclLogin", {
       ctrl.submit = async function () {
         $rootScope.isBusy = true;
         var result = await service.getList(ctrl.loginData);
-        if (result.isSucceed) {
+        if (result.success) {
           if (result.data.totalItems > 0) {
             if (
               result.data.items[0].obj.password == ctrl.loginData.password &&

@@ -24,7 +24,7 @@
         data-bs-toggle="buttons"
       >
         <label
-          ng-repeat="type in $ctrl.localizeSettings.serviceTypes track by $index"
+          ng-repeat="type in $ctrl.mixConfigurations.serviceTypes track by $index"
           ng-switch="type"
           ng-class="{active: $index === $ctrl.model.type}"
           class="btn btn-primary text-white btn-block mt-0"

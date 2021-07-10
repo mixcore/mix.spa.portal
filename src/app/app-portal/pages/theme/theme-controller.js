@@ -50,7 +50,7 @@ app.controller("ThemeController", [
       frm.append("model", angular.toJson(viewmodel || $scope.viewmodel));
 
       var response = await service.ajaxSubmitForm(frm, url);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         $rootScope.isBusy = false;
         $location.url($scope.referrerUrl);
@@ -64,7 +64,7 @@ app.controller("ThemeController", [
     $scope.syncTemplates = async function (id) {
       $rootScope.isBusy = true;
       var response = await service.syncTemplates(id);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -79,7 +79,7 @@ app.controller("ThemeController", [
       var id = $routeParams.id;
       $rootScope.isBusy = true;
       var response = await service.export(id, $scope.selectedExport);
-      if (response.isSucceed) {
+      if (response.success) {
         $rootScope.isBusy = false;
         window.open(response.data, "_blank");
         $scope.$apply();
@@ -90,14 +90,14 @@ app.controller("ThemeController", [
       }
     };
     $scope.saveSuccessCallback = function () {
-      commonService.initAllSettings().then(function () {
+      apiService.getAllSettings().then(function () {
         $location.path("/portal/theme/list");
         $rootScope.isBusy = false;
         $scope.$apply();
       });
     };
     $scope.removeCallback = function () {
-      commonService.initAllSettings().then(function () {
+      apiService.getAllSettings().then(function () {
         $location.path("/portal/theme/list");
       });
     };
@@ -105,7 +105,7 @@ app.controller("ThemeController", [
     $scope.getExportData = async function () {
       var id = $routeParams.id;
       var resp = await service.getExportData(id);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.exportData = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();

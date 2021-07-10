@@ -7,10 +7,10 @@ modules.component("listMixColumn", {
     function ($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         var getDefaultAttr = await service.getDefault();
-        if (getDefaultAttr.isSucceed) {
+        if (getDefaultAttr.success) {
           ctrl.defaultAttr = getDefaultAttr.data;
           ctrl.defaultAttr.options = [];
         }
@@ -27,7 +27,7 @@ modules.component("listMixColumn", {
           if (attr.id) {
             $rootScope.isBusy = true;
             var remove = await service.delete([attr.id]);
-            if (remove.isSucceed) {
+            if (remove.success) {
               ctrl.columns.splice(index, 1);
             }
             $rootScope.isBusy = false;

@@ -39,7 +39,7 @@ app.controller("PermissionController", [
 
     $scope.initCurrentPath = async function () {
       var resp = await service.getDefault();
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.viewmodel = resp.data;
         $scope.viewmodel.url = $location.url();
         $rootScope.isBusy = false;
@@ -81,7 +81,7 @@ app.controller("PermissionController", [
     $scope.updateChildInfos = async function (items) {
       $rootScope.isBusy = true;
       var resp = await service.updateChildInfos(items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;

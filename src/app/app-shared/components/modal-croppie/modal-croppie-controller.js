@@ -77,7 +77,7 @@
         ctrl.media.extension = ctrl.media.mediaFile.extension;
         ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
         var result = await mediaService.save(ctrl.media);
-        if (result.isSucceed) {
+        if (result.success) {
           $uibModalInstance.close(result.data);
         }
       }

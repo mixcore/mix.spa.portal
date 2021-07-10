@@ -20,7 +20,7 @@ app.controller("RegisterController", [
         } else {
           $rootScope.isBusy = true;
           var result = await services.register($scope.user);
-          if (result.isSucceed) {
+          if (result.success) {
             $rootScope.isBusy = false;
             window.location.href = "/security/login";
           } else {

@@ -29,7 +29,7 @@ app.controller("PagePostController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.init = function () {
       $scope.pageId = $routeParams.id;
       $scope.type = $routeParams.type;
@@ -56,7 +56,7 @@ app.controller("PagePostController", [
       $scope.canDrag =
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.data = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -84,7 +84,7 @@ app.controller("PagePostController", [
     $scope.removeConfirmed = async function (id) {
       $rootScope.isBusy = true;
       var result = await service.delete(id);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -102,7 +102,7 @@ app.controller("PagePostController", [
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {
@@ -119,7 +119,7 @@ app.controller("PagePostController", [
         $scope.data.items[i].priority = startIndex + i + 1;
       }
       var resp = await service.updateInfos($scope.data.items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;

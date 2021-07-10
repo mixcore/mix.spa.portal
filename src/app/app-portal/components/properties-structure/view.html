@@ -44,7 +44,7 @@
                         <small class="form-label">Type {{col.dataType}}</small>
                         <select class="form-select form-select-sm" ng-model="col.dataType"
                             ng-change="$ctrl.changeDataType(col.dataType);">
-                            <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
+                            <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
                                 ng-value="item.name">
                                 {{item.name}}
                             </option>
@@ -229,7 +229,7 @@
                     <input type="text" class="col-7 form-control form-control-sm"
                         ng-model="col.options[$index].value" />
                     <select class="col-5 form-control form-control-sm" ng-model="col.options[$index].dataType">
-                        <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
+                        <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
                             ng-value="item.value">
                             {{item.name}}
                         </option>

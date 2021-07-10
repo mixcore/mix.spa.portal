@@ -35,7 +35,7 @@ app.controller("Step3Controller", [
     $scope.init = async function () {
       $scope.form = document.getElementById("frm-theme");
       var getThemes = await storeService.getThemes($scope.request);
-      if (getThemes.isSucceed) {
+      if (getThemes.success) {
         $scope.themes = getThemes.data;
         $scope.$apply();
       }
@@ -64,7 +64,7 @@ app.controller("Step3Controller", [
       // Adding one more key to FormData object
       frm.append("model", angular.toJson($scope.data));
       var response = await service.ajaxSubmitForm(frm, url);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         commonService.initAllSettings().then(function () {
           $rootScope.isBusy = false;
@@ -80,7 +80,7 @@ app.controller("Step3Controller", [
       }
     };
     $scope.install = function (resp) {
-      if (resp.isSucceed) {
+      if (resp.success) {
         $scope.activeTheme(resp.data);
       } else {
         $rootScope.showErrors(["Cannot install theme"]);
@@ -96,7 +96,7 @@ app.controller("Step3Controller", [
       $rootScope.isBusy = true;
       // Looping over all files and add it to FormData object
       var response = await service.activeTheme(data);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         commonService.initAllSettings().then(function () {
           $rootScope.isBusy = false;

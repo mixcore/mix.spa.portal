@@ -7,7 +7,7 @@ app.factory("JsonDataService", [
   function ($http, $rootScope, apiService, commonService) {
     var filesServiceFactory = {};
 
-    var settings = $rootScope.globalSettings;
+    var settings = $rootScope.appSettings;
 
     var _getFile = async function (folder, filename) {
       var apiUrl = "/file/";

@@ -13,11 +13,11 @@ function PageDetailsController($scope, $element, $attrs) {
   ctrl.loadPage = function (pageId) {
     ctrl.isBusy = true;
     var url = "/" + ctrl.currentLanguage + "/page/details/be/" + pageId; //byPage/' + pageId;
-    ctrl.localizeSettings.method = "GET";
-    ctrl.localizeSettings.url = url; // + '/true';
-    ctrl.localizeSettings.data = ctrl.request;
-    $.ajax(ctrl.localizeSettings).done(function (response) {
-      if (response.isSucceed) {
+    ctrl.mixConfigurations.method = "GET";
+    ctrl.mixConfigurations.url = url; // + '/true';
+    ctrl.mixConfigurations.data = ctrl.request;
+    $.ajax(ctrl.mixConfigurations).done(function (response) {
+      if (response.success) {
         ctrl.activedPage = response.data;
         ctrl.initEditor();
       }
@@ -37,10 +37,10 @@ function PageDetailsController($scope, $element, $attrs) {
       ctrl.request.toDate = ctrl.request.toDate.toISOString();
     }
     var url = "/" + ctrl.currentLanguage + "/page/list"; //byPage/' + pageId;
-    ctrl.localizeSettings.method = "POST";
-    ctrl.localizeSettings.url = url; // + '/true';
-    ctrl.localizeSettings.data = ctrl.request;
-    $.ajax(ctrl.localizeSettings).done(function (response) {
+    ctrl.mixConfigurations.method = "POST";
+    ctrl.mixConfigurations.url = url; // + '/true';
+    ctrl.mixConfigurations.data = ctrl.request;
+    $.ajax(ctrl.mixConfigurations).done(function (response) {
       ctrl.data = response.data;
 
       $.each(ctrl.data.items, function (i, page) {
@@ -90,7 +90,7 @@ function PageDetailsController($scope, $element, $attrs) {
       data: page,
       success: function (data) {
         //ctrl.loadPages();
-        if (data.isSucceed) {
+        if (data.success) {
           alert("success");
         } else {
           alert("failed! " + data.errors);

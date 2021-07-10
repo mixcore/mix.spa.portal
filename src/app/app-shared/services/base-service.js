@@ -11,7 +11,7 @@ appShared.factory("BaseService", [
       this.modelName = modelName;
       this.serviceBase = serviceBase;
       if (!isGlobal) {
-        this.lang = $rootScope.localizeSettings.lang;
+        this.lang = $rootScope.mixConfigurations.lang;
         this.prefixUrl = "/" + this.lang + "/" + modelName;
       } else {
         this.prefixUrl = "/" + modelName;

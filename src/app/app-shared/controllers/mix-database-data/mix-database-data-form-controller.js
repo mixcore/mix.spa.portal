@@ -63,7 +63,7 @@ appShared.controller("MixDatabaseFormController", [
         $rootScope.executeFunctionByName($scope.validateHandler, [data])
       ) {
         var saveResult = await dataService.save(data);
-        if (saveResult.isSucceed) {
+        if (saveResult.success) {
           if ($scope.successHandler) {
             $rootScope.executeFunctionByName($scope.successHandler, [
               saveResult,

@@ -30,7 +30,7 @@ app.controller("ServiceController", [
     $scope.parentType = null;
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.init = async function () {
@@ -125,7 +125,7 @@ app.controller("ServiceController", [
     $scope.removeConfirmed = async function (dataId) {
       $rootScope.isBusy = true;
       var result = await service.delete([dataId]);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -143,7 +143,7 @@ app.controller("ServiceController", [
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {

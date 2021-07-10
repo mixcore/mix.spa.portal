@@ -75,7 +75,7 @@
           var getMixDatbase = await databaseService.getSingle([
             ctrl.mixDatabaseName || ctrl.mixDatabaseId,
           ]);
-          if (getMixDatbase.isSucceed) {
+          if (getMixDatbase.success) {
             ctrl.columns = getMixDatbase.data.columns;
             ctrl.mixDatabaseId = getMixDatbase.data.id;
             ctrl.mixDatabaseName = getMixDatbase.data.name;
@@ -141,7 +141,7 @@
         });
         ctrl.request.key = "data";
         var response = await dataService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           ctrl.filterData();
           ctrl.isBusy = false;
@@ -187,7 +187,7 @@
         if (isSelected) {
           if (!nav.id && ctrl.parentId) {
             navService.save(nav).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 nav.id = resp.data.id;
                 ctrl.selectedList.push(nav);
                 ctrl.selectedValues.push(value);
@@ -205,7 +205,7 @@
         } else {
           if (ctrl.parentId) {
             navService.delete([nav.id]).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 nav.disabled = false;
                 nav.id = null;
                 $rootScope.removeObjectByKey(
@@ -259,7 +259,7 @@
             var nav = angular.copy(ctrl.defaultNav);
             nav.attributeData = ctrl.mixDatabaseData;
             navService.save(nav).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 ctrl.data.items.push(resp.data.attributeData);
                 ctrl.reload();
                 resp.data.isActived = true;

@@ -22,7 +22,7 @@ appShared.controller("LoginPopupController", [
     };
     $scope.login = async function () {
       var result = await authService.loginPopup($scope.loginData);
-      if (result && result.isSucceed) {
+      if (result && result.success) {
         $rootScope.isBusy = false;
         $scope.message = result.errors[0];
         $("#login-popup").modal("hide");

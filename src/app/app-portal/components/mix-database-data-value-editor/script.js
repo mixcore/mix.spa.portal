@@ -33,7 +33,7 @@
       };
       ctrl.refRequest = angular.copy(ngAppSettings.request);
       ctrl.refRequest.pageSize = 100;
-      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.$doCheck = function () {
         if (
@@ -89,9 +89,8 @@
                   key: ctrl.mixDatabaseDataValue.encryptKey,
                   data: ctrl.mixDatabaseDataValue.encryptValue,
                 };
-                ctrl.mixDatabaseDataValue.stringValue = $rootScope.decrypt(
-                  encryptedData
-                );
+                ctrl.mixDatabaseDataValue.stringValue =
+                  $rootScope.decrypt(encryptedData);
               }
               if (
                 ctrl.mixDatabaseDataValue.column &&
@@ -150,19 +149,22 @@
           case "date":
           case "time":
             if (ctrl.mixDatabaseDataValue.dateObj) {
-              ctrl.mixDatabaseDataValue.dateTimeValue = ctrl.mixDatabaseDataValue.dateObj.toISOString();
+              ctrl.mixDatabaseDataValue.dateTimeValue =
+                ctrl.mixDatabaseDataValue.dateObj.toISOString();
               ctrl.mixDatabaseDataValue.stringValue =
                 ctrl.mixDatabaseDataValue.dateTimeValue;
             }
             break;
           case "double":
             if (ctrl.mixDatabaseDataValue.doubleValue) {
-              ctrl.mixDatabaseDataValue.stringValue = ctrl.mixDatabaseDataValue.doubleValue.toString();
+              ctrl.mixDatabaseDataValue.stringValue =
+                ctrl.mixDatabaseDataValue.doubleValue.toString();
             }
             break;
           case "boolean":
             if (ctrl.mixDatabaseDataValue.booleanValue != null) {
-              ctrl.mixDatabaseDataValue.stringValue = ctrl.mixDatabaseDataValue.booleanValue.toString();
+              ctrl.mixDatabaseDataValue.stringValue =
+                ctrl.mixDatabaseDataValue.booleanValue.toString();
             }
             break;
 
@@ -199,7 +201,7 @@
           nav.parentType,
           nav.id,
         ]);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.removeObjectByKey(ctrl.refData, "id", nav.id);
           $rootScope.isBusy = false;
           $scope.$apply();

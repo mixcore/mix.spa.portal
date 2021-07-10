@@ -10,7 +10,7 @@
       ctrl.init = function () {
         if (gapi) {
           gapi.analytics.ready(function () {
-            if ($rootScope.localizeSettings.data.Google_Client_Id) {
+            if ($rootScope.mixConfigurations.data.Google_Client_Id) {
               /**
                * Authorize the user immediately if the user has already granted access.
                * If no access has been created, render an authorize button inside the
@@ -19,7 +19,7 @@
               gapi.analytics.auth.authorize({
                 container: "embed-api-auth-container",
                 //REPLACE WITH YOUR CLIENT ID
-                clientid: $rootScope.localizeSettings.data.Google_Client_Id,
+                clientid: $rootScope.mixConfigurations.data.Google_Client_Id,
               });
 
               /**
@@ -88,7 +88,7 @@
                */
               var dataChart1 = new gapi.analytics.googleCharts.DataChart({
                 query: {
-                  // ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                  // ids: $rootScope.mixConfigurations.data.Google_Analytic_Ids,
                   metrics: "ga:sessions",
                   dimensions: "ga:date",
                   "start-date": "30daysAgo",
@@ -111,7 +111,7 @@
                     series: {
                       0: {
                         color:
-                          $rootScope.globalSettings.portalThemeSettings
+                          $rootScope.appSettings.portalThemeSettings
                             .primaryColor,
                       },
                       1: { color: "#e7711b" },
@@ -130,7 +130,7 @@
                */
               var dataChart2 = new gapi.analytics.googleCharts.DataChart({
                 query: {
-                  // ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                  // ids: $rootScope.mixConfigurations.data.Google_Analytic_Ids,
                   metrics: "ga:sessions",
                   dimensions: "ga:country",
                   "start-date": "90daysAgo",
@@ -151,20 +151,20 @@
               dataChart1
                 .set({
                   query: {
-                    ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                    ids: $rootScope.mixConfigurations.data.Google_Analytic_Ids,
                   },
                 })
                 .execute();
               dataChart2
                 .set({
                   query: {
-                    ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                    ids: $rootScope.mixConfigurations.data.Google_Analytic_Ids,
                   },
                 })
                 .execute();
               activeUsers
                 .set({
-                  ids: $rootScope.localizeSettings.data.Google_Analytic_Ids,
+                  ids: $rootScope.mixConfigurations.data.Google_Analytic_Ids,
                 })
                 .execute();
 

@@ -81,7 +81,7 @@
       ctrl.getList = async function () {
         $rootScope.isBusy = true;
         var resp = await service.getList(ctrl.request);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           ctrl.pages = resp.data;
           $rootScope.isBusy = false;
           $scope.$apply();

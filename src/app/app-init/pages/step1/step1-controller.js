@@ -123,7 +123,7 @@ app.controller("Step1Controller", [
       $rootScope.isBusy = true;
       if ($scope.initCmsModel.siteName && $scope.initCmsModel.siteName != "") {
         var result = await step1Services.initCms($scope.initCmsModel);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.isBusy = false;
           $rootScope.goToPath("/init/step2");
           $scope.$apply();

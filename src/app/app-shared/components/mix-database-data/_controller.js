@@ -39,7 +39,7 @@ appShared.controller("MixDatabaseDataClientController", [
       title: "",
       description: "",
     };
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.init = async function () {
@@ -64,7 +64,7 @@ appShared.controller("MixDatabaseDataClientController", [
         $scope.refDataModel.data = $scope.viewmodel;
         $rootScope.isBusy = true;
         navService.save("portal", $scope.refDataModel).then((resp) => {
-          if (resp.isSucceed) {
+          if (resp.success) {
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
@@ -95,7 +95,7 @@ appShared.controller("MixDatabaseDataClientController", [
       $scope.canDrag =
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         window.top.location = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -192,7 +192,7 @@ appShared.controller("MixDatabaseDataClientController", [
     $scope.removeConfirmed = async function (dataId) {
       $rootScope.isBusy = true;
       var result = await service.delete([dataId]);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -210,7 +210,7 @@ appShared.controller("MixDatabaseDataClientController", [
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {

@@ -26,7 +26,7 @@
       ctrl.removeDataConfirmed = async function (id, moduleId) {
         $rootScope.isBusy = true;
         var result = await moduleDataService.removeModuleData(id);
-        if (result.isSucceed) {
+        if (result.success) {
           ctrl.loadModuleDatas(moduleId);
         } else {
           $rootScope.showMessage("failed");
@@ -48,7 +48,7 @@
           request.pageIndex = pageIndex;
         }
         var response = await moduleDataService.getModuleDatas(request);
-        if (response.isSucceed) {
+        if (response.success) {
           var nav = $rootScope.findObjectByKey(
             ctrl.post.moduleNavs,
             "moduleId",
@@ -69,7 +69,7 @@
       ctrl.updateDataInfos = async function (items) {
         $rootScope.isBusy = true;
         var resp = await moduleDataService.updateInfos(items);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.activedPage = resp.data;
           $rootScope.showMessage("success", "success");
           $rootScope.isBusy = false;

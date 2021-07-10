@@ -6,7 +6,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'ApiService
         var _init = function (modelName, isGlobal) {
             this.modelName = modelName;
             if (!isGlobal && isGlobal != 'true') {
-                this.lang = $rootScope.localizeSettings.lang;
+                this.lang = $rootScope.mixConfigurations.lang;
                 this.prefixUrl = '/odata/' + this.lang + '/' + modelName;
             }
             else {

@@ -11,7 +11,7 @@ app.controller("Step5Controller", [
     $scope.data = [];
     $scope.init = async function () {
       var getData = await commonService.loadJsonData("configurations");
-      if (getData.isSucceed) {
+      if (getData.success) {
         $scope.data = getData.data.items;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -26,7 +26,7 @@ app.controller("Step5Controller", [
     $scope.submit = async function () {
       $rootScope.isBusy = true;
       var result = await service.submit($scope.data);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.isBusy = false;
         window.top.location = "/";
       } else {

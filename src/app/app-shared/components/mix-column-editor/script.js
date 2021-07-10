@@ -64,7 +64,7 @@
         data: null,
       };
 
-      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.options = [];
       ctrl.$onInit = function () {
@@ -81,14 +81,14 @@
             // load options if not belong to other column value
             if (!ctrl.column.columnConfigurations.belongTo) {
               let options = JSON.parse(
-                $rootScope.localizeSettings.data[
+                $rootScope.mixConfigurations.data[
                   ctrl.column.columnConfigurations.optionsConfigurationName
                 ]
               );
               ctrl.options = options;
             } else {
               let options = JSON.parse(
-                $rootScope.localizeSettings.data[
+                $rootScope.mixConfigurations.data[
                   ctrl.column.columnConfigurations.optionsConfigurationName
                 ]
               );
@@ -109,7 +109,7 @@
                 function (newVal, oldVal) {
                   if (newVal != oldVal) {
                     let options = JSON.parse(
-                      $rootScope.localizeSettings.data[
+                      $rootScope.mixConfigurations.data[
                         ctrl.column.columnConfigurations
                           .optionsConfigurationName
                       ]

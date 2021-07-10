@@ -4,38 +4,26 @@
       "/mix-app/views/app-shared/components/language-switcher/language-switcher.html",
     controller: [
       "$rootScope",
-      "$scope",
-      "$location",
       "ApiService",
-      "CommonService",
       "TranslatorService",
-      "GlobalSettingsService",
-      function (
-        $rootScope,
-        $scope,
-        $location,
-        apiService,
-        commonService,
-        translatorService,
-        globalSettingsService
-      ) {
+      function ($rootScope, apiService, translatorService) {
         var ctrl = this;
-        ctrl.localizeSettings = {};
+        ctrl.mixConfigurations = {};
         this.$onInit = function () {
-          ctrl.localizeSettings = $rootScope.localizeSettings;
-          if ($rootScope.globalSettings) {
-            ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
+          ctrl.mixConfigurations = $rootScope.mixConfigurations;
+          if ($rootScope.appSettings) {
+            ctrl.mixConfigurations.cultures = $rootScope.appSettings.cultures;
           }
         };
 
         ctrl.changeLang = async function (lang, langIcon) {
-          ctrl.localizeSettings.lang = lang;
-          ctrl.localizeSettings.langIcon = langIcon;
+          ctrl.mixConfigurations.lang = lang;
+          ctrl.mixConfigurations.langIcon = langIcon;
           // await commonService.removeSettings();
           // await commonService.removeTranslator();
           // commonService.fillSettings(lang).then(function () {
           //     translatorService.reset(lang).then(function () {
-          commonService.fillAllSettings(lang).then(function (response) {
+          apiService.fillAllSettings(lang).then(function (response) {
             translatorService.translateUrl(lang).then(function (url) {
               window.top.location = url;
             });

@@ -13,7 +13,7 @@
     function ($rootScope, $scope, columnService, service) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.user = {
         loggedIn: false,
         connection: {},
@@ -52,7 +52,7 @@
                 */
         $rootScope.isBusy = true;
         var getDefault = await service.initData(ctrl.mixDatabaseName);
-        if (getDefault.isSucceed) {
+        if (getDefault.success) {
           ctrl.defaultData = getDefault.data;
           ctrl.defaultData.data.user_name = ctrl.user.connection.name;
           ctrl.defaultData.data.user_id = ctrl.user.connection.id;
@@ -67,7 +67,7 @@
           $rootScope.isBusy = false;
         }
         var getFields = await columnService.initData(ctrl.mixDatabaseName);
-        if (getFields.isSucceed) {
+        if (getFields.success) {
           ctrl.columns = getFields.data;
           ctrl.msgField = $rootScope.findObjectByKey(
             ctrl.columns,

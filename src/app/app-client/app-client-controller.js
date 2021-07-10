@@ -5,8 +5,8 @@
     "$scope",
     "$location",
     "$anchorScroll",
-    "GlobalSettingsService",
-    "CommonService",
+    "AppSettingsService",
+    "ApiService",
     "AuthService",
     "localStorageService",
     "TranslatorService",
@@ -17,8 +17,8 @@
       $scope,
       $location,
       $anchorScroll,
-      globalSettingsService,
-      commonService,
+      appSettingsService,
+      apiService,
       authService,
       localStorageService,
       translatorService,
@@ -41,7 +41,7 @@
         totalItems: 0,
         total: 0,
       };
-      $rootScope.globalSettingsService = globalSettingsService;
+      $rootScope.appSettingsService = appSettingsService;
       $scope.changeLang = $rootScope.changeLang;
       $scope.init = function (lang) {
         angular.element(document).ready(function () {
@@ -59,7 +59,7 @@
         );
         if (!$rootScope.isBusy) {
           $rootScope.isBusy = true;
-          // globalSettingsService.fillGlobalSettings().then(function (response) {
+          // appSettingsService.fillAppSettings().then(function (response) {
           $scope.cartData = localStorageService.get("shoppingCart");
           if (!$scope.cartData) {
             $scope.cartData = {
@@ -68,8 +68,8 @@
               total: 0,
             };
           }
-          commonService.fillAllSettings(lang).then(function (response) {
-            if ($rootScope.globalSettings) {
+          apiService.fillAllSettings(lang).then(function (response) {
+            if ($rootScope.appSettings) {
               authService.fillAuthData().then(function (response) {
                 $rootScope.authentication = authService.authentication;
                 $scope.isInit = true;
@@ -194,7 +194,7 @@
             resp = await moduleDataService.initModuleForm($scope.name);
           }
 
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             $scope.activedModuleData = resp.data;
             $rootScope.isBusy = false;
             $scope.$apply();
@@ -224,7 +224,7 @@
         var resp = await moduleDataService.saveModuleData(
           $scope.activedModuleData
         );
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.activedModuleData = resp.data;
           if ($scope.successCallback) {
             $rootScope.executeFunctionByName(
@@ -234,7 +234,7 @@
             );
           } else {
             var msg =
-              $rootScope.localizeSettings.data["employee_success_msg"] ||
+              $rootScope.mixConfigurations.data["employee_success_msg"] ||
               "Thank you for submitting! Your lovely photo is well received 😊";
             $rootScope.showConfirm($scope, "", [], null, "", msg);
           }

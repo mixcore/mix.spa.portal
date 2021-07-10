@@ -38,7 +38,7 @@ app.controller("MixDatabaseController", [
     $scope.request.orderBy = "createdDateTime";
     $scope.getSingleSuccessCallback = async function () {
       var getDefaultAttr = await databaseColumnService.getDefault();
-      if (getDefaultAttr.isSucceed) {
+      if (getDefaultAttr.success) {
         $scope.defaultAttr = getDefaultAttr.data;
         $scope.defaultAttr.options = [];
       }
@@ -48,7 +48,7 @@ app.controller("MixDatabaseController", [
       if ($scope.viewmodel.id) {
         $rootScope.isBusy = true;
         var result = await databaseService.migrate($scope.viewmodel);
-        if (result.isSucceed) {
+        if (result.success) {
           var migrateData = await databaseDataService.migrate(
             $scope.viewmodel.id
           );

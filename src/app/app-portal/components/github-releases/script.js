@@ -24,7 +24,7 @@
           },
           function (error) {
             return {
-              isSucceed: false,
+              success: false,
               errors: [error.statusText || error.status],
             };
           }

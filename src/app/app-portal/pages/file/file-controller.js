@@ -62,7 +62,7 @@ app.controller("FileController", [
         $routeParams.folder,
         $routeParams.filename
       );
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedFile = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -92,7 +92,7 @@ app.controller("FileController", [
       }
       $rootScope.isBusy = true;
       var resp = await fileServices.getFiles($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, file) {
           $.each($scope.activedFiles, function (i, e) {
@@ -116,7 +116,7 @@ app.controller("FileController", [
       if (confirm("Are you sure!")) {
         $rootScope.isBusy = true;
         var resp = await fileServices.removeFile(id);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.loadFiles();
         } else {
           if (resp) {
@@ -131,7 +131,7 @@ app.controller("FileController", [
     $scope.saveFile = async function (file) {
       $rootScope.isBusy = true;
       var resp = await fileServices.saveFile(file);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedFile = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

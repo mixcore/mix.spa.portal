@@ -32,7 +32,7 @@
           ctrl.request.toDate = d.toISOString();
         }
         var response = await postService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           ctrl.navs = [];
           angular.forEach(response.data.items, function (e) {

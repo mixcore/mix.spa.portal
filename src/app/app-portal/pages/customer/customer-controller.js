@@ -39,7 +39,7 @@ app.controller("CustomerController", [
       $rootScope.isBusy = true;
       var id = $routeParams.id;
       var response = await customerServices.getCustomer(id, "portal");
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedCustomer = response.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -63,7 +63,7 @@ app.controller("CustomerController", [
         $scope.request.toDate = d.toISOString();
       }
       var resp = await customerServices.getCustomers($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         //$("html, body").animate({ "scrollTop": "0px" }, 500);
         $.each($scope.data.items, function (i, customer) {
@@ -96,7 +96,7 @@ app.controller("CustomerController", [
 
     $scope.removeCustomerConfirmed = async function (id) {
       var result = await customerServices.removeCustomer(id);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.showMessage("success", "success");
         $scope.loadCustomers();
       } else {
@@ -109,7 +109,7 @@ app.controller("CustomerController", [
     $scope.saveCustomer = async function (customer) {
       customer.content = $(".editor-content").val();
       var resp = await customerServices.saveCustomer(customer);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedCustomer = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

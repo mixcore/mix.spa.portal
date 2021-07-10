@@ -28,7 +28,7 @@ modules.component("mixDatabaseForm", {
 
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
         ctrl.loadData();
@@ -125,7 +125,7 @@ modules.component("mixDatabaseForm", {
           ctrl.isBusy = true;
 
           var saveResult = await service.save(ctrl.mixDatabaseData);
-          if (saveResult.isSucceed) {
+          if (saveResult.success) {
             ctrl.mixDatabaseData = saveResult.data;
             if (ctrl.saveSuccess) {
               ctrl.saveSuccess({ data: ctrl.mixDatabaseData });

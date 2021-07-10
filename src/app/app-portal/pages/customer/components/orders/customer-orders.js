@@ -19,7 +19,7 @@
 
       ctrl.removeOrderConfirmed = async function (id) {
         var result = await orderServices.removeOrder(id);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.showMessage("success", "success");
           window.top.location = window.top.location.href;
         } else {

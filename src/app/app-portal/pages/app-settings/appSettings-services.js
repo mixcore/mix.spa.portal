@@ -9,7 +9,7 @@ app.factory("AppSettingsServices", [
 
     var appSettingssServiceFactory = {};
 
-    var settings = $rootScope.globalSettings;
+    var settings = $rootScope.appSettings;
 
     var _getAppSettings = async function () {
       var url = "/portal/app-settings/details";
@@ -30,7 +30,7 @@ app.factory("AppSettingsServices", [
       };
       return await apiService.sendRequest(req);
     };
-    var _saveGlobalSettings = async function (name, content) {
+    var _saveAppSettings = async function (name, content) {
       var apiUrl = "/portal/app-settings/save-global/" + name;
       var req = {
         method: "POST",
@@ -42,7 +42,7 @@ app.factory("AppSettingsServices", [
 
     appSettingssServiceFactory.getAppSettings = _getAppSettings;
     appSettingssServiceFactory.saveAppSettings = _saveAppSettings;
-    appSettingssServiceFactory.saveGlobalSettings = _saveGlobalSettings;
+    appSettingssServiceFactory.saveAppSettings = _saveAppSettings;
     return appSettingssServiceFactory;
   },
 ]);

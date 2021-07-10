@@ -8,12 +8,12 @@
       "AuthService",
       function ($rootScope, commonService, authService) {
         var ctrl = this;
-        ctrl.globalSettings = $rootScope.globalSettings;
+        ctrl.appSettings = $rootScope.appSettings;
         ctrl.isInRole = $rootScope.isInRole;
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
-          ctrl.localizeSettings = $rootScope.localizeSettings;
-          ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
+          ctrl.mixConfigurations = $rootScope.mixConfigurations;
+          ctrl.mixConfigurations.cultures = $rootScope.appSettings.cultures;
           authService.fillAuthData().then(() => {
             if (authService.authentication && authService.authentication.info) {
               ctrl.avatar = authService.authentication.info.user.Avatar;
@@ -25,8 +25,8 @@
           return $rootScope.getConfiguration(keyword, isWrap, defaultText);
         };
         ctrl.changeLang = function (lang, langIcon) {
-          ctrl.localizeSettings.lang = lang;
-          ctrl.localizeSettings.langIcon = langIcon;
+          ctrl.mixConfigurations.lang = lang;
+          ctrl.mixConfigurations.langIcon = langIcon;
           commonService.fillAllSettings(lang).then(function () {
             window.top.location = location.href;
           });

@@ -8,12 +8,12 @@
       var ctrl = this;
       ctrl.$onInit = function () {
         ctrl.properties = $.parseJSON(
-          ctrl.appSettings.GlobalSettings.DefaultPostAttr
+          ctrl.appSettings.AppSettings.DefaultPostAttr
         );
         ctrl.trackedProperties = $.parseJSON(
-          ctrl.appSettings.GlobalSettings.DefaultPostAttr
+          ctrl.appSettings.AppSettings.DefaultPostAttr
         );
-        ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+        ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       };
       ctrl.addPostProperty = function () {
         ctrl.properties.push({
@@ -26,7 +26,7 @@
       ctrl.$doCheck = function () {
         if (ctrl.trackedProperties != ctrl.properties) {
           ctrl.trackedProperties = angular.copy(ctrl.properties);
-          ctrl.appSettings.GlobalSettings.DefaultPostAttr = JSON.stringify(
+          ctrl.appSettings.AppSettings.DefaultPostAttr = JSON.stringify(
             ctrl.properties
           );
         }

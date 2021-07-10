@@ -21,7 +21,7 @@
       ctrl.attributes = [];
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         ctrl.defaultData = await service.getSingle("web", [
           ctrl.defaultId,
@@ -79,7 +79,7 @@
         if (ctrl.saveData) {
           ctrl.isBusy = true;
           var result = await ctrl.saveData({ data: ctrl.mixDatabaseData });
-          if (result && result.isSucceed) {
+          if (result && result.success) {
             ctrl.isBusy = false;
             ctrl.mixDatabaseData = result.data;
             $scope.$apply();
@@ -91,7 +91,7 @@
         } else {
           ctrl.isBusy = true;
           var saveResult = await service.save(ctrl.mixDatabaseData);
-          if (saveResult.isSucceed) {
+          if (saveResult.success) {
             ctrl.isBusy = false;
           } else {
             ctrl.isBusy = false;

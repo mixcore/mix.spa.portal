@@ -24,9 +24,9 @@ sharedComponents.component("mixStore", {
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.init = async function () {
-        ctrl.startConnection("portalhub", () => {
-          ctrl.joinRoom("Theme");
-        });
+        // ctrl.startConnection("portalhub", () => {
+        //   ctrl.joinRoom("Theme");
+        // });
 
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
@@ -35,7 +35,7 @@ sharedComponents.component("mixStore", {
         ctrl.cateRequest.mixDatabaseName = "sys_category";
         ctrl.cateRequest.pageSize = null;
 
-        ctrl.localizeSettings = $rootScope.globalSettings;
+        ctrl.mixConfigurations = $rootScope.appSettings;
         let getCategories = await service.getCategories(ctrl.cateRequest);
         ctrl.categories = getCategories.data.items;
         await ctrl.getThemes(ctrl.themeRequest);
@@ -76,7 +76,7 @@ sharedComponents.component("mixStore", {
           ctrl.themeRequest.toDate = dt.toISOString();
         }
         var resp = await service.getThemes(ctrl.themeRequest);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           ctrl.data = resp.data;
           $.each(ctrl.data, function (i, data) {
             $.each(ctrl.viewmodels, function (i, e) {
@@ -119,7 +119,7 @@ sharedComponents.component("mixStore", {
         ctrl.id = id;
         var result = await themeService.install(theme);
 
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.isBusy = false;
           theme.installStatus = "finished";
           $rootScope.showMessage("success");

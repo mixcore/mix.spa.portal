@@ -36,7 +36,7 @@ modules.component("tclOrder", {
         ctrl.request.parentId = ctrl.user.id;
         ctrl.request.parentType = "Set";
         var getPackages = await service.getList(ctrl.request);
-        if (getPackages.isSucceed) {
+        if (getPackages.success) {
           ctrl.user.obj.order_packages = getPackages.data.items;
           angular.forEach(ctrl.user.obj.order_packages, function (pack) {
             pack.parentId = ctrl.user.id;
@@ -71,7 +71,7 @@ modules.component("tclOrder", {
       ctrl.saveDefaultData = async function () {
         angular.forEach(ctrl.user.obj.order_packages, async function (pack) {
           var savePackage = await ctrl.saveData(pack);
-          if (savePackage.isSucceed) {
+          if (savePackage.success) {
             pack.id = savePackage.data.id;
             pack.mixDatabaseId = savePackage.data.mixDatabaseId;
             pack.obj.id = savePackage.data.id;
@@ -84,7 +84,7 @@ modules.component("tclOrder", {
               slot.parentId = pack.id;
 
               var saveSlot = await ctrl.saveData(slot);
-              if (saveSlot.isSucceed) {
+              if (saveSlot.success) {
                 slot.mixDatabaseId = saveSlot.data.mixDatabaseId;
                 slot.id = saveSlot.data.id;
                 slot.mixDatabaseId = saveSlot.data.mixDatabaseId;
@@ -94,7 +94,7 @@ modules.component("tclOrder", {
                   item.parentId = slot.id;
 
                   var saveItem = await ctrl.saveData(item);
-                  if (saveItem.isSucceed) {
+                  if (saveItem.success) {
                     item.id = saveItem.data.id;
                     item.obj.id = saveItem.data.id;
                     item.mixDatabaseId = saveItem.data.mixDatabaseId;
@@ -173,7 +173,7 @@ modules.component("tclOrder", {
       };
 
       ctrl.handleResult = function (result) {
-        if (result.isSucceed) {
+        if (result.success) {
           ctrl.onSuccess(result);
           $rootScope.isBusy = false;
           $scope.$apply();

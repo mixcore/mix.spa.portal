@@ -58,7 +58,7 @@ app.controller("JsonDataController", [
         $routeParams.folder,
         $routeParams.filename
       );
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedFile = response.data;
         $scope.data = $.parseJSON(response.data.content);
         $rootScope.isBusy = false;
@@ -79,7 +79,7 @@ app.controller("JsonDataController", [
 
       $rootScope.isBusy = true;
       var resp = await service.getFiles($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, file) {
           $.each($scope.activedFiles, function (i, e) {
@@ -103,7 +103,7 @@ app.controller("JsonDataController", [
       if (confirm("Are you sure!")) {
         $rootScope.isBusy = true;
         var resp = await service.removeFile(id);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.loadFiles();
         } else {
           if (resp) {
@@ -128,7 +128,7 @@ app.controller("JsonDataController", [
       $rootScope.isBusy = true;
       file.content = JSON.stringify($scope.data);
       var resp = await service.saveFile(file);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedFile = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

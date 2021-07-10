@@ -8,7 +8,7 @@ app.controller("AppPortalController", [
   "CommonService",
   "AuthService",
   "TranslatorService",
-  "GlobalSettingsService",
+  "AppSettingsService",
   "localStorageService",
   function (
     $rootScope,
@@ -19,7 +19,7 @@ app.controller("AppPortalController", [
     commonService,
     authService,
     translatorService,
-    globalSettingsService,
+    appSettingsService,
     localStorageService
   ) {
     $scope.isInit = false;
@@ -28,9 +28,9 @@ app.controller("AppPortalController", [
     $scope.pageTagType = 0;
     $scope.isAdmin = false;
     $scope.translator = translatorService;
-    $rootScope.globalSettingsService = globalSettingsService;
+    $rootScope.appSettingsService = appSettingsService;
     $scope.lang = null;
-    $scope.localizeSettings = {};
+    $scope.mixConfigurations = {};
     $scope.portalThemeSettings = {};
     $scope.init = function () {
       new ClipboardJS(".btn-clipboard");
@@ -45,10 +45,10 @@ app.controller("AppPortalController", [
           ngAppSettings.enums = resp.data.items;
         });
         commonService.fillAllSettings($scope.lang).then(function (response) {
-          ngAppSettings.localizeSettings = $rootScope.localizeSettings.data;
-          if ($rootScope.globalSettings) {
+          ngAppSettings.mixConfigurations = $rootScope.mixConfigurations;
+          if ($rootScope.appSettings) {
             $scope.portalThemeSettings =
-              $rootScope.globalSettings.portalThemeSettings;
+              $rootScope.appSettings.portalThemeSettings;
             authService.fillAuthData().then(function (response) {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth = authService.authentication != null;

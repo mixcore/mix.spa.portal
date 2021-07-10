@@ -9,7 +9,7 @@ app.factory("CustomerServices", [
 
     var customersServiceFactory = {};
 
-    var settings = $rootScope.globalSettings;
+    var settings = $rootScope.appSettings;
 
     var _getCustomer = async function (id, type) {
       var apiUrl = "/queen-beauty/customer/";

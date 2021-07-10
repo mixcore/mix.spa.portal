@@ -75,11 +75,11 @@
             <li class="nav-item dropdown me-2">
                 <!-- <div class="language-switcher portal"></div> -->
                 <a class="btn nav-link p-2" ng-click="$ctrl.showLanguages = !$ctrl.showLanguages">
-                    <span class="flag-icon {{$ctrl.localizeSettings.langIcon}}"></span>
+                    <span class="flag-icon {{$ctrl.mixConfigurations.langIcon}}"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" ng-class="{show: $ctrl.showLanguages}">
-                    <a class="dropdown-item" href="" ng-repeat="culture in $ctrl.localizeSettings.cultures"
-                        ng-class="{active: culture.specificulture === $ctrl.localizeSettings.lang}"
+                    <a class="dropdown-item" href="" ng-repeat="culture in $ctrl.mixConfigurations.cultures"
+                        ng-class="{active: culture.specificulture === $ctrl.mixConfigurations.lang}"
                         ng-click="$ctrl.changeLang(culture.specificulture, culture.icon);">
                         <span class="flag-icon {{culture.icon}}"></span>
                         <span ng-bind="culture.description"></span>

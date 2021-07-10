@@ -9,7 +9,7 @@ app.controller("HubMessagesController", [
   function ($scope) {
     BaseHub.call(this, $scope);
     $scope.init = function () {
-      $scope.startConnection("portalhub");
+      //   $scope.startConnection("portalhub");
     };
   },
 ]);

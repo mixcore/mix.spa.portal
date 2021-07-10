@@ -8,7 +8,7 @@ app.factory("DashboardServices", [
     //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
 
     var usersServiceFactory = {};
-    var apiUrl = "/portal/" + $rootScope.localizeSettings.lang;
+    var apiUrl = "/portal/" + $rootScope.mixConfigurations.lang;
     var _getDashboardInfo = async function () {
       var req = {
         method: "GET",

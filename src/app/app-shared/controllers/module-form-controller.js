@@ -11,7 +11,7 @@ appShared.controller("ModuleFormController", [
         }, 500);
       } else {
         resp = await moduleDataService.initModuleForm(name);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.data = resp.data;
           $scope.data.postId = $scope.postId;
           $scope.data.productId = $scope.productId;
@@ -35,7 +35,7 @@ appShared.controller("ModuleFormController", [
         $scope.d,
         "portal"
       );
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.data = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -61,7 +61,7 @@ appShared.controller("ModuleFormController", [
         }
       });
       var resp = await moduleDataService.saveModuleData($scope.data);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         $scope.initModuleForm();
         $rootScope.showMessage("success", "success");

@@ -33,7 +33,7 @@
 <!-- <div class="mb-3">
             <label class="form-label">Type</label>
             <div class="btn-group btn-group-sm btn-group-toggle d-flex w-100" role="group" data-bs-toggle="buttons">
-                <label ng-repeat="type in $ctrl.localizeSettings.mixDatabaseTypes track by $index" ng-switch="type.name"
+                <label ng-repeat="type in $ctrl.mixConfigurations.mixDatabaseTypes track by $index" ng-switch="type.name"
                     ng-class="{active: type.value === $ctrl.model.type}" class="btn btn-primary text-white btn-block mt-0"
                     ng-click="$ctrl.model.type=type.value;">
                     <input ng-model="$ctrl.model.type" type="radio" value="{{type.value}}" class="form-check-input"

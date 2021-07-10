@@ -35,7 +35,7 @@ app.controller("Step2Controller", [
         } else {
           $rootScope.isBusy = true;
           var result = await services.register($scope.user);
-          if (result.isSucceed) {
+          if (result.success) {
             await commonService.fillAllSettings();
             var loginData = {
               userName: $scope.user.userName,
@@ -43,7 +43,7 @@ app.controller("Step2Controller", [
               rememberMe: true,
             };
             var result = await authService.login(loginData);
-            if (result.isSucceed) {
+            if (result.success) {
               $rootScope.isBusy = false;
               $rootScope.goToPath("/init/step3");
               $scope.$apply();
@@ -75,7 +75,7 @@ app.controller("Step2Controller", [
         } else {
           $rootScope.isBusy = true;
           var result = await services.register($scope.user);
-          if (result.isSucceed) {
+          if (result.success) {
             var loginData = {
               userName: $scope.user.userName,
               password: $scope.user.password,

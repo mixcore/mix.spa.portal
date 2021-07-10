@@ -25,7 +25,7 @@
         ctrl.request.pageIndex = pageIndex || ctrl.request.pageIndex;
         $rootScope.isBusy = true;
         var resp = await service.getList(ctrl.request);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           ctrl.data = resp.data;
         }
         $rootScope.isBusy = false;

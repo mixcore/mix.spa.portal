@@ -283,9 +283,9 @@ appShared.run([
     $rootScope.updateSettings = function () {
       commonService.removeSettings();
       commonService
-        .fillSettings($rootScope.globalSettings.lang)
+        .fillSettings($rootScope.appSettings.lang)
         .then(function (response) {
-          $rootScope.globalSettings = response;
+          $rootScope.appSettings = response;
         });
       $rootScope.isBusy = false;
     };
@@ -469,7 +469,7 @@ appShared.run([
     };
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {
-      if ($rootScope.globalSettings && $rootScope.translator) {
+      if ($rootScope.appSettings && $rootScope.translator) {
         return (
           $rootScope.translator.get(keyword, isWrap, defaultText) || keyword
         );
@@ -480,14 +480,10 @@ appShared.run([
 
     $rootScope.getConfiguration = function (keyword, isWrap, defaultText) {
       if (
-        $rootScope.globalSettings &&
-        ($rootScope.globalSettingsService || $rootScope.isBusy)
+        $rootScope.appSettings &&
+        ($rootScope.appSettingsService || $rootScope.isBusy)
       ) {
-        return $rootScope.globalSettingsService.get(
-          keyword,
-          isWrap,
-          defaultText
-        );
+        return $rootScope.appSettingsService.get(keyword, isWrap, defaultText);
       } else {
         return keyword || defaultText;
       }

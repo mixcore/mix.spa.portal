@@ -32,7 +32,7 @@ appShared.factory("ApiService", [
           data: JSON.stringify(data),
         };
         var resp = await _sendRequest(req);
-        if (resp.isSucceed) {
+        if (resp.success) {
           let encryptedData = resp.data;
           return _updateAuthData(encryptedData);
         } else {
@@ -59,17 +59,12 @@ appShared.factory("ApiService", [
     };
 
     var _getAllSettings = async function (culture) {
-      var settings = localStorageService.get("localizeSettings");
-      var globalSettings = localStorageService.get("globalSettings");
+      var settings = localStorageService.get("mixConfigurations");
+      var appSettings = localStorageService.get("appSettings");
       var translator = localStorageService.get("translator");
-      if (
-        settings &&
-        globalSettings &&
-        translator &&
-        settings.lang === culture
-      ) {
-        $rootScope.localizeSettings = settings;
-        $rootScope.globalSettings = globalSettings;
+      if (settings && appSettings && translator && settings.lang === culture) {
+        $rootScope.mixConfigurations = settings;
+        $rootScope.appSettings = appSettings;
         $rootScope.translator.translator = translator;
       } else {
         var url = "/shared";
@@ -82,33 +77,37 @@ appShared.factory("ApiService", [
           url: url,
         };
         return _sendRequest(req).then(function (response) {
-          response.data.globalSettings.lastUpdateConfiguration = new Date();
-          localStorageService.set(
-            "localizeSettings",
-            response.data.localizeSettings
-          );
-          localStorageService.set(
-            "globalSettings",
-            response.data.globalSettings
-          );
-          localStorageService.set("translator", response.data.translator);
-          $rootScope.localizeSettings = response.data.localizeSettings;
-          $rootScope.globalSettings = response.data.globalSettings;
-          $rootScope.translator.translator = response.data.translator;
+          if (response.success) {
+            response.data.appSettings.lastUpdateConfiguration = new Date();
+            localStorageService.set(
+              "mixConfigurations",
+              response.data.mixConfigurations
+            );
+            localStorageService.set("appSettings", response.data.appSettings);
+            localStorageService.set("translator", response.data.translator);
+            $rootScope.mixConfigurations = response.data.mixConfigurations;
+            $rootScope.appSettings = response.data.appSettings;
+            $rootScope.translator.translator = response.data.translator;
+          } else {
+            $rootScope.showErrors(response.errors);
+          }
         });
       }
     };
 
     var _initAllSettings = async function (culture) {
-      localStorageService.remove("localizeSettings");
+      localStorageService.remove("mixConfigurations");
       localStorageService.remove("translator");
-      localStorageService.remove("globalSettings");
+      localStorageService.remove("appSettings");
 
       var response = await _getAllSettings();
       if (response) {
-        localStorageService.set("localizeSettings", response.localizeSettings);
+        localStorageService.set(
+          "mixConfigurations",
+          response.mixConfigurations
+        );
         localStorageService.set("translator", response.translator);
-        localStorageService.set("globalSettings", response.globalSettings);
+        localStorageService.set("appSettings", response.appSettings);
       }
       return response;
     };
@@ -143,14 +142,14 @@ appShared.factory("ApiService", [
         function (resp) {
           if (
             req.url.indexOf("settings") == -1 &&
-            (!$rootScope.localizeSettings ||
-              $rootScope.localizeSettings.lastUpdateConfiguration <
+            (!$rootScope.mixConfigurations ||
+              $rootScope.mixConfigurations.lastUpdateConfiguration <
                 resp.data.lastUpdateConfiguration)
           ) {
             _initAllSettings();
           }
 
-          return { isSucceed: true, data: resp.data };
+          return { success: true, data: resp.data };
         },
         async function (error) {
           if (error.status === 401 && retry) {
@@ -164,16 +163,16 @@ appShared.factory("ApiService", [
             error.status === 205
           ) {
             return {
-              isSucceed: true,
+              success: true,
               status: err.status,
               errors: [error.statusText || error.status],
             };
           } else {
             if (error.data) {
-              return { isSucceed: false, errors: [error.data] };
+              return { success: false, errors: [error.data] };
             } else {
               return {
-                isSucceed: false,
+                success: false,
                 errors: [error.statusText || error.status],
               };
             }
@@ -195,7 +194,7 @@ appShared.factory("ApiService", [
       //   };
       //   localStorageService.remove("authorizationData");
       //   var resp = await _getRestApiResult(req, false);
-      //   if (resp.isSucceed) {
+      //   if (resp.success) {
       //     window.top.location.href = "/security/login";
       //   }
     };

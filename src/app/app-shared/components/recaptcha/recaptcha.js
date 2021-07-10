@@ -11,8 +11,8 @@
       ctrl.recaptcha_key = null;
       ctrl.token = null;
       this.$onInit = () => {
-        ctrl.recaptcha_key = $rootScope.globalSettings.data.Recaptcha_Key;
-        ctrl.recaptcha_secret = $rootScope.globalSettings.data.Recaptcha_Secret;
+        ctrl.recaptcha_key = $rootScope.appSettings.data.Recaptcha_Key;
+        ctrl.recaptcha_secret = $rootScope.appSettings.data.Recaptcha_Secret;
         grecaptcha.ready(function () {
           grecaptcha
             .execute(ctrl.recaptcha_key, { action: ctrl.action })

@@ -12,7 +12,7 @@
       <small class="form-label">Type {{$ctrl.column.dataType}}</small>
       <select class="form-control form-control-sm" ng-model="$ctrl.column.dataType"
         ng-change="$ctrl.changeDataType($ctrl.column.dataType);">
-        <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index" ng-value="item.name">
+        <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index" ng-value="item.name">
           {{item.name}}
         </option>
       </select>
@@ -134,7 +134,7 @@
           </div>
           <div class="mb-3x col-md-3">
             <select class="form-control form-control-sm" ng-model="$ctrl.column.options[$index].dataType">
-              <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index" ng-value="item.name">
+              <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index" ng-value="item.name">
                 {{item.name}}
               </option>
             </select>
@@ -199,7 +199,7 @@
     <div class="col-md-10 row">
       <input type="text" class="col-7 form-control form-control-sm" ng-model="$ctrl.column.options[$index].value" />
       <select class="col-5 form-control form-control-sm" ng-model="$ctrl.column.options[$index].dataType">
-        <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index" ng-value="item.name">
+        <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index" ng-value="item.name">
           {{item.name}}
         </option>
       </select>
@@ -222,7 +222,7 @@
     <small class="form-label">Type</small>
     <select class="form-control form-control-sm" ng-model="$ctrl.column.dataType"
       ng-change="$ctrl.changeDataType($ctrl.column.dataType);">
-      <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index" ng-value="item.name">
+      <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index" ng-value="item.name">
         {{item.name}}
       </option>
     </select>

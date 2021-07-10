@@ -79,7 +79,7 @@ app.controller("ModuleController", [
     };
     $scope.type = "-1";
 
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.viewmodel = null;
     $scope.editDataUrl = "";
 
@@ -88,7 +88,7 @@ app.controller("ModuleController", [
       var id = $routeParams.id;
       $scope.dataColumns = [];
       var response = await moduleServices.getSingle([id]);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         $scope.editDataUrl =
           "/portal/module-data/details/" + $scope.viewmodel.id;
@@ -127,7 +127,7 @@ app.controller("ModuleController", [
       }
       $rootScope.isBusy = true;
       var resp = await moduleDataService.getModuleDatas($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.viewmodel.data = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -154,7 +154,7 @@ app.controller("ModuleController", [
       }
       $rootScope.isBusy = true;
       var resp = await moduleDataService.exportModuleData($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         window.top.location = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -183,7 +183,7 @@ app.controller("ModuleController", [
     $scope.removeDataConfirmed = async function (id) {
       $rootScope.isBusy = true;
       var result = await moduleDataService.removeModuleData(id);
-      if (result.isSucceed) {
+      if (result.success) {
         $scope.loadModuleDatas();
       } else {
         $rootScope.showMessage("failed");
@@ -197,7 +197,7 @@ app.controller("ModuleController", [
         propertyName,
         item[propertyName]
       );
-      if (result.isSucceed) {
+      if (result.success) {
         $scope.loadModuleDatas();
       } else {
         $rootScope.showMessage("failed");
@@ -208,7 +208,7 @@ app.controller("ModuleController", [
     $scope.updateDataInfos = async function (items) {
       $rootScope.isBusy = true;
       var resp = await moduleDataService.updateInfos(items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;
@@ -228,7 +228,7 @@ app.controller("ModuleController", [
         var saveData = await dataService.saveAdditionalData(
           $scope.additionalData
         );
-        if (saveData.isSucceed) {
+        if (saveData.success) {
           if ($location.path() == "/portal/module/create") {
             $scope.goToDetail($scope.viewmodel.id, "module");
             $rootScope.isBusy = false;
@@ -246,7 +246,7 @@ app.controller("ModuleController", [
       var id = $routeParams.id;
       $scope.postRequest.query += "&page_id=" + id;
       var response = await pagePostRestService.getList($scope.postRequest);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.pageData.posts = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -282,7 +282,7 @@ app.controller("ModuleController", [
         databaseName: "sys_additional_field_module",
       };
       const getData = await dataService.getAdditionalData(obj);
-      if (getData.isSucceed) {
+      if (getData.success) {
         $scope.additionalData = getData.data;
         $rootScope.isBusy = false;
         $scope.$apply();

@@ -12,7 +12,7 @@ modules.component("haiyenSubscriber", {
       ctrl.formName = "subscribers";
       ctrl.$onInit = async function () {
         var initData = await service.initData(ctrl.formName);
-        if (initData.isSucceed) {
+        if (initData.success) {
           ctrl.default = initData.data;
           ctrl.subscriber = angular.copy(ctrl.default);
           $scope.$apply();
@@ -22,7 +22,7 @@ modules.component("haiyenSubscriber", {
       ctrl.submit = async function () {
         ctrl.isBusy = true;
         var result = await service.save(ctrl.subscriber);
-        if (result.isSucceed) {
+        if (result.success) {
           ctrl.onSuccess(result);
           ctrl.subscriber = angular.copy(ctrl.default);
           ctrl.isBusy = false;

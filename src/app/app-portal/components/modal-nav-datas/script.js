@@ -61,7 +61,7 @@
           }
         });
         var response = await service.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           ctrl.navs = [];
           angular.forEach(response.data.items, function (e) {
@@ -97,7 +97,7 @@
               id: value,
             };
             navService.save(nav).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 var current = $rootScope.findObjectByKey(
                   ctrl.selectedList,
                   "id",
@@ -132,7 +132,7 @@
             navService
               .delete([ctrl.parentId, ctrl.parentType, data.id])
               .then((resp) => {
-                if (resp.isSucceed) {
+                if (resp.success) {
                   data.disabled = false;
                   var tmp = $rootScope.findObjectByKey(
                     ctrl.data.items,
@@ -180,7 +180,7 @@
           type: ctrl.type,
         };
         service.saveByName(ctrl.mixDatabaseName, data).then((resp) => {
-          if (resp.isSucceed) {
+          if (resp.success) {
             ctrl.data.items.push(resp.data);
             $rootScope.showMessage("success", "success");
             $rootScope.isBusy = false;

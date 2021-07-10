@@ -29,7 +29,7 @@ modules.component("mixDatabaseNavValues", {
       ctrl.request.query = "{}";
 
       ctrl.request.direction = 0;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         ctrl.maxCol = ctrl.maxCol || 3;
         if (!ctrl.createUrl) {
@@ -42,7 +42,7 @@ modules.component("mixDatabaseNavValues", {
           var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
-          if (getFields.isSucceed) {
+          if (getFields.success) {
             ctrl.columns = getFields.data;
             $scope.$apply();
           }
@@ -120,11 +120,11 @@ modules.component("mixDatabaseNavValues", {
         $rootScope.isBusy = true;
         ctrl.refDataModel.data = data;
         dataService.save("portal", data).then((resp) => {
-          if (resp.isSucceed) {
+          if (resp.success) {
             ctrl.refDataModel.id = resp.data.id;
             ctrl.refDataModel.data = resp.data;
             navService.save("portal", ctrl.refDataModel).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 var tmp = $rootScope.findObjectByKey(
                   ctrl.refData,
                   ["parentId", "parentType", "id"],
@@ -166,7 +166,7 @@ modules.component("mixDatabaseNavValues", {
       ctrl.removeDataConfirmed = async function (nav) {
         $rootScope.isBusy = true;
         var result = await navService.delete([nav.id]);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.removeObjectByKey(ctrl.data.items, "id", nav.id);
           $rootScope.isBusy = false;
           $scope.$apply();

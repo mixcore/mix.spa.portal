@@ -3,7 +3,7 @@
   <div class="card-body collapse-x show">
     <div
       class="form-check form-switch custom-control-inline col-3"
-      ng-repeat="type in $ctrl.localizeSettings.pageTypes track by $index"
+      ng-repeat="type in $ctrl.mixConfigurations.pageTypes track by $index"
       ng-class="{active: type.name === $ctrl.model}"
       ng-click="$ctrl.model=type.name;"
     >

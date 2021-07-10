@@ -56,7 +56,7 @@
                   ng-change="$ctrl.updateDataType()"
                 >
                   <option
-                    ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
+                    ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
                     ng-value="item.value"
                   >
                     {{item.name}}

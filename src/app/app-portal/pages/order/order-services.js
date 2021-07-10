@@ -9,7 +9,7 @@ app.factory("OrderServices", [
 
     var ordersServiceFactory = {};
 
-    var settings = $rootScope.globalSettings;
+    var settings = $rootScope.appSettings;
 
     var _getOrder = async function (id, type) {
       var apiUrl = "/" + settings.lang + "/order/";

@@ -16,14 +16,14 @@
     "$rootScope",
     "$routeParams",
     "ngAppSettings",
-    "GlobalSettingsService",
+    "AppSettingsService",
     "TemplateService",
     function (
       $scope,
       $rootScope,
       $routeParams,
       ngAppSettings,
-      globalSettingsService,
+      appSettingsService,
       service
     ) {
       BaseCtrl.call(
@@ -52,13 +52,13 @@
           ctrl.template = ctrl.templates[0];
         }
         if (ctrl.folderType && !ctrl.folderType) {
-          var themeId = globalSettingsService.get("themeId");
+          var themeId = appSettingsService.get("themeId");
           var resp = await service.getSingle([
             "portal",
             themeId,
             ctrl.folderType,
           ]);
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             resp.data.fileName = "new";
             ctrl.templates.splice(0, 0, resp.data);
             $rootScope.isBusy = false;

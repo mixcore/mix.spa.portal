@@ -19,7 +19,7 @@
       var ctrl = this;
       ctrl.init = function () {
         commonService.getPermissions().then(function (response) {
-          if (response && response.isSucceed) {
+          if (response && response.success) {
             ctrl.isInit = true;
             ctrl.roles = response.data;
             if (ctrl.roles.data) {

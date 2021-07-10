@@ -34,7 +34,7 @@ app.controller("PageController", [
     $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
     $scope.pageType = "";
-    $scope.pageTypes = $rootScope.globalSettings.pageTypes;
+    $scope.pageTypes = $rootScope.appSettings.pageTypes;
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.pageData = {
@@ -51,7 +51,7 @@ app.controller("PageController", [
       $scope.postRequest.query += "&page_id=" + id;
       var response = await pagePostRestService.getList($scope.postRequest);
 
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.pageData.posts = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -83,7 +83,7 @@ app.controller("PageController", [
         databaseName: "sys_additional_field_page",
       };
       const getData = await dataService.getAdditionalData(obj);
-      if (getData.isSucceed) {
+      if (getData.success) {
         $scope.additionalData = getData.data;
         $scope.$apply();
       }
@@ -99,7 +99,7 @@ app.controller("PageController", [
         $scope.data.items[i].priority = startIndex + i + 1;
       }
       var resp = await service.updateInfos($scope.data.items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;
@@ -129,7 +129,7 @@ app.controller("PageController", [
     $scope.updatePagePage = async function (items) {
       $rootScope.isBusy = true;
       var resp = await pagePageRestService.updateInfos(items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $scope.getList();
@@ -162,7 +162,7 @@ app.controller("PageController", [
     };
     $scope.addAlias = async function (alias) {
       var getAlias = await urlAliasService.getSingle();
-      if (getAlias.isSucceed) {
+      if (getAlias.success) {
         if (alias) {
           getAlias.data.alias = alias;
         }

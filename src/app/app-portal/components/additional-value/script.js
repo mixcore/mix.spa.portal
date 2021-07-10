@@ -17,7 +17,7 @@ modules.component("additionalValue", {
       ctrl.value = {};
       ctrl.column = { dataType: "Text" };
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.additionalData) {
           if (!ctrl.additionalDataId) {
@@ -27,7 +27,7 @@ modules.component("additionalValue", {
               databaseName: ctrl.databaseName,
             };
             const getData = await dataService.getAdditionalData(obj);
-            if (getData.isSucceed) {
+            if (getData.success) {
               ctrl.additionalData = getData.data;
               ctrl.additionalData.mixDatabaseName = ctrl.databaseName;
               ctrl.additionalData.parentType = ctrl.parentType;

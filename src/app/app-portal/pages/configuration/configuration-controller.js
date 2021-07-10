@@ -29,24 +29,24 @@ app.controller("ConfigurationController", [
 
     $scope.getSingleSuccessCallback = function () {
       $scope.cates = ngAppSettings.enums.configuration_cates;
-      $scope.globalSettings = $rootScope.globalSettings;
+      $scope.appSettings = $rootScope.appSettings;
       $scope.request.category = $routeParams.category || "";
-      if(!$scope.viewmodel.id){
-        $scope.viewmodel.property.dataType = 'Text';
+      if (!$scope.viewmodel.id) {
+        $scope.viewmodel.property.dataType = "Text";
       }
       if (!$scope.viewmodel.category) {
         $scope.viewmodel.category = "Site";
       }
     };
     $scope.saveSuccessCallback = function () {
-      commonService.initAllSettings().then(function () {
+      apiService.getAllSettings().then(function () {
         // $location.url($scope.referrerUrl);
         $rootScope.isBusy = false;
         $scope.$apply();
       });
     };
     $scope.removeCallback = function () {
-      commonService.initAllSettings().then(function () {
+      apiService.getAllSettings().then(function () {
         $location.url($scope.referrerUrl);
       });
     };

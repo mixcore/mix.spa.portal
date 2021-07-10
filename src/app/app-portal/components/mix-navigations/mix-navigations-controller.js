@@ -44,7 +44,7 @@ app.controller("MixNavigationController", [
     $scope.uploadMedia = async function () {
       $rootScope.isBusy = true;
       var resp = await service.uploadMedia($scope.mediaFile);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedMedia = resp.data;
         $scope.getList();
         $scope.$apply();
@@ -96,7 +96,7 @@ app.controller("MixNavigationController", [
     $scope.clone = async function (id) {
       $rootScope.isBusy = true;
       var resp = await service.cloneMedia(id);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedMedia = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

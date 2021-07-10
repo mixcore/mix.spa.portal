@@ -6,7 +6,7 @@
     "ngAppSettings",
     function ($rootScope, $scope) {
       var ctrl = this;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       // ctrl.setPageType = function (type) {
       //     ctrl.page.type = $index;
       // }

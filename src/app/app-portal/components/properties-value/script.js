@@ -24,7 +24,7 @@ modules.component("propertiesValue", {
         width: 3,
       };
       ctrl.selectedProp = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
 
       ctrl.$doCheck = function () {
         if (

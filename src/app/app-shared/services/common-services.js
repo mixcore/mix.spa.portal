@@ -49,47 +49,6 @@ appShared.factory("CommonService", [
       });
     };
 
-    var _getAllSettings = async function (culture) {
-      var settings = localStorageService.get("localizeSettings");
-      var globalSettings = localStorageService.get("globalSettings");
-      var translator = localStorageService.get("translator");
-      if (
-        settings &&
-        globalSettings &&
-        translator &&
-        settings.lang === culture
-      ) {
-        $rootScope.localizeSettings = settings;
-        $rootScope.globalSettings = globalSettings;
-        $rootScope.translator.translator = translator;
-      } else {
-        var url = "/rest/shared";
-        if (culture) {
-          url += "/" + culture;
-        }
-        url += "/get-shared-settings";
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return apiService.sendRequest(req).then(function (response) {
-          response.data.globalSettings.lastUpdateConfiguration = new Date();
-          localStorageService.set(
-            "localizeSettings",
-            response.data.localizeSettings
-          );
-          localStorageService.set(
-            "globalSettings",
-            response.data.globalSettings
-          );
-          localStorageService.set("translator", response.data.translator);
-          $rootScope.localizeSettings = response.data.localizeSettings;
-          $rootScope.globalSettings = response.data.globalSettings;
-          $rootScope.translator.translator = response.data.translator;
-        });
-      }
-    };
-
     var _checkConfig = async function (lastSync) {
       if (!lastSync) {
         _renewSettings();
@@ -109,10 +68,9 @@ appShared.factory("CommonService", [
             if (response.data) {
               _renewSettings();
             } else {
-              $rootScope.localizeSettings =
-                localStorageService.get("localizeSettings");
-              $rootScope.globalSettings =
-                localStorageService.get("globalSettings");
+              $rootScope.mixConfigurations =
+                localStorageService.get("mixConfigurations");
+              $rootScope.appSettings = localStorageService.get("appSettings");
               $rootScope.translator.translator =
                 localStorageService.get("translator");
             }
@@ -124,7 +82,7 @@ appShared.factory("CommonService", [
     var _renewSettings = function () {
       _removeSettings().then(() => {
         _removeTranslator().then(() => {
-          _getAllSettings();
+          apiService.getAllSettings();
         });
       });
     };
@@ -150,21 +108,24 @@ appShared.factory("CommonService", [
     };
 
     var _initAllSettings = async function (culture) {
-      localStorageService.remove("localizeSettings");
+      localStorageService.remove("mixConfigurations");
       localStorageService.remove("translator");
-      localStorageService.remove("globalSettings");
+      localStorageService.remove("appSettings");
 
-      var response = await _getAllSettings();
+      var response = await apiService.getAllSettings();
       if (response) {
-        localStorageService.set("localizeSettings", response.localizeSettings);
+        localStorageService.set(
+          "mixConfigurations",
+          response.mixConfigurations
+        );
         localStorageService.set("translator", response.translator);
-        localStorageService.set("globalSettings", response.globalSettings);
+        localStorageService.set("appSettings", response.appSettings);
       }
       return response;
     };
 
     var _removeSettings = async function (settings) {
-      localStorageService.remove("localizeSettings");
+      localStorageService.remove("mixConfigurations");
     };
 
     var _removeTranslator = async function () {
@@ -172,25 +133,25 @@ appShared.factory("CommonService", [
     };
 
     var _fillAllSettings = async function (culture) {
-      var settings = localStorageService.get("localizeSettings");
-      var globalSettings = localStorageService.get("globalSettings");
+      var settings = localStorageService.get("mixConfigurations");
+      var appSettings = localStorageService.get("appSettings");
       var translator = localStorageService.get("translator");
       if (
         settings &&
-        globalSettings &&
+        appSettings &&
         translator &&
         (!culture || settings.lang === culture)
       ) {
-        $rootScope.localizeSettings = settings;
-        $rootScope.globalSettings = globalSettings;
+        $rootScope.mixConfigurations = settings;
+        $rootScope.appSettings = appSettings;
         $rootScope.translator.translator = translator;
-        await _checkConfig(globalSettings.lastUpdateConfiguration);
+        await _checkConfig(appSettings.lastUpdateConfiguration);
       } else {
         if (culture && settings && settings.lang !== culture) {
           await _removeSettings();
           await _removeTranslator();
         }
-        await _getAllSettings(culture);
+        await apiService.getAllSettings(culture);
       }
     };
 

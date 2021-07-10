@@ -81,7 +81,7 @@
             );
             ctrl.mediaFile.fileStream = reader.result;
             var resp = await fileService.save(ctrl.mediaFile);
-            if (resp && resp.isSucceed) {
+            if (resp && resp.success) {
               ctrl.data.value = resp.data.webPath;
               ctrl.srcUrl = resp.data.webPath;
               $rootScope.isBusy = false;

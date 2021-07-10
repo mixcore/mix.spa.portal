@@ -37,7 +37,7 @@
                                 <label class="form-label">Type</label>
                                 <select ng-change="initEditors()" class="form-select me-2"
                                     ng-model="viewmodel.property.dataType">
-                                    <option ng-repeat="item in globalSettings.dataTypes track by $index"
+                                    <option ng-repeat="item in appSettings.dataTypes track by $index"
                                         ng-value="item.name">
                                         {{item.name}}</option>
                                 </select>

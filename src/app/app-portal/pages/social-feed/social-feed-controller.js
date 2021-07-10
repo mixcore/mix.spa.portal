@@ -36,10 +36,10 @@ app.controller("SocialFeedController", [
         });
       };
       $scope.socialSettings = {
-        app_id: $rootScope.localizeSettings.data.FacebookAppId,
-        page_id: $rootScope.localizeSettings.data.Facebook_Page_Id,
-        app_secret: $rootScope.localizeSettings.data.FacebookAppSecret,
-        access_token: $rootScope.localizeSettings.data.FacebookAccessToken,
+        app_id: $rootScope.mixConfigurations.data.FacebookAppId,
+        page_id: $rootScope.mixConfigurations.data.Facebook_Page_Id,
+        app_secret: $rootScope.mixConfigurations.data.FacebookAppSecret,
+        access_token: $rootScope.mixConfigurations.data.FacebookAccessToken,
         show_login: true,
         errors: [],
       };
@@ -175,7 +175,7 @@ app.controller("SocialFeedController", [
         if (media) {
           post.mediaNavs.push({
             media: media,
-            specificulture: $rootScope.localizeSettings.lang,
+            specificulture: $rootScope.mixConfigurations.lang,
             image: media.fullPath,
           });
         }
@@ -186,7 +186,7 @@ app.controller("SocialFeedController", [
         angular.forEach(medias, function (e, i) {
           post.mediaNavs.push({
             media: e,
-            specificulture: $rootScope.localizeSettings.lang,
+            specificulture: $rootScope.mixConfigurations.lang,
             image: e.fullPath,
           });
         });
@@ -252,7 +252,7 @@ app.controller("SocialFeedController", [
     $scope.syncPosts = async function () {
       $rootScope.isBusy = true;
       var resp = await postService.saveList($scope.socialSettings.posts);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;
         $scope.$apply();

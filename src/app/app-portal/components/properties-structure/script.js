@@ -7,7 +7,7 @@ modules.component("propertiesStructure", {
     function ($rootScope, $scope) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.defaultAttr = {
         title: "",
         name: "",
