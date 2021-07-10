@@ -6,21 +6,15 @@
 </aside> -->
 <!-- ----------------------------------------------------------- -->
 
-<div class="content-body py-3 px-5">
-  <!-- Main content -->
-  <section ng-init="init()">
-    <!--<actions preview-url="activedModuleData.detailsUrl" back-url="'/portal/module-data/list'"></actions>-->
-    <div class="row flex-xl-nowrap" ng-if="moduleId">
-      <div class="col-md-12">
-        <module-form
-          d="id"
-          is-show-title="'true'"
-          name="moduleName"
-          module-id="moduleId"
-          back-url="backUrl"
-        >
-        </module-form>
-      </div>
-    </div>
-  </section>
+<div class="content-body py-3 pe-3">
+    <!-- Main content -->
+    <section ng-init="init()">
+        <!--<actions preview-url="activedModuleData.detailsUrl" back-url="'/portal/module-data/list'"></actions>-->
+        <div class="row flex-xl-nowrap" ng-if="moduleId">
+            <div class="col-md-12">
+                <module-form d="id" is-show-title="'true'" name="moduleName" module-id="moduleId" back-url="backUrl">
+                </module-form>
+            </div>
+        </div>
+    </section>
 </div>
