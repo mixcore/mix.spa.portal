@@ -12,7 +12,7 @@ app.factory("TemplateService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.copy = _copy;
     return serviceFactory;

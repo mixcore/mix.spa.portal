@@ -14,7 +14,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getAdditionalData = async function (data) {
@@ -28,7 +28,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initData = async function (mixDatabaseName) {
@@ -37,7 +37,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _export = async function (objData) {
@@ -52,7 +52,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _import = async function (mixDatabaseName, file) {
@@ -71,7 +71,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     serviceFactory.migrate = _migrate;

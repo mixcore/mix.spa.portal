@@ -3,7 +3,7 @@ appShared.factory("StoreService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("", null, "en-us", "https://store.mixcore.org");
+    serviceFactory.init("", null, "en-us", "https://store.mixcore.org", "v1");
     // Define more service methods here
     var _getThemes = async function (objData) {
       var data = serviceFactory.parseQuery(objData);
@@ -15,6 +15,7 @@ appShared.factory("StoreService", [
       }
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: url,
       };
@@ -31,6 +32,7 @@ appShared.factory("StoreService", [
       }
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: url,
       };

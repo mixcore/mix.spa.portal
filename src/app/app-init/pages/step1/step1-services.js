@@ -6,7 +6,7 @@ app.factory("Step1Services", [
     var _initCms = async function (data) {
       var req = {
         method: "POST",
-        url: "/mix-theme/init/init-cms/step-1",
+        url: "/mix-theme/setup/init-site",
         data: JSON.stringify(data),
       };
       return await apiService.sendRequest(req, true);

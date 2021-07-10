@@ -5,15 +5,12 @@ appShared.factory("BaseRestService", [
   "AppSettings",
   "AuthService",
   "ApiService",
-  "CommonService",
-  "localStorageService",
-  function ($rootScope, $routeParams, appSettings, authService, commonService) {
+  function ($rootScope, $routeParams, appSettings, authService, apiService) {
     var serviceFactory = {};
-    var _init = function (modelName, isGlobal, lang, serviceBase) {
+    var _init = function (modelName, isGlobal, lang, serviceBase, apiVersion) {
       this.modelName = modelName;
-      if (serviceBase) {
-        this.serviceBase = serviceBase;
-      }
+      this.apiVersion = apiVersion || appSettings.apiVersion;
+      this.serviceBase = serviceBase || appSettings.serviceBase;
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.localizeSettings || lang) {
           this.lang = lang || $rootScope.localizeSettings.lang;
@@ -229,22 +226,13 @@ appShared.factory("BaseRestService", [
       console.log(`loaded ${progress}%`);
     };
 
-    var _getRestApiResult = async function (req, serviceBase) {
+    var _getRestApiResult = async function (req) {
       if (!authService.authentication) {
         await authService.fillAuthData();
       }
       if (authService.authentication) {
         req.Authorization = authService.authentication.access_token;
       }
-
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
-
-      req.url = serviceUrl + req.url;
       if (!req.headers) {
         req.headers = {
           "Content-Type": "application/json",
@@ -252,7 +240,7 @@ appShared.factory("BaseRestService", [
       }
       req.headers.Authorization = "Bearer " + req.Authorization || "";
 
-      return commonService.sendRestRequest(req).then(function (resp) {
+      return apiService.sendRequest(req).then(function (resp) {
         return resp;
       });
     };

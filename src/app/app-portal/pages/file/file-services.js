@@ -19,7 +19,7 @@ app.factory("FileServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initFile = async function (type) {
@@ -28,7 +28,7 @@ app.factory("FileServices", [
         method: "GET",
         url: apiUrl + "init/" + type,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getFiles = async function (request) {
@@ -39,7 +39,7 @@ app.factory("FileServices", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeFile = async function (fullPath) {
@@ -48,7 +48,7 @@ app.factory("FileServices", [
         method: "GET",
         url: apiUrl + "delete/?fullPath=" + fullPath,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveFile = async function (file) {
@@ -58,7 +58,7 @@ app.factory("FileServices", [
         url: apiUrl + "save",
         data: JSON.stringify(file),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _uploadFile = async function (file, folder) {
       var apiUrl = "/file/upload-file";

@@ -49,7 +49,7 @@ appShared.factory("GlobalSettingsService", [
           method: "GET",
           url: url,
         };
-        var getData = await apiService.getApiResult(req);
+        var getData = await apiService.sendRequest(req);
         if (getData.isSucceed) {
           globalSettings = getData.data;
           localStorageService.set("globalSettings", globalSettings);

@@ -32,7 +32,7 @@
           url: url,
           data: data,
         };
-        return apiService.getApiResult(req).then(function (response) {
+        return apiService.sendRequest(req).then(function (response) {
           if (response.success) {
             ctrl.callback();
           } else {

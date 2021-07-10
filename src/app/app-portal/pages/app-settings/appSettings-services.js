@@ -18,7 +18,7 @@ app.factory("AppSettingsServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveAppSettings = async function (appSettings) {
@@ -28,7 +28,7 @@ app.factory("AppSettingsServices", [
         url: apiUrl,
         data: JSON.stringify(appSettings),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _saveGlobalSettings = async function (name, content) {
       var apiUrl = "/portal/app-settings/save-global/" + name;
@@ -37,7 +37,7 @@ app.factory("AppSettingsServices", [
         url: apiUrl,
         data: JSON.stringify(content),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     appSettingssServiceFactory.getAppSettings = _getAppSettings;

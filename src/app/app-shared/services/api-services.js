@@ -116,15 +116,11 @@ appShared.factory("ApiService", [
     var _sendRequest = async function (
       req,
       skipAuthorize = false,
-      retry = true,
-      serviceBase = null
+      retry = true
     ) {
-      var serviceUrl =
-        appSettings.serviceBase + "/api/" + appSettings.apiVersion;
-      if (serviceBase || req.serviceBase) {
-        serviceUrl =
-          (serviceBase || req.serviceBase) + "/api/" + appSettings.apiVersion;
-      }
+      let apiVersion = req.apiVersion || appSettings.apiVersion;
+      let serviceBase = req.serviceBase || appSettings.serviceBase;
+      var serviceUrl = serviceBase + "/api/" + apiVersion;
       req.url = serviceUrl + req.url;
       var defer = $q.defer();
       req.uploadEventHandlers = {

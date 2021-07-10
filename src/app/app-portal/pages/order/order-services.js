@@ -21,7 +21,7 @@ app.factory("OrderServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initOrder = async function (type) {
@@ -30,7 +30,7 @@ app.factory("OrderServices", [
         method: "GET",
         url: apiUrl + "init/" + type,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getOrders = async function (request) {
@@ -41,7 +41,7 @@ app.factory("OrderServices", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeOrder = async function (id) {
@@ -50,7 +50,7 @@ app.factory("OrderServices", [
         method: "GET",
         url: apiUrl + "delete/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveOrder = async function (order) {
@@ -60,7 +60,7 @@ app.factory("OrderServices", [
         url: apiUrl + "save",
         data: JSON.stringify(order),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     ordersServiceFactory.getOrder = _getOrder;

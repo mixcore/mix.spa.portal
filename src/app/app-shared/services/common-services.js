@@ -44,7 +44,7 @@ appShared.factory("CommonService", [
         url: url,
         data: { subject: subject, body: body },
       };
-      return apiService.getApiResult(req).then(function (response) {
+      return apiService.sendRequest(req).then(function (response) {
         return response.data;
       });
     };
@@ -72,7 +72,7 @@ appShared.factory("CommonService", [
           method: "GET",
           url: url,
         };
-        return apiService.getRestApiResult(req).then(function (response) {
+        return apiService.sendRequest(req).then(function (response) {
           response.data.globalSettings.lastUpdateConfiguration = new Date();
           localStorageService.set(
             "localizeSettings",
@@ -105,7 +105,7 @@ appShared.factory("CommonService", [
             method: "GET",
             url: url,
           };
-          return apiService.getApiResult(req).then(function (response) {
+          return apiService.sendRequest(req).then(function (response) {
             if (response.data) {
               _renewSettings();
             } else {
@@ -136,7 +136,7 @@ appShared.factory("CommonService", [
         method: "GET",
         url: url,
       };
-      return apiService.getApiResult(req).then(function (response) {
+      return apiService.sendRequest(req).then(function (response) {
         return response.data;
       });
     };
@@ -146,7 +146,7 @@ appShared.factory("CommonService", [
         method: "GET",
         url: "/rest/shared/permissions",
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initAllSettings = async function (culture) {
@@ -203,7 +203,6 @@ appShared.factory("CommonService", [
     factory.checkfile = _checkfile;
     factory.genrateSitemap = _genrateSitemap;
     factory.loadJsonData = _loadJsonData;
-    factory.clearCache = _clearCache;
     factory.getPermissions = _getPermissions;
     return factory;
   },

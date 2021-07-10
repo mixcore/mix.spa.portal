@@ -21,7 +21,7 @@ app.factory("CustomerServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initCustomer = async function (type) {
@@ -30,7 +30,7 @@ app.factory("CustomerServices", [
         method: "GET",
         url: apiUrl + "init/" + type,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getCustomers = async function (request) {
@@ -41,7 +41,7 @@ app.factory("CustomerServices", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeCustomer = async function (id) {
@@ -50,7 +50,7 @@ app.factory("CustomerServices", [
         method: "GET",
         url: apiUrl + "delete/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveCustomer = async function (customer) {
@@ -60,7 +60,7 @@ app.factory("CustomerServices", [
         url: apiUrl + "save",
         data: JSON.stringify(customer),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     customersServiceFactory.getCustomer = _getCustomer;

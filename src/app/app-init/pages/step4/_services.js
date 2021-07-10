@@ -10,7 +10,7 @@ app.factory("Step4Services", [
         url: "/init/init-cms/step-4",
         data: JSON.stringify(data),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     service.submit = _submit;
     return service;

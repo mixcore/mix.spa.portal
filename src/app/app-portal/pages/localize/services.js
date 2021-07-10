@@ -30,7 +30,7 @@ app.factory("LocalizeService", [
           data: files,
         };
 
-        return await apiService.getApiResult(req);
+        return await apiService.sendRequest(req);
       }
     };
     serviceFactory.uploadLanguage = _uploadLanguage;

@@ -1,9 +1,8 @@
 ﻿"use strict";
 appShared.factory("ThemeService", [
   "ApiService",
-  "CommonService",
   "BaseRestService",
-  function (apiService, commonService, baseService) {
+  function (apiService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("theme/portal");
 
@@ -13,7 +12,7 @@ appShared.factory("ThemeService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _install = async function (objData) {
       var url = this.prefixUrl + "/install";
@@ -22,7 +21,7 @@ appShared.factory("ThemeService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _export = async function (id, objData) {
       var url = this.prefixUrl + "/export/" + id;
@@ -31,7 +30,7 @@ appShared.factory("ThemeService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _getExportData = async function (id) {
       var url =
@@ -42,7 +41,7 @@ appShared.factory("ThemeService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.install = _install;
     serviceFactory.export = _export;

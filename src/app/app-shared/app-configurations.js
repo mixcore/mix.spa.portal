@@ -465,7 +465,7 @@ appShared.run([
         processData: false, // Not to process data
         data: form,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {

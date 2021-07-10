@@ -13,7 +13,7 @@ app.factory("PagePostRestService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _updateInfos = async function (pages) {
       var req = {
@@ -21,7 +21,7 @@ app.factory("PagePostRestService", [
         url: this.prefixUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.delete = _delete;
     serviceFactory.updateInfos = _updateInfos;

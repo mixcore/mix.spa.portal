@@ -33,7 +33,7 @@ app.factory("ConfigurationService", [
           data: files,
         };
 
-        return await apiService.getApiResult(req);
+        return await apiService.sendRequest(req);
       }
     };
     serviceFactory.uploadConfiguration = _uploadConfiguration;

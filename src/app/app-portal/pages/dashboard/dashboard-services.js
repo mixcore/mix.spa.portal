@@ -14,7 +14,7 @@ app.factory("DashboardServices", [
         method: "GET",
         url: apiUrl + "/dashboard",
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     usersServiceFactory.getDashboardInfo = _getDashboardInfo;

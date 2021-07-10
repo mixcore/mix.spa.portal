@@ -36,7 +36,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await apiService.getRestApiResult(req);
+      var resp = await apiService.sendRequest(req);
       return resp;
     };
 
@@ -47,7 +47,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await apiService.getRestApiResult(req);
+      var resp = await apiService.sendRequest(req);
       return resp;
     };
 
@@ -66,7 +66,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify({ message: message }),
       };
-      var resp = await apiService.getRestApiResult(req, true);
+      var resp = await apiService.sendRequest(req, true);
       if (resp.isSucceed) {
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);
@@ -113,7 +113,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify({ message: message }),
       };
-      var resp = await apiService.getRestApiResult(req, true);
+      var resp = await apiService.sendRequest(req, true);
 
       if (resp.isSucceed) {
         let encryptedData = resp.data;
@@ -139,7 +139,7 @@ appShared.factory("AuthService", [
       //   };
 
       //   _authentication = null;
-      //   var resp = await apiService.getRestApiResult(req);
+      //   var resp = await apiService.sendRequest(req);
       //   if (resp.isSucceed) {
       //     window.top.location.href = "/security/login";
       //   }
@@ -161,7 +161,7 @@ appShared.factory("AuthService", [
           url: apiUrl,
           data: JSON.stringify(data),
         };
-        var resp = await apiService.getApiResult(req);
+        var resp = await apiService.sendRequest(req);
         if (resp.isSucceed) {
           let encryptedData = resp.data;
           return apiService.updateAuthData(encryptedData);

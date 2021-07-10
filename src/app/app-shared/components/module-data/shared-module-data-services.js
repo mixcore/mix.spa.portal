@@ -14,7 +14,7 @@ appShared.factory("SharedModuleDataService", [
         url: apiUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getModuleData = async function (moduleId, id, type) {
@@ -29,7 +29,7 @@ appShared.factory("SharedModuleDataService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getModuleDatas = async function (request) {
@@ -40,7 +40,7 @@ appShared.factory("SharedModuleDataService", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _exportModuleData = async function (request) {
@@ -51,7 +51,7 @@ appShared.factory("SharedModuleDataService", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initModuleForm = async function (name) {
@@ -61,7 +61,7 @@ appShared.factory("SharedModuleDataService", [
         url: apiUrl + "init-by-name/" + name,
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeModuleData = async function (id) {
@@ -70,7 +70,7 @@ appShared.factory("SharedModuleDataService", [
         method: "GET",
         url: apiUrl + "delete/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveModuleData = async function (moduleData) {
@@ -80,7 +80,7 @@ appShared.factory("SharedModuleDataService", [
         url: apiUrl + "save",
         data: JSON.stringify(moduleData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _saveFields = async function (id, propertyName, propertyValue) {
       var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
@@ -95,7 +95,7 @@ appShared.factory("SharedModuleDataService", [
         url: apiUrl + "save/" + id,
         data: JSON.stringify(column),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     moduleDatasServiceFactory.getModuleData = _getModuleData;
     moduleDatasServiceFactory.getModuleDatas = _getModuleDatas;

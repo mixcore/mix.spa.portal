@@ -10,7 +10,7 @@ app.factory("CultureService", [
         url: this.prefixUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _syncTemplates = async function (id) {
@@ -20,7 +20,7 @@ app.factory("CultureService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     serviceFactory.syncTemplates = _syncTemplates;

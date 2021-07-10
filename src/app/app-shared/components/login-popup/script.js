@@ -30,7 +30,7 @@ appShared.controller("LoginPopupController", [
 
         if ($rootScope.loginCallbackRequest) {
           if ($rootScope.loginCallbackType == "rest") {
-            apiService.getRestApiResult($rootScope.loginCallbackRequest);
+            apiService.sendRequest($rootScope.loginCallbackRequest);
           } else {
             apiService.getRestResult($rootScope.loginCallbackRequest);
           }

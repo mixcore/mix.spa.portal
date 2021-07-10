@@ -19,7 +19,7 @@ app.factory("UserServices", [
         url: serviceBase + url,
       };
 
-      return apiService.getApiResult(req);
+      return apiService.sendRequest(req);
     };
 
     var _importUsers = function (strBase64) {
@@ -30,7 +30,7 @@ app.factory("UserServices", [
         data: JSON.stringify({ strBase64: strBase64 }),
       };
 
-      return apiService.getApiResult(req);
+      return apiService.sendRequest(req);
     };
 
     var _getUsers = function (request) {
@@ -40,7 +40,7 @@ app.factory("UserServices", [
         data: request,
       };
 
-      return apiService.getApiResult(req);
+      return apiService.sendRequest(req);
     };
 
     var _getUser = async function (id, viewType) {
@@ -53,7 +53,7 @@ app.factory("UserServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getMyProfile = async function () {
@@ -63,7 +63,7 @@ app.factory("UserServices", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _updateRoleStatus = function (userInRole) {
@@ -73,7 +73,7 @@ app.factory("UserServices", [
         data: JSON.stringify(userInRole),
       };
 
-      return apiService.getApiResult(req);
+      return apiService.sendRequest(req);
     };
 
     var _saveUser = async function (user) {
@@ -83,7 +83,7 @@ app.factory("UserServices", [
         url: apiUrl + "save",
         data: JSON.stringify(user),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _register = async function (user) {
@@ -93,7 +93,7 @@ app.factory("UserServices", [
         url: apiUrl + "register",
         data: JSON.stringify(user),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeUser = function (userId) {
@@ -102,7 +102,7 @@ app.factory("UserServices", [
         url: apiUrl + "remove-user/" + userId,
       };
 
-      return apiService.getApiResult(req);
+      return apiService.sendRequest(req);
     };
 
     usersServiceFactory.importUsers = _importUsers;

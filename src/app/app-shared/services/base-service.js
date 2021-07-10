@@ -30,7 +30,7 @@ appShared.factory("BaseService", [
         serviceBase: this.serviceBase,
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _getList = async function (objData, params = []) {
       var url = this.prefixUrl + "/list";
@@ -44,7 +44,7 @@ appShared.factory("BaseService", [
         data: JSON.stringify(objData),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _export = async function (objData, params = []) {
       var url = this.prefixUrl + "/export";
@@ -58,7 +58,7 @@ appShared.factory("BaseService", [
         data: JSON.stringify(objData),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _delete = async function (id) {
@@ -68,7 +68,7 @@ appShared.factory("BaseService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _save = async function (objData) {
@@ -79,7 +79,7 @@ appShared.factory("BaseService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _saveProperties = async function (objData) {
       var url = this.prefixUrl + "/save-properties";
@@ -89,7 +89,7 @@ appShared.factory("BaseService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _saveList = async function (objData) {
       var url = this.prefixUrl + "/save-list";
@@ -99,7 +99,7 @@ appShared.factory("BaseService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _updateInfos = async function (objData) {
@@ -110,7 +110,7 @@ appShared.factory("BaseService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _ajaxSubmitForm = async function (form, url, onUploadFileProgress) {
       var req = {
@@ -120,7 +120,7 @@ appShared.factory("BaseService", [
         headers: { "Content-Type": undefined },
         data: form,
       };
-      return await apiService.getApiResult(
+      return await apiService.sendRequest(
         req,
         this.serviceBase,
         onUploadFileProgress || _onUploadFileProgress
@@ -135,7 +135,7 @@ appShared.factory("BaseService", [
         url: url,
         data: JSON.stringify(objData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _onUploadFileProgress = function (progress) {

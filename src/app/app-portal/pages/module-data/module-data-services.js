@@ -14,7 +14,7 @@ app.factory("ModuleDataRestService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.initForm = _initForm;
     return serviceFactory;

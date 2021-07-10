@@ -13,7 +13,7 @@ appShared.factory("MediaService", [
         method: "GET",
         url: serviceFactory.prefixUrl + "/clone/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _save = async function (objData, file, onUploadFileProgress) {
       var url = this.prefixUrl + "/save";

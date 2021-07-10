@@ -16,7 +16,7 @@ app.factory("JsonDataService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initFile = async function (type) {
@@ -25,7 +25,7 @@ app.factory("JsonDataService", [
         method: "GET",
         url: apiUrl + "init/" + type,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getFiles = async function (request) {
@@ -36,7 +36,7 @@ app.factory("JsonDataService", [
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeFile = async function (id) {
@@ -45,7 +45,7 @@ app.factory("JsonDataService", [
         method: "GET",
         url: apiUrl + "delete/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveFile = async function (file) {
@@ -55,7 +55,7 @@ app.factory("JsonDataService", [
         url: apiUrl + "save",
         data: JSON.stringify(file),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     filesServiceFactory.getFile = _getFile;
