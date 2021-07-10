@@ -19,8 +19,7 @@
       var ctrl = this;
       ctrl.items = [];
       ctrl.init = function () {
-        var routes = JSON.parse($("#portal-menus").val());
-        ctrl.items = routes.data;
+        ctrl.items = JSON.parse($("#portal-menus").val());
       };
     },
   ],
