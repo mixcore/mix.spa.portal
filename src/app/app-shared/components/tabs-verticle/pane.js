@@ -4,7 +4,7 @@ sharedComponents.directive("paneV", function () {
     require: "^tabs-v",
     restrict: "E",
     transclude: true,
-    scope: { header: "@", id: "@", icon: "@" },
+    scope: { header: "@", id: "@", icon: "@", class: "@" },
     link: function (scope, element, attrs, tabsController) {
       tabsController.addPane(scope);
     },

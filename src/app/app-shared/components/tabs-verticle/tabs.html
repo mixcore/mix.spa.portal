@@ -1,10 +1,12 @@
-<!-- <div class=""> -->
+<!-- <div class="card"> -->
 <div class="tabbable mb-3">
     <div class="mb-3">
-        <ul class="nav nav-tabs justify-content-end">
-            <li class="nav-item" ng-repeat="pane in panes">
-                <a class="nav-link {{pane.id}}" ng-class="{active:pane.selected}" href="" ng-click="select(pane)"><span
-                        class="{{pane.icon}}"></span> {{pane.header}}</a>
+        <ul class="nav nav-tabs">
+            <li class="nav-item {{pane.class}} " ng-repeat="pane in panes">
+                <a class="nav-link {{pane.id}} text-primary" ng-class="{active:pane.selected}" href=""
+                    ng-click="select(pane)">
+                    <span class="{{pane.icon}}"></span> <span ng-if="pane.header"
+                        class="ms-2">{{pane.header}}</span></a>
             </li>
         </ul>
     </div>

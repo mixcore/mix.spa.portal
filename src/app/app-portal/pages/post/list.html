@@ -1,4 +1,4 @@
-<div class="page-wrapper d-flex flex-column">
+<div class="page-wrapper d-flex flex-column pt-4">
     <div class="container-xl">
         <!-- Page title -->
         <div class="page-header d-print-none">
@@ -13,15 +13,11 @@
                     </h3>
                 </div>
                 <!-- Page title actions -->
-                <div class="col-auto ms-auto d-print-none">
+                <!-- <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <span class="d-none d-sm-inline">
-                            <!-- <a href="#" class="btn btn-white">
-                            New view
-                        </a> -->
                         </span>
                         <a href="/portal/post/create" class="btn btn-primary d-none d-sm-inline-block shadow">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -33,7 +29,6 @@
                         </a>
                         <a href="/portal/post/create" class="btn btn-primary d-sm-none btn-icon shadow"
                             aria-label="Create new report">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -43,7 +38,7 @@
                             </svg>
                         </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -52,7 +47,8 @@
         <aside class="bd-sidebar sub-sidebar">
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
-                    <filter-list request="request" callback="getList(pageIndex)">
+                    <filter-list request="request" callback="getList(pageIndex)" create-url="createUrl"
+                        create-text="'Create Post'">
                     </filter-list>
 
                     <select class="form-select my-3"
