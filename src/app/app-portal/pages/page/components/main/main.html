@@ -6,11 +6,11 @@
 </div>
 <div class="mb-3">
     <label class="form-label">Excerpt</label>
-    <textarea class="form-control" ng-model="$ctrl.page.excerpt">
+    <textarea class="form-control" ng-model="$ctrl.page.excerpt" rows="4">
 {{$ctrl.page.excerpt}}</textarea>
 </div>
 <div class="mb-3">
-    <!-- <label class="form-label">Full description</label> -->
+    <label class="form-label">Content body</label>
     <!-- <trumbowyg options="{}" ng-model="$ctrl.page.content"></trumbowyg> -->
 
     <quill-editor content="$ctrl.page.content"></quill-editor>
