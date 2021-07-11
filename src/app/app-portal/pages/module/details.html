@@ -9,6 +9,7 @@
                 <h2 class="page-title text-white">
                     {{viewmodel.title}}
                 </h2>
+                <p class="lead">{{viewmodel.excerpt}}</p>
             </div>
             <div ng-if="!viewmodel.title" class="col-6">
                 <div class="page-pretitle text-white">
@@ -17,6 +18,7 @@
                 <h2 ng-if="!viewmodel.title" class="page-title text-white">
                     New Module
                 </h2>
+                <p class="lead">{{viewmodel.excerpt}}</p>
             </div>
         </div>
         <span class="mask bg-gradient-primary" style="opacity: 0.5;"></span>
