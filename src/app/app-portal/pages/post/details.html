@@ -238,7 +238,7 @@
                         <pane-v icon="fas fa-cubes" header="Parents">
                             <post-parents post="$ctrl.model"></post-parents>
                         </pane-v>
-                        <pane-v icon="fas fa-cog" header="" class="ms-auto">
+                        <pane-v icon="fas fa-cog" header="" class="ms-auto" ng-if="isAdmin">
                             <post-advanced model="viewmodel" additional-data="additionalData"></post-advanced>
                         </pane-v>
                     </tabs-v>

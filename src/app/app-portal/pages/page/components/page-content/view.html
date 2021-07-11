@@ -1,46 +1,38 @@
 <div class="card mb-5">
-  <div class="card-body">
-    <page-main
-      page="$ctrl.model"
-      generate-seo="$ctrl.generateSEO()"
-    ></page-main>
-  </div>
+    <div class="card-body">
+        <page-main page="$ctrl.model" generate-seo="$ctrl.generateSEO()"></page-main>
+    </div>
 </div>
 
 <div class="row mb-5">
-  <div class="col-12">
-    <tabs-v class="mb-4">
-      <pane-v header="General">
-        <page-general is-admin="isAdmin" page="$ctrl.model"></page-general>
-      </pane-v>
-      <pane-v header="SEO" class="">
-        <page-seo page="$ctrl.model"></page-seo>
-      </pane-v>
-      <!-- <pane-v header="Parents" class="">
+    <div class="col-12" ng-if="$ctrl.additionalData">
+        <additional-value class="mb-4" additional-data="$ctrl.additionalData" database-name="$ctrl.type"
+            parent-type="'Page'" parent-id="$ctrl.model.id"></additional-value>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <tabs-v class="mb-4">
+            <pane-v header="General">
+                <page-general is-admin="isAdmin" page="$ctrl.model"></page-general>
+            </pane-v>
+            <pane-v header="SEO" class="">
+                <page-seo page="$ctrl.model"></page-seo>
+            </pane-v>
+            <!-- <pane-v header="Parents" class="">
                 <page-parents page="$ctrl.model"></page-parents>
             </pane-v> -->
-      <!-- <pane-v header="Media">
+            <!-- <pane-v header="Media">
         <page-medias page="$ctrl.model" medias="$ctrl.model.mediaNavs"></page-medias>
       </pane-v> -->
-      <pane-v header="Module">
-        <page-modules page="$ctrl.model"></page-modules>
-      </pane-v>
-      <!-- <pane-v header="Related">
+            <pane-v header="Module">
+                <page-modules page="$ctrl.model"></page-modules>
+            </pane-v>
+            <!-- <pane-v header="Related">
                 <related-navs request="request" source-id="$ctrl.model.id" culture="$ctrl.model.specificulture"
                     prefix="'page'" navs="$ctrl.model.pageNavs" data="data" load-data="getListRelated(pageIndex)">
                 </related-navs>
             </pane-v> -->
-    </tabs-v>
-  </div>
-</div>
-<div class="row">
-  <div class="col-12" ng-if="$ctrl.additionalData">
-    <additional-value
-      class="mb-4"
-      additional-data="$ctrl.additionalData"
-      database-name="$ctrl.type"
-      parent-type="'Page'"
-      parent-id="$ctrl.model.id"
-    ></additional-value>
-  </div>
+        </tabs-v>
+    </div>
 </div>
