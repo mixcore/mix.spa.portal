@@ -1,10 +1,8 @@
 <div class="page-wrapper d-flex flex-column pt-4">
     <div class="container-xl">
-        <!-- Page title -->
         <div class="page-header d-print-none">
             <div class="row align-items-center">
                 <div class="col">
-                    <!-- Page pre-title -->
                     <div class="page-pretitle">
                         Listing
                     </div>
@@ -12,33 +10,6 @@
                         All Posts
                     </h3>
                 </div>
-                <!-- Page title actions -->
-                <!-- <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <span class="d-none d-sm-inline">
-                        </span>
-                        <a href="/portal/post/create" class="btn btn-primary d-none d-sm-inline-block shadow">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Create new post
-                        </a>
-                        <a href="/portal/post/create" class="btn btn-primary d-sm-none btn-icon shadow"
-                            aria-label="Create new report">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </a>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -91,9 +62,11 @@
                                 <th class="col text-secondary text-xxs font-weight-bolder opacity-7">
                                     Feature</th>
                                 <th class="col text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Created Date</th>
+                                    Created</th>
                                 <th class="col text-secondary text-xxs font-weight-bolder opacity-7">
                                     Author</th>
+                                <th class="col text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Status</th>
 
                                 <th class="col-1 text-secondary text-xxs font-weight-bolder opacity-7">
                                 </th>
@@ -141,6 +114,12 @@
                                 <td class="text-black-50">
                                     <small>{{item.createdBy}}</small>
                                 </td>
+                                <td class="text-black-50">
+                                    <small ng-if="item.status == 'Published'">🟢</small>
+                                    <small ng-if="item.status == 'Schedule'">🟡</small>
+                                    <small ng-if="item.status == 'Draft'">🔴</small>
+                                    <small ng-if="item.status == 'Deleted'">⚫️</small>
+                                </td>
 
                                 <td>
                                     <div class="dropdown float-lg-end ms-auto pe-1">
@@ -175,7 +154,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer">
+                <div class="card-body">
                     <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
                         ul-class="pagination justify-content-end m-0" a-class="page-link"
                         paging-action="getList(page-1)" scroll-top="true">
