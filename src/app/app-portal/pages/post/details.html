@@ -1,24 +1,28 @@
 <div class="page-wrapper d-flex flex-column pt-4">
     <form ng-class="{'submitted': submitted}" ng-submit="save()">
-        <div class="container-xl">
-            <!-- Page title -->
-            <div class="page-header d-print-none">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <!-- Page pre-title -->
-                        <div class="page-pretitle">
-                            Create
-                        </div>
-                        <h3 class="page-title">
-                            New Post
-                        </h3>
+
+        <!-- Page title -->
+        <div class="container card page-header page-header-feature d-print-none mb-3"
+            style="background-image: url('/mix-content/assets/casper/uploads/2021-03/screencapturestagmixcoreorgportal201908041604151637509839818705119-637514690948911040.jpg'); ">
+            <div class="page-title-wrapper row align-items-center">
+                <div class="col">
+                    <!-- Page pre-title -->
+                    <div class="page-pretitle text-white">
+                        Create
                     </div>
+                    <h3 class="page-title text-white">
+                        New Post
+                    </h3>
                 </div>
+            </div>
+            <span class="mask bg-gradient-primary" style="opacity: 0.5;"></span>
+            <div class="page-thumbnail"
+                style="background-image: url(/mix-content/assets/casper/uploads/2021-03/scenery637483741300760544-637514691063252053.jpg);    ">
             </div>
         </div>
         <div class="page-body d-flex flex-row-reverse">
             <aside class="bd-sidebar sub-sidebar">
-                <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
+                <nav class="bd-links ps-3 pt-4" aria-label="Sub-section navigation">
                     <div class="card">
                         <actions on-clear-cache="clearCache()" preview-url="viewmodel.detailsUrl"
                             back-url="referrerUrl">
