@@ -22,7 +22,7 @@
                 <input type="text" ng-model="nav.priority" ng-change="$ctrl.updatePriorities()" 
                        class="item-priority d-none form-control form-control-sm d"/>
             </div>-->
-            <div class="form-check form-switch flex-fill">
+            <div class="form-check form-switch flex-fill pt-1">
                 <input type="checkbox" ng-change="$ctrl.callback({nav: nav})" ng-model="nav.isActived"
                     id="{{$ctrl.prefix}}_{{$index}}" class="form-check-input" />
                 <label class="form-check-label" for="{{$ctrl.prefix}}_{{$index}}" ng-bind="$ctrl.getTitle(nav)">
@@ -33,7 +33,7 @@
             </div>
 
             <div class=" text-end">
-                <a class="text-primary btn btn-sm" ng-if="$ctrl.detailsUrl" ng-click="$ctrl.goToDetails(nav)"><i
+                <a class=" btn btn-sm btn-light ms-3" ng-if="$ctrl.detailsUrl" ng-click="$ctrl.goToDetails(nav)"><i
                         class="fa fa-pen"></i></a>
             </div>
         </div>
