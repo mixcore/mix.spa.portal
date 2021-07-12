@@ -52,7 +52,9 @@
                                 <th class="col">Database</th>
                                 <th class="col">Name</th>
                                 <th class="col">Type</th>
-                                <th class="col">Created Date</th>
+                                <th class="col">Created</th>
+                                <th class="col">Author</th>
+                                <th class="col"></th>
                                 <th class="col"></th>
                             </tr>
                         </thead>
@@ -70,18 +72,32 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <small>{{item.title}}</small>
+                                    <a href="/portal/mix-database/details/{{item.id}}" title="Config database"
+                                        class="btn-link">
+                                        {{item.title}}
+                                    </a>
                                 </td>
                                 <td>
                                     <small class="text-black-50">{{item.name}}</small>
                                 </td>
                                 <td>
-                                    <small class="text-black-50">{{item.model.type}}</small>
+                                    <small class="text-black-50">{{item.type}}</small>
                                 </td>
                                 <td>
                                     <small class="text-black-50">
                                         {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
                                     </small>
+                                </td>
+                                <td>
+                                    <small class="text-black-50">
+                                        {{item.createdBy}}
+                                    </small>
+                                </td>
+                                <td class="text-black-50">
+                                    <small ng-if="item.status == 'Published'">🟢</small>
+                                    <small ng-if="item.status == 'Schedule'">🟡</small>
+                                    <small ng-if="item.status == 'Draft'">🔴</small>
+                                    <small ng-if="item.status == 'Deleted'">⚫️</small>
                                 </td>
                                 <td>
                                     <!-- <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
