@@ -135,13 +135,12 @@
         <div class="content-body py-3 pe-3">
             <div class="row">
                 <div class="col-12" ng-init="getList()">
-
-                    <div class="mb-5">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
-                            </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
                         </div>
+                    </div>
+                    <div class="mb-5 card">
                         <mix-database-data-values ng-if="columns" on-duplicate="duplicate(data)" on-update="edit(data)"
                             on-delete="remove(data)" columns="columns"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
@@ -149,13 +148,14 @@
                             on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"
                             mix-database-name="mixDatabaseName" queries="queries">
                         </mix-database-data-values>
+                        <div class="card-body">
+                            <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+                                ul-class="pagination justify-content-end m-0" a-class="page-link"
+                                paging-action="getList(page-1)" scroll-top="true">
+                            </paging>
+                        </div>
                     </div>
 
-                    <div class="card-footer"></div>
-                    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-                        ul-class="pagination justify-content-end m-0" a-class="page-link"
-                        paging-action="getList(page-1)" scroll-top="true">
-                    </paging>
 
 
                 </div>
