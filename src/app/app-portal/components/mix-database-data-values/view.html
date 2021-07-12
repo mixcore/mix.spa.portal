@@ -76,27 +76,8 @@
                                 {{item.createdDateTime | utcToLocal:'dd.MM.yy'}} - {{item.createdBy}}
                             </small>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 border-0">
 
-                            <!-- <div class="btn-group btn-group-sm float-end">
-                                <a ng-click="$ctrl.sendMail(item)" class="btn btn-link text-primary">
-                                    <span class="fa fa-envelope"></span>
-                                </a>
-                                <a class="btn btn-link text-primary" ng-click="$ctrl.view(item)">
-                                    <span class="fa fa-eye"></span></a>
-                                <a ng-if="item.detailsUrl" class="btn btn-link text-primary" target="_blank"
-                                    href="{{item.detailsUrl}}">
-                                    <span class="fa fa-link"></span></a>
-                                <a ng-click="$ctrl.update(item)" class="btn btn-link text-primary">
-                                    <span class="fa fa-pen"></span>
-                                </a>
-                                <a class="btn btn-link" ng-if="$ctrl.onDuplicate" ng-click="$ctrl.duplicate(item.id)">
-                                    <span class="fas fa-copy text-primary"></span>
-                                </a>
-                                <a ng-click="$ctrl.delete(item)" class="btn btn-link text-danger">
-                                    <span class="fas fa-trash-alt"></span>
-                                </a>
-                            </div> -->
 
                             <div class="dropdown float-lg-end ms-auto pe-1">
                                 <a href="javascript:;" class="cursor-pointer" id="dropdownTable2"
@@ -125,7 +106,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="btn btn-link" ng-if="$ctrl.onDuplicate"
+                                        <a class="dropdown-item border-radius-md" ng-if="$ctrl.onDuplicate"
                                             ng-click="$ctrl.duplicate(item.id)">
                                             <span class="fas fa-copy"></span> Copy record
                                         </a>
@@ -136,6 +117,25 @@
                                         </a>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="btn-group btn-group-sm float-end me-3">
+                                <!-- <a ng-click="$ctrl.sendMail(item)" class="btn btn-link text-primary">
+                                    <span class="fa fa-envelope"></span>
+                                </a> -->
+                                <a class="btn btn-light" ng-click="$ctrl.view(item)">
+                                    <span class="fa fa-eye"></span></a>
+                                <!-- <a ng-if="item.detailsUrl" class="btn btn-link text-primary" target="_blank"
+                                    href="{{item.detailsUrl}}">
+                                    <span class="fa fa-link"></span></a> -->
+                                <a ng-click="$ctrl.update(item)" class="btn btn-light">
+                                    <span class="fa fa-pen"></span>
+                                </a>
+                                <!-- <a class="btn btn-link" ng-if="$ctrl.onDuplicate" ng-click="$ctrl.duplicate(item.id)">
+                                    <span class="fas fa-copy text-primary"></span>
+                                </a>
+                                <a ng-click="$ctrl.delete(item)" class="btn btn-link text-danger">
+                                    <span class="fas fa-trash-alt"></span>
+                                </a> -->
                             </div>
                         </div>
                     </div>
