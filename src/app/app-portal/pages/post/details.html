@@ -229,16 +229,16 @@
                             <post-content model="viewmodel" additional-data="additionalData"></post-content>
                         </pane-v>
                         <pane-v icon="fas fa-search" header="SEO">
-                            <post-seo post="$ctrl.model"></post-seo>
+                            <post-seo post="viewmodel"></post-seo>
                         </pane-v>
                         <pane-v icon="fas fa-list" header="Related">
-                            <related-navs request="$ctrl.request" source-id="$ctrl.model.id"
-                                culture="$ctrl.model.specificulture" prefix="'post'" navs="$ctrl.model.postNavs"
-                                data="$ctrl.relatedData" load-data="$ctrl.getListRelated(pageIndex)">
+                            <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture"
+                                prefix="'post'" navs="viewmodel.postNavs" data="relatedData"
+                                load-data="getListRelated(pageIndex)">
                             </related-navs>
                         </pane-v>
                         <pane-v icon="fas fa-cubes" header="Parents">
-                            <post-parents post="$ctrl.model"></post-parents>
+                            <post-parents post="viewmodel"></post-parents>
                         </pane-v>
                         <pane-v icon="fas fa-cog" header="" class="ms-auto" ng-if="isAdmin">
                             <post-advanced model="viewmodel" additional-data="additionalData"></post-advanced>
