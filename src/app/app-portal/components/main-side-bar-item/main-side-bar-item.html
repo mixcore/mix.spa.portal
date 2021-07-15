@@ -25,11 +25,21 @@
         </li>
     </ul>
 </div> -->
-
+<style>
+    object{
+        svg[Attributes Style] {
+            stroke: #999;
+        }
+    }
+</style>
 <div class="btn sidebar-menu-item-main d-inline-flex align-items-center collapsed w-100" data-bs-toggle="collapse"
     aria-expanded="false" data-bs-target="#{{$ctrl.item.title}}" aria-controls="contents-collapse"
     ng-if="!$ctrl.item.isHiden">
-    <span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span>
+    <!-- <img src="/mix-app/assets/img/svg/{{$ctrl.item.svg}}" class="me-3" style="" /> -->
+    <object type="image/svg+xml" data="/mix-app/assets/img/svg/{{$ctrl.item.svg}}" class="me-3 text-primary">
+        <img src="/mix-app/assets/img/svg/{{$ctrl.item.svg}}" class="me-3" style="" />
+    </object>
+
     <span ng-bind-html="$ctrl.translate($ctrl.item.title)" class="menu-item-title"></span>
 
     <span class="btn-group btn-group position-absolute end-0 d-none mt-1x shadow" ng-mouseenter="$ctrl.addClass($event)"
