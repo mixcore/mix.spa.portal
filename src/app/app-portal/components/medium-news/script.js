@@ -10,7 +10,7 @@
         var req = {
           method: "GET",
           url:
-            "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore?t=" +
+            "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/mixcore&api_key=qww481wpgat3g4iqvqss7spzrilkbekpxpjgrbof&t=" +
             Math.floor(Date.now() / 1000),
         };
         ctrl.getMediumApiResult(req);

@@ -16,7 +16,7 @@
 
     <div class="page-body d-flex flex-row-reverse">
         <aside class="bd-sidebar sub-sidebar" ng-init="init()">
-            <nav class="bd-links p-3 pt-4" aria-label="Sub-section navigation">
+            <nav class="bd-links p-3" aria-label="Sub-section navigation">
 
                 <div class="card">
                     <div class="btn-group  card-body mb-3 w-100" role="group" aria-label="Basic example">
@@ -135,11 +135,6 @@
         <div class="content-body py-3 pe-3">
             <div class="row">
                 <div class="col-12" ng-init="getList()">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
-                        </div>
-                    </div>
                     <div class="mb-5 card">
                         <mix-database-data-values ng-if="columns" on-duplicate="duplicate(data)" on-update="edit(data)"
                             on-delete="remove(data)" columns="columns"
@@ -149,6 +144,11 @@
                             mix-database-name="mixDatabaseName" queries="queries">
                         </mix-database-data-values>
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
+                                </div>
+                            </div>
                             <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
                                 ul-class="pagination justify-content-end m-0" a-class="page-link"
                                 paging-action="getList(page-1)" scroll-top="true">

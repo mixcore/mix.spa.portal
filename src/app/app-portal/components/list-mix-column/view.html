@@ -24,8 +24,21 @@
                 dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedCol === col}">
                 <div class="d-flex">
                     <div class="me-3">
-                        <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"
-                            style="cursor: grab"></small>
+                        <!-- <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"
+                            style="cursor: grab"></small> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drag-drop-2"
+                            style="cursor: grab" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <rect x="8" y="8" width="12" height="12" rx="2" />
+                            <line x1="4" y1="4" x2="4" y2="4.01" />
+                            <line x1="8" y1="4" x2="8" y2="4.01" />
+                            <line x1="12" y1="4" x2="12" y2="4.01" />
+                            <line x1="16" y1="4" x2="16" y2="4.01" />
+                            <line x1="4" y1="8" x2="4" y2="8.01" />
+                            <line x1="4" y1="12" x2="4" y2="12.01" />
+                            <line x1="4" y1="16" x2="4" y2="16.01" />
+                        </svg>
                     </div>
                     <div class="me-3">
                         <!-- <small class="form-label">Column title: </small> -->
