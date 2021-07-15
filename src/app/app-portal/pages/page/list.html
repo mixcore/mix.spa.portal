@@ -157,11 +157,11 @@
                                                     <span class="fas fa-pen"></span> Edit
                                                 </a>
                                             </li>
-                                            <!-- <li><a href="" ng-click="preview(item)" target="_blank"
+                                            <li><a href="{{item.detailsUrl}}" target="_blank"
                                                     class="dropdown-item border-radius-md">
                                                     <span class="fas fa-eye"></span> Preview
                                                 </a>
-                                            </li> -->
+                                            </li>
                                             <li>
                                                 <a href="" ng-if="item.type=='ListPost'"
                                                     ng-click="goToPath('/portal/page/page-post/list/' + item.id)"
