@@ -177,7 +177,6 @@
         </aside>
 
         <!-- ----------------------------------------------------------- -->
-
         <div class="content-body py-3 pe-3">
             <section class="pt-4 pb-3" ng-init="getSingle()">
                 <!-- <form ng-class="{'submitted': submitted}" ng-submit="save()"> -->
@@ -193,6 +192,32 @@
                             <pane-v icon="fas fa-cubes" header="Modules">
                                 <page-modules page="viewmodel"></page-modules>
                             </pane-v>
+                            <!-- <pane-v icon="fas fa-eye" header="Preview">
+                                <div class="card card-body  hd-screen">
+
+                                    <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-home" type="button" role="tab"
+                                                aria-controls="pills-home" aria-selected="true">Desktop</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                                data-bs-target="#pills-profile" type="button" role="tab"
+                                                aria-controls="pills-profile" aria-selected="false">Mobile</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content wrap-a" id="pills-tabContent">
+                                        <div class="tab-pane fade show active wrap-b" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
+                                            <iframe id="preview-iframe" class="wrap-c transitions-Mixcore Studio "
+                                                src="/page/12/about-us_1" style="opacity: 1;"></iframe>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                            aria-labelledby="pills-profile-tab">...</div>
+                                    </div>
+                                </div>
+                            </pane-v> -->
                             <pane-v icon="fas fa-cog" header="" class="ms-auto" ng-if="isAdmin">
                                 <page-advanced model="viewmodel" additional-data="additionalData"></page-advanced>
                             </pane-v>
