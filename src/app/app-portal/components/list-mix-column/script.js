@@ -7,7 +7,7 @@ modules.component("listMixColumn", {
     function ($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       ctrl.$onInit = async function () {
         var getDefaultAttr = await service.getDefault();
         if (getDefaultAttr.success) {
@@ -107,8 +107,13 @@ modules.component("listMixColumn", {
       };
 
       ctrl.generateName = function (col, isForce = false) {
-        if (isForce || !col.name) {
-          col.name = $rootScope.generateKeyword(col.title, "_", true, true);
+        if (isForce || !col.systemName) {
+          col.systemName = $rootScope.generateKeyword(
+            col.displayName,
+            "_",
+            true,
+            true
+          );
         }
       };
       ctrl.removeAttr = function (index) {

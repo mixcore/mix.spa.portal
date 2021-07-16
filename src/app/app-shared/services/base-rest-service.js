@@ -14,12 +14,12 @@ appShared.factory("BaseRestService", [
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.mixConfigurations || lang) {
           this.lang = lang || $rootScope.appSettings.lang;
-          this.prefixUrl = `/rest/${this.lang}/${modelName}`;
+          this.prefixUrl = `/rest/mix-portal/${modelName}`;
         } else {
-          this.prefixUrl = `/rest/${modelName}`;
+          this.prefixUrl = `/rest/mix-portal/${modelName}`;
         }
       } else {
-        this.prefixUrl = `/rest/${modelName}`;
+        this.prefixUrl = `/rest/mix-portal/${modelName}`;
       }
     };
 

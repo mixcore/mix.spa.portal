@@ -49,7 +49,7 @@ modules.component("mixDatabaseColumn", {
       };
 
       ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+        col.systemName = $rootScope.generateKeyword(col.displayName, "_");
       };
       ctrl.showReferences = function (col) {
         ctrl.colRef = col;

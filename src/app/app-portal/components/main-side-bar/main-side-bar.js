@@ -19,7 +19,7 @@
       var ctrl = this;
       ctrl.items = [];
       ctrl.init = function () {
-        ctrl.items = JSON.parse($("#portal-menus").val());
+        ctrl.items = JSON.parse($("#portal-menus").val()).items;
       };
     },
   ],

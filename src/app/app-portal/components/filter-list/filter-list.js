@@ -12,22 +12,13 @@
         toDate: null,
       };
       ctrl.init = function () {
-        if (!ctrl.orders) {
-          ctrl.orders = ngAppSettings.orders;
+        if (!ctrl.arrOrderby) {
+          ctrl.arrOrderby = ["Title", "Priority", "CreatedDateTime", "Status"];
         }
-        ctrl.directions = ngAppSettings.directions;
-        ctrl.pageSizes = ngAppSettings.pageSizes;
-        ctrl.statuses = [];
-        var statuses = ngAppSettings.contentStatuses;
-        if (ctrl.request && ctrl.request.contentStatuses) {
-          statuses = ctrl.request.contentStatuses;
-        }
-        angular.forEach(statuses, function (val, i) {
-          ctrl.statuses.push({
-            value: val,
-            title: val,
-          });
-        });
+        ctrl.request.orderBy = ctrl.request.orderBy || ctrl.arrOrderby[0];
+        ctrl.directions = ["Asc", "Desc"];
+        ctrl.pageSizes = [5, 10, 15, 20];
+        ctrl.statuses = $rootScope.appSettings.statuses;
       };
       ctrl.apply = function (pageIndex) {
         $rootScope.setRequest(ctrl.request, ctrl.key);
@@ -54,7 +45,7 @@
   bindings: {
     request: "=",
     key: "=?",
-    orders: "=?",
+    arrOrderby: "=?",
     createUrl: "=",
     createText: "=",
     callback: "&",

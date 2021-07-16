@@ -64,13 +64,12 @@ function BaseRestCtrl(
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
   };
-  $scope.getSingle = async function (params = []) {
+  $scope.getSingle = async function (id) {
     $rootScope.isBusy = true;
-    var id = $routeParams.id;
+    id = id || $routeParams.id;
     if (!id) {
       return await this.getDefault();
     } else {
-      params.splice(0, 0, id);
       var resp = await service.getSingle([id]);
       if (resp.success) {
         $scope.viewmodel = resp.data;
@@ -205,8 +204,8 @@ function BaseRestCtrl(
       }
 
       if (resp.success) {
-        $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
+        $scope.getSingle([resp.data]);
 
         if ($scope.saveSuccessCallback) {
           $rootScope.executeFunctionByName(

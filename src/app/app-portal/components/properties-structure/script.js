@@ -100,7 +100,7 @@ modules.component("propertiesStructure", {
       };
 
       ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+        col.systemName = $rootScope.generateKeyword(col.displayName, "_");
       };
       ctrl.removeAttr = function (index) {
         if (ctrl.columns) {

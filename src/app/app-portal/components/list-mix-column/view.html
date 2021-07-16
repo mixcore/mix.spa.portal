@@ -26,14 +26,14 @@
                     </div>
                     <div style="width: 20%">
                         <small class="form-label">Column title: </small>
-                        <input ng-model="col.title" placeholder="Title" ng-blur="$ctrl.generateName(col)"
+                        <input ng-model="col.displayName" placeholder="Title" ng-blur="$ctrl.generateName(col)"
                             class="form-control form-control-sm" />
                     </div>
                     <div style="width: 20%">
                         <small class="form-label">Column name: </small>
-                        <!-- <span class="text-black-50" ng-bind="col.name"></span> -->
+                        <!-- <span class="text-black-50" ng-bind="col.systemName"></span> -->
                         <div class="input-group input-group-sm">
-                            <input class="form-control form-control-sm text-black-50" ng-model="col.name" />
+                            <input class="form-control form-control-sm text-black-50" ng-model="col.systemName" />
                             <button class="btn btn-outline-primary" type="button"
                                 ng-click="$ctrl.generateName(col,true)">
                                 <span class="fa fa-redo"></span>
@@ -44,9 +44,8 @@
                         <small class="form-label">Type {{col.dataType}}</small>
                         <select class="form-select form-select-sm" ng-model="col.dataType"
                             ng-change="$ctrl.changeDataType(col.dataType);">
-                            <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
-                                ng-value="item.name">
-                                {{item.name}}
+                            <option ng-repeat="item in $ctrl.dataTypes track by $index" ng-value="item">
+                                {{item}}
                             </option>
                         </select>
                     </div>
@@ -203,16 +202,6 @@
                                         <input type="text" class="form-control form-control-sm"
                                             ng-model="col.options[$index].value" />
                                     </div>
-                                    <!-- <div class="col-md-3">
-
-                                      <select class="form-control form-control-sm"
-                                          ng-model="col.options[$index].dataType">
-                                          <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
-                                              ng-value="$index">
-                                              {{item}}
-                                          </option>
-                                      </select>
-                                  </div> -->
                                     <div style="width: 5%">
                                         <a class="btn btn-sm" ng-click="col.options.splice($index,1)">
                                             <span class="fas fa-times text-danger"></span>
@@ -239,9 +228,8 @@
                     <input type="text" class="col-7 form-control form-control-sm"
                         ng-model="col.options[$index].value" />
                     <select class="col-5 form-control form-control-sm" ng-model="col.options[$index].dataType">
-                        <option ng-repeat="item in $ctrl.mixConfigurations.dataTypes track by $index"
-                            ng-value="item.value">
-                            {{item.name}}
+                        <option ng-repeat="item in $ctrl.dataTypes track by $index" ng-value="item">
+                            {{item}}
                         </option>
                     </select>
 

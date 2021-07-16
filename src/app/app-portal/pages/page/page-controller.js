@@ -151,14 +151,15 @@ app.controller("PageController", [
       $scope.$apply();
     };
     $scope.validate = async function () {
+      return true;
       // Add default alias if create new page
-      if (!$scope.viewmodel.id && !$scope.viewmodel.urlAliases.length) {
-        // Ex: en-us/page-seo-name
-        // await $scope.addAlias($scope.viewmodel.specificulture + '/' + $scope.viewmodel.seoName);
-        return true;
-      } else {
-        return true;
-      }
+      //   if (!$scope.viewmodel.id && !$scope.viewmodel.urlAliases.length) {
+      //     // Ex: en-us/page-seo-name
+      //     // await $scope.addAlias($scope.viewmodel.specificulture + '/' + $scope.viewmodel.seoName);
+      //     return true;
+      //   } else {
+      //     return true;
+      //   }
     };
     $scope.addAlias = async function (alias) {
       var getAlias = await urlAliasService.getSingle();

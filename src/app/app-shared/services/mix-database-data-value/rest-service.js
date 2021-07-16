@@ -3,7 +3,7 @@ appShared.factory("RestMixDatabaseDataValuePortalService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-database-data-value/portal");
+    serviceFactory.init("mix-database-data-value");
     return serviceFactory;
   },
 ]);

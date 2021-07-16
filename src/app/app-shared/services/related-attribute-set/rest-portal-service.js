@@ -5,7 +5,7 @@ appShared.factory("RestRelatedMixDatabasePortalService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("related-mix-database/portal");
+    serviceFactory.init("related-mix-database");
     return serviceFactory;
   },
 ]);

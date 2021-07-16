@@ -3,7 +3,7 @@ appShared.factory("RestMixDatabasePortalService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-database/portal");
+    serviceFactory.init("mix-database");
     var _migrate = async function (data) {
       var url = `${this.prefixUrl}/migrate/${data.id}`;
       var req = {

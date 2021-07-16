@@ -2,24 +2,9 @@
 app.controller("Step1Controller", [
   "$scope",
   "$rootScope",
-  "ngAppSettings",
-  "$timeout",
-  "$location",
-  "$http",
-  "ApiService",
   "CommonService",
   "Step1Services",
-  function (
-    $scope,
-    $rootScope,
-    ngAppSettings,
-    $timeout,
-    $location,
-    $http,
-    apiService,
-    commonService,
-    step1Services
-  ) {
+  function ($scope, $rootScope, commonService, step1Services) {
     var rand = Math.floor(Math.random() * 10000) + 1;
     $scope.settings = {
       providers: [

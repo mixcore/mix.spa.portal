@@ -25,10 +25,7 @@
       ctrl.selected = [];
 
       ctrl.init = function () {
-        ctrl.service = $rootScope.getRestService(
-          ctrl.modelName + "/portal",
-          ctrl.isGlobal
-        );
+        ctrl.service = $rootScope.getRestService(ctrl.modelName, ctrl.isGlobal);
         ctrl.prefix = "modal_navs_" + ctrl.modelName;
         ctrl.cols = ctrl.selects.split(",");
         ctrl.getList();

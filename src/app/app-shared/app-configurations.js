@@ -470,9 +470,7 @@ appShared.run([
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {
       if ($rootScope.appSettings && $rootScope.translator) {
-        return (
-          $rootScope.translator.get(keyword, isWrap, defaultText) || keyword
-        );
+        return $rootScope.translator[keyword] || keyword;
       } else {
         return keyword || defaultText;
       }

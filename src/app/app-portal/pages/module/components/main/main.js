@@ -9,10 +9,13 @@
       ctrl.gennerateName = function () {
         if (
           !ctrl.module.id ||
-          ctrl.module.name === null ||
-          ctrl.module.name === ""
+          ctrl.module.systemName === null ||
+          ctrl.module.systemName === ""
         ) {
-          ctrl.module.name = $rootScope.generateKeyword(ctrl.module.title, "_");
+          ctrl.module.systemName = $rootScope.generateKeyword(
+            ctrl.module.title,
+            "_"
+          );
         }
       };
     },

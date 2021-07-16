@@ -18,14 +18,14 @@
     <div class="col-12">
         <div class="input-group mb-3">
             <select class="form-select" ng-model="$ctrl.request.status" ng-change="$ctrl.apply(0)">
-                <option ng-repeat="item in $ctrl.statuses track by $index" value="{{item.value}}">
-                    {{item.title}}
+                <option ng-repeat="item in $ctrl.statuses track by $index" value="{{item}}">
+                    {{item}}
                 </option>
             </select>
 
             <select class="form-select" ng-model="$ctrl.request.orderBy" ng-change="$ctrl.apply(0)">
-                <option ng-repeat="item in $ctrl.orders track by $index" value="{{item.value}}">
-                    {{item.title}}
+                <option ng-repeat="item in $ctrl.arrOrderby track by $index" value="{{item}}">
+                    {{item}}
                 </option>
             </select>
         </div>
@@ -34,8 +34,8 @@
     <div class="col-12">
         <div class="input-group mb-3">
             <select class="form-select" ng-model="$ctrl.request.direction" ng-change="$ctrl.apply(0)">
-                <option ng-repeat="item in $ctrl.directions track by $index" value="{{item.value}}">
-                    {{item.title}}
+                <option ng-repeat="item in $ctrl.directions track by $index" value="{{item}}">
+                    {{item}}
                 </option>
             </select>
             <select class="form-select" ng-model="$ctrl.request.pageSize" ng-change="$ctrl.apply(0)">

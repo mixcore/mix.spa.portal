@@ -5,7 +5,7 @@ appShared.factory("RestMixDatabaseDataPortalService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = angular.copy(baseService);
-    serviceFactory.init("mix-database-data/portal");
+    serviceFactory.init("mix-data");
 
     var _saveAdditionalData = async function (objData) {
       var url = this.prefixUrl + "/save-additional-data";

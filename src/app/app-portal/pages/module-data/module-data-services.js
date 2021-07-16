@@ -5,7 +5,7 @@ app.factory("ModuleDataRestService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("module-data/portal");
+    serviceFactory.init("module-data");
     // Define more service methods here
 
     var _initForm = async function (moduleId) {

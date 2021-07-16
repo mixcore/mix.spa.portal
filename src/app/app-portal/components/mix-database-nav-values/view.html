@@ -14,7 +14,7 @@
       <small
         ng-repeat="col in $ctrl.columns | orderBy:'priority' track by $index"
         ng-if="$index < $ctrl.maxCol"
-        ng-bind="col.title"
+        ng-bind="col.displayName"
         class="col-md-3"
       ></small>
       <div class="col text-end"></div>

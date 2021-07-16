@@ -31,18 +31,20 @@ app.controller("MixDatabaseController", [
     $scope.actions = ["Delete"];
     // $scope.request.selects = 'id,title,name,createdDateTime';
     $scope.orders = [
-      { title: "Id", value: "id" },
-      { title: "Name", value: "name" },
-      { title: "Created Date", value: "createdDateTime" },
+      { title: "Id", value: "Id" },
+      { title: "Name", value: "Name" },
+      { title: "Created Date", value: "CreatedDateTime" },
     ];
-    $scope.request.orderBy = "createdDateTime";
+    $scope.request.orderBy = "CreatedDateTime";
     $scope.getSingleSuccessCallback = async function () {
-      var getDefaultAttr = await databaseColumnService.getDefault();
-      if (getDefaultAttr.success) {
-        $scope.defaultAttr = getDefaultAttr.data;
-        $scope.defaultAttr.options = [];
+      if (!$scope.defaultAttr) {
+        var getDefaultAttr = await databaseColumnService.getDefault();
+        if (getDefaultAttr.success) {
+          $scope.defaultAttr = getDefaultAttr.data;
+          $scope.defaultAttr.options = [];
+        }
+        $scope.$apply();
       }
-      $scope.$apply();
     };
     $scope.migrate = async function () {
       if ($scope.viewmodel.id) {
