@@ -15,6 +15,7 @@
           ctrl.model.name = $rootScope.generateKeyword(
             ctrl.model.title,
             "_",
+            true,
             true
           );
         }
