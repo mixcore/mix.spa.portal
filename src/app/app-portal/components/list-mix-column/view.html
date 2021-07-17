@@ -58,13 +58,8 @@
                     </div>
                     <div class="me-3">
                         <!-- <small class="form-label">Type {{col.dataType}}</small> -->
-                        <select class="form-select form-select-sm" ng-model="col.dataType"
-                            ng-change="$ctrl.changeDataType(col.dataType);">
-                            <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
-                                ng-value="item.name">
-                                {{item.name}}
-                            </option>
-                        </select>
+                        <mix-select model="col.dataType" options="$ctrl.localizeSettings.dataTypes"
+                            callback="$ctrl.changeDataType(type)"></mix-select>
                     </div>
                     <div class="flex-fill me-3">
                         <div class="" ng-if="col.dataType != 'Reference'">
@@ -211,16 +206,6 @@
                                         <input type="text" class="form-control form-control-sm"
                                             ng-model="col.options[$index].value" />
                                     </div>
-                                    <!-- <div class="col-md-3">
-
-                                      <select class="form-control form-control-sm"
-                                          ng-model="col.options[$index].dataType">
-                                          <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
-                                              ng-value="$index">
-                                              {{item}}
-                                          </option>
-                                      </select>
-                                  </div> -->
                                     <div style="width: 5%">
                                         <a class="btn btn-sm" ng-click="col.options.splice($index,1)">
                                             <span class="fas fa-times text-danger"></span>

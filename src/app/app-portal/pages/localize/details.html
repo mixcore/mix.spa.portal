@@ -32,12 +32,9 @@
                             <div class="col">
                                 <div class="mb-3" ng-if="isAdmin">
                                     <label class="form-label">Type</label>
-                                    <select ng-change="initEditors()" class="form-select me-2"
-                                        ng-model="viewmodel.property.dataType">
-                                        <option ng-repeat="item in globalSettings.dataTypes track by $index"
-                                            ng-value="item.name">
-                                            {{item.name}}</option>
-                                    </select>
+                                    <mix-select model="viewmodel.property.dataType" options="globalSettings.dataTypes"
+                                        callback="initEditors(type)">
+                                    </mix-select>
                                 </div>
                             </div>
                         </div>

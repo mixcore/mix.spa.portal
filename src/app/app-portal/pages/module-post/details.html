@@ -27,13 +27,9 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Type</label>
-                                <select ng-change="initEditors()" class="form-control me-2"
-                                    ng-model="viewmodel.property.dataType">
-                                    <option ng-repeat="item in settings.dataTypes track by $index"
-                                        ng-value="item.value">
-                                        {{item.name}}
-                                    </option>
-                                </select>
+                                <mix-select model="viewmodel.property.dataType" options="settings.dataTypes"
+                                    callback="initEditors(type)">
+                                </mix-select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Value</label>
