@@ -1,15 +1,21 @@
 ﻿modules.component("relatedNavs", {
   templateUrl:
     "/mix-app/views/app-portal/components/related-navigations/view.html",
+  bindings: {
+    request: "=",
+    prefix: "=",
+    sourceId: "=",
+    culture: "=",
+    navs: "=",
+    data: "=",
+    loadData: "&",
+  },
   controller: [
     "$rootScope",
-    "$scope",
-    "ngAppSettings",
-    "$q",
-    function ($rootScope, $scope, ngAppSettings, $q) {
+    function ($rootScope) {
       var ctrl = this;
       ctrl.selected = null;
-      ctrl.activeItem = function (item) {
+      ctrl.activeItem = function (item, index) {
         var currentItem = $rootScope.findObjectByKey(
           ctrl.navs,
           ["sourceId", "destinationId"],
@@ -19,19 +25,20 @@
           currentItem = item;
           currentItem.priority = ctrl.navs.length + 1;
           ctrl.navs.push(currentItem);
+          ctrl.data.items.splice(index, 1);
         }
       };
       ctrl.updateOrders = function (index) {
-        ctrl.data.splice(index, 1);
+        ctrl.navs.splice(index, 1);
         for (var i = 0; i < ctrl.data.length; i++) {
-          ctrl.data[i].priority = i + 1;
+          ctrl.navs[i].priority = i + 1;
         }
       };
-      ctrl.load = function (pageIndex) {
+      ctrl.load = async function (pageIndex) {
         if (pageIndex) {
           ctrl.request.pageIndex = pageIndex;
         }
-        ctrl.loadData({ pageIndex: ctrl.request.pageIndex });
+        ctrl.data = await ctrl.loadData({ pageIndex: ctrl.request.pageIndex });
       };
       ctrl.checkActived = function (item) {
         if (ctrl.navs) {
@@ -42,13 +49,4 @@
       };
     },
   ],
-  bindings: {
-    request: "=",
-    prefix: "=",
-    sourceId: "=",
-    culture: "=",
-    navs: "=",
-    data: "=",
-    loadData: "&",
-  },
 });

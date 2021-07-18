@@ -224,7 +224,7 @@
             <div class="content-body py-3 pe-3">
                 <section class="" ng-init="getSingle()">
 
-                    <tabs-v class="mb-3">
+                    <tabs-v class="mb-3" ng-if="viewmodel">
                         <pane-v icon="fas fa-feather-alt" header="Content">
                             <post-content model="viewmodel" additional-data="additionalData"></post-content>
                         </pane-v>

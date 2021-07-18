@@ -144,25 +144,30 @@ app.controller("PostController", [
       }
       var resp = await service.getList($scope.request);
       if (resp && resp.isSucceed) {
-        $scope.viewmodel.postNavs = $rootScope.filterArray(
-          $scope.viewmodel.postNavs,
-          ["isActived"],
-          [true]
-        );
+        let result = [];
         angular.forEach(resp.data.items, (element) => {
-          var obj = {
-            description: element.title,
-            destinationId: element.id,
-            image: element.image,
-            isActived: false,
-            sourceId: $scope.viewmodel.id,
-            specificulture: $scope.viewmodel.specificulture,
-            status: "Published",
-          };
-          $scope.viewmodel.postNavs.push(obj);
+          let isActive =
+            null !=
+            $scope.viewmodel.postNavs.find(
+              (p) => p.destinationId == element.id
+            );
+          if (!isActive) {
+            var obj = {
+              description: element.title,
+              destinationId: element.id,
+              image: element.image,
+              isActived: isActive,
+              sourceId: $scope.viewmodel.id,
+              specificulture: $scope.viewmodel.specificulture,
+              status: "Published",
+            };
+            result.push(obj);
+          }
         });
+        resp.data.items = result;
         $rootScope.isBusy = false;
         $scope.$apply();
+        return resp.data;
       } else {
         $rootScope.showErrors(getData.errors);
         $rootScope.isBusy = false;
