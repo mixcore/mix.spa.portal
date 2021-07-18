@@ -39,7 +39,7 @@
     <span class="btn-group btn-group position-absolute end-0 d-none mt-1x shadow" ng-mouseenter="$ctrl.addClass($event)"
         ng-mouseleave="$ctrl.removeClass($event)" role="group" aria-label="Quick Actions"
         ng-if="$ctrl.item.subMenus.length>0">
-        <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus" href="{{m.path}}">
+        <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus  | limitTo: 3" href="{{m.path}}">
             <span class="{{m.icon}}"></span>
         </a>
     </span>

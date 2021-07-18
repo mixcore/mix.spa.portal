@@ -16,7 +16,7 @@
                     Create
                 </div>
                 <h2 ng-if="!viewmodel.title" class="page-title text-white">
-                    New Post
+                    New Page
                 </h2>
                 <p class="lead">{{viewmodel.excerpt}}</p>
             </div>
@@ -189,7 +189,7 @@
                             <pane-v icon="fas fa-search" header="SEO">
                                 <page-seo page="viewmodel"></page-seo>
                             </pane-v>
-                            <pane-v icon="fas fa-cubes" header="Modules">
+                            <pane-v icon="fas fa-cubes" header="Modules" ng-if="isAdmin">
                                 <page-modules page="viewmodel"></page-modules>
                             </pane-v>
                             <!-- <pane-v icon="fas fa-eye" header="Preview">

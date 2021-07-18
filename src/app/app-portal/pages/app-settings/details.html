@@ -1,8 +1,14 @@
-<!-- <aside class="bd-sidebar sub-sidebar">
+<aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3" aria-label="Sub-section navigation">
-
+        <div class="btn-group w-100" role="group">
+            <button id="btnToSubmit" type="button" ng-click="saveAppSettings(appSettings)"
+                class="btn btn-primary text-white">
+                <i class="fa fa-save"></i>
+                <span ng-bind="translate('Save')"></span>
+            </button>
+        </div>
     </nav>
-</aside> -->
+</aside>
 
 <!-- ----------------------------------------------------------- -->
 
@@ -14,43 +20,52 @@
     <section class="" ng-init="loadAppSettings()">
         <form ng-if="appSettings" ng-class="{'submitted': submitted}" ng-submit="saveAppSettings(appSettings)"
             autocomplete="new-password">
-            <tabs-h>
-                <div class="row mb-3">
-                    <div class="col"></div>
-                    <div class="col-4">
-                        <div class="btn-group w-100" role="group">
-                            <button id="btnToSubmit" type="button" ng-click="saveAppSettings(appSettings)"
-                                class="btn btn-primary text-white">
-                                <i class="fa fa-save"></i>
-                                <span ng-bind="translate('Save')"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <pane-h header="General" class="">
-                    <div class="">
+            <tabs-v>
+                <pane-v header="General" class="">
+                    <div class="mb-3">
                         <app-settings-general app-settings="appSettings"></app-settings-general>
                     </div>
-                </pane-h>
-                <!-- <pane-h header="Default" class="card">
-                <div class="card-body">
+                    <div class="card card-body mb-3">
+                        <h6>
+                            Languages
+                            <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add new</a>
+                            <a href="/portal/language/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                languages</a>
+                        </h6>
+                    </div>
+                    <div class="card card-body">
+                        <h6>
+                            Localization
+                            <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="fas fa-plus text-primary"></span> Add new</a>
+                            <a href="/portal/localize/list" class="btn btn-link text-primary btn-sm float-end"><span
+                                    class="far fa-list-alt text-primary"></span> List
+                                translations</a>
+                        </h6>
+                        <p class="text-muted">Manage your multilingual site contents.</p>
+                    </div>
+                </pane-v>
+                <!-- <pane-v header="Default">
+                <div class="card card-body">
                     <app-settings-default app-settings="appSettings" statuses="statuses"
                         cultures="globalSettings.cultures">
                     </app-settings-default>
                 </div>
-            </pane-h> -->
-                <pane-h header="Authentication" class="card">
-                    <div class="card-body">
+            </pane-v> -->
+                <pane-v header="Authentication">
+                    <div class="card card-body">
                         <app-settings-auth app-settings="appSettings"></app-settings-auth>
                     </div>
-                </pane-h>
-                <pane-h header="Email" class="card">
-                    <div class="card-body">
+                </pane-v>
+                <pane-v header="Email">
+                    <div class="card card-body">
                         <app-settings-smtp app-settings="appSettings"></app-settings-smtp>
                     </div>
-                </pane-h>
-                <!-- <pane-h header="Import" class="card">
-                <div class="card-body">
+                </pane-v>
+                <!-- <pane-v header="Import">
+                <div class="card card-body">
                     <h6>Import
                         <a href="/portal/import" class="btn btn-link text-primary btn-sm float-end"><span
                                 class="fas fa-file-import text-primary"></span> Import</a>
@@ -59,9 +74,9 @@
                     <p class="text-muted">Add a title and description to see how this product might
                         appear in a search engine listing.</p>
                 </div>
-            </pane-h> -->
-                <!-- <pane-h header="Permissions" class="card">
-                    <div class="card-body">
+            </pane-v> -->
+                <!-- <pane-v header="Permissions">
+                    <div class="card card-body">
                         <h6>Permissions
                             <a href="/portal/permission/create" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="fas fa-plus text-primary"></span> Add
@@ -71,9 +86,9 @@
                                 permissions</a>
                         </h6>
                     </div>
-                </pane-h> -->
-                <pane-h header="File Management" class="card">
-                    <div class="card-body">
+                </pane-v> -->
+                <pane-v header="File Management">
+                    <div class="card card-body">
                         <h6>
                             Files
                             <a href="/portal/file/create" class="btn btn-link text-primary btn-sm float-end"><span
@@ -82,18 +97,18 @@
                                     class="far fa-list-alt text-primary"></span> List file</a>
                         </h6>
                     </div>
-                </pane-h>
-                <!-- <pane-h header="Json Setttings" class="card">
-                    <div class="card-body">
+                </pane-v>
+                <!-- <pane-v header="Json Setttings">
+                    <div class="card card-body">
                         <h6>Json Settings
                             <a href="/portal/json-data/list" class="btn btn-link text-primary btn-sm float-end"><span
                                     class="far fa-list-alt text-primary"></span> List
                                 Json List</a>
                         </h6>
                     </div>
-                </pane-h> -->
-                <!-- <pane-h header="Attribute sets" class="card">
-                <div class="card-body">
+                </pane-v> -->
+                <!-- <pane-v header="Attribute sets">
+                <div class="card card-body">
                     <h6>Attribute sets
                         <a href="/portal/mix-database/create"
                             class="btn btn-link text-primary btn-sm float-end"><span
@@ -104,9 +119,9 @@
                             Attr Sets</a>
                     </h6>
                 </div>
-            </pane-h> -->
-                <pane-h header="Languages" class="card">
-                    <div class="card-body">
+            </pane-v> -->
+                <pane-v header="Languages">
+                    <div class="card card-body">
                         <h6>
                             Languages
                             <a href="/portal/language/create" class="btn btn-link text-primary btn-sm float-end"><span
@@ -116,9 +131,9 @@
                                 languages</a>
                         </h6>
                     </div>
-                </pane-h>
-                <pane-h header="Localization" class="card">
-                    <div class="card-body">
+                </pane-v>
+                <pane-v header="Localization">
+                    <div class="card card-body">
                         <h6>
                             Localization
                             <a href="/portal/localize/create" class="btn btn-link text-primary btn-sm float-end"><span
@@ -129,8 +144,8 @@
                         </h6>
                         <p class="text-muted">Manage your multilingual site contents.</p>
                     </div>
-                </pane-h>
-            </tabs-h>
+                </pane-v>
+            </tabs-v>
 
             <!-- 
         <div class="row justify-content-md-center">
@@ -304,7 +319,7 @@
                     <h6 class="card-header">
                         App Settings
                     </h6>
-                    <div class="card-body">
+                    <div class="card card-body">
                         <div class="row">
                             <tabs-v class="col-lg-12">
                                 <pane-v header="General">
