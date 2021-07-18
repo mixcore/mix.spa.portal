@@ -1,4 +1,5 @@
-<div class="container py-4">
+
+<div class="container py-4 w-100">
     <form id="frm-theme">
         <div class="text-center mb-4">
             <a href="."><img src="/mix-app/css/portal/img/mixcore-logo-red-2.svg" alt="Mixcore CMS" height="36"></a>
@@ -20,23 +21,23 @@
                     </h1>
                     <!-- <hr> -->
 
-                    <tabs-h select-callback="selectPane(pane)">
-                        <pane-h header="Mixcore Store">
+                    <tabs-v select-callback="selectPane(pane)">
+                        <pane-v header="Mixcore Store">
                             <mix-store install-callback="install(data)"></mix-store>
-                        </pane-h>
-                        <pane-h header="Blank Theme">
+                        </pane-v>
+                        <pane-v header="Blank Theme">
 
                             <h1>Blank Theme</h1>
                             <p>
                                 Choose this theme only if you want to build your theme from scratch.
                             </p>
-                        </pane-h>
-                        <pane-h header="Upload your theme">
+                        </pane-v>
+                        <pane-v header="Upload your theme">
                             <api-file form-name="'theme'" posted-file="theme"></api-file>
                             <small class="form-text text-muted">Mixcore Themes
                                 <a target="_blank" href="https://themes.mixcore.org/">list</a>.</small>
-                        </pane-h>
-                    </tabs-h>
+                        </pane-v>
+                    </tabs-v>
                     <!-- <div class="text-end">
                         <button ng-disabled="themeType ==='custom' && !form['theme'].files.length"
                             class="btn btn-primary" style="min-width: 200px" ng-click="submit()">
