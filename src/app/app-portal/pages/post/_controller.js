@@ -69,14 +69,14 @@ app.controller("PostController", [
             title: "Default",
           }
         );
-        if ($scope.request.type) {
+        if ($scope.request.postType) {
           $scope.postType = $rootScope.findObjectByKey(
             $scope.postTypes,
             "databaseName",
-            $scope.request.type
+            $scope.request.postType
           );
         }
-        $scope.request.type = $routeParams.type || "";
+        $scope.request.postType = $routeParams.type || "";
         $scope.$apply();
       }
     };
@@ -118,13 +118,16 @@ app.controller("PostController", [
         $scope.viewmodel.type = $scope.postType.databaseName;
         $scope.loadAdditionalData();
       }
-      $scope.request.type = $scope.postType.databaseName;
-      $scope.createUrl = `/portal/post/create?type=${$scope.request.type}`;
+      $scope.request.postType = $scope.postType.databaseName;
+      $scope.createUrl = `/portal/post/create?type=${$scope.request.postType}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
       }
-      if (!$scope.viewmodel || !$scope.viewmodel.id) {
-        $scope.getDefault($scope.request.type);
+      if (
+        $scope.postType.databaseName &&
+        (!$scope.viewmodel || !$scope.viewmodel.id)
+      ) {
+        $scope.getDefault($scope.request.postType);
       }
       if ($scope.pageName == "postList") {
         $scope.getList();
@@ -207,13 +210,13 @@ app.controller("PostController", [
       $scope.defaultFeatureImgHeight =
         ngAppSettings.localizeSettings.DefaultFeatureImgHeight;
 
-      $scope.request.type = $scope.viewmodel.type;
+      $scope.request.postType = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
       var pageIds = $routeParams.page_ids;
       $scope.postType = $rootScope.findObjectByKey(
         $scope.postTypes,
         "databaseName",
-        $scope.request.type
+        $scope.request.postType
       );
       $scope.loadAdditionalData();
       if (moduleIds) {
