@@ -55,10 +55,6 @@
         };
       };
 
-      ctrl.croppieCallback = function (result) {
-        ctrl.srcUrl = result.filePath;
-      };
-
       ctrl.mediaFile = {
         file: null,
         fullPath: "",
@@ -66,6 +62,15 @@
         title: ctrl.title,
         description: ctrl.description,
       };
+
+      ctrl.croppieCallback = function (result) {
+        if (result) {
+          ctrl.srcUrl = result.filePath;
+        } else if (ctrl.file) {
+          ctrl.uploadFile(ctrl.file);
+        }
+      };
+
       ctrl.media = {};
       ctrl.$doCheck = function () {
         if (ctrl.src !== ctrl.srcUrl && ctrl.srcUrl != image_placeholder) {
@@ -78,12 +83,12 @@
 
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
-          const file = files[0];
+          ctrl.file = files[0];
           ctrl.mediaFile.fileFolder = ctrl.folder || "Media";
           ctrl.mediaFile.title = ctrl.title || "";
           ctrl.mediaFile.description = ctrl.description || "";
-          ctrl.mediaFile.file = file;
-          mediaService.openCroppie(file, ctrl, true);
+          ctrl.mediaFile.file = ctrl.file;
+          mediaService.openCroppie(ctrl.file, ctrl, true);
         }
       };
 

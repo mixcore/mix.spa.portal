@@ -68,6 +68,10 @@
       }
     };
 
+    ctrl.origin = function () {
+      $uibModalInstance.close();
+    };
+
     ctrl.ok = async function () {
       if (!ctrl.autoSave) {
         $uibModalInstance.close(ctrl.cropped.image);

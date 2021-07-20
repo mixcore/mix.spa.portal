@@ -47,33 +47,37 @@
 
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
-          const file = files[0];
+          ctrl.file = files[0];
           ctrl.mediaFile.fileFolder = ctrl.folder ? ctrl.folder : "Media";
           ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
           ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";
-          ctrl.mediaFile.fileName = file.name.substring(
+          ctrl.mediaFile.fileName = ctrl.file.name.substring(
             0,
-            file.name.lastIndexOf(".")
+            ctrl.file.name.lastIndexOf(".")
           );
-          ctrl.mediaFile.extension = file.name.substring(
-            file.name.lastIndexOf(".")
+          ctrl.mediaFile.extension = ctrl.file.name.substring(
+            ctrl.file.name.lastIndexOf(".")
           );
-          if ($rootScope.isImage(file)) {
+          if ($rootScope.isImage(ctrl.file)) {
             ctrl.canUpload = false;
-            mediaService.openCroppie(file, ctrl, false);
+            mediaService.openCroppie(ctrl.file, ctrl, false);
           } else {
-            ctrl.mediaFile.file = file;
-            ctrl.formFile = file;
+            ctrl.mediaFile.file = ctrl.file;
+            ctrl.formFile = ctrl.file;
             ctrl.canUpload = true;
-            ctrl.getBase64(file);
+            ctrl.getBase64(ctrl.file);
           }
         }
       };
 
       ctrl.croppieCallback = function (result) {
-        ctrl.isImage = true;
-        ctrl.mediaFile.fileStream = result;
-        ctrl.src = result;
+        if (result) {
+          ctrl.isImage = true;
+          ctrl.mediaFile.fileStream = result;
+          ctrl.src = result;
+        } else if (ctrl.file) {
+          ctrl.uploadFile(ctrl.file);
+        }
       };
 
       ctrl.uploadFile = async function (file) {

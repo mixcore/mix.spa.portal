@@ -48,7 +48,7 @@
             var h = ctrl.editor.getModel().getLineCount() * 18;
             $($element).height(h);
             ctrl.editor.layout();
-          }, 200);
+          }, 500);
         }
       }.bind(this);
 
@@ -57,7 +57,7 @@
         setTimeout(() => {
           ctrl.previousId = ctrl.contentId;
           ctrl.updateEditors();
-        }, 300);
+        }, 500);
       };
 
       ctrl.updateContent = function (content) {

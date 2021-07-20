@@ -17,8 +17,8 @@
         <aside class="bd-sidebar sub-sidebar">
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
-                    <filter-list request="request" callback="getList(pageIndex)" create-url="'/portal/configuration/create'"
-                        create-text="'Create'"></filter-list>
+                    <filter-list request="request" callback="getList(pageIndex)"
+                        create-url="'/portal/configuration/create'" create-text="'Create'"></filter-list>
                 </div>
             </nav>
         </aside>
@@ -46,7 +46,8 @@
                                         <tr ng-repeat="item in data.items track by $index" class="sortable-item"
                                             sort-model="configuration" sort-model-id="{{item.id}}">
                                             <td>
-                                                <a href="/portal/configuration/details/{{item.id}}"><span ng-bind="item.keyword"></span></a>
+                                                <a href="/portal/configuration/details/{{item.id}}"><span
+                                                        ng-bind="item.keyword"></span></a>
                                             </td>
                                             <td>
                                                 <small class="text-black-50"><span
