@@ -23,7 +23,7 @@
       };
       ctrl.calculate = function () {
         ctrl.cartData.total = 0;
-        ctrl.cartData.totalItems = ctrl.cartData.items.length;
+        ctrl.cartData.totalItem = ctrl.cartData.items.length;
         angular.forEach(ctrl.cartData.items, function (e) {
           ctrl.cartData.total += parseInt(e.price) * e.quantity;
         });
@@ -50,7 +50,7 @@
         }, 1000);
         ctrl.cartData = {
           items: [],
-          totalItems: 0,
+          totalItem: 0,
           total: 0,
         };
         localStorageService.set("shoppingCart", ctrl.cartData);

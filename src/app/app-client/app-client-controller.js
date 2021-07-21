@@ -38,7 +38,7 @@
       };
       $scope.cartData = {
         items: [],
-        totalItems: 0,
+        totalItem: 0,
         total: 0,
       };
       $rootScope.globalSettingsService = globalSettingsService;
@@ -64,7 +64,7 @@
           if (!$scope.cartData) {
             $scope.cartData = {
               items: [],
-              totalItems: 0,
+              totalItem: 0,
               total: 0,
             };
           }

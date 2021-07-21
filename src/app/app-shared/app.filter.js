@@ -156,6 +156,8 @@ function FilterPhoneNumber() {
 
 function FilterMoney() {
   return function (money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    if (money) {
+      return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
   };
 }
