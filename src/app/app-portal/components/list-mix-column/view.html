@@ -101,20 +101,150 @@
                         aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <!-- <div class="modal-header">
                                     <h5 class="modal-title h4" id="advance-{{$index}}-Label" ng-model="col.title">Entity Settings</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+                                </div> -->
                                 <div class="modal-body">
+                                    <tabs-v>
+                                        <pane-v icon="" header="General" class="p-0">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.isUnique" id="{{'unique_' + $index}}" />
+                                                    <label class="form-check-label" for="{{'unique_' + $index}}">
+                                                        Unique
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-switch col">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.isEncrypt" id="{{'isEncrypt_' + $index}}" />
+                                                    <label class="form-check-label" for="{{'isEncrypt_' + $index}}">
+                                                        Encrypt value
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-switch col">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.isRequire" id="{{'required_' + $index}}" />
+                                                    <label class="form-check-label" for="{{'required_' + $index}}">
+                                                        Mandatory
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class=" mb-3">
+                                                    <label class="form-label">
+                                                        Max Length
+                                                    </label>
+                                                    <input type="number" class="form-control form-inline" ng-model="col.columnConfigurations.maxLength" />
+                                                </div>
+                                                <div class=" mb-3">
+                                                    <label class="form-label">
+                                                        Options Configuration Name
+                                                    </label>
+                                                    <input type="text" class="form-control form-inline"
+                                                        ng-model="col.columnConfigurations.optionsConfigurationName" />
+                                                </div>
+                                                <div class=" mb-3">
+                                                    <label class="form-label">
+                                                        Belong To
+                                                    </label>
+                                                    <input type="text" class="form-control form-inline" ng-model="col.columnConfigurations.belongTo" />
+                                                </div>
+                                            
+                                            </div>
+                                        </pane-v>
+                                        <pane-v icon="" header="Default values" class="p-0">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.isSelect" id="{{'select_' + $index}}" />
+                                                    <label class="form-check-label" for="{{'select_' + $index}}">
+                                                        Default values
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div ng-show="col.isSelect">
+                                                    <div class="row my-2">
+                                                        <div class="">
+                                                            <div class="input-group mb-3">
+                                                                <span class="input-group-text">Input option value</span>
+                                                                <input type="text" class="form-control form-control-sm" id="option_{{$index}}"
+                                                                    ng-enter="$ctrl.addOption(col,$index)"
+                                                                    placeholder="Please type in the value then enter to add to option list..." />
+                                                            </div>
+                                                
+                                                            <div class="row my-2 ms-2" ng-repeat="opt in col.options track by $index">
+                                                                <div class="col-md pl-4">
+                                                                    <input type="text" class="form-control form-control-sm" ng-model="col.options[$index].value" />
+                                                                </div>
+                                                                <div style="width: 5%">
+                                                                    <a class="btn btn-sm" ng-click="col.options.splice($index,1)">
+                                                                        <span class="fas fa-times text-danger"></span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </pane-v>
+                                        <pane-v icon="" header="Validations" class="p-0">
+                                            <div class="mb-3">
+                                                <div class="form-check form-switch col">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.isRegex" id="{{'regex_' + $index}}" />
+                                                    <label class="form-check-label" for="{{'regex_' + $index}}">
+                                                        Validation
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="row mb-2" ng-show="col.isRegex">
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Regular Expression</span>
+                                                            <input type="text" class="col form-control" ng-model="col.regex"
+                                                                placeholder="(^\d{1,10}$)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </pane-v>
+                                        <pane-v icon="" header="Image Properties" class="p-0">
+                                            <div class="mb-3"  ng-show="col.dataType == 'Upload'">
+                                                <div class="col-md-12 mb-3" ng-if="col.columnConfigurations.upload.arrayAccepts">
+                                                    <label class="form-label">Accept file formats</label>
+                                                    <tags-input min-length="1" ng-model="col.columnConfigurations.upload.arrayAccepts">
+                                                    </tags-input>
+                                                </div>
+                                                <div class="form-check form-switch">
+                                                    <input type="checkbox" class="form-check-input" ng-model="col.columnConfigurations.upload.isCrop"
+                                                        id="{{'isCrop_' + $index}}" />
+                                                    <label class="custom-form-label" for="{{'isCrop_' + $index}}">
+                                                        Crop information
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3" ng-if="col.columnConfigurations.upload.isCrop">
+                                                    <small>Width</small>
+                                                    <input type="number" ng-model="col.columnConfigurations.upload.width" class="form-control sm-control mb-3" />
+                                                </div>
+                                                <div class="col-md-3" ng-if="col.columnConfigurations.upload.isCrop">
+                                                    <small>Height</small>
+                                                    <input type="number" ng-model="col.columnConfigurations.upload.height" class="form-control sm-control" />
+                                                </div>
+                                            </div>
+                                            <div class=""  ng-show="col.dataType != 'Upload'">
+                                                <label>For "Upload" entity type only.</label>
+                                            </div>
+                                        </pane-v>
+                                    </tabs-v>
+
+
                                     <div class="ms-auto">
-                                        <div class="row">
-                                            <!-- <div style="width: 5%"></div> -->
+                                        <!-- <div class="row">
                                             <div class="col-md form-check-inline px-2">
                                                 <div class="form-check form-switch mx-2 float-start">
                                                     <input type="checkbox" class="form-check-input" ng-model="col.isEncrypt"
                                                         id="{{'isEncrypt_' + $index}}" />
                                                     <label class="form-check-label" for="{{'isEncrypt_' + $index}}">
-                                                        Encrypt
+                                                        Encrypt value
                                                     </label>
                                                 </div>
                                                 <div class="form-check form-switch mx-2 float-start">
@@ -148,7 +278,6 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <!-- <div style="width: 5%"></div> -->
                                             <div class="float-start">
                                                 <label class="form-label">
                                                     Max Length
@@ -193,11 +322,10 @@
                                                 <small>Height</small>
                                                 <input type="number" ng-model="col.columnConfigurations.upload.height" class="sm-control" />
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="mix-database-entity">
-                                        <div class="row mb-2" ng-show="col.isRegex">
-                                            <!-- <div style="width: 5%"></div> -->
+                                        <!-- <div class="row mb-2" ng-show="col.isRegex">
                                             <div class="col-10">
                                                 <div class="input-group">
                                                     <span class="input-group-text">Regular Expression</span>
@@ -208,7 +336,6 @@
                                         </div>
                                         <div ng-show="col.isSelect">
                                             <div class="row my-2">
-                                                <!-- <div style="width: 5%"></div> -->
                                                 <div class="col-10">
                                                     <div class="input-group mb-3">
                                                         <span class="input-group-text">Input option value</span>
@@ -230,7 +357,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
