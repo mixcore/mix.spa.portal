@@ -1,13 +1,13 @@
 <!-- <div class="tab-pane fade active show" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab"> -->
 <div class="mb-3 row">
-    <div class="mb-3">
-        <div class="form-check form-switch">
+    <div class="mb-3 d-flex">
+        <div class="col form-check form-switch">
             <input type="checkbox" ng-model="$ctrl.appSettings.MixConfigurations.IsCache" id="IsCache"
                 class="form-check-input ng-pristine ng-untouched ng-valid ng-empty" />
             <label class="custom-control-label mb-0" for="IsCache">Site data cache</label>
         </div>
-        <div class="col-12">
-            <a href="" ng-click="$ctrl.clearCache()" class="btn">
+        <div class="w-1">
+            <a href="" ng-click="$ctrl.clearCache()" class="btn btn-primary">
                 Clear Cache
             </a>
         </div>
@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="mb-3" ng-if="$ctrl.appSettings.MixConfigurations.MixCacheMode === 'Json'">
-        <label class="form-label">JsonDataFolder</label>
+        <label class="form-label">Json Data Storage Path</label>
         <input type="text" ng-model="$ctrl.appSettings.MixConfigurations.JsonDataFolder" class="form-control" />
     </div>
     <div class="mb-3" ng-if="$ctrl.appSettings.MixConfigurations.MixCacheMode === 'Database'">
@@ -44,7 +44,7 @@
             ng-model="$ctrl.appSettings.MixConfigurations.MixCacheConnectionString"></textarea>
     </div>
     <div class="mb-3 row">
-        <label class="form-label">Image Sizes</label>
+        <label class="form-label">Default crop image sizes (px)</label>
         <div class="col-2">
             <label class="form-label">XXS:</label>
             <input type="text" ng-model="$ctrl.appSettings.MixConfigurations.ImageSizes.XXS.width"
