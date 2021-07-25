@@ -10,6 +10,9 @@
       ctrl.previousId = null;
       ctrl.editor = null;
       ctrl.init = function () {
+        if (ctrl.content == undefined) {
+          ctrl.content = "";
+        }
         ctrl.guid = $rootScope.generateUUID();
         setTimeout(() => {
           var toolbarOptions = {

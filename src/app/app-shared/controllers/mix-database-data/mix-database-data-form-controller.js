@@ -1,4 +1,4 @@
-appShared.controller("MixDatabaseFormController", [
+appShared.controller("MixDataController", [
   "$rootScope",
   "$scope",
   "ngAppSettings",

@@ -9,36 +9,37 @@
     price: "=",
     quantity: "=?",
   },
-  controller: [
-    "$rootScope",
-    "localStorageService",
-    function ($rootScope, localStorageService) {
-      var ctrl = this;
-      ctrl.$onInit = function () {
-        ctrl.quantity = ctrl.quantity || 1;
-      };
-      ctrl.addToCart = function () {
-        var current = $rootScope.findObjectByKey(
-          ctrl.cartData.items,
-          "propertyId",
-          ctrl.propertyId
-        );
-        if (current) {
-          current.quantity += parseInt(ctrl.quantity);
-        } else {
-          var item = {
-            propertyId: ctrl.propertyId,
-            title: ctrl.title,
-            imageUrl: ctrl.imageUrl,
-            price: ctrl.price,
-            quantity: parseInt(ctrl.quantity) || 1,
-          };
-          ctrl.cartData.items.push(item);
-          ctrl.cartData.totalItem += 1;
-        }
-        ctrl.cartData.total += parseInt(ctrl.price);
-        localStorageService.set("shoppingCart", ctrl.cartData);
-      };
-    },
-  ],
+  controller: "AddToCartController",
 });
+modules.controller("AddToCartController", [
+  "$rootScope",
+  "$scope",
+  "localStorageService",
+  function ($rootScope, $scope, localStorageService) {
+    $scope.init = function () {
+      $scope.quantity = $scope.quantity || 1;
+    };
+    $scope.addToCart = function () {
+      var current = $rootScope.findObjectByKey(
+        $scope.cartData.items,
+        "propertyId",
+        $scope.propertyId
+      );
+      if (current) {
+        current.quantity += parseInt($scope.quantity);
+      } else {
+        var item = {
+          propertyId: $scope.propertyId,
+          title: $scope.title,
+          imageUrl: $scope.imageUrl,
+          price: $scope.price,
+          quantity: parseInt($scope.quantity) || 1,
+        };
+        $scope.cartData.items.push(item);
+        $scope.cartData.totalItem += 1;
+      }
+      $scope.cartData.total += parseInt($scope.price);
+      localStorageService.set("shoppingCart", $scope.cartData);
+    };
+  },
+]);

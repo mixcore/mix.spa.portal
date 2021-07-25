@@ -67,6 +67,7 @@
               totalItem: 0,
               total: 0,
             };
+            localStorageService.set("shoppingCart", $scope.cartData);
           }
           commonService.fillAllSettings(lang).then(function (response) {
             if ($rootScope.globalSettings) {

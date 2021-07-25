@@ -11,9 +11,10 @@
   controller: [
     "$rootScope",
     "$scope",
+    "$routeParams",
     "ngAppSettings",
     "PostRestService",
-    function ($rootScope, $scope, ngAppSettings, postService) {
+    function ($rootScope, $scope, $routeParams, ngAppSettings, postService) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.navs = [];
@@ -30,6 +31,11 @@
         if (ctrl.request.toDate !== null) {
           var d = new Date(ctrl.request.toDate);
           ctrl.request.toDate = d.toISOString();
+        }
+        if ($routeParams.type) {
+          ctrl.request.postType = $routeParams.type;
+        } else {
+          ctrl.request.postType = "";
         }
         var response = await postService.getList(ctrl.request);
         if (response.isSucceed) {

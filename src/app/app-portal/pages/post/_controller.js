@@ -30,7 +30,7 @@ app.controller("PostController", [
       service
     );
     $scope.additionalData = null;
-    $scope.createUrl = "/portal/post/create";
+    $scope.createUrl = "/portal/post/create?";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.postType = {
@@ -44,10 +44,17 @@ app.controller("PostController", [
 
     $scope.initList = async function () {
       if ($routeParams.template) {
-        $scope.createUrl = `${$scope.createUrl}?template=${$routeParams.template}`;
+        $scope.createUrl = `${$scope.createUrl}&template=${$routeParams.template}`;
       }
       if ($routeParams.category) {
         $scope.request.category = $routeParams.category;
+      }
+      if ($routeParams.type) {
+        $scope.createUrl = `${$scope.createUrl}&type=${$routeParams.type}`;
+        $scope.request.postType = $routeParams.type;
+      }
+      if ($routeParams.page_ids) {
+        $scope.createUrl = `${$scope.createUrl}&page_ids=${$routeParams.page_ids}`;
       }
       $scope.pageName = "postList";
       await $scope.loadPostTypes();

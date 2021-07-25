@@ -17,7 +17,15 @@
     "$location",
     "ngAppSettings",
     "$filter",
-    function ($rootScope, $scope, $location, ngAppSettings, $filter) {
+    "ApiService",
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      ngAppSettings,
+      $filter,
+      apiService
+    ) {
       var ctrl = this;
       ctrl.mediaFile = {};
       ctrl.icons = ngAppSettings.icons;
@@ -67,7 +75,7 @@
       ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.options = [];
-      ctrl.$onInit = function () {
+      ctrl.$onInit = async function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.column.referenceId) {
           var backUrl = encodeURIComponent($location.url());
           ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
@@ -79,45 +87,32 @@
           // Load options from system configutation by name if exist else load options from column configurations
           if (ctrl.column.columnConfigurations.optionsConfigurationName) {
             // load options if not belong to other column value
-            if (!ctrl.column.columnConfigurations.belongTo) {
-              let options = JSON.parse(
-                $rootScope.localizeSettings.data[
-                  ctrl.column.columnConfigurations.optionsConfigurationName
-                ]
-              );
+            let belongTo = ctrl.column.columnConfigurations.belongTo;
+            let endpoint =
+              ctrl.column.columnConfigurations.optionsConfigurationName;
+            if (!belongTo) {
+              let options = await apiService.getApiResult({
+                url: endpoint,
+              });
               ctrl.options = options;
             } else {
-              let options = JSON.parse(
-                $rootScope.localizeSettings.data[
-                  ctrl.column.columnConfigurations.optionsConfigurationName
-                ]
-              );
-              let index = options.findIndex(
-                (m) =>
-                  m.value ==
-                  ctrl.model.obj[ctrl.column.columnConfigurations.belongTo]
-              );
-              if (index >= 0) {
-                ctrl.options = options[index][`${ctrl.column.name}s`];
-              }
+              //   ctrl.options = options.filter(
+              //     (m) => m[belongTo] == ctrl.model.obj[belongTo]
+              //   );
               $rootScope.$watch(
                 () => {
-                  return ctrl.model.obj[
-                    ctrl.column.columnConfigurations.belongTo
-                  ];
+                  return ctrl.model.obj[belongTo];
                 },
-                function (newVal, oldVal) {
+                async function (newVal, oldVal) {
                   if (newVal != oldVal) {
-                    let options = JSON.parse(
-                      $rootScope.localizeSettings.data[
-                        ctrl.column.columnConfigurations
-                          .optionsConfigurationName
-                      ]
-                    );
-                    let index = options.findIndex((m) => m.value == newVal);
-                    if (index >= 0) {
-                      ctrl.options = options[index][`${ctrl.column.name}s`];
+                    if (!ctrl.allOptions) {
+                      ctrl.allOptions = await apiService.getApiResult({
+                        url: endpoint,
+                      });
                     }
+                    ctrl.options = ctrl.allOptions.filter(
+                      (m) => m[belongTo] == ctrl.model.obj[belongTo]
+                    );
                   }
                 }
               );

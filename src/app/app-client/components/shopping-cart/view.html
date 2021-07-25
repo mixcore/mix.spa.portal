@@ -1,12 +1,13 @@
 <!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-shopping-cart">
+<button ng-init="$ctrl.init()" type="button" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#modal-shopping-cart">
     <i class="bi-bag"></i>
     (<span ng-bind="$ctrl.cartData.items.length"></span>)
 </button>
 <div class="modal  fade" data-bs-backdrop="static" id="modal-shopping-cart">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form ng-class="{'submitted': submitted}" ng-submit="$ctrl.book()">
+            <form ng-class="{'submitted': submitted}" ng-submit="$ctrl.book()" name="frmCheckOut">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Shopping Cart</h4>
@@ -23,7 +24,10 @@
                                 <div class="col-sm-2">
                                     <img height="50" width="auto" ng-if="item.imageUrl" src="{{item.imageUrl}}" />
                                 </div>
-                                <span class="col-sm-5" ng-bind="item.title"></span>
+                                <div class="col-sm-5">
+                                    <span ng-bind="item.title"></span><br>
+                                    <span ng-bind="item.size"></span><br>
+                                </div>
                                 <input type="number" class="form-control-sm col-sm-1" ng-change="$ctrl.calculate()"
                                     ng-model="item.quantity" />
                                 <span class="col-sm-3 text-end" ng-bind="item.price | money"></span>
