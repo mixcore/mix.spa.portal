@@ -24,12 +24,12 @@
                     style="cursor: grab; height: 12px; margin-bottom: 4px"></small>
             </div>
             <div class="float-start">
-                <checkbox-switch value="item.dataId" is-selected="$ctrl.isSelected(item.dataId)" ng-hide="item.disabled"
+                <checkbox-switch value="item.dataId" is-selected="item.isActived" ng-hide="item.disabled"
                     callback="$ctrl.select(value, isSelected)"
                     description="item.attributeData.obj[$ctrl.columnDisplay]">
                 </checkbox-switch>
                 <div class="col-12 col-md-12 mx-2" ng-repeat="sub in item.attributeData.obj.sub_categories">
-                    <checkbox-switch value="sub.id" is-selected="$ctrl.isSelected(sub.id, 1)"
+                    <checkbox-switch value="sub.id" is-selected="sub.isActived"
                         callback="$ctrl.select(value, isSelected)" description="sub[$ctrl.columnDisplay]">
                     </checkbox-switch>
                 </div>
@@ -46,9 +46,10 @@
     </div>
     <div class="row mb-3">
         <div class="col-12" ng-repeat="item in $ctrl.data.items | filter:$ctrl.newTitle" ng-hide="item.disabled">
-            <checkbox-switch value="item.id" is-selected="$ctrl.isSelected(item.id)"
-                callback="$ctrl.select(value, isSelected)" description="item.obj[$ctrl.columnDisplay]">
+            <checkbox-switch value="item.id" is-selected="item.isActived" callback="$ctrl.select(value, isSelected)"
+                description="item.obj[$ctrl.columnDisplay]">
             </checkbox-switch>
+            {{ctrl.selectedValues}}
         </div>
     </div>
 
