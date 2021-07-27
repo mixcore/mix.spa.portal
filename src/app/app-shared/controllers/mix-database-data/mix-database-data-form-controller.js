@@ -37,7 +37,6 @@ appShared.controller("MixDataController", [
         $scope.defaultData.parentId = parentId;
         $scope.formData = angular.copy($scope.defaultData);
       }
-
       $scope.$apply();
     };
     $scope.loadData = function () {
@@ -64,6 +63,7 @@ appShared.controller("MixDataController", [
       ) {
         var saveResult = await dataService.save(data);
         if (saveResult.isSucceed) {
+          $scope.loadData();
           if ($scope.successHandler) {
             $rootScope.executeFunctionByName($scope.successHandler, [
               saveResult,
