@@ -8,10 +8,10 @@
 
     <span ng-bind-html="$ctrl.translate($ctrl.item.title)" class="menu-item-title"></span>
 
-    <span class="btn-group btn-group position-absolute end-0 d-none mt-1x shadow" ng-mouseenter="$ctrl.addClass($event)"
+    <span class="btn-group btn-group-sm position-absolute end-0 d-none mt-1x shadow" ng-mouseenter="$ctrl.addClass($event)"
         ng-mouseleave="$ctrl.removeClass($event)" role="group" aria-label="Quick Actions"
         ng-if="$ctrl.item.subMenus.length>0">
-        <a class="btn btn-light" ng-repeat="m in $ctrl.item.subMenus  | limitTo: 3" href="{{m.path}}">
+        <a class="btn btn-primary" ng-repeat="m in $ctrl.item.subMenus  | limitTo: 3" href="{{m.path}}">
             <span class="{{m.icon}}"></span>
         </a>
     </span>
@@ -28,5 +28,5 @@
         <a class="d-inline-flex align-items-center rounded text-secondary py-1" href="{{m.path}}"><span
                 class="{{m.icon}} me-3"></span>
             <span ng-bind="$ctrl.translate(m.title)"></span></a>
-    </li>
+    </li> 
 </ul>
