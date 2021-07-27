@@ -77,8 +77,7 @@
       ctrl.options = [];
       ctrl.$onInit = async function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.column.referenceId) {
-          var backUrl = encodeURIComponent($location.url());
-          ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
+          ctrl.buildCreateUrl();
         }
         if (!ctrl.updateUrl) {
           ctrl.updateUrl = "/portal/mix-database-data/details";
@@ -121,6 +120,26 @@
             ctrl.options = ctrl.column.options;
           }
         }
+
+        ctrl.watchId();
+      };
+      ctrl.watchId = function () {
+        $rootScope.$watch(
+          () => {
+            if (ctrl.model) {
+              return ctrl.model.id;
+            }
+          },
+          async function (newVal, oldVal) {
+            if (newVal != oldVal) {
+              ctrl.buildCreateUrl();
+            }
+          }
+        );
+      };
+      ctrl.buildCreateUrl = function () {
+        var backUrl = encodeURIComponent($location.url());
+        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
       };
       ctrl.initData = async function () {
         setTimeout(() => {

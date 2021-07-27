@@ -41,8 +41,10 @@ modules.component("additionalColumn", {
               ctrl.column.title = "";
               ctrl.column.name = "";
               ctrl.column.dataType = "Text";
-              $scope.$apply();
+            } else {
+              $rootScope.showErrors(saveField.errors);
             }
+            $scope.$apply();
           }
         } else {
           $rootScope.showErrors(["Please add column Name"]);

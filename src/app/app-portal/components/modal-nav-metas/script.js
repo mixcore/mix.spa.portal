@@ -194,58 +194,6 @@
         if (ctrl.selectCallback) {
           ctrl.selectCallback({ data: nav });
         }
-
-        // if (isSelected) {
-        //   if (!nav.id && ctrl.parentId) {
-        //     navService.save(nav).then((resp) => {
-        //       if (resp.isSucceed) {
-        //         nav.id = resp.data.id;
-        //         ctrl.selectedList.push(nav);
-        //         ctrl.selectedValues.push(value);
-        //         $rootScope.showMessage("success", "success");
-        //         ctrl.isBusy = false;
-        //         ctrl.filterData();
-        //         $scope.$apply();
-        //       } else {
-        //         $rootScope.showMessage("failed");
-        //         ctrl.isBusy = false;
-        //         $scope.$apply();
-        //       }
-        //     });
-        //   }
-        // } else {
-        //   if (ctrl.parentId) {
-        //     navService.delete([nav.id]).then((resp) => {
-        //       if (resp.isSucceed) {
-        //         nav.disabled = false;
-        //         nav.id = null;
-        //         $rootScope.removeObjectByKey(
-        //           ctrl.selectedList,
-        //           "dataId",
-        //           value
-        //         );
-        //         ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
-        //         ctrl.filterData();
-        //         $rootScope.showMessage("success", "success");
-        //         ctrl.isBusy = false;
-        //         $scope.$apply();
-        //       } else {
-        //         $rootScope.showMessage("failed");
-        //         ctrl.isBusy = false;
-        //         ctrl.filterData();
-        //         $scope.$apply();
-        //       }
-        //     });
-        //   } else {
-        //     ctrl.disableNavitem(nav, false);
-        //     $rootScope.removeObjectByKey(ctrl.selectedList, "dataId", value);
-        //     ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
-        //   }
-        // }
-        // ctrl.filterData();
-        // if (ctrl.selectCallback) {
-        //   ctrl.selectCallback({ data: nav });
-        // }
       };
       ctrl.disableNavitem = function (nav, isDisable) {
         nav.disabled = isDisable;
