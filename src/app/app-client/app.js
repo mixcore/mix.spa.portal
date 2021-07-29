@@ -12,13 +12,6 @@ var app = angular.module("MixClient", [
   "MixShared",
 ]);
 
-app.config([
-  "$locationProvider",
-  function ($locationProvider) {
-    $locationProvider.hashPrefix("");
-  },
-]);
-
 var serviceBase = "";
 var modules = angular.module("components", []);
 var cart = angular.module("cart", []);

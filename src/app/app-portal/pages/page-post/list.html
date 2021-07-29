@@ -25,9 +25,7 @@
                         class="btn btn-primary  mb-3">
                         <i class="fas fa-search"></i> Link current post
                     </a>
-                    <modal-nav-posts save="saveOthers()" src-column="'pageId'" src-id="pageId" selected="others">
-                    </modal-nav-posts>
-<filter-list request="request" callback="getList(pageIndex)"></filter-list>
+                    <filter-list request="request" callback="getList(pageIndex)"></filter-list>
                 </div>
             </nav>
         </aside>
@@ -36,10 +34,13 @@
 
         <div class="content-body py-3 pe-3">
             <!-- <section class="content container-fluid"> -->
+            <div class="row">
+                <modal-nav-posts save="saveOthers()" src-column="'pageId'" src-id="pageId" selected="others">
+                </modal-nav-posts>
+            </div>
             <div class="card" ng-init="init()">
                 <div class="card-body">
-                    <table id="list-page" class="table table-hover sortable" cellspacing="0"
-                        ng-init="getList()">
+                    <table id="list-page" class="table table-hover sortable" cellspacing="0" ng-init="getList()">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" class="col">
@@ -67,8 +68,10 @@
                                 ng-class="{'selected': selected === item}">
                                 <td style="cursor: grab" class="drag-header small">
                                     <!-- <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small> -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drag-drop-2" width="20" height="20"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-drag-drop-2" width="20" height="20"
+                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                         <rect x="8" y="8" width="12" height="12" rx="2" />
                                         <line x1="4" y1="4" x2="4" y2="4.01" />
