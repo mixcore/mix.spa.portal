@@ -160,7 +160,7 @@
         });
         angular.forEach(ctrl.selectedList, function (e) {
           var subIds = [];
-          e.isActived = true;
+          e.isActived = e.isActived === undefined ? true : e.isActived;
           if (e.attributeData && e.attributeData.obj.sub_categories) {
             subIds = e.attributeData.obj.sub_categories.map((m) => m.id);
           } else if (e.sub_categories) {
@@ -174,7 +174,7 @@
           });
         });
       };
-      ctrl.select = function (dataId, isSelected) {
+      ctrl.select = async function (dataId, isSelected) {
         let idx = ctrl.selectedValues.indexOf(dataId);
         var nav = ctrl.selectedList[idx];
         if (!nav) {
@@ -188,11 +188,35 @@
           );
           ctrl.selectedList.push(nav);
         }
-        nav.isActived = isSelected;
 
+        if (isSelected) {
+          nav.isActived = true;
+          if (nav.parentId) {
+            var saveResult = await navService.save(nav);
+            nav.id = saveResult.data.id;
+            $rootScope.showMessage("success", "success");
+            ctrl.filterData();
+            $scope.$apply();
+          }
+        }
+
+        if (!isSelected) {
+          await ctrl.removeNav(idx);
+          if (ctrl.selectCallback) {
+            ctrl.selectCallback({ data: nav });
+          }
+          return;
+        }
+      };
+      ctrl.removeNav = async function (idx) {
+        var nav = ctrl.selectedList[idx];
+        ctrl.selectedValues.splice(idx, 1);
+        ctrl.selectedList.splice(idx, 1);
         ctrl.filterData();
-        if (ctrl.selectCallback) {
-          ctrl.selectCallback({ data: nav });
+        if (nav && nav.id) {
+          await navService.delete([nav.id]);
+          $rootScope.showMessage("success", "success");
+          $scope.$apply();
         }
       };
       ctrl.disableNavitem = function (nav, isDisable) {
