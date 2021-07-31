@@ -1,5 +1,6 @@
 "use strict";
 appShared
+  .filter("slice", sliceString)
   .filter("utcToLocal", FilterUtcDate)
   .filter("utcToLocalTime", FilterUtcDateTime)
   .filter("phoneNumber", FilterPhoneNumber)
@@ -87,6 +88,12 @@ function MarkdownToHtml($filter) {
   };
 }
 
+function sliceString($filter) {
+  return function (origin, max) {
+    max = max || 50;
+    return `${origin.slice(2, 18)}...`;
+  };
+}
 function FilterUtcDate($filter) {
   return function (utcDateString, format) {
     format = format || "MM.dd.yyyy - hh:mm:ss a";

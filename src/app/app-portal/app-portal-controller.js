@@ -68,46 +68,6 @@ app.controller("AppPortalController", [
         });
       }
     };
-    $scope.initFB = function () {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "1958592154434745",
-          cookie: true,
-          xfbml: true,
-          version: "v10.0",
-        });
-
-        FB.AppEvents.logPageView();
-      };
-    };
-    $scope.$on("$routeChangeStart", function ($event, next, current) {
-      // ... you could trigger something here ...
-      if (current && current.$$route) {
-        $rootScope.referrerUrl = current.$$route.originalPath;
-        Object.keys(current.params).forEach(function (key, index) {
-          // key: the name of the object key
-          // index: the ordinal position of the key within the object
-          if ($rootScope.referrerUrl.indexOf(":" + key) >= 0) {
-            $rootScope.referrerUrl = $rootScope.referrerUrl.replace(
-              ":" + key,
-              current.params[key]
-            );
-          } else {
-            if ($rootScope.referrerUrl.indexOf("?") < 0) {
-              $rootScope.referrerUrl += "?";
-            }
-            $rootScope.referrerUrl += key + "=" + current.params[key] + "&";
-          }
-        });
-      }
-      $scope.pageTagName = $location.$$path.toString().split("/")[2];
-      $scope.pageTagTypeName = $location.$$path.toString().split("/")[3];
-      if ($scope.pageTagTypeName == "list") $scope.pageTagType = 1;
-      if ($scope.pageTagTypeName == "create") $scope.pageTagType = 2;
-    });
-    $rootScope.limString = function (str, max) {
-      return str.substring(0, max);
-    };
     $rootScope.getRequest = function (key) {
       key =
         key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
