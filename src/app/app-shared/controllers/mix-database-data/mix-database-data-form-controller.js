@@ -53,47 +53,53 @@ appShared.controller("MixDataController", [
       });
     };
     $scope.submit = async (data) => {
-      $rootScope.isBusy = true;
-      if ($scope.loadingHandler) {
-        $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
-      }
-      if (
-        !$scope.validateHandler ||
-        $rootScope.executeFunctionByName($scope.validateHandler, [data])
-      ) {
-        var saveResult = await dataService.save(data);
-        if (saveResult.isSucceed) {
-          $scope.loadData();
-          if ($scope.successHandler) {
-            $rootScope.executeFunctionByName($scope.successHandler, [
-              saveResult,
-            ]);
-          } else {
-            alert($scope.successMsg);
-          }
-          $scope.formData = angular.copy($scope.defaultData);
-          $rootScope.isBusy = false;
-          // $scope.loadData();
-          if ($scope.loadingHandler) {
-            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
-          }
-          $scope.$apply();
-        } else {
-          if (saveResult.errors && saveResult.errors.length) {
-            if ($scope.failHandler) {
-              $rootScope.executeFunctionByName($scope.failHandler, [
-                data,
+      $scope.form.$$element.addClass("was-validated");
+      if ($scope.form.$valid) {
+        $rootScope.isBusy = true;
+        if ($scope.loadingHandler) {
+          $rootScope.executeFunctionByName($scope.loadingHandler, [true]);
+        }
+        if (
+          !$scope.validateHandler ||
+          $rootScope.executeFunctionByName($scope.validateHandler, [data])
+        ) {
+          var saveResult = await dataService.save(data);
+          if (saveResult.isSucceed) {
+            $scope.loadData();
+            if ($scope.successHandler) {
+              $rootScope.executeFunctionByName($scope.successHandler, [
                 saveResult,
               ]);
             } else {
-              alert(errMsg);
+              $scope.form.$$element.removeClass("was-validated");
+              $scope.form.$setPristine();
+              $scope.form.$setUntouched();
+              alert($scope.successMsg);
             }
+            $scope.formData = angular.copy($scope.defaultData);
+            $rootScope.isBusy = false;
+            // $scope.loadData();
+            if ($scope.loadingHandler) {
+              $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
+            }
+            $scope.$apply();
+          } else {
+            if (saveResult.errors && saveResult.errors.length) {
+              if ($scope.failHandler) {
+                $rootScope.executeFunctionByName($scope.failHandler, [
+                  data,
+                  saveResult,
+                ]);
+              } else {
+                alert(errMsg);
+              }
+            }
+            if ($scope.loadingHandler) {
+              $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
+            }
+            $rootScope.isBusy = false;
+            $scope.$apply();
           }
-          if ($scope.loadingHandler) {
-            $rootScope.executeFunctionByName($scope.loadingHandler, [false]);
-          }
-          $rootScope.isBusy = false;
-          $scope.$apply();
         }
       }
     };

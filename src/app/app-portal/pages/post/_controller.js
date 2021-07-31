@@ -270,12 +270,6 @@ app.controller("PostController", [
           $routeParams.template
         );
       }
-      $scope.viewmodel.publishedDateTime = $filter("utcToLocalTime")(
-        $scope.viewmodel.publishedDateTime
-      );
-      $scope.viewmodel.createdDateTime = $filter("utcToLocalTime")(
-        $scope.viewmodel.createdDateTime
-      );
     };
     $scope.loadAdditionalData = async function () {
       const obj = {
