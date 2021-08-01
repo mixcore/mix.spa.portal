@@ -161,10 +161,13 @@
         angular.forEach(ctrl.selectedList, function (e) {
           var subIds = [];
           e.isActived = e.isActived === undefined ? true : e.isActived;
-          if (e.attributeData && e.attributeData.obj.sub_categories) {
-            subIds = e.attributeData.obj.sub_categories.map((m) => m.id);
-          } else if (e.sub_categories) {
-            subIds = e.sub_categories.map((m) => m.id);
+          if (e.attributeData && e.attributeData.obj.children) {
+            angular.forEach(e.attributeData.obj.children, function (sub) {
+              sub.isActived = ctrl.selectedValues.indexOf(e.id) >= 0;
+            });
+            subIds = e.attributeData.obj.children.map((m) => m.id);
+          } else if (e.children) {
+            subIds = e.children.map((m) => m.id);
           }
           var subData = ctrl.selectedList.filter(
             (m) => subIds.indexOf(m.dataId) >= 0
@@ -174,7 +177,7 @@
           });
         });
       };
-      ctrl.select = async function (dataId, isSelected) {
+      ctrl.select = async function (dataId, isSelected, level) {
         let idx = ctrl.selectedValues.indexOf(dataId);
         var nav = ctrl.selectedList[idx];
         if (!nav) {
@@ -188,7 +191,7 @@
           );
           ctrl.selectedList.push(nav);
         }
-
+        nav.level = level;
         if (isSelected) {
           nav.isActived = true;
           if (nav.parentId) {

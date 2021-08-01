@@ -21,6 +21,11 @@
       ctrl.minHeight = 400;
       ctrl.isFull = false;
       ctrl.id = Math.floor(Math.random() * 100) + 1;
+      ctrl.$onInit = function () {
+        if (ctrl.content === null) {
+          ctrl.content = "\r\n";
+        }
+      };
       ctrl.$onChanges = function (changes) {
         if (changes.content) {
           ctrl.updateContent(changes.content);
@@ -48,16 +53,14 @@
             var h = ctrl.editor.getModel().getLineCount() * 18;
             $($element).height(h);
             ctrl.editor.layout();
-          }, 500);
+          }, 100);
         }
       }.bind(this);
 
       ctrl.initEditor = function () {
         // ctrl.lineCount = parseInt(ctrl.lineCount) || 100;
-        setTimeout(() => {
-          ctrl.previousId = ctrl.contentId;
-          ctrl.updateEditors();
-        }, 500);
+        ctrl.previousId = ctrl.contentId;
+        ctrl.updateEditors();
       };
 
       ctrl.updateContent = function (content) {
