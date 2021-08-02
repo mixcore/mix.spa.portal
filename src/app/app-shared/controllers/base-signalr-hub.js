@@ -85,7 +85,9 @@ function BaseHub(scope) {
       if (scope.onLeave) {
         scope.onLeave();
       }
-      scope.connection.stop();
+      if (scope.connection) {
+        scope.connection.stop();
+      }
     });
   }
 }

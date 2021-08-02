@@ -156,8 +156,8 @@
     <div class="col-10">
         <select ng-if="$ctrl.column.dataType!='icon'" class="form-select form-control"
             ng-model="$ctrl.model.obj[$ctrl.column.name]">
-            <option ng-repeat="item in $ctrl.options track by $index" ng-value="item.name">
-                {{item.name}}
+            <option ng-repeat="item in $ctrl.options track by $index" ng-value="item.value">
+                {{item.value}}
             </option>
         </select>
     </div>

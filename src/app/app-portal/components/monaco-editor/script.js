@@ -74,7 +74,6 @@
       };
       ctrl.updateEditors = function () {
         $.each($($element).find(".code-editor"), function (i, e) {
-          //var container = $(this);
           if (e) {
             var model = {
               value: ctrl.content || ctrl.defaultContent,

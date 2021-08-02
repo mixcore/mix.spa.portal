@@ -161,13 +161,13 @@
         angular.forEach(ctrl.selectedList, function (e) {
           var subIds = [];
           e.isActived = e.isActived === undefined ? true : e.isActived;
-          if (e.attributeData && e.attributeData.obj.children) {
-            angular.forEach(e.attributeData.obj.children, function (sub) {
+          if (e.attributeData && e.attributeData.obj.childItems) {
+            angular.forEach(e.attributeData.obj.childItems, function (sub) {
               sub.isActived = ctrl.selectedValues.indexOf(e.id) >= 0;
             });
-            subIds = e.attributeData.obj.children.map((m) => m.id);
-          } else if (e.children) {
-            subIds = e.children.map((m) => m.id);
+            subIds = e.attributeData.obj.childItems.map((m) => m.id);
+          } else if (e.childItems) {
+            subIds = e.childItems.map((m) => m.id);
           }
           var subData = ctrl.selectedList.filter(
             (m) => subIds.indexOf(m.dataId) >= 0
