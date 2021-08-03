@@ -58,10 +58,11 @@ modules.component("additionalColumn", {
         ctrl.colRef = col;
         $("#modal-navs").modal("show");
       };
-      ctrl.referenceCallback = function (selected) {
+      ctrl.referenceCallback = async function (selected) {
         if (selected && selected.length) {
           ctrl.colRef.reference = selected;
           ctrl.colRef.referenceId = selected[0].id;
+          await columnService.save(ctrl.colRef);
         }
         $("#modal-navs").modal("hide");
       };
