@@ -77,7 +77,6 @@
       ctrl.options = [];
       ctrl.$onInit = async function () {
         if (!ctrl.createUrl && ctrl.model && ctrl.column.referenceId) {
-          debugger;
           ctrl.buildCreateUrl();
         }
         if (!ctrl.updateUrl) {
