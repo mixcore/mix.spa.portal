@@ -23,8 +23,19 @@ appShared.factory("RestMixDatabaseDataClientService", [
       };
       return await apiService.getRestApiResult(req);
     };
+
+    var _saveValues = async function (dataId, objData) {
+      var url = `${this.prefixUrl}/save-values/${dataId}`;
+      var req = {
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objData),
+      };
+      return await apiService.getRestApiResult(req);
+    };
     serviceFactory.initData = _initData;
     serviceFactory.saveData = _saveData;
+    serviceFactory.saveValues = _saveValues;
     return serviceFactory;
   },
 ]);

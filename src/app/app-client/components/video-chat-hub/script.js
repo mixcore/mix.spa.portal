@@ -14,7 +14,7 @@
       var ctrl = this;
       BaseHub.call(this, ctrl);
       ctrl.localizeSettings = $rootScope.globalSettings;
-
+      ctrl.webrtcDetectedBrowser = null;
       ctrl.init = function () {
         ctrl.viewmodel = viewmodel;
         _start();
@@ -76,7 +76,7 @@
         },
         _start = function () {
           // Show warning if WebRTC support is not detected
-          if (webrtcDetectedBrowser == null) {
+          if (ctrl.webrtcDetectedBrowser == null) {
             console.log("Your browser doesnt appear to support WebRTC.");
             $(".browser-warning").show();
           }

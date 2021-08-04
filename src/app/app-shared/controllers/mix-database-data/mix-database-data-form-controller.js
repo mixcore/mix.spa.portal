@@ -2,7 +2,7 @@ appShared.controller("MixDataController", [
   "$rootScope",
   "$scope",
   "ngAppSettings",
-  "RestRelatedAttributeDataPortalService",
+  "RestRelatedAttributeDataFormService",
   "RestMixDatabaseDataClientService",
   function ($rootScope, $scope, ngAppSettings, navService, dataService) {
     $scope.defaultData = null;
@@ -101,6 +101,17 @@ appShared.controller("MixDataController", [
             $scope.$apply();
           }
         }
+      }
+    };
+
+    $scope.saveValue = async (id, name, value) => {
+      if ($scope.form.$valid) {
+        $rootScope.isBusy = true;
+        var obj = new {}();
+        obj[name] = value;
+        await dataService.saveValues(id, obj);
+        $rootScope.isBusy = false;
+        $scope.$apply();
       }
     };
   },
