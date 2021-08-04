@@ -96,8 +96,8 @@
                                 </td>
                                 <td>
                                     <a href="" ng-click="goToPath('/portal/post/details/' + item.id)" class="btn-link"
-                                        title="{{item.excerpt}}" data-bs-toggle="tooltip">
-                                        {{item.title}}
+                                        title="{{item.excerpt}}" data-bs-toggle="tooltip" ng-bind="item.title|trim:10">
+
                                     </a>
                                 </td>
                                 <td>

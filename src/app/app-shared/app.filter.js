@@ -1,5 +1,6 @@
 "use strict";
 appShared
+  .filter("trim", trimString)
   .filter("utcToLocal", FilterUtcDate)
   .filter("utcToLocalTime", FilterUtcDateTime)
   .filter("phoneNumber", FilterPhoneNumber)
@@ -84,6 +85,12 @@ function MarkdownToHtml($filter) {
   return function (mdContent) {
     var converter = new showdown.Converter();
     return converter.makeHtml(mdContent);
+  };
+}
+
+function trimString($filter) {
+  return function (content, length = 150) {
+    return `${content.substring(0, length)}...`;
   };
 }
 
