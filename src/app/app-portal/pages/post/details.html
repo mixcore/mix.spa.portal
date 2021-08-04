@@ -221,10 +221,11 @@
                             <post-seo post="viewmodel"></post-seo>
                         </pane-v>
                         <pane-v icon="fas fa-list" header="Related">
-                            <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture"
-                                prefix="'post'" navs="viewmodel.postNavs" data="relatedData"
-                                load-data="getListRelated(pageIndex)">
-                            </related-navs>
+                            <div class="card card-body">
+                                <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture" prefix="'post'"
+                                navs="viewmodel.postNavs" data="relatedData" load-data="getListRelated(pageIndex)">
+                                </related-navs>
+                            </div>
 
                             <!-- <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture" prefix="'post'"
                                 navs="viewmodel.postNavs" data="relatedData" load-data="getListRelated(pageIndex)">
