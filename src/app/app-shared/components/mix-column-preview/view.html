@@ -1,7 +1,7 @@
 <div class="rowx" ng-if="$ctrl.model">
     <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-9x">
         <div ng-switch-default>
-            <p ng-bind="$ctrl.model"></p>
+            <p ng-bind="$ctrl.model|trim:200" title="{{$ctrl.model}}"></p>
         </div>
         <div ng-switch-when="url">
             <a target="_blank" href="{{$ctrl.model}}" ng-bind="$ctrl.model"> </a>
