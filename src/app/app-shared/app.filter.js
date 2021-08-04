@@ -88,9 +88,11 @@ function MarkdownToHtml($filter) {
   };
 }
 
-function trimString($filter) {
+function trimString() {
   return function (content, length = 150) {
-    return `${content.substring(0, length)}...`;
+    return content.length > length
+      ? `${content.substring(0, length)}...`
+      : content;
   };
 }
 
