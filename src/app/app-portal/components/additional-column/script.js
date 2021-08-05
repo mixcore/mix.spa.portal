@@ -9,7 +9,8 @@ modules.component("additionalColumn", {
     "$rootScope",
     "$scope",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, columnService) {
+    "RestMixDatabaseDataPortalService",
+    function ($rootScope, $scope, columnService, dataService) {
       var ctrl = this;
       ctrl.value = {};
       ctrl.column = {
@@ -36,7 +37,9 @@ modules.component("additionalColumn", {
             $rootScope.isBusy = false;
             if (saveField.isSucceed) {
               ctrl.additionalData.columns.push(saveField.data);
-
+              if (ctrl.additionalData.parentId) {
+                await dataService.save(ctrl.additionalData);
+              }
               //reset column option
               ctrl.column.title = "";
               ctrl.column.name = "";
