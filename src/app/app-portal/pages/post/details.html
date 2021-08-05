@@ -28,7 +28,7 @@
         </div>
         <div class="page-body d-flex flex-row-reverse">
             <aside class="bd-sidebar sub-sidebar">
-                <nav class="bd-links ps-3 pt-4" aria-label="Sub-section navigation">
+                <nav class="bd-links p-3" aria-label="Sub-section navigation">
                     <div class="card">
                         <actions on-clear-cache="clearCache()" preview-url="viewmodel.detailsUrl"
                             back-url="referrerUrl">
@@ -221,10 +221,11 @@
                             <post-seo post="viewmodel"></post-seo>
                         </pane-v>
                         <pane-v icon="fas fa-list" header="Related">
-                            <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture"
-                                prefix="'post'" navs="viewmodel.postNavs" data="relatedData"
-                                load-data="getListRelated(pageIndex)">
-                            </related-navs>
+                            <div class="card card-body">
+                                <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture" prefix="'post'"
+                                navs="viewmodel.postNavs" data="relatedData" load-data="getListRelated(pageIndex)">
+                                </related-navs>
+                            </div>
 
                             <!-- <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture" prefix="'post'"
                                 navs="viewmodel.postNavs" data="relatedData" load-data="getListRelated(pageIndex)">
