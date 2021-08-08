@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card mb-4" ng-if=$ctrl.additionalData>
     <h6 class="card-header">
         Additional Data Columns
         <a class="btn-link text-primary btn-sm float-end py-0" data-bs-toggle="collapse"
@@ -13,7 +13,7 @@
         </div>
         <div dnd-list="$ctrl.additionalData.columns" dnd-inserted="$ctrl.updateOrders(index)">
             <div ng-repeat="col in $ctrl.additionalData.columns track by $index" dnd-draggable="col" dnd-type="'col'"
-                dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedCol = col"
+                ng-if="col!==null" dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedCol = col"
                 dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedCol === col}" class="">
                 <div class="row">
                     <div class="col-md-1">
@@ -56,9 +56,7 @@
                                 ng-click="col.showAdvanced = !col.showAdvanced">
                                 <span class="far fa-check-square"></span>
                             </a>
-                            <a href="" class="btn btn-outline-primary"
-                                ng-if="col.mixDatabaseName === 'sys_additional_column'"
-                                ng-click="$ctrl.removeAttribute(col, $index)">
+                            <a href="" class="btn btn-outline-primary" ng-click="$ctrl.removeAttribute(col, $index)">
                                 <span class="fas fa-trash-alt"></span>
                             </a>
                         </div>

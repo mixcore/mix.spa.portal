@@ -29,6 +29,7 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    $scope.viewmodelType = "post";
     $scope.additionalData = null;
     $scope.createUrl = "/portal/post/create?";
     $scope.selectedCategories = [];
@@ -70,10 +71,12 @@ app.controller("PostController", [
           {
             databaseName: "",
             title: "All",
+            id: 0,
           },
           {
-            databaseName: "sys_additional_field_post",
+            databaseName: "sys_additional_column_post",
             title: "Default",
+            id: 1,
           }
         );
         if ($scope.request.postType) {
@@ -196,6 +199,8 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
+        $scope.additionalData.isClone = $scope.viewmodel.isClone;
+        $scope.additionalData.cultures = $scope.viewmodel.cultures;
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
         let result = await dataService.save($scope.additionalData);
@@ -275,7 +280,7 @@ app.controller("PostController", [
       const obj = {
         parentType: "Post",
         parentId: $scope.viewmodel.id,
-        databaseName: $scope.viewmodel.type,
+        databaseName: $scope.viewmodel.type || "",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {

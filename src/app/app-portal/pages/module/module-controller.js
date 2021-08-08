@@ -223,21 +223,17 @@ app.controller("ModuleController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
+        $scope.additionalData.isClone = $scope.viewmodel.isClone;
+        $scope.additionalData.cultures = $scope.viewmodel.cultures;
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Module";
-        var saveData = await dataService.saveAdditionalData(
-          $scope.additionalData
-        );
-        if (saveData.isSucceed) {
-          if ($location.path() == "/portal/module/create") {
-            $scope.goToDetail($scope.viewmodel.id, "module");
-            $rootScope.isBusy = false;
-            $scope.$apply();
-          } else {
-            $scope.additionalData = saveData.data;
-            $rootScope.isBusy = false;
-            $scope.$apply();
-          }
+        let result = await dataService.save($scope.additionalData);
+        if (!result.isSucceed) {
+          $rootScope.showErrors(result.errors);
+        } else {
+          $scope.additionalData = result.data;
+          $rootScope.isBusy = false;
+          $scope.$apply();
         }
       }
     };
@@ -279,7 +275,7 @@ app.controller("ModuleController", [
       const obj = {
         parentType: "Module",
         parentId: $scope.viewmodel.id,
-        databaseName: "sys_additional_field_module",
+        databaseName: "sys_additional_column_module",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.isSucceed) {

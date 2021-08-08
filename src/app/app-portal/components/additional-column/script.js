@@ -17,6 +17,7 @@ modules.component("additionalColumn", {
         dataType: "Text",
         mixDatabaseName: "sys_additional_column",
         mixDatabaseId: 6,
+        status: "Published",
       };
       ctrl.selectedCol = null;
       ctrl.localizeSettings = $rootScope.globalSettings;

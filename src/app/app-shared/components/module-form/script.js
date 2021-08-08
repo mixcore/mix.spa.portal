@@ -95,6 +95,7 @@
         }
       };
       ctrl.saveModuleData = async function () {
+        $rootScope.isBusy = true;
         var form = $("#module-" + ctrl.data.moduleId);
 
         $.each(ctrl.data.dataProperties, function (i, e) {
@@ -116,6 +117,8 @@
             ctrl.saveSuccessCallback({
               data: ctrl.data,
             });
+            $rootScope.isBusy = false;
+            $scope.$apply();
           } else {
             var msg = $rootScope.translate("success");
             $rootScope.showMessage(msg, "success");
