@@ -40,10 +40,12 @@
                                         </div>
                                     </td>
                                     <td width="35%">
-                                        <a class="" style="cursor: pointer" ng-click="togglePreview(item)">
+                                        <a class="" ng-if="item.isImage" style="cursor: pointer"
+                                            ng-click="togglePreview(item)">
                                             <img class="rounded" ng-src="{{item.fullPath}}"
                                                 ng-class="{preview: item.isPreview}" />
                                         </a>
+                                        <a ng-if="!item.isImage" href="{{item.fullPath}}" target="_blank">View</a>
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Actions">

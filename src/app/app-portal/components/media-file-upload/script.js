@@ -65,7 +65,8 @@
             ctrl.mediaFile.file = ctrl.file;
             ctrl.formFile = ctrl.file;
             ctrl.canUpload = true;
-            ctrl.getBase64(ctrl.file);
+            ctrl.uploadFile(ctrl.file);
+            // ctrl.getBase64(ctrl.file);
           }
         }
       };

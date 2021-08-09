@@ -49,6 +49,16 @@ appShared.controller("MediaController", [
         $scope.getList();
       });
     };
+    $scope.getListSuccessCallback = function () {
+      angular.forEach($scope.data.items, function (e) {
+        e.isImage = $scope.isImage(e.fullPath);
+      });
+    };
+    $scope.isImage = function (url) {
+      return url
+        .toLowerCase()
+        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+    };
     $scope.save = async function () {
       var data = $scope.viewmodel;
       $rootScope.isBusy = true;
