@@ -2,8 +2,11 @@
   templateUrl: "/mix-app/views/app-shared/components/address-editor/view.html",
   bindings: {
     province: "=",
+    provinceClass: "=?",
     district: "=",
+    districtClass: "=?",
     ward: "=",
+    wardClass: "=?",
   },
   controller: "AddressEditorController",
 });
@@ -18,6 +21,12 @@ sharedComponents.controller("AddressEditorController", [
     ctrl.districtEndpoint = "/rest/shared/json-data/districts.json/true";
     ctrl.wardEndpoint = "/rest/shared/json-data/wards.json/true";
     ctrl.$onInit = async function () {
+      ctrl.provinceClass =
+        ctrl.provinceClass || "form-select form-control mb-3";
+      ctrl.districtClass =
+        ctrl.districtClass || "form-select form-control mb-3";
+      ctrl.wardClass = ctrl.wardClass || "form-select form-control mb-3";
+
       ctrl.provinceOptions = await apiService.getApiResult({
         url: ctrl.provinceEndpoint,
       });

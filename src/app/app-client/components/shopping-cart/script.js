@@ -2,6 +2,7 @@
   templateUrl: "/mix-app/views/app-client/components/shopping-cart/view.html",
   bindings: {
     cartData: "=?",
+    successCallback: "&?",
   },
   controller: "ShoppingCartController",
 });
@@ -10,39 +11,17 @@ modules.controller("ShoppingCartController", [
   "$scope",
   "$element",
   "localStorageService",
-  "ApiService",
-  "CommonService",
   "RestMixDatabaseDataClientService",
-  function (
-    $rootScope,
-    $scope,
-    $element,
-    localStorageService,
-    apiService,
-    commonService,
-    dataService
-  ) {
-    var ctrl = this;
+  function ($rootScope, $scope, $element, localStorageService, dataService) {
     $scope.submitted = false;
     $scope.isShow = false;
-    $scope.init = function () {
-      $scope.submitting = true;
-      $scope.cartModal = new bootstrap.Modal($element.find(".modal")[0]);
-      if (!$scope.cartData) {
-        $scope.cartData = {
-          items: [],
-        };
-      }
+    $scope.init = function (validateCallback, successCallback, failCallback) {
+      $scope.validateCallback = validateCallback;
+      $scope.successCallback = successCallback;
+      $scope.failCallback = failCallback;
     };
     $scope.translate = $rootScope.translate;
-    $scope.edm =
-      'Url: <a href="[url]">View Tour</a> <br/>Name: [name] <br/>' +
-      "Phone: [phone]<br/>" +
-      "Email: [email]<br/>" +
-      "Quantity: [quantity]<br/>" +
-      "Message: [message] <br/>" +
-      "property: [property] <br/>Price: [price] <br/>";
-    $scope.init = function () {};
+
     $scope.showShoppingCart = function () {
       $scope.cartModal.show();
     };
@@ -58,20 +37,8 @@ modules.controller("ShoppingCartController", [
       $scope.cartData.items.splice(index, 1);
       $scope.calculate();
     };
-    $scope.book = async function () {
-      // $scope.edm = $scope.edm.replace(/\[url\]/g, window.top.location.href);
-      // $scope.edm = $scope.edm.replace(/\[name\]/g, $scope.order.name);
-      // $scope.edm = $scope.edm.replace(/\[phone\]/g, $scope.order.phone);
-      // $scope.edm = $scope.edm.replace(/\[email\]/g, $scope.order.email);
-      // $scope.edm = $scope.edm.replace(/\[message\]/g, $scope.order.message);
-      // $scope.edm = $scope.edm.replace(/\[property\]/g, $scope.order.propertyId);
-      // $scope.edm = $scope.edm.replace(/\[price\]/g, $scope.order.price);
-      // $scope.edm = $scope.edm.replace(/\[quantity\]/g, $scope.order.quantity);
-
-      //TODO Handle cart submit
-      // commonService.sendMail("Booking - " + $scope.propertyName, $scope.edm);
-      //   $scope.submitted = true;
-      $scope.frmCheckOut.$$element.addClass("was-validated");
+    $scope.submit = async function () {
+      $scope.onValidate();
       if ($scope.frmCheckOut.$valid) {
         $rootScope.submitting = true;
         var result = await dataService.saveData(
@@ -79,21 +46,72 @@ modules.controller("ShoppingCartController", [
           $scope.cartData
         );
         if (result.isSucceed) {
-          setTimeout(() => {
-            $scope.submitting = false;
-          }, 1000);
-          $scope.cartData = {
-            items: [],
-            totalItem: 0,
-            total: 0,
-          };
-          localStorageService.set("shoppingCart", $scope.cartData);
-          window.location.href = "/";
+          $scope.onSuccess(result.data);
         } else {
-          $scope.errors = result.errors;
+          $scope.onFail(result.errors);
         }
         $scope.$apply();
       }
+    };
+
+    $scope.onValidate = async function () {
+      $scope.frmCheckOut.$$element.addClass("was-validated");
+      if ($scope.validateCallback) {
+        let isValid = await $rootScope.executeFunctionByName(
+          $scope.validateCallback,
+          [$scope.frmCheckOut, $scope.cartData],
+          window
+        );
+        $scope.frmCheckOut.$valid = $scope.frmCheckOut.$valid && isValid;
+      }
+    };
+    $scope.onSuccess = function (resp) {
+      setTimeout(() => {
+        $scope.submitting = false;
+      }, 1000);
+      $scope.cartData = {
+        items: [],
+        totalItem: 0,
+        total: 0,
+      };
+      localStorageService.set("shoppingCart", $scope.cartData);
+
+      if ($scope.successCallback) {
+        $rootScope.executeFunctionByName(
+          $scope.successCallback,
+          [resp],
+          window
+        );
+      } else {
+        window.location.href = "/";
+      }
+    };
+    $scope.onFail = function (errors) {
+      if ($scope.failCallback) {
+        $rootScope.executeFunctionByName($scope.failCallback, [errors], window);
+      }
+    };
+    $scope.sendmail = async function () {
+      let edm =
+        'Url: <a href="[url]">View Tour</a> <br/>Name: [name] <br/>' +
+        "Phone: [phone]<br/>" +
+        "Email: [email]<br/>" +
+        "Quantity: [quantity]<br/>" +
+        "Message: [message] <br/>" +
+        "property: [property] <br/>Price: [price] <br/>";
+
+      edm = edm.replace(/\[url\]/g, window.top.location.href);
+      edm = edm.replace(/\[name\]/g, $scope.order.name);
+      edm = edm.replace(/\[phone\]/g, $scope.order.phone);
+      edm = edm.replace(/\[email\]/g, $scope.order.email);
+      edm = edm.replace(/\[message\]/g, $scope.order.message);
+      edm = edm.replace(/\[property\]/g, $scope.order.propertyId);
+      edm = edm.replace(/\[price\]/g, $scope.order.price);
+      edm = edm.replace(/\[quantity\]/g, $scope.order.quantity);
+
+      //   TODO Handle cart submit
+      await commonService.sendMail("Booking - " + $scope.propertyName, edm);
+      $scope.submitted = true;
     };
   },
 ]);
