@@ -41,7 +41,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index">
-                        <mix-column-editor level="$ctrl.level + 1" model="$ctrl.mixDatabaseData" column="column">
+                        <mix-column-editor ng-if="column" level="$ctrl.level + 1" model="$ctrl.mixDatabaseData"
+                            column="column">
                         </mix-column-editor>
                     </div>
                 </div>

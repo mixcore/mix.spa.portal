@@ -36,6 +36,7 @@
       ctrl.$doCheck = function () {
         // Generate seo string if create new or not exist
         if (
+          ctrl.column &&
           ctrl.model &&
           (!ctrl.model.id || !ctrl.model.obj["seo_url"]) &&
           ctrl.column.name == "title"

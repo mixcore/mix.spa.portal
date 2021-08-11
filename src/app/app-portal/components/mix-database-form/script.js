@@ -31,7 +31,7 @@ modules.component("mixDatabaseForm", {
       ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
-        ctrl.loadData();
+        await ctrl.loadData();
       };
       ctrl.loadData = async function () {
         /*
