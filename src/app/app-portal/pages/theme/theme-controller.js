@@ -28,6 +28,9 @@ app.controller("ThemeController", [
     );
     $scope.exportData = null;
     $scope.selectedExport = {
+      isIncludeAssets: true,
+      isIncludeTemplates: true,
+      isIncludeConfigurations: true,
       pages: [],
       modules: [],
       mixDatabases: [],

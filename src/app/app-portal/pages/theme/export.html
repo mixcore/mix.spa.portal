@@ -25,14 +25,17 @@
             <div class="row justify-content-md-center">
                 <div class="col-12 mb-3">
                     <div class="form-check form-switch">
-                        <input
-                        type="checkbox"
-                        class="form-check-input"
-                        ng-model="exportData.isIncludeAssets"
-                        />
-                        <label class="custom-control-label" for="switchSelectAllSetData"
-                        >Include Assets</label
-                        >
+                        <input type="checkbox" class="form-check-input" ng-model="selectedExport.isIncludeAssets" />
+                        <label class="custom-control-label" for="switchSelectAllSetData">Include Assets</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" ng-model="selectedExport.isIncludeTemplates" />
+                        <label class="custom-control-label" for="switchSelectAllSetData">Include Templates</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input"
+                            ng-model="selectedExport.isIncludeConfigurations" />
+                        <label class="custom-control-label" for="switchSelectAllSetData">Include Configurations</label>
                     </div>
                 </div>
                 <div class="">

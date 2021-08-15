@@ -83,17 +83,11 @@
         </div>
         <div class="text-muted col-6 p-0" ng-switch-when="upload">
             <!--upload-->
-            <media-file-upload ng-if="!$ctrl.column.columnConfigurations.upload.isCrop" header="'Media Upload'"
-                type="'Medias'" folder="'Medias'" auto="'true'"
+            <media-file-upload header="'Media Upload'" type="'Medias'" folder="'Medias'" auto="'true'"
                 accept-types="$ctrl.column.columnConfigurations.upload.accepts"
                 src-url="$ctrl.model.obj[$ctrl.column.name]" src="$ctrl.model.obj[$ctrl.column.name]"
                 media-file="$ctrl.mediaFile" form-file="formFile">
             </media-file-upload>
-            <custom-image ng-if="$ctrl.column.columnConfigurations.upload.isCrop" header="'Image'" type="'Medias'"
-                w="$ctrl.column.columnConfigurations.upload.width" h="$ctrl.column.columnConfigurations.upload.height"
-                folder="'Medias'" src-url="$ctrl.model.obj[$ctrl.column.name]" src="$ctrl.model.obj[$ctrl.column.name]"
-                auto="'true'">
-            </custom-image>
         </div>
         <div class="text-muted" ng-switch-when="color">
             <!--Color-->

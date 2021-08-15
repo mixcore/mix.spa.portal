@@ -7,9 +7,9 @@ sharedComponents.component("customFile", {
     title: "=",
     description: "=",
     src: "=",
-    srcUrl: "=",
-    data: "=",
-    type: "=",
+    srcUrl: "=?",
+    data: "=?",
+    type: "=?",
     folder: "=",
     auto: "=",
     onInsert: "&?",
@@ -23,8 +23,15 @@ sharedComponents.component("customFile", {
     function PortalTemplateController($rootScope, $scope, mediaService) {
       var ctrl = this;
       ctrl.media = null;
-      ctrl.init = function () {
+      ctrl.$onInit = function () {
         ctrl.id = Math.random();
+        ctrl.mediaFile = {
+          file: null,
+          fullPath: "",
+          fileFolder: "content/site",
+          title: "",
+          description: "",
+        };
       };
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
@@ -34,7 +41,7 @@ sharedComponents.component("customFile", {
             mediaService.openCroppie(ctrl.file, ctrl, true);
           } else {
             ctrl.canUpload = true;
-            ctrl.getBase64(ctrl.file);
+            ctrl.uploadFile(ctrl.file);
           }
         }
       };
@@ -58,16 +65,16 @@ sharedComponents.component("customFile", {
           reader.onload = async function () {
             var getMedia = await mediaService.getSingle(["portal"]);
             if (getMedia.isSucceed) {
-              ctrl.data.mediaFile.fileName = file.name.substring(
+              ctrl.mediaFile.fileName = file.name.substring(
                 0,
                 file.name.lastIndexOf(".")
               );
-              ctrl.data.mediaFile.extension = file.name.substring(
+              ctrl.mediaFile.extension = file.name.substring(
                 file.name.lastIndexOf(".")
               );
-              ctrl.data.mediaFile.fileStream = reader.result;
+              ctrl.mediaFile.fileStream = reader.result;
               var media = getMedia.data;
-              media.data.mediaFile = ctrl.data.mediaFile;
+              media.mediaFile = ctrl.mediaFile;
               var resp = await mediaService.save(media);
               if (resp && resp.isSucceed) {
                 ctrl.src = resp.data.fullPath;
@@ -89,21 +96,21 @@ sharedComponents.component("customFile", {
         }
       };
       ctrl.getBase64 = function (file) {
-        if (file !== null && ctrl.data.mediaFile) {
+        if (file !== null && ctrl.mediaFile) {
           $rootScope.isBusy = true;
           var reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = function () {
             var index = reader.result.indexOf(",") + 1;
             var base64 = reader.result.substring(index);
-            ctrl.data.mediaFile.fileName = file.name.substring(
+            ctrl.mediaFile.fileName = file.name.substring(
               0,
               file.name.lastIndexOf(".")
             );
-            ctrl.data.mediaFile.extension = file.name.substring(
+            ctrl.mediaFile.extension = file.name.substring(
               file.name.lastIndexOf(".")
             );
-            ctrl.data.mediaFile.fileStream = reader.result;
+            ctrl.mediaFile.fileStream = reader.result;
             ctrl.srcUrl = reader.result;
             $rootScope.isBusy = false;
 
