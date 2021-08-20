@@ -47,26 +47,26 @@
 
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
-          ctrl.file = files[0];
+          ctrl.formFile = files[0];
           ctrl.mediaFile.fileFolder = ctrl.folder ? ctrl.folder : "Media";
           ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
           ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";
-          ctrl.mediaFile.fileName = ctrl.file.name.substring(
+          ctrl.mediaFile.fileName = ctrl.formFile.name.substring(
             0,
-            ctrl.file.name.lastIndexOf(".")
+            ctrl.formFile.name.lastIndexOf(".")
           );
-          ctrl.mediaFile.extension = ctrl.file.name.substring(
-            ctrl.file.name.lastIndexOf(".")
+          ctrl.mediaFile.extension = ctrl.formFile.name.substring(
+            ctrl.formFile.name.lastIndexOf(".")
           );
-          if ($rootScope.isImage(ctrl.file)) {
+          if ($rootScope.isImage(ctrl.formFile)) {
             ctrl.canUpload = false;
-            mediaService.openCroppie(ctrl.file, ctrl, false);
+            mediaService.openCroppie(ctrl.formFile, ctrl, false);
           } else {
-            ctrl.mediaFile.file = ctrl.file;
-            ctrl.formFile = ctrl.file;
+            ctrl.mediaFile.file = ctrl.formFile;
+            ctrl.formFile = ctrl.formFile;
             ctrl.canUpload = true;
-            ctrl.uploadFile(ctrl.file);
-            // ctrl.getBase64(ctrl.file);
+            // ctrl.uploadFile(ctrl.formFile);
+            // ctrl.getBase64(ctrl.formFile);
           }
         }
       };
@@ -76,8 +76,9 @@
           ctrl.isImage = true;
           ctrl.mediaFile.fileStream = result;
           ctrl.src = result;
-        } else if (ctrl.file) {
-          ctrl.uploadFile(ctrl.file);
+        } else if (ctrl.formFile) {
+          ctrl.mediaFile.file = ctrl.formFile;
+          //   ctrl.uploadFile(ctrl.formFile);
         }
       };
 

@@ -20,7 +20,7 @@ appShared.controller("MixDataController", [
       successHandler,
       failHandler
     ) {
-      $scope.successMsg = "Thành công";
+      $scope.successMsg = "Success";
       $scope.validateHandler = validateHandler;
       $scope.loadingHandler = loadingHandler;
       $scope.successHandler = successHandler;
@@ -74,7 +74,7 @@ appShared.controller("MixDataController", [
               $scope.form.$$element.removeClass("was-validated");
               $scope.form.$setPristine();
               $scope.form.$setUntouched();
-              alert($scope.successMsg);
+              console.log($scope.successMsg);
             }
             $scope.formData = angular.copy($scope.defaultData);
             $rootScope.isBusy = false;

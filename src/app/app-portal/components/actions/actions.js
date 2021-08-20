@@ -1,5 +1,12 @@
 ﻿modules.component("actions", {
   templateUrl: "/mix-app/views/app-portal/components/actions/actions.html",
+  bindings: {
+    previewUrl: "=",
+    backUrl: "=",
+    contentUrl: "=",
+    onClearCache: "&?",
+    onSubmit: "&?",
+  },
   controller: [
     "$rootScope",
     "$scope",
@@ -15,15 +22,15 @@
       ctrl.$onInit = function () {
         ctrl.isAdmin = $rootScope.isAdmin;
       };
+      ctrl.submit = function ($event) {
+        if (ctrl.onSubmit) {
+          $event.preventDefault();
+          ctrl.onSubmit();
+        }
+      };
       ctrl.clearCache = function () {
         ctrl.onClearCache();
       };
     },
   ],
-  bindings: {
-    previewUrl: "=",
-    backUrl: "=",
-    contentUrl: "=",
-    onClearCache: "&?",
-  },
 });
