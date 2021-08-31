@@ -23,7 +23,8 @@
         </div>
         <div ng-switch-when="html">
             <!--Html-->
-            <quill-editor content="$ctrl.data.value"></quill-editor>
+            <!-- <quill-editor content="$ctrl.data.value"></quill-editor> -->
+            <trumbowyg ng-model="$ctrl.data.value"></trumbowyg>
         </div>
         <div ng-switch-when="multilinetext">
             <!--TextArea-->

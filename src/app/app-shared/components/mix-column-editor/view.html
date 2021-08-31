@@ -58,7 +58,8 @@
         </div>
         <div class="text-muted" ng-switch-when="html">
             <!--Html-->
-            <quill-editor content="$ctrl.model.obj[$ctrl.column.name]"></quill-editor>
+            <!-- <quill-editor content="$ctrl.model.obj[$ctrl.column.name]"></quill-editor> -->
+            <trumbowyg ng-model="$ctrl.model.obj[$ctrl.column.name]"></trumbowyg>
         </div>
         <div class="text-muted" ng-switch-when="multilinetext">
             <!--TextArea-->
