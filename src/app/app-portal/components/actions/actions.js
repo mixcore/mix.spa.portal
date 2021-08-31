@@ -26,6 +26,7 @@
         if (ctrl.onSubmit) {
           $event.preventDefault();
           ctrl.onSubmit();
+          return;
         }
       };
       ctrl.clearCache = function () {

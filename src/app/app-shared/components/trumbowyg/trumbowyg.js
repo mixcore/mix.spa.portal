@@ -93,7 +93,7 @@ sharedComponents.component("trumbowyg", {
         },
       };
       ctrl.getElementReference = function () {
-        return $($element.find("div"));
+        return jQuery($element.find("div"));
       };
 
       ctrl.getEditorReference = function () {
@@ -102,6 +102,7 @@ sharedComponents.component("trumbowyg", {
       ctrl.updateModelValue = () => {
         $scope.$applyAsync(() => {
           const value = ctrl.getEditorReference().trumbowyg("html");
+          console.log(value);
           ctrl.ngModel.$setViewValue(value);
         });
       };
@@ -153,9 +154,18 @@ sharedComponents.component("trumbowyg", {
       };
 
       ctrl.$onInit = () => {
+        jQuery.trumbowyg.svgPath =
+          "https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/icons.svg";
         ctrl.ngModel.$render = () => {
-          const element = ctrl.getEditorReference();
-          element.trumbowyg("html", ctrl.ngModel.$modelValue);
+          setTimeout(() => {
+            const element = ctrl.getEditorReference();
+            element.trumbowyg(ctrl.editorConfigurations.plugins);
+            element.trumbowyg("html", ctrl.ngModel.$modelValue);
+            element
+              .on("tbwchange", () => ctrl.updateModelValue())
+              .on("tbwpaste", () => ctrl.updateModelValue());
+            $scope.$apply();
+          }, 200);
         };
       };
     },

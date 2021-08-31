@@ -122,7 +122,7 @@
           } else {
             var msg = $rootScope.translate("success");
             $rootScope.showMessage(msg, "success");
-            ctrl.initModuleForm();
+            // ctrl.initModuleForm();
             $rootScope.isBusy = false;
             $scope.$apply();
           }
