@@ -42,7 +42,13 @@ sharedComponents.component("trumbowyg", {
         plugins: {
           removeformatPasted: false,
           imageWidthModalEdit: true,
-          semantic: false,
+          resetCss: true,
+          tagsToRemove: ["p"],
+          tagClasses: {
+            p: "p",
+            h1: "h1",
+            blockquote: "bg-grey-100 rounded-xl",
+          },
           btnsDef: {
             // Customizables dropdowns
             image: {

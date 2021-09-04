@@ -11,7 +11,7 @@
     <div class="mb-3">
         <div class="input-group">
             <div class="custom-file">
-                <input id="{{$ctrl.id}}" type="file" name="pic" accept="{{$ctrl.acceptTypes}}"
+                <input id="{{$ctrl.id}}" type="file" name="pic" accept="{{$ctrl.uploadOptions.accepts}}"
                     ngf-select="$ctrl.selectFile($files)" data-files="file.files"
                     class="position-absolute hidden form-control">
                 <label class="form-label" for="{{$ctrl.id}}">Upload file...</label>

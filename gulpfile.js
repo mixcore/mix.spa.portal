@@ -73,6 +73,8 @@ paths.clientApp = {
     paths.webapp + "app-client/app.js",
     paths.webapp + "app-client/app-client-controller.js",
     paths.webapp + "app-client/components/**/*.js",
+    paths.webapp + "app-client/controllers/**/*.js",
+    paths.webapp + "app-client/services/**/*.js",
   ],
   dest: paths.webroot + "js/app-client.min.js",
 };

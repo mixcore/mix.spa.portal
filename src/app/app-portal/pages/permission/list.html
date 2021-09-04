@@ -37,8 +37,7 @@
 
             <div class="card mb-5" ng-init="getList()">
                 <div class="card-body">
-                    <table id="list-page" class="table table-hover sortable" cellspacing="0"
-                        ng-init="getList()">
+                    <table id="list-page" class="table table-hover sortable" cellspacing="0" ng-init="getList()">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" style="width: 3%;">
@@ -89,7 +88,7 @@
                                     <span ng-bind-html="item.textDefault"></span>
                                 </td>
                                 <td class="small">
-                                    <span ng-bind-html="item.url"></span>
+                                    <span ng-bind-html="item.url|trim:50"></span>
                                 </td>
                                 <td class="small">
                                     {{item.post.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}

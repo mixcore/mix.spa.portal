@@ -10,6 +10,7 @@ app.controller("PageController", [
   "PagePageRestService",
   "UrlAliasService",
   "RestMixDatabaseDataPortalService",
+  "RestMixDatabaseColumnPortalService",
   function (
     $scope,
     $rootScope,
@@ -20,7 +21,8 @@ app.controller("PageController", [
     pagePostRestService,
     pagePageRestService,
     urlAliasService,
-    dataService
+    dataService,
+    columnService
   ) {
     BaseRestCtrl.call(
       this,
@@ -147,11 +149,25 @@ app.controller("PageController", [
         $scope.additionalData.cultures = $scope.viewmodel.cultures;
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Page";
-        await dataService.save($scope.additionalData);
+        let result = await dataService.save($scope.additionalData);
+        if (!result.isSucceed) {
+          $rootScope.showErrors(result.errors);
+        } else {
+          $scope.additionalData = result.data;
+          $scope.saveColumns();
+        }
       }
       $rootScope.isBusy = false;
       $scope.$apply();
     };
+
+    $scope.saveColumns = async function () {
+      let result = await columnService.saveMany($scope.additionalData.columns);
+      if (result.isSucceed) {
+        $rootScope.showMessage("success", "success");
+      }
+    };
+
     $scope.validate = async function () {
       // Add default alias if create new page
       if (!$scope.viewmodel.id && !$scope.viewmodel.urlAliases.length) {

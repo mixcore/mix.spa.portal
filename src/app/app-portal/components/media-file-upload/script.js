@@ -10,7 +10,7 @@
     type: "=?",
     folder: "=?",
     auto: "=",
-    acceptTypes: "=?",
+    uploadOptions: "=?",
     onDelete: "&?",
     onUpdate: "&?",
     onInsert: "&?",
@@ -35,6 +35,10 @@
           .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
         ctrl.maxHeight = ctrl.maxHeight || "200px";
         ctrl.id = Math.floor(Math.random() * 100);
+        if (ctrl.uploadOptions) {
+          ctrl.w = ctrl.uploadOptions.width;
+          ctrl.h = ctrl.uploadOptions.height;
+        }
       };
       ctrl.$doCheck = function () {
         if (ctrl.src !== ctrl.srcUrl && ctrl.srcUrl != image_placeholder) {

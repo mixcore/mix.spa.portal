@@ -72,11 +72,11 @@ modules.component("additionalColumn", {
       };
       ctrl.updateOrders = function (index) {
         if (index > ctrl.dragStartIndex) {
-          ctrl.columns.splice(ctrl.dragStartIndex, 1);
+          ctrl.additionalData.columns.splice(ctrl.dragStartIndex, 1);
         } else {
-          ctrl.columns.splice(ctrl.dragStartIndex + 1, 1);
+          ctrl.additionalData.columns.splice(ctrl.dragStartIndex + 1, 1);
         }
-        angular.forEach(ctrl.columns, function (e, i) {
+        angular.forEach(ctrl.additionalData.columns, function (e, i) {
           e.priority = i;
         });
       };

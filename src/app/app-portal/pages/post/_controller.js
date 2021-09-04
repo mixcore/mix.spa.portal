@@ -9,6 +9,7 @@ app.controller("PostController", [
   "PostRestService",
   "UrlAliasService",
   "RestMixDatabaseDataPortalService",
+  "RestMixDatabaseColumnPortalService",
   function (
     $scope,
     $rootScope,
@@ -18,7 +19,8 @@ app.controller("PostController", [
     $routeParams,
     service,
     urlAliasService,
-    dataService
+    dataService,
+    columnService
   ) {
     BaseRestCtrl.call(
       this,
@@ -206,10 +208,20 @@ app.controller("PostController", [
         let result = await dataService.save($scope.additionalData);
         if (!result.isSucceed) {
           $rootScope.showErrors(result.errors);
+        } else {
+          $scope.additionalData = result.data;
+          $scope.saveColumns();
         }
       }
       $rootScope.isBusy = false;
       $scope.$apply();
+    };
+
+    $scope.saveColumns = async function () {
+      let result = await columnService.saveMany($scope.additionalData.columns);
+      if (result.isSucceed) {
+        $rootScope.showMessage("success", "success");
+      }
     };
     $scope.getSingleSuccessCallback = async function () {
       $scope.defaultThumbnailImgWidth =

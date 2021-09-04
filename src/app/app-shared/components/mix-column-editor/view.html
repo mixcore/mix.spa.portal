@@ -85,9 +85,8 @@
         <div class="text-muted col-6 p-0" ng-switch-when="upload">
             <!--upload-->
             <media-file-upload header="'Media Upload'" type="'Medias'" folder="'Medias'" auto="'true'"
-                accept-types="$ctrl.column.columnConfigurations.upload.accepts"
-                src-url="$ctrl.model.obj[$ctrl.column.name]" src="$ctrl.model.obj[$ctrl.column.name]"
-                media-file="$ctrl.mediaFile">
+                upload-options="$ctrl.column.columnConfigurations.upload" src-url="$ctrl.model.obj[$ctrl.column.name]"
+                src="$ctrl.model.obj[$ctrl.column.name]" media-file="$ctrl.mediaFile">
             </media-file-upload>
         </div>
         <div class="text-muted" ng-switch-when="color">

@@ -12,9 +12,9 @@
             has been created for this table yet!
         </div>
         <div dnd-list="$ctrl.additionalData.columns" dnd-inserted="$ctrl.updateOrders(index)">
-            <div ng-repeat="col in $ctrl.additionalData.columns track by $index" dnd-draggable="col" dnd-type="'col'"
-                ng-if="col!==null" dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedCol = col"
-                dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedCol === col}" class="">
+            <div ng-repeat="col in $ctrl.additionalData.columns track by $index" ng-if="col!==null" dnd-draggable="col"
+                dnd-type="'col'" dnd-effect-allowed="copyMove" dnd-selected="$ctrl.selectedCol = col"
+                dnd-dragstart="$ctrl.dragStart($index)" ng-class="{'selected': $ctrl.selectedCol === col}">
                 <div class="row">
                     <div class="col-md-1">
                         <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"

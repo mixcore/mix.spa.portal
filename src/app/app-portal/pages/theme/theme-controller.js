@@ -31,6 +31,7 @@ app.controller("ThemeController", [
       isIncludeAssets: true,
       isIncludeTemplates: true,
       isIncludeConfigurations: true,
+      isIncludePermissions: true,
       pages: [],
       modules: [],
       mixDatabases: [],

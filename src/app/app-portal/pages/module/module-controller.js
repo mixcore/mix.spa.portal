@@ -9,6 +9,7 @@ app.controller("ModuleController", [
   "SharedModuleDataService",
   "RestRelatedMixDatabasePortalService",
   "RestMixDatabaseDataPortalService",
+  "RestMixDatabaseColumnPortalService",
   function (
     $scope,
     $rootScope,
@@ -18,7 +19,8 @@ app.controller("ModuleController", [
     moduleServices,
     moduleDataService,
     RestRelatedMixDatabasePortalService,
-    dataService
+    dataService,
+    columnService
   ) {
     BaseRestCtrl.call(
       this,
@@ -232,9 +234,14 @@ app.controller("ModuleController", [
           $rootScope.showErrors(result.errors);
         } else {
           $scope.additionalData = result.data;
-          $rootScope.isBusy = false;
-          $scope.$apply();
+          $scope.saveColumns();
         }
+      }
+    };
+    $scope.saveColumns = async function () {
+      let result = await columnService.saveMany($scope.additionalData.columns);
+      if (result.isSucceed) {
+        $rootScope.showMessage("success", "success");
       }
     };
     $scope.loadPosts = async function () {
