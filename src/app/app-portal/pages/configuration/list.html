@@ -42,7 +42,7 @@
                                         </tr>
                                     </thead>
 
-                                    <tbody class="sortable" ng-init="getList()">
+                                    <tbody class="sortable" ng-init="init()">
                                         <tr ng-repeat="item in data.items track by $index" class="sortable-item"
                                             sort-model="configuration" sort-model-id="{{item.id}}">
                                             <td>
