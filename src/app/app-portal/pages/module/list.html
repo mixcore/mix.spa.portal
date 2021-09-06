@@ -58,10 +58,10 @@
                                 </th>
                                 <th class="col">Module</th>
                                 <th class="col">Name</th>
-                                <th class="col">Created</th>
 
                                 <th class="col">Screen</th>
                                 <th class="col">Author</th>
+                                <th class="col"></th>
                                 <th class="col"></th>
                                 <th class="col"></th>
                             </tr>
@@ -91,22 +91,26 @@
                       </td> -->
                                 <td>
                                     <a href="/portal/module/details/{{item.id}}" class="btn-link">
+                                        <small ng-if="item.type == 'ListPost'"><i class="fas fa-book"></i></small>
+                                        <small ng-if="item.type == 'Data'"><i class="far fa-list-alt"></i></small>
+                                        <small ng-if="item.type == 'Content'"><i class="far fa-file-alt"></i></small>
                                         {{item.title}}
                                     </a>
                                 </td>
                                 <td class="text-black-50">
                                     <small>{{item.name}}</small>
                                 </td>
-                                <td class="text-black-50">
-                                    <small>
-                                        {{item.lastModified | utcToLocal:'d.M.yyyy h:mm a'}}
-                                    </small>
-                                </td>
                                 <td>
                                     <preview-image img-height="25" img-src="item.image"></preview-image>
                                 </td>
                                 <td class="text-black-50">
                                     <small>{{item.createdBy}}</small>
+                                </td>
+                                <td class="text-black-50">
+                                    <small>
+                                        <i class="far fa-clock"
+                                            title="Last Modified at {{item.lastModified | utcToLocal:'d.M.yyyy h:mm a'}}"></i>
+                                    </small>
                                 </td>
                                 <td class="text-black-50">
                                     <small ng-if="item.status == 'Published'">🟢</small>

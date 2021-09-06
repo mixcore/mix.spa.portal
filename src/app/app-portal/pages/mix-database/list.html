@@ -52,8 +52,8 @@
                                 <th class="col">Database</th>
                                 <th class="col">Name</th>
                                 <th class="col">Type</th>
-                                <th class="col">Created</th>
                                 <th class="col">Author</th>
+                                <th class="col"></th>
                                 <th class="col"></th>
                                 <th class="col"></th>
                             </tr>
@@ -85,12 +85,13 @@
                                 </td>
                                 <td>
                                     <small class="text-black-50">
-                                        {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
+                                        {{item.createdBy}}
                                     </small>
                                 </td>
-                                <td>
-                                    <small class="text-black-50">
-                                        {{item.createdBy}}
+                                <td class="text-black-50">
+                                    <small>
+                                        <i class="far fa-clock"
+                                            title="Created at {{item.createdDateTime | utcToLocal:'d.M.yyyy h:mm a'}}"></i>
                                     </small>
                                 </td>
                                 <td class="text-black-50">
