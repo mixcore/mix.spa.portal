@@ -68,7 +68,7 @@ sharedComponents.component("trumbowyg", {
                         ["image"],
                         ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
                         ["unorderedList", "orderedList"],
-                        ['indent', 'outdent']
+                        ["indent", "outdent"]
                         ["preformatted"],
                         ["horizontalRule"],
                         ["fullscreen"],
@@ -85,7 +85,6 @@ sharedComponents.component("trumbowyg", {
                             urlPropertyName: "data.link",
                         },
                         table: {},
-                        colors: {},
                         fontfamily: {
                             init: function (trumbowyg) {
                                 trumbowyg.o.plugins.fontfamily =
