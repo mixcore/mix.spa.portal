@@ -106,7 +106,7 @@ app.controller("PostController", [
         }
 
         // $scope.viewmodel.createdDateTime = Date.now();
-        $scope.viewmodel.createdBy = $rootScope.authentication.userName;
+        $scope.viewmodel.createdBy = $rootScope.authentication.username;
 
         $rootScope.isBusy = false;
         $scope.$apply();

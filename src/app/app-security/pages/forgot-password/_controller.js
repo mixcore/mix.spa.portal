@@ -66,7 +66,7 @@ app.controller("ForgotPasswordController", [
 
           authService.externalAuthData = {
             provider: fragment.provider,
-            userName: fragment.external_user_name,
+            username: fragment.external_user_name,
             externalAccessToken: fragment.external_access_token,
           };
 

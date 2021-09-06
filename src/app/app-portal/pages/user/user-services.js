@@ -1,12 +1,8 @@
 ﻿"use strict";
 app.factory("UserServices", [
-  "$http",
   "ApiService",
-  "CommonService",
   "ngAppSettings",
-  function ($http, apiService, commonService, ngAuthSettings) {
-    //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
-
+  function (apiService, ngAuthSettings) {
     var usersServiceFactory = {};
     var apiUrl = "/account/";
 

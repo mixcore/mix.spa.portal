@@ -5,7 +5,7 @@ app.controller("RegisterController", [
   "RegisterServices",
   function ($scope, $rootScope, services) {
     $scope.user = {
-      userName: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",

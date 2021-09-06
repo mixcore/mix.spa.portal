@@ -17,7 +17,7 @@ app.controller("Step2Controller", [
     authService
   ) {
     $scope.user = {
-      userName: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -38,7 +38,7 @@ app.controller("Step2Controller", [
           if (result.isSucceed) {
             await commonService.fillAllSettings();
             var loginData = {
-              userName: $scope.user.userName,
+              username: $scope.user.username,
               password: $scope.user.password,
               rememberMe: true,
             };
@@ -77,7 +77,7 @@ app.controller("Step2Controller", [
           var result = await services.register($scope.user);
           if (result.isSucceed) {
             var loginData = {
-              userName: $scope.user.userName,
+              username: $scope.user.username,
               password: $scope.user.password,
               rememberMe: true,
             };

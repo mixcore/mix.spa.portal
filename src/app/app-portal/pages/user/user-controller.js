@@ -158,7 +158,7 @@ app.controller("UserController", [
       var resp = await userServices.saveUser($scope.activedUser);
       if (resp && resp.isSucceed) {
         $rootScope.showMessage("Update successfully!", "success");
-        if ($scope.activedUser.id == authService.authentication.id) {
+        if ($scope.activedUser.user.id == authService.authentication.info.id) {
           authService
             .refreshToken(
               authService.authentication.refresh_token,

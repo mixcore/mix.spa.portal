@@ -25,7 +25,7 @@ app.controller("LoginController", [
     $scope.pageClass = "page-login";
 
     $scope.loginData = {
-      userName: "",
+      username: "",
       password: "",
       rememberMe: true,
     };
@@ -120,7 +120,7 @@ app.controller("LoginController", [
 
           authService.externalAuthData = {
             provider: fragment.provider,
-            userName: fragment.external_user_name,
+            username: fragment.external_user_name,
             externalAccessToken: fragment.external_access_token,
           };
 

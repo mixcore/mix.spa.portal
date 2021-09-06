@@ -20,10 +20,6 @@
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
                     <actions preview-url="activedUser.user.fullPath" back-url="'/portal/user/list'"></actions>
-                    <custom-image header="'Avatar'" auto="'true'" type="'Users'" folder="'Avatars'"
-                        src-url="activedUser.user.avatar" src="activedUser.user.avatar"
-                        posted-file="activedUser.mediaFile">
-                    </custom-image>
                 </div>
             </nav>
         </aside>
@@ -39,7 +35,8 @@
 
                         <div class="mb-3">
                             <label class="form-label">Username</label>
-                            <input type="text" class="form-control form-control-lg" ng-model="activedUser.user.userName" />
+                            <input type="text" class="form-control form-control-lg"
+                                ng-model="activedUser.user.userName" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>

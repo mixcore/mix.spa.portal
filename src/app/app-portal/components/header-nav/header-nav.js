@@ -16,7 +16,7 @@
           ctrl.localizeSettings.cultures = $rootScope.globalSettings.cultures;
           authService.fillAuthData().then(() => {
             if (authService.authentication && authService.authentication.info) {
-              ctrl.avatar = authService.authentication.info.user.Avatar;
+              ctrl.avatar = authService.authentication.info.userData.avatar;
             }
           });
         };

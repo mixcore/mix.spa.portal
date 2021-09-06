@@ -16,7 +16,7 @@ appShared.controller("LoginPopupController", [
     commonService
   ) {
     $scope.loginData = {
-      userName: "",
+      username: "",
       password: "",
       rememberMe: false,
     };

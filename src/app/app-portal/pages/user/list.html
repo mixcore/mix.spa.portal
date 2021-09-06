@@ -63,7 +63,7 @@
                                     <small><span ng-bind="item.id"></span></small>
                                 </td> -->
                                 <td>
-                                    <small ng-bind="item.userName"></small>
+                                    <small ng-bind="item.username"></small>
                                 </td>
                                 <!-- <td>
                             <small>
@@ -96,11 +96,12 @@
                             </tr>
                         </tbody>
                     </table>
-                </div><div class="card-body">
-                
+                </div>
+                <div class="card-body">
+
                     <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-                        ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="loadUsers(page-1)"
-                        scroll-top="true">
+                        ul-class="pagination justify-content-end m-0" a-class="page-link"
+                        paging-action="loadUsers(page-1)" scroll-top="true">
                 </div>
             </div>
         </div>

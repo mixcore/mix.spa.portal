@@ -408,7 +408,7 @@ appShared.run([
           }
         );
       } else {
-        alert(content);
+        console.log(content);
       }
     };
     $rootScope.encrypt = function (message) {

@@ -53,7 +53,7 @@ appShared.factory("AuthService", [
 
     var _login = async function (loginData) {
       var data = {
-        UserName: loginData.userName,
+        UserName: loginData.username,
         Password: loginData.password,
         RememberMe: loginData.rememberMe,
         Email: "",
@@ -102,7 +102,7 @@ appShared.factory("AuthService", [
     var _externalLogin = async function (loginData, provider) {
       var data = {
         provider: provider,
-        userName: loginData.userName,
+        username: loginData.username,
         email: loginData.email,
         externalAccessToken: loginData.accessToken,
       };

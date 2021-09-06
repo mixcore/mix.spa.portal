@@ -49,8 +49,8 @@ app.controller("TemplateController", [
     $scope.init = async function () {
       authService.fillAuthData().then(function () {
         $scope.user = {
-          username: authService.authentication.info.user.UserName,
-          avatar: authService.authentication.info.user.Avatar,
+          username: authService.authentication.info.username,
+          avatar: authService.authentication.info.userData.avatar,
         };
         $scope.startConnection("editFileHub", () => {
           if ($routeParams.id) {
