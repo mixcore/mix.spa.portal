@@ -5,7 +5,7 @@
         </button>
     </div>
     <div class="btn-group flex-fill me-3">
-        <button id="btnToSubmit" type="submit" class="btn btn-primary  ms-auto" ng-click="$ctrl.submit($event)">
+        <button id="btnToSubmit" type="submit" class="btn btn-primary  ms-auto" ng-if="!$ctrl.primaryUrl" ng-click="$ctrl.submit($event)">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24"
                 height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -19,17 +19,13 @@
     </div>
     <div class="btn-group me-2">
         <div class="dropdown float-lg-end ms-auto pe-1">
-            <a href="javascript:;" class="cursor-pointer" id="dropdownTable2" data-bs-toggle="dropdown"
-                aria-expanded="false">
+            <a href="javascript:;" class="cursor-pointer" id="dropdownTable2" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i>
             </a>
             <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable2" style="">
                 <li>
-                    <a ng-if="$ctrl.previewUrl" target="_blank" href="{{$ctrl.previewUrl}}"
-                        class="dropdown-item border-radius-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check"
-                            width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <a ng-if="$ctrl.previewUrl" target="_blank" href="{{$ctrl.previewUrl}}" class="dropdown-item border-radius-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-check" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <circle cx="12" cy="12" r="2" />
                             <path
@@ -41,9 +37,7 @@
                 </li>
                 <li>
                     <a ng-if="$ctrl.contentUrl" href="{{$ctrl.contentUrl}}" class="dropdown-item border-radius-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-notes" width="20"
-                            height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-notes" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <rect x="5" y="3" width="14" height="18" rx="2" />
                             <line x1="9" y1="7" x2="15" y2="7" />
@@ -53,8 +47,7 @@
                         <span>Data List</span>
                     </a>
                 </li>
-                <li><button type="button" ng-click="$ctrl.clearCache()" ng-if="$ctrl.onClearCache"
-                        class="dropdown-item border-radius-md">
+                <li><button type="button" ng-click="$ctrl.clearCache()" ng-if="$ctrl.onClearCache" class="dropdown-item border-radius-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="20"
                             height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
                             stroke-linecap="round" stroke-linejoin="round">

@@ -79,6 +79,9 @@ app.controller("PagePostController", [
                 "Deleted data will not able to recover, are you sure you want to delete this item?"
             );
         };
+        $scope.back = function() {
+            window.history.back();
+        };
 
         $scope.removeConfirmed = async function(id) {
             $rootScope.isBusy = true;
