@@ -39,9 +39,9 @@ app.controller("ModuleController", [
 
             if ($scope.viewmodel.id > 0) {
                 // module => list post or list product
-                if ($scope.viewmodel.type == 2 || $scope.viewmodel.type == 6) {
+                if ($scope.viewmodel.type.localeCompare("ListPost") == 0) {
                     $scope.contentUrl = "/portal/module-post/list/" + $scope.viewmodel.id;
-                } else {
+                } else if ($scope.viewmodel.type.localeCompare("Data") == 0) {
                     $scope.contentUrl = "/portal/module-data/list/" + $scope.viewmodel.id;
                 }
             }
