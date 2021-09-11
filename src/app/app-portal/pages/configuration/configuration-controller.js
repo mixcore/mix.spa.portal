@@ -27,7 +27,7 @@ app.controller("ConfigurationController", [
       service
     );
     $scope.init = function () {
-      $scope.request.category = $routeParams.category;
+      $scope.request.category = $routeParams.category || "";
       $scope.getList();
     };
     $scope.getSingleSuccessCallback = function () {

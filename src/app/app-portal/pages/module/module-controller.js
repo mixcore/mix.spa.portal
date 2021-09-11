@@ -47,13 +47,13 @@ app.controller("ModuleController", [
       }
       if ($scope.viewmodel.sysCategories) {
         angular.forEach($scope.viewmodel.sysCategories, function (e) {
-          e.attributeData.obj.isActived = true;
+          e.additionalData.obj.isActived = true;
         });
       }
 
       if ($scope.viewmodel.sysTags) {
         angular.forEach($scope.viewmodel.sysTags, function (e) {
-          e.attributeData.obj.isActived = true;
+          e.additionalData.obj.isActived = true;
         });
       }
 
@@ -276,7 +276,7 @@ app.controller("ModuleController", [
     };
     $scope.removeAttributeConfirmed = function (attr, index) {
       RestRelatedMixDatabasePortalService.delete([]);
-      $scope.viewmodel.attributeData.data.values.splice(index, 1);
+      $scope.viewmodel.additionalData.data.values.splice(index, 1);
     };
     $scope.loadAdditionalData = async function () {
       const obj = {

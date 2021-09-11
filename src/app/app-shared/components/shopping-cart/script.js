@@ -1,18 +1,17 @@
-﻿modules.component("shoppingCart", {
-  templateUrl: "/mix-app/views/app-client/components/shopping-cart/view.html",
+﻿sharedComponents.component("shoppingCart", {
+  templateUrl: "/mix-app/views/app-shared/components/shopping-cart/view.html",
   bindings: {
     cartData: "=?",
     successCallback: "&?",
   },
   controller: "ShoppingCartController",
 });
-modules.controller("ShoppingCartController", [
+sharedComponents.controller("ShoppingCartController", [
   "$rootScope",
   "$scope",
-  "$element",
   "localStorageService",
   "RestMixDatabaseDataClientService",
-  function ($rootScope, $scope, $element, localStorageService, dataService) {
+  function ($rootScope, $scope, localStorageService, dataService) {
     $scope.submitted = false;
     $scope.isShow = false;
     $scope.init = function (validateCallback, successCallback, failCallback) {

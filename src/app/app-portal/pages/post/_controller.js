@@ -269,15 +269,15 @@ app.controller("PostController", [
       }
       if ($scope.viewmodel.sysCategories) {
         angular.forEach($scope.viewmodel.sysCategories, function (e) {
-          e.attributeData.obj.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
+          e.additionalData.obj.isActived = true;
+          $scope.selectedCategories.push(e.additionalData.obj);
         });
       }
 
       if ($scope.viewmodel.sysTags) {
         angular.forEach($scope.viewmodel.sysTags, function (e) {
-          e.attributeData.obj.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
+          e.additionalData.obj.isActived = true;
+          $scope.selectedCategories.push(e.additionalData.obj);
         });
       }
       if ($routeParams.template) {

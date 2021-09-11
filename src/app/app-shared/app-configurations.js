@@ -767,7 +767,3 @@ appShared.run([
     };
   },
 ]);
-
-// if (document.getElementsByTagName('trumbowyg').length) { //  ($.trumbowyg) {
-//     $.trumbowyg.svgPath = '/assets/icons.svg';
-// }

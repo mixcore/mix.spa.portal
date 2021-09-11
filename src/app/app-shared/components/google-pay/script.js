@@ -66,8 +66,8 @@
       ctrl.getGoogleTransactionInfo = function () {
         return {
           displayItems: ctrl.items,
-          countryCode: "US",
-          currencyCode: "USD",
+          countryCode: "VN",
+          currencyCode: "VND",
           totalPriceStatus: "FINAL",
           totalPrice: `${ctrl.totalPrice}`,
           totalPriceLabel: "Total",

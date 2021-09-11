@@ -35,34 +35,34 @@ app.controller("UserController", [
     $scope.login = async function () {
       var result = await authService.login($scope.loginData);
       if (result.isSucceed) {
-        window.top.location = window.top.location;
+        $rootScope.executeFunctionByName("loginSuccess", [result.data]);
       } else {
-        alert(result.errors[0]);
+        $rootScope.executeFunctionByName("loginFail", [result.errors]);
       }
     };
 
     $scope.save = async function () {
       $rootScope.isBusy = true;
       var resp = null;
-      if (!user.id) {
+      if (!$scope.user.id) {
         resp = await userService.register($scope.user);
       } else {
         resp = await userService.saveUser($scope.user);
       }
       if (resp && resp.isSucceed) {
         $scope.user = resp.data;
-        $rootScope.showMessage("Update successfully!", "success");
         authService
           .refreshToken(
             authService.authentication.refresh_token,
             authService.authentication.access_token
           )
           .then(() => {
-            window.location = window.location;
+            $rootScope.executeFunctionByName("saveUserSuccess", [resp.Data]);
           });
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
+        $rootScope.executeFunctionByName("saveUserFail", [resp.errors]);
         if (resp) {
           $rootScope.showErrors(resp.errors);
         }
@@ -84,30 +84,18 @@ app.controller("UserController", [
         $scope.$apply();
       }
     };
-    $scope.save = async function () {
-      $rootScope.isBusy = true;
-      var resp = await userService.saveUser($scope.user);
-      if (resp && resp.isSucceed) {
-        $rootScope.showMessage("Update successfully!", "success");
-        if ($scope.user.id == authService.authentication.info.id) {
-          authService
-            .refreshToken(
-              authService.authentication.refresh_token,
-              authService.authentication.access_token
-            )
-            .then(() => {
-              window.location = window.location;
-            });
-        }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        if (resp) {
-          $rootScope.showErrors(resp.errors);
-        }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
-    };
   },
 ]);
+
+window.loginSuccess = function (data) {
+  window.top.location = window.top.location;
+};
+window.loginFail = function (errors) {
+  console.error(errors);
+};
+window.saveUserSuccess = function (data) {
+  window.top.location = window.top.location;
+};
+window.saveUserFail = function (errors) {
+  console.error(errors);
+};
