@@ -1,6 +1,7 @@
 <div class="d-inline-flex align-items-center collapsed w-100 {{$ctrl.itemStyle}}" ng-if="!$ctrl.item.isHiden">
     <!-- <a href="{{$ctrl.item.url}}" class="text {{$ctrl.linkStyle}}" ng-click="$ctrl.item.isActive = !$ctrl.item.isActive"> -->
-    <span class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span>
+    <span ng-if="$ctrl.item.icon" class="{{$ctrl.item.icon}} mi-lg mi-fw me-3 text-primary"></span>
+    <span ng-if="!$ctrl.item.icon" class="mi mi-Info mi-lg mi-fw me-3 text-primary"></span>
     <span ng-bind="$ctrl.translate($ctrl.item.textKeyword, false, $ctrl.item.textDefault)"></span>
     <!-- </a> -->
     <span class="btn-group btn-group-sm position-absolute end-0 me-2" role="group" aria-label="Quick Actions" ng-if="$ctrl.item.childPages.length == 0">
