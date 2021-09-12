@@ -68,7 +68,7 @@ sharedComponents.component("trumbowyg", {
                         ["image"],
                         ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"],
                         ["unorderedList", "orderedList"],
-                        ["indent", "outdent"]
+                        ["indent", "outdent"],
                         ["preformatted"],
                         ["horizontalRule"],
                         ["fullscreen"],
