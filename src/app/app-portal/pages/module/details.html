@@ -69,7 +69,7 @@
                                                 <input ng-model="viewmodel.createdBy" class="form-control" readonly="readonly" />
                                             </div>
                                         </div>
-                                        <div class="mb-3 mb-0">
+                                        <div ng-if="isAdmin" class="mb-3 mb-0">
                                             <label class="form-label">Template</label>
                                             <div class="input-group">
                                                 <span class="input-group-text" id="basic-addon1"><i
