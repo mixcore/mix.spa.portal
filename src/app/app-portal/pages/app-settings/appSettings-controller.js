@@ -25,8 +25,10 @@ app.controller("AppSettingsController", [
     $scope.appSettings = null;
     $scope.errors = [];
     $scope.statuses = ngAppSettings.contentStatuses;
+    $scope.cultures = $rootScope.globalSettings.cultures;
     $scope.getAppSettings = async function (id) {
       $rootScope.isBusy = true;
+
       var resp = await appSettingsServices.getAppSettings();
       if (resp && resp.isSucceed) {
         $scope.appSettings = JSON.stringify(resp.data);

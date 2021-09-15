@@ -34,6 +34,11 @@
                                     class="far fa-list-alt text-primary"></span> List
                                 languages</a>
                         </h6>
+                        <h6>Default Language</h6>
+                        <select class="form-select" ng-model="appSettings.GlobalSettings.DefaultCulture">
+                            <option ng-repeat="item in cultures" ng-value="item.specificulture">
+                                {{item.specificulture}}</option>
+                        </select>
                     </div>
                     <div class="card card-body">
                         <h6>

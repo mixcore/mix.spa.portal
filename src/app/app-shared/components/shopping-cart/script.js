@@ -36,6 +36,7 @@ sharedComponents.controller("ShoppingCartController", [
       $scope.cartData.items.splice(index, 1);
       $scope.calculate();
     };
+
     $scope.submit = async function () {
       $scope.onValidate();
       if ($scope.frmCheckOut.$valid) {
@@ -65,16 +66,7 @@ sharedComponents.controller("ShoppingCartController", [
       }
     };
     $scope.onSuccess = function (resp) {
-      setTimeout(() => {
-        $scope.submitting = false;
-      }, 1000);
-      $scope.cartData = {
-        items: [],
-        totalItem: 0,
-        total: 0,
-      };
-      localStorageService.set("shoppingCart", $scope.cartData);
-
+      $scope.cartData = resp.obj;
       if ($scope.successCallback) {
         $rootScope.executeFunctionByName(
           $scope.successCallback,
@@ -82,6 +74,15 @@ sharedComponents.controller("ShoppingCartController", [
           window
         );
       } else {
+        setTimeout(() => {
+          $scope.submitting = false;
+        }, 1000);
+        $scope.cartData = {
+          items: [],
+          totalItem: 0,
+          total: 0,
+        };
+        localStorageService.set("shoppingCart", $scope.cartData);
         window.location.href = "/";
       }
     };
