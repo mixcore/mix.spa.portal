@@ -19,8 +19,9 @@
       ctrl.icons = ngAppSettings.icons;
       this.dataTypes = ngAppSettings.dataTypes;
       ctrl.$onInit = function () {
-        ctrl.dataType =
-          ctrl.data.dataType.toLowerCase() || ctrl.dataType.toLowerCase();
+        ctrl.dataType = ctrl.datatype
+          ? ctrl.datatype.toLowerCase()
+          : ctrl.data.dataType.toLowerCase();
         switch (ctrl.dataType) {
           case "datetime":
           case "date":

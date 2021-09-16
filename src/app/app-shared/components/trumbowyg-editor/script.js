@@ -1,30 +1,19 @@
-sharedComponents.component("trumbowyg", {
-  templateUrl: "/mix-app/views/app-shared/components/trumbowyg/trumbowyg.html",
+﻿sharedComponents.component("trumbowygEditor", {
+  templateUrl:
+    "/mix-app/views/app-shared/components/trumbowyg-editor/view.html",
   bindings: {
-    options: "<?",
-    ngDisabled: "<?",
-    placeholder: "@?",
-    onFocus: "&?",
-    onBlur: "&?",
-    onInit: "&?",
-    onChange: "&?",
-    onResize: "&?",
-    onPaste: "&?",
-    onOpenfullscreen: "&?",
-    onClosefullscreen: "&?",
-    onClose: "&?",
-    removeformatPasted: "=",
-  },
-  require: {
-    ngModel: "ngModel",
+    content: "=",
   },
   controller: [
-    "$element",
+    "$rootScope",
     "$scope",
+    "$element",
     "$attrs",
     "ngAppSettings",
-    function ($element, $scope, $attrs) {
+    function ($rootScope, $scope, $element, $attrs, ngAppSettings) {
       var ctrl = this;
+      ctrl.previousId = null;
+      ctrl.editor = null;
       const TBW_EVENTS = [
           "focus",
           "blur",
@@ -100,18 +89,29 @@ sharedComponents.component("trumbowyg", {
           },
         },
       };
-      ctrl.getElementReference = function () {
-        return $($element.find("div"));
+      ctrl.$onChanges = (changes) => {
+        setTimeout(() => {
+          ctrl.initializeEditor();
+        }, 100);
       };
 
-      ctrl.getEditorReference = function () {
-        return ctrl.getElementReference().find(".trumbowyg-editor");
-      };
-      ctrl.updateModelValue = () => {
-        $scope.$applyAsync(() => {
-          const value = ctrl.getEditorReference().trumbowyg("html");
-          ctrl.ngModel.$setViewValue(value);
+      ctrl.initializeEditor = () => {
+        ctrl.editor = $($element.find("div"));
+        if (ctrl.removeformatPasted) {
+          ctrl.options.plugins.removeformatPasted =
+            ctrl.removeformatPasted == "true";
+        }
+        ctrl.editor
+          .trumbowyg(ctrl.options.plugins)
+          .on("tbwchange", () => ctrl.updateModelValue())
+          .on("tbwpaste", () => ctrl.updateModelValue());
+        angular.forEach(TBW_EVENTS, (event) => {
+          ctrl.editor.on(`${EVENTS_PREFIX}${event}`, () =>
+            ctrl.emitEvent(event)
+          );
         });
+
+        ctrl.editor.trumbowyg("html", ctrl.content);
       };
 
       ctrl.emitEvent = (event) => {
@@ -121,49 +121,11 @@ sharedComponents.component("trumbowyg", {
         }
       };
 
-      ctrl.initializeEditor = (element, options) => {
-        if (ctrl.removeformatPasted) {
-          ctrl.options.plugins.removeformatPasted =
-            ctrl.removeformatPasted == "true";
-        }
-        element
-          .trumbowyg(ctrl.options.plugins)
-          .on("tbwchange", () => ctrl.updateModelValue())
-          .on("tbwpaste", () => ctrl.updateModelValue());
-        angular.forEach(TBW_EVENTS, (event) => {
-          element.on(`${EVENTS_PREFIX}${event}`, () => ctrl.emitEvent(event));
+      ctrl.updateModelValue = () => {
+        $scope.$applyAsync(() => {
+          const value = ctrl.editor.trumbowyg("html");
+          ctrl.content = value;
         });
-        ctrl.ngModel.$render();
-      };
-
-      ctrl.$onDestroy = () => {
-        ctrl.getElementReference().trumbowyg("destroy");
-      };
-
-      ctrl.$onChanges = (changes) => {
-        const element = ctrl.getElementReference();
-
-        if (changes.options && !changes.options.isFirstChange()) {
-          element.trumbowyg("destroy");
-        }
-        ctrl.options = ctrl.options || {};
-        ctrl.initializeEditor(element, angular.extend({}, ctrl.options));
-
-        if (changes.ngDisabled) {
-          element.trumbowyg(ctrl.ngDisabled ? "disable" : "enable");
-        }
-
-        if (changes.placeholder) {
-          ctrl.getEditorReference().attr("placeholder", ctrl.placeholder);
-        }
-      };
-
-      ctrl.$onInit = () => {
-        ctrl.ngModel.$render = () => {
-          const element = ctrl.getEditorReference();
-          debugger;
-          element.trumbowyg("html", ctrl.ngModel.$modelValue);
-        };
       };
     },
   ],

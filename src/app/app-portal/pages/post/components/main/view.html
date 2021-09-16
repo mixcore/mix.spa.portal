@@ -12,12 +12,11 @@
 
     <div class="mb-3">
         <label class="form-label">Excerpt</label>
-        <textarea class="form-control" ng-model="$ctrl.post.excerpt" ng-blur="$ctrl.generateSeo()" rows="4">
-{{$ctrl.post.excerpt}}</textarea>
+        <textarea class="form-control" ng-model="$ctrl.post.excerpt" ng-blur="$ctrl.generateSeo()" rows="4"></textarea>
     </div>
     <div class="mb-3"><label class="form-label">Content body</label>
         <!-- <quill-editor content="$ctrl.post.content"></quill-editor> -->
-        <trumbowyg ng-model="$ctrl.post.content"></trumbowyg>
+        <trumbowyg-editor content="$ctrl.post.content"></trumbowyg-editor>
     </div>
 
     <div class="mb-3 mb-0">

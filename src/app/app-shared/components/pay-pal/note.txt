@@ -1,0 +1,17 @@
+https://developer.paypal.com/docs/checkout/integrate
+
+ - Add paypal js lib 
+
+ <script
+    src="https://www.paypal.com/sdk/js?client-id="> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+</script>
+
+
+
+Card Type: Visa
+
+Card Number: 4032039687100844
+
+Expiration Date: 04/2025
+
+CVV: 328

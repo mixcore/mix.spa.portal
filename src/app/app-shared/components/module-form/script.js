@@ -57,6 +57,15 @@
             ctrl.data.postId = ctrl.postId;
             ctrl.data.productId = ctrl.productId;
             ctrl.data.categoryId = ctrl.categoryId;
+            angular.forEach(ctrl.data.dataProperties, function (e) {
+              if (!ctrl.data.jItem[e.name]) {
+                ctrl.data.jItem[e.name] = {
+                  dataType: e.dataType,
+                  value: null,
+                };
+              }
+            });
+
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
