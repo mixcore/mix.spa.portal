@@ -40,6 +40,7 @@ app.controller("PostController", [
       databaseName: "",
       title: "All",
     };
+    $scope.cateRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest.mixDatabaseName = "post_type";
     $scope.postTypeRequest.orderBy = "Priority";
@@ -61,7 +62,17 @@ app.controller("PostController", [
       }
       $scope.pageName = "postList";
       await $scope.loadPostTypes();
+      await $scope.loadCategories();
       $scope.getList();
+    };
+    $scope.loadCategories = async function () {
+      $scope.cateRequest.mixDatabaseName = "sys_category";
+      var response = await dataService.getList($scope.cateRequest);
+      if (response.isSucceed) {
+        $scope.categories = response.data;
+        $scope.isBusy = false;
+        $scope.$apply();
+      }
     };
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
@@ -242,6 +253,7 @@ app.controller("PostController", [
         "databaseName",
         $scope.request.postType
       );
+      await $scope.loadCategories();
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleId of moduleIds.split(",")) {
@@ -269,15 +281,15 @@ app.controller("PostController", [
       }
       if ($scope.viewmodel.sysCategories) {
         angular.forEach($scope.viewmodel.sysCategories, function (e) {
-          e.additionalData.obj.isActived = true;
-          $scope.selectedCategories.push(e.additionalData.obj);
+          e.attributeData.obj.isActived = true;
+          $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
 
       if ($scope.viewmodel.sysTags) {
         angular.forEach($scope.viewmodel.sysTags, function (e) {
-          e.additionalData.obj.isActived = true;
-          $scope.selectedCategories.push(e.additionalData.obj);
+          e.attributeData.obj.isActived = true;
+          $scope.selectedCategories.push(e.attributeData.obj);
         });
       }
       if ($routeParams.template) {

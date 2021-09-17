@@ -1,6 +1,6 @@
 ﻿modules.component("relatedNavs", {
   templateUrl:
-    "/mix-app/views/app-portal/components/related-navigations/view.html",
+    "/mix-app/views/app-portal/pages/post/components/related-navigations/view.html",
   bindings: {
     request: "=",
     prefix: "=",
@@ -8,11 +8,14 @@
     culture: "=",
     navs: "=",
     data: "=",
+    categories: "=",
+    postTypes: "=",
     loadData: "&",
   },
   controller: [
     "$rootScope",
-    function ($rootScope) {
+    "$scope",
+    function ($rootScope, $scope) {
       var ctrl = this;
       ctrl.selected = null;
       ctrl.activeItem = function (item, index) {
@@ -35,10 +38,11 @@
         }
       };
       ctrl.load = async function (pageIndex) {
-        if (pageIndex) {
+        if (pageIndex !== undefined) {
           ctrl.request.pageIndex = pageIndex;
         }
         ctrl.data = await ctrl.loadData({ pageIndex: ctrl.request.pageIndex });
+        $scope.$apply();
       };
       ctrl.checkActived = function (item) {
         if (ctrl.navs) {

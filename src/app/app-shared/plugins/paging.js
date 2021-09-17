@@ -36,6 +36,7 @@ angular.module("bw.paging", []).directive("paging", function () {
       page: "=",
       pageSize: "=",
       total: "=",
+      scrollTop: "=",
       disabled: "@",
       dots: "@",
       ulClass: "@",
@@ -141,7 +142,7 @@ angular.module("bw.paging", []).directive("paging", function () {
     scope.hideIfEmpty = evalBoolAttribute(scope, attrs.hideIfEmpty);
     scope.showPrevNext = evalBoolAttribute(scope, attrs.showPrevNext);
     scope.showFirstLast = evalBoolAttribute(scope, attrs.showFirstLast);
-    scope.scrollTop = evalBoolAttribute(scope, attrs.scrollTop);
+    scope.scrollTop = String(scope.scrollTop) == "true"; //evalBoolAttribute(scope, attrs.scrollTop);
     scope.isDisabled = evalBoolAttribute(scope, attrs.disabled);
   }
 

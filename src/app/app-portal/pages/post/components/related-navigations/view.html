@@ -33,10 +33,11 @@
             </tbody>
         </table>
         <paging class="small" page="$ctrl.data.page" page-size="$ctrl.data.pageSize" total="$ctrl.data.totalItems"
-            ul-class="pagination pagination-sm justify-content-end m-0" a-class="page-link"
-            paging-action="callback(page-1)" scroll-top="true"></paging>
+            scroll-top="'false'" ul-class="pagination pagination-sm justify-content-end m-0" a-class="page-link"
+            paging-action="$ctrl.load(page-1)" scroll-top="'false'"></paging>
     </div>
     <div class="col-4">
-        <filter-list request="$ctrl.request" callback="$ctrl.load(pageIndex)"></filter-list>
+        <post-filter-list request="$ctrl.request" categories="$ctrl.categories" post-types="$ctrl.postTypes"
+            callback="$ctrl.load(pageIndex)"></post-filter-list>
     </div>
 </div>

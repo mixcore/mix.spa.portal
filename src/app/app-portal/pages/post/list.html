@@ -18,13 +18,9 @@
         <aside class="bd-sidebar sub-sidebar">
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
-                    <filter-list request="request" callback="getList(pageIndex)" create-url="createUrl"
-                        create-text="'Create Post'">
-                    </filter-list>
-
-                    <select class="form-select my-3"
-                        ng-options="item as item.title for item in postTypes track by item.title"
-                        ng-change="onSelectType();" ng-model="postType"></select>
+                    <post-filter-list request="request" categories="categories" post-types="postTypes"
+                        callback="getList(pageIndex)" create-url="createUrl" create-text="'Create Post'">
+                    </post-filter-list>
                     <select class="form-select" ng-model="selectedList.action">
                         <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
                     </select>

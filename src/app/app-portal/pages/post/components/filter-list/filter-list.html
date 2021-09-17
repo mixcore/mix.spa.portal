@@ -31,6 +31,21 @@
             </select>
         </div>
     </div>
+    <div class="col-12">
+        <div class="input-group mb-3">
+            <select class="form-select" ng-model="$ctrl.request.category" ng-change="$ctrl.apply(0)">
+                <option selected value="">All</option>
+                <option ng-repeat="item in $ctrl.categories.items track by $index" value="{{item.obj.slug}}">
+                    {{item.obj.title}}
+                </option>
+            </select>
+            <select class="form-select" ng-model="$ctrl.request.postType" ng-change="$ctrl.apply(0)">
+                <option ng-repeat="item in $ctrl.postTypes track by $index" value="{{item.databaseName}}">
+                    {{item.title}}
+                </option>
+            </select>
+        </div>
+    </div>
 
     <div class="col-12">
         <div class="input-group mb-3">
