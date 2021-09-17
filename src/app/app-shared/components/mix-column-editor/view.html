@@ -101,8 +101,8 @@
             <!--Boolean-->
             <div class="form-check">
                 <input class="form-check-input {{$ctrl.inputClass}}" type="checkbox"
-                    placeholder="{{$ctrl.translate($ctrl.column.title)}}" ng-model="$ctrl.model.obj[$ctrl.column.name]"
-                    ng-checked="$ctrl.model.obj[$ctrl.column.name]" />
+                    placeholder="{{$ctrl.translate($ctrl.column.title)}}"
+                    ng-model="$ctrl.model.obj[$ctrl.column.name]" />
                 <lable ng-bind="$ctrl.model.obj[$ctrl.column.name]" class="form-check-label"></label>
             </div>
         </div>
@@ -139,6 +139,16 @@
         <div class="text-muted" ng-switch-when="qrcode">
             <!--Text-->
             <qr-code model="$ctrl.model.obj[$ctrl.column.name]"></qr-code>
+        </div>
+        <div class="text-muted" ng-switch-when="json">
+            <!--Text-->
+            <monaco-editor content="$ctrl.model.obj[$ctrl.column.name] | json" ext="'.json'">
+            </monaco-editor>
+        </div>
+        <div class="text-muted" ng-switch-when="tag">
+            <!--Text-->
+            <tags-input ng-model="$ctrl.model.obj[$ctrl.column.name]">
+            </tags-input>
         </div>
     </div>
 </div>

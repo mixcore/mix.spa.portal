@@ -32,9 +32,12 @@
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label">Active members</label><br>
-                            <preview-image ng-repeat="member in members" class="mx-1 d-inline-block border rounded-circle"
-                                img-class="'rounded-circle'" img-height="50" img-width="50" img-src="member.Avatar">
-                            </preview-image>
+                            <div class="d-inline-block text-center" ng-repeat="member in members">
+                                <preview-image class="mx-1 d-inline-block border rounded-circle"
+                                    img-class="'rounded-circle'" img-height="50" img-width="50" img-src="member.Avatar">
+                                </preview-image><br>
+                                <strong ng-bind="member.Username"></strong>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <p ng-repeat="err in errors" class="text-danger" ng-bind="err"></p>
@@ -64,7 +67,7 @@
                                 <pane-v header="Razor Template">
                                     <div class="card card-body">
                                         <monaco-editor is-visible="activedPane.title == 'Razor Template'"
-                                            is-readonly="!isValid" content="viewmodel.content"
+                                            is-readonly="!canEdit" content="viewmodel.content"
                                             update-content="updateTemplateContent(content)">
                                         </monaco-editor>
                                     </div>
@@ -72,14 +75,14 @@
                                 <pane-v header="Scripts">
                                     <div class="card card-body">
                                         <monaco-editor is-visible="activedPane.title == 'Scripts'"
-                                            is-readonly="!isValid" update-content="updateStyleContent(content)"
+                                            is-readonly="!canEdit" update-content="updateStyleContent(content)"
                                             content="viewmodel.scripts" default-content="'<script>\n\n</script>'">
                                         </monaco-editor>
                                     </div>
                                 </pane-v>
                                 <pane-v header="Styles">
                                     <div class="card card-body">
-                                        <monaco-editor is-visible="activedPane.title == 'Styles'" is-readonly="!isValid"
+                                        <monaco-editor is-visible="activedPane.title == 'Styles'" is-readonly="!canEdit"
                                             update-content="updateScriptContent(content)" content="viewmodel.styles"
                                             default-content="'<style>\n\n</style>'">
                                         </monaco-editor>
