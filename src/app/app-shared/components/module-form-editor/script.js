@@ -31,6 +31,9 @@
               ctrl.data.value = new Date(local);
             }
             break;
+          case "boolean":
+            ctrl.data.value = String(ctrl.data.value) == "true";
+            break;
           default:
             if (ctrl.column && !ctrl.data.value) {
               ctrl.data.value = ctrl.column.defaultValue;

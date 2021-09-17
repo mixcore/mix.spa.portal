@@ -70,9 +70,8 @@
         </div>
         <div ng-switch-when="boolean">
             <!--Boolean-->
-
             <input class="{{$ctrl.inputClass}}" type="checkbox" placeholder="{{$ctrl.columnTitle}}"
-                ng-model="$ctrl.data.value" ng-checked="$ctrl.data.value=='true'" />
+                ng-model="$ctrl.data.value" ng-checked="$ctrl.data.value" />
         </div>
         <div ng-switch-when="icon">
             <mix-select-icons prefix="'fab'" options="$ctrl.icons" data="$ctrl.data.value"></mix-select-icons>
