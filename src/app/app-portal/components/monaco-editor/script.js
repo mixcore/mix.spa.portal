@@ -50,7 +50,9 @@
         }
         if (ctrl.isVisible && ctrl.editor) {
           setTimeout(() => {
-            var h = ctrl.editor.getModel().getLineCount() * 18;
+            var h = ctrl.lineCount
+              ? ctrl.lineCount
+              : ctrl.editor.getModel().getLineCount() * 18;
             $($element).height(h);
             ctrl.editor.layout();
           }, 100);

@@ -1,7 +1,16 @@
 <div class="rowx" ng-if="$ctrl.model">
     <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-9x">
         <div ng-switch-default>
-            <p ng-bind="$ctrl.model|trim:200" title="{{$ctrl.model}}"></p>
+            <p ng-bind="$ctrl.view" title="{{$ctrl.model}}"></p>
+        </div>
+        <div ng-switch-when="tag">
+            <tags-input ng-model="$ctrl.model">
+            </tags-input>
+        </div>
+        <div ng-switch-when="json">
+            <p ng-if="$ctrl.maxLength" ng-bind="$ctrl.view"></p>
+            <pre ng-if="!$ctrl.maxLength" ng-bind="$ctrl.model|json"></pre>
+
         </div>
         <div ng-switch-when="url">
             <a target="_blank" href="{{$ctrl.model}}" ng-bind="$ctrl.model"> </a>

@@ -66,7 +66,9 @@ sharedComponents.controller("ShoppingCartController", [
       }
     };
     $scope.onSuccess = function (resp) {
-      localStorageService.set("shoppingCart", resp.cartData);
+      debugger;
+      localStorageService.set("shoppingCart", resp.obj);
+      $scope.cartData = resp.obj;
       if ($scope.successCallback) {
         $rootScope.executeFunctionByName(
           $scope.successCallback,

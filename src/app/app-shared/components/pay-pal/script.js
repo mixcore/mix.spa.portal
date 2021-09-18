@@ -8,7 +8,8 @@
     "$scope",
     "$element",
     "localStorageService",
-    function ($scope, $element, localStorageService) {
+    "RestMixDatabaseDataClientService",
+    function ($scope, $element, localStorageService, dataService) {
       var ctrl = this;
 
       ctrl.init = function () {
@@ -34,12 +35,17 @@
               // This function captures the funds from the transaction.
               console.log("data: ", data);
               console.log("actions: ", actions);
+              var obj = {
+                data: JSON.stringify(data),
+              };
               return actions.order.capture().then(function (details) {
                 // This function shows a transaction success message to your buyer.
                 console.log("details: ", details);
-                alert(
-                  "Transaction completed by " + details.payer.name.given_name
-                );
+                obj.details = JSON.stringify(details);
+                $scope.cartData.status = details.status;
+
+                dataService.saveData("shoppingCart", $scope.cartData);
+                dataService.saveData("paypal", obj);
               });
             },
           })

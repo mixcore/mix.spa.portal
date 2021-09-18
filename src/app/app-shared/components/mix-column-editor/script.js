@@ -214,6 +214,10 @@
             break;
         }
       };
+      ctrl.updateJsonContent = function (content) {
+        ctrl.model.obj[ctrl.column.name] = JSON.parse(content);
+        $scope.$apply();
+      };
     },
   ],
 });

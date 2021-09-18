@@ -142,7 +142,8 @@
         </div>
         <div class="text-muted" ng-switch-when="json">
             <!--Text-->
-            <monaco-editor content="$ctrl.model.obj[$ctrl.column.name] | json" ext="'.json'">
+            <monaco-editor content="$ctrl.model.obj[$ctrl.column.name] | json"
+                update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor>
         </div>
         <div class="text-muted" ng-switch-when="tag">

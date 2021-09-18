@@ -4,24 +4,34 @@
   bindings: {
     model: "=",
     column: "=",
+    maxLength: "=?",
     isShowTitle: "=?",
     inputClass: "=?",
   },
   controller: [
     "$rootScope",
     "$sce",
-    function ($rootScope, $sce) {
+    "$filter",
+    function ($rootScope, $sce, $filter) {
       var ctrl = this;
       ctrl.previousId = null;
       ctrl.$onInit = function () {
         ctrl.uuid = $rootScope.generateUUID();
+        var obj = $rootScope.testJSON(ctrl.model);
+        ctrl.view = ctrl.model;
         if (ctrl.column.isEncrypt) {
-          var obj = $rootScope.testJSON(ctrl.model);
           if (obj) {
             ctrl.encryptedData = obj;
             ctrl.model = ctrl.encryptedData.data;
             ctrl.decrypted = $rootScope.decrypt(ctrl.encryptedData);
           }
+        } else {
+          if (obj && ctrl.maxLength) {
+            ctrl.view = JSON.stringify(ctrl.model);
+          }
+        }
+        if (ctrl.maxLength) {
+          ctrl.view = $filter("trim")(ctrl.view, ctrl.maxLength);
         }
         if (ctrl.column.dataType == 20 && ctrl.model) {
           // youtube video
