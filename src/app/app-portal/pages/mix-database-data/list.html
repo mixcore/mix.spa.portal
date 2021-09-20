@@ -40,7 +40,8 @@
                                 <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5" aria-labelledby="dropdownTable2"
                                     style="">
                                     <li>
-                                        <a ng-if="isAdmin" href="/portal/mix-database/details/{{mixDatabaseId}}" class="dropdown-item border-radius-md">
+                                        <a ng-if="isAdmin" href="/portal/mix-database/details/{{mixDatabaseId}}"
+                                            class="dropdown-item border-radius-md">
                                             <i class="fas fa-tools"></i> Config MixDB
                                         </a>
                                     </li>
@@ -61,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-<!-- 
+                    <!-- 
 
                     <div class="btn-group  card-body mb-3 w-100" role="group" aria-label="Basic example">
                         <a href="/portal/mix-database-data/create?mixDatabaseId={{mixDatabaseId}}&mixDatabaseName={{mixDatabaseName}}&mixDatabaseTitle={{mixDatabaseTitle}}&dataId=default"
@@ -109,7 +110,8 @@
                             <div id="flush-collapseEntities" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingEntities" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body overflow-auto" style="max-height: 400px;">
-                                    <div ng-if="columns" ng-repeat="column in columns" class="">
+                                    <div ng-if="columns && column.dataType !=='Reference'" ng-repeat="column in columns"
+                                        class="">
                                         <label class="form-label">{{column.title}}</label>
                                         <input ng-model="queries[column.name]" ng-enter="getList()"
                                             class="form-control">
@@ -183,9 +185,10 @@
                         <mix-database-data-values ng-if="columns" on-duplicate="duplicate(data)" on-update="edit(data)"
                             on-delete="remove(data)" columns="columns"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
-                            on-send-mail="sendMail(data)" filter-type="filterType" on-filter-list="getList(0)"
-                            on-apply-list="applyList()" selected-list="selectedList" header="''" data="data.items"
-                            mix-database-name="mixDatabaseName" queries="queries">
+                            on-send-mail="sendMail(data)" filter-type="request.filterType"
+                            compare-type="request.compareType" on-filter-list="getList(0)" on-apply-list="applyList()"
+                            selected-list="selectedList" header="''" data="data.items"
+                            mix-database-name="mixDatabaseName" mix-database-title="mixDatabaseTitle" queries="queries">
                         </mix-database-data-values>
                         <div class="card-body">
                             <div class="row">

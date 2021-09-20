@@ -6,9 +6,11 @@ modules.component("mixDatabaseDataValues", {
     data: "=",
     canDrag: "=",
     mixDatabaseName: "=?",
+    mixDatabaseTitle: "=?",
     mixDatabaseId: "=?",
     queries: "=?",
     filterType: "=?",
+    compareType: "=?",
     selectedList: "=",
     selectSingle: "=?",
     columns: "=?",
@@ -28,6 +30,7 @@ modules.component("mixDatabaseDataValues", {
       var ctrl = this;
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];
+      ctrl.compareTypes = ["or", "and"];
       ctrl.selectedProp = null;
       ctrl.localizeSettings = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
@@ -75,7 +78,10 @@ modules.component("mixDatabaseDataValues", {
           }
         });
       };
-      ctrl.filter = function () {};
+      ctrl.filter = function () {
+        ctrl.data = [];
+        ctrl.onFilterList();
+      };
       ctrl.sendMail = async function (data) {
         ctrl.onSendMail({ data: data });
       };

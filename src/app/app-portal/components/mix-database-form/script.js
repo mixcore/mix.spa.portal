@@ -4,6 +4,7 @@ modules.component("mixDatabaseForm", {
   bindings: {
     mixDatabaseId: "=",
     mixDatabaseName: "=",
+    mixDatabaseTitle: "=?",
     columns: "=?",
     mixDatabaseDataId: "=?",
     mixDatabaseData: "=",
@@ -47,8 +48,11 @@ modules.component("mixDatabaseForm", {
             ctrl.mixDatabaseData.parentType = ctrl.parentType;
             ctrl.mixDatabaseId = ctrl.mixDatabaseData.mixDatabaseId;
             ctrl.mixDatabaseName = ctrl.mixDatabaseData.mixDatabaseName;
-            ctrl.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
-            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=test`;
+            ctrl.mixDatabaseTitle =
+              ctrl.mixDatabaseTitle ||
+              $routeParams.mixDatabaseTitle ||
+              ctrl.mixDatabaseName;
+            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();

@@ -14,8 +14,12 @@ appShared.factory("RestMixDatabaseDataClientService", [
       };
       return await apiService.getRestApiResult(req);
     };
-    var _saveData = async function (mixDatabaseName, objData) {
-      var url = this.prefixUrl + "/save-data/" + mixDatabaseName;
+    var _saveData = async function (
+      mixDatabaseName,
+      objData,
+      sendMail = false
+    ) {
+      var url = `${this.prefixUrl}/save-data/${mixDatabaseName}/${sendMail}`;
       var req = {
         method: "POST",
         url: url,

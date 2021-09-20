@@ -40,17 +40,22 @@ sharedComponents.controller("ShoppingCartController", [
     $scope.submit = async function () {
       $scope.onValidate();
       if ($scope.frmCheckOut.$valid) {
+        $scope.isBusy = true;
         $rootScope.submitting = true;
         var result = await dataService.saveData(
           "shoppingCart",
           $scope.cartData
         );
         if (result.isSucceed) {
+          $scope.isBusy = false;
+          $scope.cartData = result.data.obj;
+          $scope.$apply();
           $scope.onSuccess(result.data);
         } else {
+          $scope.isBusy = false;
+          $scope.$apply();
           $scope.onFail(result.errors);
         }
-        $scope.$apply();
       }
     };
 
@@ -66,9 +71,8 @@ sharedComponents.controller("ShoppingCartController", [
       }
     };
     $scope.onSuccess = function (resp) {
-      debugger;
       localStorageService.set("shoppingCart", resp.obj);
-      $scope.cartData = resp.obj;
+
       if ($scope.successCallback) {
         $rootScope.executeFunctionByName(
           $scope.successCallback,
@@ -89,6 +93,7 @@ sharedComponents.controller("ShoppingCartController", [
       }
     };
     $scope.onFail = function (errors) {
+      $scope.errors = errors;
       if ($scope.failCallback) {
         $rootScope.executeFunctionByName($scope.failCallback, [errors], window);
       }

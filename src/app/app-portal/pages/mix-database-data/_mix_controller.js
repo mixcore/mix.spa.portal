@@ -46,6 +46,13 @@ app.controller("MixDatabaseDataController", [
         "_"
       )}_${$routeParams.mixDatabaseId}`;
       $scope.request = $rootScope.getRequest($scope.requestKey);
+      if ($routeParams.mixDatabaseId) {
+        $scope.request.mixDatabaseId = $routeParams.mixDatabaseId;
+      }
+      $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
+      $scope.request.filterType = $routeParams.filterType || "contain";
+      $scope.request.compareType = $routeParams.compareType || "or";
+
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
@@ -111,7 +118,7 @@ app.controller("MixDatabaseDataController", [
     };
     $scope.edit = function (data) {
       $rootScope.goToPath(
-        "/portal/mix-database-data/details?dataId=" + data.id + "&abc"
+        `/portal/mix-database-data/details?dataId=${data.id}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`
       );
     };
     $scope.remove = function (data) {
@@ -240,11 +247,7 @@ app.controller("MixDatabaseDataController", [
         $scope.request.toDate = dt.toISOString();
       }
       var query = {};
-      if ($routeParams.mixDatabaseId) {
-        $scope.request.mixDatabaseId = $routeParams.mixDatabaseId;
-      }
-      $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
-      $scope.request.filterType = $routeParams.filterType || "contain";
+
       Object.keys($scope.queries).forEach((e) => {
         if ($scope.queries[e]) {
           query[e] = $scope.queries[e];

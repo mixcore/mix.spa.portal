@@ -2,14 +2,16 @@
   templateUrl: "/mix-app/views/app-shared/components/pay-pal/view.html",
   bindings: {
     cartData: "=?",
-    successCallback: "&?",
+    isBusy: "=?",
+    onSuccess: "=?", // name of function ex: window.onSuccess => 'onSuccess'
+    onFail: "=?", // name of function ex: window.onFail => 'onFail'
   },
   controller: [
+    "$rootScope",
     "$scope",
-    "$element",
     "localStorageService",
     "RestMixDatabaseDataClientService",
-    function ($scope, $element, localStorageService, dataService) {
+    function ($rootScope, $scope, localStorageService, dataService) {
       var ctrl = this;
 
       ctrl.init = function () {
@@ -33,19 +35,42 @@
             },
             onApprove: function (data, actions) {
               // This function captures the funds from the transaction.
-              console.log("data: ", data);
-              console.log("actions: ", actions);
               var obj = {
-                data: JSON.stringify(data),
+                data: data,
               };
-              return actions.order.capture().then(function (details) {
+              return actions.order.capture().then(async function (details) {
                 // This function shows a transaction success message to your buyer.
-                console.log("details: ", details);
-                obj.details = JSON.stringify(details);
-                $scope.cartData.status = details.status;
+                obj.details = details;
+                ctrl.cartData.status = details.status;
+                ctrl.cartData.paypalLogs = [obj];
+                ctrl.isBusy = true;
+                var saveCart = await dataService.saveData(
+                  "shoppingCart",
+                  ctrl.cartData,
+                  true
+                );
+                ctrl.isBusy = false;
+                $scope.$apply();
+                if (saveCart.isSucceed) {
+                  localStorageService.set("shoppingCart", null);
+                  if (ctrl.onSuccess && ctrl.cartData.status === "COMPLETED") {
+                    $rootScope.executeFunctionByName(
+                      ctrl.onSuccess,
+                      [ctrl.cartData],
+                      window
+                    );
+                  }
+                } else {
+                  if (ctrl.onFail && ctrl.cartData.status === "COMPLETED") {
+                    $rootScope.executeFunctionByName(
+                      ctrl.onFail,
+                      [ctrl.cartData],
+                      window
+                    );
+                  }
+                }
 
-                dataService.saveData("shoppingCart", $scope.cartData);
-                dataService.saveData("paypal", obj);
+                // dataService.saveData("paypal", obj);
               });
             },
           })
