@@ -30,7 +30,7 @@
             ctrl.view = JSON.stringify(ctrl.model);
           }
         }
-        if (ctrl.maxLength) {
+        if (ctrl.maxLength && ctrl.view) {
           ctrl.view = $filter("trim")(ctrl.view, ctrl.maxLength);
         }
         if (ctrl.column.dataType == 20 && ctrl.model) {

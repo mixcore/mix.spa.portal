@@ -20,18 +20,18 @@
         </div>
         <div class="text-muted" ng-switch-when="datetime">
             <!--datetime-->
-            <input class="form-control {{$ctrl.inputClass}}" type="datetime-local"
-                ng-model="$ctrl.model.obj[$ctrl.column.name]" placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
+            <input class="form-control {{$ctrl.inputClass}}" type="datetime-local" ng-model="$ctrl.obj"
+                ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
         </div>
         <div class="text-muted" ng-switch-when="date">
             <!--date-->
-            <input class="form-control {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.model.obj[$ctrl.column.name]"
-                placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
+            <input class="form-control {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.obj"
+                ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
         </div>
         <div class="text-muted" ng-switch-when="time">
             <!--time-->
-            <input class="form-control {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.model.obj[$ctrl.column.name]"
-                placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
+            <input class="form-control {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.obj"
+                ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.title)}}" />
         </div>
         <div class="text-muted" ng-switch-when="phonenumber">
             <!--phonenumber-->

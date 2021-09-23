@@ -149,11 +149,7 @@
             case "date":
             case "time":
               if (ctrl.model.obj[ctrl.column.name]) {
-                var local = $filter("utcToLocalTime")(
-                  ctrl.model.obj[ctrl.column.name]
-                );
-                ctrl.model.obj[ctrl.column.name] = new Date(local);
-                $scope.$apply();
+                ctrl.obj = new Date(ctrl.model.obj[ctrl.column.name]);
               }
               break;
             case "reference": // reference
@@ -188,7 +184,7 @@
           case "date":
           case "time":
             if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.name] = new Date(
+              ctrl.obj = new Date(
                 ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
@@ -217,6 +213,31 @@
       ctrl.updateJsonContent = function (content) {
         ctrl.model.obj[ctrl.column.name] = JSON.parse(content);
         $scope.$apply();
+      };
+      ctrl.updateValue = function () {
+        switch (ctrl.column.dataType.toLowerCase()) {
+          case "datetime":
+            if (ctrl.obj) {
+              ctrl.model.obj[ctrl.column.name] = ctrl.obj.toLocaleString();
+            }
+            break;
+          case "date":
+            if (ctrl.obj) {
+              ctrl.model.obj[ctrl.column.name] = ctrl.obj.toLocaleDateString();
+            }
+            break;
+          case "time":
+            if (ctrl.obj) {
+              ctrl.model.obj[ctrl.column.name] =
+                ctrl.obj.toLocaleTimeString("en-GB");
+            }
+            break;
+          default:
+            if (ctrl.column.defaultValue) {
+              ctrl.model[ctrl.column.name] = ctrl.column.defaultValue;
+            }
+            break;
+        }
       };
     },
   ],

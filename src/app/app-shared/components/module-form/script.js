@@ -106,7 +106,7 @@
       ctrl.saveModuleData = async function () {
         $rootScope.isBusy = true;
         var form = $("#module-" + ctrl.data.moduleId);
-
+        console.log(ctrl.data);
         $.each(ctrl.data.dataProperties, function (i, e) {
           switch (e.dataType) {
             case 5:
