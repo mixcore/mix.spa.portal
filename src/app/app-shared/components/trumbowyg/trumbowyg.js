@@ -73,12 +73,13 @@ sharedComponents.component("trumbowyg", {
         plugins: {
           // Add imagur parameters to upload plugin
           upload: {
-            serverPath: "https://api.imgur.com/3/image",
-            fileFieldName: "image",
+            serverPath: "/api/v1/vi-vn/media/upload-media",
+            fileFieldName: "file",
             headers: {
               Authorization: "Client-ID 9e57cb1c4791cea",
             },
-            urlPropertyName: "data.link",
+            urlPropertyName: "data.fullPath",
+            statusPropertyName: "isSucceed",
           },
           table: {},
           fontfamily: {

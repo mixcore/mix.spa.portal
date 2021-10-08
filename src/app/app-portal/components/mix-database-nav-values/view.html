@@ -32,7 +32,7 @@
                 </div>
                 <div ng-if="$index < $ctrl.maxCol"
                     ng-repeat="column in $ctrl.columns | orderBy: 'priority' track by $index" class="col-md-3">
-                    <mix-column-preview model="item.attributeData.obj[column.name]" column="column" max-length="50">
+                    <mix-column-preview model="item.attributeData.obj[column.name]" column="column" max-length="120">
                     </mix-column-preview>
                 </div>
                 <div class="col text-end">

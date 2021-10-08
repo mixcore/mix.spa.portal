@@ -270,7 +270,7 @@ app.controller("PostController", [
       if (pageIds) {
         for (var pageId of pageIds.split(",")) {
           var pageNav = $rootScope.findObjectByKey(
-            $scope.viewmodel.categories,
+            $scope.viewmodel.pages,
             "pageId",
             pageId
           );

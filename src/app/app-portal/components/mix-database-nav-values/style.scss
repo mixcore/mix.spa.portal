@@ -1,0 +1,11 @@
+mix-database-nav-values {
+  .row {
+    padding: 10px 0;
+  }
+  mix-column-preview {
+    .rowx {
+      max-height: 110px;
+      overflow: hidden;
+    }
+  }
+}

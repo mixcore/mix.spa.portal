@@ -18,7 +18,8 @@
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card">
                     <div class="card-body">
-                        <filter-list request="request" callback="getList(pageIndex)" create-url="'/portal/localize/create'" create-text="'Create Keyword'"></filter-list>
+                        <filter-list request="request" callback="getList(pageIndex)"
+                            create-url="'/portal/localize/create'" create-text="'Create Keyword'"></filter-list>
                     </div>
                 </div>
             </nav>
@@ -51,7 +52,8 @@
                         </thead>
 
                         <tbody class="sortable" ng-init="getList()">
-                            <tr ng-repeat="item in data.items track by $index" class="sortable-item" sort-model="language" sort-model-id="{{item.id}}">
+                            <tr ng-repeat="item in data.items track by $index" class="sortable-item"
+                                sort-model="language" sort-model-id="{{item.id}}">
                                 <td>
                                     <small ng-bind="item.keyword"></small>
                                 </td>
@@ -68,11 +70,12 @@
                                 </td>
 
                                 <td>
-                                    <div class="btn-group btn-group-sm btn-group-sm float-end" role="group" aria-label="Actions">
+                                    <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
+                                        aria-label="Actions">
                                         <a href="/portal/localize/details/{{item.id}}" class="btn btn-link">
                                             <span class="fa fa-pen text-primary"></span>
                                         </a>
-                                        <a ng-click="remove(item.keyword);" class="btn btn-link">
+                                        <a ng-click="remove(item.id);" class="btn btn-link">
                                             <span class="fas fa-trash-alt text-danger"></span>
                                         </a>
                                     </div>
@@ -82,7 +85,9 @@
                     </table>
                 </div>
                 <div class="card-body">
-                    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems" ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)" scroll-top="true">
+                    <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+                        ul-class="pagination justify-content-end m-0" a-class="page-link"
+                        paging-action="getList(page-1)" scroll-top="true">
                 </div>
             </div>
 

@@ -17,7 +17,7 @@
             <i class="{{$ctrl.data.value}}"> </i>
         </div>
         <div ng-switch-when="boolean">
-            <input class="sm-form-control" type="checkbox" ng-checked="$ctrl.data.value == 'true'" />
+            <input class="sm-form-control" type="checkbox" ng-model="$ctrl.data.value" />
         </div>
         <div ng-switch-when="html">
             <p ng-bind-html="$ctrl.data.value"></p>

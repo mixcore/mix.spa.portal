@@ -4,7 +4,7 @@
         <input type="text" class="form-control" ng-model="$ctrl.model.title" ng-blur="$ctrl.gennerateName()" />
     </div>
 </div>
-<div class="row mb-3">
+<div class="row mb-3" ng-if="$ctrl.isInRole('SuperAdmin')">
     <div class="col">
         <label class="form-label">Database system name</label>
         <div class="input-group">

@@ -18,8 +18,7 @@
         <aside class="bd-sidebar sub-sidebar">
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
-                    <a href="/portal/post/create?page_ids={{pageIds}}&module_ids={{moduleIds}}&type={{type}}"
-                        class="btn btn-primary mb-2">
+                    <a href="{{createUrl}}" class="btn btn-primary mb-2">
                         <i class="fas fa-plus"></i> Create new post
                     </a>
                     <a data-bs-toggle="modal" data-bs-target="#modal-nav-posts-{{moduleId}}"
@@ -47,7 +46,7 @@
             <!-- <section class="content container-fluid"> -->
             <div class="card">
                 <div class="card-body">
-                    <table id="list-page" class="table table-hover sortable" cellspacing="0" ng-init="getList()">
+                    <table id="list-page" class="table table-hover sortable" cellspacing="0" ng-init="init()">
                         <thead class="thead-light">
                             <tr>
                                 <th scope="col" style="width: 3%">

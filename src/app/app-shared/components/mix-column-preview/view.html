@@ -1,7 +1,8 @@
 <div class="rowx" ng-if="$ctrl.model">
     <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-9x">
         <div ng-switch-default>
-            <p ng-bind="$ctrl.view" title="{{$ctrl.model}}"></p>
+            <p ng-if="$ctrl.maxLength" ng-bind="$ctrl.model|trim:$ctrl.maxLength"></p>
+            <p ng-if="$!ctrl.maxLength" ng-bind="$ctrl.model" title="{{$ctrl.model}}"></p>
         </div>
         <div ng-switch-when="tag">
             <tags-input ng-model="$ctrl.model">

@@ -53,10 +53,9 @@ app.controller("TemplateController", [
           avatar: authService.authentication.info.userData.avatar,
         };
         $scope.startConnection("editFileHub", () => {
-          if ($routeParams.id) {
-            $scope.room = `Template-${$routeParams.id}`;
-            $scope.joinRoom();
-          }
+          let id = $routeParams.id || $rootScope.generateUUID();
+          $scope.room = `Template-${id}`;
+          $scope.joinRoom();
         });
       });
     };

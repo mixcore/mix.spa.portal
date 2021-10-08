@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col-12" ng-repeat="item in $ctrl.data.items | filter:$ctrl.newTitle" ng-hide="item.disabled">
+        <div class="col-12" ng-repeat="item in $ctrl.data.items | filter:$ctrl.newTitle" ng-hide="item.isActived">
             <checkbox-switch value="item.id" is-selected="item.isActived" callback="$ctrl.select(value, isSelected)"
                 description="item.obj[$ctrl.columnDisplay]">
             </checkbox-switch>

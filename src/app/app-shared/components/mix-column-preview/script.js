@@ -15,7 +15,11 @@
     function ($rootScope, $sce, $filter) {
       var ctrl = this;
       ctrl.previousId = null;
+
       ctrl.$onInit = function () {
+        ctrl.parseView();
+      };
+      ctrl.parseView = function () {
         ctrl.uuid = $rootScope.generateUUID();
         var obj = $rootScope.testJSON(ctrl.model);
         ctrl.view = ctrl.model;
@@ -46,7 +50,6 @@
         //     ctrl.generateQRCode();
         // }
       };
-
       ctrl.generateQRCode = function () {
         setTimeout(() => {
           $("#" + ctrl.uuid).empty();

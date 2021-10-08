@@ -6,7 +6,7 @@
                 ng-blur="$ctrl.gennerateName()" placeholder="Module title..." required />
         </div>
         <div class="row">
-            <div class="col-10">
+            <div class="col-10" ng-if="$ctrl.isInRole('SuperAdmin')">
                 <div class="mb-3 mb-0">
                     <label class="form-label">System Name</label>
                     <input type="text" class="form-control" ng-model="$ctrl.module.name" />

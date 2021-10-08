@@ -6,6 +6,7 @@
     function ($rootScope) {
       var ctrl = this;
       ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.isInRole = $rootScope.isInRole;
       ctrl.gennerateName = function () {
         if (
           !ctrl.model.id ||
