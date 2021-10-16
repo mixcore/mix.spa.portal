@@ -34,6 +34,7 @@
         ctrl.callback({ pageIndex: pageIndex });
       };
       ctrl.updateDate = function () {
+        ctrl.request.pageIndex = 0;
         if (Date.parse(ctrl.dateRange.fromDate)) {
           ctrl.request.fromDate = new Date(
             ctrl.dateRange.fromDate

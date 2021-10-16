@@ -8,10 +8,10 @@
 <div ng-init="$ctrl.init()" class="row">
     <div class="col-12">
         <div class="input-group mb-3">
-            <div class="input-group-text" id="btnGroupAddon" ng-click="$ctrl.callback({pageIndex: 0})">
+            <div class="input-group-text" id="btnGroupAddon" ng-click="$ctrl.apply(0)">
                 <i class="mi mi-Search" style="top: 0"></i>
             </div>
-            <input ng-model="$ctrl.request.keyword" ng-enter="$ctrl.callback()" type="text" class="form-control"
+            <input ng-model="$ctrl.request.keyword" ng-enter="$ctrl.apply(0)" type="text" class="form-control"
                 placeholder="Search keyword..." aria-label="Search keyword..." aria-describedby="btnGroupAddon" />
         </div>
     </div>

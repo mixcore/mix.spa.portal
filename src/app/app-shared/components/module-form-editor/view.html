@@ -3,8 +3,9 @@
     <div class="col-8" ng-switch="$ctrl.dataType.toLowerCase()">
         <div ng-switch-default>
             <!--custom-->
-            <input class="form-control {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.obj"
-                ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.columnTitle}}" />
+
+            <input class="form-control {{$ctrl.inputClass}}" type="text" ng-model="$ctrl.data.value"
+                placeholder="{{$ctrl.columnTitle}}" />
         </div>
         <div ng-switch-when="datetime">
             <!--datetime-->
@@ -21,7 +22,7 @@
             <input class="form-control {{$ctrl.inputClass}}" value="{{$ctrl.data.value}}" type="time"
                 ng-model="$ctrl.obj" ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.columnTitle}}" />
         </div>
-        <div ng-switch-when="html">
+        <div ng-switch-when="html" class="w-100">
             <!--Html-->
             <!-- <quill-editor content="$ctrl.data.value"></quill-editor> -->
             <trumbowyg ng-model="$ctrl.data.value"></trumbowyg>

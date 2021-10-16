@@ -56,7 +56,7 @@ modules.component("additionalColumn", {
       };
 
       ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+        col.name = $rootScope.generateKeyword(col.title, "_", true, true);
       };
       ctrl.showReferences = function (col) {
         ctrl.colRef = col;

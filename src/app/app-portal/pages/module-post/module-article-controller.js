@@ -40,8 +40,11 @@ app.controller("ModulePostController", [
       $scope.createUrl = `/portal/post/create?page_ids=${$scope.pageIds}&module_ids=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.getList();
     };
-    $scope.getList = async function () {
+    $scope.getList = async function (pageIndex) {
       $rootScope.isBusy = true;
+      if (pageIndex !== undefined) {
+        $scope.request.pageIndex = pageIndex;
+      }
       var id = $routeParams.id;
       $scope.moduleId = $routeParams.id;
       $scope.request.query = "&module_id=" + id;

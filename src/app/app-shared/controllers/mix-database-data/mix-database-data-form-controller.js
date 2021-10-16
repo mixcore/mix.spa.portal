@@ -91,7 +91,7 @@ appShared.controller("MixDataController", [
                   saveResult,
                 ]);
               } else {
-                alert(errMsg);
+                console.error(saveResult.errors);
               }
             }
             if ($scope.loadingHandler) {
