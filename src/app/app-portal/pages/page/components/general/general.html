@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row mb-3" ng-if="$ctrl.isInRole('SuperAdmin')">
     <div class="col">
         <label class="form-label">Page Size</label>
         <input type="number" class="form-control" ng-model="$ctrl.page.pageSize" />
@@ -8,13 +8,7 @@
         <input type="number" class="form-control" ng-model="$ctrl.page.priority" />
     </div>
 </div>
-<div class="mb-3">
-    <label class="form-label">Redirect to URL <small>(Optional)</small></label>
-    <input type="text" class="form-control" ng-model="$ctrl.page.staticUrl"
-        placeholder="https://your-external-link..." />
-    <!-- <small class="form-text text-muted">This page will auto redirect to an external link instead.</small> -->
-</div>
-<div class="mb-3">
+<div class="mb-3" ng-if="$ctrl.isInRole('SuperAdmin')">
     <label class="form-label">Source URL</label>
     <input type="text" class="form-control" ng-model="$ctrl.page.source" />
 </div>
@@ -26,7 +20,7 @@
 <!--<auto-complete source="$ctrl.loadTags($query)"></auto-complete>-->
 <!-- </tags-input> -->
 <!-- </div> -->
-<div class="mb-3">
+<div class="mb-3" ng-if="$ctrl.isInRole('SuperAdmin')">
     <label class="form-label">Css</label>
     <input type="text" class="form-control tags" ng-model="$ctrl.page.cssClass" />
 </div>

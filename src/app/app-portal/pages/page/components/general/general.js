@@ -1,8 +1,9 @@
 ﻿app.component("pageGeneral", {
   templateUrl:
     "/mix-app/views/app-portal/pages/page/components/general/general.html",
-  controller: function ($scope) {
+  controller: function ($rootScope) {
     var ctrl = this;
+    ctrl.isInRole = $rootScope.isInRole;
     ctrl.dataTypes = [
       {
         title: "String",

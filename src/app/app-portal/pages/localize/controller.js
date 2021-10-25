@@ -32,7 +32,7 @@ app.controller("LocalizeController", [
       $scope.globalSettings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
       if (!$scope.viewmodel.id) {
-        $scope.viewmodel.property.dataType = "Text";
+        $scope.viewmodel.dataType = "Text";
       }
       if (!$scope.viewmodel.category) {
         $scope.viewmodel.category = "Site";

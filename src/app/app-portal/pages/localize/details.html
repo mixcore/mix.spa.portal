@@ -37,8 +37,8 @@
                             <section class="col-lg-12">
                                 <div class="mb-3">
                                     <label class="form-label">Keyword</label>
-                                    <input type="text" required class="form-control form-control-lg"
-                                        ng-model="viewmodel.keyword">
+                                    <input type="text" ng-disabled="!isAdmin" required
+                                        class="form-control form-control-lg" ng-model="viewmodel.keyword">
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -63,7 +63,7 @@
                                     <module-form-editor ng-if="viewmodel" data="viewmodel.property"
                                         column-title="viewmodel.title" input-class="me-2"></module-form-editor>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" ng-show="isAdmin">
                                     <label class="form-label">Default value</label>
                                     <module-form-editor ng-if="viewmodel" data="viewmodel.property"
                                         column-title="viewmodel.title" input-class="me-2"></module-form-editor>

@@ -45,7 +45,8 @@
                                             <img class="rounded" ng-src="{{item.fullPath}}"
                                                 ng-class="{preview: item.isPreview}" />
                                         </a>
-                                        <a ng-if="!item.isImage" href="{{item.fullPath}}" target="_blank">View</a>
+                                        <a ng-if="!item.isImage && item.fullPath" href="{{item.fullPath}}"
+                                            target="_blank">View</a>
                                     </td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Actions">

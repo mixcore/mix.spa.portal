@@ -7,7 +7,7 @@
                         Listing
                     </div>
                     <h3 class="page-title">
-                        All Posts
+                        All Posts (<span ng-bind="data.totalItems"></span> items)
                     </h3>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     <post-filter-list request="request" categories="categories" post-types="postTypes"
                         callback="getList(pageIndex)" create-url="createUrl" create-text="'Create Post'">
                     </post-filter-list>
-                    <select class="form-select" ng-model="selectedList.action">
+                    <select ng-if="isAdmin" class="form-select" ng-model="selectedList.action">
                         <option ng-repeat="item in actions" ng-value="item">{{item}}</option>
                     </select>
                     <button type="button" class="btn btn-sm btn-primary mt-3"

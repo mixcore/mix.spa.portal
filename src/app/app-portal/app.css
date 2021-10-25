@@ -7,6 +7,9 @@ body {
 .btn-link {
   cursor: pointer;
 }
+.content-body {
+  max-width: 66vw;
+}
 /* body {
     color: #212529!important;
 }

@@ -48,7 +48,10 @@ app.controller("PagePostController", [
           ? "/portal/post/gallery-details"
           : "/portal/post/details";
     };
-    $scope.getList = async function () {
+    $scope.getList = async function (pageIndex) {
+      if (pageIndex !== undefined) {
+        $scope.request.pageIndex = pageIndex;
+      }
       $rootScope.isBusy = true;
       var id = $routeParams.id;
       $scope.request.query = "&page_id=" + id;
