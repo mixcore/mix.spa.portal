@@ -18,7 +18,7 @@
         <div class="mb-3 row">
             <div class="col-3">
                 <div class="form-check form-switch">
-                    <input type="checkbox" ng-model="$ctrl.appSettings.GlobalSettings.IsRegistration"
+                    <input type="checkbox" ng-model="$ctrl.appSettings.AppSettings.IsRegistration"
                         id="IsRegistration" class="form-check-input ng-pristine ng-untouched ng-valid ng-empty" />
                     <label class="custom-control-label mb-0" for="IsRegistration">Allow guest to register
                     </label>
@@ -26,7 +26,7 @@
             </div>
             <div class="col-3">
                 <div class="form-check form-switch">
-                    <input type="checkbox" ng-model="$ctrl.appSettings.GlobalSettings.IsMaintenance" id="IsMaintenance"
+                    <input type="checkbox" ng-model="$ctrl.appSettings.AppSettings.IsMaintenance" id="IsMaintenance"
                         class="form-check-input ng-pristine ng-untouched ng-valid ng-empty" />
                     <label class="custom-control-label mb-0" for="IsMaintenance">Maintenance
                     </label>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-3">
                 <span class="form-check form-switch">
-                    <input type="checkbox" ng-model="$ctrl.appSettings.GlobalSettings.IsRewrite" id="IsRewrite"
+                    <input type="checkbox" ng-model="$ctrl.appSettings.AppSettings.IsRewrite" id="IsRewrite"
                         class="form-check-input ng-pristine ng-untouched ng-valid ng-empty" />
                     <label class="custom-control-label mb-0" for="IsRewrite">Rewrite URL
                     </label>
@@ -43,7 +43,7 @@
 
             <div class="col-3">
                 <div class="form-check form-switch">
-                    <input type="checkbox" ng-model="$ctrl.appSettings.GlobalSettings.IsHttps" id="IsHttps"
+                    <input type="checkbox" ng-model="$ctrl.appSettings.AppSettings.IsHttps" id="IsHttps"
                         class="form-check-input ng-pristine ng-untouched ng-valid ng-empty" />
                     <label class="custom-control-label mb-0" for="IsHttps">Force use Https
                     </label>
@@ -93,9 +93,9 @@
                 <tags-input ng-model="$ctrl.appSettings.IpSecuritySettings.ExceptIps">
                 </tags-input>
             </div>
-            <div class="mb-3" ng-if="$ctrl.appSettings.GlobalSettings.AllowedHosts">
+            <div class="mb-3" ng-if="$ctrl.appSettings.AppSettings.AllowedHosts">
                 <label class="form-label">Allowed Hosts</label>
-                <tags-input min-length="1" ng-model="$ctrl.appSettings.GlobalSettings.AllowedHosts">
+                <tags-input min-length="1" ng-model="$ctrl.appSettings.AppSettings.AllowedHosts">
                 </tags-input>
             </div>
             <div class="mb-3">

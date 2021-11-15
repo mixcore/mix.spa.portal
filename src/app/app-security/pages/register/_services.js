@@ -16,7 +16,7 @@ app.factory("RegisterServices", [
         data: JSON.stringify(user),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     usersServiceFactory.register = _register;

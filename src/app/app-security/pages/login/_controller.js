@@ -33,12 +33,12 @@ app.controller("LoginController", [
     $scope.message = "";
     $scope.$on("$viewContentLoaded", async function () {
       $rootScope.isBusy = false;
-      await commonService.fillAllSettings();
+      await apiService.getAllSettings();
     });
     $scope.login = async function () {
       $rootScope.isBusy = true;
       var result = await authService.login($scope.loginData);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($routeParams.ReturnUrl) {
           window.top.location = $routeParams.ReturnUrl;
         } else if (

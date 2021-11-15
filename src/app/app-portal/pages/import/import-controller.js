@@ -4,13 +4,13 @@ app.controller("ImportFileController", [
   "$rootScope",
   "ImportFileServices",
   "TranslatorService",
-  "GlobalSettingsService",
+  "AppSettingsService",
   function (
     $scope,
     $rootScope,
     service,
     translatorService,
-    GlobalSettingsService
+    AppSettingsService
   ) {
     $scope.saveImportFile = async function () {
       $rootScope.isBusy = true;
@@ -18,7 +18,7 @@ app.controller("ImportFileController", [
       var frm = new FormData();
       frm.append("assets", form["assets"].files[0]);
       var response = await service.saveImportFile(frm);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.viewmodel = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();

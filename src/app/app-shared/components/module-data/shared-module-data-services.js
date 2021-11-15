@@ -8,17 +8,17 @@ appShared.factory("SharedModuleDataService", [
     var moduleDatasServiceFactory = {};
 
     var _updateInfos = async function (pages) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data";
       var req = {
         method: "POST",
         url: apiUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getModuleData = async function (moduleId, id, type) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var url = apiUrl + "details/" + type;
       if (id) {
         url += "/" + moduleId + "/" + id;
@@ -29,61 +29,61 @@ appShared.factory("SharedModuleDataService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _getModuleDatas = async function (request) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var req = {
         method: "POST",
         url: apiUrl + "list",
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _exportModuleData = async function (request) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var req = {
         method: "POST",
         url: apiUrl + "export",
         data: JSON.stringify(request),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _initModuleForm = async function (name) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var req = {
         method: "GET",
         url: apiUrl + "init-by-name/" + name,
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _removeModuleData = async function (id) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var req = {
         method: "GET",
         url: apiUrl + "delete/" + id,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _saveModuleData = async function (moduleData) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var req = {
         method: "POST",
         url: apiUrl + "save",
         data: JSON.stringify(moduleData),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _saveFields = async function (id, propertyName, propertyValue) {
-      var apiUrl = "/" + $rootScope.localizeSettings.lang + "/module-data/";
+      var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var column = [
         {
           propertyName: propertyName,
@@ -95,7 +95,7 @@ appShared.factory("SharedModuleDataService", [
         url: apiUrl + "save/" + id,
         data: JSON.stringify(column),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     moduleDatasServiceFactory.getModuleData = _getModuleData;
     moduleDatasServiceFactory.getModuleDatas = _getModuleDatas;

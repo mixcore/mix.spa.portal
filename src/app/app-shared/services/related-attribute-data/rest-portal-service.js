@@ -5,7 +5,7 @@ appShared.factory("RestRelatedAttributeDataPortalService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = angular.copy(baseService);
-    serviceFactory.init("mix-database-data-association/portal");
+    serviceFactory.init("mix-database-data-association");
     return serviceFactory;
   },
 ]);

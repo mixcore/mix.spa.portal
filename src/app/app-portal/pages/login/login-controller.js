@@ -41,7 +41,7 @@ app.controller("loginController", [
       }
       $rootScope.isBusy = true;
       var result = await authService.login($scope.loginData);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($routeParams.ReturnUrl) {
           window.top.location = $routeParams.ReturnUrl;
         } else if (

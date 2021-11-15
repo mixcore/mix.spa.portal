@@ -76,7 +76,7 @@ sharedComponents.component("customFile", {
               var media = getMedia.data;
               media.mediaFile = ctrl.mediaFile;
               var resp = await mediaService.save(media);
-              if (resp && resp.isSucceed) {
+              if (resp && resp.success) {
                 ctrl.src = resp.data.fullPath;
                 ctrl.srcUrl = resp.data.fullPath;
                 $rootScope.isBusy = false;

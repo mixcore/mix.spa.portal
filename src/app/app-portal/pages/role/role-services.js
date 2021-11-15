@@ -12,7 +12,7 @@ app.factory("RoleService", [
         method: "GET",
         url: this.prefixUrl + "/permissions",
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _updatePermission = async function (permission) {
@@ -21,7 +21,7 @@ app.factory("RoleService", [
         url: this.prefixUrl + "/update-permission",
         data: JSON.stringify(permission),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _createRole = function (name) {
       var req = {
@@ -30,7 +30,7 @@ app.factory("RoleService", [
         data: JSON.stringify(name),
       };
 
-      return apiService.getRestApiResult(req);
+      return apiService.sendRequest(req);
     };
     serviceFactory.createRole = _createRole;
     serviceFactory.getPermissions = _getPermissions;

@@ -59,6 +59,11 @@ app.controller("TemplateController", [
         });
       });
     };
+    $scope.validate = function () {
+      $scope.viewmodel.displayName = $scope.viewmodel.fileName;
+      $scope.viewmodel.extension = ".cshtml";
+      return true;
+    };
     $scope.loadFolder = function (d) {
       $location.url(
         "/portal/template/list/" +
@@ -85,9 +90,9 @@ app.controller("TemplateController", [
       if (id) {
         var resp = await service.getSingle([id], {
           folderType: $scope.folderType,
-          themeId: themeId,
+          mixThemeId: themeId,
         });
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.viewmodel = resp.data;
           $scope.canRename =
             $scope.viewmodel.id === 0 ||
@@ -103,8 +108,8 @@ app.controller("TemplateController", [
         }
       } else {
         var resp = await service.getDefault();
-        if (resp && resp.isSucceed) {
-          resp.data.themeId = themeId;
+        if (resp && resp.success) {
+          resp.data.mixThemeId = themeId;
           resp.data.folderType = $scope.folderType;
           $scope.viewmodel = resp.data;
           $rootScope.isBusy = false;
@@ -128,7 +133,7 @@ app.controller("TemplateController", [
         "?folderType=" +
         encodeURIComponent($scope.folderType);
       var resp = await service.copy(id);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $location.url(
           `/portal/template/details/${themeId}/${$scope.folderType}/${resp.data.id}`
         );
@@ -159,7 +164,7 @@ app.controller("TemplateController", [
           $scope.request.toDate = dt.toISOString();
         }
         var resp = await service.getList($scope.request, [$scope.themeId]);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.data = resp.data;
           $rootScope.isBusy = false;
           $scope.$apply();

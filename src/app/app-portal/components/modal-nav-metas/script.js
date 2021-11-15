@@ -76,7 +76,7 @@
           var getMixDatbase = await databaseService.getSingle([
             ctrl.mixDatabaseName || ctrl.mixDatabaseId,
           ]);
-          if (getMixDatbase.isSucceed) {
+          if (getMixDatbase.success) {
             ctrl.columns = getMixDatbase.data.columns;
             ctrl.mixDatabaseId = getMixDatbase.data.id;
             ctrl.mixDatabaseName = getMixDatbase.data.name;
@@ -142,7 +142,7 @@
         });
         ctrl.request.key = "data";
         var response = await dataService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           ctrl.filterData();
           ctrl.isBusy = false;

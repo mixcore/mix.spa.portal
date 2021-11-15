@@ -17,7 +17,7 @@ modules.component("mixDatabaseColumn", {
         mixDatabaseId: 6,
       };
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
         if (ctrl.column.name) {
@@ -33,7 +33,7 @@ modules.component("mixDatabaseColumn", {
             $rootScope.isBusy = true;
             var saveField = await columnService.create(ctrl.column);
             $rootScope.isBusy = false;
-            if (saveField.isSucceed) {
+            if (saveField.success) {
               ctrl.additionalData.columns.push(saveField.data);
 
               //reset column option
@@ -49,7 +49,7 @@ modules.component("mixDatabaseColumn", {
       };
 
       ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+        col.systemName = $rootScope.generateKeyword(col.displayName, "_");
       };
       ctrl.showReferences = function (col) {
         ctrl.colRef = col;
@@ -91,7 +91,7 @@ modules.component("mixDatabaseColumn", {
         if (val.id) {
           $rootScope.isBusy = true;
           var result = await columnService.delete([val.id]);
-          if (result.isSucceed) {
+          if (result.success) {
             ctrl.additionalData.columns.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();

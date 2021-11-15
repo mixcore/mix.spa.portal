@@ -26,7 +26,7 @@ var dest = "."; //For publish folder use "./bin/Release/PublishOutput/";
 
 var paths = {
   //webroot: "./dist/Mix.Cms.Web/wwwroot/", // Use for current repo dist
-  webroot: "../mix.core/src/Mix.Cms.Web/wwwroot/mix-app/", // Use for mix.core repo
+  webroot: "../mix.core.v2/src/applications/Mixcore/wwwroot/mix-app/", // Use for mix.core repo
   webapp: "./src/app/", //app
   libs: "./src/lib/",
   nodeModules: "./node_modules/",
@@ -61,6 +61,7 @@ paths.securityApp = {
   src: [
     paths.webapp + "app-security/app.js",
     paths.webapp + "app-security/app.route.js",
+    paths.webapp + "app-security/app-security-controller.js",
     paths.webapp + "app-security/pages/**/*.js",
   ],
   dest: paths.webroot + "js/app-security.min.js",
@@ -210,9 +211,6 @@ gulp.task("min:shared", function (cb) {
 paths.appCss = {
   src: [
     paths.webapp + "app-shared/**/*.css",
-    paths.webapp + "app-portal/**/*.css",
-    paths.webapp + "app-security/**/*.css",
-    paths.webapp + "app-init/**/*.css",
     paths.webroot + "css/app-vendor-scss.min.css",
     paths.styleLib + "**/*.css",
     `${paths.nodeModules}angular-ui-bootstrap/dist/ui-bootstrap-csp.css`,
@@ -221,12 +219,7 @@ paths.appCss = {
 };
 
 paths.scss = {
-  src: [
-    paths.webapp + "app-shared/**/*.scss",
-    paths.webapp + "app-portal/**/*.scss",
-    paths.webapp + "app-security/**/*.scss",
-    paths.webapp + "app-init/**/*.scss",
-  ],
+  src: [paths.webapp + "app-shared/**/*.scss"],
   dest: paths.webroot + "css/app-vendor-scss.min.css",
 };
 
@@ -385,6 +378,7 @@ gulp.task("min:portalAppRequired", function (cb) {
 paths.portalCss = {
   src: [
     `${paths.nodeModules}bootstrap/dist/css/bootstrap.min.css`,
+    paths.webapp + "app-portal/**/*.css",
     paths.libs + "portal/**/*.css",
     paths.libs + "portal/**/*.*.css",
   ],

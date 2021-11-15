@@ -10,11 +10,11 @@ app.factory("Step2Services", [
     var _register = async function (user) {
       var req = {
         method: "POST",
-        url: "/init/init-cms/step-2",
+        url: "/mix-theme/setup/init-account",
         data: JSON.stringify(user),
       };
 
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     usersServiceFactory.register = _register;

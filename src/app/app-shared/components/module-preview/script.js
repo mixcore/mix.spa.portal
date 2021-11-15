@@ -27,7 +27,7 @@
           ctrl.contentId,
           "portal"
         );
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           $rootScope.isBusy = false;
           $scope.$apply();

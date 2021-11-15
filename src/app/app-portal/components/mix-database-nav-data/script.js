@@ -20,7 +20,7 @@ modules.component("mixDatabaseNavData", {
       ctrl.selected = null;
       ctrl.navRequest = angular.copy(ngAppSettings.request);
       ctrl.setRequest = angular.copy(ngAppSettings.request);
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = function () {
         navService
           .getDefault([ctrl.parentId, ctrl.parentType, "default"])
@@ -58,13 +58,13 @@ modules.component("mixDatabaseNavData", {
         $rootScope.isBusy = true;
         ctrl.selected.data = data;
         dataService.save(data).then((resp) => {
-          if (resp.isSucceed) {
+          if (resp.success) {
             ctrl.selected.dataId = resp.data.id;
             ctrl.selected.mixDatabaseId = resp.data.mixDatabaseId;
             ctrl.selected.mixDatabaseName = resp.data.mixDatabaseName;
             ctrl.selected.attributeData = resp.data;
             navService.save(ctrl.selected).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 var tmp = $rootScope.findObjectByKey(
                   ctrl.data,
                   ["parentId", "parentType", "id"],
@@ -104,7 +104,7 @@ modules.component("mixDatabaseNavData", {
       ctrl.removeDataConfirmed = async function (nav) {
         $rootScope.isBusy = true;
         var result = await navService.delete([nav.id]);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.removeObjectByKey(ctrl.data, "id", nav.id);
           $rootScope.isBusy = false;
           $scope.$apply();

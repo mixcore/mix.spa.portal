@@ -8,7 +8,7 @@ app.controller("AppPortalController", [
   "CommonService",
   "AuthService",
   "TranslatorService",
-  "GlobalSettingsService",
+  "AppSettingsService",
   "localStorageService",
   function (
     $rootScope,
@@ -19,7 +19,7 @@ app.controller("AppPortalController", [
     commonService,
     authService,
     translatorService,
-    globalSettingsService,
+    appSettingsService,
     localStorageService
   ) {
     $scope.isInit = false;
@@ -28,9 +28,9 @@ app.controller("AppPortalController", [
     $scope.pageTagType = 0;
     $scope.isAdmin = false;
     $scope.translator = translatorService;
-    $rootScope.globalSettingsService = globalSettingsService;
+    $rootScope.appSettingsService = appSettingsService;
     $scope.lang = null;
-    $scope.localizeSettings = {};
+    $scope.mixConfigurations = {};
     $scope.portalThemeSettings = {};
     $scope.init = function () {
       new ClipboardJS(".btn-clipboard");
@@ -38,18 +38,17 @@ app.controller("AppPortalController", [
       if (!$rootScope.isBusy) {
         $rootScope.isBusy = true;
 
-        commonService.loadJArrayData("micon.json").then((resp) => {
-          ngAppSettings.icons = resp.data;
+        commonService.loadJsonData("micon").then((resp) => {
+          ngAppSettings.icons = resp.data.items;
         });
-        commonService.loadJsonData("enums.json").then((resp) => {
-          ngAppSettings.enums = resp.data;
+        commonService.loadJsonData("enums").then((resp) => {
+          ngAppSettings.enums = resp.data.items;
         });
-        commonService.fillAllSettings($scope.lang).then(function (response) {
-          ngAppSettings.localizeSettings = $rootScope.localizeSettings.data;
-          if ($rootScope.globalSettings) {
+        apiService.getAllSettings($scope.lang).then(function () {
+          if ($rootScope.appSettings) {
             $scope.portalThemeSettings =
-              $rootScope.globalSettings.portalThemeSettings;
-            authService.fillAuthData().then(function (response) {
+              $rootScope.appSettings.portalThemeSettings;
+            authService.fillAuthData().then(function () {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth = authService.authentication != null;
               $rootScope.isAuth = authService.authentication != null;
@@ -68,46 +67,6 @@ app.controller("AppPortalController", [
           }
         });
       }
-    };
-    $scope.initFB = function () {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "1958592154434745",
-          cookie: true,
-          xfbml: true,
-          version: "v10.0",
-        });
-
-        FB.AppEvents.logPageView();
-      };
-    };
-    $scope.$on("$routeChangeStart", function ($event, next, current) {
-      // ... you could trigger something here ...
-      if (current && current.$$route) {
-        $rootScope.referrerUrl = current.$$route.originalPath;
-        Object.keys(current.params).forEach(function (key, index) {
-          // key: the name of the object key
-          // index: the ordinal position of the key within the object
-          if ($rootScope.referrerUrl.indexOf(":" + key) >= 0) {
-            $rootScope.referrerUrl = $rootScope.referrerUrl.replace(
-              ":" + key,
-              current.params[key]
-            );
-          } else {
-            if ($rootScope.referrerUrl.indexOf("?") < 0) {
-              $rootScope.referrerUrl += "?";
-            }
-            $rootScope.referrerUrl += key + "=" + current.params[key] + "&";
-          }
-        });
-      }
-      $scope.pageTagName = $location.$$path.toString().split("/")[2];
-      $scope.pageTagTypeName = $location.$$path.toString().split("/")[3];
-      if ($scope.pageTagTypeName == "list") $scope.pageTagType = 1;
-      if ($scope.pageTagTypeName == "create") $scope.pageTagType = 2;
-    });
-    $rootScope.limString = function (str, max) {
-      return str.substring(0, max);
     };
     $rootScope.getRequest = function (key) {
       key =

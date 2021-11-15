@@ -96,7 +96,7 @@
         if (file !== null) {
           $rootScope.isBusy = true;
           var getMedia = await mediaService.getSingle(["portal"]);
-          if (getMedia.isSucceed) {
+          if (getMedia.success) {
             ctrl.mediaFile.fileName = file.name.substring(
               0,
               file.name.lastIndexOf(".")
@@ -115,7 +115,7 @@
               null,
               ctrl.onUploadFileProgress
             );
-            if (resp && resp.isSucceed) {
+            if (resp && resp.success) {
               ctrl.src = resp.data.filePath;
               ctrl.srcUrl = resp.data.filePath;
               ctrl.isImage = ctrl.srcUrl

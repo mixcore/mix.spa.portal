@@ -18,17 +18,17 @@
     ) {
       var ctrl = this;
       ctrl.init = function () {
-        commonService.getPermissions().then(function (response) {
-          if (response && response.isSucceed) {
-            ctrl.isInit = true;
-            ctrl.roles = response.data;
-            if (ctrl.roles.data) {
-              ctrl.role = ctrl.roles.data[0];
-            }
-            $rootScope.isBusy = false;
-            $scope.$apply();
-          }
-        });
+        // commonService.getPermissions().then(function (response) {
+        //   if (response && response.success) {
+        //     ctrl.isInit = true;
+        //     ctrl.roles = response.data;
+        //     if (ctrl.roles.data) {
+        //       ctrl.role = ctrl.roles.data[0];
+        //     }
+        //     $rootScope.isBusy = false;
+        //     $scope.$apply();
+        //   }
+        // });
       };
     },
   ],

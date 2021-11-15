@@ -14,14 +14,14 @@
     "$rootScope",
     "$routeParams",
     "ngAppSettings",
-    "GlobalSettingsService",
+    "AppSettingsService",
     "TemplateService",
     function (
       $scope,
       $rootScope,
       $routeParams,
       ngAppSettings,
-      globalSettingsService,
+      appSettingsService,
       service
     ) {
       BaseCtrl.call(
@@ -47,11 +47,11 @@
       };
       ctrl.init = async function () {
         if (ctrl.folderType) {
-          var themeId = $rootScope.localizeSettings.data.ThemeId;
+          var themeId = $rootScope.mixConfigurations.data.ThemeId;
           ctrl.request.key = ctrl.folderType;
           var resp = await service.getList(ctrl.request, [themeId]);
 
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             ctrl.templates = resp.data.items;
             if (!ctrl.template) {
               ctrl.template = ctrl.templates[0];

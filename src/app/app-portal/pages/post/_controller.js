@@ -76,7 +76,7 @@ app.controller("PostController", [
     };
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
-      if (getTypes.isSucceed) {
+      if (getTypes.success) {
         $scope.postTypes = getTypes.data.items.map((m) => m.obj);
         $scope.postTypes.splice(
           0,
@@ -110,7 +110,7 @@ app.controller("PostController", [
         type: type || "",
         template: $routeParams.template || "",
       });
-      if (resp.isSucceed) {
+      if (resp.success) {
         $scope.viewmodel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
@@ -169,8 +169,9 @@ app.controller("PostController", [
         $scope.request.toDate = d.toISOString();
       }
       var resp = await service.getList($scope.request);
-      if (resp && resp.isSucceed) {
-        let result = [];
+      if (resp && resp.success) {
+        $scope.relatedData = angular.copy(resp.data);
+        $scope.relatedData.items = [];
         angular.forEach(resp.data.items, (element) => {
           let isActive =
             null !=
@@ -217,7 +218,7 @@ app.controller("PostController", [
         $scope.additionalData.parentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
         let result = await dataService.save($scope.additionalData);
-        if (!result.isSucceed) {
+        if (!result.success) {
           $rootScope.showErrors(result.errors);
         } else {
           $scope.additionalData = result.data;
@@ -236,14 +237,14 @@ app.controller("PostController", [
     };
     $scope.getSingleSuccessCallback = async function () {
       $scope.defaultThumbnailImgWidth =
-        ngAppSettings.localizeSettings.DefaultThumbnailImgWidth;
+        ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
       $scope.defaultThumbnailImgHeight =
-        ngAppSettings.localizeSettings.DefaultThumbnailImgHeight;
+        ngAppSettings.mixConfigurations.DefaultThumbnailImgHeight;
 
       $scope.defaultFeatureImgWidth =
-        ngAppSettings.localizeSettings.DefaultFeatureImgWidth;
+        ngAppSettings.mixConfigurations.DefaultFeatureImgWidth;
       $scope.defaultFeatureImgHeight =
-        ngAppSettings.localizeSettings.DefaultFeatureImgHeight;
+        ngAppSettings.mixConfigurations.DefaultFeatureImgHeight;
 
       $scope.request.postType = $scope.viewmodel.type;
       var moduleIds = $routeParams.module_ids;
@@ -307,7 +308,7 @@ app.controller("PostController", [
         databaseName: $scope.viewmodel.type || "",
       };
       const getData = await dataService.getAdditionalData(obj);
-      if (getData.isSucceed) {
+      if (getData.success) {
         $scope.additionalData = getData.data;
         $scope.$apply();
       }
@@ -349,7 +350,7 @@ app.controller("PostController", [
     };
     $scope.addAlias = async function () {
       var getAlias = await urlAliasService.getSingle();
-      if (getAlias.isSucceed) {
+      if (getAlias.success) {
         $scope.viewmodel.urlAliases.push(getAlias.data);
         $rootScope.isBusy = false;
         $scope.$apply();

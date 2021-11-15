@@ -32,7 +32,7 @@ app.controller("ModuleDataController", [
     // $scope.request.direction = "Asc";
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.moduleId = $routeParams.moduleId;
     $scope.backUrl = `/portal/module-data/list/${$scope.moduleId}`;
     $scope.module = null;
@@ -42,7 +42,7 @@ app.controller("ModuleDataController", [
       $scope.id = $routeParams.id;
       if (!$scope.module) {
         var getModule = await moduleService.getSingle([$scope.moduleId]);
-        if (getModule.isSucceed) {
+        if (getModule.success) {
           $scope.module = getModule.data;
           angular.forEach($scope.module.columns, function (e, i) {
             if (e.isDisplay) {
@@ -63,7 +63,7 @@ app.controller("ModuleDataController", [
       $rootScope.isBusy = true;
       $scope.request.module_id = $scope.moduleId;
       var response = await service.getList($scope.request);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.data = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -78,7 +78,7 @@ app.controller("ModuleDataController", [
       $rootScope.isBusy = true;
       $scope.request.module_id = $scope.moduleId;
       var response = await service.export($scope.request);
-      if (response.isSucceed) {
+      if (response.success) {
         window.top.location = response.data.webPath;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -92,7 +92,7 @@ app.controller("ModuleDataController", [
     $scope.getSingle = async function () {
       $rootScope.isBusy = true;
       var resp = await service.getSingle($routeParams.id, "portal");
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedModuleData = resp.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -119,7 +119,7 @@ app.controller("ModuleDataController", [
     $scope.removeConfirmed = async function (dataId) {
       $rootScope.isBusy = true;
       var result = await service.delete([dataId]);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -139,7 +139,7 @@ app.controller("ModuleDataController", [
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {

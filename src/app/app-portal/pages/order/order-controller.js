@@ -48,7 +48,7 @@ app.controller("OrderController", [
       $rootScope.isBusy = true;
       var id = $routeParams.id;
       var response = await orderServices.getOrder(id, "portal");
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedOrder = response.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -73,7 +73,7 @@ app.controller("OrderController", [
       }
       $rootScope.isBusy = true;
       var resp = await orderServices.getOrders($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         //$("html, body").animate({ "scrollTop": "0px" }, 500);
         $.each($scope.data.items, function (i, order) {
@@ -108,7 +108,7 @@ app.controller("OrderController", [
     $scope.removeOrderConfirmed = async function (id) {
       $rootScope.isBusy = true;
       var result = await orderServices.removeOrder(id);
-      if (result.isSucceed) {
+      if (result.success) {
         $scope.loadOrders();
       } else {
         $rootScope.showMessage("failed");
@@ -122,7 +122,7 @@ app.controller("OrderController", [
       order.excerpt = $(".editor-content.excerpt").val();
       $rootScope.isBusy = true;
       var resp = await orderServices.saveOrder(order);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedOrder = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

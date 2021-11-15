@@ -25,7 +25,7 @@ appShared.controller("MvcModuleDataController", [
     );
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.moduleId = null;
     $scope.module = null;
     $scope.allData = [];
@@ -41,7 +41,7 @@ appShared.controller("MvcModuleDataController", [
     $scope.getSingle = async function () {
       $rootScope.isBusy = true;
       var resp = await service.getSingle($scope.id, "mvc");
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedModuleData = resp.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -67,7 +67,7 @@ appShared.controller("MvcModuleDataController", [
       $scope.request.pageIndex = pageIndex || $scope.request.pageIndex + 1;
       $rootScope.isBusy = true;
       var response = await service.getList($scope.request);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.allData = $scope.allData.concat(response.data.items);
         $rootScope.isBusy = false;
         $scope.canLoadMore = response.data.totalItems > $scope.allData.length;

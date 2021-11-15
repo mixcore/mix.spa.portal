@@ -10,15 +10,15 @@
       ctrl.gennerateName = function () {
         if (
           !ctrl.model.id ||
-          ctrl.model.name === null ||
-          ctrl.model.name === ""
+          ctrl.model.systemName === null ||
+          ctrl.model.systemName === ""
         ) {
-          ctrl.model.name = $rootScope.generateKeyword(
-            ctrl.model.title,
+          ctrl.model.systemName = `${prefix}${$rootScope.generateKeyword(
+            ctrl.model.displayName,
             "_",
             true,
             true
-          );
+          )}`;
         }
       };
     },

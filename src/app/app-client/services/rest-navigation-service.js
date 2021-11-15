@@ -12,7 +12,7 @@ app.factory("RestNavigationService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _export = async function (objData) {
@@ -27,7 +27,7 @@ app.factory("RestNavigationService", [
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     serviceFactory.initData = _initData;

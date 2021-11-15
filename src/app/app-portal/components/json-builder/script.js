@@ -19,7 +19,7 @@
       var ctrl = this;
       ctrl.file = null;
       ctrl.translate = $rootScope.translate;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.timestamp = Math.random();
       ctrl.templates = [
         { type: "item", name: "i1", dataType: 7, value: "" },
@@ -58,7 +58,7 @@
         $scope.listUrl = "/portal/json-data/list?folder=" + ctrl.folder;
 
         var response = await fileService.getFile(ctrl.folder, ctrl.filename);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.file = response.data;
           ctrl.data = $.parseJSON(response.data.content);
           $rootScope.isBusy = false;
@@ -79,7 +79,7 @@
           // ctrl.parseObj(ctrl.dropzones.root, ctrl.model);
           ctrl.file.content = JSON.stringify(ctrl.model);
           var resp = await fileService.saveFile(ctrl.file);
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             $scope.activedFile = resp.data;
             $rootScope.showMessage("Update successfully!", "success");
             $rootScope.isBusy = false;

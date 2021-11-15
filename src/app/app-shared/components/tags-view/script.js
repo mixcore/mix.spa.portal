@@ -13,9 +13,9 @@
         }
         angular.forEach(ctrl.data, function (e, i) {
           e.url =
-            $rootScope.globalSettings.domain +
+            $rootScope.appSettings.domain +
             "/" +
-            $rootScope.localizeSettings.lang +
+            $rootScope.mixConfigurations.lang +
             "/tag/" +
             e.text;
         });

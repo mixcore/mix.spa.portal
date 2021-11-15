@@ -38,16 +38,16 @@
         if (
           ctrl.column &&
           ctrl.model &&
-          (!ctrl.model.id || !ctrl.model.obj["seo_url"]) &&
+          (!ctrl.model.id || !ctrl.model.data["seo_url"]) &&
           ctrl.column.name == "title"
         ) {
           if (
-            ctrl.model.obj[ctrl.column.name] &&
-            ctrl.previousValue !== ctrl.model.obj[ctrl.column.name]
+            ctrl.model.data[ctrl.column.name] &&
+            ctrl.previousValue !== ctrl.model.data[ctrl.column.name]
           ) {
-            ctrl.previousValue = ctrl.model.obj[ctrl.column.name];
-            ctrl.model.obj["seo_url"] = $rootScope.generateKeyword(
-              ctrl.model.obj[ctrl.column.name],
+            ctrl.previousValue = ctrl.model.data[ctrl.column.name];
+            ctrl.model.data["seo_url"] = $rootScope.generateKeyword(
+              ctrl.model.data[ctrl.column.name],
               "-"
             );
           }
@@ -56,11 +56,11 @@
           // check encrypt data
           if (
             ctrl.column.isEncrypt &&
-            ctrl.model.obj[ctrl.column.name] &&
-            $rootScope.testJSON(ctrl.model.obj[ctrl.column.name])
+            ctrl.model.data[ctrl.column.name] &&
+            $rootScope.testJSON(ctrl.model.data[ctrl.column.name])
           ) {
-            ctrl.model.obj[ctrl.column.name] = ctrl.parseEncryptedData(
-              ctrl.model.obj[ctrl.column.name]
+            ctrl.model.data[ctrl.column.name] = ctrl.parseEncryptedData(
+              ctrl.model.data[ctrl.column.name]
             );
           }
         }
@@ -73,7 +73,7 @@
         data: null,
       };
 
-      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.options = [];
       ctrl.$onInit = async function () {

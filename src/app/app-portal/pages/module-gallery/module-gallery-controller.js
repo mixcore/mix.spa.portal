@@ -28,7 +28,7 @@ app.controller("ModuleGalleryController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.moduleId = $routeParams.id;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
@@ -43,7 +43,7 @@ app.controller("ModuleGalleryController", [
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
       var response = await service.getList($scope.request);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.data = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -67,7 +67,7 @@ app.controller("ModuleGalleryController", [
     $scope.removeConfirmed = async function (moduleId, postId) {
       $rootScope.isBusy = true;
       var result = await service.delete(moduleId, postId);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -87,7 +87,7 @@ app.controller("ModuleGalleryController", [
 
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {
@@ -104,7 +104,7 @@ app.controller("ModuleGalleryController", [
         $scope.data.items[i].priority = startIndex + i + 1;
       }
       var resp = await service.updateInfos($scope.data.items);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedPage = resp.data;
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;

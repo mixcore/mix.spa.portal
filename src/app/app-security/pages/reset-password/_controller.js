@@ -20,7 +20,7 @@ app.controller("ResetPasswordController", [
       } else {
         $rootScope.isBusy = true;
         var result = await service.resetPassword($scope.user);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.isBusy = false;
           window.location.href = "/security/login";
         } else {

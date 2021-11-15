@@ -5,7 +5,7 @@ app.config(function (
   ngAppSettings
 ) {
   $locationProvider.html5Mode(true);
-  var data = $.parseJSON($("#portal-menus").val());
+  var data = JSON.parse($("#portal-menus").val());
   ngAppSettings.routes = data.routes;
   angular.forEach(ngAppSettings.routes, function (cate, key) {
     if (cate.items.length) {

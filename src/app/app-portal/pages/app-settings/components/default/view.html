@@ -4,7 +4,7 @@
     <label class="form-label">Content Status</label>
     <select
       class="btn btn-outline-secondary form-select"
-      ng-model="$ctrl.appSettings.GlobalSettings.DefaultStatus"
+      ng-model="$ctrl.appSettings.AppSettings.DefaultStatus"
     >
       <option
         ng-repeat="item in $ctrl.statuses track by $index"
@@ -18,7 +18,7 @@
     <label class="form-label">Language</label>
     <select
       class="btn btn-outline-secondary form-select"
-      ng-model="$ctrl.appSettings.GlobalSettings.DefaultCulture"
+      ng-model="$ctrl.appSettings.AppSettings.DefaultCulture"
     >
       <option
         ng-repeat="item in $ctrl.cultures track by $index"
@@ -32,11 +32,11 @@
 <!-- <div class="mb-3 row">
     <div class="col">
         <label class="form-label">Order By</label>
-        <input type="text" ng-model="$ctrl.appSettings.GlobalSettings.OrderBy" class="form-control">
+        <input type="text" ng-model="$ctrl.appSettings.AppSettings.OrderBy" class="form-control">
     </div>
     <div class="col">
         <label class="form-label">Order Direction</label>
-        <input type="text" ng-model="$ctrl.appSettings.GlobalSettings.OrderDirection" class="form-control">
+        <input type="text" ng-model="$ctrl.appSettings.AppSettings.OrderDirection" class="form-control">
     </div>
 </div> -->
 <div class="mb-3 row">
@@ -44,7 +44,7 @@
     <label class="form-label">Search PageSize</label>
     <input
       type="number"
-      ng-model="$ctrl.appSettings.GlobalSettings.SearchPageSize"
+      ng-model="$ctrl.appSettings.AppSettings.SearchPageSize"
       class="form-control"
     />
   </div>
@@ -52,7 +52,7 @@
     <label class="form-label">Tag PageSize</label>
     <input
       type="number"
-      ng-model="$ctrl.appSettings.GlobalSettings.TagPageSize"
+      ng-model="$ctrl.appSettings.AppSettings.TagPageSize"
       class="form-control"
     />
   </div>

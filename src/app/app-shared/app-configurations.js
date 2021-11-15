@@ -1,6 +1,6 @@
 appShared.constant("AppSettings", {
   serviceBase: "",
-  apiVersion: "v1",
+  apiVersion: "v2",
 });
 appShared.constant("ngAppSettings", {
   serviceBase: "",
@@ -283,9 +283,9 @@ appShared.run([
     $rootScope.updateSettings = function () {
       commonService.removeSettings();
       commonService
-        .fillSettings($rootScope.globalSettings.lang)
+        .fillSettings($rootScope.appSettings.lang)
         .then(function (response) {
-          $rootScope.globalSettings = response;
+          $rootScope.appSettings = response;
         });
       $rootScope.isBusy = false;
     };
@@ -316,6 +316,31 @@ appShared.run([
       lblOK,
       lblCancel
     ) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        windowClass: "show",
+        templateUrl:
+          "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
+        controller: "ModalCroppieController",
+        controllerAs: "$ctrl",
+        size: "lg",
+        resolve: {
+          mediaService: this,
+          file: function () {
+            return file;
+          },
+          w,
+          h,
+          rto,
+          autoSave,
+        },
+      });
+      modalInstance.result.then(
+        function (result) {
+          scope.croppieCallback(result);
+        },
+        function () {}
+      );
       $rootScope.confirmMessage = {
         title: title,
         content: msg,
@@ -465,14 +490,12 @@ appShared.run([
         processData: false, // Not to process data
         data: form,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     $rootScope.translate = function (keyword, isWrap, defaultText) {
-      if ($rootScope.globalSettings && $rootScope.translator) {
-        return (
-          $rootScope.translator.get(keyword, isWrap, defaultText) || keyword
-        );
+      if ($rootScope.appSettings && $rootScope.translator) {
+        return $rootScope.translator[keyword] || keyword;
       } else {
         return keyword || defaultText;
       }
@@ -480,14 +503,10 @@ appShared.run([
 
     $rootScope.getConfiguration = function (keyword, isWrap, defaultText) {
       if (
-        $rootScope.globalSettings &&
-        ($rootScope.globalSettingsService || $rootScope.isBusy)
+        $rootScope.appSettings &&
+        ($rootScope.appSettingsService || $rootScope.isBusy)
       ) {
-        return $rootScope.globalSettingsService.get(
-          keyword,
-          isWrap,
-          defaultText
-        );
+        return $rootScope.appSettingsService.get(keyword, isWrap, defaultText);
       } else {
         return keyword || defaultText;
       }

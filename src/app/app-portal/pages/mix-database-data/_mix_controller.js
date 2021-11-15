@@ -28,7 +28,7 @@ app.controller("MixDatabaseDataController", [
     $scope.queries = {};
     $scope.data = {};
     $scope.exportAll = true;
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     // $scope.request.orderBy = "Priority";
     // $scope.request.direction = "Asc";
     $scope.filterType = "contain";
@@ -80,7 +80,7 @@ app.controller("MixDatabaseDataController", [
         var getFields = await columnService.initData(
           $scope.mixDatabaseName || $scope.mixDatabaseId
         );
-        if (getFields.isSucceed) {
+        if (getFields.success) {
           $scope.columns = getFields.data;
           $scope.$apply();
         }
@@ -135,7 +135,7 @@ app.controller("MixDatabaseDataController", [
     $scope.removeConfirmed = async function (dataId) {
       $rootScope.isBusy = true;
       var result = await service.delete([dataId]);
-      if (result.isSucceed) {
+      if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
             "removeCallback",
@@ -158,7 +158,7 @@ app.controller("MixDatabaseDataController", [
           $scope.mixDatabaseName,
           form["import-data-inp"].files[0]
         );
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.showMessage("success", "success");
           $rootScope.isBusy = false;
           $scope.getList(0);
@@ -197,7 +197,7 @@ app.controller("MixDatabaseDataController", [
       $rootScope.isBusy = true;
       $rootScope.isBusy = true;
       var result = await service.sendMail([data.id]);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.showMessage("success", "success");
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -209,7 +209,7 @@ app.controller("MixDatabaseDataController", [
     };
     $scope.saveOthers = async function () {
       var response = await service.saveList($scope.others);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.getList();
         $scope.$apply();
       } else {
@@ -256,7 +256,7 @@ app.controller("MixDatabaseDataController", [
       $scope.request.query = JSON.stringify(query);
       $rootScope.isBusy = true;
       var resp = await service.getList($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
           $.each($scope.activeddata, function (i, e) {
@@ -323,7 +323,7 @@ app.controller("MixDatabaseDataController", [
       }
       $rootScope.isBusy = true;
       var resp = await service.export(request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         if (resp.data) {
           window.top.location = resp.data.webPath;
         } else {

@@ -9,7 +9,7 @@ app.factory("Step3Services", [
         url: "/init/init-cms/step-3",
         data: JSON.stringify(data),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _activeTheme = async function (data) {
       var req = {
@@ -17,7 +17,7 @@ app.factory("Step3Services", [
         url: "/init/init-cms/step-3/active",
         data: JSON.stringify(data),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     var _ajaxSubmitForm = async function (form, url) {
       var req = {
@@ -28,7 +28,7 @@ app.factory("Step3Services", [
         processData: false, // Not to process data
         data: form,
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     service.submit = _submit;
     service.activeTheme = _activeTheme;

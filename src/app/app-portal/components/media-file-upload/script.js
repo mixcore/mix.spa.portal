@@ -105,7 +105,7 @@
               file,
               ctrl.onUploadFileProgress
             );
-            if (response.isSucceed) {
+            if (response.success) {
               ctrl.media = response.data;
               $rootScope.isBusy = false;
               ctrl.srcUrl = response.data.filePath;

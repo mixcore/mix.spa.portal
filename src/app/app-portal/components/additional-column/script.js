@@ -20,7 +20,7 @@ modules.component("additionalColumn", {
         status: "Published",
       };
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
         if (ctrl.column.name) {
@@ -36,7 +36,7 @@ modules.component("additionalColumn", {
             $rootScope.isBusy = true;
             var saveField = await columnService.create(ctrl.column);
             $rootScope.isBusy = false;
-            if (saveField.isSucceed) {
+            if (saveField.success) {
               ctrl.additionalData.columns.push(saveField.data);
               if (ctrl.additionalData.parentId) {
                 await dataService.save(ctrl.additionalData);
@@ -99,7 +99,7 @@ modules.component("additionalColumn", {
         if (val.id) {
           $rootScope.isBusy = true;
           var result = await columnService.delete([val.id]);
-          if (result.isSucceed) {
+          if (result.success) {
             ctrl.additionalData.columns.splice(index, 1);
             $rootScope.isBusy = false;
             $scope.$apply();

@@ -5,14 +5,14 @@ appShared.factory("RestMixDatabaseColumnPortalService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-database-column/portal", true);
+    serviceFactory.init("mix-database-column", true);
     var _initData = async function (mixDatabaseName) {
       var url = this.prefixUrl + "/init/" + mixDatabaseName;
       var req = {
         method: "GET",
         url: url,
       };
-      return await apiService.getRestApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.initData = _initData;
     return serviceFactory;

@@ -5,7 +5,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.gennerateName = function () {
         if (
           !ctrl.model.id ||

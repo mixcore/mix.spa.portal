@@ -52,7 +52,7 @@
               resp = await moduleDataService.initForm(ctrl.moduleId);
             }
           }
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             ctrl.data = resp.data;
             ctrl.data.postId = ctrl.postId;
             ctrl.data.productId = ctrl.productId;
@@ -86,7 +86,7 @@
           ctrl.d,
           "portal"
         );
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           //$rootScope.initEditor();
           $rootScope.isBusy = false;
@@ -120,7 +120,7 @@
           }
         });
         var resp = await moduleDataService.save(ctrl.data);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           ctrl.data = resp.data;
           if (ctrl.saveSuccessCallback) {
             ctrl.saveSuccessCallback({

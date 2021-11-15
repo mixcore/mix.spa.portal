@@ -32,7 +32,7 @@ modules.component("mixDatabaseDataValues", {
       ctrl.filterTypes = ["contain", "equal"];
       ctrl.compareTypes = ["or", "and"];
       ctrl.selectedProp = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.selectedList) {
           ctrl.selectedList = {
@@ -44,7 +44,7 @@ modules.component("mixDatabaseDataValues", {
           var getFields = await columnService.initData(
             ctrl.mixDatabaseName || ctrl.mixDatabaseId
           );
-          if (getFields.isSucceed) {
+          if (getFields.success) {
             ctrl.columns = getFields.data;
             $scope.$apply();
           }
@@ -127,7 +127,7 @@ modules.component("mixDatabaseDataValues", {
           var resp = await dataService.saveFields(e.id, {
             priority: e.priority,
           });
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             $scope.activedPage = resp.data;
           } else {
             if (resp) {

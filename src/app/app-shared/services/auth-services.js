@@ -36,7 +36,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await apiService.getRestApiResult(req);
+      var resp = await apiService.sendRequest(req);
       return resp;
     };
 
@@ -47,7 +47,7 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify(data),
       };
-      var resp = await apiService.getRestApiResult(req);
+      var resp = await apiService.sendRequest(req);
       return resp;
     };
 
@@ -66,11 +66,11 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify({ message: message }),
       };
-      var resp = await apiService.getRestApiResult(req, true);
-      if (resp.isSucceed) {
+      var resp = await apiService.sendRequest(req, true);
+      if (resp.success) {
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);
-        apiService.initAllSettings().then(function () {
+        apiService.getAllSettings().then(function () {
           if ($routeParams.ReturnUrl) {
             setTimeout(() => {
               window.top.location = $routeParams.ReturnUrl;
@@ -113,9 +113,9 @@ appShared.factory("AuthService", [
         url: apiUrl,
         data: JSON.stringify({ message: message }),
       };
-      var resp = await apiService.getRestApiResult(req, true);
+      var resp = await apiService.sendRequest(req, true);
 
-      if (resp.isSucceed) {
+      if (resp.success) {
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);
         apiService.initAllSettings().then(function () {
@@ -139,8 +139,8 @@ appShared.factory("AuthService", [
       //   };
 
       //   _authentication = null;
-      //   var resp = await apiService.getRestApiResult(req);
-      //   if (resp.isSucceed) {
+      //   var resp = await apiService.sendRequest(req);
+      //   if (resp.success) {
       //     window.top.location.href = "/security/login";
       //   }
     };
@@ -161,8 +161,8 @@ appShared.factory("AuthService", [
           url: apiUrl,
           data: JSON.stringify(data),
         };
-        var resp = await apiService.getApiResult(req);
-        if (resp.isSucceed) {
+        var resp = await apiService.sendRequest(req);
+        if (resp.success) {
           let encryptedData = resp.data;
           return apiService.updateAuthData(encryptedData);
         } else {

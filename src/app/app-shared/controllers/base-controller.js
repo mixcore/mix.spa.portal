@@ -33,7 +33,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     $rootScope.isBusy = true;
     var id = $routeParams.id;
     var resp = await service.getSingle([id, "portal"]);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
@@ -65,7 +65,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     }
     $rootScope.isBusy = true;
     var resp = await service.getList($scope.request);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.data = resp.data;
       $.each($scope.data.items, function (i, data) {
         $.each($scope.viewmodels, function (i, e) {
@@ -106,7 +106,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.removeConfirmed = async function (id) {
     $rootScope.isBusy = true;
     var result = await service.delete(id);
-    if (result.isSucceed) {
+    if (result.success) {
       if ($scope.removeCallback) {
         $rootScope.executeFunctionByName(
           "removeCallback",
@@ -135,7 +135,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.applyListConfirmed = async function () {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.viewmodel = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
@@ -171,7 +171,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
     $scope.viewmodel = data || $scope.viewmodel;
     if ($scope.isValid) {
       var resp = await service.save($scope.viewmodel);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
 
@@ -235,7 +235,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.applyListConfirmed = async function () {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.viewmodel = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
@@ -274,7 +274,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   };
 
   $scope.handleResult = function (result) {
-    if (result.isSucceed) {
+    if (result.success) {
       $rootScope.showMessage("Success");
     } else {
       $rootScope.showErrors(result.errors);

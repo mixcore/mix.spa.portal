@@ -14,7 +14,7 @@ app.factory("UrlAliasService", [
         url: this.prefixUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.updateInfos = _updateInfos;
     return serviceFactory;

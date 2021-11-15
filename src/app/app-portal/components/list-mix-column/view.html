@@ -528,9 +528,8 @@
                     <input type="text" class="col-7 form-control form-control-sm"
                         ng-model="col.options[$index].value" />
                     <select class="col-5 form-control form-control-sm" ng-model="col.options[$index].dataType">
-                        <option ng-repeat="item in $ctrl.localizeSettings.dataTypes track by $index"
-                            ng-value="item.value">
-                            {{item.name}}
+                        <option ng-repeat="item in $ctrl.dataTypes track by $index" ng-value="item">
+                            {{item}}
                         </option>
                     </select>
 

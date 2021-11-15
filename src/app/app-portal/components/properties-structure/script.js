@@ -7,7 +7,7 @@ modules.component("propertiesStructure", {
     function ($rootScope, $scope) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.defaultAttr = {
         title: "",
         name: "",
@@ -100,7 +100,7 @@ modules.component("propertiesStructure", {
       };
 
       ctrl.generateName = function (col) {
-        col.name = $rootScope.generateKeyword(col.title, "_");
+        col.systemName = $rootScope.generateKeyword(col.displayName, "_");
       };
       ctrl.removeAttr = function (index) {
         if (ctrl.columns) {

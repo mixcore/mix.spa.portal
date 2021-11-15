@@ -11,9 +11,9 @@
       };
       ctrl.updateUrl = function () {
         ctrl.url =
-          $rootScope.globalSettings.domain +
+          $rootScope.appSettings.domain +
           "/" +
-          $rootScope.localizeSettings.lang +
+          $rootScope.mixConfigurations.lang +
           "/" +
           ctrl.urlAlias.alias;
       };
@@ -37,7 +37,7 @@
       ctrl.removeConfirmed = async function (id) {
         $rootScope.isBusy = true;
         var result = await service.delete(id);
-        if (result.isSucceed) {
+        if (result.success) {
           if (ctrl.removeCallback) {
             ctrl.removeCallback({ index: ctrl.index });
           }

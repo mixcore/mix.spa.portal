@@ -11,7 +11,7 @@ appShared.factory("CryptoService", [
       var key, iv;
       ngAppSettings;
       iCompleteEncodedKey =
-        iCompleteEncodedKey || $rootScope.globalSettings.apiEncryptKey;
+        iCompleteEncodedKey || $rootScope.appSettings.apiEncryptKey;
       var keys = _parseKeys(iCompleteEncodedKey);
       key = keys.key;
       iv = keys.iv;
@@ -21,7 +21,7 @@ appShared.factory("CryptoService", [
     var _decryptAES = function (ciphertext, iCompleteEncodedKey = null) {
       var key, iv;
       iCompleteEncodedKey =
-        iCompleteEncodedKey || $rootScope.globalSettings.apiEncryptKey;
+        iCompleteEncodedKey || $rootScope.appSettings.apiEncryptKey;
       var keys = _parseKeys(iCompleteEncodedKey);
       key = keys.key;
       iv = keys.iv;

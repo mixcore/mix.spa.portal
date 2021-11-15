@@ -16,7 +16,7 @@ app.controller("ForgotPasswordController", [
       $location.path("/portal");
     }
     $scope.pageClass = "page-forgot-password";
-    $scope.isSucceed = false;
+    $scope.success = false;
     $scope.viewmodel = {
       email: null,
     };
@@ -28,9 +28,9 @@ app.controller("ForgotPasswordController", [
     });
     $scope.submit = async function () {
       var result = await authService.forgotPassword($scope.viewmodel);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.isBusy = false;
-        $scope.isSucceed = true;
+        $scope.success = true;
         $scope.$apply();
       } else {
         $rootScope.isBusy = false;

@@ -22,7 +22,7 @@ modules.component("mixDatabaseNavs", {
       ctrl.navRequest = angular.copy(ngAppSettings.request);
       ctrl.setRequest = angular.copy(ngAppSettings.request);
 
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
       ctrl.$onInit = function () {
         // ctrl.setRequest.type = ctrl.parentType;
         navService.getDefault().then((resp) => {
@@ -99,7 +99,7 @@ modules.component("mixDatabaseNavs", {
             .parent()
             .remove();
         }
-        if (result && result.isSucceed) {
+        if (result && result.success) {
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -112,7 +112,7 @@ modules.component("mixDatabaseNavs", {
         $rootScope.isBusy = true;
         var result;
         result = await navService.save(nav);
-        if (result && result.isSucceed) {
+        if (result && result.success) {
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {

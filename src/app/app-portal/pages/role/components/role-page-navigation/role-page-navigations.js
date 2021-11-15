@@ -19,7 +19,7 @@
       //    //var permission = ctrl.page.navPermission;
       //    //$rootScope.isBusy = true;
       //    //var resp = await roleServices.updatePermission(permission);
-      //    //if (resp && resp.isSucceed) {
+      //    //if (resp && resp.success) {
       //    //    $rootScope.showMessage('Update successfully!', 'success');
       //    //    $rootScope.isBusy = false;
       //    //    $scope.$apply();

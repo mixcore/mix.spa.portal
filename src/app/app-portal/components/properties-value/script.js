@@ -24,7 +24,7 @@ modules.component("propertiesValue", {
         width: 3,
       };
       ctrl.selectedProp = null;
-      ctrl.localizeSettings = $rootScope.globalSettings;
+      ctrl.mixConfigurations = $rootScope.appSettings;
 
       ctrl.$doCheck = function () {
         if (
@@ -44,12 +44,12 @@ modules.component("propertiesValue", {
             $rootScope.findObjectByKey(
               ctrl.trackedProperties,
               "name",
-              col.name
+              col.systemName
             ) || {};
 
           ctrl.properties.push({
-            title: col.title,
-            name: col.name,
+            title: col.displayName,
+            name: col.systemName,
             dataType: col.dataType,
             value: oldObj.value || col.defaultValue,
             options: col.options,

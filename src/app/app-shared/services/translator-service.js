@@ -44,8 +44,8 @@ appShared.factory("TranslatorService", [
           url: url,
         };
         translator.lang = culture;
-        var getData = await apiService.getApiResult(req);
-        if (getData.isSucceed) {
+        var getData = await apiService.sendRequest(req);
+        if (getData.success) {
           translator.data = getData.data;
           localStorageService.set("translator", translator);
         }
@@ -57,9 +57,9 @@ appShared.factory("TranslatorService", [
       await _getTranslator(lang);
     };
     var _get = function (keyword, isWrap, defaultText) {
-      if (!this.translator.data && $rootScope.globalSettings) {
+      if (!$rootScope.translator.data && $rootScope.appSettings) {
         $rootScope.isBusy = true;
-        this.fillTranslator($rootScope.globalSettings.lang).then(function (
+        this.fillTranslator($rootScope.appSettings.lang).then(function (
           response
         ) {
           $rootScope.isBusy = false;
@@ -79,7 +79,7 @@ appShared.factory("TranslatorService", [
     };
 
     var _getAsync = async function (keyword, defaultText) {
-      if (!this.translator.data && $rootScope.globalSettings) {
+      if (!this.translator) {
         $rootScope.isBusy = true;
         this.translator = await _fillTranslator(lang);
         return (
@@ -109,7 +109,7 @@ appShared.factory("TranslatorService", [
         method: "GET",
         url: url,
       };
-      var getData = await apiService.getApiResult(req);
+      var getData = await apiService.sendRequest(req);
       return getData.data;
     };
     factory.getAsync = _getAsync;

@@ -19,7 +19,7 @@
       ctrl.refData = [];
       ctrl.refRequest = angular.copy(ngAppSettings.request);
       ctrl.refRequest.pageSize = 100;
-      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.initData = async function () {
         setTimeout(() => {
@@ -119,7 +119,7 @@
       ctrl.removeRefDataConfirmed = async function (dataId) {
         $rootScope.isBusy = true;
         var result = await dataService.delete(dataId);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.removeObjectByKey(ctrl.refData, "id", dataId);
           $rootScope.isBusy = false;
           $scope.$apply();

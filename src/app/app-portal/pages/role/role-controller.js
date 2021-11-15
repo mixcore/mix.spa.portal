@@ -37,7 +37,7 @@ app.controller("RoleController", [
     $scope.createRole = async function () {
       $rootScope.isBusy = true;
       var result = await service.createRole($scope.role.name);
-      if (result.isSucceed) {
+      if (result.success) {
         $scope.role.name = "";
         $scope.getList();
       } else {

@@ -6,14 +6,14 @@ app.factory("PageRestService", [
   "BaseRestService",
   function ($rootScope, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("page/portal");
+    serviceFactory.init("mix-page-content");
     var _updateInfos = async function (pages) {
       var req = {
         method: "POST",
         url: this.prefixUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
     serviceFactory.updateInfos = _updateInfos;
     return serviceFactory;

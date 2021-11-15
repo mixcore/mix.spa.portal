@@ -70,10 +70,10 @@
         if (ctrl.request.toDate !== null) {
           ctrl.request.toDate = ctrl.request.toDate.toISOString();
         }
-        if ($rootScope.globalSettings) {
+        if ($rootScope.appSettings) {
           ctrl.isBusy = true;
           var resp = await mediaService.getList(ctrl.request);
-          if (resp && resp.isSucceed) {
+          if (resp && resp.success) {
             ctrl.medias = resp.data;
             if (ctrl.data) {
               angular.forEach(ctrl.medias.items, function (value, key) {

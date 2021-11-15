@@ -132,7 +132,7 @@ function BaseODataCtrl(
   $scope.removeConfirmed = async function (id) {
     $rootScope.isBusy = true;
     var result = await service.delete([id]);
-    if (result.isSucceed) {
+    if (result.success) {
       if ($scope.removeCallback) {
         $rootScope.executeFunctionByName(
           "removeCallback",
@@ -159,7 +159,7 @@ function BaseODataCtrl(
     }
     if ($scope.isValid) {
       var resp = await service.save("portal", data);
-      if (resp.isSucceed) {
+      if (resp.success) {
         $scope.viewmodel = resp.data;
         $rootScope.showMessage("success", "success");
 
@@ -224,7 +224,7 @@ function BaseODataCtrl(
   $scope.applyListConfirmed = async function () {
     $rootScope.isBusy = true;
     var resp = await service.applyList("read", $scope.selectedList);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.viewmodel = resp.data;
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {

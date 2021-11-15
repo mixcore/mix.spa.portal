@@ -54,7 +54,7 @@ appShared.controller("SharedModuleDataController", [
     $scope.getModuleData = async function (id) {
       $rootScope.isBusy = true;
       var resp = await moduleDataService.getModuleData(id, "portal");
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedModuleData = resp.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -81,7 +81,7 @@ appShared.controller("SharedModuleDataController", [
         resp = await moduleDataService.initModuleForm($scope.name);
       }
 
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedModuleData = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -109,7 +109,7 @@ appShared.controller("SharedModuleDataController", [
         id,
         "portal"
       );
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedModuleData = response.data;
         $rootScope.initEditor();
         $rootScope.isBusy = false;
@@ -134,7 +134,7 @@ appShared.controller("SharedModuleDataController", [
         $scope.request.toDate = d.toISOString();
       }
       var resp = await moduleDataService.getModuleDatas($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -150,7 +150,7 @@ appShared.controller("SharedModuleDataController", [
     $scope.removeModuleData = async function (id) {
       if (confirm("Are you sure!")) {
         var resp = await moduleDataService.removeModuleData(id);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.loadModuleDatas();
         } else {
           if (resp) {
@@ -164,7 +164,7 @@ appShared.controller("SharedModuleDataController", [
       var resp = await moduleDataService.saveModuleData(
         $scope.activedModuleData
       );
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedModuleData = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

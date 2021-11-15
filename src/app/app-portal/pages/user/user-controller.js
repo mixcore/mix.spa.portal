@@ -58,7 +58,7 @@ app.controller("UserController", [
       $rootScope.isBusy = true;
       var id = $routeParams.id;
       var response = await userServices.getUser(id, "portal");
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedUser = response.data;
         $rootScope.isBusy = false;
         if (!$rootScope.isInRole("SuperAdmin")) {
@@ -77,7 +77,7 @@ app.controller("UserController", [
     $scope.loadMyProfile = async function () {
       $rootScope.isBusy = true;
       var response = await userServices.getMyProfile();
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.activedUser = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();
@@ -100,7 +100,7 @@ app.controller("UserController", [
       }
       $rootScope.isBusy = true;
       var resp = await userServices.getUsers($scope.request);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.data = resp.data;
         if (!$rootScope.isInRole("SuperAdmin")) {
           $scope.data.items = $scope.data.items.filter(
@@ -141,7 +141,7 @@ app.controller("UserController", [
     $scope.removeUserConfirmed = async function (id) {
       $rootScope.isBusy = true;
       var result = await userServices.removeUser(id);
-      if (result.isSucceed) {
+      if (result.success) {
         $scope.loadUsers();
       } else {
         $rootScope.showMessage("failed");
@@ -156,7 +156,7 @@ app.controller("UserController", [
       //}
       $rootScope.isBusy = true;
       var resp = await userServices.saveUser($scope.activedUser);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $rootScope.showMessage("Update successfully!", "success");
         if ($scope.activedUser.user.id == authService.authentication.info.id) {
           authService
@@ -190,7 +190,7 @@ app.controller("UserController", [
     $scope.register = async function (user) {
       $rootScope.isBusy = true;
       var resp = await userServices.register(user);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedUser = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
@@ -213,7 +213,7 @@ app.controller("UserController", [
       };
       $rootScope.isBusy = true;
       var resp = await userServices.updateRoleStatus(userRole);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
         $scope.$apply();

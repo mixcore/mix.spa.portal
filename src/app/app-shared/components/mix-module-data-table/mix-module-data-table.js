@@ -34,7 +34,7 @@
       ctrl.updateDataInfos = async function (items) {
         $rootScope.isBusy = true;
         var resp = await dataService.updateInfos(items);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.activedPage = resp.data;
           $rootScope.showMessage("success", "success");
           $rootScope.isBusy = false;

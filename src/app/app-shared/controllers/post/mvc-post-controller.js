@@ -26,7 +26,7 @@ appShared.controller("MvcPostController", [
     $scope.service = null;
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
-    $scope.localizeSettings = $rootScope.globalSettings;
+    $scope.mixConfigurations = $rootScope.appSettings;
     $scope.moduleId = null;
     $scope.module = null;
     $scope.allData = [];
@@ -50,7 +50,7 @@ appShared.controller("MvcPostController", [
       $scope.request.pageIndex = pageIndex || $scope.request.pageIndex + 1;
       $rootScope.isBusy = true;
       var response = await service.getList($scope.request);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.allData = $scope.allData.concat(response.data.items);
         $rootScope.isBusy = false;
         $scope.canLoadMore =

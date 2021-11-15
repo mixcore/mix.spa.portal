@@ -53,7 +53,7 @@
           ctrl.request.toDate = d.toISOString();
         }
         var resp = await service.getList(ctrl.request);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           ctrl.relatedData = angular.copy(resp.data);
           ctrl.relatedData.items = [];
           angular.forEach(resp.data.items, (element) => {

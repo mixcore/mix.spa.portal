@@ -34,7 +34,7 @@
       ctrl.save = async function (data) {
         $rootScope.isBusy = true;
         var resp = await service.save(data);
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.viewmodel = resp.data;
           $rootScope.showMessage("success", "success");
           $rootScope.isBusy = false;

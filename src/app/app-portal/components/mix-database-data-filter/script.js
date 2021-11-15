@@ -59,7 +59,7 @@
         }
 
         var response = await dataService.getList(ctrl.request);
-        if (response.isSucceed) {
+        if (response.success) {
           ctrl.data = response.data;
           ctrl.isBusy = false;
           $scope.$apply();

@@ -75,7 +75,7 @@ appShared.controller("MediaController", [
           $scope.formFile,
           $scope.onUploadFileProgress
         );
-        if (resp && resp.isSucceed) {
+        if (resp && resp.success) {
           $scope.viewmodel = resp.data;
           $rootScope.showMessage("success", "success");
 
@@ -113,7 +113,7 @@ appShared.controller("MediaController", [
     $scope.uploadMedia = async function () {
       $rootScope.isBusy = true;
       var resp = await service.uploadMedia($scope.mediaFile);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         //$scope.activedMedia = resp.data;
         $scope.getList();
         $scope.$apply();
@@ -165,7 +165,7 @@ appShared.controller("MediaController", [
     $scope.clone = async function (id) {
       $rootScope.isBusy = true;
       var resp = await service.cloneMedia(id);
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.activedMedia = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;

@@ -2,24 +2,9 @@
 app.controller("Step1Controller", [
   "$scope",
   "$rootScope",
-  "ngAppSettings",
-  "$timeout",
-  "$location",
-  "$http",
-  "ApiService",
   "CommonService",
   "Step1Services",
-  function (
-    $scope,
-    $rootScope,
-    ngAppSettings,
-    $timeout,
-    $location,
-    $http,
-    apiService,
-    commonService,
-    step1Services
-  ) {
+  function ($scope, $rootScope, commonService, step1Services) {
     var rand = Math.floor(Math.random() * 10000) + 1;
     $scope.settings = {
       providers: [
@@ -51,10 +36,9 @@ app.controller("Step1Controller", [
       cultures: [],
     };
     $scope.loadSettings = async function () {
-      step1Services.saveDefaultSettings();
-      var getCultures = await commonService.loadJArrayData("cultures.json");
-      if (getCultures.isSucceed) {
-        $scope.settings.cultures = getCultures.data;
+      var getCultures = await commonService.loadJsonData("cultures");
+      if (getCultures) {
+        $scope.settings.cultures = getCultures.data.items;
         $scope.initCmsModel.culture = $scope.settings.cultures[0];
         $scope.dbProvider = $scope.settings.providers[0];
         $scope.initCmsModel.databaseProvider = $scope.dbProvider.value;
@@ -124,7 +108,7 @@ app.controller("Step1Controller", [
       $rootScope.isBusy = true;
       if ($scope.initCmsModel.siteName && $scope.initCmsModel.siteName != "") {
         var result = await step1Services.initCms($scope.initCmsModel);
-        if (result.isSucceed) {
+        if (result.success) {
           $rootScope.isBusy = false;
           $rootScope.goToPath("/init/step2");
           $scope.$apply();

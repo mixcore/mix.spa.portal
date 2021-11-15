@@ -1,5 +1,5 @@
 ﻿"use strict";
-appShared.factory("GlobalSettingsService", [
+appShared.factory("AppSettingsService", [
   "$rootScope",
   "ApiService",
   "CommonService",
@@ -13,33 +13,33 @@ appShared.factory("GlobalSettingsService", [
     appSettings
   ) {
     var factory = {};
-    var _globalSettings = {
+    var _appSettings = {
       lang: "",
       data: null,
     };
-    var _fillGlobalSettings = async function (culture) {
-      this.globalSettings = localStorageService.get("globalSettings");
+    var _fillAppSettings = async function (culture) {
+      this.appSettings = localStorageService.get("appSettings");
       if (
-        this.globalSettings &&
-        this.globalSettings.data &&
-        this.globalSettings.lang === culture
+        this.appSettings &&
+        this.appSettings.data &&
+        this.appSettings.lang === culture
       ) {
-        //_globalSettings = globalSettings;
-        //this.globalSettings = globalSettings;
+        //_appSettings = appSettings;
+        //this.appSettings = appSettings;
 
-        return this.globalSettings;
+        return this.appSettings;
       } else {
-        this.globalSettings = await _getglobalSettings(culture);
-        return this.globalSettings;
+        this.appSettings = await _getappSettings(culture);
+        return this.appSettings;
       }
     };
-    var _getglobalSettings = async function (culture) {
-      var globalSettings = localStorageService.get("globalSettings");
-      if (globalSettings && (!culture || globalSettings.lang === culture)) {
-        globalSettings = globalSettings;
-        return globalSettings;
+    var _getappSettings = async function (culture) {
+      var appSettings = localStorageService.get("appSettings");
+      if (appSettings && (!culture || appSettings.lang === culture)) {
+        appSettings = appSettings;
+        return appSettings;
       } else {
-        globalSettings = { lang: culture, data: null };
+        appSettings = { lang: culture, data: null };
         var url = "/portal";
         if (culture) {
           url += "/" + culture;
@@ -49,35 +49,35 @@ appShared.factory("GlobalSettingsService", [
           method: "GET",
           url: url,
         };
-        var getData = await apiService.getApiResult(req);
-        if (getData.isSucceed) {
-          globalSettings = getData.data;
-          localStorageService.set("globalSettings", globalSettings);
+        var getData = await apiService.sendRequest(req);
+        if (getData.success) {
+          appSettings = getData.data;
+          localStorageService.set("appSettings", appSettings);
         }
-        return globalSettings;
+        return appSettings;
       }
     };
     var _reset = async function (lang) {
-      localStorageService.remove("globalSettings");
-      await _getglobalSettings(lang);
+      localStorageService.remove("appSettings");
+      await _getappSettings(lang);
     };
     var _get = function (keyword, isWrap, defaultText) {
       if ($rootScope.waitForInit()) {
-        if (!this.globalSettings && $rootScope.globalSettings) {
+        if (!this.appSettings && $rootScope.appSettings) {
           $rootScope.isBusy = true;
-          this.fillGlobalSettings($rootScope.globalSettings.lang).then(
-            function (response) {
-              $rootScope.isBusy = false;
-              return (
-                response[keyword] ||
-                defaultText ||
-                getLinkCreateLanguage(keyword, isWrap)
-              );
-            }
-          );
+          this.fillAppSettings($rootScope.appSettings.lang).then(function (
+            response
+          ) {
+            $rootScope.isBusy = false;
+            return (
+              response[keyword] ||
+              defaultText ||
+              getLinkCreateLanguage(keyword, isWrap)
+            );
+          });
         } else {
           return (
-            this.globalSettings[keyword] ||
+            this.appSettings[keyword] ||
             defaultText ||
             getLinkCreateLanguage(keyword, isWrap)
           );
@@ -86,17 +86,17 @@ appShared.factory("GlobalSettingsService", [
     };
 
     var _getAsync = async function (keyword, defaultText) {
-      if (!this.globalSettings && $rootScope.globalSettings) {
+      if (!this.appSettings && $rootScope.appSettings) {
         $rootScope.isBusy = true;
-        this.globalSettings = await _fillGlobalSettings(lang);
+        this.appSettings = await _fillAppSettings(lang);
         return (
-          this.globalSettings[keyword] ||
+          this.appSettings[keyword] ||
           defaultText ||
           getLinkCreateLanguage(keyword, isWrap)
         );
       } else {
         return (
-          this.globalSettings[keyword] ||
+          this.appSettings[keyword] ||
           defaultText ||
           getLinkCreateLanguage(keyword, isWrap)
         );
@@ -111,8 +111,8 @@ appShared.factory("GlobalSettingsService", [
     factory.getAsync = _getAsync;
     factory.get = _get;
     factory.reset = _reset;
-    factory.globalSettings = _globalSettings;
-    factory.fillGlobalSettings = _fillGlobalSettings;
+    factory.appSettings = _appSettings;
+    factory.fillAppSettings = _fillAppSettings;
     return factory;
   },
 ]);

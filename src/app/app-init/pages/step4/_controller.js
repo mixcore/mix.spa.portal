@@ -17,9 +17,9 @@ app.controller("Step4Controller", [
     var rand = Math.random();
     $scope.data = [];
     $scope.init = async function () {
-      var getData = await commonService.loadJArrayData("languages.json");
-      if (getData.isSucceed) {
-        $scope.data = getData.data;
+      var getData = await commonService.loadJsonData("languages.json");
+      if (getData.success) {
+        $scope.data = getData.data.items;
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
@@ -33,7 +33,7 @@ app.controller("Step4Controller", [
     $scope.submit = async function () {
       $rootScope.isBusy = true;
       var result = await service.submit($scope.data);
-      if (result.isSucceed) {
+      if (result.success) {
         authService.initSettings().then(function () {
           $rootScope.isBusy = false;
           window.top.location = "/";

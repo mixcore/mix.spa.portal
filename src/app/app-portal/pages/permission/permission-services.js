@@ -12,7 +12,7 @@ app.factory("PermissionService", [
         url: this.prefixUrl + "/update-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     var _updateChildInfos = async function (pages) {
@@ -21,7 +21,7 @@ app.factory("PermissionService", [
         url: this.prefixUrl + "/update-child-infos",
         data: JSON.stringify(pages),
       };
-      return await apiService.getApiResult(req);
+      return await apiService.sendRequest(req);
     };
 
     serviceFactory.updateInfos = _updateInfos;

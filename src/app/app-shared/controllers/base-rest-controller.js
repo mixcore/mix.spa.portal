@@ -48,7 +48,7 @@ function BaseRestCtrl(
       return await this.getDefault();
     } else {
       var resp = await service.duplicate([id]);
-      if (resp.isSucceed) {
+      if (resp.success) {
         $scope.goToDetail(resp.data.id, $scope.viewmodelType);
       } else {
         if (resp) {
@@ -64,15 +64,14 @@ function BaseRestCtrl(
     const url = `/portal/${type}/details/${id}`;
     window.location.href = url;
   };
-  $scope.getSingle = async function (params = []) {
+  $scope.getSingle = async function (id) {
     $rootScope.isBusy = true;
-    var id = $routeParams.id;
+    id = id || $routeParams.id;
     if (!id) {
       return await this.getDefault();
     } else {
-      params.splice(0, 0, id);
       var resp = await service.getSingle([id]);
-      if (resp.isSucceed) {
+      if (resp.success) {
         $scope.viewmodel = resp.data;
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
@@ -95,7 +94,7 @@ function BaseRestCtrl(
   $scope.getDefault = async function () {
     $rootScope.isBusy = true;
     var resp = await service.getDefault();
-    if (resp.isSucceed) {
+    if (resp.success) {
       $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
         $scope.getSingleSuccessCallback();
@@ -128,7 +127,7 @@ function BaseRestCtrl(
       $scope.request.toDate = dt.toISOString();
     }
     var resp = await service.getList($scope.request, params);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $scope.data = resp.data;
       $.each($scope.data, function (i, data) {
         $.each($scope.viewmodels, function (i, e) {
@@ -158,20 +157,19 @@ function BaseRestCtrl(
   };
 
   $scope.remove = function (id) {
-    $rootScope.showConfirm(
-      $scope,
-      "removeConfirmed",
-      [id],
-      null,
-      "Remove",
-      "Deleted data will not able to recover, are you sure you want to delete this item?"
-    );
+    if (
+      confirm(
+        "Deleted data will not able to recover, are you sure you want to delete this item?"
+      )
+    ) {
+      $scope.removeConfirmed(id);
+    }
   };
 
   $scope.removeConfirmed = async function (id) {
     $rootScope.isBusy = true;
     var result = await service.delete([id]);
-    if (result.isSucceed) {
+    if (result.success) {
       if ($scope.removeCallback) {
         $rootScope.executeFunctionByName(
           "removeCallback",
@@ -198,15 +196,19 @@ function BaseRestCtrl(
     }
     if ($scope.isValid) {
       var resp = null;
-      if ($scope.viewmodel.id == 0 || $scope.viewmodel.id == null) {
+      if (
+        $scope.viewmodel.id == 0 ||
+        $scope.viewmodel.id == null ||
+        $scope.viewmodel.id == "00000000-0000-0000-0000-000000000000"
+      ) {
         resp = await service.create($scope.viewmodel);
       } else {
         resp = await service.update($scope.viewmodel.id, $scope.viewmodel);
       }
 
-      if (resp.isSucceed) {
-        $scope.viewmodel = resp.data;
+      if (resp.success) {
         $rootScope.showMessage("success", "success");
+        $scope.getSingle([resp.data]);
 
         if ($scope.saveSuccessCallback) {
           $rootScope.executeFunctionByName(
@@ -268,7 +270,7 @@ function BaseRestCtrl(
   $scope.applyListConfirmed = async function () {
     $rootScope.isBusy = true;
     var resp = await service.applyList($scope.selectedList);
-    if (resp && resp.isSucceed) {
+    if (resp && resp.success) {
       $rootScope.showMessage("success", "success");
       switch ($scope.selectedList.action) {
         case "Export":
@@ -295,7 +297,7 @@ function BaseRestCtrl(
     if ($scope.viewmodel) {
       $rootScope.isBusy = true;
       var resp = await service.clearCache([$scope.viewmodel.id]);
-      if (resp.isSucceed) {
+      if (resp.success) {
         $rootScope.showMessage("success", "success");
       } else {
         $rootScope.showErrors(resp.errors);
@@ -306,7 +308,7 @@ function BaseRestCtrl(
   };
 
   $scope.handleResult = function (result) {
-    if (result.isSucceed) {
+    if (result.success) {
       $rootScope.showMessage("Success");
     } else {
       $rootScope.showErrors(result.errors);
