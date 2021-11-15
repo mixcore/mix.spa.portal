@@ -322,6 +322,10 @@ app.controller("PostController", [
             $scope.viewmodel.title,
             "-"
           );
+          if ($scope.viewmodel.seoName.length > 50) {
+            $scope.viewmodel.seoName =
+              $scope.viewmodel.seoName.substring(0, 80) + "...";
+          }
         }
         if (
           $scope.viewmodel.seoTitle === null ||

@@ -26,7 +26,7 @@ modules.component("mixDatabaseForm", {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
-
+      ctrl.isInRole = $rootScope.isInRole;
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
       ctrl.localizeSettings = $rootScope.globalSettings;
