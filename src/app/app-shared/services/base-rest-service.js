@@ -138,7 +138,11 @@ appShared.factory("BaseRestService", [
       return await this.getRestApiResult(req);
     };
     var _save = async function (objData) {
-      if (objData.id == 0 || objData.id == null) {
+      if (
+        objData.id == 0 ||
+        objData.id == null ||
+        objData.id == "00000000-0000-0000-0000-000000000000"
+      ) {
         return await this.create(objData);
       } else {
         return await this.update(objData.id, objData);
@@ -209,7 +213,7 @@ appShared.factory("BaseRestService", [
       var result = "";
       if (req) {
         for (var key in req) {
-          if (req.hasOwnProperty(key)) {
+          if (req.hasOwnProperty(key) && req[key]) {
             if (result != "") {
               result += "&";
             }

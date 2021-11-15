@@ -38,17 +38,18 @@
                 <div class="col-md-12">
                     <tabs-v select-callback="selectPane(pane)">
                         <pane-v header="Razor Template">
-                            <monaco-editor is-visible="activedPane.title == 'Razor Template'" is-readonly="!isValid"
-                                content="viewmodel.content" update-content="updateTemplateContent(content)">
+                            <monaco-editor is-visible="activedPane.displayName == 'Razor Template'"
+                                is-readonly="!isValid" content="viewmodel.content"
+                                update-content="updateTemplateContent(content)">
                             </monaco-editor>
                         </pane-v>
                         <pane-v header="Scripts">
-                            <monaco-editor is-visible="activedPane.title == 'Scripts'" is-readonly="!isValid"
+                            <monaco-editor is-visible="activedPane.displayName == 'Scripts'" is-readonly="!isValid"
                                 update-content="updateStyleContent(content)" content="viewmodel.scripts"
                                 default-content="'<script>\n\n</script>'"></monaco-editor>
                         </pane-v>
                         <pane-v header="Styles">
-                            <monaco-editor is-visible="activedPane.title == 'Styles'" is-readonly="!isValid"
+                            <monaco-editor is-visible="activedPane.displayName == 'Styles'" is-readonly="!isValid"
                                 update-content="updateScriptContent(content)" content="viewmodel.styles"
                                 default-content="'<style>\n\n</style>'">
                             </monaco-editor>

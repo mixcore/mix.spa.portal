@@ -9,7 +9,7 @@ appShared.factory("CommonService", [
     var _loadJsonData = async function (name) {
       var req = {
         method: "GET",
-        url: "/shared/json-data/" + name,
+        url: "/rest/shared/json-data/" + name,
       };
       return await apiService.sendRequest(req, true);
     };

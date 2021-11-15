@@ -69,15 +69,11 @@
                                 <td>
                                     <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
                                         aria-label="Actions">
-                                        <!-- <a class="btn btn-link" data-bs-toggle="collapse" href="#attribute-childs" role="button"
-                        aria-expanded="false" aria-controls="attribute-childs">
-                        <i class="fas fa-folder"></i>
-                    </a> -->
-                                        <a href="/portal/mix-database-data/create?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}&dataId=default"
+                                        <a href="/portal/mix-database-data/create?mixDatabaseId={{item.id}}&mixDatabaseName={{item.systemName}}&mixDatabaseTitle={{item.displayName}}&dataId=default"
                                             title="Add Data" class="btn btn-link text-primary">
                                             <span class="fas fa-plus"></span>
                                         </a>
-                                        <a href="/portal/mix-database-data/list?mixDatabaseId={{item.id}}&mixDatabaseName={{item.name}}&mixDatabaseTitle={{item.title}}"
+                                        <a href="/portal/mix-database-data/list?mixDatabaseId={{item.id}}&mixDatabaseName={{item.systemName}}&mixDatabaseTitle={{item.displayName}}"
                                             title="List Data" class="btn btn-link text-primary">
                                             <span class="fas fa-database"></span>
                                         </a>

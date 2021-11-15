@@ -29,16 +29,16 @@
         // Generate seo string if create new or not exist
         if (
           ctrl.model &&
-          (!ctrl.model.id || !ctrl.model.obj["seo_url"]) &&
+          (!ctrl.model.id || !ctrl.model.data["seo_url"]) &&
           ctrl.column.name == "title"
         ) {
           if (
-            ctrl.model.obj[ctrl.column.name] &&
-            ctrl.previousValue !== ctrl.model.obj[ctrl.column.name]
+            ctrl.model.data[ctrl.column.name] &&
+            ctrl.previousValue !== ctrl.model.data[ctrl.column.name]
           ) {
-            ctrl.previousValue = ctrl.model.obj[ctrl.column.name];
-            ctrl.model.obj["seo_url"] = $rootScope.generateKeyword(
-              ctrl.model.obj[ctrl.column.name],
+            ctrl.previousValue = ctrl.model.data[ctrl.column.name];
+            ctrl.model.data["seo_url"] = $rootScope.generateKeyword(
+              ctrl.model.data[ctrl.column.name],
               "-"
             );
           }
@@ -47,11 +47,11 @@
           // check encrypt data
           if (
             ctrl.column.isEncrypt &&
-            ctrl.model.obj[ctrl.column.name] &&
-            $rootScope.testJSON(ctrl.model.obj[ctrl.column.name])
+            ctrl.model.data[ctrl.column.name] &&
+            $rootScope.testJSON(ctrl.model.data[ctrl.column.name])
           ) {
-            ctrl.model.obj[ctrl.column.name] = ctrl.parseEncryptedData(
-              ctrl.model.obj[ctrl.column.name]
+            ctrl.model.data[ctrl.column.name] = ctrl.parseEncryptedData(
+              ctrl.model.data[ctrl.column.name]
             );
           }
         }
@@ -95,14 +95,14 @@
               let index = options.findIndex(
                 (m) =>
                   m.value ==
-                  ctrl.model.obj[ctrl.column.columnConfigurations.belongTo]
+                  ctrl.model.data[ctrl.column.columnConfigurations.belongTo]
               );
               if (index >= 0) {
                 ctrl.options = options[index][`${ctrl.column.name}s`];
               }
               $rootScope.$watch(
                 () => {
-                  return ctrl.model.obj[
+                  return ctrl.model.data[
                     ctrl.column.columnConfigurations.belongTo
                   ];
                 },
@@ -133,11 +133,11 @@
             case "datetime":
             case "date":
             case "time":
-              if (ctrl.model.obj[ctrl.column.name]) {
+              if (ctrl.model.data[ctrl.column.name]) {
                 var local = $filter("utcToLocalTime")(
-                  ctrl.model.obj[ctrl.column.name]
+                  ctrl.model.data[ctrl.column.name]
                 );
-                ctrl.model.obj[ctrl.column.name] = new Date(local);
+                ctrl.model.data[ctrl.column.name] = new Date(local);
                 $scope.$apply();
               }
               break;

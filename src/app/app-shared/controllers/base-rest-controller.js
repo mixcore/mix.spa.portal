@@ -157,14 +157,13 @@ function BaseRestCtrl(
   };
 
   $scope.remove = function (id) {
-    $rootScope.showConfirm(
-      $scope,
-      "removeConfirmed",
-      [id],
-      null,
-      "Remove",
-      "Deleted data will not able to recover, are you sure you want to delete this item?"
-    );
+    if (
+      confirm(
+        "Deleted data will not able to recover, are you sure you want to delete this item?"
+      )
+    ) {
+      $scope.removeConfirmed(id);
+    }
   };
 
   $scope.removeConfirmed = async function (id) {
@@ -197,7 +196,11 @@ function BaseRestCtrl(
     }
     if ($scope.isValid) {
       var resp = null;
-      if ($scope.viewmodel.id == 0 || $scope.viewmodel.id == null) {
+      if (
+        $scope.viewmodel.id == 0 ||
+        $scope.viewmodel.id == null ||
+        $scope.viewmodel.id == "00000000-0000-0000-0000-000000000000"
+      ) {
         resp = await service.create($scope.viewmodel);
       } else {
         resp = await service.update($scope.viewmodel.id, $scope.viewmodel);

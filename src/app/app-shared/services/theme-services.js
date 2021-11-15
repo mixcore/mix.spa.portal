@@ -4,7 +4,7 @@ appShared.factory("ThemeService", [
   "BaseRestService",
   function (apiService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("theme");
+    serviceFactory.init("mix-theme");
 
     var _syncTemplates = async function (id) {
       var url = this.prefixUrl + "/sync/" + id;

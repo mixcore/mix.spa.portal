@@ -316,6 +316,31 @@ appShared.run([
       lblOK,
       lblCancel
     ) {
+      var modalInstance = $uibModal.open({
+        animation: true,
+        windowClass: "show",
+        templateUrl:
+          "/mix-app/views/app-shared/components/modal-croppie/croppie.html",
+        controller: "ModalCroppieController",
+        controllerAs: "$ctrl",
+        size: "lg",
+        resolve: {
+          mediaService: this,
+          file: function () {
+            return file;
+          },
+          w,
+          h,
+          rto,
+          autoSave,
+        },
+      });
+      modalInstance.result.then(
+        function (result) {
+          scope.croppieCallback(result);
+        },
+        function () {}
+      );
       $rootScope.confirmMessage = {
         title: title,
         content: msg,

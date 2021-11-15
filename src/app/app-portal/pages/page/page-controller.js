@@ -80,7 +80,7 @@ app.controller("PageController", [
       const obj = {
         parentType: "Page",
         parentId: $scope.viewmodel.id,
-        databaseName: "sys_additional_field_page",
+        databaseName: "mixdb_page",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.success) {

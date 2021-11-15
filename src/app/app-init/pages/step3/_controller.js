@@ -33,6 +33,7 @@ app.controller("Step3Controller", [
     };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
+      //   window.top.location = "/";
       $scope.form = document.getElementById("frm-theme");
       var getThemes = await storeService.getThemes($scope.request);
       if (getThemes.success) {

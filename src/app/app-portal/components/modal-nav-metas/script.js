@@ -266,9 +266,6 @@
                 ctrl.selectedList.push(resp.data);
                 ctrl.selectedValues.push(resp.data.dataId);
                 ctrl.filterData();
-                // debugger;
-                // ctrl.select(resp.data.dataId, true);
-
                 ctrl.isBusy = false;
                 $scope.$apply();
               } else {

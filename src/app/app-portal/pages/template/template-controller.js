@@ -53,12 +53,18 @@ app.controller("TemplateController", [
           avatar: authService.authentication.info.user.Avatar,
         };
         $scope.startConnection("editFileHub", () => {
+          let id = $routeParams.id || $rootScope.generateUUID();
           if ($routeParams.id) {
-            $scope.room = `Template-${$routeParams.id}`;
+            $scope.room = `Template-${id}`;
             $scope.joinRoom();
           }
         });
       });
+    };
+    $scope.validate = function () {
+      $scope.viewmodel.displayName = $scope.viewmodel.fileName;
+      $scope.viewmodel.extension = ".cshtml";
+      return true;
     };
     $scope.loadFolder = function (d) {
       $location.url(
@@ -86,7 +92,7 @@ app.controller("TemplateController", [
       if (id) {
         var resp = await service.getSingle([id], {
           folderType: $scope.folderType,
-          themeId: themeId,
+          mixThemeId: themeId,
         });
         if (resp && resp.success) {
           $scope.viewmodel = resp.data;
@@ -105,7 +111,7 @@ app.controller("TemplateController", [
       } else {
         var resp = await service.getDefault();
         if (resp && resp.success) {
-          resp.data.themeId = themeId;
+          resp.data.mixThemeId = themeId;
           resp.data.folderType = $scope.folderType;
           $scope.viewmodel = resp.data;
           $rootScope.isBusy = false;

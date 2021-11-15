@@ -148,7 +148,7 @@ modules.component("mixDatabaseForm", {
         angular.forEach(ctrl.columns, function (column) {
           if (column.regex) {
             var regex = RegExp(column.regex, "g");
-            isValid = regex.test(ctrl.mixDatabaseData.obj[column.name]);
+            isValid = regex.test(ctrl.mixDatabaseData.data[column.name]);
             if (!isValid) {
               ctrl.errors.push(`${column.name} is not match Regex`);
             }
@@ -157,8 +157,8 @@ modules.component("mixDatabaseForm", {
             $rootScope.showErrors(ctrl.errors);
           }
           if (isValid && column.isEncrypt) {
-            ctrl.mixDatabaseData.obj[column.name] = $rootScope.encrypt(
-              ctrl.mixDatabaseData.obj[column.name]
+            ctrl.mixDatabaseData.data[column.name] = $rootScope.encrypt(
+              ctrl.mixDatabaseData.data[column.name]
             );
           }
         });
@@ -169,16 +169,16 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.loadSelectedLink = function (data, type) {
         if (data) {
-          ctrl.mixDatabaseData.obj.target_id = data.id;
-          ctrl.mixDatabaseData.obj.title = data.title;
-          ctrl.mixDatabaseData.obj.type = type;
-          ctrl.mixDatabaseData.obj.uri = data.detailsUrl;
+          ctrl.mixDatabaseData.data.target_id = data.id;
+          ctrl.mixDatabaseData.data.title = data.title;
+          ctrl.mixDatabaseData.data.type = type;
+          ctrl.mixDatabaseData.data.uri = data.detailsUrl;
         }
       };
       ctrl.filterData = function (attributeName) {
         if (ctrl.mixDatabaseData) {
           var attr = $rootScope.findObjectByKey(
-            ctrl.mixDatabaseData.obj,
+            ctrl.mixDatabaseData.data,
             "mixDatabaseColumnName",
             attributeName
           );
@@ -191,7 +191,7 @@ modules.component("mixDatabaseForm", {
               )
             );
             mixDatabaseColumn;
-            ctrl.mixDatabaseData.obj.push(attr);
+            ctrl.mixDatabaseData.data.push(attr);
           }
           return attr;
         }

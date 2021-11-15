@@ -51,7 +51,8 @@
                         </div>
                         <div ng-if="$index < 3"
                             ng-repeat="column in $ctrl.columns | orderBy: 'priority' track by $index" class="col-md-2">
-                            <mix-column-preview model="item.obj[column.name]" column="column"></mix-column-preview>
+                            <mix-column-preview model="item.data[column.systemName]" column="column">
+                            </mix-column-preview>
                         </div>
                         <!-- <div class="col-md-2">
                         <small class="text-black-50 align-middle" ng-bind="item.createdBy">

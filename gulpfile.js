@@ -209,9 +209,6 @@ gulp.task("min:shared", function (cb) {
 paths.appCss = {
   src: [
     paths.webapp + "app-shared/**/*.css",
-    paths.webapp + "app-portal/**/*.css",
-    paths.webapp + "app-security/**/*.css",
-    paths.webapp + "app-init/**/*.css",
     paths.webroot + "css/app-vendor-scss.min.css",
     paths.styleLib + "**/*.css",
     `${paths.nodeModules}angular-ui-bootstrap/dist/ui-bootstrap-csp.css`,
@@ -220,12 +217,7 @@ paths.appCss = {
 };
 
 paths.scss = {
-  src: [
-    paths.webapp + "app-shared/**/*.scss",
-    paths.webapp + "app-portal/**/*.scss",
-    paths.webapp + "app-security/**/*.scss",
-    paths.webapp + "app-init/**/*.scss",
-  ],
+  src: [paths.webapp + "app-shared/**/*.scss"],
   dest: paths.webroot + "css/app-vendor-scss.min.css",
 };
 
@@ -384,6 +376,7 @@ gulp.task("min:portalAppRequired", function (cb) {
 paths.portalCss = {
   src: [
     `${paths.nodeModules}bootstrap/dist/css/bootstrap.min.css`,
+    paths.webapp + "app-portal/**/*.css",
     paths.libs + "portal/**/*.css",
     paths.libs + "portal/**/*.*.css",
   ],

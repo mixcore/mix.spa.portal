@@ -5,7 +5,7 @@ app.factory("TemplateService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("template", true);
+    serviceFactory.init("mix-template", true);
     var _copy = async function (id) {
       var url = this.prefixUrl + "/copy/" + id;
       var req = {

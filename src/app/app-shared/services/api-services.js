@@ -21,11 +21,11 @@ appShared.factory("ApiService", [
     var _refreshToken = async function () {
       let _authentication = await _fillAuthData();
       let data = {
-        refreshToken: _authentication.refresh_token,
-        accessToken: _authentication.access_token,
+        refreshToken: _authentication.refreshToken,
+        accessToken: _authentication.accessToken,
       };
       if (_authentication) {
-        var apiUrl = `/account/refresh-token`;
+        var apiUrl = `/account/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -136,7 +136,9 @@ appShared.factory("ApiService", [
       let apiVersion = req.apiVersion || appSettings.apiVersion;
       let serviceBase = req.serviceBase || appSettings.serviceBase;
       var serviceUrl = serviceBase + "/api/" + apiVersion;
-      req.url = serviceUrl + req.url;
+      if (req.url.indexOf(serviceUrl) < 0) {
+        req.url = serviceUrl + req.url;
+      }
       var defer = $q.defer();
       req.uploadEventHandlers = {
         progress: function (e) {
@@ -151,7 +153,7 @@ appShared.factory("ApiService", [
 
       if (!skipAuthorize) {
         let _authentication = await _fillAuthData();
-        req.headers.Authorization = `Bearer ${_authentication.access_token}`;
+        req.headers.Authorization = `Bearer ${_authentication.accessToken}`;
       }
 
       return $http(req).then(
@@ -161,7 +163,7 @@ appShared.factory("ApiService", [
         async function (error) {
           if (error.status === 401 && retry) {
             return _refreshToken().then(() =>
-              _sendRestRequest(req, false, skipAuthorize)
+              _sendRequest(req, false, skipAuthorize)
             );
           } else if (
             error.status === 200 ||
