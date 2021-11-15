@@ -67,7 +67,7 @@ appShared.factory("ApiService", [
       $rootScope.mixConfigurations =
         localStorageService.get("mixConfigurations");
       if (!$rootScope.appSettings) {
-        var url = "/shared";
+        var url = "/rest/shared";
         if (culture) {
           url += "/" + culture;
         }
@@ -78,8 +78,11 @@ appShared.factory("ApiService", [
         };
         return _sendRequest(req, true).then(function (response) {
           if (response.success) {
-            response.data.appSettings.lastUpdateConfiguration = new Date();
-            localStorageService.set("appSettings", response.data.appSettings);
+            response.data.globalSettings.lastUpdateConfiguration = new Date();
+            localStorageService.set(
+              "appSettings",
+              response.data.globalSettings
+            );
             localStorageService.set("translator", response.data.translator);
             localStorageService.set(
               "mixConfigurations",

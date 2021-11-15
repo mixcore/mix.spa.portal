@@ -8,7 +8,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.localizeSettings = $rootScope.appSettings;
     },
   ],
 });
