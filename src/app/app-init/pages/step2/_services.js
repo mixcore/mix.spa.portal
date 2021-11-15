@@ -10,7 +10,7 @@ app.factory("Step2Services", [
     var _register = async function (user) {
       var req = {
         method: "POST",
-        url: "/mix-theme/setup/init-account",
+        url: "/rest/mix-tenancy/setup/init-account",
         data: JSON.stringify(user),
       };
 

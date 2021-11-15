@@ -11,7 +11,7 @@ var gulp = require("gulp"),
   header = require("gulp-header"),
   uglify = require("gulp-uglify-es").default;
 
-var sass = require("gulp-sass");
+var sass = require("gulp-sass")(require("sass"));
 
 sass.compiler = require("node-sass");
 
