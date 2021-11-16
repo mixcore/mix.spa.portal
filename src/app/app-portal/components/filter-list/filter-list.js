@@ -18,7 +18,7 @@
         ctrl.request.orderBy = ctrl.request.orderBy || ctrl.arrOrderby[0];
         ctrl.directions = ["Asc", "Desc"];
         ctrl.pageSizes = [5, 10, 15, 20];
-        ctrl.statuses = $rootScope.appSettings.statuses;
+        ctrl.statuses = $rootScope.globalSettings.statuses;
       };
       ctrl.apply = function (pageIndex) {
         $rootScope.setRequest(ctrl.request, ctrl.key);

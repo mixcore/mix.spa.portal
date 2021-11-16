@@ -28,7 +28,7 @@ app.controller("AppPortalController", [
     $scope.pageTagType = 0;
     $scope.isAdmin = false;
     $scope.translator = translatorService;
-    $rootScope.appSettingsService = appSettingsService;
+    $rootScope.globalSettingsService = appSettingsService;
     $scope.lang = null;
     $scope.mixConfigurations = {};
     $scope.portalThemeSettings = {};
@@ -45,9 +45,9 @@ app.controller("AppPortalController", [
           ngAppSettings.enums = resp.data.items;
         });
         apiService.getAllSettings($scope.lang).then(function () {
-          if ($rootScope.appSettings) {
+          if ($rootScope.globalSettings) {
             $scope.portalThemeSettings =
-              $rootScope.appSettings.portalThemeSettings;
+              $rootScope.globalSettings.portalThemeSettings;
             authService.fillAuthData().then(function () {
               $rootScope.authentication = authService.authentication;
               $scope.isAuth = authService.authentication != null;

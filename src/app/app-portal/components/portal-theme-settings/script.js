@@ -11,10 +11,12 @@
     function ($rootScope, $scope, appSettingsServices) {
       var ctrl = this;
       this.$onInit = function () {
-        ctrl.portalThemeSettings = $rootScope.appSettings.portalThemeSettings;
+        ctrl.portalThemeSettings =
+          $rootScope.globalSettings.portalThemeSettings;
       };
       ctrl.applyThemeSettings = function () {
-        $rootScope.appSettings.portalThemeSettings = ctrl.portalThemeSettings;
+        $rootScope.globalSettings.portalThemeSettings =
+          ctrl.portalThemeSettings;
       };
       ctrl.saveThemeSettings = async function () {
         var resp = await appSettingsServices.saveAppSettings(

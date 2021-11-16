@@ -62,11 +62,11 @@ appShared.factory("ApiService", [
     };
 
     var _getAllSettings = async function (culture) {
-      $rootScope.appSettings = localStorageService.get("appSettings");
+      $rootScope.globalSettings = localStorageService.get("appSettings");
       $rootScope.translator = localStorageService.get("translator");
       $rootScope.mixConfigurations =
         localStorageService.get("mixConfigurations");
-      if (!$rootScope.appSettings) {
+      if (!$rootScope.globalSettings) {
         var url = "/rest/shared";
         if (culture) {
           url += "/" + culture;
@@ -88,7 +88,7 @@ appShared.factory("ApiService", [
               "mixConfigurations",
               response.data.mixConfigurations
             );
-            $rootScope.appSettings = response.data.appSettings;
+            $rootScope.globalSettings = response.data.appSettings;
             $rootScope.mixConfigurations = response.data.mixConfigurations;
             $rootScope.translator = response.data.translator;
           } else {

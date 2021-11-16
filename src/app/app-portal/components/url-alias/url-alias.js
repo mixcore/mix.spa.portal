@@ -11,7 +11,7 @@
       };
       ctrl.updateUrl = function () {
         ctrl.url =
-          $rootScope.appSettings.domain +
+          $rootScope.globalSettings.domain +
           "/" +
           $rootScope.mixConfigurations.lang +
           "/" +

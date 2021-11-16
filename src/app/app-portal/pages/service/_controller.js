@@ -30,7 +30,7 @@ app.controller("ServiceController", [
     $scope.parentType = null;
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.mixConfigurations = $rootScope.appSettings;
+    $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.init = async function () {

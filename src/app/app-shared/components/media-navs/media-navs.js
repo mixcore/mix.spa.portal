@@ -70,7 +70,7 @@
         if (ctrl.request.toDate !== null) {
           ctrl.request.toDate = ctrl.request.toDate.toISOString();
         }
-        if ($rootScope.appSettings) {
+        if ($rootScope.globalSettings) {
           ctrl.isBusy = true;
           var resp = await mediaService.getList(ctrl.request);
           if (resp && resp.success) {

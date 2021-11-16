@@ -13,7 +13,7 @@
         ctrl.trackedProperties = $.parseJSON(
           ctrl.appSettings.AppSettings.DefaultPostAttr
         );
-        ctrl.dataTypes = $rootScope.appSettings.dataTypes;
+        ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       };
       ctrl.addPostProperty = function () {
         ctrl.properties.push({

@@ -13,7 +13,7 @@ appShared.factory("BaseRestService", [
       this.serviceBase = serviceBase || appSettings.serviceBase;
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.mixConfigurations || lang) {
-          this.lang = lang || $rootScope.appSettings.lang;
+          this.lang = lang || $rootScope.globalSettings.lang;
           this.prefixUrl = `/rest/mix-portal/${modelName}`;
         } else {
           this.prefixUrl = `/rest/mix-portal/${modelName}`;
@@ -244,7 +244,7 @@ appShared.factory("BaseRestService", [
         await authService.fillAuthData();
       }
       if (authService.authentication) {
-        req.Authorization = authService.authentication.access_token;
+        req.Authorization = authService.authentication.accessToken;
       }
       if (!req.headers) {
         req.headers = {

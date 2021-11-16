@@ -13,7 +13,7 @@
         }
         angular.forEach(ctrl.data, function (e, i) {
           e.url =
-            $rootScope.appSettings.domain +
+            $rootScope.globalSettings.domain +
             "/" +
             $rootScope.mixConfigurations.lang +
             "/tag/" +

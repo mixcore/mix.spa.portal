@@ -26,7 +26,7 @@ appShared.controller("MvcPostController", [
     $scope.service = null;
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
-    $scope.mixConfigurations = $rootScope.appSettings;
+    $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.moduleId = null;
     $scope.module = null;
     $scope.allData = [];

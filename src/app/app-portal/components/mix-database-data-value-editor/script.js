@@ -33,7 +33,7 @@
       };
       ctrl.refRequest = angular.copy(ngAppSettings.request);
       ctrl.refRequest.pageSize = 100;
-      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.$doCheck = function () {
         if (

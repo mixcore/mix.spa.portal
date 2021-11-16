@@ -12,7 +12,9 @@
     function PortalTemplateController($rootScope, $scope) {
       var ctrl = this;
       ctrl.onSelect = function () {
-        ctrl.callback({ type: ctrl.model });
+        if (ctrl.callback) {
+          ctrl.callback({ type: ctrl.model });
+        }
       };
     },
   ],

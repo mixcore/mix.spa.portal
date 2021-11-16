@@ -9,7 +9,7 @@ app.factory("AppSettingsServices", [
 
     var appSettingssServiceFactory = {};
 
-    var settings = $rootScope.appSettings;
+    var settings = $rootScope.globalSettings;
 
     var _getAppSettings = async function () {
       var url = "/portal/app-settings/details";

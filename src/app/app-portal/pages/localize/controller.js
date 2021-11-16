@@ -29,7 +29,7 @@ app.controller("LocalizeController", [
 
     $scope.getSingleSuccessCallback = function () {
       $scope.cates = ngAppSettings.enums.configuration_cates;
-      $scope.appSettings = $rootScope.appSettings;
+      $scope.appSettings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
       if (!$scope.viewmodel.id) {
         $scope.viewmodel.dataType = "Text";

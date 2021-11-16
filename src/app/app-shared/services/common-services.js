@@ -68,7 +68,8 @@ appShared.factory("CommonService", [
             if (response.data) {
               _renewSettings();
             } else {
-              $rootScope.appSettings = localStorageService.get("appSettings");
+              $rootScope.globalSettings =
+                localStorageService.get("appSettings");
             }
           });
         }

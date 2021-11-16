@@ -21,7 +21,7 @@
       ctrl.attributes = [];
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.defaultData = await service.getSingle("web", [
           ctrl.defaultId,

@@ -28,7 +28,7 @@ app.controller("ModuleGalleryController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.mixConfigurations = $rootScope.appSettings;
+    $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.moduleId = $routeParams.id;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";

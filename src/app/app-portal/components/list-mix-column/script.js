@@ -7,8 +7,9 @@ modules.component("listMixColumn", {
     function ($rootScope, $scope, service) {
       var ctrl = this;
       ctrl.selectedCol = null;
-      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
+
       ctrl.$onInit = async function () {
+        ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
         var getDefaultAttr = await service.getDefault();
         if (getDefaultAttr.success) {
           ctrl.defaultAttr = getDefaultAttr.data;

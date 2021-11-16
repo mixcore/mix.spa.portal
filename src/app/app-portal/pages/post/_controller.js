@@ -66,7 +66,7 @@ app.controller("PostController", [
       $scope.getList();
     };
     $scope.loadCategories = async function () {
-      $scope.cateRequest.mixDatabaseName = "sys_category";
+      $scope.cateRequest.mixDatabaseName = "sysCategory";
       var response = await dataService.getList($scope.cateRequest);
       if (response.isSucceed) {
         $scope.categories = response.data;
@@ -87,7 +87,7 @@ app.controller("PostController", [
             id: 0,
           },
           {
-            databaseName: "sys_additional_column_post",
+            databaseName: "sysColumnPost",
             title: "Default",
             id: 1,
           }
@@ -377,7 +377,7 @@ app.controller("PostController", [
           $scope.viewmodel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sys_category",
+            mixDatabaseName: "sysCategory",
           });
         }
       });
@@ -395,7 +395,7 @@ app.controller("PostController", [
           $scope.viewmodel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sys_tag",
+            mixDatabaseName: "sysTag",
           });
         }
       });

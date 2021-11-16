@@ -8,7 +8,7 @@
     "$routeParams",
     function ($rootScope, $scope, ngAppSettings, $routeParams) {
       var ctrl = this;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.icons = ngAppSettings.icons;
       ctrl.setPageType = function (type) {
         ctrl.page.type = $index;

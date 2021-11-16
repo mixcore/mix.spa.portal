@@ -77,14 +77,14 @@
                         </div>
 
                         <label class="form-label">Active roles</label>
-                        <div ng-if="isInRole('SuperAdmin')" class="tab-pane" ng-if="activedUser.userRoles.length>0">
-                            <navs data="activedUser.userRoles" callback="updateRoleStatus(nav)"></navs>
+                        <div ng-if="isInRole('SuperAdmin')" class="tab-pane" ng-if="activedUser.roles.length>0">
+                            <navs data="activedUser.roles" callback="updateRoleStatus(nav)"></navs>
                         </div>
                     </div>
 
                     <div class="row">
-                        <additional-value ng-if="activedUser" class="mb-4" additional-data="activedUser.userData"
-                            database-name="'sys_user_data'" parent-type="'User'" parent-id="activedUser.id">
+                        <additional-value ng-if="activedUser" class="mb-4" additional-data="activedUser.info.userData"
+                            database-name="'sysUserData'" parent-type="'User'" parent-id="activedUser.user.id">
                         </additional-value>
                     </div>
 

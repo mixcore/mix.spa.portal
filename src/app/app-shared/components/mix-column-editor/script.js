@@ -33,38 +33,7 @@
       ctrl.translate = (keyword, isWrap, defaultText) => {
         return $rootScope.translate(keyword, isWrap, defaultText);
       };
-      ctrl.$doCheck = function () {
-        // Generate seo string if create new or not exist
-        if (
-          ctrl.column &&
-          ctrl.model &&
-          (!ctrl.model.id || !ctrl.model.data["seo_url"]) &&
-          ctrl.column.name == "title"
-        ) {
-          if (
-            ctrl.model.data[ctrl.column.name] &&
-            ctrl.previousValue !== ctrl.model.data[ctrl.column.name]
-          ) {
-            ctrl.previousValue = ctrl.model.data[ctrl.column.name];
-            ctrl.model.data["seo_url"] = $rootScope.generateKeyword(
-              ctrl.model.data[ctrl.column.name],
-              "-"
-            );
-          }
-        }
-        if (ctrl.model && ctrl.column) {
-          // check encrypt data
-          if (
-            ctrl.column.isEncrypt &&
-            ctrl.model.data[ctrl.column.name] &&
-            $rootScope.testJSON(ctrl.model.data[ctrl.column.name])
-          ) {
-            ctrl.model.data[ctrl.column.name] = ctrl.parseEncryptedData(
-              ctrl.model.data[ctrl.column.name]
-            );
-          }
-        }
-      }.bind(ctrl);
+
       ctrl.refData = null;
       ctrl.defaultDataModel = null;
 
@@ -73,7 +42,7 @@
         data: null,
       };
 
-      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.previousId = null;
       ctrl.options = [];
       ctrl.$onInit = async function () {

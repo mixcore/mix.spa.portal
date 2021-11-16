@@ -5,20 +5,23 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.localizeSettings = $rootScope.globalSettings;
-      ctrl.isInRole = $rootScope.isInRole;
-      ctrl.gennerateName = function () {
+      ctrl.$onInit = () => {
+        ctrl.globalSettings = $rootScope.globalSettings;
+        ctrl.isInRole = $rootScope.isInRole;
+      };
+      ctrl.gennerateName = function (type) {
         if (
           !ctrl.model.id ||
           ctrl.model.systemName === null ||
           ctrl.model.systemName === ""
         ) {
-          ctrl.model.systemName = `${prefix}${$rootScope.generateKeyword(
-            ctrl.model.displayName,
-            "_",
+          let prefix = ctrl.model.type == "System" ? "sys" : "";
+          ctrl.model.systemName = $rootScope.generateKeyword(
+            `${prefix} ${ctrl.model.displayName}`,
+            "",
             true,
             true
-          )}`;
+          );
         }
       };
     },

@@ -9,15 +9,15 @@
       "AuthService",
       function ($rootScope, commonService, apiService, authService) {
         var ctrl = this;
-        ctrl.appSettings = $rootScope.appSettings;
+        ctrl.appSettings = $rootScope.globalSettings;
         ctrl.isInRole = $rootScope.isInRole;
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
           ctrl.mixConfigurations = $rootScope.mixConfigurations;
-          ctrl.mixConfigurations.cultures = $rootScope.appSettings.cultures;
+          ctrl.mixConfigurations.cultures = $rootScope.globalSettings.cultures;
           authService.fillAuthData().then(() => {
             if (authService.authentication && authService.authentication.info) {
-              ctrl.avatar = authService.authentication.info.userData.avatar;
+              ctrl.avatar = authService.authentication.info.avatar;
             }
           });
         };

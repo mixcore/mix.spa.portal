@@ -8,7 +8,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.localizeSettings = $rootScope.appSettings;
+      ctrl.localizeSettings = $rootScope.globalSettings;
     },
   ],
 });

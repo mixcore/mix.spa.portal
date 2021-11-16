@@ -63,9 +63,9 @@ appShared.factory("AppSettingsService", [
     };
     var _get = function (keyword, isWrap, defaultText) {
       if ($rootScope.waitForInit()) {
-        if (!this.appSettings && $rootScope.appSettings) {
+        if (!this.appSettings && $rootScope.globalSettings) {
           $rootScope.isBusy = true;
-          this.fillAppSettings($rootScope.appSettings.lang).then(function (
+          this.fillAppSettings($rootScope.globalSettings.lang).then(function (
             response
           ) {
             $rootScope.isBusy = false;
@@ -86,7 +86,7 @@ appShared.factory("AppSettingsService", [
     };
 
     var _getAsync = async function (keyword, defaultText) {
-      if (!this.appSettings && $rootScope.appSettings) {
+      if (!this.appSettings && $rootScope.globalSettings) {
         $rootScope.isBusy = true;
         this.appSettings = await _fillAppSettings(lang);
         return (

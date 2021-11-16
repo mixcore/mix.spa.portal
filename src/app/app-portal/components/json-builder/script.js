@@ -19,7 +19,7 @@
       var ctrl = this;
       ctrl.file = null;
       ctrl.translate = $rootScope.translate;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.timestamp = Math.random();
       ctrl.templates = [
         { type: "item", name: "i1", dataType: 7, value: "" },

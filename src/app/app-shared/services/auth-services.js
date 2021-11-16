@@ -155,7 +155,7 @@ appShared.factory("AuthService", [
         accessToken: accessToken,
       };
       if (id) {
-        var apiUrl = `/account/refresh-token`;
+        var apiUrl = `/account/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -177,7 +177,7 @@ appShared.factory("AuthService", [
       if (!this.authentication || !this.authentication.info) {
         return false;
       }
-      var role = this.authentication.info.userRoles.filter(
+      var role = this.authentication.info.roles.filter(
         (m) => m.description == roleName && m.isActived
       );
       return role.length > 0;

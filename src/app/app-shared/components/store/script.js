@@ -32,10 +32,10 @@ sharedComponents.component("mixStore", {
         ctrl.themeRequest.orderBy = "createdDatetime";
         ctrl.themeRequest.postType = "theme";
         ctrl.cateRequest = angular.copy(ngAppSettings.request);
-        ctrl.cateRequest.mixDatabaseName = "sys_category";
+        ctrl.cateRequest.mixDatabaseName = "sysCategory";
         ctrl.cateRequest.pageSize = null;
 
-        ctrl.mixConfigurations = $rootScope.appSettings;
+        ctrl.mixConfigurations = $rootScope.globalSettings;
         let getCategories = await service.getCategories(ctrl.cateRequest);
         ctrl.categories = getCategories.data.items;
         await ctrl.getThemes(ctrl.themeRequest);

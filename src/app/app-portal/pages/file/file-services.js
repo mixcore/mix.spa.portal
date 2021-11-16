@@ -10,7 +10,7 @@ app.factory("FileServices", [
 
     var filesServiceFactory = angular.copy(baseService);
     filesServiceFactory.init("file", true);
-    var settings = $rootScope.appSettings;
+    var settings = $rootScope.globalSettings;
 
     var _getFile = async function (folder, filename) {
       var apiUrl = "/file/";

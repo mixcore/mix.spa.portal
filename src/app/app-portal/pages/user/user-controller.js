@@ -62,7 +62,7 @@ app.controller("UserController", [
         $scope.activedUser = response.data;
         $rootScope.isBusy = false;
         if (!$rootScope.isInRole("SuperAdmin")) {
-          $scope.activedUser.userRoles = $scope.activedUser.userRoles.filter(
+          $scope.activedUser.roles = $scope.activedUser.roles.filter(
             (role) => role.description != "SuperAdmin"
           );
         }
@@ -105,8 +105,7 @@ app.controller("UserController", [
         if (!$rootScope.isInRole("SuperAdmin")) {
           $scope.data.items = $scope.data.items.filter(
             (user) =>
-              user.userRoles.length == 0 ||
-              user.userRoles[0].role.name != "SuperAdmin"
+              user.roles.length == 0 || user.roles[0].role.name != "SuperAdmin"
           );
         }
         $.each($scope.data.items, function (i, user) {
@@ -158,11 +157,13 @@ app.controller("UserController", [
       var resp = await userServices.saveUser($scope.activedUser);
       if (resp && resp.success) {
         $rootScope.showMessage("Update successfully!", "success");
-        if ($scope.activedUser.user.id == authService.authentication.info.id) {
+        if (
+          $scope.activedUser.user.id == authService.authentication.info.user.id
+        ) {
           authService
             .refreshToken(
-              authService.authentication.refresh_token,
-              authService.authentication.access_token
+              authService.authentication.refreshToken,
+              authService.authentication.accessToken
             )
             .then(() => {
               window.location = window.location;

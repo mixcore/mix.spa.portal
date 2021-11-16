@@ -11,8 +11,9 @@
         ctrl.mixConfigurations = {};
         this.$onInit = function () {
           ctrl.mixConfigurations = $rootScope.mixConfigurations;
-          if ($rootScope.appSettings) {
-            ctrl.mixConfigurations.cultures = $rootScope.appSettings.cultures;
+          if ($rootScope.globalSettings) {
+            ctrl.mixConfigurations.cultures =
+              $rootScope.globalSettings.cultures;
           }
         };
 

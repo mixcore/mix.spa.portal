@@ -29,7 +29,7 @@ app.controller("PagePostController", [
     );
     $scope.cates = ["Site", "System"];
     $scope.others = [];
-    $scope.mixConfigurations = $rootScope.appSettings;
+    $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.init = function () {
       $scope.pageId = $routeParams.id;
       $scope.type = $routeParams.type;

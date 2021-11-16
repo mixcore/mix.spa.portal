@@ -35,7 +35,7 @@
         totalItem: 0,
         total: 0,
       };
-      $rootScope.appSettingsService = appSettingsService;
+      $rootScope.globalSettingsService = appSettingsService;
       $scope.changeLang = $rootScope.changeLang;
       $scope.init = function (lang) {
         angular.element(document).ready(function () {
@@ -64,7 +64,7 @@
             localStorageService.set("shoppingCart", $scope.cartData);
           }
           apiService.getAllSettings(lang).then(function (response) {
-            if ($rootScope.appSettings) {
+            if ($rootScope.globalSettings) {
               authService.fillAuthData().then(function (response) {
                 $rootScope.authentication = authService.authentication;
                 $scope.isInit = true;

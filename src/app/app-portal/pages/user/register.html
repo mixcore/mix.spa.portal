@@ -73,10 +73,9 @@
                                         ng-model="activedUser.confirmPassword" />
                                 </div>
                             </div>
-                            <div ng-if="isAdmin && activedUser.id" class="tab-pane"
-                                ng-if="activedUser.userRoles.length>0">
+                            <div ng-if="isAdmin && activedUser.id" class="tab-pane" ng-if="activedUser.roles.length>0">
                                 <label ng-if="isAdmin" class="form-label">Active roles</label>
-                                <navs data="activedUser.userRoles" callback="updateRoleStatus(nav)"></navs>
+                                <navs data="activedUser.roles" callback="updateRoleStatus(nav)"></navs>
                             </div>
                         </form>
                     </div>

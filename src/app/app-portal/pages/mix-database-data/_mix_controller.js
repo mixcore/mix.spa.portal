@@ -28,7 +28,7 @@ app.controller("MixDatabaseDataController", [
     $scope.queries = {};
     $scope.data = {};
     $scope.exportAll = true;
-    $scope.mixConfigurations = $rootScope.appSettings;
+    $scope.mixConfigurations = $rootScope.globalSettings;
     // $scope.request.orderBy = "Priority";
     // $scope.request.direction = "Asc";
     $scope.filterType = "contain";

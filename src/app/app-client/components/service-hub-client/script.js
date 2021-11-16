@@ -13,7 +13,7 @@
     function ($rootScope, $scope, columnService, service) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.user = {
         loggedIn: false,
         connection: {},

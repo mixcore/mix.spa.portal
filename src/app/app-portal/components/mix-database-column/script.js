@@ -13,11 +13,11 @@ modules.component("mixDatabaseColumn", {
       ctrl.value = {};
       ctrl.column = {
         dataType: "Text",
-        mixDatabaseName: "sys_additional_column",
+        mixDatabaseName: "sysAdditionalColumn",
         mixDatabaseId: 6,
       };
       ctrl.selectedCol = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {};
       ctrl.addAttr = async function () {
         if (ctrl.column.name) {

@@ -32,7 +32,7 @@ modules.component("mixDatabaseDataValues", {
       ctrl.filterTypes = ["contain", "equal"];
       ctrl.compareTypes = ["or", "and"];
       ctrl.selectedProp = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.selectedList) {
           ctrl.selectedList = {

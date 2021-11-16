@@ -6,7 +6,7 @@
     "ngAppSettings",
     function ($rootScope, ngAppSettings) {
       var ctrl = this;
-      ctrl.dataTypes = $rootScope.appSettings.dataTypes;
+      ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
       ctrl.$onInit = function () {};
       ctrl.addProperty = function (type) {
         var i = $(".property").length;

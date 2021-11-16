@@ -36,7 +36,7 @@ app.controller("PageController", [
     $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
     $scope.pageType = "";
-    $scope.pageTypes = $rootScope.appSettings.pageTypes;
+    $scope.pageTypes = $rootScope.globalSettings.pageTypes;
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.pageData = {
@@ -82,7 +82,7 @@ app.controller("PageController", [
       const obj = {
         parentType: "Page",
         parentId: $scope.viewmodel.id,
-        databaseName: "sys_additional_column_page",
+        databaseName: "sysColumnPage",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.success) {
@@ -207,7 +207,7 @@ app.controller("PageController", [
           $scope.viewmodel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sys_category",
+            mixDatabaseName: "sysCategory",
           });
         }
       });
@@ -225,7 +225,7 @@ app.controller("PageController", [
           $scope.viewmodel.sysCategories.push({
             id: e.id,
             parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sys_tag",
+            mixDatabaseName: "sysTag",
           });
         }
       });

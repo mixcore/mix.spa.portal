@@ -58,7 +58,7 @@
                     <small class="fa fa-grip-vertical fa-xs text-black-50 align-middle"></small>
                 </td> -->
                                 <td class="">
-                                    {{item.title}}
+                                    {{item.displayName}}
                                 </td>
                                 <!-- <td class="text-black-50 align-middle">
                     <small>???</small>
@@ -118,7 +118,8 @@
                 </div>
                 <div class="card-body">
                     <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
-                        ul-class="pagination justify-content-end m-0" a-class="page-link" paging-action="getList(page-1)" scroll-top="true">
+                        ul-class="pagination justify-content-end m-0" a-class="page-link"
+                        paging-action="getList(page-1)" scroll-top="true">
                     </paging>
                 </div>
             </div>

@@ -17,7 +17,7 @@ modules.component("additionalValue", {
       ctrl.value = {};
       ctrl.column = { dataType: "Text" };
       ctrl.selectedCol = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         if (!ctrl.additionalData) {
           if (!ctrl.additionalDataId) {

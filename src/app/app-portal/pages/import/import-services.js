@@ -7,7 +7,7 @@ app.factory("ImportFileServices", [
 
     var serviceFactory = {};
 
-    var settings = $rootScope.appSettings;
+    var settings = $rootScope.globalSettings;
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("portal", true);
     var _saveImportFile = async function (frm) {

@@ -115,7 +115,7 @@
                     series: {
                       0: {
                         color:
-                          $rootScope.appSettings.portalThemeSettings
+                          $rootScope.globalSettings.portalThemeSettings
                             .primaryColor,
                       },
                       1: { color: "#e7711b" },

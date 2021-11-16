@@ -5,7 +5,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
     },
   ],
   bindings: {

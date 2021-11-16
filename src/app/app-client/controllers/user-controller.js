@@ -22,7 +22,7 @@ app.controller("UserController", [
         if (authService.authentication.info) {
           $scope.user = authService.authentication.info;
           $scope.showLogin = false;
-          $scope.userData = authService.authentication.info.userData;
+          $scope.userData = authService.authentication.info;
         } else {
           $scope.showLogin = true;
         }
@@ -53,8 +53,8 @@ app.controller("UserController", [
         $scope.user = resp.data;
         authService
           .refreshToken(
-            authService.authentication.refresh_token,
-            authService.authentication.access_token
+            authService.authentication.refreshToken,
+            authService.authentication.accessToken
           )
           .then(() => {
             $rootScope.executeFunctionByName("saveUserSuccess", [resp.Data]);

@@ -50,7 +50,7 @@ app.controller("TemplateController", [
       authService.fillAuthData().then(function () {
         $scope.user = {
           username: authService.authentication.info.username,
-          avatar: authService.authentication.info.userData.avatar,
+          avatar: authService.authentication.info.avatar,
         };
         $scope.startConnection("editFileHub", () => {
           let id = $routeParams.id || $rootScope.generateUUID();

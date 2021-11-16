@@ -22,7 +22,7 @@ modules.component("mixDatabaseNavs", {
       ctrl.navRequest = angular.copy(ngAppSettings.request);
       ctrl.setRequest = angular.copy(ngAppSettings.request);
 
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = function () {
         // ctrl.setRequest.type = ctrl.parentType;
         navService.getDefault().then((resp) => {

@@ -19,7 +19,7 @@
       ctrl.init = function () {
         // ctrl.checkLoginState();
         ctrl.showLogin =
-          $rootScope.appSettings.externalLoginProviders.Facebook != "";
+          $rootScope.globalSettings.externalLoginProviders.Facebook != "";
       };
       ctrl.translate = $rootScope.translate;
       ctrl.login = function () {

@@ -57,9 +57,9 @@ appShared.factory("TranslatorService", [
       await _getTranslator(lang);
     };
     var _get = function (keyword, isWrap, defaultText) {
-      if (!$rootScope.translator.data && $rootScope.appSettings) {
+      if (!$rootScope.translator.data && $rootScope.globalSettings) {
         $rootScope.isBusy = true;
-        this.fillTranslator($rootScope.appSettings.lang).then(function (
+        this.fillTranslator($rootScope.globalSettings.lang).then(function (
           response
         ) {
           $rootScope.isBusy = false;

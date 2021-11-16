@@ -29,7 +29,7 @@ modules.component("mixDatabaseForm", {
       ctrl.isInRole = $rootScope.isInRole;
       ctrl.defaultData = null;
       ctrl.selectedProp = null;
-      ctrl.mixConfigurations = $rootScope.appSettings;
+      ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
         await ctrl.loadData();
