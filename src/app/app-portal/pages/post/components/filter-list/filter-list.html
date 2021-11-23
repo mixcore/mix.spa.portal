@@ -40,7 +40,7 @@
                 </option>
             </select>
             <select class="form-select" ng-model="$ctrl.request.postType" ng-change="$ctrl.apply(0)">
-                <option ng-repeat="item in $ctrl.postTypes track by $index" value="{{item.databaseName}}">
+                <option ng-repeat="item in $ctrl.postTypes track by $index" value="{{item.mixDatabaseName}}">
                     {{item.title}}
                 </option>
             </select>

@@ -138,16 +138,16 @@ app.controller("PostController", [
     };
     $scope.onSelectType = function () {
       if ($scope.viewmodel) {
-        $scope.viewmodel.type = $scope.postType.databaseName;
+        $scope.viewmodel.type = $scope.postType.mixDatabaseName;
         $scope.loadAdditionalData();
       }
-      $scope.request.postType = $scope.postType.databaseName;
+      $scope.request.postType = $scope.postType.mixDatabaseName;
       $scope.createUrl = `/portal/post/create?type=${$scope.request.postType}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
       }
       if (
-        $scope.postType.databaseName &&
+        $scope.postType.mixDatabaseName &&
         (!$scope.viewmodel || !$scope.viewmodel.id)
       ) {
         $scope.getDefault($scope.request.postType);

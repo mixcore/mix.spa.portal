@@ -19,8 +19,8 @@
         <div class="input-group mb-3">
             <select class="form-select" ng-model="$ctrl.request.status" ng-change="$ctrl.apply(0)">
                 <option selected value="">All status</option>
-                <option ng-repeat="item in $ctrl.statuses track by $index" value="{{item.value}}">
-                    {{item.title}}
+                <option ng-repeat="item in $ctrl.statuses track by $index" value="{{item}}">
+                    {{item}}
                 </option>
             </select>
 

@@ -52,11 +52,12 @@ app.controller("TemplateController", [
           username: authService.authentication.info.username,
           avatar: authService.authentication.info.avatar,
         };
-        $scope.startConnection("editFileHub", () => {
-          let id = $routeParams.id || $rootScope.generateUUID();
-          $scope.room = `Template-${id}`;
-          $scope.joinRoom();
-        });
+        $scope.canEdit = true;
+        // $scope.startConnection("editFileHub", () => {
+        //   let id = $routeParams.id || $rootScope.generateUUID();
+        //   $scope.room = `Template-${id}`;
+        //   $scope.joinRoom();
+        // });
       });
     };
     $scope.validate = function () {

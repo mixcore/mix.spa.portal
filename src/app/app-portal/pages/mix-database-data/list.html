@@ -6,7 +6,7 @@
                     <div class="page-pretitle">
                         Listing
                     </div>
-                    <h3 class="page-title">
+                    <h3 class="page-title" ng-if="mixDatabaseTitle">
                         {{mixDatabaseTitle}}'s Data List
                     </h3>
                 </div>
@@ -45,42 +45,10 @@
                                             <i class="fas fa-tools"></i> Config MixDB
                                         </a>
                                     </li>
-                                    <!-- <li><button type="button" ng-click="$ctrl.clearCache()" ng-if="$ctrl.onClearCache"
-                                            class="dropdown-item border-radius-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                class="icon icon-tabler icon-tabler-refresh" width="20" height="20"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
-                                                <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
-                                            </svg>
-                                            <span>Clear Cache</span>
-                                        </button>
-                                    </li> -->
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <!-- 
-
-                    <div class="btn-group  card-body mb-3 w-100" role="group" aria-label="Basic example">
-                        <a href="/portal/mix-database-data/create?mixDatabaseId={{mixDatabaseId}}&mixDatabaseName={{mixDatabaseName}}&mixDatabaseTitle={{mixDatabaseTitle}}&dataId=default"
-                            class="btn btn-primary text-white">
-                            <i class="fas fa-plus"></i> Data
-                        </a>
-                        <a ng-if="isAdmin" href="/portal/mix-database/list" class="btn btn-primary text-white">
-                            <i class="fas fa-list"></i> List
-                        </a>
-                        <a ng-if="isAdmin" ng-click="migrate()" class="btn btn-primary text-white">
-                            <i class="fas fa-list"></i> Migrate
-                        </a>
-                        <a ng-if="isAdmin" href="/portal/mix-database/details/{{mixDatabaseId}}"
-                            class="btn btn-primary text-white">
-                            <i class="fas fa-tools"></i> Config
-                        </a>
-                    </div> -->
-
                     <div class="accordion accordion-flush shadow-none" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="flush-headingOne">

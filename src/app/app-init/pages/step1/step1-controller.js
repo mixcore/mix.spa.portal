@@ -60,7 +60,7 @@ app.controller("Step1Controller", [
     $scope.canConnect = function () {
       return (
         ($scope.initCmsModel.databaseServer &&
-          $scope.initCmsModel.databaseName &&
+          $scope.initCmsModel.mixDatabaseName &&
           $scope.initCmsModel.databaseUser &&
           $scope.initCmsModel.culture) ||
         ($scope.initCmsModel.databaseProvider == "SQLITE" &&

@@ -32,9 +32,18 @@ app.controller("ThemeController", [
       isIncludeTemplates: true,
       isIncludeConfigurations: true,
       isIncludePermissions: true,
-      pages: [],
-      modules: [],
-      mixDatabases: [],
+      content: {
+        pageIds: [],
+        postIds: [],
+        moduleIds: [],
+        mixDatabaseIds: [],
+      },
+      nested: {
+        pageIds: [],
+        postIds: [],
+        moduleIds: [],
+        mixDatabaseIds: [],
+      },
     };
 
     $scope.getSingleSuccessCallback = function () {

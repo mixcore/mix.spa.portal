@@ -1,5 +1,6 @@
 "use strict";
 var app = angular.module("MixSecurity", [
+  "ui.bootstrap",
   "ngRoute",
   "ngFileUpload",
   "LocalStorageModule",

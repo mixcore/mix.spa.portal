@@ -6,7 +6,7 @@ modules.component("additionalValue", {
     additionalDataId: "=?",
     parentType: "=?",
     parentId: "=?",
-    databaseName: "=?",
+    mixDatabaseName: "=?",
   },
   controller: [
     "$rootScope",
@@ -24,12 +24,12 @@ modules.component("additionalValue", {
             const obj = {
               parentType: ctrl.parentType,
               parentId: ctrl.parentId,
-              databaseName: ctrl.databaseName,
+              databaseName: ctrl.mixDatabaseName,
             };
             const getData = await dataService.getAdditionalData(obj);
             if (getData.success) {
               ctrl.additionalData = getData.data;
-              ctrl.additionalData.mixDatabaseName = ctrl.databaseName;
+              ctrl.additionalData.mixDatabaseName = ctrl.mixDatabaseName;
               ctrl.additionalData.parentType = ctrl.parentType;
               ctrl.additionalData.parentId = ctrl.parentId;
               $scope.$apply();
