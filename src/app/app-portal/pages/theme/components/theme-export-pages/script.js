@@ -8,6 +8,8 @@
     "PageRestService",
     function ($rootScope, $scope, ngAppSettings, service) {
       var ctrl = this;
+      ctrl.selectAllContent = false;
+      ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
         ctrl.getList();
@@ -29,52 +31,62 @@
           ctrl.data = getData.data;
         }
       };
-      ctrl.updatePageExport = function (value, isSelected) {
-        // Filter actived page
-        ctrl.selectedExport.content.pageIds = [1, 2];
-        // var idx = (ctrl.selectedExport.pages = angular.copy(
-        //   $rootScope.filterArray(ctrl.data.items, ["isActived"], [true])
-        // ));
-
-        // // Loop actived page
-        // angular.forEach(ctrl.selectedExport.pages, function (e) {
-        //     // filter list actived modules
-        //     e.moduleNavs = angular.copy($rootScope.filterArray(e.moduleNavs, ['isActived'], [true]));
-
-        //     // Loop actived modules
-        //     angular.forEach(e.moduleNavs, function (n) {
-        //         // filter list actived data
-        //         n.module.data.items = angular.copy($rootScope.filterArray(n.module.data.items, ['isActived'], [true]));
-        //         $rootScope.removeObjectByKey(ctrl.exportData.modules, 'id', n.moduleId);
-        //         $rootScope.removeObjectByKey(ctrl.selectedExport.modules, 'id', n.moduleId);
-        //     });
-        // });
+      ctrl.selectContent = (page, selected) => {
+        ctrl.selectAllContent = ctrl.selectAllContent && selected;
+        ctrl.selectAllData = ctrl.selectAllData && selected;
+        page.isExportData = selected && page.isExportData;
+        ctrl.updateContent([page.id], selected);
+      };
+      ctrl.selectData = (page, selected) => {
+        ctrl.selectAllData = ctrl.selectAllData && selected;
+        ctrl.updateData([page.id], selected);
+      };
+      ctrl.updateContent = function (arr, selected) {
+        if (selected) {
+          ctrl.selectedExport.content.pageIds = ctrl.unionArray(
+            ctrl.selectedExport.content.pageIds,
+            arr
+          );
+        } else {
+          ctrl.selectedExport.content.pageIds =
+            ctrl.selectedExport.content.pageIds.filter(
+              (m) => arr.indexOf(m) < 0
+            );
+          ctrl.updateData(arr, false);
+        }
+      };
+      ctrl.updateData = function (arr, selected) {
+        if (selected) {
+          ctrl.selectedExport.data.pageIds = ctrl.unionArray(
+            ctrl.selectedExport.data.pageIds,
+            arr
+          );
+        } else {
+          ctrl.selectedExport.data.pageIds =
+            ctrl.selectedExport.data.pageIds.filter((m) => arr.indexOf(m) < 0);
+        }
       };
       ctrl.isSelected = function (value) {
         return ctrl.selectedValues.indexOf(value) >= 0;
       };
       ctrl.selectAll = function (arr) {
         // ctrl.selectedList.data = [];
-        var ids = arr
-          .filter((m) => ctrl.selectedExport.content.pageIds.indexOf(m.id) < 0)
-          .map(function (obj) {
-            return obj.id;
-          });
-        if (ctrl.selectedExport.isSelectAll) {
-          console.log(ids);
-          ctrl.selectedExport.content.pageIds =
-            ctrl.selectedExport.content.pageIds.concat(ids);
-        }
-        angular.forEach(arr, function (e) {
-          e.isActived = ctrl.selectedList.isSelectAll;
-          e.isExportData = ctrl.selectedList.isExportData;
+        var ids = arr.map(function (obj) {
+          return obj.id;
         });
-        ctrl.updatePageExport();
+        ctrl.updateContent(ids, ctrl.selectAllContent);
+        ctrl.updateData(ids, ctrl.selectAllData);
+        angular.forEach(arr, function (e) {
+          e.isActived = ctrl.selectAllContent;
+          e.isExportData = ctrl.selectAllData;
+        });
+      };
+      ctrl.unionArray = (a, b) => {
+        return [...new Set([...a, ...b])];
       };
     },
   ],
   bindings: {
-    exportData: "=",
     selectedExport: "=",
   },
 });

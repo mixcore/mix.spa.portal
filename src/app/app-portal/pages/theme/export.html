@@ -16,8 +16,9 @@
         <aside class="bd-sidebar sub-sidebar">
             <nav class="bd-links p-3" aria-label="Sub-section navigation">
                 <div class="card card-body">
-                    <filter-list class="" request="request" callback="getList(pageIndex)"
-                        create-url="'/portal/page/create'" create-text="'Create Page'"></filter-list>
+                    <a ng-click="export()" class="btn btn-primary text-white m-0 mb-3">
+                        Export
+                    </a>
                 </div>
             </nav>
         </aside>
@@ -94,8 +95,8 @@
                 </div>
                 <div class="card-body">
                     <pre>
-                        {{selectedExport|json}}
-                    </pre>>
+{{selectedExport|json}}
+</pre>
                 </div>
             </div>
         </div>

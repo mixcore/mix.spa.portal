@@ -23,8 +23,8 @@ appShared.factory("ThemeService", [
       };
       return await apiService.sendRequest(req);
     };
-    var _export = async function (id, objData) {
-      var url = this.prefixUrl + "/export/" + id;
+    var _export = async function (objData) {
+      var url = this.prefixUrl + "/export/";
       var req = {
         method: "POST",
         url: url,

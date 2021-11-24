@@ -38,7 +38,7 @@ app.controller("ThemeController", [
         moduleIds: [],
         mixDatabaseIds: [],
       },
-      nested: {
+      data: {
         pageIds: [],
         postIds: [],
         moduleIds: [],
@@ -89,9 +89,9 @@ app.controller("ThemeController", [
     };
 
     $scope.export = async function () {
-      var id = $routeParams.id;
+      $scope.selectedExport.themeId = $routeParams.id;
       $rootScope.isBusy = true;
-      var response = await service.export(id, $scope.selectedExport);
+      var response = await service.export($scope.selectedExport);
       if (response.success) {
         $rootScope.isBusy = false;
         window.open(response.data, "_blank");
