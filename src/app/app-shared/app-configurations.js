@@ -688,9 +688,9 @@ appShared.run([
         return false;
       }
     };
-    $rootScope.getRestService = function (modelName, isGlobal, lang) {
+    $rootScope.getRestService = function (modelName, lang) {
       var serviceFactory = angular.copy(baseRestService);
-      serviceFactory.init(modelName, isGlobal, lang);
+      serviceFactory.init(modelName, lang);
       return serviceFactory;
     };
     $rootScope.showLogin = function (req, type = null) {

@@ -32,16 +32,23 @@ app.controller("ThemeController", [
       isIncludeTemplates: true,
       isIncludeConfigurations: true,
       isIncludePermissions: true,
+      cultureIds: [],
       content: {
         pageIds: [],
+        pageContentIds: [],
         postIds: [],
+        postContentIds: [],
         moduleIds: [],
+        moduleContentIds: [],
         mixDatabaseIds: [],
       },
       data: {
         pageIds: [],
+        pageContentIds: [],
         postIds: [],
+        postContentIds: [],
         moduleIds: [],
+        moduleContentIds: [],
         mixDatabaseIds: [],
       },
     };

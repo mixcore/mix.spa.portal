@@ -5,9 +5,9 @@
     "$rootScope",
     "$scope",
     "ngAppSettings",
-    "PageRestService",
-    function ($rootScope, $scope, ngAppSettings, service) {
+    function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;
+      var service = $rootScope.getRestService("mix-page");
       ctrl.selectAllContent = false;
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
@@ -35,48 +35,51 @@
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
         page.isExportData = selected && page.isExportData;
-        ctrl.updateContent([page.id], selected);
+        let contentIds = page.contents.map(function (obj) {
+          return obj.id;
+        });
+        ctrl.selectedExport.content.pageIds = ctrl.updateArray(
+          ctrl.selectedExport.content.pageIds,
+          [page.id],
+          selected
+        );
+        ctrl.selectedExport.content.pageContentIds = ctrl.updateArray(
+          ctrl.selectedExport.content.pageContentIds,
+          contentIds,
+          selected
+        );
+        if (!selected) {
+          ctrl.selectData(page, false);
+        }
       };
       ctrl.selectData = (page, selected) => {
         ctrl.selectAllData = ctrl.selectAllData && selected;
-        ctrl.updateData([page.id], selected);
-      };
-      ctrl.updateContent = function (arr, selected) {
-        if (selected) {
-          ctrl.selectedExport.content.pageIds = ctrl.unionArray(
-            ctrl.selectedExport.content.pageIds,
-            arr
-          );
-        } else {
-          ctrl.selectedExport.content.pageIds =
-            ctrl.selectedExport.content.pageIds.filter(
-              (m) => arr.indexOf(m) < 0
-            );
-          ctrl.updateData(arr, false);
-        }
-      };
-      ctrl.updateData = function (arr, selected) {
-        if (selected) {
-          ctrl.selectedExport.data.pageIds = ctrl.unionArray(
-            ctrl.selectedExport.data.pageIds,
-            arr
-          );
-        } else {
-          ctrl.selectedExport.data.pageIds =
-            ctrl.selectedExport.data.pageIds.filter((m) => arr.indexOf(m) < 0);
-        }
-      };
-      ctrl.isSelected = function (value) {
-        return ctrl.selectedValues.indexOf(value) >= 0;
-      };
-      ctrl.selectAll = function (arr) {
-        // ctrl.selectedList.data = [];
-        var ids = arr.map(function (obj) {
+        let contentIds = page.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.updateContent(ids, ctrl.selectAllContent);
-        ctrl.updateData(ids, ctrl.selectAllData);
+        ctrl.selectedExport.data.pageIds = ctrl.updateArray(
+          ctrl.selectedExport.data.pageIds,
+          [page.id],
+          selected
+        );
+        ctrl.selectedExport.data.pageContentIds = ctrl.updateArray(
+          ctrl.selectedExport.data.pageContentIds,
+          contentIds,
+          selected
+        );
+      };
+      ctrl.updateArray = function (src, arr, selected) {
+        if (selected) {
+          src = ctrl.unionArray(src, arr);
+        } else {
+          src = src.filter((m) => arr.indexOf(m) < 0);
+        }
+        return src;
+      };
+      ctrl.selectAll = function (arr) {
         angular.forEach(arr, function (e) {
+          ctrl.selectContent(e, ctrl.selectAllContent);
+          ctrl.selectData(e, ctrl.selectAllData);
           e.isActived = ctrl.selectAllContent;
           e.isExportData = ctrl.selectAllData;
         });
