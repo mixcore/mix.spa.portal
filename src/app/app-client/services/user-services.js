@@ -5,7 +5,7 @@ app.factory("UserService", [
     var usersServiceFactory = {};
 
     var _getMyProfile = async function () {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var url = apiUrl + "my-profile";
       var req = {
         method: "GET",
@@ -15,7 +15,7 @@ app.factory("UserService", [
     };
 
     var _saveUser = async function (user) {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var req = {
         method: "POST",
         url: apiUrl + "save-my-profile",
@@ -25,7 +25,7 @@ app.factory("UserService", [
     };
 
     var _register = async function (user) {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var req = {
         method: "POST",
         url: apiUrl + "register",

@@ -25,7 +25,7 @@ appShared.factory("ApiService", [
         accessToken: _authentication.accessToken,
       };
       if (_authentication) {
-        var apiUrl = `/account/renew-token`;
+        var apiUrl = `/rest/mix-account/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -138,7 +138,7 @@ appShared.factory("ApiService", [
     ) {
       let apiVersion = req.apiVersion || appSettings.apiVersion;
       let serviceBase = req.serviceBase || appSettings.serviceBase;
-      var serviceUrl = serviceBase + "/api/" + apiVersion;
+      var serviceUrl = `${serviceBase}/api/${apiVersion}`;
       if (req.url.indexOf(serviceUrl) < 0) {
         req.url = serviceUrl + req.url;
       }
@@ -199,7 +199,7 @@ appShared.factory("ApiService", [
     var _logOut = async function () {
       localStorageService.remove("authorizationData");
       window.top.location.href = "/security/login";
-      //   var apiUrl = "/account/logout";
+      //   var apiUrl = "/rest/mix-account/logout";
       //   var req = {
       //     method: "GET",
       //     url: apiUrl,

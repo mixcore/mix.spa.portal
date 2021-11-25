@@ -23,14 +23,14 @@ appShared.factory("AuthService", [
       _logOut();
 
       return $http
-        .post("/account/register", registration)
+        .post("/rest/mix-account/register", registration)
         .then(function (response) {
           return response;
         });
     };
 
     var _forgotPassword = async function (data) {
-      var apiUrl = "/account/forgot-password";
+      var apiUrl = "/rest/mix-account/forgot-password";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -41,7 +41,7 @@ appShared.factory("AuthService", [
     };
 
     var _resetPassword = async function (data) {
-      var apiUrl = "/account/reset-password";
+      var apiUrl = "/rest/mix-account/reset-password";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -60,7 +60,7 @@ appShared.factory("AuthService", [
         ReturnUrl: "",
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/account/login";
+      var apiUrl = "/rest/mix-account/login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -107,7 +107,7 @@ appShared.factory("AuthService", [
         externalAccessToken: loginData.accessToken,
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/account/external-login";
+      var apiUrl = "/rest/mix-account/external-login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -132,7 +132,7 @@ appShared.factory("AuthService", [
       localStorageService.remove("authorizationData");
       window.top.location.href = "/security/login";
 
-      //     var apiUrl = "/account/logout";
+      //     var apiUrl = "/rest/mix-account/logout";
       //   var req = {
       //     method: "GET",
       //     url: apiUrl,
@@ -155,7 +155,7 @@ appShared.factory("AuthService", [
         accessToken: accessToken,
       };
       if (id) {
-        var apiUrl = `/account/renew-token`;
+        var apiUrl = `/rest/mix-account/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,

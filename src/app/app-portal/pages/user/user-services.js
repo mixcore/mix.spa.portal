@@ -4,7 +4,7 @@ app.factory("UserServices", [
   "ngAppSettings",
   function (apiService, ngAuthSettings) {
     var usersServiceFactory = {};
-    var apiUrl = "/account/";
+    var apiUrl = "/rest/mix-account/";
 
     var serviceBase = ngAuthSettings.serviceBase;
 
@@ -40,7 +40,7 @@ app.factory("UserServices", [
     };
 
     var _getUser = async function (id, viewType) {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var url = apiUrl + "details/" + viewType;
       if (id) {
         url += "/" + id;
@@ -53,7 +53,7 @@ app.factory("UserServices", [
     };
 
     var _getMyProfile = async function () {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var url = apiUrl + "my-profile";
       var req = {
         method: "GET",
@@ -65,7 +65,7 @@ app.factory("UserServices", [
     var _updateRoleStatus = function (userInRole) {
       var req = {
         method: "POST",
-        url: serviceBase + "/account/user-in-role",
+        url: serviceBase + "/rest/mix-account/user-in-role",
         data: JSON.stringify(userInRole),
       };
 
@@ -73,7 +73,7 @@ app.factory("UserServices", [
     };
 
     var _saveUser = async function (user) {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var req = {
         method: "POST",
         url: apiUrl + "save",
@@ -83,7 +83,7 @@ app.factory("UserServices", [
     };
 
     var _register = async function (user) {
-      var apiUrl = "/account/";
+      var apiUrl = "/rest/mix-account/";
       var req = {
         method: "POST",
         url: apiUrl + "register",
