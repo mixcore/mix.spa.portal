@@ -38,13 +38,13 @@
       };
       ctrl.updateContent = function (arr, selected) {
         if (selected) {
-          ctrl.selectedExport.cultureIds = ctrl.unionArray(
-            ctrl.selectedExport.cultureIds,
+          ctrl.exportThemeDto.cultureIds = ctrl.unionArray(
+            ctrl.exportThemeDto.cultureIds,
             arr
           );
         } else {
-          ctrl.selectedExport.cultureIds =
-            ctrl.selectedExport.cultureIds.filter((m) => arr.indexOf(m) < 0);
+          ctrl.exportThemeDto.cultureIds =
+            ctrl.exportThemeDto.cultureIds.filter((m) => arr.indexOf(m) < 0);
           ctrl.updateData(arr, false);
         }
       };
@@ -64,6 +64,6 @@
     },
   ],
   bindings: {
-    selectedExport: "=",
+    exportThemeDto: "=",
   },
 });

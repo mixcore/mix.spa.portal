@@ -5,18 +5,18 @@
     "$rootScope",
     "$scope",
     "ngAppSettings",
-    "PostRestService",
-    function ($rootScope, $scope, ngAppSettings, service) {
+    function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;
+      var service = $rootScope.getRestService("mix-post");
       ctrl.selectAllContent = false;
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
         ctrl.getList();
       };
-      ctrl.getList = async (pageIndex) => {
-        if (pageIndex !== undefined) {
-          ctrl.request.pageIndex = pageIndex;
+      ctrl.getList = async (postIndex) => {
+        if (postIndex !== undefined) {
+          ctrl.request.postIndex = postIndex;
         }
         if (ctrl.request.fromDate !== null) {
           var d = new Date(ctrl.request.fromDate);
@@ -26,6 +26,7 @@
           var d = new Date(ctrl.request.toDate);
           ctrl.request.toDate = d.toISOString();
         }
+        debugger;
         let getData = await service.getList(ctrl.request);
         if (getData.success) {
           ctrl.data = getData.data;
@@ -35,45 +36,51 @@
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
         post.isExportData = selected && post.isExportData;
-        ctrl.updateContent([post.id], selected);
+        let contentIds = post.contents.map(function (obj) {
+          return obj.id;
+        });
+        ctrl.exportThemeDto.content.postIds = ctrl.updateArray(
+          ctrl.exportThemeDto.content.postIds,
+          [post.id],
+          selected
+        );
+        ctrl.exportThemeDto.content.postContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.content.postContentIds,
+          contentIds,
+          selected
+        );
+        if (!selected) {
+          ctrl.selectData(post, false);
+        }
       };
       ctrl.selectData = (post, selected) => {
         ctrl.selectAllData = ctrl.selectAllData && selected;
-        ctrl.updateData([post.id], selected);
-      };
-      ctrl.updateContent = function (arr, selected) {
-        if (selected) {
-          ctrl.selectedExport.content.postIds = ctrl.unionArray(
-            ctrl.selectedExport.content.postIds,
-            arr
-          );
-        } else {
-          ctrl.selectedExport.content.postIds =
-            ctrl.selectedExport.content.postIds.filter(
-              (m) => arr.indexOf(m) < 0
-            );
-          ctrl.updateData(arr, false);
-        }
-      };
-      ctrl.updateData = function (arr, selected) {
-        if (selected) {
-          ctrl.selectedExport.data.postIds = ctrl.unionArray(
-            ctrl.selectedExport.data.postIds,
-            arr
-          );
-        } else {
-          ctrl.selectedExport.data.postIds =
-            ctrl.selectedExport.data.postIds.filter((m) => arr.indexOf(m) < 0);
-        }
-      };
-      ctrl.selectAll = function (arr) {
-        // ctrl.selectedList.data = [];
-        var ids = arr.map(function (obj) {
+        let contentIds = post.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.updateContent(ids, ctrl.selectAllContent);
-        ctrl.updateData(ids, ctrl.selectAllData);
+        ctrl.exportThemeDto.data.postIds = ctrl.updateArray(
+          ctrl.exportThemeDto.data.postIds,
+          [post.id],
+          selected
+        );
+        ctrl.exportThemeDto.data.postContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.data.postContentIds,
+          contentIds,
+          selected
+        );
+      };
+      ctrl.updateArray = function (src, arr, selected) {
+        if (selected) {
+          src = ctrl.unionArray(src, arr);
+        } else {
+          src = src.filter((m) => arr.indexOf(m) < 0);
+        }
+        return src;
+      };
+      ctrl.selectAll = function (arr) {
         angular.forEach(arr, function (e) {
+          ctrl.selectContent(e, ctrl.selectAllContent);
+          ctrl.selectData(e, ctrl.selectAllData);
           e.isActived = ctrl.selectAllContent;
           e.isExportData = ctrl.selectAllData;
         });
@@ -84,6 +91,6 @@
     },
   ],
   bindings: {
-    selectedExport: "=",
+    exportThemeDto: "=",
   },
 });

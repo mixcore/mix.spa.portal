@@ -27,7 +27,7 @@ app.controller("ThemeController", [
       service
     );
     $scope.exportData = null;
-    $scope.selectedExport = {
+    $scope.exportThemeDto = {
       isIncludeAssets: true,
       isIncludeTemplates: true,
       isIncludeConfigurations: true,
@@ -96,9 +96,9 @@ app.controller("ThemeController", [
     };
 
     $scope.export = async function () {
-      $scope.selectedExport.themeId = $routeParams.id;
+      $scope.exportThemeDto.themeId = $routeParams.id;
       $rootScope.isBusy = true;
-      var response = await service.export($scope.selectedExport);
+      var response = await service.export($scope.exportThemeDto);
       if (response.success) {
         $rootScope.isBusy = false;
         window.open(response.data, "_blank");

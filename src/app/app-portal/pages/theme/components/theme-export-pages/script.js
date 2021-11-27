@@ -38,13 +38,13 @@
         let contentIds = page.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.selectedExport.content.pageIds = ctrl.updateArray(
-          ctrl.selectedExport.content.pageIds,
+        ctrl.exportThemeDto.content.pageIds = ctrl.updateArray(
+          ctrl.exportThemeDto.content.pageIds,
           [page.id],
           selected
         );
-        ctrl.selectedExport.content.pageContentIds = ctrl.updateArray(
-          ctrl.selectedExport.content.pageContentIds,
+        ctrl.exportThemeDto.content.pageContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.content.pageContentIds,
           contentIds,
           selected
         );
@@ -57,13 +57,13 @@
         let contentIds = page.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.selectedExport.data.pageIds = ctrl.updateArray(
-          ctrl.selectedExport.data.pageIds,
+        ctrl.exportThemeDto.data.pageIds = ctrl.updateArray(
+          ctrl.exportThemeDto.data.pageIds,
           [page.id],
           selected
         );
-        ctrl.selectedExport.data.pageContentIds = ctrl.updateArray(
-          ctrl.selectedExport.data.pageContentIds,
+        ctrl.exportThemeDto.data.pageContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.data.pageContentIds,
           contentIds,
           selected
         );
@@ -90,6 +90,6 @@
     },
   ],
   bindings: {
-    selectedExport: "=",
+    exportThemeDto: "=",
   },
 });

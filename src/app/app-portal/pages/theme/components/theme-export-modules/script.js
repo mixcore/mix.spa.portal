@@ -43,13 +43,13 @@
       };
       ctrl.updateContent = function (arr, selected) {
         if (selected) {
-          ctrl.selectedExport.content.moduleIds = ctrl.unionArray(
-            ctrl.selectedExport.content.moduleIds,
+          ctrl.exportThemeDto.content.moduleIds = ctrl.unionArray(
+            ctrl.exportThemeDto.content.moduleIds,
             arr
           );
         } else {
-          ctrl.selectedExport.content.moduleIds =
-            ctrl.selectedExport.content.moduleIds.filter(
+          ctrl.exportThemeDto.content.moduleIds =
+            ctrl.exportThemeDto.content.moduleIds.filter(
               (m) => arr.indexOf(m) < 0
             );
           ctrl.updateData(arr, false);
@@ -57,13 +57,13 @@
       };
       ctrl.updateData = function (arr, selected) {
         if (selected) {
-          ctrl.selectedExport.data.moduleIds = ctrl.unionArray(
-            ctrl.selectedExport.data.moduleIds,
+          ctrl.exportThemeDto.data.moduleIds = ctrl.unionArray(
+            ctrl.exportThemeDto.data.moduleIds,
             arr
           );
         } else {
-          ctrl.selectedExport.data.moduleIds =
-            ctrl.selectedExport.data.moduleIds.filter(
+          ctrl.exportThemeDto.data.moduleIds =
+            ctrl.exportThemeDto.data.moduleIds.filter(
               (m) => arr.indexOf(m) < 0
             );
         }
@@ -86,6 +86,6 @@
     },
   ],
   bindings: {
-    selectedExport: "=",
+    exportThemeDto: "=",
   },
 });

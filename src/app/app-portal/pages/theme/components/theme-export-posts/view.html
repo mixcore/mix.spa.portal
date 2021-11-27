@@ -11,8 +11,8 @@
         <div class="col-md-6" ng-if="$ctrl.selectAllContent">
             <div class="form-check form-switch">
                 <input type="checkbox" class="form-check-input" ng-model="$ctrl.selectAllData"
-                    ng-change="$ctrl.selectAll($ctrl.data.items)" id="switchSelectAllPostData" />
-                <label class="custom-control-label" for="switchSelectAllPostData">With Data</label>
+                    ng-change="$ctrl.selectAll($ctrl.data.items)" id="switchSelectAllData" />
+                <label class="custom-control-label" for="switchSelectAllData">With Data</label>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <div class="form-check form-switch">
                 <input type="checkbox" class="form-check-input" ng-model="post.isActived"
                     ng-change="$ctrl.selectContent(post, post.isActived)" id="post-{{post.id}}" />
-                <label class="custom-control-label" for="post-{{post.id}}">{{post.title}}</label>
+                <label class="custom-control-label" for="post-{{post.id}}">{{post.displayName}}</label>
             </div>
 
             <div class="col-md-1"></div>
