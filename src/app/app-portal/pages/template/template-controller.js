@@ -75,26 +75,25 @@ app.controller("TemplateController", [
     };
     $scope.loadParams = async function () {
       $rootScope.isBusy = true;
-      $scope.folderType = $routeParams.folderType; // ? $routeParams.folderType : 'Masters';
       $scope.themeId = $routeParams.themeId;
+      $scope.folderType = $routeParams.folderType;
     };
     $scope.getSingle = async function () {
       $rootScope.isBusy = true;
       var id = $routeParams.id;
-      $scope.folderType = $routeParams.folderType; // ? $routeParams.folderType : 'Masters';
-      var themeId = $routeParams.themeId;
-      $scope.listUrl =
-        "/portal/template/list/" +
-        themeId +
-        "?folderType=" +
-        encodeURIComponent($scope.folderType);
+      $scope.folderType = $routeParams.folderType;
+
       if (id) {
         var resp = await service.getSingle([id], {
           folderType: $scope.folderType,
-          mixThemeId: themeId,
         });
         if (resp && resp.success) {
           $scope.viewmodel = resp.data;
+          $scope.listUrl =
+            "/portal/template/list/" +
+            $scope.viewmodel.themeId +
+            "?folderType=" +
+            encodeURIComponent($scope.viewmodel.folderType);
           $scope.canRename =
             $scope.viewmodel.id === 0 ||
             $scope.viewmodel.fileName.indexOf("Copy") === 0;
@@ -108,6 +107,7 @@ app.controller("TemplateController", [
           $scope.$apply();
         }
       } else {
+        var themeId = $routeParams.themeId;
         var resp = await service.getDefault();
         if (resp && resp.success) {
           resp.data.mixThemeId = themeId;
@@ -136,7 +136,7 @@ app.controller("TemplateController", [
       var resp = await service.copy(id);
       if (resp && resp.success) {
         $location.url(
-          `/portal/template/details/${themeId}/${$scope.folderType}/${resp.data.id}`
+          `/portal/template/details/${$scope.folderType}/${resp.data.id}`
         );
         $scope.$apply();
       } else {

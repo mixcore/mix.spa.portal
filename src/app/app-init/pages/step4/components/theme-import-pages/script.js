@@ -1,22 +1,22 @@
-﻿app.component("themeExportMixDatabases", {
+﻿app.component("themeImportPages", {
   templateUrl:
-    "/mix-app/views/app-portal/pages/theme/components/theme-export-mix-databases/view.html",
+    "/mix-app/views/app-init/pages/step4/components/theme-import-pages/view.html",
   controller: [
     "$rootScope",
     "$scope",
     "ngAppSettings",
     function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;
-      var service = $rootScope.getRestService("mix-database");
+      var service = $rootScope.getRestService("mix-page");
       ctrl.selectAllContent = false;
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
         ctrl.getList();
       };
-      ctrl.getList = async (mixDatabaseIndex) => {
-        if (mixDatabaseIndex !== undefined) {
-          ctrl.request.mixDatabaseIndex = mixDatabaseIndex;
+      ctrl.getList = async (pageIndex) => {
+        if (pageIndex !== undefined) {
+          ctrl.request.pageIndex = pageIndex;
         }
         if (ctrl.request.fromDate !== null) {
           var d = new Date(ctrl.request.fromDate);
@@ -31,24 +31,40 @@
           ctrl.data = getData.data;
         }
       };
-      ctrl.selectContent = (mixDatabase, selected) => {
+      ctrl.selectContent = (page, selected) => {
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
-        mixDatabase.isExportData = selected && mixDatabase.isExportData;
-        ctrl.exportThemeDto.content.mixDatabaseIds = ctrl.updateArray(
-          ctrl.exportThemeDto.content.mixDatabaseIds,
-          [mixDatabase.id],
+        page.isImportData = selected && page.isImportData;
+        let contentIds = page.contents.map(function (obj) {
+          return obj.id;
+        });
+        ctrl.importThemeDto.content.pageIds = ctrl.updateArray(
+          ctrl.importThemeDto.content.pageIds,
+          [page.id],
+          selected
+        );
+        ctrl.importThemeDto.content.pageContentIds = ctrl.updateArray(
+          ctrl.importThemeDto.content.pageContentIds,
+          contentIds,
           selected
         );
         if (!selected) {
-          ctrl.selectData(mixDatabase, false);
+          ctrl.selectData(page, false);
         }
       };
-      ctrl.selectData = (mixDatabase, selected) => {
+      ctrl.selectData = (page, selected) => {
         ctrl.selectAllData = ctrl.selectAllData && selected;
-        ctrl.exportThemeDto.associations.mixDatabaseIds = ctrl.updateArray(
-          ctrl.exportThemeDto.associations.mixDatabaseIds,
-          [mixDatabase.id],
+        let contentIds = page.contents.map(function (obj) {
+          return obj.id;
+        });
+        ctrl.importThemeDto.associations.pageIds = ctrl.updateArray(
+          ctrl.importThemeDto.associations.pageIds,
+          [page.id],
+          selected
+        );
+        ctrl.importThemeDto.associations.pageContentIds = ctrl.updateArray(
+          ctrl.importThemeDto.associations.pageContentIds,
+          contentIds,
           selected
         );
       };
@@ -65,7 +81,7 @@
           ctrl.selectContent(e, ctrl.selectAllContent);
           ctrl.selectData(e, ctrl.selectAllData);
           e.isActived = ctrl.selectAllContent;
-          e.isExportData = ctrl.selectAllData;
+          e.isImportData = ctrl.selectAllData;
         });
       };
       ctrl.unionArray = (a, b) => {
@@ -74,6 +90,6 @@
     },
   ],
   bindings: {
-    exportThemeDto: "=",
+    importThemeDto: "=",
   },
 });

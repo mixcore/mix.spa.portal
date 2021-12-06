@@ -47,11 +47,11 @@ app.controller("FileController", [
     };
     $scope.loadPage = async function (folder) {
       if (folder) {
-        $scope.request.key += $scope.request.key !== "" ? "/" : "";
-        $scope.request.key += folder;
+        $scope.request.folder += $scope.request.folder !== "" ? "/" : "";
+        $scope.request.folder += folder;
       }
       $location.url(
-        "/portal/file/list?folder=" + encodeURIComponent($scope.request.key)
+        "/portal/file/list?folder=" + encodeURIComponent($scope.request.folder)
       );
     };
     $scope.loadFile = async function () {
@@ -74,11 +74,11 @@ app.controller("FileController", [
     };
     $scope.loadFiles = async function (folder) {
       if (folder) {
-        $scope.request.key +=
-          $scope.request.key !== "" ? "wwwroot/" : "wwwroot";
-        $scope.request.key += folder;
+        $scope.request.folder +=
+          $scope.request.folder !== "" ? "wwwroot/" : "wwwroot";
+        $scope.request.folder += folder;
       } else {
-        $scope.request.key = $routeParams.folder
+        $scope.request.folder = $routeParams.folder
           ? $routeParams.folder
           : "wwwroot";
       }

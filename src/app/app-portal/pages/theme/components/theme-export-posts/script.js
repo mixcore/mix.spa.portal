@@ -26,7 +26,6 @@
           var d = new Date(ctrl.request.toDate);
           ctrl.request.toDate = d.toISOString();
         }
-        debugger;
         let getData = await service.getList(ctrl.request);
         if (getData.success) {
           ctrl.data = getData.data;
@@ -58,13 +57,13 @@
         let contentIds = post.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.exportThemeDto.data.postIds = ctrl.updateArray(
-          ctrl.exportThemeDto.data.postIds,
+        ctrl.exportThemeDto.associations.postIds = ctrl.updateArray(
+          ctrl.exportThemeDto.associations.postIds,
           [post.id],
           selected
         );
-        ctrl.exportThemeDto.data.postContentIds = ctrl.updateArray(
-          ctrl.exportThemeDto.data.postContentIds,
+        ctrl.exportThemeDto.associations.postContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.associations.postContentIds,
           contentIds,
           selected
         );

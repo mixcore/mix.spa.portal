@@ -2,42 +2,26 @@
 app.controller("Step4Controller", [
   "$scope",
   "$rootScope",
-  "ApiService",
   "CommonService",
   "AuthService",
   "Step4Services",
-  function (
-    $scope,
-    $rootScope,
-    apiService,
-    commonService,
-    authService,
-    service
-  ) {
-    var rand = Math.random();
+  function ($scope, $rootScope, commonService, authService, service) {
+    $scope.importThemeDto = null;
+    $scope.canContinue = true;
     $scope.data = [];
     $scope.init = async function () {
-      var getData = await commonService.loadJsonData("languages.json");
+      var getData = await service.loadTheme();
       if (getData.success) {
-        $scope.data = getData.data.items;
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        if (getData) {
-          $rootScope.showErrors(getData.errors);
-        }
+        $scope.importThemeDto = getData.data;
         $rootScope.isBusy = false;
         $scope.$apply();
       }
     };
     $scope.submit = async function () {
       $rootScope.isBusy = true;
-      var result = await service.submit($scope.data);
+      var result = await service.submit($scope.importThemeDto);
       if (result.success) {
-        authService.initSettings().then(function () {
-          $rootScope.isBusy = false;
-          window.top.location = "/";
-        });
+        window.top.location = "/";
       } else {
         if (result) {
           $rootScope.showErrors(result.errors);

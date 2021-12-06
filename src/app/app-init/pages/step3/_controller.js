@@ -33,7 +33,6 @@ app.controller("Step3Controller", [
     };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
-      //   window.top.location = "/";
       $scope.form = document.getElementById("frm-theme");
       var getThemes = await storeService.getThemes($scope.request);
       if (getThemes.success) {
@@ -57,7 +56,7 @@ app.controller("Step3Controller", [
       }
       $rootScope.isBusy = true;
       var frm = new FormData();
-      var url = "/init/init-cms/step-3";
+      var url = "/rest/mix-tenancy/setup/extract-theme";
       $scope.data.isCreateDefault = $scope.themeType === "materialkit";
       $rootScope.isBusy = true;
       // Looping over all files and add it to FormData object
@@ -65,15 +64,9 @@ app.controller("Step3Controller", [
       // Adding one more key to FormData object
       frm.append("model", angular.toJson($scope.data));
       var response = await service.ajaxSubmitForm(frm, url);
+      $rootScope.isBusy = false;
       if (response.success) {
-        $scope.viewmodel = response.data;
-        commonService.initAllSettings().then(function () {
-          $rootScope.isBusy = false;
-          setTimeout(() => {
-            $rootScope.goToSiteUrl("/portal");
-          }, 500);
-          $scope.$apply();
-        });
+        window.top.location = "/init/step4";
       } else {
         $rootScope.showErrors(response.errors);
         $rootScope.isBusy = false;

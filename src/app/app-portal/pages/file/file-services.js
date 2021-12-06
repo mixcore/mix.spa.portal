@@ -4,17 +4,13 @@ app.factory("FileServices", [
   "$rootScope",
   "ApiService",
   "CommonService",
-  "BaseService",
+  "BaseRestService",
   function ($http, $rootScope, apiService, commonService, baseService) {
-    //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
-
     var filesServiceFactory = angular.copy(baseService);
-    filesServiceFactory.init("file", true);
-    var settings = $rootScope.globalSettings;
-
+    filesServiceFactory.init("mix-file", true);
     var _getFile = async function (folder, filename) {
-      var apiUrl = "/file/";
-      var url = apiUrl + "details?folder=" + folder + "&filename=" + filename;
+      var url =
+        this.prefixUrl + "/details?folder=" + folder + "&filename=" + filename;
       var req = {
         method: "GET",
         url: url,
@@ -23,45 +19,46 @@ app.factory("FileServices", [
     };
 
     var _initFile = async function (type) {
-      var apiUrl = "/file/";
       var req = {
         method: "GET",
-        url: apiUrl + "init/" + type,
+        url: this.prefixUrl + "/init/" + type,
       };
       return await apiService.sendRequest(req);
     };
 
     var _getFiles = async function (request) {
-      var apiUrl = "/file/";
+      var url = this.prefixUrl;
+      var data = filesServiceFactory.parseQuery(request);
+      if (data) {
+        url += "?";
+        url = url.concat(data);
+      }
       var req = {
-        method: "POST",
-        url: apiUrl + "list",
+        method: "GET",
+        url: url,
         data: JSON.stringify(request),
       };
-
       return await apiService.sendRequest(req);
     };
 
     var _removeFile = async function (fullPath) {
-      var apiUrl = "/file/";
       var req = {
         method: "GET",
-        url: apiUrl + "delete/?fullPath=" + fullPath,
+        url: this.prefixUrl + "/delete/?fullPath=" + fullPath,
       };
       return await apiService.sendRequest(req);
     };
 
     var _saveFile = async function (file) {
-      var apiUrl = "/file/";
       var req = {
         method: "POST",
-        url: apiUrl + "save",
+        url: this.prefixUrl + "/save",
         data: JSON.stringify(file),
       };
       return await apiService.sendRequest(req);
     };
     var _uploadFile = async function (file, folder) {
-      var apiUrl = "/file/upload-file";
+      var apiUrl = this.prefixUrl + "/file/upload-file";
       var fd = new FormData();
       fd.append("folder", folder);
       fd.append("file", file);

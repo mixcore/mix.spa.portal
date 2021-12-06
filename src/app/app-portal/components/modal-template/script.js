@@ -32,7 +32,7 @@
         $scope.$apply();
       };
       ctrl.edit = function (item) {
-        let path = `/portal/template/details/${item.themeId}/${item.folderType}/${item.id}`;
+        let path = `/portal/template/details/${item.folderType}/${item.id}`;
         ctrl.modal.modal("hide");
         $rootScope.goToPath(path);
       };

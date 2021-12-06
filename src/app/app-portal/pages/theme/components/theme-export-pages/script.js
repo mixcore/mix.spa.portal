@@ -57,13 +57,13 @@
         let contentIds = page.contents.map(function (obj) {
           return obj.id;
         });
-        ctrl.exportThemeDto.data.pageIds = ctrl.updateArray(
-          ctrl.exportThemeDto.data.pageIds,
+        ctrl.exportThemeDto.associations.pageIds = ctrl.updateArray(
+          ctrl.exportThemeDto.associations.pageIds,
           [page.id],
           selected
         );
-        ctrl.exportThemeDto.data.pageContentIds = ctrl.updateArray(
-          ctrl.exportThemeDto.data.pageContentIds,
+        ctrl.exportThemeDto.associations.pageContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.associations.pageContentIds,
           contentIds,
           selected
         );

@@ -9,18 +9,14 @@ modules.component("propertiesStructure", {
       ctrl.selectedCol = null;
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.defaultAttr = {
-        title: "",
-        name: "",
+        displayName: "",
+        systemName: "",
         defaultValue: null,
-        options: [],
         priority: 0,
         dataType: "Text",
-        isGroupBy: false,
-        isSelect: false,
-        isDisplay: true,
-        width: 3,
         columnConfigurations: {
           upload: {
+            arrayAccepts: [],
             isCrop: false,
             width: null,
             height: null,
@@ -100,7 +96,12 @@ modules.component("propertiesStructure", {
       };
 
       ctrl.generateName = function (col) {
-        col.systemName = $rootScope.generateKeyword(col.displayName, "_");
+        col.systemName = $rootScope.generateKeyword(
+          col.displayName,
+          "",
+          true,
+          true
+        );
       };
       ctrl.removeAttr = function (index) {
         if (ctrl.columns) {

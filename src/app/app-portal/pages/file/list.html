@@ -33,7 +33,7 @@
                         Back</a>
                 </div>
                 <div class="col-6">
-                    <mix-file-upload folder="request.key" on-success="loadFiles()">
+                    <mix-file-upload folder="request.folder" on-success="loadFiles()">
                     </mix-file-upload>
                 </div>
             </div>
@@ -85,7 +85,7 @@
                                             <path
                                                 d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
                                         </svg>
-                                        <span ng-bind="item.fileName"></span>
+                                        <span ng-bind="item.filename"></span>
                                     </td>
                                     <td>
                                         <div class="input-group input-group-sm">
@@ -103,7 +103,7 @@
                                     <td>
                                         <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
                                             aria-label="Actions">
-                                            <a href="/portal/file/details?folder={{item.fileFolder}}&filename={{item.fileName}}{{item.extension}}"
+                                            <a href="/portal/file/details?folder={{item.fileFolder}}&filename={{item.filename}}{{item.extension}}"
                                                 class="btn btn-link">
                                                 <span class="fa fa-pen text-primary"></span>
                                             </a>
