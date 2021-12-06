@@ -26,7 +26,7 @@
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.types = ["Page", "Post", "Module"];
-      ctrl.moduleId = null;
+      ctrl.moduleContentId = null;
       ctrl.type = "Page";
       ctrl.navs = [];
       ctrl.data = {

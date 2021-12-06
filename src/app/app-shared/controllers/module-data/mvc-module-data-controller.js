@@ -26,14 +26,14 @@ appShared.controller("MvcModuleDataController", [
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
     $scope.mixConfigurations = $rootScope.globalSettings;
-    $scope.moduleId = null;
+    $scope.moduleContentId = null;
     $scope.module = null;
     $scope.allData = [];
     $scope.editDataUrl = null;
     $scope.canLoadMore = false;
-    $scope.init = async function (moduleId, pageSize) {
-      $scope.moduleId = moduleId;
-      $scope.request.module_id = $scope.moduleId;
+    $scope.init = async function (moduleContentId, pageSize) {
+      $scope.moduleContentId = moduleContentId;
+      $scope.request.moduleContentId = $scope.moduleContentId;
       $scope.request.pageSize = pageSize || $scope.request.pageSize;
       $scope.loadMore(0);
     };

@@ -11,7 +11,7 @@
       var ctrl = this;
       ctrl.colWidth = 3;
       ctrl.init = function () {
-        ctrl.editUrl = "/portal/module-data/details/" + ctrl.moduleId;
+        ctrl.editUrl = "/portal/module-data/details/" + ctrl.moduleContentId;
         ctrl.visible = $rootScope.visible;
         if (ctrl.data.items.length) {
           ctrl.min = ctrl.data.items[0].priority;
@@ -62,9 +62,9 @@
       ctrl.toggleChildNavs = function (nav) {
         nav.showChildNavs = nav.childNavs.length > 0 && !nav.showChildNavs;
       };
-      ctrl.view = function (moduleId, contentId) {
+      ctrl.view = function (moduleContentId, contentId) {
         var obj = {
-          moduleId: moduleId,
+          moduleContentId: moduleContentId,
           id: contentId,
         };
         $rootScope.preview("module-data", obj, null, "modal-lg");
@@ -72,7 +72,7 @@
     },
   ],
   bindings: {
-    moduleId: "=",
+    moduleContentId: "=",
     data: "=",
     childName: "=",
     canDrag: "=",

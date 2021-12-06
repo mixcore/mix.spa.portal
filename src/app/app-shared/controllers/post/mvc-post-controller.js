@@ -27,7 +27,7 @@ appShared.controller("MvcPostController", [
     $scope.request.orderBy = "Priority";
     $scope.request.direction = "Asc";
     $scope.mixConfigurations = $rootScope.globalSettings;
-    $scope.moduleId = null;
+    $scope.moduleContentId = null;
     $scope.module = null;
     $scope.allData = [];
     $scope.editDataUrl = null;
@@ -41,7 +41,7 @@ appShared.controller("MvcPostController", [
         $scope.service.init("module-post/mvc");
       }
 
-      $scope.request.module_id = $scope.moduleId;
+      $scope.request.moduleContentId = $scope.moduleContentId;
       $scope.request.pageSize = pageSize || $scope.request.pageSize;
       $scope.loadMore(0);
     };

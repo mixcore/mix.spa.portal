@@ -33,7 +33,7 @@
       };
       ctrl.view = function () {
         var obj = {
-          moduleId: ctrl.moduleId,
+          moduleContentId: ctrl.moduleContentId,
           id: ctrl.contentId,
         };
         $rootScope.preview("module-data", obj, null, "modal-lg");
@@ -45,7 +45,7 @@
     content: "=",
     showData: "=",
     max: "=",
-    moduleId: "=",
+    moduleContentId: "=",
     contentId: "=",
   },
 });

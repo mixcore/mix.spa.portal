@@ -21,11 +21,11 @@
                     <a href="{{createUrl}}" class="btn btn-primary mb-2">
                         <i class="fas fa-plus"></i> Create new post
                     </a>
-                    <a data-bs-toggle="modal" data-bs-target="#modal-nav-posts-{{moduleId}}"
+                    <a data-bs-toggle="modal" data-bs-target="#modal-nav-posts-{{moduleContentId}}"
                         class="btn btn-primary mb-2">
                         <i class="fas fa-search"></i> Link current post
                     </a>
-                    <a href="/portal/module/details/{{moduleId}}" class="btn btn-primary mb-3">
+                    <a href="/portal/module/details/{{moduleContentId}}" class="btn btn-primary mb-3">
                         <i class="fas fa-pen"></i> Edit module
                     </a>
                     <filter-list request="request" callback="getList(pageIndex)"></filter-list>
@@ -39,8 +39,8 @@
 
             <div class="row">
 
-                <modal-nav-posts save="saveOthers()" src-column="'moduleId'" src-id="moduleId" selected="others"
-                    query="'not_module_id='"></modal-nav-posts>
+                <modal-nav-posts save="saveOthers()" src-column="'moduleContentId'" src-id="moduleContentId"
+                    selected="others" query="'not_moduleId='"></modal-nav-posts>
             </div>
 
             <!-- <section class="content container-fluid"> -->
@@ -110,7 +110,7 @@
                                             <span class="fas fa-eye"></span>
                                         </a>
 
-                                        <a ng-click="remove(item.moduleId,item.postId);" class="btn btn-link">
+                                        <a ng-click="remove(item.moduleContentId,item.postId);" class="btn btn-link">
                                             <span class="fas fa-trash-alt text-danger"></span>
                                         </a>
                                     </div>

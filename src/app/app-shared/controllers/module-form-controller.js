@@ -31,7 +31,7 @@ appShared.controller("ModuleFormController", [
     $scope.loadModuleData = async function (id) {
       $rootScope.isBusy = true;
       var response = await moduleDataService.getModuleData(
-        $scope.moduleId,
+        $scope.moduleContentId,
         $scope.d,
         "portal"
       );
@@ -47,7 +47,7 @@ appShared.controller("ModuleFormController", [
     };
 
     $scope.saveModuleData = async function () {
-      var form = $("#module-" + $scope.data.moduleId);
+      var form = $("#module-" + $scope.data.moduleContentId);
       $.each($scope.data.dataProperties, function (i, e) {
         switch (e.dataType) {
           case 5:

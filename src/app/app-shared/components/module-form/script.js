@@ -1,7 +1,7 @@
 ﻿sharedComponents.component("moduleForm", {
   templateUrl: "/mix-app/views/app-shared/components/module-form/view.html",
   bindings: {
-    moduleId: "=",
+    moduleContentId: "=",
     categoryId: "=",
     productId: "=",
     postId: "=",
@@ -43,13 +43,13 @@
             ctrl.initModuleForm();
           }, 500);
         } else {
-          if (!ctrl.moduleId) {
+          if (!ctrl.moduleContentId) {
             resp = await moduleDataService.initModuleForm(ctrl.name);
           } else {
             if (ctrl.d) {
               resp = await moduleDataService.getSingle([ctrl.d]);
             } else {
-              resp = await moduleDataService.initForm(ctrl.moduleId);
+              resp = await moduleDataService.initForm(ctrl.moduleContentId);
             }
           }
           if (resp && resp.success) {
@@ -82,7 +82,7 @@
         $rootScope.isBusy = true;
         var id = $routeParams.id;
         var response = await moduleDataService.getModuleData(
-          ctrl.moduleId,
+          ctrl.moduleContentId,
           ctrl.d,
           "portal"
         );
@@ -105,7 +105,7 @@
       };
       ctrl.saveModuleData = async function () {
         $rootScope.isBusy = true;
-        var form = $("#module-" + ctrl.data.moduleId);
+        var form = $("#module-" + ctrl.data.moduleContentId);
         console.log(ctrl.data);
         $.each(ctrl.data.dataProperties, function (i, e) {
           switch (e.dataType) {

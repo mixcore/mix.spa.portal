@@ -7,8 +7,8 @@ app.factory("ModulePostRestService", [
   function ($rootScope, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("module-post");
-    var _delete = async function (moduleId, postId) {
-      var url = this.prefixUrl + "/delete/" + moduleId + "/" + postId;
+    var _delete = async function (moduleContentId, postId) {
+      var url = this.prefixUrl + "/delete/" + moduleContentId + "/" + postId;
       var req = {
         method: "GET",
         url: url,

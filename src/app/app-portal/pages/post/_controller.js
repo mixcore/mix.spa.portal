@@ -247,7 +247,7 @@ app.controller("PostController", [
         ngAppSettings.mixConfigurations.DefaultFeatureImgHeight;
 
       $scope.request.postType = $scope.viewmodel.type;
-      var moduleIds = $routeParams.module_ids;
+      var moduleIds = $routeParams.moduleIds;
       var pageIds = $routeParams.page_ids;
       $scope.postType = $rootScope.findObjectByKey(
         $scope.postTypes,
@@ -257,11 +257,11 @@ app.controller("PostController", [
       await $scope.loadCategories();
       $scope.loadAdditionalData();
       if (moduleIds) {
-        for (var moduleId of moduleIds.split(",")) {
+        for (var moduleContentId of moduleIds.split(",")) {
           var moduleNav = $rootScope.findObjectByKey(
             $scope.viewmodel.modules,
-            "moduleId",
-            moduleId
+            "moduleContentId",
+            moduleContentId
           );
           if (moduleNav) {
             moduleNav.isActived = true;

@@ -17,13 +17,13 @@ appShared.factory("SharedModuleDataService", [
       return await apiService.sendRequest(req);
     };
 
-    var _getModuleData = async function (moduleId, id, type) {
+    var _getModuleData = async function (moduleContentId, id, type) {
       var apiUrl = "/" + $rootScope.mixConfigurations.lang + "/module-data/";
       var url = apiUrl + "details/" + type;
       if (id) {
-        url += "/" + moduleId + "/" + id;
+        url += "/" + moduleContentId + "/" + id;
       } else {
-        url += "/" + moduleId;
+        url += "/" + moduleContentId;
       }
       var req = {
         method: "GET",

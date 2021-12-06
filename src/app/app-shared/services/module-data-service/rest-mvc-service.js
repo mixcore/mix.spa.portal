@@ -4,8 +4,8 @@ appShared.factory("RestMvcModuleDataService", [
   function (baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("module-data/mvc");
-    var _initForm = async function (moduleId) {
-      var url = `${this.prefixUrl}/init-form/${moduleId}`;
+    var _initForm = async function (moduleContentId) {
+      var url = `${this.prefixUrl}/init-form/${moduleContentId}`;
       var req = {
         method: "GET",
         url: url,

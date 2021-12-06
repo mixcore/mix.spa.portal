@@ -13,21 +13,21 @@
         return $rootScope.translate(keyword, wrap, defaultValue);
       };
 
-      ctrl.removeData = function (id, moduleId) {
+      ctrl.removeData = function (id, moduleContentId) {
         $rootScope.showConfirm(
           ctrl,
           "removeDataConfirmed",
-          [id, moduleId],
+          [id, moduleContentId],
           null,
           "Remove Data",
           "Deleted data will not able to recover, are you sure you want to delete this item?"
         );
       };
-      ctrl.removeDataConfirmed = async function (id, moduleId) {
+      ctrl.removeDataConfirmed = async function (id, moduleContentId) {
         $rootScope.isBusy = true;
         var result = await moduleDataService.removeModuleData(id);
         if (result.success) {
-          ctrl.loadModuleDatas(moduleId);
+          ctrl.loadModuleDatas(moduleContentId);
         } else {
           $rootScope.showMessage("failed");
           $rootScope.isBusy = false;
@@ -36,14 +36,14 @@
       };
       ctrl.saveDataCallback = function (data) {
         if (data) {
-          ctrl.loadModuleDatas(data.moduleId);
+          ctrl.loadModuleDatas(data.moduleContentId);
         }
       };
       ctrl.loadModuleDatas = async function (id, pageIndex) {
         $rootScope.isBusy = true;
         $scope.dataColumns = [];
         var request = angular.copy(ngAppSettings.request);
-        request.query = "?module_id=" + id + "&post_id=" + ctrl.post.id;
+        request.query = "?moduleContentId=" + id + "&post_id=" + ctrl.post.id;
         if (pageIndex) {
           request.pageIndex = pageIndex;
         }
@@ -51,7 +51,7 @@
         if (response.success) {
           var nav = $rootScope.findObjectByKey(
             ctrl.post.moduleNavs,
-            "moduleId",
+            "moduleContentId",
             id
           );
           if (nav) {

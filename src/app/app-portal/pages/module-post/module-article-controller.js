@@ -37,7 +37,7 @@ app.controller("ModulePostController", [
     $scope.template = $routeParams.template || "";
 
     $scope.init = function () {
-      $scope.createUrl = `/portal/post/create?page_ids=${$scope.pageIds}&module_ids=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
+      $scope.createUrl = `/portal/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.getList();
     };
     $scope.getList = async function (pageIndex) {
@@ -46,8 +46,8 @@ app.controller("ModulePostController", [
         $scope.request.pageIndex = pageIndex;
       }
       var id = $routeParams.id;
-      $scope.moduleId = $routeParams.id;
-      $scope.request.query = "&module_id=" + id;
+      $scope.moduleContentId = $routeParams.id;
+      $scope.request.query = "&moduleContentId=" + id;
       $scope.canDrag =
         $scope.request.orderBy !== "Priority" ||
         $scope.request.direction !== "0";
@@ -66,20 +66,20 @@ app.controller("ModulePostController", [
       item.editUrl = "/portal/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
-    $scope.remove = function (moduleId, postId) {
+    $scope.remove = function (moduleContentId, postId) {
       $rootScope.showConfirm(
         $scope,
         "removeConfirmed",
-        [moduleId, postId],
+        [moduleContentId, postId],
         null,
         "Remove",
         "Deleted data will not able to recover, are you sure you want to delete this item?"
       );
     };
 
-    $scope.removeConfirmed = async function (moduleId, postId) {
+    $scope.removeConfirmed = async function (moduleContentId, postId) {
       $rootScope.isBusy = true;
-      var result = await service.delete(moduleId, postId);
+      var result = await service.delete(moduleContentId, postId);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(

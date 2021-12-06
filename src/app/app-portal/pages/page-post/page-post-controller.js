@@ -35,14 +35,14 @@ app.controller("PagePostController", [
       $scope.type = $routeParams.type;
       $scope.template = $routeParams.template || "";
       $scope.pageIds = $routeParams.page_ids || $routeParams.id;
-      $scope.moduleIds = $routeParams.module_ids || "";
+      $scope.moduleIds = $routeParams.moduleIds || "";
       $scope.canDrag =
         $scope.request.orderBy === "Priority" &&
         $scope.request.direction === "Asc";
       $scope.createUrl =
         $routeParams.post_type === "gallery"
           ? "/portal/post/create-gallery"
-          : `/portal/post/create?page_ids=${$scope.pageIds}&module_ids=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
+          : `/portal/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.updateUrl =
         $routeParams.post_type === "gallery"
           ? "/portal/post/gallery-details"

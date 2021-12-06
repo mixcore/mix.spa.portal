@@ -23,7 +23,7 @@
       ctrl.loadModuleData = async function () {
         $rootScope.isBusy = true;
         var response = await moduleDataService.getModuleData(
-          ctrl.moduleId,
+          ctrl.moduleContentId,
           ctrl.contentId,
           "portal"
         );
@@ -40,7 +40,7 @@
     },
   ],
   bindings: {
-    moduleId: "=",
+    moduleContentId: "=",
     contentId: "=",
   },
 });

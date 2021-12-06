@@ -96,16 +96,17 @@ appShared.controller("SharedModuleDataController", [
 
     $scope.loadParams = async function () {
       $scope.dataId = $routeParams.id;
-      $scope.backUrl = "/portal/module-data/list/" + $routeParams.moduleId;
-      $scope.moduleId = $routeParams.moduleId;
+      $scope.backUrl =
+        "/portal/module-data/list/" + $routeParams.moduleContentId;
+      $scope.moduleContentId = $routeParams.moduleContentId;
     };
 
     $scope.loadModuleData = async function () {
       $rootScope.isBusy = true;
-      var moduleId = $routeParams.moduleId;
+      var moduleContentId = $routeParams.moduleContentId;
       var id = $routeParams.id;
       var response = await moduleDataService.getModuleData(
-        moduleId,
+        moduleContentId,
         id,
         "portal"
       );
@@ -120,8 +121,8 @@ appShared.controller("SharedModuleDataController", [
         $scope.$apply();
       }
     };
-    $scope.loadModuleDatas = async function (moduleId, pageIndex) {
-      $scope.request.key = moduleId;
+    $scope.loadModuleDatas = async function (moduleContentId, pageIndex) {
+      $scope.request.key = moduleContentId;
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }

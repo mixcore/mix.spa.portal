@@ -115,7 +115,7 @@ app.controller("ModuleController", [
     };
 
     $scope.loadMoreModuleDatas = async function (pageIndex) {
-      $scope.request.query = "&module_id=" + $scope.viewmodel.id;
+      $scope.request.query = "&moduleContentId=" + $scope.viewmodel.id;
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
@@ -142,7 +142,7 @@ app.controller("ModuleController", [
       }
     };
     $scope.exportModuleData = async function (pageIndex) {
-      $scope.request.query = "&module_id=" + $scope.viewmodel.id;
+      $scope.request.query = "&moduleContentId=" + $scope.viewmodel.id;
       if (pageIndex !== undefined) {
         $scope.request.pageIndex = pageIndex;
       }
