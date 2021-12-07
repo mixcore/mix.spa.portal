@@ -44,6 +44,7 @@ app.controller("PageController", [
       products: [],
       data: [],
     };
+    $scope.request.selectedMembers = ["id", "title", "createdDateTime", "type"];
     $scope.postRequest = angular.copy(ngAppSettings.request);
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
