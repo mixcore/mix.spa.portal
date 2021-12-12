@@ -33,18 +33,26 @@ app.controller("PageController", [
       ngAppSettings,
       service
     );
+    var pageModuleService = $rootScope.getRestService("mix-page-module");
     $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
     $scope.pageType = "";
     $scope.pageTypes = $rootScope.globalSettings.pageTypes;
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
+    $scope.selectedModules = [];
     $scope.pageData = {
       posts: [],
       products: [],
       data: [],
     };
-    $scope.request.selectedMembers = ["id", "title", "createdDateTime", "type"];
+    $scope.request.columns = [
+      "id",
+      "title",
+      "createdDateTime",
+      "type",
+      "image",
+    ];
     $scope.postRequest = angular.copy(ngAppSettings.request);
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
@@ -144,7 +152,12 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
+    $scope.selectModule = function (module) {
+      $scope.selectedModules.push(module);
+    };
     $scope.saveSuccessCallback = async function () {
+      await pageModuleService.saveMany($scope.selectedModules);
+
       if ($scope.additionalData) {
         $scope.additionalData.isClone = $scope.viewmodel.isClone;
         $scope.additionalData.cultures = $scope.viewmodel.cultures;

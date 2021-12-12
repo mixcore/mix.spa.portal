@@ -36,6 +36,7 @@ app.controller("MixDatabaseController", [
       { title: "Created Date", value: "CreatedDateTime" },
     ];
     $scope.request.orderBy = "CreatedDateTime";
+    $scope.request.columns = "id,displayName,systemName,type,createdDatetime";
     $scope.getSingleSuccessCallback = async function () {
       if (!$scope.defaultAttr) {
         var getDefaultAttr = await databaseColumnService.getDefault();
