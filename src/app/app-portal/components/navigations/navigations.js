@@ -8,7 +8,7 @@
     titleField: "=?",
 
     prefix: "=",
-    detailsUrl: "=",
+    detailUrl: "=",
     data: "=",
     titleMaxLength: "=?",
     callback: "&?",
@@ -125,7 +125,7 @@
         ctrl.minPriority = ctrl.data[0].priority;
       };
       ctrl.goToDetails = async function (nav) {
-        $location.url(ctrl.detailsUrl + nav[ctrl.key]);
+        $location.url(ctrl.detailUrl + nav[ctrl.key]);
       };
     },
   ],

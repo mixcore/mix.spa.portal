@@ -101,9 +101,9 @@
                                         <a class="dropdown-item border-radius-md" ng-click="$ctrl.view(item)">
                                             <span class="fa fa-eye"></span> Preview</a>
                                     </li>
-                                    <li ng-if="item.detailsUrl">
+                                    <li ng-if="item.detailUrl">
                                         <a class="dropdown-item border-radius-md" target="_blank"
-                                            href="{{item.detailsUrl}}">
+                                            href="{{item.detailUrl}}">
                                             <span class="fa fa-link"></span> Config</a>
                                     </li>
                                     <li>
@@ -130,8 +130,8 @@
                                 </a> -->
                                 <a class="btn btn-light" ng-click="$ctrl.view(item)">
                                     <span class="fa fa-eye"></span></a>
-                                <!-- <a ng-if="item.detailsUrl" class="btn btn-link text-primary" target="_blank"
-                                    href="{{item.detailsUrl}}">
+                                <!-- <a ng-if="item.detailUrl" class="btn btn-link text-primary" target="_blank"
+                                    href="{{item.detailUrl}}">
                                     <span class="fa fa-link"></span></a> -->
                                 <a ng-click="$ctrl.update(item)" class="btn btn-light">
                                     <span class="fa fa-pen"></span>

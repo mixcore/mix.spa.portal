@@ -179,7 +179,7 @@ modules.component("mixDatabaseForm", {
           ctrl.mixDatabaseData.data.target_id = data.id;
           ctrl.mixDatabaseData.data.title = data.title;
           ctrl.mixDatabaseData.data.type = type;
-          ctrl.mixDatabaseData.data.uri = data.detailsUrl;
+          ctrl.mixDatabaseData.data.uri = data.detailUrl;
         }
       };
       ctrl.filterData = function (attributeName) {

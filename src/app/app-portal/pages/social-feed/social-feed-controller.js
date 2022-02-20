@@ -167,7 +167,7 @@ app.controller("SocialFeedController", [
       post.content = post.description;
       post.source = "Facebook";
       post.image = post.full_picture;
-      post.detailsUrl = post.permalink_url;
+      post.detailUrl = post.permalink_url;
       var attachments = post.attachments.data[0];
 
       if (attachments.media) {

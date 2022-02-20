@@ -1,7 +1,7 @@
 <!-- Main content -->
 <section class="content container-fluid" ng-init="loadCustomer()">
     <form ng-class="{'submitted': submitted}" ng-submit="saveCustomer(activedCustomer)">
-        <actions preview-url="activedCustomer.detailsUrl" back-url="'/portal/customer/list'"></actions>
+        <actions preview-url="activedCustomer.detailUrl" back-url="'/portal/customer/list'"></actions>
 
         <div class="row">
             <section class="col-lg-9">

@@ -20,7 +20,7 @@
   bindings: {
     value: "=",
     isSelected: "=?",
-    detailsUrl: "=?",
+    detailUrl: "=?",
     callback: "&",
     description: "=",
   },
