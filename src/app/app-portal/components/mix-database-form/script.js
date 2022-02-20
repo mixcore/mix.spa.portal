@@ -39,7 +39,6 @@ modules.component("mixDatabaseForm", {
             If input is data id => load ctrl.mixDatabaseData from service and handle it independently
         */
         ctrl.isBusy = true;
-
         if (ctrl.mixDatabaseDataId) {
           var getData = await service.getSingle([ctrl.mixDatabaseDataId]);
           ctrl.mixDatabaseData = getData.data;
@@ -103,8 +102,12 @@ modules.component("mixDatabaseForm", {
           ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseName;
           ctrl.defaultData.parentId = ctrl.parentId;
           ctrl.defaultData.parentType = ctrl.parentType;
-
-          ctrl.columns = ctrl.columns || ctrl.defaultData.columns;
+          let otherColumns = ctrl.defaultData.columns.filter(
+            (m) =>
+              ctrl.columns.filter((n) => n.systemName == m.systemName).length ==
+              0
+          );
+          ctrl.columns = ctrl.columns.concat(otherColumns);
         }
 
         if (!ctrl.mixDatabaseData) {

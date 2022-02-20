@@ -15,7 +15,9 @@
         ) {
           ctrl.module.systemName = $rootScope.generateKeyword(
             ctrl.module.title,
-            "_"
+            "_",
+            true,
+            true
           );
         }
       };

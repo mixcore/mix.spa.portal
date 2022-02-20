@@ -291,8 +291,8 @@
                                     <page-seo page="viewmodel"></page-seo>
                                 </pane-v>
                                 <pane-v icon="fas fa-cubes" header="Modules">
-                                    <page-modules left-id="viewmodel.id" selected-items="selectedModules"
-                                        on-update="selectModule(module)"></page-modules>
+                                    <page-modules left-id="viewmodel.id" associations="selectedModules"
+                                        on-update="selectModule(associations)"></page-modules>
                                 </pane-v>
                                 <pane-v icon="fas fa-cog" header="" class="ms-auto">
                                     <page-advanced model="viewmodel" additional-data="additionalData"></page-advanced>

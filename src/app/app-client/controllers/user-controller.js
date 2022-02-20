@@ -34,7 +34,7 @@ app.controller("UserController", [
     };
     $scope.login = async function () {
       var result = await authService.login($scope.loginData);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.executeFunctionByName("loginSuccess", [result.data]);
       } else {
         $rootScope.executeFunctionByName("loginFail", [result.errors]);
@@ -49,7 +49,7 @@ app.controller("UserController", [
       } else {
         resp = await userService.saveUser($scope.user);
       }
-      if (resp && resp.isSucceed) {
+      if (resp && resp.success) {
         $scope.user = resp.data;
         authService
           .refreshToken(
@@ -74,7 +74,7 @@ app.controller("UserController", [
     $scope.getMyProfile = async function () {
       $rootScope.isBusy = true;
       var response = await userService.getMyProfile();
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.user = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();

@@ -1,7 +1,7 @@
-<ul dnd-list="$ctrl.data" class="list-group">
-    <li ng-repeat="nav in $ctrl.data" class="list-group-item m-0" dnd-draggable="nav" dnd-type="'nav'"
-        dnd-effect-allowed="move" dnd-selected="$ctrl.selected = nav" dnd-moved="$ctrl.updateOrders($index)"
-        ng-class="{'selected': $ctrl.selected === nav}">
+<ul dnd-list="$ctrl.data" dnd-inserted="$ctrl.updateOrders(index)" class="list-group">
+    <li ng-repeat="nav in $ctrl.data track by $index" class="list-group-item m-0" dnd-draggable="nav"
+        dnd-dragstart="$ctrl.dragStart($index)" dnd-type="'nav'" dnd-effect-allowed="copyMove"
+        dnd-selected="$ctrl.selected = nav" ng-class="{'selected': $ctrl.selected === nav}">
         <div class="d-flex">
             <div class="drag-header pe-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-drag-drop-2"
@@ -18,12 +18,8 @@
                     <line x1="4" y1="16" x2="4" y2="16.01" />
                 </svg>
             </div>
-            <!--<div class="col-1">
-                <input type="text" ng-model="nav.priority" ng-change="$ctrl.updatePriorities()" 
-                       class="item-priority d-none form-control form-control-sm d"/>
-            </div>-->
             <div class="form-check form-switch flex-fill pt-1">
-                <input type="checkbox" ng-change="$ctrl.callback({nav: nav})" ng-model="nav.isActived"
+                <input type="checkbox" ng-change="$ctrl.select(nav)" ng-model="nav.isActived"
                     id="{{$ctrl.prefix}}_{{$index}}" class="form-check-input" />
                 <label class="form-check-label" for="{{$ctrl.prefix}}_{{$index}}" ng-bind="$ctrl.getTitle(nav)">
                 </label>

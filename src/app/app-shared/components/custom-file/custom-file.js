@@ -64,7 +64,7 @@ sharedComponents.component("customFile", {
           reader.readAsDataURL(file);
           reader.onload = async function () {
             var getMedia = await mediaService.getSingle(["portal"]);
-            if (getMedia.isSucceed) {
+            if (getMedia.success) {
               ctrl.mediaFile.fileName = file.name.substring(
                 0,
                 file.name.lastIndexOf(".")

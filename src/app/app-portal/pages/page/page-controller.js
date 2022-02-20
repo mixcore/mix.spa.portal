@@ -91,7 +91,7 @@ app.controller("PageController", [
       const obj = {
         parentType: "Page",
         parentId: $scope.viewmodel.id,
-        databaseName: "sysColumnPage",
+        databaseName: "sysPageColumn",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.success) {
@@ -127,6 +127,9 @@ app.controller("PageController", [
       $scope.request.query = "level=0&pageType=" + $scope.pageType;
       $scope.getList();
     };
+    $scope.selectModule = (associations) => {
+      $scope.selectedModules = associations;
+    };
     $scope.goUp = async function (items, index) {
       items[index].priority -= 1;
       items[index - 1].priority += 1;
@@ -152,32 +155,42 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
-    $scope.selectModule = function (module) {
-      $scope.selectedModules.push(module);
-    };
     $scope.saveSuccessCallback = async function () {
-      await pageModuleService.saveMany($scope.selectedModules);
+      var result = await $scope.savePageModules();
 
-      if ($scope.additionalData) {
-        $scope.additionalData.isClone = $scope.viewmodel.isClone;
-        $scope.additionalData.cultures = $scope.viewmodel.cultures;
-        $scope.additionalData.parentId = $scope.viewmodel.id;
-        $scope.additionalData.parentType = "Page";
-        let result = await dataService.save($scope.additionalData);
-        if (!result.isSucceed) {
-          $rootScope.showErrors(result.errors);
-        } else {
-          $scope.additionalData = result.data;
-          $scope.saveColumns();
-        }
+      result = result && (await $scope.saveAdditionalData());
+      if (result) {
+        $rootScope.showMessage("Saved", "success");
       }
       $rootScope.isBusy = false;
       $scope.$apply();
     };
-
+    $scope.saveAdditionalData = async () => {
+      if ($scope.additionalData) {
+        $scope.additionalData.isClone = $scope.viewmodel.isClone;
+        $scope.additionalData.cultures = $scope.viewmodel.cultures;
+        $scope.additionalData.intParentId = $scope.viewmodel.id;
+        $scope.additionalData.parentType = "Page";
+        let result = await dataService.save($scope.additionalData);
+        if (!result.success) {
+          $rootScope.showErrors(result.errors);
+        }
+        return result.success;
+      }
+    };
+    $scope.savePageModules = async () => {
+      angular.forEach($scope.selectedModules, (e) => {
+        e.leftId = $scope.viewmodel.id;
+      });
+      var result = await pageModuleService.saveMany($scope.selectedModules);
+      if (!result.success) {
+        $rootScope.showErrors(result.errors);
+      }
+      return result.success;
+    };
     $scope.saveColumns = async function () {
       let result = await columnService.saveMany($scope.additionalData.columns);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.showMessage("success", "success");
       }
     };

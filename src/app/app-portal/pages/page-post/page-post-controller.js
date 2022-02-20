@@ -59,7 +59,7 @@ app.controller("PagePostController", [
       $scope.canDrag =
         $scope.request.orderBy === "Priority" &&
         $scope.request.direction === "Asc";
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.data = response.data;
         $rootScope.isBusy = false;
         $scope.$apply();

@@ -51,7 +51,7 @@
                 );
                 ctrl.isBusy = false;
                 $scope.$apply();
-                if (saveCart.isSucceed) {
+                if (saveCart.success) {
                   localStorageService.set("shoppingCart", null);
                   if (ctrl.onSuccess && ctrl.cartData.status === "COMPLETED") {
                     $rootScope.executeFunctionByName(

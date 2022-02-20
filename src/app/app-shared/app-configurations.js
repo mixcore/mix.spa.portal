@@ -281,7 +281,11 @@ appShared.run([
     $rootScope.logOut = function () {
       authService.logOut();
     };
-
+    $rootScope.sortArray = (arr, fieldName) => {
+      return arr.sort(function (a, b) {
+        return a[fieldName] - b[fieldName];
+      });
+    };
     $rootScope.updateSettings = function () {
       commonService.removeSettings();
       commonService
@@ -712,7 +716,7 @@ appShared.run([
     };
 
     $rootScope.isInRole = function (roleName) {
-      return authService.isInRole(roleName);
+      return true; //authService.isInRole(roleName);
     };
     $rootScope.showContentFilter = function (callback) {
       $rootScope.contentFilterCallback = callback;

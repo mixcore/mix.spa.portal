@@ -243,7 +243,7 @@
             );
             ctrl.mixDatabaseData.obj.type = ctrl.type;
             dataService.save(ctrl.mixDatabaseData).then((resp) => {
-              if (resp.isSucceed) {
+              if (resp.success) {
                 ctrl.data.items.push(resp.data);
                 ctrl.reload();
                 ctrl.select(resp.data.id, true);

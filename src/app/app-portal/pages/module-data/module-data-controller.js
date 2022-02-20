@@ -39,6 +39,9 @@ app.controller("ModuleDataController", [
     $scope.columns = [];
     $scope.editDataUrl =
       "/portal/module-data/details/" + $scope.moduleContentId;
+    $scope.init = async function () {
+      $scope.id = $routeParams.id;
+    };
     $scope.initList = async function () {
       $scope.id = $routeParams.id;
       if (!$scope.module) {

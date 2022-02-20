@@ -179,7 +179,7 @@ function BaseRestCtrl(
       }
       $scope.getList();
     } else {
-      $rootScope.showMessage("failed");
+      $rootScope.showErrors(result.errors);
       $rootScope.isBusy = false;
       $scope.$apply();
     }
@@ -207,7 +207,7 @@ function BaseRestCtrl(
       }
 
       if (resp.success) {
-        $rootScope.showMessage("success", "success");
+        $scope.viewmodel.id = resp.data;
         $scope.getSingle([resp.data]);
 
         if ($scope.saveSuccessCallback) {
@@ -216,6 +216,8 @@ function BaseRestCtrl(
             $scope.saveSuccessCallbackArgs,
             $scope
           );
+        } else {
+          $rootScope.showMessage("success", "success");
         }
       } else {
         if ($scope.saveFailCallback) {

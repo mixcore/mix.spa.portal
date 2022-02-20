@@ -45,7 +45,8 @@
                     <div class="card-body">
                         <mix-module-data-table ng-show="module" ng-init="getList()" data="data"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
-                            edit-url="editDataUrl" module-id="moduleContentId" columns="columns" on-delete="remove(id)">
+                            edit-url="editDataUrl" module-content-id="moduleContentId" columns="columns"
+                            on-delete="remove(id)">
                         </mix-module-data-table>
                     </div>
                 </div>

@@ -46,7 +46,7 @@ sharedComponents.controller("ShoppingCartController", [
           "shoppingCart",
           $scope.cartData
         );
-        if (result.isSucceed) {
+        if (result.success) {
           $scope.isBusy = false;
           $scope.cartData = result.data.obj;
           $scope.$apply();

@@ -31,7 +31,6 @@ modules.component("additionalValue", {
               ctrl.additionalData = getData.data;
               ctrl.additionalData.mixDatabaseName = ctrl.mixDatabaseName;
               ctrl.additionalData.parentType = ctrl.parentType;
-              ctrl.additionalData.parentId = ctrl.parentId;
               $scope.$apply();
             } else {
               $rootScope.showErrors(getData.errors);

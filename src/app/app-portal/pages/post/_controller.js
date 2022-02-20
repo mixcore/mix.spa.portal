@@ -68,7 +68,7 @@ app.controller("PostController", [
     $scope.loadCategories = async function () {
       $scope.cateRequest.mixDatabaseName = "sysCategory";
       var response = await dataService.getList($scope.cateRequest);
-      if (response.isSucceed) {
+      if (response.success) {
         $scope.categories = response.data;
         $scope.isBusy = false;
         $scope.$apply();
@@ -87,7 +87,7 @@ app.controller("PostController", [
             id: 0,
           },
           {
-            databaseName: "sysColumnPost",
+            databaseName: "sysPostColumn",
             title: "Default",
             id: 1,
           }
@@ -231,7 +231,7 @@ app.controller("PostController", [
 
     $scope.saveColumns = async function () {
       let result = await columnService.saveMany($scope.additionalData.columns);
-      if (result.isSucceed) {
+      if (result.success) {
         $rootScope.showMessage("success", "success");
       }
     };
