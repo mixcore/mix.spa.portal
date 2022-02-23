@@ -27,10 +27,10 @@ sharedComponents.component("mixStore", {
         ctrl.startConnection("portalhub", () => {
           ctrl.joinRoom("Theme");
         });
-
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
         ctrl.themeRequest.postType = "theme";
+        ctrl.themeRequest.mixcore_versions = "1.0.1";
         ctrl.cateRequest = angular.copy(ngAppSettings.request);
         ctrl.cateRequest.mixDatabaseName = "sys_category";
         ctrl.cateRequest.pageSize = null;
