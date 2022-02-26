@@ -220,6 +220,9 @@ appShared.factory("BaseRestService", [
     var _parseQuery = function (req) {
       var result = "";
       if (req) {
+        if (angular.isObject(req.query)) {
+          req.query = JSON.stringify(req.query);
+        }
         for (var key in req) {
           if (req.hasOwnProperty(key)) {
             if (result != "") {
