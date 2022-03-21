@@ -22,7 +22,7 @@
                 class="btn bnt-sm btn-primary px-3 text-white">
                 <i class="fas fa-search"></i> Search links
             </a>
-            <button ng-if="$ctrl.parentId && $ctrl.isInRole('SuperAdmin')" type="button" data-bs-toggle="modal"
+            <button ng-if="$ctrl.parentId && $ctrl.isInRole('Owner')" type="button" data-bs-toggle="modal"
                 data-bs-target="#modal-data-filter" class="btn btn-sm btn-link py-0 float-end"
                 ng-disabled="$ctrl.isBusy">
                 <i class="fas fa-folder"></i> Browse Data

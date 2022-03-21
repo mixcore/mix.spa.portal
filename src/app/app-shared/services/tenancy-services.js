@@ -4,7 +4,8 @@ appShared.factory("TenancyService", [
   "BaseRestService",
   function (apiService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-tenancy");
+    // serviceFactory.init("mix-tenancy");
+    serviceFactory.prefixUrl = `/rest/mix-tenancy/setup`;
 
     var _syncTemplates = async function (id) {
       var url = this.prefixUrl + "/sync/" + id;

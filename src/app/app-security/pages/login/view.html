@@ -1,5 +1,5 @@
-<div class="container-tight py-4">
-    <div class="text-center m-4">
+<div class="container-tight py-4" ng-init="init()">
+    <div class=" text-center m-4">
         <a href="."><img src="/mix-app/css/portal/img/mixcore-logo-red-2.svg" alt="Mixcore CMS" height="36"></a>
     </div>
     <div class="card card-md">
@@ -50,9 +50,15 @@
                             Register
                         </button>
                     </div>
+
                 </div>
             </form>
-
+            <form class="d-center" action="/security/external-login" method="POST">
+                <input type="hidden" name="returnUrl" value="{{returnUrl}}" />
+                <button ng-repeat="provider in providers.data" type="submit" class="btn btn-primary" name="provider"
+                    value="{{provider.name}}" title="Log in using your {{provider.displayName}} account"
+                    ng-bind="provider.displayName"></button>
+            </form>
         </div>
     </div>
 </div>

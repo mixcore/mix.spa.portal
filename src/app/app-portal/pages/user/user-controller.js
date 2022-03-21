@@ -4,8 +4,6 @@ app.controller("UserController", [
   "$rootScope",
   "ngAppSettings",
   "$routeParams",
-  "$timeout",
-  "$location",
   "AuthService",
   "UserServices",
   "RestMixDatabaseDataPortalService",
@@ -14,8 +12,6 @@ app.controller("UserController", [
     $rootScope,
     ngAppSettings,
     $routeParams,
-    $timeout,
-    $location,
     authService,
     userServices,
     dataService
@@ -61,9 +57,9 @@ app.controller("UserController", [
       if (response.success) {
         $scope.activedUser = response.data;
         $rootScope.isBusy = false;
-        if (!$rootScope.isInRole("SuperAdmin")) {
+        if (!$rootScope.isInRole("Owner")) {
           $scope.activedUser.roles = $scope.activedUser.roles.filter(
-            (role) => role.description != "SuperAdmin"
+            (role) => role.description != "Owner"
           );
         }
         $scope.$apply();
@@ -90,7 +86,7 @@ app.controller("UserController", [
 
     $scope.loadUsers = async function (pageIndex) {
       authService.fillAuthData().then(() => {
-        if ($rootScope.isInRoles(["SuperAdmin", "Admin"])) {
+        if ($rootScope.isInRoles(["Owner", "Admin"])) {
           $scope.createUrl = "/portal/user/create";
         }
       });
@@ -102,10 +98,10 @@ app.controller("UserController", [
       var resp = await userServices.getUsers($scope.request);
       if (resp && resp.success) {
         $scope.data = resp.data;
-        if (!$rootScope.isInRole("SuperAdmin")) {
+        if (!$rootScope.isInRole("Owner")) {
           $scope.data.items = $scope.data.items.filter(
             (user) =>
-              user.roles.length == 0 || user.roles[0].role.name != "SuperAdmin"
+              user.roles.length == 0 || user.roles[0].role.name != "Owner"
           );
         }
         $.each($scope.data.items, function (i, user) {
@@ -166,8 +162,7 @@ app.controller("UserController", [
             )
             .then(() => {
               if (
-                $scope.activedUser.user.id ==
-                authService.authentication.info.user.id
+                $scope.activedUser.id == authService.authentication.info.user.id
               ) {
                 window.location = window.location;
               }
@@ -210,12 +205,13 @@ app.controller("UserController", [
       }
     };
 
-    $scope.updateRoleStatus = async function (nav) {
+    $scope.updateRoleStatus = async function (role) {
+      console.log(role);
       var userRole = {
-        userId: nav.userId,
-        roleId: nav.roleId,
-        roleName: nav.description,
-        isUserInRole: nav.isActived,
+        userId: $scope.activedUser.id,
+        roleId: role.id,
+        roleName: role.name,
+        isUserInRole: role.isActived,
       };
       $rootScope.isBusy = true;
       var resp = await userServices.updateRoleStatus(userRole);

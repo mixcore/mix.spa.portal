@@ -29,18 +29,18 @@ app.controller("DashboardController", [
     });
     $scope.getDashboardInfo = async function () {
       $rootScope.isBusy = true;
-      var response = await dashboardServices.getDashboardInfo();
-      if (response.success) {
-        // $('#mainSection').removeClass('card');
-        $scope.data = response.data;
-        $rootScope.isBusy = false;
-        $scope.$apply();
-        // $scope.getChart();
-      } else {
-        $rootScope.showErrors(response.errors);
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
+      //   var response = await dashboardServices.getDashboardInfo();
+      //   if (response.success) {
+      //     // $('#mainSection').removeClass('card');
+      //     $scope.data = response.data;
+      //     $rootScope.isBusy = false;
+      //     $scope.$apply();
+      //     // $scope.getChart();
+      //   } else {
+      //     $rootScope.showErrors(response.errors);
+      //     $rootScope.isBusy = false;
+      //     $scope.$apply();
+      //   }
     };
     $scope.getChart = function () {
       var ctx = document.getElementById("myChart");

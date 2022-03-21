@@ -95,6 +95,8 @@ paths.sharedApp = {
     paths.webapp + "app-shared/controllers/**/*.js",
     paths.webapp + "app-shared/components/**/*.js",
     paths.webapp + "app-shared/plugins/**/*.js",
+    `${paths.nodeModules}/@microsoft/signalr/dist/browser/signalr.min.js`,
+    `${paths.nodeModules}/@microsoft/signalr-protocol-msgpack/dist/browser/signalr-protocol-msgpack.min.js`,
     `${paths.nodeModules}/html2canvas/dist/html2canvas.min.js`,
   ],
   dest: paths.webroot + "js/app-shared.min.js",

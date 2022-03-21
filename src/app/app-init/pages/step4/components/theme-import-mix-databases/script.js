@@ -1,6 +1,9 @@
 ﻿app.component("themeImportMixDatabases", {
   templateUrl:
     "/mix-app/views/app-init/pages/step4/components/theme-import-mix-databases/view.html",
+  bindings: {
+    importThemeDto: "=",
+  },
   controller: [
     "$rootScope",
     "$scope",
@@ -12,7 +15,7 @@
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
-        ctrl.getList();
+        // ctrl.getList();
       };
       ctrl.getList = async (pageIndex) => {
         if (pageIndex !== undefined) {
@@ -85,7 +88,4 @@
       };
     },
   ],
-  bindings: {
-    importThemeDto: "=",
-  },
 });

@@ -76,6 +76,7 @@ app.controller("ThemeController", [
       $scope.exportThemeDto.themeId = $routeParams.id;
       $rootScope.isBusy = true;
       var response = await service.export($scope.exportThemeDto);
+
       if (response.success) {
         $rootScope.isBusy = false;
         window.open(response.data, "_blank");

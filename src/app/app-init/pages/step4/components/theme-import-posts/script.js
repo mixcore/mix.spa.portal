@@ -12,7 +12,7 @@
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
-        ctrl.getList();
+        // ctrl.getList();
       };
       ctrl.getList = async (postIndex) => {
         if (postIndex !== undefined) {

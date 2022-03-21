@@ -14,7 +14,7 @@ app.factory("Step2Services", [
         data: JSON.stringify(user),
       };
 
-      return await apiService.sendRequest(req);
+      return await apiService.sendRequest(req, true);
     };
 
     usersServiceFactory.register = _register;

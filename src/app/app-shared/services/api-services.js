@@ -25,7 +25,7 @@ appShared.factory("ApiService", [
         accessToken: _authentication.accessToken,
       };
       if (_authentication) {
-        var apiUrl = `/rest/mix-account/renew-token`;
+        var apiUrl = `/rest/mix-account/user/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -50,7 +50,7 @@ appShared.factory("ApiService", [
         return JSON.parse(
           cryptoService.decryptAES(
             encryptedAuthData.message,
-            encryptedAuthData.aesKey
+            $rootScope.globalSettings.apiEncryptKey
           )
         );
       }
@@ -62,7 +62,7 @@ appShared.factory("ApiService", [
     };
 
     var _getAllSettings = async function (culture) {
-      $rootScope.globalSettings = localStorageService.get("appSettings");
+      $rootScope.globalSettings = localStorageService.get("globalSettings");
       $rootScope.translator = localStorageService.get("translator");
       $rootScope.mixConfigurations =
         localStorageService.get("mixConfigurations");
@@ -71,7 +71,7 @@ appShared.factory("ApiService", [
         if (culture) {
           url += "/" + culture;
         }
-        url += "/get-shared-settings";
+        url += "/get-all-settings";
         var req = {
           method: "GET",
           url: url,
@@ -80,7 +80,7 @@ appShared.factory("ApiService", [
           if (response.success) {
             response.data.globalSettings.lastUpdateConfiguration = new Date();
             localStorageService.set(
-              "appSettings",
+              "globalSettings",
               response.data.globalSettings
             );
             localStorageService.set("translator", response.data.translator);
@@ -88,9 +88,28 @@ appShared.factory("ApiService", [
               "mixConfigurations",
               response.data.mixConfigurations
             );
-            $rootScope.globalSettings = response.data.appSettings;
+            $rootScope.globalSettings = response.data.globalSettings;
             $rootScope.mixConfigurations = response.data.mixConfigurations;
             $rootScope.translator = response.data.translator;
+          } else {
+            $rootScope.showErrors(response.errors);
+          }
+        });
+      }
+    };
+    var _getGlobalSettings = async function () {
+      $rootScope.globalSettings = localStorageService.get("globalSettings");
+      if (!$rootScope.globalSettings) {
+        var url = "/rest/shared/get-global-settings";
+        var req = {
+          method: "GET",
+          url: url,
+        };
+        return _sendRequest(req, true).then(function (response) {
+          if (response.success) {
+            response.data.lastUpdateConfiguration = new Date();
+            localStorageService.set("globalSettings", response.data);
+            $rootScope.globalSettings = response.data.globalSettings;
           } else {
             $rootScope.showErrors(response.errors);
           }
@@ -213,6 +232,7 @@ appShared.factory("ApiService", [
 
     factory.initAllSettings = _initAllSettings;
     factory.getAllSettings = _getAllSettings;
+    factory.getGlobalSettings = _getGlobalSettings;
     factory.getTranslator = _getTranslator;
     factory.refreshToken = _refreshToken;
     factory.fillAuthData = _fillAuthData;

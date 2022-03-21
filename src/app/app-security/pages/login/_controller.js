@@ -17,7 +17,7 @@ app.controller("LoginController", [
     authService
   ) {
     $scope.canLogin = true;
-    if (authService.authentication && authService.isInRole("SuperAdmin")) {
+    if (authService.authentication && authService.isInRole("Owner")) {
       authService.referredUrl = $location.path();
       $location.path("/portal");
     }
@@ -31,10 +31,13 @@ app.controller("LoginController", [
     };
 
     $scope.message = "";
-    $scope.$on("$viewContentLoaded", async function () {
+    $scope.init = async function () {
+      $scope.returnUrl = document.referrer || "/";
       $rootScope.isBusy = false;
+      $scope.providers = await authService.getExternalLoginProviders();
       await apiService.getAllSettings();
-    });
+      $scope.$apply();
+    };
     $scope.login = async function () {
       $rootScope.isBusy = true;
       var result = await authService.login($scope.loginData);
@@ -86,7 +89,7 @@ app.controller("LoginController", [
     $scope.hasPermission = function (url) {
       return (
         url == "/" ||
-        authService.isInRole("SuperAdmin") ||
+        authService.isInRole("Owner") ||
         (authService.authentication.permissions &&
           authService.authentication.permissions.contains(url))
       );

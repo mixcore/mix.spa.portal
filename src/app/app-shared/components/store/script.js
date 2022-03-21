@@ -8,7 +8,7 @@ sharedComponents.component("mixStore", {
     "$rootScope",
     "ngAppSettings",
     "CryptoService",
-    "ThemeService",
+    "TenancyService",
     "StoreService",
     function (
       $scope,
@@ -24,13 +24,13 @@ sharedComponents.component("mixStore", {
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.init = async function () {
-        // ctrl.startConnection("portalhub", () => {
-        //   ctrl.joinRoom("Theme");
-        // });
-
+        ctrl.startConnection("mixThemeHub", () => {
+          ctrl.joinRoom("Theme");
+        });
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
         ctrl.themeRequest.postType = "theme";
+        ctrl.themeRequest.query.mixcore_versions = "2.0.1";
         ctrl.cateRequest = angular.copy(ngAppSettings.request);
         ctrl.cateRequest.mixDatabaseName = "sysCategory";
         ctrl.cateRequest.pageSize = null;

@@ -67,20 +67,20 @@
                 <a href="/portal/my-profile" class="dropdown-item">Profile & Account</a>
                 <a href="#" ng-click="$ctrl.generateSitemap()" class="dropdown-item">Sitemap</a>
                 <a href="#" ng-click="$ctrl.addPermission()" class="dropdown-item"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">Create Permission</a>
+                    ng-if="$ctrl.isInRole('Owner')">Create Permission</a>
                 <a href="#" ng-click="$ctrl.addBookmark()" class="dropdown-item"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">Bookmark</a>
+                    ng-if="$ctrl.isInRole('Owner')">Bookmark</a>
                 <a data-bs-toggle="modal" data-bs-target="#modal-template" class="dropdown-item"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">Templates</a>
+                    ng-if="$ctrl.isInRole('Owner')">Templates</a>
                 <a href="https://github.com/mixcore/mix.core/discussions" class="dropdown-item" target="_blank"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">Feedback</a>
+                    ng-if="$ctrl.isInRole('Owner')">Feedback</a>
                 <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#dev-helper-modal"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">User Guide</a>
+                    ng-if="$ctrl.isInRole('Owner')">User Guide</a>
                 <div class="dropdown-divider"></div>
                 <a href="/portal/app-settings/details" class="dropdown-item"
-                    ng-if="$ctrl.isInRole('SuperAdmin')">Settings</a>
-                <a href="#" class="dropdown-item" ng-if="$ctrl.isInRole('SuperAdmin')" data-bs-toggle="modal"
-                    data-bs-target="#dlg-portal-theme-settings" ng-if="$ctrl.isInRole('SuperAdmin')">Portal Styling</a>
+                    ng-if="$ctrl.isInRole('Owner')">Settings</a>
+                <a href="#" class="dropdown-item" ng-if="$ctrl.isInRole('Owner')" data-bs-toggle="modal"
+                    data-bs-target="#dlg-portal-theme-settings" ng-if="$ctrl.isInRole('Owner')">Portal Styling</a>
                 <a href="#" ng-click="$ctrl.logOut()" class="dropdown-item text-danger"><i
                         class="mi mi-PowerButton"></i> Logout</a>
             </div>

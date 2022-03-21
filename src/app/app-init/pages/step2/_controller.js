@@ -13,7 +13,9 @@ app.controller("Step2Controller", [
       confirmPassword: "",
       isAgreed: false,
     };
-    $scope.init = async function () {};
+    $scope.init = async function () {
+      await apiService.getGlobalSettings();
+    };
     $scope.register = async function () {
       if (!$scope.user.isAgreed) {
         var ele = document.getElementById("notTNCYetChecked");

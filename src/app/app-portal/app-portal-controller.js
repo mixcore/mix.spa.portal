@@ -53,7 +53,7 @@ app.controller("AppPortalController", [
               $scope.isAuth = authService.authentication != null;
               $rootScope.isAuth = authService.authentication != null;
               if (authService.authentication) {
-                $scope.isAdmin = authService.isInRole("SuperAdmin");
+                $scope.isAdmin = authService.isInRole("Owner");
               } else {
                 window.top.location.href = "/security/login";
               }

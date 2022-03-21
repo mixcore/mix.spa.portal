@@ -2,14 +2,15 @@
 app.controller("Step4Controller", [
   "$scope",
   "$rootScope",
-  "CommonService",
+  "ApiService",
   "AuthService",
   "Step4Services",
-  function ($scope, $rootScope, commonService, authService, service) {
+  function ($scope, $rootScope, apiService, authService, service) {
     $scope.importThemeDto = null;
     $scope.canContinue = true;
     $scope.data = [];
     $scope.init = async function () {
+      await apiService.getGlobalSettings();
       var getData = await service.loadTheme();
       if (getData.success) {
         $scope.importThemeDto = getData.data;

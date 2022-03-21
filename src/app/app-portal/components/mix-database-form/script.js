@@ -102,12 +102,16 @@ modules.component("mixDatabaseForm", {
           ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseName;
           ctrl.defaultData.parentId = ctrl.parentId;
           ctrl.defaultData.parentType = ctrl.parentType;
-          let otherColumns = ctrl.defaultData.columns.filter(
-            (m) =>
-              ctrl.columns.filter((n) => n.systemName == m.systemName).length ==
-              0
-          );
-          ctrl.columns = ctrl.columns.concat(otherColumns);
+          if (ctrl.columns) {
+            let otherColumns = ctrl.defaultData.columns.filter(
+              (m) =>
+                ctrl.columns.filter((n) => n.systemName == m.systemName)
+                  .length == 0
+            );
+            ctrl.columns = ctrl.columns.concat(otherColumns);
+          } else {
+            ctrl.columns = ctrl.defaultData.columns;
+          }
         }
 
         if (!ctrl.mixDatabaseData) {

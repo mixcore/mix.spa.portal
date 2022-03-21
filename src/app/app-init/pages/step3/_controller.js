@@ -33,6 +33,7 @@ app.controller("Step3Controller", [
     };
     $scope.themeType = "materialkit";
     $scope.init = async function () {
+      await apiService.getGlobalSettings();
       $scope.form = document.getElementById("frm-theme");
       var getThemes = await storeService.getThemes($scope.request);
       if (getThemes.success) {
@@ -75,7 +76,7 @@ app.controller("Step3Controller", [
     };
     $scope.install = function (resp) {
       if (resp.success) {
-        $scope.activeTheme(resp.data);
+        window.top.location = "/init/step4";
       } else {
         $rootScope.showErrors(["Cannot install theme"]);
       }
@@ -83,27 +84,6 @@ app.controller("Step3Controller", [
     $scope.selectPane = function (pane) {
       $scope.canContinue = pane.header !== "Mixcore Store";
       $scope.mode = pane.header;
-    };
-    $scope.activeTheme = async function (data) {
-      $rootScope.isBusy = true;
-      var url = "/init/init-cms/step-3/active";
-      $rootScope.isBusy = true;
-      // Looping over all files and add it to FormData object
-      var response = await service.activeTheme(data);
-      if (response.success) {
-        $scope.viewmodel = response.data;
-        commonService.initAllSettings().then(function () {
-          $rootScope.isBusy = false;
-          setTimeout(() => {
-            $rootScope.goToSiteUrl("/portal");
-          }, 500);
-          $scope.$apply();
-        });
-      } else {
-        $rootScope.showErrors(response.errors);
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
     };
   },
 ]);

@@ -5,7 +5,7 @@ app.factory("RoleService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("role", true);
+    serviceFactory.initService("/rest/mix-account", "role", true);
 
     var _getPermissions = async function () {
       var req = {

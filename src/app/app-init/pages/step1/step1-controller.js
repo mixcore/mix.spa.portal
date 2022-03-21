@@ -2,9 +2,18 @@
 app.controller("Step1Controller", [
   "$scope",
   "$rootScope",
+  "localStorageService",
   "CommonService",
+  "ApiService",
   "Step1Services",
-  function ($scope, $rootScope, commonService, step1Services) {
+  function (
+    $scope,
+    $rootScope,
+    localStorageService,
+    commonService,
+    apiService,
+    step1Services
+  ) {
     var rand = Math.floor(Math.random() * 10000) + 1;
     $scope.settings = {
       providers: [
@@ -16,7 +25,7 @@ app.controller("Step1Controller", [
         },
         {
           text: "Microsoft SQL Server Database",
-          value: "MSSQL",
+          value: "SQLSERVER",
           port: null,
           img: "/mix-app/assets/img/mssql.jpg",
         },
@@ -36,6 +45,9 @@ app.controller("Step1Controller", [
       cultures: [],
     };
     $scope.loadSettings = async function () {
+      localStorageService.remove("globalSettings");
+      localStorageService.remove("translator");
+      localStorageService.remove("mixConfigurations");
       var getCultures = await commonService.loadJsonData("cultures");
       if (getCultures) {
         $scope.settings.cultures = getCultures.data.items;
@@ -60,7 +72,7 @@ app.controller("Step1Controller", [
     $scope.canConnect = function () {
       return (
         ($scope.initCmsModel.databaseServer &&
-          $scope.initCmsModel.mixDatabaseName &&
+          $scope.initCmsModel.databaseName &&
           $scope.initCmsModel.databaseUser &&
           $scope.initCmsModel.culture) ||
         ($scope.initCmsModel.databaseProvider == "SQLITE" &&

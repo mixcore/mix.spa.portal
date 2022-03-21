@@ -23,6 +23,29 @@ appShared.factory("BaseRestService", [
       }
     };
 
+    var _initService = function (
+      path,
+      modelName,
+      isGlobal,
+      lang,
+      serviceBase,
+      apiVersion
+    ) {
+      this.modelName = modelName;
+      this.apiVersion = apiVersion || appSettings.apiVersion;
+      this.serviceBase = serviceBase || appSettings.serviceBase;
+      if (!isGlobal && isGlobal != "true") {
+        if ($rootScope.mixConfigurations || lang) {
+          this.lang = lang || $rootScope.globalSettings.lang;
+          this.prefixUrl = `${path}/${modelName}`;
+        } else {
+          this.prefixUrl = `${path}/${modelName}`;
+        }
+      } else {
+        this.prefixUrl = `${path}/${modelName}`;
+      }
+    };
+
     var _duplicate = async function (params = [], queries) {
       var url = this.prefixUrl + "/duplicate";
       for (let i = 0; i < params.length; i++) {
@@ -222,6 +245,9 @@ appShared.factory("BaseRestService", [
       var result = "";
       if (req) {
         for (var key in req) {
+          if (angular.isObject(req.query)) {
+            req.query = JSON.stringify(req.query);
+          }
           if (req.hasOwnProperty(key) && req[key]) {
             if (result != "") {
               result += "&";
@@ -261,6 +287,7 @@ appShared.factory("BaseRestService", [
     serviceFactory.lang = "";
     serviceFactory.prefixUrl = "";
     serviceFactory.init = _init;
+    serviceFactory.initService = _initService;
     serviceFactory.count = _count;
     serviceFactory.duplicate = _duplicate;
     serviceFactory.applyList = _applyList;

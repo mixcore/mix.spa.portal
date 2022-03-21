@@ -18,7 +18,7 @@ appShared.constant("ngAppSettings", {
     toDate: null,
     keyword: "",
     key: "",
-    query: "{}",
+    query: {},
   },
   restRequest: {
     pageSize: "20",
@@ -29,7 +29,7 @@ appShared.constant("ngAppSettings", {
     fromDate: null,
     toDate: null,
     keyword: "",
-    query: "{}",
+    query: {},
   },
   privacies: ["VND", "USD"],
   pageSizes: ["", "5", "10", "15", "20"],

@@ -33,8 +33,9 @@ function BaseHub(scope) {
   scope.startConnection = async function (hubName, callback) {
     scope.connection = new signalR.HubConnectionBuilder()
       .withUrl(scope.host + hubName)
+      //   .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
       .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
+      //   .configureLogging(signalR.LogLevel.Trace)
       .build();
     // Create a function that the hub can call to broadcast messages.
 

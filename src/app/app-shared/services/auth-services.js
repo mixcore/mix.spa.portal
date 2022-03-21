@@ -23,14 +23,14 @@ appShared.factory("AuthService", [
       _logOut();
 
       return $http
-        .post("/rest/mix-account/register", registration)
+        .post("/rest/mix-account/user/register", registration)
         .then(function (response) {
           return response;
         });
     };
 
     var _forgotPassword = async function (data) {
-      var apiUrl = "/rest/mix-account/forgot-password";
+      var apiUrl = "/rest/mix-account/user/forgot-password";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -41,11 +41,21 @@ appShared.factory("AuthService", [
     };
 
     var _resetPassword = async function (data) {
-      var apiUrl = "/rest/mix-account/reset-password";
+      var apiUrl = "/rest/mix-account/user/reset-password";
       var req = {
         method: "POST",
         url: apiUrl,
         data: JSON.stringify(data),
+      };
+      var resp = await apiService.sendRequest(req);
+      return resp;
+    };
+
+    var _getExternalLoginProviders = async function (data) {
+      var apiUrl = "/rest/mix-account/user/get-external-login-providers";
+      var req = {
+        method: "GET",
+        url: apiUrl,
       };
       var resp = await apiService.sendRequest(req);
       return resp;
@@ -60,7 +70,7 @@ appShared.factory("AuthService", [
         ReturnUrl: "",
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/rest/mix-account/login";
+      var apiUrl = "/rest/mix-account/user/login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -107,7 +117,7 @@ appShared.factory("AuthService", [
         externalAccessToken: loginData.accessToken,
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/rest/mix-account/external-login";
+      var apiUrl = "/rest/mix-account/user/external-login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -155,7 +165,7 @@ appShared.factory("AuthService", [
         accessToken: accessToken,
       };
       if (id) {
-        var apiUrl = `/rest/mix-account/renew-token`;
+        var apiUrl = `/rest/mix-account/user/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -193,6 +203,7 @@ appShared.factory("AuthService", [
     authServiceFactory.logOut = _logOut;
     authServiceFactory.fillAuthData = _fillAuthData;
     authServiceFactory.refreshToken = _refreshToken;
+    authServiceFactory.getExternalLoginProviders = _getExternalLoginProviders;
     return authServiceFactory;
   },
 ]);
