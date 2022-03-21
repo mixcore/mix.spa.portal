@@ -241,3 +241,4 @@ ModelManifest.xml
 .fake/
 
 dist/
+/src/app/app-portal/custom
