@@ -336,6 +336,7 @@ paths.appPortal = {
     paths.webapp + "app-portal/app-portal-controller.js",
     paths.webapp + "app-portal/app.route.js",
     paths.webapp + "app-portal/services/**/*.js",
+    paths.webapp + "app-portal/custom/**/*.js",
     paths.webapp + "app-portal/pages/**/*.js",
     paths.webapp + "app-portal/components/**/*.js",
   ],

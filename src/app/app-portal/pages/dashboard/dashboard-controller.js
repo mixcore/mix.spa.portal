@@ -6,13 +6,15 @@ app.controller("DashboardController", [
   "$timeout",
   "$location",
   "DashboardServices",
+  "KiotvietService",
   function (
     $scope,
     $rootScope,
     ngAppSettings,
     $timeout,
     $location,
-    dashboardServices
+    dashboardServices,
+    kiotvietService
   ) {
     $scope.pageClass = "page-dashboard";
     $(".side-nav li").removeClass("active");
@@ -28,7 +30,9 @@ app.controller("DashboardController", [
       $rootScope.isBusy = false;
     });
     $scope.getDashboardInfo = async function () {
-      $rootScope.isBusy = true;
+      await kiotvietService.getkiotvietSettings();
+      await kiotvietService.getToken();
+      $rootScope.isBusy = false;
       //   var response = await dashboardServices.getDashboardInfo();
       //   if (response.success) {
       //     // $('#mainSection').removeClass('card');
