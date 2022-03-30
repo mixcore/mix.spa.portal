@@ -6,7 +6,7 @@ app.controller("DashboardController", [
   "$timeout",
   "$location",
   "DashboardServices",
-  "KiotvietService",
+  "BaseKiotvietService",
   function (
     $scope,
     $rootScope,
@@ -30,8 +30,8 @@ app.controller("DashboardController", [
       $rootScope.isBusy = false;
     });
     $scope.getDashboardInfo = async function () {
-      await kiotvietService.getkiotvietSettings();
-      await kiotvietService.getToken();
+      kiotvietService.init("branches");
+      await kiotvietService.getList();
       $rootScope.isBusy = false;
       //   var response = await dashboardServices.getDashboardInfo();
       //   if (response.success) {

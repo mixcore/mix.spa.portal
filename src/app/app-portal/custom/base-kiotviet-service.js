@@ -1,43 +1,20 @@
 "use strict";
-app.factory("KiotvietService", [
+app.factory("BaseKiotvietService", [
   "$http",
   "$q",
-  "$rootScope",
-  "localStorageService",
   "CryptoService",
-  "AppSettings",
-  function (
-    $http,
-    $q,
-    $rootScope,
-    localStorageService,
-    cryptoService,
-    appSettings
-  ) {
+  function ($http, $q, cryptoService) {
     var factory = {};
-    var _endpoint = "/api/kiotviet";
+    var _endpoint = null;
     var _token = null;
-    var _getServerToken = async function () {
-      this.token = localStorageService.get("kiotviet_token");
-      if (this.token == null || this.token.expired_at < new Date()) {
-        var url = `${this.endpoint}/token`;
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        let result = await _sendRequest(req, true);
-        if (result.success) {
-          this.token = result.data;
-          let now = new Date();
-          now.setSeconds(now.getSeconds() + 10);
-          this.token.expired_at = now;
-          localStorageService.set("kiotviet_token", this.token);
-        }
-      }
+    var _modelName = null;
+    var _init = function (modelName) {
+      this._modelName = modelName;
+      this._endpoint = `/api/kiotviet/${modelName}`;
     };
 
-    var _getProducts = async function (queries = null) {
-      var url = `${this.endpoint}/products`;
+    var _getList = async function (queries = null) {
+      var url = this._endpoint;
       if (queries) {
         url += "?";
         url = url.concat(_parseQuery(queries));
@@ -50,49 +27,13 @@ app.factory("KiotvietService", [
       return await _sendRequest(req, this.token);
     };
 
-    var _getCategories = async function (queries = null) {
-      var url = `${this.endpoint}/categories`;
-      if (queries) {
-        url += "?";
-        url = url.concat(_parseQuery(queries));
-      }
-
+    var _getSingle = async function (id) {
+      var url = `${this._endpoint}/${id}`;
       var req = {
         method: "GET",
         url: url,
       };
       return _sendRequest(req, this.token);
-    };
-
-    var _getkiotvietSettings = async function () {
-      let settings = localStorageService.get("kiotvietSettings");
-      if (settings) {
-        $rootScope.kiotvietSettings = JSON.parse(
-          cryptoService.decryptAES(
-            settings,
-            $rootScope.globalSettings.apiEncryptKey
-          )
-        );
-      } else {
-        var url = "/api/kiotviet/get-settings";
-        var req = {
-          method: "GET",
-          url: url,
-        };
-        return _sendRequest(req, true).then(function (response) {
-          if (response.success) {
-            localStorageService.set("kiotvietSettings", response.data);
-            $rootScope.kiotvietSettings = JSON.parse(
-              cryptoService.decryptAES(
-                response.data,
-                $rootScope.globalSettings.apiEncryptKey
-              )
-            );
-          } else {
-            $rootScope.showErrors(response.errors);
-          }
-        });
-      }
     };
 
     var _parseQuery = function (req) {
@@ -169,13 +110,9 @@ app.factory("KiotvietService", [
       );
     };
 
-    factory.getServerToken = _getServerToken;
-    factory.getkiotvietSettings = _getkiotvietSettings;
-    factory.getProducts = _getProducts;
-    factory.getCategories = _getCategories;
-    factory.token = _token;
-    factory.sendRequest = _sendRequest;
-    factory.endpoint = _endpoint;
+    factory.init = _init;
+    factory.getList = _getList;
+    factory.getSingle = _getSingle;
     return factory;
   },
 ]);
