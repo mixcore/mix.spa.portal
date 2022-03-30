@@ -42,7 +42,7 @@ app.controller("PostController", [
     };
     $scope.cateRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
-    $scope.postTypeRequest.mixDatabaseName = "post_type";
+    $scope.postTypeRequest.mixDatabaseName = "postType";
     $scope.postTypeRequest.orderBy = "Priority";
     $scope.postTypeRequest.direction = "Asc";
 
@@ -77,7 +77,7 @@ app.controller("PostController", [
     $scope.loadPostTypes = async function () {
       let getTypes = await dataService.getList($scope.postTypeRequest);
       if (getTypes.success) {
-        $scope.postTypes = getTypes.data.items.map((m) => m.obj);
+        $scope.postTypes = getTypes.data.items.map((m) => m.data);
         $scope.postTypes.splice(
           0,
           0,
@@ -95,7 +95,7 @@ app.controller("PostController", [
         if ($scope.request.postType) {
           $scope.postType = $rootScope.findObjectByKey(
             $scope.postTypes,
-            "databaseName",
+            "mixDatabaseName",
             $scope.request.postType
           );
         }
@@ -213,9 +213,10 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
+        debugger;
         $scope.additionalData.isClone = $scope.viewmodel.isClone;
         $scope.additionalData.cultures = $scope.viewmodel.cultures;
-        $scope.additionalData.parentId = $scope.viewmodel.id;
+        $scope.additionalData.intParentId = $scope.viewmodel.id;
         $scope.additionalData.parentType = "Post";
         let result = await dataService.save($scope.additionalData);
         if (!result.success) {
@@ -236,22 +237,21 @@ app.controller("PostController", [
       }
     };
     $scope.getSingleSuccessCallback = async function () {
-      $scope.defaultThumbnailImgWidth =
-        ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
-      $scope.defaultThumbnailImgHeight =
-        ngAppSettings.mixConfigurations.DefaultThumbnailImgHeight;
+      //   $scope.defaultThumbnailImgWidth =
+      //     ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
+      //   $scope.defaultThumbnailImgHeight =
+      //     ngAppSettings.mixConfigurations.DefaultThumbnailImgHeight;
 
-      $scope.defaultFeatureImgWidth =
-        ngAppSettings.mixConfigurations.DefaultFeatureImgWidth;
-      $scope.defaultFeatureImgHeight =
-        ngAppSettings.mixConfigurations.DefaultFeatureImgHeight;
-
-      $scope.request.postType = $scope.viewmodel.type;
+      //   $scope.defaultFeatureImgWidth =
+      //     ngAppSettings.mixConfigurations.DefaultFeatureImgWidth;
+      //   $scope.defaultFeatureImgHeight =
+      //     ngAppSettings.mixConfigurations.DefaultFeatureImgHeight;
+      $scope.request.postType = $scope.viewmodel.mixDatabaseName;
       var moduleIds = $routeParams.moduleIds;
       var pageIds = $routeParams.page_ids;
       $scope.postType = $rootScope.findObjectByKey(
         $scope.postTypes,
-        "databaseName",
+        "mixDatabaseName",
         $scope.request.postType
       );
       await $scope.loadCategories();
@@ -305,7 +305,7 @@ app.controller("PostController", [
       const obj = {
         parentType: "Post",
         parentId: $scope.viewmodel.id,
-        databaseName: $scope.viewmodel.type || "",
+        databaseName: $scope.viewmodel.mixDatabaseName || "",
       };
       const getData = await dataService.getAdditionalData(obj);
       if (getData.success) {
