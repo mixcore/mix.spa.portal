@@ -68,7 +68,7 @@
             <textarea class="form-control {{$ctrl.inputClass}}" rows="5"
                 ng-model="$ctrl.model.data[$ctrl.column.systemName]"
                 placeholder="{{$ctrl.translate($ctrl.column.displayName)}}"></textarea>
-        </div>
+        </div>        
         <div class="text-muted" ng-switch-when="emailaddress">
             <!--Email-->
             <input class="form-control {{$ctrl.inputClass}}" type="email"
@@ -149,6 +149,12 @@
             <qr-code model="$ctrl.model.data[$ctrl.column.systemName]"></qr-code>
         </div>
         <div class="text-muted" ng-switch-when="json">
+            <!--Text-->
+            <monaco-editor content="$ctrl.model.data[$ctrl.column.systemName] | json"
+                update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
+            </monaco-editor>
+        </div>
+        <div class="text-muted" ng-switch-when="array">
             <!--Text-->
             <monaco-editor content="$ctrl.model.data[$ctrl.column.systemName] | json"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
