@@ -59,8 +59,7 @@ app.factory("UserServices", [
     };
 
     var _getMyProfile = async function () {
-      var apiUrl = "/rest/mix-account/";
-      var url = apiUrl + "my-profile";
+      var url = "/rest/mix-account/user/my-profile";
       var req = {
         method: "GET",
         url: url,

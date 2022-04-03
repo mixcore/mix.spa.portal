@@ -1,3 +1,7 @@
+<a ng-click="readMessages()" class="btn-link nav-link text-primary">
+  <i class="mi mi-Mail" style="font-size: 25px"></i>
+  <span class="new-msg-count" ng-if="newMsgCount" ng-bind="newMsgCount"></span>
+</a>
 <div
   class="modal modal-default fade show"
   id="modal-hub-messages"
@@ -19,34 +23,21 @@
         <table class="table table-sm table-hover sortable" cellspacing="0">
           <thead class="thead-light">
             <tr>
-              <th scope="col" width="10%">User</th>
-              <th scope="col">Action</th>
-              <th scope="col" width="15%">Request Url</th>
               <th scope="col" width="10%">Status</th>
-
-              <th scope="col">Message</th>
+              <th width="50%" scope="col">Message</th>
               <th scope="col">Created Date</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="msg in responses">
+            <tr ng-repeat="msg in messages">
               <td>
-                <span ng-bind="msg.user"></span>
+                <span ng-bind="msg.type"></span>
               </td>
               <td>
-                <span ng-bind="msg.action"></span>
+                <span ng-bind="msg.message" class="text-{{msg.style}}"></span>
               </td>
               <td>
-                <span ng-bind="msg.request_url"></span>
-              </td>
-              <td>
-                <span ng-bind="msg.status"></span>
-              </td>
-              <td>
-                <span ng-bind="msg.message"></span>
-              </td>
-              <td>
-                <span ng-bind="msg.created_at | utcToLocal"></span>
+                <span ng-bind="msg.createdDateTime | utcToLocal"></span>
               </td>
             </tr>
           </tbody>

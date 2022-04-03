@@ -45,6 +45,10 @@ appShared.constant("ngAppSettings", {
   ],
   orders: [
     {
+      value: "LastModified",
+      title: "Last Modified",
+    },
+    {
       value: "CreatedDateTime",
       title: "Created Date",
     },
