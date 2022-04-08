@@ -15,6 +15,16 @@ app.factory("SchedulerService", [
       };
       return await this.getRestApiResult(req);
     };
+    var _reschedule = async function (schedule) {
+      var url = `${this.prefixUrl}/reschedule`;
+      var req = {
+        serviceBase: this.serviceBase,
+        method: "POST",
+        url: url,
+        data: JSON.stringify(schedule),
+      };
+      return await this.getRestApiResult(req);
+    };
     var _pauseTrigger = async function (name) {
       var url = `${this.prefixUrl}/trigger/pause/${name}`;
       var req = {
@@ -104,6 +114,7 @@ app.factory("SchedulerService", [
     serviceFactory.parseQuery = _parseQuery;
     serviceFactory.getRestApiResult = _getRestApiResult;
     serviceFactory.createSchedule = _createSchedule;
+    serviceFactory.reschedule = _reschedule;
     serviceFactory.getJobs = _getJobs;
     serviceFactory.getTrigger = _getTrigger;
     serviceFactory.getTriggers = _getTriggers;

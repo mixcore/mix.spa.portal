@@ -7,7 +7,15 @@ app.controller("SchedulerController", [
   "SchedulerService",
   function ($scope, $rootScope, $routeParams, $location, service) {
     $scope.jobs = [];
-    $scope.intervalTypes = ["Second", "Minute", "Hour", "Day", "Month", "Year"];
+    $scope.intervalTypes = [
+      "Second",
+      "Minute",
+      "Hour",
+      "Day",
+      "Week",
+      "Month",
+      "Year",
+    ];
     $scope.schedule = {
       jobData: {},
       cronExpression: null,
@@ -18,7 +26,7 @@ app.controller("SchedulerController", [
       startAt: null,
       isStartNow: false,
       interval: null,
-      intervalType: null,
+      intervalType: "Second",
       repeatCount: null,
     };
     $scope.init = function () {
@@ -34,9 +42,12 @@ app.controller("SchedulerController", [
     $scope.getTrigger = async function () {
       if ($routeParams.name) {
         $rootScope.isBusy = true;
+        $scope.isReschedule = true;
         var resp = await service.getTrigger($routeParams.name);
         if (resp && resp.success) {
           $scope.trigger = resp.data;
+          //   $scope.schedule.trigger = $scope.trigger;
+          $scope.schedule.name = $scope.trigger.name;
           $scope.schedule.jobName = $scope.trigger.jobName;
           $scope.schedule.groupName = $scope.trigger.group;
           $scope.schedule.interval = $scope.trigger.repeatInterval;
@@ -55,7 +66,9 @@ app.controller("SchedulerController", [
 
     $scope.createSchedule = async function () {
       $rootScope.isBusy = true;
-      var resp = await service.createSchedule($scope.schedule);
+      var resp = $scope.isReschedule
+        ? await service.reschedule($scope.schedule)
+        : await service.createSchedule($scope.schedule);
       if (resp && resp.success) {
         $rootScope.isBusy = true;
         $location.url("/portal/scheduler");

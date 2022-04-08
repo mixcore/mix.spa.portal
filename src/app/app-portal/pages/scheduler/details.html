@@ -5,7 +5,7 @@
         <div class="row align-items-center">
           <div class="col">
             <div class="page-pretitle">Creating</div>
-            <h3 class="page-title">New Setting</h3>
+            <h3 class="page-title">New Schedule</h3>
           </div>
         </div>
       </div>
@@ -57,7 +57,11 @@
                 <div class="col">
                   <div class="mb-3">
                     <label class="form-label">Job</label>
-                    <select class="form-select" ng-model="schedule.jobName">
+                    <select
+                      ng-disabled="isReschedule"
+                      class="form-select"
+                      ng-model="schedule.jobName"
+                    >
                       <option ng-repeat="item in jobs" ng-value="item">
                         {{item}}
                       </option>
@@ -68,6 +72,7 @@
                   <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input
+                      ng-readonly="isReschedule"
                       type="text"
                       class="form-control"
                       ng-model="schedule.name"
@@ -147,20 +152,32 @@
               <div class="row">
                 <div class="col">
                   <div class="mb-3">
-                    <label class="form-label">Start Now</label>
-                    <checkbox-switch
-                      is-selected="schedule.isStartNow"
-                    ></checkbox-switch>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="mb-3">
                     <label class="form-label">Start At</label>
                     <input
                       type="datetime-local"
                       class="form-control"
                       ng-model="schedule.startAt"
                     />
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">End At</label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      ng-model="schedule.endAt"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row hidden">
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">Start Now</label>
+                    <checkbox-switch
+                      is-selected="schedule.isStartNow"
+                    ></checkbox-switch>
                   </div>
                 </div>
               </div>
@@ -178,6 +195,7 @@
               </div>
 
               <pre>
+{{trigger|json}}
 {{schedule|json}}
 </pre
               >

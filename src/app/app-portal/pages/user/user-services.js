@@ -99,8 +99,8 @@ app.factory("UserServices", [
 
     var _removeUser = function (userId) {
       var req = {
-        method: "GET",
-        url: apiUrl + "remove-user/" + userId,
+        method: "DELETE",
+        url: apiUrl + "/remove-user/" + userId,
       };
 
       return apiService.sendRequest(req);
