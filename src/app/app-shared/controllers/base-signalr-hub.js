@@ -1,7 +1,7 @@
 function BaseHub(scope) {
   scope.isLog = true;
   scope.connection = null;
-  scope.host = "/";
+  scope.host = "/hub/";
   scope.responses = [];
   scope.requests = [];
   scope.rooms = [];

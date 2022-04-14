@@ -45,14 +45,16 @@ appShared.factory("ApiService", [
 
     var _fillAuthData = async function () {
       var encryptedAuthData = localStorageService.get("authorizationData");
-
       if (encryptedAuthData) {
-        return JSON.parse(
-          cryptoService.decryptAES(
-            encryptedAuthData.message,
-            $rootScope.globalSettings.apiEncryptKey
-          )
-        );
+        if ($rootScope.globalSettings.isEncryptApi) {
+          return JSON.parse(
+            cryptoService.decryptAES(
+              encryptedAuthData.message,
+              $rootScope.globalSettings.apiEncryptKey
+            )
+          );
+        }
+        return encryptedAuthData;
       }
       return {};
     };
