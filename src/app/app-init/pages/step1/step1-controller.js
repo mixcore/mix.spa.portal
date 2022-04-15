@@ -45,6 +45,8 @@ app.controller("Step1Controller", [
       cultures: [],
     };
     $scope.loadSettings = async function () {
+      localStorageService.remove("requests");
+      localStorageService.remove("authorizationData");
       localStorageService.remove("globalSettings");
       localStorageService.remove("translator");
       localStorageService.remove("mixConfigurations");
