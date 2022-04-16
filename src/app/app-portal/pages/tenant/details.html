@@ -109,55 +109,14 @@
           </div>
         </nav>
       </aside>
-
-      <!-- ----------------------------------------------------------- -->
-      <div class="content-body py-3 pe-3">
-        <section class="pt-4 pb-3">
-          <!-- <form ng-class="{'submitted': submitted}" ng-submit="save()"> -->
-          <div class="row">
-            <section class="pr-3">
-              <div class="row mb-3">
-                <div class="col">
-                  <label class="form-label">Display Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    ng-model="viewmodel.displayName"
-                    ng-blur="generateName()"
-                  />
-                </div>
-                <div class="col">
-                  <label class="form-label">System Name</label>
-                  <div class="input-group input-group-sm">
-                    <input
-                      type="text"
-                      class="form-control"
-                      ng-model="viewmodel.systemName"
-                    />
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      ng-click="generateName(true)"
-                    >
-                      <span class="fa fa-redo"></span>
-                    </button>
-                  </div>
-                </div>
-                <div class="col">
-                  <label class="form-label">Primary Domain</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    ng-model="viewmodel.primaryDomain"
-                  />
-                </div>
-              </div>
-            </section>
-          </div>
-          <!-- </form> -->
-        </section>
-        <!-- /.content -->
-      </div>
+      <tabs-v>
+        <pane-v header="General" class="card">
+          <tenant-general model="viewmodel"></tenant-general>
+        </pane-v>
+        <pane-v header="Domains" class="card">
+          <tenant-domain model="viewmodel"></tenant-domain>
+        </pane-v>
+      </tabs-v>
     </div>
   </div>
 </div>

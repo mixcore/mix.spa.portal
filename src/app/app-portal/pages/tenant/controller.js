@@ -33,15 +33,5 @@ app.controller("TenantController", [
     ];
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
-    $scope.generateName = function (isForce = false) {
-      if (isForce || !$scope.viewmodel.systemName) {
-        $scope.viewmodel.systemName = $rootScope.generateKeyword(
-          $scope.viewmodel.displayName,
-          "_",
-          true,
-          true
-        );
-      }
-    };
   },
 ]);
