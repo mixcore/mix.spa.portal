@@ -11,6 +11,9 @@
     function ($rootScope, $scope) {
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
+      ctrl.$onInit = function () {
+        ctrl.backUrl = `/portal/page/details`;
+      };
       ctrl.generateSeo = function () {
         if ($scope.viewmodel) {
           if (ctrl.model.seoName === null || ctrl.model.seoName === "") {

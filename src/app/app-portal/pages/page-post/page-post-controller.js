@@ -32,10 +32,10 @@ app.controller("PagePostController", [
     $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.init = function () {
       $scope.pageId = $routeParams.id;
-      $scope.type = $routeParams.type;
+      $scope.type = $routeParams.type || "";
       $scope.template = $routeParams.template || "";
-      $scope.pageIds = $routeParams.page_ids || $routeParams.id;
-      $scope.moduleIds = $routeParams.moduleIds || "";
+      $scope.pageIds = $routeParams.page_ids || $routeParams.id || "";
+      $scope.moduleIds = $routeParams.module_ids || "";
       $scope.canDrag =
         $scope.request.orderBy === "Priority" &&
         $scope.request.direction === "Asc";

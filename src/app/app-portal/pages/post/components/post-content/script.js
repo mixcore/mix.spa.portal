@@ -15,6 +15,9 @@
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.translate = $rootScope.translate;
       ctrl.relatedData = {};
+      ctrl.$onInit = function () {
+        ctrl.backUrl = `/portal/post/details`;
+      };
       ctrl.generateSeo = function () {
         if (ctrl.model) {
           if (ctrl.model.seoName === null || ctrl.model.seoName === "") {

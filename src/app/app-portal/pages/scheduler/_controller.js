@@ -60,7 +60,11 @@ app.controller("SchedulerController", [
           $scope.schedule.groupName = $scope.trigger.group;
           $scope.schedule.interval = $scope.trigger.repeatInterval;
           $scope.schedule.repeatCount = $scope.trigger.repeatCount;
-          $scope.schedule.jobData = JSON.parse($scope.trigger.jobDataMap.data);
+          if ($scope.trigger.jobDataMap.data) {
+            $scope.schedule.jobData = JSON.parse(
+              $scope.trigger.jobDataMap.data
+            );
+          }
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {

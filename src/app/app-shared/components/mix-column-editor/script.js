@@ -4,6 +4,7 @@
   bindings: {
     model: "=",
     column: "=",
+    parentId: "=?",
     isShowTitle: "=?",
     inputClass: "=?",
     createUrl: "=?",
@@ -108,7 +109,7 @@
         );
       };
       ctrl.buildCreateUrl = function () {
-        var backUrl = encodeURIComponent($location.url());
+        var backUrl = ctrl.backUrl ?? encodeURIComponent($location.url());
         ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
       };
       ctrl.initData = async function () {

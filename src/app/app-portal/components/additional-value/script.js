@@ -7,6 +7,7 @@ modules.component("additionalValue", {
     parentType: "=?",
     parentId: "=?",
     mixDatabaseName: "=?",
+    backUrl: "=?",
   },
   controller: [
     "$rootScope",

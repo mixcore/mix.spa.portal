@@ -31,6 +31,7 @@ app.controller("MixDatabaseDataController", [
     $scope.mixConfigurations = $rootScope.globalSettings;
     // $scope.request.orderBy = "Priority";
     // $scope.request.direction = "Asc";
+
     $scope.filterType = "contain";
     $scope.defaultId = "default";
     $scope.importFile = {
@@ -60,6 +61,7 @@ app.controller("MixDatabaseDataController", [
       $scope.parentType = $routeParams.parentType;
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.request.isGroup = $routeParams.isGroup || false;
+      $scope.dataUrl = `/portal/mix-database-data/list?mixDatabaseId=${$scope.mixDatabaseId}&mixDatabaseName=${$scope.mixDatabaseName}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`;
       if ($routeParams.backUrl) {
         $scope.backUrl = decodeURIComponent($routeParams.backUrl);
       }
@@ -87,7 +89,16 @@ app.controller("MixDatabaseDataController", [
       }
     };
     $scope.saveSuccess = function (data) {
-      window.location.href = window.location.href;
+      debugger;
+      if ($scope.backUrl) {
+        $location.url($scope.backUrl);
+      } else {
+        $location.url(
+          `/portal/mix-database-data/details?dataId=${data}&mixDatabaseTitle=${
+            $scope.mixDatabaseTitle
+          }&backUrl=${encodeURIComponent($scope.dataUrl)}`
+        );
+      }
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
