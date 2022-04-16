@@ -2,6 +2,7 @@
 
 function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.request = angular.copy(ngAppSettings.request);
+  $scope.request.query = "";
   $scope.contentStatuses = angular.copy(ngAppSettings.contentStatuses);
   $scope.viewmodel = null;
   $scope.data = null;

@@ -9,6 +9,9 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
+      ctrl.$onInit = function () {
+        ctrl.backUrl = `/portal/module/details`;
+      };
       ctrl.localizeSettings = $rootScope.globalSettings;
     },
   ],

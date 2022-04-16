@@ -6,6 +6,7 @@ modules.component("additionalValue", {
     additionalDataId: "=?",
     parentType: "=?",
     parentId: "=?",
+    backUrl: "=?",
     databaseName: "=?",
   },
   controller: [

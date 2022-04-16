@@ -32,7 +32,7 @@
         ctrl.mediaFile = ctrl.mediaFile || {};
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()
-          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|ico)/g);
         ctrl.maxHeight = ctrl.maxHeight || "200px";
         ctrl.id = Math.floor(Math.random() * 100);
         if (ctrl.uploadOptions) {

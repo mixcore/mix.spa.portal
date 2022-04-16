@@ -32,8 +32,8 @@ app.controller("ModulePostController", [
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.translate = $rootScope.translate;
     $scope.moduleIds = $routeParams.moduleIds || $routeParams.id;
-    $scope.pageIds = $routeParams.page_ids;
-    $scope.type = $routeParams.type;
+    $scope.pageIds = $routeParams.page_ids || "";
+    $scope.type = $routeParams.type || "";
     $scope.template = $routeParams.template || "";
 
     $scope.init = function () {

@@ -52,7 +52,9 @@ modules.component("mixDatabaseForm", {
               ctrl.mixDatabaseTitle ||
               $routeParams.mixDatabaseTitle ||
               ctrl.mixDatabaseName;
-            ctrl.backUrl = `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
+            ctrl.backUrl =
+              ctrl.backUrl ??
+              `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
@@ -83,13 +85,17 @@ modules.component("mixDatabaseForm", {
               case "Post":
               case "Page":
               case "Module":
-                ctrl.backUrl = `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                  ctrl.parentId
-                }`;
+                ctrl.backUrl =
+                  ctrl.backUrl ??
+                  `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                    ctrl.parentId
+                  }`;
                 break;
 
               default:
-                ctrl.backUrl = `/portal/mix-database-data/details?dataId=${ctrl.parentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
+                ctrl.backUrl =
+                  ctrl.backUrl ??
+                  `/portal/mix-database-data/details?dataId=${ctrl.parentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
                 break;
             }
           }

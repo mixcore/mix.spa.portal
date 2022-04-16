@@ -34,7 +34,7 @@
         ctrl.srcUrl = ctrl.srcUrl || image_placeholder;
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()
-          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|ico)/g);
         ctrl.id = Math.floor(Math.random() * 100);
       };
       ctrl.calImageSize = function () {

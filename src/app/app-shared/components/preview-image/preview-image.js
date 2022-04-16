@@ -13,7 +13,7 @@
           ctrl.imgClass = ctrl.imgClass || "rounded";
           ctrl.isImage = ctrl.imgSrc
             .toLowerCase()
-            .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp|jfif)/g);
+            .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp|jfif|ico)/g);
           // check if facebook avatar Url
           ctrl.isImage =
             ctrl.isImage ||

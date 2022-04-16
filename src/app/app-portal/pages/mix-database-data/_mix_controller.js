@@ -87,7 +87,11 @@ app.controller("MixDatabaseDataController", [
       }
     };
     $scope.saveSuccess = function (data) {
-      window.location.href = window.location.href;
+      if ($scope.backUrl) {
+        $location.url($scope.backUrl);
+      } else {
+        window.location.href = window.location.href;
+      }
     };
     $scope.selectData = function () {
       if ($scope.selectedList.data.length) {
