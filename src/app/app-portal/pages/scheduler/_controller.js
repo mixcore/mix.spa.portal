@@ -17,14 +17,22 @@ app.controller("SchedulerController", [
       "Year",
     ];
     $scope.schedule = {
-      jobData: {},
+      jobData: {
+        data: {
+          status: "success",
+          string: "value",
+          obj: {
+            msg: "content",
+          },
+        },
+      },
       cronExpression: null,
       name: null,
       groupName: null,
       jobName: null,
       description: null,
       startAt: null,
-      isStartNow: false,
+      isStartNow: true,
       interval: null,
       intervalType: "Second",
       repeatCount: null,
@@ -45,13 +53,14 @@ app.controller("SchedulerController", [
         $scope.isReschedule = true;
         var resp = await service.getTrigger($routeParams.name);
         if (resp && resp.success) {
-          $scope.trigger = resp.data;
+          $scope.trigger = resp.data.trigger;
           //   $scope.schedule.trigger = $scope.trigger;
           $scope.schedule.name = $scope.trigger.name;
           $scope.schedule.jobName = $scope.trigger.jobName;
           $scope.schedule.groupName = $scope.trigger.group;
           $scope.schedule.interval = $scope.trigger.repeatInterval;
           $scope.schedule.repeatCount = $scope.trigger.repeatCount;
+          $scope.schedule.jobData = JSON.parse($scope.trigger.jobDataMap.data);
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
