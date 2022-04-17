@@ -76,7 +76,7 @@ app.controller("PagePageController", [
         }
         $scope.getList();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

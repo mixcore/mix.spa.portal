@@ -206,7 +206,7 @@
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
-          $rootScope.showMessage("failed");
+          $rootScope.showErros(result.errors);
           $rootScope.isBusy = false;
           $scope.$apply();
         }

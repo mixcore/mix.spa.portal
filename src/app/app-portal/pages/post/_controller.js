@@ -213,7 +213,6 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
-        debugger;
         $scope.additionalData.isClone = $scope.viewmodel.isClone;
         $scope.additionalData.cultures = $scope.viewmodel.cultures;
         $scope.additionalData.intParentId = $scope.viewmodel.id;

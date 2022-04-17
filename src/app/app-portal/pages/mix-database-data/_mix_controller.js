@@ -89,7 +89,6 @@ app.controller("MixDatabaseDataController", [
       }
     };
     $scope.saveSuccess = function (data) {
-      debugger;
       if ($scope.backUrl) {
         $location.url($scope.backUrl);
       } else {
@@ -156,7 +155,7 @@ app.controller("MixDatabaseDataController", [
         }
         $scope.getList();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }
@@ -174,7 +173,7 @@ app.controller("MixDatabaseDataController", [
           $rootScope.isBusy = false;
           $scope.getList(0);
         } else {
-          $rootScope.showMessage("failed");
+          $rootScope.showErrors(result.errors);
           $rootScope.isBusy = false;
           $scope.$apply();
         }
@@ -213,7 +212,7 @@ app.controller("MixDatabaseDataController", [
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

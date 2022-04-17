@@ -25,7 +25,7 @@
             <actions
               on-clear-cache="clearCache()"
               preview-url="viewmodel.detailUrl"
-              back-url="'/portal/tenant/list'"
+              back-url="'/portal/domain/list'"
             >
             </actions>
             <div class="mb-3"></div>
@@ -46,36 +46,16 @@
                     type="text"
                     class="form-control"
                     ng-model="viewmodel.displayName"
-                    ng-blur="generateName()"
                   />
                 </div>
               </div>
               <div class="row mb-3">
                 <div class="col">
-                  <label class="form-label">System Name</label>
-                  <div class="input-group input-group-sm">
-                    <input
-                      type="text"
-                      class="form-control"
-                      ng-model="viewmodel.systemName"
-                    />
-                    <button
-                      class="btn btn-outline-secondary"
-                      type="button"
-                      ng-click="generateName(true)"
-                    >
-                      <span class="fa fa-redo"></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col">
-                  <label class="form-label">Primary Domain</label>
+                  <label class="form-label">Host</label>
                   <input
                     type="text"
                     class="form-control"
-                    ng-model="viewmodel.primaryDomain"
+                    ng-model="viewmodel.host"
                   />
                 </div>
               </div>

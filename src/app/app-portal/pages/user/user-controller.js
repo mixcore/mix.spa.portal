@@ -139,7 +139,7 @@ app.controller("UserController", [
       if (result.success) {
         $scope.loadUsers();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

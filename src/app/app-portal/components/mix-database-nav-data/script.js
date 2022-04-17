@@ -42,7 +42,7 @@ modules.component("mixDatabaseNavData", {
             $scope.$apply();
           } else {
             if (resp) {
-              $rootScope.showErrors("Failed");
+              $rootScope.showErrors(resp.errors);
             }
             $scope.$apply();
           }

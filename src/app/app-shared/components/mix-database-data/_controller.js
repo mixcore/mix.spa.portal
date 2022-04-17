@@ -68,7 +68,7 @@ appShared.controller("MixDatabaseDataClientController", [
             $rootScope.isBusy = false;
             $scope.$apply();
           } else {
-            $rootScope.showMessage("failed");
+            $rootScope.showErrors(result.errors);
             $rootScope.isBusy = false;
             $scope.$apply();
           }
@@ -202,7 +202,7 @@ appShared.controller("MixDatabaseDataClientController", [
         }
         $scope.getList();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }
