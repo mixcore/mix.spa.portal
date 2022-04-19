@@ -9,7 +9,8 @@ modules.component("mixDatabaseForm", {
     mixDatabaseDataId: "=?",
     mixDatabaseData: "=",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
-    parentId: "=?",
+    intParentId: "=?",
+    guidParentId: "=?",
     defaultId: "=",
     backUrl: "=?",
     level: "=?",
@@ -43,7 +44,8 @@ modules.component("mixDatabaseForm", {
           var getData = await service.getSingle([ctrl.mixDatabaseDataId]);
           ctrl.mixDatabaseData = getData.data;
           if (ctrl.mixDatabaseData) {
-            ctrl.mixDatabaseData.parentId = ctrl.parentId;
+            ctrl.mixDatabaseData.intParentId = ctrl.intParentId;
+            ctrl.mixDatabaseData.guidParentId = ctrl.guidParentId;
             ctrl.mixDatabaseData.parentType = ctrl.parentType;
             ctrl.mixDatabaseId = ctrl.mixDatabaseData.mixDatabaseId;
             ctrl.mixDatabaseName = ctrl.mixDatabaseData.mixDatabaseName;
@@ -65,15 +67,22 @@ modules.component("mixDatabaseForm", {
             $scope.$apply();
           }
         }
-        if ((ctrl.mixDatabaseName || ctrl.mixDatabaseId) && !ctrl.defaultData) {
+        if (
+          !ctrl.mixDatabaseData &&
+          (ctrl.mixDatabaseName || ctrl.mixDatabaseId) &&
+          !ctrl.defaultData
+        ) {
           await ctrl.loadDefaultModel();
           ctrl.isBusy = false;
           $scope.$apply();
         }
       };
       ctrl.loadDefaultModel = async function () {
-        if ($routeParams.parentId) {
-          ctrl.parentId = $routeParams.parentId;
+        if ($routeParams.intParentId) {
+          ctrl.intParentId = $routeParams.intParentId;
+        }
+        if ($routeParams.guidParentId) {
+          ctrl.guidParentId = $routeParams.guidParentId;
         }
         if ($routeParams.parentType) {
           ctrl.parentType = $routeParams.parentType;
@@ -87,14 +96,14 @@ modules.component("mixDatabaseForm", {
                 ctrl.backUrl =
                   ctrl.backUrl ??
                   `/portal/${ctrl.parentType.toLowerCase()}/details/${
-                    ctrl.parentId
+                    ctrl.intParentId
                   }`;
                 break;
 
               default:
                 ctrl.backUrl =
                   ctrl.backUrl ??
-                  `/portal/mix-database-data/details?dataId=${ctrl.parentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
+                  `/portal/mix-database-data/details?dataId=${ctrl.guidParentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
                 break;
             }
           }
@@ -104,7 +113,9 @@ modules.component("mixDatabaseForm", {
         );
         ctrl.defaultData = getDefault.data;
         if (ctrl.defaultData) {
-          ctrl.defaultData.parentId = ctrl.parentId;
+          ctrl.defaultData.id = null;
+          ctrl.defaultData.intParentId = ctrl.intParentId;
+          ctrl.defaultData.guidParentId = ctrl.guidParentId;
           ctrl.defaultData.parentType = ctrl.parentType;
           if (ctrl.columns) {
             let otherColumns = ctrl.defaultData.columns.filter(
@@ -131,7 +142,8 @@ modules.component("mixDatabaseForm", {
           ctrl.mixDatabaseData = ctrl.selectedList.data[0];
           ctrl.mixDatabaseData.mixDatabaseId = ctrl.mixDatabaseId;
           ctrl.mixDatabaseData.mixDatabaseName = ctrl.mixDatabaseName;
-          ctrl.mixDatabaseData.parentId = ctrl.parentId;
+          ctrl.mixDatabaseData.intParentId = ctrl.intParentId;
+          ctrl.mixDatabaseData.guidParentId = ctrl.guidParentId;
           ctrl.mixDatabaseData.parentType = ctrl.parentType;
         }
       };

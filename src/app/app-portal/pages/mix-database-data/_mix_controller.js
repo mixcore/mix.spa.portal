@@ -57,7 +57,7 @@ app.controller("MixDatabaseDataController", [
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.mixDatabaseTitle = $routeParams.mixDatabaseTitle;
-      $scope.parentId = $routeParams.parentId;
+      $scope.guidParentId = $routeParams.guidParentId;
       $scope.parentType = $routeParams.parentType;
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.request.isGroup = $routeParams.isGroup || false;

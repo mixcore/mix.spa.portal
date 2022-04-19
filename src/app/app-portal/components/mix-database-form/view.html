@@ -43,7 +43,7 @@
         <i class="fas fa-search"></i> Search links
       </a>
       <button
-        ng-if="$ctrl.parentId && $ctrl.isInRole('Owner')"
+        ng-if="$ctrl.guidParentId"
         type="button"
         data-bs-toggle="modal"
         data-bs-target="#modal-data-filter"
@@ -91,6 +91,8 @@
               model="$ctrl.mixDatabaseData"
               column="column"
               back-url="$ctrl.backUrl"
+              int-parent-id="$ctrl.intParentId"
+              guid-parent-id="$ctrl.guidParentId"
             >
             </mix-column-editor>
           </div>

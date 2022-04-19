@@ -42,6 +42,9 @@ modules.component("additionalValue", {
             $scope.$apply();
           }
         }
+        if (ctrl.additionalData.id == "00000000-0000-0000-0000-000000000000") {
+          ctrl.additionalData.id = null;
+        }
       };
     },
   ],

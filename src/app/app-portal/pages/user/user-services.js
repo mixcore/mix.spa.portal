@@ -78,10 +78,10 @@ app.factory("UserServices", [
     };
 
     var _saveUser = async function (user) {
-      var apiUrl = "/rest/mix-account/";
+      var apiUrl = "/rest/mix-account/user/save";
       var req = {
         method: "POST",
-        url: apiUrl + "save",
+        url: apiUrl,
         data: JSON.stringify(user),
       };
       return await apiService.sendRequest(req);

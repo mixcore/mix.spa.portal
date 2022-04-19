@@ -152,7 +152,7 @@ app.controller("UserController", [
       $rootScope.isBusy = true;
       var resp = await userServices.saveUser($scope.activedUser);
       if (resp && resp.success) {
-        var saveInfo = await dataService.save($scope.activedUser.info.userData);
+        var saveInfo = await dataService.save($scope.activedUser.userData);
         if (saveInfo.success) {
           $rootScope.showMessage("Update successfully!", "success");
           authService
@@ -161,9 +161,7 @@ app.controller("UserController", [
               authService.authentication.accessToken
             )
             .then(() => {
-              if (
-                $scope.activedUser.id == authService.authentication.info.user.id
-              ) {
+              if ($scope.activedUser.id == authService.authentication.info.id) {
                 window.location = window.location;
               }
             });

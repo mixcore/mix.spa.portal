@@ -15,10 +15,10 @@ app.factory("UserService", [
     };
 
     var _saveUser = async function (user) {
-      var apiUrl = "/rest/mix-account/";
+      var apiUrl = "/rest/mix-account/save";
       var req = {
         method: "POST",
-        url: apiUrl + "save-my-profile",
+        url: apiUrl,
         data: JSON.stringify(user),
       };
       return await apiService.getApiResult(req);

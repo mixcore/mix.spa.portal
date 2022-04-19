@@ -4,7 +4,7 @@ modules.component("mixDatabaseNavValues", {
   bindings: {
     mixDatabaseId: "=",
     mixDatabaseName: "=",
-    parentId: "=",
+    guidParentId: "=",
     parentType: "=",
     columns: "=?",
     header: "=",
@@ -90,7 +90,7 @@ modules.component("mixDatabaseNavValues", {
       ctrl.loadData = function () {
         ctrl.request.mixDatabaseId = ctrl.mixDatabaseId || 0;
         ctrl.request.mixDatabaseName = ctrl.mixDatabaseName || null;
-        ctrl.request.parentId = ctrl.parentId;
+        ctrl.request.guidParentId = ctrl.guidParentId;
         ctrl.request.parentType = ctrl.parentType;
         navService.getList(ctrl.request).then((resp) => {
           if (resp) {
