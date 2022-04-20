@@ -109,7 +109,7 @@ modules.component("mixDatabaseNavValues", {
       };
       ctrl.updateData = function (nav) {
         $rootScope.goToPath(
-          `${ctrl.updateUrl}?dataId=${nav.dataId}&mixDatabaseId=${nav.mixDatabaseId}&parentId=${ctrl.parentId}&parentType=${ctrl.parentType}`
+          `${ctrl.updateUrl}?dataId=${nav.childDataContent.id}&mixDatabaseId=${nav.mixDatabaseId}&guidParentId=${ctrl.guidParentId}&parentType=${ctrl.parentType}`
         );
         // ctrl.refDataModel = nav;
         // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
