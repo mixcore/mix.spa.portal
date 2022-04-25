@@ -17,7 +17,8 @@ appShared.constant("ngAppSettings", {
     fromDate: null,
     toDate: null,
     keyword: "",
-    key: "",
+    searchColumns: "title",
+    SearchMethod: "Ct",
     query: {},
   },
   restRequest: {

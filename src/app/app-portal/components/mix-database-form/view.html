@@ -32,7 +32,7 @@
         <i class="fas fa-chevron-left"></i> List data
       </a>
       <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
-        aria-controls="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}} collapse">
+        aria-controls="mixDatabaseId_{{$ctrl.mixDataContent.mixDatabaseId}} collapse">
         <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
       <a
         href="#"
@@ -76,10 +76,7 @@
         <i class="fas fa-save"></i> Save current
       </button>
     </h6>
-    <div
-      id="mixDatabaseId_{{$ctrl.mixDatabaseData.mixDatabaseId}}"
-      class="card-body show"
-    >
+    <div id="mixDatabaseId_{{$ctrl.mixDataContent.id}}" class="card-body show">
       <div class="row">
         <div class="col-sm-12">
           <div
@@ -88,11 +85,10 @@
             <mix-column-editor
               ng-if="column"
               level="$ctrl.level + 1"
-              model="$ctrl.mixDatabaseData"
+              model="$ctrl.mixDataContent"
               column="column"
               back-url="$ctrl.backUrl"
-              int-parent-id="$ctrl.intParentId"
-              guid-parent-id="$ctrl.guidParentId"
+              guid-parent-id="$ctrl.mixDataContentId"
             >
             </mix-column-editor>
           </div>
@@ -129,6 +125,6 @@
 >
 </mix-database-data-filter>
 <modal-content-filter
-  ng-if="$ctrl.mixDatabaseData"
+  ng-if="$ctrl.mixDataContent"
   callback="$ctrl.loadSelectedLink(nav,type)"
 ></modal-content-filter>
