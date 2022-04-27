@@ -273,15 +273,15 @@
                 >
                   <div class="accordion-body">
                     <modal-nav-metas
-                      ng-if="viewmodel.sysCategories"
+                      ng-if="viewmodel"
                       header="'Categories'"
-                      parent-id="viewmodel.id"
+                      int-parent-id="viewmodel.id"
                       is-open="'show'"
                       parent-type="'Post'"
                       type="''"
                       mix-database-name="'sysCategory'"
                       column-display="'title'"
-                      selected-list="viewmodel.sysCategories"
+                      selected-list="sysCategories"
                     ></modal-nav-metas>
                   </div>
                 </div>

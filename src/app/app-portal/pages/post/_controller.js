@@ -10,6 +10,7 @@ app.controller("PostController", [
   "UrlAliasService",
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
+  "RestRelatedAttributeDataPortalService",
   function (
     $scope,
     $rootScope,
@@ -20,7 +21,8 @@ app.controller("PostController", [
     service,
     urlAliasService,
     dataService,
-    columnService
+    columnService,
+    navService
   ) {
     BaseRestCtrl.call(
       this,
@@ -32,6 +34,9 @@ app.controller("PostController", [
       service
     );
     $scope.viewmodelType = "post";
+    $scope.sysCategories = {
+      items: [],
+    };
     $scope.additionalData = null;
     $scope.createUrl = "/portal/post/create?";
     $scope.selectedCategories = [];
@@ -222,8 +227,11 @@ app.controller("PostController", [
           $rootScope.showErrors(result.errors);
         } else {
           $scope.additionalData = result.data;
-          $scope.saveColumns();
+          //   $scope.saveColumns();
         }
+      }
+      if ($scope.sysCategories.items.length) {
+        await navService.saveMany($scope.sysCategories.items);
       }
       $rootScope.isBusy = false;
       $scope.$apply();

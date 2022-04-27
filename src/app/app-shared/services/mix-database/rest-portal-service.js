@@ -13,7 +13,16 @@ appShared.factory("RestMixDatabasePortalService", [
       };
       return await this.getRestApiResult(req);
     };
+    var _getByName = async function (name) {
+      var url = `${this.prefixUrl}/get-by-name/${name}`;
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await this.getRestApiResult(req);
+    };
     serviceFactory.migrate = _migrate;
+    serviceFactory.getByName = _getByName;
     return serviceFactory;
   },
 ]);

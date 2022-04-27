@@ -4,7 +4,8 @@
     header: "=",
     mixDatabaseId: "=?",
     mixDatabaseName: "=?",
-    parentId: "=?",
+    intParentId: "=?",
+    guidParentId: "=?",
     parentType: "=?",
     type: "=?",
     columnDisplay: "=?",
@@ -31,6 +32,7 @@
       databaseService
     ) {
       var ctrl = this;
+
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.request.key = "readData";
       ctrl.navs = [];
@@ -38,53 +40,71 @@
       ctrl.queries = {};
       ctrl.data = { items: [] };
       ctrl.selectedValues = [];
-      ctrl.$onInit = function () {
-        ctrl.request.isGroup = true;
-        if (!ctrl.selectedList) {
-          ctrl.selectedList = [];
+
+      ctrl.$onInit = async function () {
+        await ctrl.loadDefaultModel();
+        await ctrl.loadDefaultData();
+        await ctrl.loadSelected();
+        ctrl.loadData();
+        ctrl.filterData();
+      };
+
+      ctrl.loadSelected = async function () {
+        ctrl.navRequest = angular.copy(ngAppSettings.request);
+        ctrl.navRequest.mixDatabaseId = ctrl.mixDatabaseId;
+        ctrl.navRequest.mixDatabaseName = ctrl.mixDatabaseName;
+        ctrl.navRequest.intParentId = ctrl.intParentId;
+        ctrl.navRequest.guidParentId = ctrl.guidParentId;
+        var getSelected = await navService.getList(ctrl.navRequest);
+        if (getSelected.success) {
+          ctrl.selectedList = getSelected.data;
+          ctrl.selectedValues = ctrl.selectedList.items.map(
+            (m) => m.dataContentId
+          );
+          $scope.$apply();
         }
-        ctrl.selectedValues = ctrl.selectedList.map((m) => m.dataId);
+      };
+      ctrl.loadDefaultModel = async function () {
+        ctrl.request.isGroup = true;
+
         if (ctrl.mixDatabaseId) {
           ctrl.request.mixDatabaseId = ctrl.mixDatabaseId;
         }
         if (ctrl.mixDatabaseName) {
           ctrl.request.mixDatabaseName = ctrl.mixDatabaseName;
         }
-        ctrl.loadDefaultModel();
-        ctrl.loadData();
-        ctrl.filterData();
-      };
-      ctrl.loadDefaultModel = async function () {
-        ctrl.defaultNav = {
-          id: null,
-          specificulture: navService.lang,
-          dataId: null,
-          parentId: ctrl.parentId,
-          parentType: ctrl.parentType,
-          mixDatabaseId: ctrl.mixDatabaseId,
-          mixDatabaseName: ctrl.mixDatabaseName,
-          status: "Published",
-          attributeData: null,
-        };
-        if ($routeParams.parentId) {
-          ctrl.parentId = $routeParams.parentId;
+        if ($routeParams.intParentId) {
+          ctrl.intParentId = $routeParams.intParentId;
         }
         if ($routeParams.parentType) {
           ctrl.parentType = $routeParams.parentType;
         }
+        ctrl.defaultNav = {
+          id: null,
+          specificulture: navService.lang,
+          dataContentId: null,
+          intParentId: ctrl.intParentId,
+          parentType: ctrl.parentType,
+          mixDatabaseId: ctrl.mixDatabaseId,
+          mixDatabaseName: ctrl.mixDatabaseName,
+          status: "Published",
+          childDataContent: null,
+        };
         if (!ctrl.columns) {
-          var getMixDatbase = await databaseService.getSingle([
-            ctrl.mixDatabaseName || ctrl.mixDatabaseId,
-          ]);
+          var getMixDatbase = ctrl.mixDatabaseId
+            ? await databaseService.getSingle([ctrl.mixDatabaseId])
+            : await databaseService.getByName([ctrl.mixDatabaseName]);
           if (getMixDatbase.success) {
             ctrl.columns = getMixDatbase.data.columns;
             ctrl.mixDatabaseId = getMixDatbase.data.id;
-            ctrl.mixDatabaseName = getMixDatbase.data.name;
+            ctrl.mixDatabaseName = getMixDatbase.data.systemName;
             ctrl.defaultNav.mixDatabaseId = getMixDatbase.data.id;
-            ctrl.defaultNav.mixDatabaseName = getMixDatbase.data.name;
+            ctrl.defaultNav.mixDatabaseName = getMixDatbase.data.systemName;
             $scope.$apply();
           }
         }
+      };
+      ctrl.loadDefaultData = async function () {
         var getDefault = await dataService.initData(
           ctrl.mixDatabaseName || ctrl.mixDatabaseId
         );
@@ -93,15 +113,20 @@
           ctrl.defaultData.mixDatabaseId = ctrl.mixDatabaseId || 0;
           ctrl.defaultData.mixDatabaseName = ctrl.mixDatabaseName;
         }
-
         if (!ctrl.mixDatabaseData) {
           ctrl.mixDatabaseData = angular.copy(ctrl.defaultData);
+        }
+        if (!ctrl.mixDatabaseId) {
+          ctrl.mixDatabaseId = ctrl.defaultData.mixDatabaseId;
+        }
+        if (!ctrl.mixDatabaseName) {
+          ctrl.mixDatabaseName = ctrl.defaultData.mixDatabaseName;
         }
       };
       ctrl.isSelected = function (value, level) {
         let item = $rootScope.findObjectByKey(
-          ctrl.selectedList,
-          "dataId",
+          ctrl.selectedList.items,
+          "dataContentId",
           value
         );
         if (item) {
@@ -158,43 +183,43 @@
           // Not show data if there's in selected list
           e.disabled = ctrl.selectedValues.indexOf(e.id) >= 0;
         });
-        angular.forEach(ctrl.selectedList, function (e) {
+        angular.forEach(ctrl.selectedList.items, function (e) {
           var subIds = [];
           e.isActived = e.isActived === undefined ? true : e.isActived;
-          if (e.attributeData && e.attributeData.obj.childItems) {
-            angular.forEach(e.attributeData.obj.childItems, function (sub) {
+          if (e.childDataContent && e.childDataContent.data.childItems) {
+            angular.forEach(e.childDataContent.data.childItems, function (sub) {
               sub.isActived = ctrl.selectedValues.indexOf(e.id) >= 0;
             });
-            subIds = e.attributeData.obj.childItems.map((m) => m.id);
+            subIds = e.childDataContent.data.childItems.map((m) => m.id);
           } else if (e.childItems) {
             subIds = e.childItems.map((m) => m.id);
           }
-          var subData = ctrl.selectedList.filter(
-            (m) => subIds.indexOf(m.dataId) >= 0
+          var subData = ctrl.selectedList.items.filter(
+            (m) => subIds.indexOf(m.dataContentId) >= 0
           );
           angular.forEach(subData, function (s) {
             s.disabled = true;
           });
         });
       };
-      ctrl.select = async function (dataId, isSelected, level) {
-        let idx = ctrl.selectedValues.indexOf(dataId);
-        var nav = ctrl.selectedList[idx];
+      ctrl.select = async function (dataContentId, isSelected, level) {
+        let idx = ctrl.selectedValues.indexOf(dataContentId);
+        var nav = ctrl.selectedList.items[idx];
         if (!nav) {
-          ctrl.selectedValues.push(dataId);
+          ctrl.selectedValues.push(dataContentId);
           nav = angular.copy(ctrl.defaultNav);
-          nav.dataId = dataId;
-          nav.attributeData = $rootScope.findObjectByKey(
+          nav.dataContentId = dataContentId;
+          nav.childDataContent = $rootScope.findObjectByKey(
             ctrl.data.items,
             "id",
-            dataId
+            dataContentId
           );
-          ctrl.selectedList.push(nav);
+          ctrl.selectedList.items.push(nav);
         }
         nav.level = level;
         if (isSelected) {
           nav.isActived = true;
-          if (nav.parentId) {
+          if (nav.intParentId) {
             var saveResult = await navService.save(nav);
             nav.id = saveResult.data.id;
             $rootScope.showMessage("success", "success");
@@ -212,9 +237,9 @@
         }
       };
       ctrl.removeNav = async function (idx) {
-        var nav = ctrl.selectedList[idx];
+        var nav = ctrl.selectedList.items[idx];
         ctrl.selectedValues.splice(idx, 1);
-        ctrl.selectedList.splice(idx, 1);
+        ctrl.selectedList.items.splice(idx, 1);
         ctrl.filterData();
         if (nav && nav.id) {
           await navService.delete([nav.id]);
@@ -234,17 +259,18 @@
           );
           if (!tmp) {
             ctrl.isBusy = true;
-            ctrl.mixDatabaseData.parentId = 0;
+            ctrl.mixDatabaseData.intParentId = 0;
             ctrl.mixDatabaseData.parentType = "Set";
-            ctrl.mixDatabaseData.obj.title = ctrl.newTitle;
-            ctrl.mixDatabaseData.obj.slug = $rootScope.generateKeyword(
+            ctrl.mixDatabaseData.data.title = ctrl.newTitle;
+            ctrl.mixDatabaseData.data.slug = $rootScope.generateKeyword(
               ctrl.newTitle,
               "-"
             );
-            ctrl.mixDatabaseData.obj.type = ctrl.type;
+            ctrl.mixDatabaseData.data.type = ctrl.type;
             dataService.save(ctrl.mixDatabaseData).then((resp) => {
               if (resp.success) {
-                ctrl.data.items.push(resp.data);
+                ctrl.mixDatabaseData.id = resp.data;
+                ctrl.data.items.push(ctrl.mixDatabaseData);
                 ctrl.reload();
                 ctrl.select(resp.data.id, true);
                 ctrl.filterData();

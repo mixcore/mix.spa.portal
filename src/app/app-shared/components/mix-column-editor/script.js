@@ -124,16 +124,16 @@
               }
               break;
             case "array":
-              if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
-                ctrl.model.data[ctrl.column.systemName] =
-                  ctrl.column.defaultValue;
-                $scope.$apply();
-              } else {
-                ctrl.model.data[ctrl.column.systemName] = JSON.stringify(
-                  ctrl.mode.data[ctrl.column.systemName]
-                );
-              }
-              $scope.$apply();
+              //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
+              //     ctrl.model.data[ctrl.column.systemName] =
+              //       ctrl.column.defaultValue;
+              //     $scope.$apply();
+              //   } else {
+              //     ctrl.model.data[ctrl.column.systemName] = JSON.stringify(
+              //       ctrl.mode.data[ctrl.column.systemName]
+              //     );
+              //   }
+              //   $scope.$apply();
               break;
             case "reference": // reference
               // if(ctrl.column.referenceId && ctrl.model.id){

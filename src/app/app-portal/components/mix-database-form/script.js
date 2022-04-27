@@ -2,12 +2,12 @@ modules.component("mixDatabaseForm", {
   templateUrl:
     "/mix-app/views/app-portal/components/mix-database-form/view.html",
   bindings: {
-    mixDatabaseId: "=",
-    mixDatabaseName: "=",
+    mixDatabaseId: "=?",
+    mixDatabaseName: "=?",
     mixDatabaseTitle: "=?",
     columns: "=?",
     mixDataContentId: "=?",
-    mixDataContent: "=",
+    mixDataContent: "=?",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     intParentId: "=?",
     guidParentId: "=?",
