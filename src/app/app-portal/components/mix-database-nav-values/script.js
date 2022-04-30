@@ -109,12 +109,12 @@ modules.component("mixDatabaseNavValues", {
       };
       ctrl.updateData = function (nav) {
         $rootScope.goToPath(
-          `${ctrl.updateUrl}?dataId=${nav.childDataContent.id}&mixDatabaseId=${nav.mixDatabaseId}&guidParentId=${ctrl.guidParentId}&parentType=${ctrl.parentType}`
+          `${ctrl.updateUrl}?dataContentId=${nav.childDataContent.id}&mixDatabaseId=${nav.mixDatabaseId}&guidParentId=${ctrl.guidParentId}&parentType=${ctrl.parentType}`
         );
         // ctrl.refDataModel = nav;
         // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
-        // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/portal/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
       ctrl.saveData = function (data) {
         $rootScope.isBusy = true;

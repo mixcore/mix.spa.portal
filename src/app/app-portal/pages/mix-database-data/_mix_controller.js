@@ -65,8 +65,8 @@ app.controller("MixDatabaseDataController", [
       if ($routeParams.backUrl) {
         $scope.backUrl = decodeURIComponent($routeParams.backUrl);
       }
-      if ($routeParams.dataId != $scope.defaultId) {
-        $scope.dataId = $routeParams.dataId;
+      if ($routeParams.dataContentId != $scope.defaultId) {
+        $scope.dataContentId = $routeParams.dataContentId;
       }
 
       if ($scope.parentId && $scope.parentType) {
@@ -93,7 +93,7 @@ app.controller("MixDatabaseDataController", [
         $location.url($scope.backUrl);
       } else {
         $location.url(
-          `/portal/mix-database-data/details?dataId=${data}&mixDatabaseTitle=${
+          `/portal/mix-database-data/details?dataContentId=${data}&mixDatabaseTitle=${
             $scope.mixDatabaseTitle
           }&backUrl=${encodeURIComponent($scope.dataUrl)}`
         );
@@ -108,11 +108,11 @@ app.controller("MixDatabaseDataController", [
     //   if ($location.path() == "/portal/mix-database-data/create") {
     //     let backUrl =
     //       $scope.backUrl ||
-    //       `/portal/mix-database-data/details?dataId=${$scope.viewmodel.id}`;
+    //       `/portal/mix-database-data/details?dataContentId=${$scope.viewmodel.id}`;
     //     $rootScope.goToSiteUrl(backUrl);
     //   } else {
     //     if ($scope.parentId && $scope.parentType == 'Set') {
-    //       $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataId=${$scope.parentId}`);
+    //       $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataContentId=${$scope.parentId}`);
     //     } else {
     //       let backUrl =
     //         $scope.backUrl ||
@@ -128,7 +128,7 @@ app.controller("MixDatabaseDataController", [
     };
     $scope.edit = function (data) {
       $rootScope.goToPath(
-        `/portal/mix-database-data/details?dataId=${data.id}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`
+        `/portal/mix-database-data/details?dataContentId=${data.id}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`
       );
     };
     $scope.remove = function (data) {
@@ -142,9 +142,9 @@ app.controller("MixDatabaseDataController", [
       );
     };
 
-    $scope.removeConfirmed = async function (dataId) {
+    $scope.removeConfirmed = async function (dataContentId) {
       $rootScope.isBusy = true;
-      var result = await service.delete([dataId]);
+      var result = await service.delete([dataContentId]);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
@@ -270,7 +270,7 @@ app.controller("MixDatabaseDataController", [
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
           $.each($scope.activeddata, function (i, e) {
-            if (e.dataId === data.id) {
+            if (e.dataContentId === data.id) {
               data.isHidden = true;
             }
           });

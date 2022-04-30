@@ -14,8 +14,8 @@
     <div class="row">
       <div class="col-12" ng-repeat="item in $ctrl.selectedList">
         <checkbox-switch
-          value="item.dataId"
-          is-selected="$ctrl.isSelected(item.dataId)"
+          value="item.dataContentId"
+          is-selected="$ctrl.isSelected(item.dataContentId)"
           callback="$ctrl.select(value, isSelected)"
           description="item.data[$ctrl.columnDisplay]"
         >
@@ -29,8 +29,8 @@
         ng-hide="item.disabled"
       >
         <checkbox-switch
-          value="item.dataId"
-          is-selected="$ctrl.isSelected(item.dataId)"
+          value="item.dataContentId"
+          is-selected="$ctrl.isSelected(item.dataContentId)"
           callback="$ctrl.select(value, isSelected)"
           description="item.data[$ctrl.columnDisplay]"
           >>

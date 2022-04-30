@@ -48,7 +48,7 @@
           ctrl.data = resp.data;
           $.each(ctrl.data.items, function (i, data) {
             $.each(ctrl.viewmodels, function (i, e) {
-              if (e.dataId === data.id) {
+              if (e.dataContentId === data.id) {
                 data.isHidden = true;
               }
             });

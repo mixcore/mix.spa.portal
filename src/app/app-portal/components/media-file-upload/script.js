@@ -108,7 +108,7 @@
             if (response.success) {
               ctrl.media = response.data;
               $rootScope.isBusy = false;
-              ctrl.srcUrl = response.data.filePath;
+              ctrl.srcUrl = response.data;
               $scope.$apply();
             } else {
               $rootScope.showErrors(response.errors);

@@ -131,7 +131,7 @@ function BaseRestCtrl(
       $scope.data = resp.data;
       $.each($scope.data, function (i, data) {
         $.each($scope.viewmodels, function (i, e) {
-          if (e.dataId === data.id) {
+          if (e.dataContentId === data.id) {
             data.isHidden = true;
           }
         });

@@ -99,20 +99,20 @@ app.controller("ModuleDataController", [
         $scope.$apply();
       }
     };
-    $scope.remove = function (dataId) {
+    $scope.remove = function (dataContentId) {
       $rootScope.showConfirm(
         $scope,
         "removeConfirmed",
-        [dataId],
+        [dataContentId],
         null,
         "Remove",
         "Deleted data will not able to recover, are you sure you want to delete this item?"
       );
     };
 
-    $scope.removeConfirmed = async function (dataId) {
+    $scope.removeConfirmed = async function (dataContentId) {
       $rootScope.isBusy = true;
-      var result = await service.delete([dataId]);
+      var result = await service.delete([dataContentId]);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
@@ -123,7 +123,7 @@ app.controller("ModuleDataController", [
         }
         $scope.getList();
       } else {
-        $rootScope.showMessage("failed");
+        $rootScope.showErrors(result.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }

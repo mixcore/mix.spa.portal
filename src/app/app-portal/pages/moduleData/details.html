@@ -1,13 +1,18 @@
 <!-- Main content -->
 <section ng-init="loadParams()">
-    <!--<actions preview-url="activedModuleData.detailUrl" back-url="'/portal/module-data/list'"></actions>-->
+  <!--<actions preview-url="activedModuleData.detailUrl" back-url="'/portal/module-data/list'"></actions>-->
 
-    <div class="row flex-xl-nowrap" ng-if="moduleContentId">
-        <div class="col-md-12">
-            <module-form d="dataId" is-show-title="'true'" name="moduleName" module-id="moduleContentId"
-                back-url="backUrl">
-            </module-form>
-        </div>
+  <div class="row flex-xl-nowrap" ng-if="moduleContentId">
+    <div class="col-md-12">
+      <module-form
+        d="dataContentId"
+        is-show-title="'true'"
+        name="moduleName"
+        module-id="moduleContentId"
+        back-url="backUrl"
+      >
+      </module-form>
     </div>
+  </div>
 </section>
 <!-- /.content -->

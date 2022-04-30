@@ -36,13 +36,13 @@ app.controller("ServiceController", [
     $scope.init = async function () {
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
-      $scope.dataId = $routeParams.dataId;
+      $scope.dataContentId = $routeParams.dataContentId;
     };
     $scope.saveSuccessCallback = function () {
       $rootScope.isBusy = false;
       $scope.$apply();
       // if($scope.parentId){
-      //     $location.url('/portal/mix-database-data/details?dataId='+ $scope.parentId);
+      //     $location.url('/portal/mix-database-data/details?dataContentId='+ $scope.parentId);
       // }
       // else{
       //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewmodel.mixDatabaseId);
@@ -105,7 +105,7 @@ app.controller("ServiceController", [
     };
     $scope.edit = function (data) {
       $scope.goToPath(
-        "/portal/mix-database-data/details?dataId=" +
+        "/portal/mix-database-data/details?dataContentId=" +
           data.id +
           "&mixDatabaseId=" +
           $scope.mixDatabaseId
@@ -122,9 +122,9 @@ app.controller("ServiceController", [
       );
     };
 
-    $scope.removeConfirmed = async function (dataId) {
+    $scope.removeConfirmed = async function (dataContentId) {
       $rootScope.isBusy = true;
-      var result = await service.delete([dataId]);
+      var result = await service.delete([dataContentId]);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(

@@ -74,7 +74,7 @@ appShared.controller("SharedModuleDataController", [
       if ($scope.id) {
         resp = await moduleDataService.getModuleData(
           $scope.id,
-          $scope.dataId,
+          $scope.dataContentId,
           "portal"
         );
       } else {
@@ -95,7 +95,7 @@ appShared.controller("SharedModuleDataController", [
     };
 
     $scope.loadParams = async function () {
-      $scope.dataId = $routeParams.id;
+      $scope.dataContentId = $routeParams.id;
       $scope.backUrl =
         "/portal/module-data/list/" + $routeParams.moduleContentId;
       $scope.moduleContentId = $routeParams.moduleContentId;

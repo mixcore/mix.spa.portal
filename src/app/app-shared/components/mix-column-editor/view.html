@@ -21,17 +21,17 @@
         </div>
         <div class="text-muted" ng-switch-when="datetime">
             <!--datetime-->
-            <input class="form-control {{$ctrl.inputClass}}" type="datetime-local" ng-model="$ctrl.data"
+            <input class="form-control {{$ctrl.inputClass}}" type="datetime-local" ng-model="$ctrl.dateObj"
                 ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.displayName)}}" />
         </div>
         <div class="text-muted" ng-switch-when="date">
             <!--date-->
-            <input class="form-control {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.data"
+            <input class="form-control {{$ctrl.inputClass}}" type="date" ng-model="$ctrl.dateObj"
                 ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.displayName)}}" />
         </div>
         <div class="text-muted" ng-switch-when="time">
             <!--time-->
-            <input class="form-control {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.data"
+            <input class="form-control {{$ctrl.inputClass}}" type="time" ng-model="$ctrl.dateObj"
                 ng-change="$ctrl.updateValue()" placeholder="{{$ctrl.translate($ctrl.column.displayName)}}" />
         </div>
         <div class="text-muted" ng-switch-when="phonenumber">

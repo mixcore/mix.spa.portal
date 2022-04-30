@@ -7,7 +7,7 @@ appShared.factory("MediaService", [
   "BaseService",
   function ($rootScope, $uibModal, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("media");
+    serviceFactory.init("mix-file");
     var _cloneMedia = async function (id) {
       var req = {
         method: "GET",
@@ -28,7 +28,7 @@ appShared.factory("MediaService", [
       //var container = $(this).parents('.model-media').first().find('.custom-file').first();
       if (file !== null) {
         // Create FormData object
-        var url = this.prefixUrl + "/upload-media";
+        var url = this.prefixUrl + "/upload-file";
         var fd = new FormData();
 
         fd.append("file", file);

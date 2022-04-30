@@ -51,7 +51,7 @@
                     $scope.$apply();
                   } else {
                     if (resp) {
-                      $rootScope.showErrors("Failed");
+                      $rootScope.showErrors(resp.errors);
                     }
                     $rootScope.isBusy = false;
                     $scope.$apply();
@@ -96,7 +96,7 @@
       };
       ctrl.updateRefData = function (item) {
         $location.url(
-          "/portal/mix-database-data/details?dataId=" +
+          "/portal/mix-database-data/details?dataContentId=" +
             item.id +
             "&mixDatabaseId=" +
             item.mixDatabaseId +
@@ -116,15 +116,15 @@
           "Deleted data will not able to recover, are you sure you want to delete this item?"
         );
       };
-      ctrl.removeRefDataConfirmed = async function (dataId) {
+      ctrl.removeRefDataConfirmed = async function (dataContentId) {
         $rootScope.isBusy = true;
-        var result = await dataService.delete(dataId);
+        var result = await dataService.delete(dataContentId);
         if (result.success) {
-          $rootScope.removeObjectByKey(ctrl.refData, "id", dataId);
+          $rootScope.removeObjectByKey(ctrl.refData, "id", dataContentId);
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
-          $rootScope.showMessage("failed");
+          $rootScope.showErrors(result.errors);
           $rootScope.isBusy = false;
           $scope.$apply();
         }

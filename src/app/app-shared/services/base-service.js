@@ -1,20 +1,20 @@
 "use strict";
 appShared.factory("BaseService", [
   "$rootScope",
-  "$routeParams",
+  "AppSettings",
   "ApiService",
   "CommonService",
-  function ($rootScope, $routeParams, apiService, commonService) {
+  function ($rootScope, appSettings, apiService, commonService) {
     var serviceFactory = {};
 
     var _init = function (modelName, isGlobal, serviceBase) {
       this.modelName = modelName;
-      this.serviceBase = serviceBase;
-      if (!isGlobal) {
+      this.serviceBase = serviceBase || appSettings.serviceBase;
+      if (!isGlobal && $rootScope.globalSettings.lang) {
         this.lang = $rootScope.globalSettings.lang;
         this.prefixUrl = "/" + this.lang + "/" + modelName;
       } else {
-        this.prefixUrl = "/" + modelName;
+        this.prefixUrl = "/rest/mix-portal/" + modelName;
       }
     };
     var _getSingle = async function (params = []) {

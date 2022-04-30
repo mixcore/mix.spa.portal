@@ -111,7 +111,7 @@
       };
       ctrl.buildCreateUrl = function () {
         var backUrl = encodeURIComponent(`${$location.url()}`);
-        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&guidParentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
+        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataContentId=default&guidParentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
       };
       ctrl.initData = async function () {
         setTimeout(() => {
@@ -120,7 +120,9 @@
             case "date":
             case "time":
               if (ctrl.model.data[ctrl.column.systemName]) {
-                ctrl.obj = new Date(ctrl.model.data[ctrl.column.systemName]);
+                ctrl.dateObj = new Date(
+                  ctrl.model.data[ctrl.column.systemName]
+                );
               }
               break;
             case "array":
@@ -167,7 +169,7 @@
           case "date":
           case "time":
             if (ctrl.column.defaultValue) {
-              ctrl.obj = new Date(
+              ctrl.dateObj = new Date(
                 ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
@@ -200,21 +202,21 @@
       ctrl.updateValue = function () {
         switch (ctrl.column.dataType.toLowerCase()) {
           case "datetime":
-            if (ctrl.obj) {
+            if (ctrl.dateObj) {
               ctrl.model.data[ctrl.column.systemName] =
-                ctrl.obj.toLocaleString();
+                ctrl.dateObj.toLocaleString();
             }
             break;
           case "date":
-            if (ctrl.obj) {
+            if (ctrl.dateObj) {
               ctrl.model.data[ctrl.column.systemName] =
-                ctrl.obj.toLocaleDateString();
+                ctrl.dateObj.toLocaleDateString();
             }
             break;
           case "time":
-            if (ctrl.obj) {
+            if (ctrl.dateObj) {
               ctrl.model.data[ctrl.column.systemName] =
-                ctrl.obj.toLocaleTimeString("en-GB");
+                ctrl.dateObj.toLocaleTimeString("en-GB");
             }
             break;
           default:

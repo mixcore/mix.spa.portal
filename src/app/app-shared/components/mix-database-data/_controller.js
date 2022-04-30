@@ -45,7 +45,7 @@ appShared.controller("MixDatabaseDataClientController", [
     $scope.init = async function () {
       $scope.mixDatabaseId = $routeParams.mixDatabaseId;
       $scope.mixDatabaseName = $routeParams.mixDatabaseName;
-      $scope.dataId = $routeParams.dataId;
+      $scope.dataContentId = $routeParams.dataContentId;
       $scope.refParentId = $routeParams.refParentId;
       $scope.refParentType = $routeParams.refParentType;
       if ($scope.refParentId && $scope.refParentType) {
@@ -172,7 +172,7 @@ appShared.controller("MixDatabaseDataClientController", [
     };
     $scope.edit = function (data) {
       $scope.goToPath(
-        "/portal/mix-database-data/details?dataId=" +
+        "/portal/mix-database-data/details?dataContentId=" +
           data.id +
           "&mixDatabaseId=" +
           $scope.mixDatabaseId
@@ -189,9 +189,9 @@ appShared.controller("MixDatabaseDataClientController", [
       );
     };
 
-    $scope.removeConfirmed = async function (dataId) {
+    $scope.removeConfirmed = async function (dataContentId) {
       $rootScope.isBusy = true;
-      var result = await service.delete([dataId]);
+      var result = await service.delete([dataContentId]);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(

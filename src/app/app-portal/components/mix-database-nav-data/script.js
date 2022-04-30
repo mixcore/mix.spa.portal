@@ -52,14 +52,14 @@ modules.component("mixDatabaseNavData", {
         ctrl.selected = nav;
         var e = $(".pane-form-" + ctrl.nav.data.id)[0];
         angular.element(e).triggerHandler("click");
-        // $location.url('/portal/mix-database-data/details?dataId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/portal/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
       ctrl.saveData = function (data) {
         $rootScope.isBusy = true;
         ctrl.selected.data = data;
         dataService.save(data).then((resp) => {
           if (resp.success) {
-            ctrl.selected.dataId = resp.data.id;
+            ctrl.selected.dataContentId = resp.data.id;
             ctrl.selected.mixDatabaseId = resp.data.mixDatabaseId;
             ctrl.selected.mixDatabaseName = resp.data.mixDatabaseName;
             ctrl.selected.attributeData = resp.data;
@@ -79,13 +79,13 @@ modules.component("mixDatabaseNavData", {
                 $rootScope.isBusy = false;
                 $scope.$apply();
               } else {
-                $rootScope.showMessage("failed");
+                $rootScope.showMessage(resp.errors);
                 $rootScope.isBusy = false;
                 $scope.$apply();
               }
             });
           } else {
-            $rootScope.showMessage("failed");
+            $rootScope.showErrors(resp.errors);
             $rootScope.isBusy = false;
             $scope.$apply();
           }
@@ -109,7 +109,7 @@ modules.component("mixDatabaseNavData", {
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
-          $rootScope.showMessage("failed");
+          $rootScope.showErrors(result.errors);
           $rootScope.isBusy = false;
           $scope.$apply();
         }
