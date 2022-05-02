@@ -8,6 +8,7 @@ appShared.factory("BaseRestService", [
   function ($rootScope, $routeParams, appSettings, authService, apiService) {
     var serviceFactory = {};
     var _init = function (modelName, isGlobal, lang, serviceBase, apiVersion) {
+      this.customBaseUrl = false;
       this.modelName = modelName;
       this.apiVersion = apiVersion || appSettings.apiVersion;
       this.serviceBase = serviceBase || appSettings.serviceBase;
@@ -266,22 +267,11 @@ appShared.factory("BaseRestService", [
     };
 
     var _getRestApiResult = async function (req) {
-      if (!authService.authentication) {
-        await authService.fillAuthData();
-      }
-      if (authService.authentication) {
-        req.Authorization = authService.authentication.accessToken;
-      }
-      if (!req.headers) {
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-      }
-      req.headers.Authorization = "Bearer " + req.Authorization || "";
-
-      return apiService.sendRequest(req).then(function (resp) {
-        return resp;
-      });
+      return apiService
+        .sendRequest(req, false, this.customBaseUrl)
+        .then(function (resp) {
+          return resp;
+        });
     };
 
     serviceFactory.lang = "";
