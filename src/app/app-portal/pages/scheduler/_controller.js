@@ -160,5 +160,18 @@ app.controller("SchedulerController", [
         $scope.$apply();
       }
     };
+    $scope.deleteJob = async function (name) {
+      $rootScope.isBusy = true;
+      var resp = await service.deleteJob(name);
+      if (resp && resp.success) {
+        $scope.getJobs();
+      } else {
+        if (resp) {
+          $rootScope.showErrors(resp.errors || ["Failed"]);
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
   },
 ]);

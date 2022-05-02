@@ -74,6 +74,16 @@ app.factory("SchedulerService", [
       return await this.getRestApiResult(req);
     };
 
+    var _deleteJob = async function (name) {
+      var url = `${this.prefixUrl}/job/${name}`;
+      var req = {
+        serviceBase: this.serviceBase,
+        method: "DELETE",
+        url: url,
+      };
+      return await this.getRestApiResult(req);
+    };
+
     var _getRestApiResult = async function (req) {
       if (!authService.authentication) {
         await authService.fillAuthData();
@@ -116,6 +126,7 @@ app.factory("SchedulerService", [
     serviceFactory.createSchedule = _createSchedule;
     serviceFactory.reschedule = _reschedule;
     serviceFactory.getJobs = _getJobs;
+    serviceFactory.deleteJob = _deleteJob;
     serviceFactory.getTrigger = _getTrigger;
     serviceFactory.getTriggers = _getTriggers;
     serviceFactory.pauseTrigger = _pauseTrigger;

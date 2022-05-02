@@ -126,7 +126,7 @@
               }
               break;
             case "array":
-              //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
+              //   if (ctrl.column && !ctrl.model.data[ctrl.column.systemName]) {
               //     ctrl.model.data[ctrl.column.systemName] =
               //       ctrl.column.defaultValue;
               //     $scope.$apply();
@@ -139,7 +139,7 @@
               break;
             case "reference": // reference
               // if(ctrl.column.referenceId && ctrl.model.id){
-              //     ctrl.model[ctrl.column.systemName] = ctrl.column.referenceId;
+              //     ctrl.model.data[ctrl.column.systemName] = ctrl.column.referenceId;
               //     navService.getSingle(['default']).then(resp=>{
               //         resp.mixDatabaseId = ctrl.column.referenceId;
               //         resp.parentId = ctrl.parentId;
@@ -150,9 +150,22 @@
               //     ctrl.loadRefData();
               // }
               break;
+            case "boolean":
+              if (
+                ctrl.column &&
+                ctrl.column.defaultValue &&
+                !ctrl.model.data[ctrl.column.systemName]
+              ) {
+                ctrl.model.data[ctrl.column.systemName] = JSON.parse(
+                  ctrl.column.defaultValue
+                );
+                $scope.$apply();
+              }
+              break;
             default:
-              if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
-                ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              if (ctrl.column && !ctrl.model.data[ctrl.column.systemName]) {
+                ctrl.model.data[ctrl.column.systemName] =
+                  ctrl.column.defaultValue;
                 $scope.$apply();
               }
               break;
@@ -176,21 +189,22 @@
             break;
           case "double":
             if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] = parseFloat(
+              ctrl.model.data[ctrl.column.systemName] = parseFloat(
                 ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
             break;
           case "boolean":
             if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] =
+              ctrl.model.data[ctrl.column.systemName] =
                 ctrl.mixDatabaseDataValue.column.defaultValue == "true";
             }
             break;
 
           default:
             if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              ctrl.model.data[ctrl.column.systemName] =
+                ctrl.column.defaultValue;
             }
             break;
         }
@@ -221,7 +235,8 @@
             break;
           default:
             if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              ctrl.model.data[ctrl.column.systemName] =
+                ctrl.column.defaultValue;
             }
             break;
         }
