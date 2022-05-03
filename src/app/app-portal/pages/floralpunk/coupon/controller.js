@@ -35,5 +35,8 @@ app.controller("FloralpunkCouponController", [
         await $scope.getSingle();
       }
     };
+    $scope.preview = function (item) {
+      $rootScope.preview("qr-code", item, item.code, "modal-lg");
+    };
   },
 ]);

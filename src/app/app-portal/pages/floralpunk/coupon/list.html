@@ -37,6 +37,7 @@
                       <th scope="col" class="col">Title</th>
                       <th scope="col" class="col">Description</th>
                       <th scope="col" class="col">Image</th>
+                      <th scope="col" class="col">Code</th>
                       <th scope="col" class="col"></th>
                     </tr>
                   </thead>
@@ -65,6 +66,11 @@
                             img-src="item.image"
                           ></preview-image>
                         </small>
+                      </td>
+                      <td width="50">
+                        <a class="btn-link" ng-click="preview(item)">
+                          <qr-code view-only="true" model="item.code"></qr-code>
+                        </a>
                       </td>
                       <td>
                         <div

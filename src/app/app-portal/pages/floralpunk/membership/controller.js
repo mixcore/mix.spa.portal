@@ -40,10 +40,28 @@ app.controller("FloralpunkMembershipController", [
       $scope.getList();
     };
 
+    $scope.preview = function (item) {
+      $rootScope.preview("qr-code", item, item.code, "modal-lg");
+    };
+
     $scope.removeUserCoupon = async function (couponId) {
       if (couponId && confirm("Remove this coupon")) {
         await couponService.delete([couponId]);
         await $scope.getSingle();
+      }
+    };
+
+    $scope.activeCoupon = async function (coupon) {
+      var result = await couponService.saveFields(coupon.id, [
+        {
+          propertyName: "isActive",
+          propertyValue: coupon.isActive,
+        },
+      ]);
+      if (result.success) {
+        $rootScope.showMessage("Success", "success");
+      } else {
+        $rootScope.showErrors(result.errors);
       }
     };
 

@@ -35,6 +35,15 @@
               ng-submit="save()"
             >
               <div class="mb-3">
+                <label class="form-label">User Id</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control form-control-lg"
+                  ng-model="viewmodel.userId"
+                />
+              </div>
+              <div class="mb-3">
                 <label class="form-label">User Name</label>
                 <input
                   type="text"
@@ -112,6 +121,8 @@
                         <th scope="col" class="col">Title</th>
                         <th scope="col" class="col">Description</th>
                         <th scope="col" class="col">Image</th>
+                        <th scope="col" class="col">Code</th>
+                        <th scope="col" class="col">Can Use</th>
                         <th scope="col" class="col"></th>
                       </tr>
                     </thead>
@@ -134,6 +145,21 @@
                             img-height="25"
                             img-src="item.coupon.image"
                           ></preview-image>
+                        </td>
+                        <td width="50">
+                          <a class="btn-link" ng-click="preview(item.coupon)">
+                            <qr-code
+                              view-only="true"
+                              model="item.coupon.code"
+                            ></qr-code>
+                          </a>
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            ng-model="item.isActive"
+                            ng-change="activeCoupon(item)"
+                          />
                         </td>
                         <td>
                           <div

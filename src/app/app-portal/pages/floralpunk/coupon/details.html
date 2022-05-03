@@ -44,12 +44,25 @@
                 />
               </div>
               <div class="mb-3">
+                <label class="form-label">Code</label>
+                <qr-code model="viewmodel.code"></qr-code>
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Description</label>
                 <textarea
                   type="text"
                   class="form-control"
                   ng-model="viewmodel.description"
                 ></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Edm Template (Filename)</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control form-control-lg"
+                  ng-model="viewmodel.edmTemplate"
+                />
               </div>
               <div class="mb-3">
                 <div class="row" ng-if="viewmodel.id">
@@ -72,7 +85,7 @@
                       </tr>
                     </thead>
 
-                    <tbody class="sortable" ng-init="initList()">
+                    <tbody class="sortable">
                       <tr
                         ng-repeat="item in viewmodel.rules track by $index"
                         class="sortable-item"
