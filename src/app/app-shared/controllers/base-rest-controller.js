@@ -93,6 +93,7 @@ function BaseRestCtrl(
 
   $scope.getDefault = async function () {
     $rootScope.isBusy = true;
+
     var resp = await service.getDefault();
     if (resp.success) {
       $scope.viewmodel = resp.data;

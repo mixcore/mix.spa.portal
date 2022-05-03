@@ -1,9 +1,15 @@
-<div class="text-center">
-  <div class="qr-output" ng-if="$ctrl.model" ng-init="$ctrl.initOutput()"></div>
-  <h6 ng-bind="$ctrl.model"></h6>
+<div class="">
+  <div
+    class="bar-output"
+    ng-if="$ctrl.model"
+    ng-init="$ctrl.initOutput()"
+  ></div>
+  <h6 ng-bind="$ctrl.encode"></h6>
   <input
     ng-if="!$ctrl.viewOnly"
     type="text"
+    pattern="\d*"
+    maxlength="{{$ctrl.maxLength}}"
     ng-model="$ctrl.model"
     ng-change="$ctrl.generate()"
   />

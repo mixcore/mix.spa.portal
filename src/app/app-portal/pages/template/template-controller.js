@@ -89,6 +89,9 @@ app.controller("TemplateController", [
         });
         if (resp && resp.success) {
           $scope.viewmodel = resp.data;
+          if (!$scope.viewmodel.content) {
+            $scope.viewmodel.content = "<div></div>";
+          }
           $scope.listUrl =
             "/portal/template/list/" +
             $scope.viewmodel.themeId +
@@ -113,6 +116,9 @@ app.controller("TemplateController", [
           resp.data.mixThemeId = themeId;
           resp.data.folderType = $scope.folderType;
           $scope.viewmodel = resp.data;
+          if (!$scope.viewmodel.content) {
+            $scope.viewmodel.content = "<div></div>";
+          }
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {

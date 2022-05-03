@@ -1,21 +1,29 @@
 ﻿sharedComponents.component("qrCode", {
   templateUrl: "/mix-app/views/app-shared/components/qr-code/view.html",
   controller: [
-    "$location",
-    function ($location) {
+    "$element",
+    function ($element) {
       var ctrl = this;
+
       ctrl.$onInit = function () {
-        if (ctrl.model) {
-          ctrl.generate();
-        }
+        setTimeout(() => {
+          if (ctrl.model) {
+            ctrl.generate();
+          }
+        }, 200);
+      };
+      ctrl.initOutput = function () {
+        ctrl.element = $element[0].querySelector(".qr-output");
+        ctrl.generate();
       };
       ctrl.generate = function () {
-        $("#qr-output").empty();
-        $("#qr-output").qrcode(ctrl.model);
+        $(ctrl.element).empty();
+        $(ctrl.element).qrcode(ctrl.model);
       };
     },
   ],
   bindings: {
     model: "=",
+    viewOnly: "=?",
   },
 });
