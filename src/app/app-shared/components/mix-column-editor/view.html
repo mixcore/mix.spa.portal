@@ -122,15 +122,11 @@
                 <i class="fas fa-exclamation-triangle me-3"></i> Please save the current
                 item to initialization a parent ID before input it child's data!
             </div>
-            <div class="row" ng-if="$ctrl.parentId">
-                <div class="col-md-12 mb-3">
-                    <a href="{{$ctrl.createUrl}}/{{$ctrl.parentId}}" class="btn btn-sm btn-primary float-end px-4 me-2 text-white">
-                        <i class="fas fa-plus"></i> Create data
-                    </a>
-                </div>
+            <div class="row" ng-if="$ctrl.parentId">                
                 <div class="col-md-12">
                     <mix-database-nav-values mix-database-id="$ctrl.column.referenceId" parent-id="$ctrl.model.id"
                         parent-type="'Set'" create-url="$ctrl.createUrl" update-url="$ctrl.updateUrl"
+                        back-url="$ctrl.backUrl"
                         on-update="$ctrl.updateRefData(data)" on-delete="$ctrl.removeRefData(data)">
                     </mix-database-nav-values>
                 </div>

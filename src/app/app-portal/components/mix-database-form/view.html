@@ -1,3 +1,10 @@
+<div class="row">
+  <h3 ng-if="$ctrl.mixDatabase.title">{{$ctrl.mixDatabase.title}}'s data</h3>
+  <p class="text-subtitle text-muted">
+    Fill all of the following columns to create a new data for
+    {{mixDatabaseTitle}} database.
+  </p>
+</div>
 <form ng-class="{'submitted': submitted}" ng-submit="$ctrl.submit()">
   <div class="row">
     <div class="col-8"></div>
@@ -87,11 +94,11 @@
           >
             <mix-column-editor
               ng-if="column"
-              parent-id="$ctrl.parentId"
+              parent-id="$ctrl.mixDatabaseData.id"
               level="$ctrl.level + 1"
               model="$ctrl.mixDatabaseData"
               column="column"
-              back-url="$ctrl.backUrl"
+              back-url="$ctrl.childBackUrl"
             >
             </mix-column-editor>
           </div>

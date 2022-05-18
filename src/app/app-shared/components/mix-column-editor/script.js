@@ -15,14 +15,14 @@
   controller: [
     "$rootScope",
     "$scope",
-    "$location",
+    "$routeParams",
     "ngAppSettings",
     "$filter",
     "ApiService",
     function (
       $rootScope,
       $scope,
-      $location,
+      $routeParams,
       ngAppSettings,
       $filter,
       apiService
@@ -140,8 +140,7 @@
         );
       };
       ctrl.buildCreateUrl = function () {
-        var backUrl = ctrl.backUrl ?? encodeURIComponent($location.url());
-        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
+        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataId=default&parentId=${ctrl.model.id}&parentType=Set`;
       };
       ctrl.initData = async function () {
         setTimeout(() => {

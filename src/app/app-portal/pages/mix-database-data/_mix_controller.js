@@ -82,6 +82,8 @@ app.controller("MixDatabaseDataController", [
         );
         if (getFields.isSucceed) {
           $scope.columns = getFields.data;
+          $scope.mixDatabaseTitle =
+            $scope.mixDatabaseTitle || $scope.columns[0].mixDatabaseName;
           $scope.$apply();
         }
       }

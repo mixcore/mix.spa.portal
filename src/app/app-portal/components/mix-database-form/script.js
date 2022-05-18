@@ -3,7 +3,7 @@ modules.component("mixDatabaseForm", {
     "/mix-app/views/app-portal/components/mix-database-form/view.html",
   bindings: {
     mixDatabaseId: "=",
-    mixDatabaseName: "=",
+    mixDatabaseName: "=?",
     mixDatabaseTitle: "=?",
     columns: "=?",
     mixDatabaseDataId: "=?",
@@ -21,8 +21,16 @@ modules.component("mixDatabaseForm", {
     "$scope",
     "$location",
     "$routeParams",
+    "RestMixDatabasePortalService",
     "RestMixDatabaseDataPortalService",
-    function ($rootScope, $scope, $location, $routeParams, service) {
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      $routeParams,
+      databaseService,
+      service
+    ) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -39,6 +47,8 @@ modules.component("mixDatabaseForm", {
             If input is data id => load ctrl.mixDatabaseData from service and handle it independently
         */
         ctrl.isBusy = true;
+        var getDatabase = await databaseService.getSingle([ctrl.mixDatabaseId]);
+        ctrl.mixDatabase = getDatabase.data;
 
         if (ctrl.mixDatabaseDataId) {
           var getData = await service.getSingle([ctrl.mixDatabaseDataId]);
@@ -52,9 +62,6 @@ modules.component("mixDatabaseForm", {
               ctrl.mixDatabaseTitle ||
               $routeParams.mixDatabaseTitle ||
               ctrl.mixDatabaseName;
-            ctrl.backUrl =
-              ctrl.backUrl ??
-              `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabaseData.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseData.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
@@ -66,8 +73,16 @@ modules.component("mixDatabaseForm", {
             $scope.$apply();
           }
         }
-        if ((ctrl.mixDatabaseName || ctrl.mixDatabaseId) && !ctrl.defaultData) {
+        if (ctrl.mixDatabaseName || ctrl.mixDatabaseId) {
+          var getDatabase = await databaseService.getSingle([
+            ctrl.mixDatabaseId,
+          ]);
+          ctrl.mixDatabase = getDatabase.data;
           await ctrl.loadDefaultModel();
+          ctrl.childBackUrl = $location.url();
+          ctrl.backUrl =
+            ctrl.backUrl ??
+            `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDatabase.id}&mixDatabaseName=${ctrl.mixDatabase.name}&mixDatabaseTitle=${ctrl.mixDatabase.title}`;
           ctrl.isBusy = false;
           $scope.$apply();
         }
