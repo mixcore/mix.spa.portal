@@ -50,7 +50,9 @@ app.controller("FloralpunkMembershipController", [
         await $scope.getSingle();
       }
     };
-
+    $scope.updateArrayToken = function (content) {
+      $scope.viewmodel.arrayToken = JSON.parse(content);
+    };
     $scope.activeCoupon = async function (coupon) {
       var result = await couponService.saveFields(coupon.id, [
         {

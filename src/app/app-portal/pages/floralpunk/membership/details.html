@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col">
           <div class="page-pretitle">Creating</div>
-          <h3 class="page-title">New Coupon</h3>
+          <h3 class="page-title">User Details</h3>
         </div>
       </div>
     </div>
@@ -44,21 +44,39 @@
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">User Name</label>
+                <label class="form-label">Name</label>
                 <input
                   type="text"
                   required
                   class="form-control form-control-lg"
-                  ng-model="viewmodel.userName"
+                  ng-model="viewmodel.name"
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Phone Number</label>
+                <label class="form-label">Address</label>
                 <input
                   type="text"
                   required
                   class="form-control form-control-lg"
-                  ng-model="viewmodel.phoneNumber"
+                  ng-model="viewmodel.address"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control form-control-lg"
+                  ng-model="viewmodel.email"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Contact Number</label>
+                <input
+                  type="text"
+                  required
+                  class="form-control form-control-lg"
+                  ng-model="viewmodel.contactNumber"
                 />
               </div>
               <div class="mb-3">
@@ -103,6 +121,15 @@
                     {{item}}
                   </option>
                 </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Tokens</label>
+                <monaco-editor
+                  content="viewmodel.arrayToken | json"
+                  update-content="updateArrayToken(content)"
+                  ext="'.json'"
+                >
+                </monaco-editor>
               </div>
               <div class="mb-3">
                 <div class="row" ng-if="viewmodel.id">

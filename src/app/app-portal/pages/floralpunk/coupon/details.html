@@ -44,8 +44,20 @@
                 />
               </div>
               <div class="mb-3">
-                <label class="form-label">Code</label>
+                <label class="form-label">QR Code</label>
                 <qr-code model="viewmodel.code"></qr-code>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">BarCode</label>
+                <bar-code encode="'CODE128'" model="viewmodel.code"></bar-code>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Limit</label>
+                <input
+                  type="number"
+                  class="form-control form-control-lg"
+                  ng-model="viewmodel.title"
+                />
               </div>
               <div class="mb-3">
                 <label class="form-label">Description</label>
@@ -79,6 +91,7 @@
                     <thead class="thead-light">
                       <tr>
                         <th scope="col" class="col">Tier</th>
+                        <th scope="col" class="col">Limit</th>
                         <th scope="col" class="col">Start At</th>
                         <th scope="col" class="col">End At</th>
                         <th scope="col" class="col"></th>
@@ -94,6 +107,9 @@
                       >
                         <td>
                           <span ng-bind="item.tier"></span>
+                        </td>
+                        <td>
+                          <span ng-bind="item.limit"></span>
                         </td>
                         <td>
                           <span ng-bind="item.startAt | utcToLocal"></span>

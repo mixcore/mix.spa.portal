@@ -47,16 +47,26 @@
                 </div>
                 <div class="col">
                   <div class="mb-3">
-                    <label class="form-label">Repeat</label>
+                    <label class="form-label">Limit</label>
                     <input
                       type="number"
                       class="form-control"
-                      ng-model="viewmodel.repeatCount"
+                      ng-model="viewmodel.limit"
                     />
                   </div>
                 </div>
               </div>
               <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label class="form-label">Schedule</label>
+                    <td>
+                      <input type="checkbox" ng-model="viewmodel.isSchedule" />
+                    </td>
+                  </div>
+                </div>
+              </div>
+              <div class="row" ng-if="viewmodel.isSchedule">
                 <div class="col">
                   <div class="mb-3">
                     <label class="form-label">Cron Expression</label>
@@ -68,7 +78,10 @@
                   </div>
                 </div>
               </div>
-              <div class="row" ng-if="!viewmodel.cronExpression">
+              <div
+                class="row"
+                ng-if="viewmodel.isSchedule && !viewmodel.cronExpression"
+              >
                 <div class="col">
                   <div class="mb-3">
                     <label class="form-label">Interval</label>
@@ -93,7 +106,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" ng-if="viewmodel.isSchedule">
                 <div class="col">
                   <div class="mb-3">
                     <label class="form-label">Start At</label>
