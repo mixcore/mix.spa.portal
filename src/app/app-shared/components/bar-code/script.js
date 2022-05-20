@@ -6,15 +6,31 @@
     encode: "=?", // allowed ean8 / ean13
   },
   controller: [
+    "$rootScope",
     "$element",
-    function ($element) {
+    function ($rootScope, $element) {
       var ctrl = this;
-
+      ctrl.encodes = [
+        "EAN8",
+        "EAN13",
+        "CODE128",
+        "CODE128A",
+        "CODE128B",
+        "CODE128C",
+        "UPC",
+        "ITF14",
+        "ITF",
+        "MSI",
+        "MSI10",
+        "MSI11",
+        "MSI1010",
+        "MSI1110",
+        "pharmacode",
+      ];
       ctrl.$onInit = function () {
         if (!ctrl.encode) {
-          ctrl.encode = "ean8";
+          ctrl.encode = "EAN8";
         }
-        ctrl.maxLength = ctrl.encode == "ean8" ? 8 : 13;
         setTimeout(() => {
           if (ctrl.model) {
             ctrl.generate();
@@ -28,11 +44,31 @@
         }
       };
       ctrl.generate = function () {
-        $(ctrl.element).empty();
-        $(ctrl.element).barcode(ctrl.model, ctrl.encode, {
-          barWidth: 2,
-          barHeight: 50,
-        });
+        if (ctrl.element) {
+          try {
+            JsBarcode(ctrl.element, ctrl.model, { format: ctrl.encode });
+            ctrl.error = null;
+          } catch (error) {
+            var context = ctrl.element.getContext("2d");
+            // do some drawing
+            context.clearRect(
+              0,
+              0,
+              context.canvas.width,
+              context.canvas.height
+            );
+            ctrl.element.width = context.canvas.width;
+            ctrl.error = error;
+          }
+        }
+        // $(ctrl.element).empty();
+        // $(ctrl.element).barcode(ctrl.model, ctrl.encode, {
+        //   barWidth: 2,
+        //   barHeight: 50,
+        // });
+      };
+      ctrl.download = function () {
+        $rootScope.downloadCanvasImage(ctrl.element);
       };
     },
   ],

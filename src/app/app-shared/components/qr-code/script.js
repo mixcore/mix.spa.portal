@@ -1,8 +1,9 @@
 ﻿sharedComponents.component("qrCode", {
   templateUrl: "/mix-app/views/app-shared/components/qr-code/view.html",
   controller: [
+    "$rootScope",
     "$element",
-    function ($element) {
+    function ($rootScope, $element) {
       var ctrl = this;
 
       ctrl.$onInit = function () {
