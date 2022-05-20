@@ -59,6 +59,14 @@
                   ng-model="activedUser.email"
                 />
               </div>
+              <div class="mb-3">
+                <label class="form-label">Phone Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  ng-model="activedUser.phoneNumber"
+                />
+              </div>
               <label class="form-label">Active roles</label>
               <div class="tab-pane" ng-if="activedUser">
                 <role-associations

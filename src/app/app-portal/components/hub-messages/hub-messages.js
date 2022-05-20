@@ -24,7 +24,7 @@ app.controller("HubMessagesController", [
       $scope.messages.push(msg);
       $scope.newMsgCount += 1;
       $scope.$apply();
-      $rootScope.showMessage(msg.message, msg.style);
+      $rootScope.showMessage(msg.title, msg.style);
     };
     $scope.getMessageType = function (type) {
       switch (type) {

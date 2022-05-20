@@ -346,6 +346,8 @@ paths.appPortalRequired = {
     `${paths.nodeModules}jquery/dist/jquery.min.js`,
     `${paths.nodeModules}bootstrap/dist/js/bootstrap.min.js`,
     `${paths.nodeModules}bootstrap-notify/bootstrap-notify.min.js`,
+
+    `${paths.nodeModules}jsbarcode/dist/JsBarcode.all.min.js`,
     paths.scriptLib + "portal/prism/prism.min.js",
     paths.webapp + "app-portal/shared/**/*.js",
   ],

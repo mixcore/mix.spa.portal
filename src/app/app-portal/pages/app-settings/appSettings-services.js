@@ -11,8 +11,8 @@ app.factory("AppSettingsServices", [
 
     var settings = $rootScope.globalSettings;
 
-    var _getAppSettings = async function () {
-      var url = "/portal/app-settings/details";
+    var _getAppSettings = async function (name) {
+      var url = `/rest/shared/settings/${name}`;
 
       var req = {
         method: "GET",
@@ -21,27 +21,26 @@ app.factory("AppSettingsServices", [
       return await apiService.sendRequest(req);
     };
 
-    var _saveAppSettings = async function (appSettings) {
-      var apiUrl = "/portal/app-settings/save";
+    var _saveAppSettings = async function (name, appSettings) {
+      var url = `/rest/shared/settings/${name}`;
       var req = {
         method: "POST",
-        url: apiUrl,
+        url: url,
         data: JSON.stringify(appSettings),
       };
       return await apiService.sendRequest(req);
     };
-    var _saveAppSettings = async function (name, content) {
-      var apiUrl = "/portal/app-settings/save-global/" + name;
-      var req = {
-        method: "POST",
-        url: apiUrl,
-        data: JSON.stringify(content),
-      };
-      return await apiService.sendRequest(req);
-    };
+    // var _saveAppSettings = async function (name, content) {
+    //   var apiUrl = "/portal/app-settings/save-global/" + name;
+    //   var req = {
+    //     method: "POST",
+    //     url: apiUrl,
+    //     data: JSON.stringify(content),
+    //   };
+    //   return await apiService.sendRequest(req);
+    // };
 
     appSettingssServiceFactory.getAppSettings = _getAppSettings;
-    appSettingssServiceFactory.saveAppSettings = _saveAppSettings;
     appSettingssServiceFactory.saveAppSettings = _saveAppSettings;
     return appSettingssServiceFactory;
   },

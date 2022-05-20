@@ -1,8 +1,9 @@
 ﻿sharedComponents.component("qrCode", {
   templateUrl: "/mix-app/views/app-shared/components/qr-code/view.html",
   controller: [
+    "$rootScope",
     "$element",
-    function ($element) {
+    function ($rootScope, $element) {
       var ctrl = this;
 
       ctrl.$onInit = function () {
@@ -19,6 +20,9 @@
       ctrl.generate = function () {
         $(ctrl.element).empty();
         $(ctrl.element).qrcode(ctrl.model);
+      };
+      ctrl.download = function () {
+        $rootScope.downloadCanvasImage(ctrl.element.querySelector("canvas"));
       };
     },
   ],

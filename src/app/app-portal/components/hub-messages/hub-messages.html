@@ -24,6 +24,7 @@
           <thead class="thead-light">
             <tr>
               <th scope="col" width="10%">Status</th>
+              <th scope="col">Title</th>
               <th width="50%" scope="col">Message</th>
               <th scope="col">Created Date</th>
             </tr>
@@ -31,13 +32,19 @@
           <tbody>
             <tr ng-repeat="msg in messages">
               <td>
-                <span ng-bind="msg.type"></span>
+                <span ng-bind="msg.type" class="text-{{msg.style}}"></span>
+              </td>
+              <td>
+                <span ng-bind="msg.title" class="text-{{msg.style}}"></span>
               </td>
               <td>
                 <span ng-bind="msg.message" class="text-{{msg.style}}"></span>
               </td>
               <td>
-                <span ng-bind="msg.createdDateTime | utcToLocal"></span>
+                <span
+                  ng-bind="msg.createdDateTime | utcToLocal"
+                  class="text-{{msg.style}}"
+                ></span>
               </td>
             </tr>
           </tbody>

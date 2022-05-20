@@ -46,7 +46,7 @@ app.controller("AppSettingsController", [
     $scope.loadAppSettings = async function () {
       $rootScope.isBusy = true;
 
-      var response = await appSettingsServices.getAppSettings();
+      var response = await appSettingsServices.getAppSettings("global");
       if (response && response.success) {
         $scope.appSettings = response.data;
         $rootScope.isBusy = false;
@@ -63,16 +63,19 @@ app.controller("AppSettingsController", [
       $scope.$apply();
 
       // load portal menus
-      commonService.loadJsonData("portal-menus.json").then((resp) => {
-        $scope.menus = resp.data.items;
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      });
+      //   commonService.loadJsonData("portal-menus.json").then((resp) => {
+      //     $scope.menus = resp.data.items;
+      //     $rootScope.isBusy = false;
+      //     $scope.$apply();
+      //   });
     };
 
     $scope.saveAppSettings = async function (appSettings) {
       $rootScope.isBusy = true;
-      var resp = await appSettingsServices.saveAppSettings(appSettings);
+      var resp = await appSettingsServices.saveAppSettings(
+        "global",
+        appSettings
+      );
       if (resp && resp.success) {
         $scope.appSettings = resp.data;
         $rootScope.showMessage("success", "success");

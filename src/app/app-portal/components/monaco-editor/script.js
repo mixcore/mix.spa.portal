@@ -23,7 +23,7 @@
       ctrl.id = Math.floor(Math.random() * 100) + 1;
       ctrl.$onInit = function () {
         setTimeout(() => {
-          if (ctrl.content === null) {
+          if (!ctrl.content) {
             ctrl.content = "\r\n";
           }
         }, 100);

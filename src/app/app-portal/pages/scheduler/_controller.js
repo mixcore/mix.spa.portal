@@ -19,10 +19,9 @@ app.controller("SchedulerController", [
     $scope.schedule = {
       jobData: {
         data: {
-          status: "success",
-          string: "value",
-          obj: {
-            msg: "content",
+          title: "value",
+          data: {
+            message: "content",
           },
         },
       },

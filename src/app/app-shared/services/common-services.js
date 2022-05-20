@@ -14,6 +14,14 @@ appShared.factory("CommonService", [
       return await apiService.sendRequest(req, true);
     };
 
+    var _clearCache = async function (name) {
+      var req = {
+        method: "GET",
+        url: "/rest/shared/clear-cache",
+      };
+      return await apiService.sendRequest(req, true);
+    };
+
     var _showAlertMsg = function (title, message) {
       $rootScope.message = {
         title: title,
@@ -116,6 +124,7 @@ appShared.factory("CommonService", [
     factory.removeSettings = _removeSettings;
     factory.removeTranslator = _removeTranslator;
     factory.showAlertMsg = _showAlertMsg;
+    factory.clearCache = _clearCache;
     factory.checkfile = _checkfile;
     factory.genrateSitemap = _genrateSitemap;
     factory.loadJsonData = _loadJsonData;

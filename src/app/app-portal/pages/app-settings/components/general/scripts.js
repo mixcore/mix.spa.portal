@@ -4,8 +4,9 @@
   controller: [
     "$rootScope",
     "$scope",
+    "AppSettingsServices",
     "CommonService",
-    function ($rootScope, $scope, commonService) {
+    function ($rootScope, $scope, settingService, commonService) {
       var ctrl = this;
       ctrl.stopApplication = async function () {
         $rootScope.isBusy = true;

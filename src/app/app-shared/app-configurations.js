@@ -520,6 +520,14 @@ appShared.run([
         $rootScope.errors = [];
       }
     });
+    $rootScope.downloadCanvasImage = function (canvas) {
+      if (!canvas) return;
+      var image = canvas.toDataURL();
+      var aLink = document.createElement("a");
+      aLink.download = "image.png";
+      aLink.href = image;
+      aLink.click();
+    };
     $rootScope.generateUUID = function () {
       // Public Domain/MIT
       var d = new Date().getTime();
