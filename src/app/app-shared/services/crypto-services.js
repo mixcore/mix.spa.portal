@@ -66,6 +66,7 @@ appShared.factory("CryptoService", [
       };
     };
 
+    factory.parseKeys = _parseKeys;
     factory.encryptAES = _encryptAES;
     factory.decryptAES = _decryptAES;
     return factory;

@@ -3,11 +3,35 @@
   <h6 class="card-header">General Settings</h6>
   <div class="card-body">
     <div class="mb-3 row">
+      <div class="col-12 mb-3">
+        <label class="form-label">Combined Key</label>
+        <input
+          type="text"
+          readonly
+          ng-model="$ctrl.appSettings.ApiEncryptKey"
+          class="form-control"
+        />
+      </div>
+      <div class="col-6">
+        <label class="form-label">Key</label>
+        <input
+          type="text"
+          readonly
+          ng-model="$ctrl.apiKey"
+          class="form-control"
+        />
+      </div>
+      <div class="col-6">
+        <label class="form-label">IV</label>
+        <input type="text" readonly ng-model="$ctrl.iv" class="form-control" />
+      </div>
+    </div>
+    <div class="mb-3 row">
       <div class="col-6">
         <label class="form-label">Site Domain</label>
         <input
           type="text"
-          ng-model="$ctrl.appSettings.domain"
+          ng-model="$ctrl.appSettings.Domain"
           class="form-control"
           placeholder="eg. http://mixcore.org"
         />
@@ -16,7 +40,7 @@
         <label class="form-label">Response Cache (Seconds)</label>
         <input
           type="number"
-          ng-model="$ctrl.appSettings.responseCache"
+          ng-model="$ctrl.appSettings.ResponseCache"
           class="form-control"
           placeholder=""
         />

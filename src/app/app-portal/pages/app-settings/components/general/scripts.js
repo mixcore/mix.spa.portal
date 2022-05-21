@@ -4,10 +4,15 @@
   controller: [
     "$rootScope",
     "$scope",
-    "AppSettingsServices",
+    "CryptoService",
     "CommonService",
-    function ($rootScope, $scope, settingService, commonService) {
+    function ($rootScope, $scope, cryptoService, commonService) {
       var ctrl = this;
+      ctrl.$onInit = () => {
+        var key = cryptoService.parseKeys(ctrl.appSettings.ApiEncryptKey);
+        ctrl.apiKey = key.key;
+        ctrl.iv = key.iv;
+      };
       ctrl.stopApplication = async function () {
         $rootScope.isBusy = true;
         await commonService.stopApplication();
