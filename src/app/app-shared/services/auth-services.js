@@ -157,30 +157,13 @@ appShared.factory("AuthService", [
 
     var _fillAuthData = async function () {
       this.authentication = await apiService.fillAuthData();
+      return this.authentication;
     };
 
-    var _refreshToken = async function (id, accessToken) {
-      let data = {
-        refreshToken: id,
-        accessToken: accessToken,
-      };
-      if (id) {
-        var apiUrl = `/rest/mix-account/user/renew-token`;
-        var req = {
-          method: "POST",
-          url: apiUrl,
-          data: JSON.stringify(data),
-        };
-        var resp = await apiService.sendRequest(req);
-        if (resp.success) {
-          let encryptedData = resp.data;
-          return apiService.updateAuthData(encryptedData);
-        } else {
-          _logOut();
-        }
-      } else {
-        _logOut();
-      }
+    var _refreshToken = async function () {
+      await apiService.refreshToken();
+      this.authentication = await apiService.fillAuthData();
+      return this.authentication;
     };
 
     var _isInRole = function (roleName) {

@@ -7,12 +7,36 @@
 app.controller("HubMessagesController", [
   "$scope",
   "$rootScope",
-  function ($scope, $rootScope) {
+  "AuthService",
+  function ($scope, $rootScope, authService) {
     BaseHub.call(this, $scope);
+    authService.fillAuthData();
     $scope.newMsgCount = 0;
     $scope.messages = [];
     $scope.init = function () {
-      $scope.startConnection("portalHub", () => {});
+      $scope.startConnection(
+        "portalHub",
+        authService.authentication.accessToken,
+        () => {
+          $scope.joinRoom("portal");
+        },
+        (err) => {
+          if (
+            authService.authentication.refreshToken &&
+            err.message.indexOf("401") >= 0
+          ) {
+            authService.refreshToken().then(async () => {
+              $scope.startConnection(
+                "portalHub",
+                authService.authentication.accessToken,
+                () => {
+                  $scope.joinRoom("portal");
+                }
+              );
+            });
+          }
+        }
+      );
     };
     $scope.readMessages = function () {
       $scope.newMsgCount = 0;
