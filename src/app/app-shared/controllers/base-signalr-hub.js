@@ -1,3 +1,4 @@
+//https://docs.microsoft.com/en-us/aspnet/core/signalr/javascript-client?view=aspnetcore-6.0&tabs=visual-studio
 function BaseHub(scope) {
   scope.isLog = true;
   scope.connection = null;
@@ -8,16 +9,33 @@ function BaseHub(scope) {
   scope.others = [];
   scope.totalReconnect = 10;
   scope.timeDelay = 1000;
-
+  scope.request = {
+    action: "NewMessage",
+    title: "New Message",
+    message: "",
+    data: {},
+  };
   scope.joinRoom = function (room) {
     scope.connection.invoke("JoinRoom", room);
+    scope.room = room;
   };
 
   scope.connect = function () {
     scope.connection.invoke("join", scope.player);
   };
   scope.sendMessage = function () {
-    scope.connection.invoke("SendMessage", scope.request);
+    scope.connection.invoke(
+      "SendMessageToGroups",
+      scope.request,
+      scope.room,
+      false
+    );
+    scope.request = {
+      action: "NewMessage",
+      title: "New Message",
+      message: "",
+      data: {},
+    };
   };
   scope.receiveMessage = function (msg) {
     scope.responses.splice(0, 0, msg);
@@ -30,12 +48,7 @@ function BaseHub(scope) {
   // the webSockets transport the function will fallback to the serverSentEvents transport and
   // if this does not work it will try longPolling. If the connection cannot be started using
   // any of the available transports the function will return a rejected Promise.
-  scope.startConnection = async function (
-    hubName,
-    token,
-    callback,
-    errorCallback
-  ) {
+  scope.startConnection = async function (hubName, token, errorCallback) {
     scope.connection = new signalR.HubConnectionBuilder()
       .withUrl(scope.host + hubName, {
         accessTokenFactory: () => token,
@@ -46,20 +59,21 @@ function BaseHub(scope) {
       .build();
     // Create a function that the hub can call to broadcast messages.
 
-    // https://docs.microsoft.com/en-us/aspnet/core/signalr/configuration?view=aspnetcore-3.1&tabs=dotnet
-    //It's not possible to configure JSON serialization in the JavaScript client at this time.
     scope.connection.on("receive_message", (msg) => {
-      //   let msg = JSON.parse(resp);
       scope.receiveMessage(msg);
+    });
+    scope.connection.onreconnected((connectionId) => {
+      if (scope.onConnected) {
+        scope.onConnected();
+      }
     });
     scope.connection
       .start()
       .then(function () {
         console.log("connection started", scope.connection);
-        if (callback) {
-          callback();
+        if (scope.onConnected) {
+          scope.onConnected();
         }
-        //scope.$apply();
       })
       .catch(function (error) {
         if (errorCallback) {
@@ -80,9 +94,10 @@ function BaseHub(scope) {
       scope.connection
         .start()
         .then(function () {
-          console.log("connection started", scope.connection);
+          if (scope.onConnected) {
+            scope.onConnected();
+          }
           return true;
-          //scope.$apply();
         })
         .catch(function (error) {
           console.log(`Cannot start the connection use transport.`, error);

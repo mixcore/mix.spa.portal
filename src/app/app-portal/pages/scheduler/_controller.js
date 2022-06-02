@@ -19,10 +19,10 @@ app.controller("SchedulerController", [
     $scope.schedule = {
       jobData: {
         data: {
+          type: "Info",
           title: "value",
-          data: {
-            message: "content",
-          },
+          message: "content",
+          data: {},
         },
       },
       cronExpression: null,
