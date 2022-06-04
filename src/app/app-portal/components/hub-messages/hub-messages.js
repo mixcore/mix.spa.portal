@@ -55,13 +55,18 @@ app.controller("HubMessagesController", [
         case "MemberOffline":
           $scope.removeMember(msg.data);
         case "NewMessage":
-          msg.style = $scope.getMessageType(msg.type);
-          $scope.messages.push(msg);
-          $scope.newMsgCount += 1;
-          $scope.$apply();
-          $rootScope.showMessage(msg.title, msg.style);
+          $scope.newMessage(msg);
           break;
       }
+    };
+    $scope.newMessage = function (msg) {
+      msg.style = $scope.getMessageType(msg.type);
+      $scope.messages.push(msg);
+      if (msg.from.connectionId != $scope.request.from.connectionId) {
+        $scope.newMsgCount += 1;
+        $rootScope.showMessage(msg.title, msg.style);
+      }
+      $scope.$apply();
     };
     $scope.removeMember = function (member) {
       var index = $scope.members.findIndex(
@@ -73,12 +78,6 @@ app.controller("HubMessagesController", [
       $scope.$apply();
     };
 
-    $scope.newMessage = function (msg) {
-      $scope.messages.push(msg);
-      $scope.$apply();
-      var objDiv = document.getElementsByClassName("widget-conversation")[0];
-      objDiv.scrollTop = objDiv.scrollHeight + 20;
-    };
     $scope.newMember = function (member) {
       var index = $scope.members.findIndex(
         (x) => x.username === member.username

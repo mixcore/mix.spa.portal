@@ -63,6 +63,13 @@
                   ng-bind="msg.from.username"
                   class="text-{{msg.style}}"
                 ></span>
+                <br />
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  ng-model="request.message"
+                  ng-enter="sendPrivateMessage(msg.from.connectionId)"
+                ></textarea>
               </td>
               <td>
                 <span ng-bind="msg.type" class="text-{{msg.style}}"></span>
@@ -95,7 +102,7 @@
             rows="5"
             placeholder="Press enter to send message"
             class="form-control"
-            ng-enter="sendMessage()"
+            ng-enter="sendGroupMessage()"
             ng-model="request.message"
           ></textarea>
         </div>

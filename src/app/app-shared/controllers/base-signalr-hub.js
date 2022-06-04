@@ -23,19 +23,20 @@ function BaseHub(scope) {
   scope.connect = function () {
     scope.connection.invoke("join", scope.player);
   };
-  scope.sendMessage = function () {
+  scope.sendGroupMessage = function () {
     scope.connection.invoke(
-      "SendMessageToGroups",
+      "SendGroupMessage",
       scope.request,
       scope.room,
       false
     );
-    scope.request = {
-      action: "NewMessage",
-      title: "New Message",
-      message: "",
-      data: {},
-    };
+    scope.request.message = "";
+    scope.request.data = {};
+  };
+  scope.sendPrivateMessage = function (connectionId) {
+    scope.connection.invoke("SendPrivateMessage", scope.request, connectionId);
+    scope.request.message = "";
+    scope.request.data = {};
   };
   scope.receiveMessage = function (msg) {
     scope.responses.splice(0, 0, msg);
