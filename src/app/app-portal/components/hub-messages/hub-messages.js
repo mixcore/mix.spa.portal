@@ -42,7 +42,7 @@ app.controller("HubMessagesController", [
     $scope.receiveMessage = function (msg) {
       switch (msg.action) {
         case "MyConnection":
-          $scope.request.from = msg.data;
+          $scope.hubRequest.from = msg.data;
           $scope.$apply();
           break;
         case "MemberList":
@@ -62,7 +62,7 @@ app.controller("HubMessagesController", [
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
       $scope.messages.push(msg);
-      if (msg.from.connectionId != $scope.request.from.connectionId) {
+      if (msg.from.connectionId != $scope.hubRequest.from.connectionId) {
         $scope.newMsgCount += 1;
         $rootScope.showMessage(msg.title, msg.style);
       }

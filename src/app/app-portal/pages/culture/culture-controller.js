@@ -505,10 +505,11 @@ app.controller("CultureController", [
       },
     ];
     $scope.selected = null;
-    BaseCtrl.call(
+    BaseRestCtrl.call(
       this,
       $scope,
       $rootScope,
+      $location,
       $routeParams,
       ngAppSettings,
       service

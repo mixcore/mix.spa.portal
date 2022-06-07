@@ -4,12 +4,12 @@ function BaseHub(scope) {
   scope.connection = null;
   scope.host = "/hub/";
   scope.responses = [];
-  scope.requests = [];
+  scope.hubRequests = [];
   scope.rooms = [];
   scope.others = [];
   scope.totalReconnect = 10;
   scope.timeDelay = 1000;
-  scope.request = {
+  scope.hubRequest = {
     action: "NewMessage",
     title: "New Message",
     message: "",
@@ -26,17 +26,22 @@ function BaseHub(scope) {
   scope.sendGroupMessage = function () {
     scope.connection.invoke(
       "SendGroupMessage",
-      scope.request,
+      scope.hubRequest,
       scope.room,
       false
     );
-    scope.request.message = "";
-    scope.request.data = {};
+    scope.hubRequest.message = "";
+    scope.hubRequest.data = {};
   };
-  scope.sendPrivateMessage = function (connectionId) {
-    scope.connection.invoke("SendPrivateMessage", scope.request, connectionId);
-    scope.request.message = "";
-    scope.request.data = {};
+  scope.sendPrivateMessage = function (connectionId, selfReceive = true) {
+    scope.connection.invoke(
+      "SendPrivateMessage",
+      scope.hubRequest,
+      connectionId,
+      selfReceive
+    );
+    scope.hubRequest.message = "";
+    scope.hubRequest.data = {};
   };
   scope.receiveMessage = function (msg) {
     scope.responses.splice(0, 0, msg);

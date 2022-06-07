@@ -67,7 +67,7 @@
                 <textarea
                   class="form-control"
                   rows="2"
-                  ng-model="request.message"
+                  ng-model="hubRequest.message"
                   ng-enter="sendPrivateMessage(msg.from.connectionId)"
                 ></textarea>
               </td>
@@ -103,7 +103,7 @@
             placeholder="Press enter to send message"
             class="form-control"
             ng-enter="sendGroupMessage()"
-            ng-model="request.message"
+            ng-model="hubRequest.message"
           ></textarea>
         </div>
       </div>

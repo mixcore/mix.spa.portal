@@ -1,6 +1,6 @@
 ﻿"use strict";
 app.factory("CultureService", [
-  "BaseService",
+  "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("culture");
