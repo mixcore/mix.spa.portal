@@ -141,7 +141,6 @@ app.controller("PageController", [
     };
 
     $scope.saveSuccessCallback = async function () {
-      debugger;
       var result = await $scope.savePageModules();
       result = result && (await $scope.saveAdditionalData());
       if (result) {
