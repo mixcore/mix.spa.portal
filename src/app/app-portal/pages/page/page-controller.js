@@ -52,6 +52,8 @@ app.controller("PageController", [
       "type",
       "image",
     ];
+    $scope.additionalData = null;
+    $scope.temp = null;
     $scope.postRequest = angular.copy(ngAppSettings.request);
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
@@ -71,7 +73,11 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
+    $scope.$watch("additionalData", function (newValue, oldValue) {
+      console.log(newValue, oldValue)
+    })
     $scope.getSingleSuccessCallback = function () {
+      
       $scope.loadAdditionalData();
       if ($routeParams.template) {
         $scope.viewmodel.view = $rootScope.findObjectByKey(
