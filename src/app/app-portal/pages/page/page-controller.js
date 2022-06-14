@@ -7,7 +7,6 @@ app.controller("PageController", [
   "$routeParams",
   "PageRestService",
   "PagePostRestService",
-  "PagePageRestService",
   "UrlAliasService",
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
@@ -19,7 +18,6 @@ app.controller("PageController", [
     $routeParams,
     service,
     pagePostRestService,
-    pagePageRestService,
     urlAliasService,
     dataService,
     columnService
@@ -33,6 +31,7 @@ app.controller("PageController", [
       ngAppSettings,
       service
     );
+    $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     var pageModuleService = $rootScope.getRestService("mix-page-module");
     $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
@@ -88,12 +87,13 @@ app.controller("PageController", [
         $scope.request.direction !== "0";
     };
     $scope.loadAdditionalData = async function () {
-      const obj = {
+      let obj = {
         parentType: "Page",
         parentId: $scope.viewmodel.id,
         databaseName: "sysPageColumn",
+        specificulture: $scope.request.culture,
       };
-      const getData = await dataService.getAdditionalData(obj);
+      let getData = await dataService.getAdditionalData(obj);
       if (getData.success) {
         $scope.additionalData = getData.data;
         $scope.$apply();
@@ -140,24 +140,9 @@ app.controller("PageController", [
       items[index - 1].priority -= 1;
     };
 
-    $scope.updatePagePage = async function (items) {
-      $rootScope.isBusy = true;
-      var resp = await pagePageRestService.updateInfos(items);
-      if (resp && resp.success) {
-        $scope.activedPage = resp.data;
-        $rootScope.showMessage("success", "success");
-        $scope.getList();
-      } else {
-        if (resp) {
-          $rootScope.showErrors(resp.errors);
-        }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
-    };
     $scope.saveSuccessCallback = async function () {
+      debugger;
       var result = await $scope.savePageModules();
-
       result = result && (await $scope.saveAdditionalData());
       if (result) {
         $rootScope.showMessage("Saved", "success");

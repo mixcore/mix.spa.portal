@@ -33,6 +33,7 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.viewmodelType = "post";
     $scope.sysCategories = {
       items: [],

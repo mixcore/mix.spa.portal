@@ -5,13 +5,14 @@
     "$scope",
     "$rootScope",
     "ngAppSettings",
-    function ($scope, $rootScope, ngAppSettings) {
+    "CultureService",
+    function ($scope, $rootScope, ngAppSettings, cultureService) {
       var ctrl = this;
       ctrl.dateRange = {
         fromDate: null,
         toDate: null,
       };
-      ctrl.init = function () {
+      ctrl.init = async function () {
         if (!ctrl.arrOrderby) {
           ctrl.arrOrderby = ["Title", "Priority", "CreatedDateTime", "Status"];
         }
@@ -19,6 +20,16 @@
         ctrl.directions = ["Asc", "Desc"];
         ctrl.pageSizes = [5, 10, 15, 20];
         ctrl.statuses = $rootScope.globalSettings.statuses;
+      };
+      ctrl.changeLang = function (culture) {
+        if (culture) {
+          ctrl.selectedCulture = culture;
+          ctrl.request.culture = culture.specificulture;
+        } else {
+          ctrl.selectedCulture = null;
+          ctrl.request.culture = null;
+        }
+        ctrl.apply(0);
       };
       ctrl.apply = function (pageIndex) {
         $rootScope.setRequest(ctrl.request, ctrl.key);

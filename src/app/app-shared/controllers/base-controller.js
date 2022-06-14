@@ -32,7 +32,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   $scope.getSingle = async function () {
     $rootScope.isBusy = true;
     var id = $routeParams.id;
-    var resp = await service.getSingle([id, "portal"]);
+    var resp = await service.getSingle([id || "default"]);
     if (resp && resp.success) {
       $scope.viewmodel = resp.data;
       if ($scope.getSingleSuccessCallback) {
@@ -105,7 +105,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
 
   $scope.removeConfirmed = async function (id) {
     $rootScope.isBusy = true;
-    var result = await service.delete(id);
+    var result = await service.delete([id]);
     if (result.success) {
       if ($scope.removeCallback) {
         $rootScope.executeFunctionByName(

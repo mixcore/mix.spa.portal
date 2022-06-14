@@ -24,9 +24,13 @@ sharedComponents.component("mixStore", {
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.init = async function () {
-        ctrl.startConnection("mixThemeHub", () => {
-          ctrl.joinRoom("Theme");
+        debugger;
+        ctrl.startConnection("mixThemeHub", null, (err) => {
+          console.log(err);
         });
+        ctrl.onConnected = () => {
+          ctrl.joinRoom("Theme");
+        };
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
         ctrl.themeRequest.postType = "theme";

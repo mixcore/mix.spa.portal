@@ -4,17 +4,37 @@
       "/mix-app/views/app-portal/components/header-nav/headerNav.html",
     controller: [
       "$rootScope",
+      "$scope",
+      "ngAppSettings",
+      "localStorageService",
       "CommonService",
       "ApiService",
       "AuthService",
-      function ($rootScope, commonService, apiService, authService) {
+      "CultureService",
+      function (
+        $rootScope,
+        $scope,
+        ngAppSettings,
+        localStorageService,
+        commonService,
+        apiService,
+        authService,
+        cultureService
+      ) {
         var ctrl = this;
         ctrl.appSettings = $rootScope.globalSettings;
         ctrl.isInRole = $rootScope.isInRole;
         this.$onInit = function () {
           ctrl.isAdmin = $rootScope.isAdmin;
           ctrl.mixConfigurations = $rootScope.mixConfigurations;
-          ctrl.mixConfigurations.cultures = $rootScope.globalSettings.cultures;
+          cultureService.getList(ngAppSettings.request).then((resp) => {
+            ctrl.cultures = resp.data.items;
+            ctrl.selectedCulture = ctrl.cultures.find(
+              (m) =>
+                m.specificulture == $rootScope.globalSettings.defaultCulture
+            );
+            $scope.$apply();
+          });
           authService.fillAuthData().then(() => {
             if (
               authService.authentication &&
@@ -29,12 +49,10 @@
         ctrl.getConfiguration = function (keyword, isWrap, defaultText) {
           return $rootScope.getConfiguration(keyword, isWrap, defaultText);
         };
-        ctrl.changeLang = function (lang, langIcon) {
-          ctrl.mixConfigurations.lang = lang;
-          ctrl.mixConfigurations.langIcon = langIcon;
-          apiService.getAllSettings(lang).then(function () {
-            window.top.location = location.href;
-          });
+        ctrl.changeLang = function (culture) {
+          $rootScope.globalSettings.defaultCulture = culture.specificulture;
+          localStorageService.set("globalSettings", $rootScope.globalSettings);
+          window.top.location = location.href;
         };
         ctrl.logOut = function () {
           $rootScope.logOut();

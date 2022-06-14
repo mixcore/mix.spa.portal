@@ -95,41 +95,21 @@
       ctrl.uploadFile = async function (file) {
         if (file !== null) {
           $rootScope.isBusy = true;
-          var getMedia = await mediaService.getSingle(["portal"]);
-          if (getMedia.success) {
-            ctrl.mediaFile.fileName = file.name.substring(
-              0,
-              file.name.lastIndexOf(".")
-            );
-            ctrl.mediaFile.extension = file.name.substring(
-              file.name.lastIndexOf(".")
-            );
-            var media = getMedia.data;
-            media.fileFolder = ctrl.folder || "Media";
-            media.extension = ctrl.mediaFile.extension;
-            media.title = ctrl.title || "";
-            media.description = ctrl.description || "";
-            media.mediaFile = ctrl.mediaFile;
-            var resp = await mediaService.save(
-              media,
-              null,
-              ctrl.onUploadFileProgress
-            );
-            if (resp && resp.success) {
-              ctrl.src = resp.data.filePath;
-              ctrl.srcUrl = resp.data.filePath;
-              ctrl.isImage = ctrl.srcUrl
-                .toLowerCase()
-                .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
-              $rootScope.isBusy = false;
-              $scope.$apply();
-            } else {
-              if (resp) {
-                $rootScope.showErrors(resp.errors);
-              }
-              $rootScope.isBusy = false;
-              $scope.$apply();
+          var resp = await mediaService.uploadMedia(file);
+          if (resp && resp.success) {
+            ctrl.src = resp.data;
+            ctrl.srcUrl = resp.data;
+            ctrl.isImage = ctrl.srcUrl
+              .toLowerCase()
+              .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          } else {
+            if (resp) {
+              $rootScope.showErrors(resp.errors);
             }
+            $rootScope.isBusy = false;
+            $scope.$apply();
           }
         } else {
           return null;

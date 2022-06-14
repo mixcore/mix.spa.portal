@@ -401,6 +401,7 @@
               <tabs-v class="mb-3">
                 <pane-v icon="fas fa-pen" header="Content">
                   <page-content
+                    ng-if="additionalData"
                     model="viewmodel"
                     additional-data="additionalData"
                   ></page-content>
@@ -410,13 +411,15 @@
                 </pane-v>
                 <pane-v icon="fas fa-cubes" header="Modules">
                   <page-modules
-                    left-id="viewmodel.id"
+                    ng-if="viewmodel"
+                    page="viewmodel"
                     associations="selectedModules"
                     on-update="selectModule(associations)"
                   ></page-modules>
                 </pane-v>
                 <pane-v icon="fas fa-cog" header="" class="ms-auto">
                   <page-advanced
+                    ng-if="additionalData"
                     model="viewmodel"
                     additional-data="additionalData"
                   ></page-advanced>

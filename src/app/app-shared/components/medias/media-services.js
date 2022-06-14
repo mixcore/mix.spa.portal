@@ -4,10 +4,10 @@ appShared.factory("MediaService", [
   "$uibModal",
   "ApiService",
   "CommonService",
-  "BaseService",
+  "BaseRestService",
   function ($rootScope, $uibModal, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("mix-file");
+    serviceFactory.initService("/rest", "mix-storage", true);
     var _cloneMedia = async function (id) {
       var req = {
         method: "GET",
@@ -24,7 +24,7 @@ appShared.factory("MediaService", [
       fd.append("file", file);
       return await serviceFactory.ajaxSubmitForm(fd, url, onUploadFileProgress);
     };
-    var _uploadMedia = async function (file, onUploadFileProgress) {
+    var _uploadMedia = async function (file, folder, onUploadFileProgress) {
       //var container = $(this).parents('.model-media').first().find('.custom-file').first();
       if (file !== null) {
         // Create FormData object
@@ -32,6 +32,7 @@ appShared.factory("MediaService", [
         var fd = new FormData();
 
         fd.append("file", file);
+        fd.append("folder", folder || "");
         return await serviceFactory.ajaxSubmitForm(
           fd,
           url,

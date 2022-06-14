@@ -27,6 +27,7 @@ app.controller("PagePostController", [
       ngAppSettings,
       service
     );
+    $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.cates = ["Site", "System"];
     $scope.others = [];
     $scope.mixConfigurations = $rootScope.globalSettings;

@@ -16,7 +16,8 @@
     "$rootScope",
     "ngAppSettings",
     "RestMixDatabaseDataPortalService",
-    function ($scope, $rootScope, ngAppSettings, dataService) {
+    "CultureService",
+    function ($scope, $rootScope, ngAppSettings, dataService, cultureService) {
       var ctrl = this;
       ctrl.dateRange = {
         fromDate: null,
@@ -42,7 +43,16 @@
           });
         });
       };
-
+      ctrl.changeLang = function (culture) {
+        if (culture) {
+          ctrl.selectedCulture = culture;
+          ctrl.request.culture = culture.specificulture;
+        } else {
+          ctrl.selectedCulture = null;
+          ctrl.request.culture = null;
+        }
+        ctrl.apply(0);
+      };
       ctrl.apply = function (pageIndex) {
         $rootScope.setRequest(ctrl.request, ctrl.key);
         ctrl.callback({ pageIndex: pageIndex });

@@ -28,6 +28,7 @@ app.controller("ModuleDataController", [
       ngAppSettings,
       service
     );
+    $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     // $scope.request.orderBy = "Priority";
     // $scope.request.direction = "Asc";
     $scope.cates = ["Site", "System"];

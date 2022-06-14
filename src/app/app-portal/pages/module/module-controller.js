@@ -32,6 +32,7 @@ app.controller("ModuleController", [
       moduleServices,
       "product"
     );
+    $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.viewmodelType = "module";
     $scope.contentUrl = "";
     $scope.getSingleSuccessCallback = function () {
