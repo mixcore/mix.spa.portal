@@ -24,7 +24,6 @@ sharedComponents.component("mixStore", {
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.init = async function () {
-        debugger;
         ctrl.startConnection("mixThemeHub", null, (err) => {
           console.log(err);
         });
