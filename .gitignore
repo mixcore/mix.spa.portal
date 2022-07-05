@@ -243,3 +243,5 @@ ModelManifest.xml
 dist/
 /src/app/app-portal/custom
 yarn.lock
+
+package-lock.json
