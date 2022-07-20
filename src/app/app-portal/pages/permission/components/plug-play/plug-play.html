@@ -43,7 +43,7 @@
     </div>
     <div class="col-3 text-end">
       <a
-        ng-click="$ctrl.goToPath('/portal/permission/details/' + nav.id)"
+        ng-click="$ctrl.goToPath('/admin/permission/details/' + nav.id)"
         class="btn btn-link text-primary"
       >
         <span class="fas fa-pen"></span>
@@ -59,7 +59,7 @@
     <navs
       class="col-8"
       data="$ctrl.page.childNavs"
-      details-url="'/portal/permission/details/'"
+      details-url="'/admin/permission/details/'"
       key="'pageId'"
       title-column="'page.textDefault'"
       prefix="$ctrl.prefixChild"
@@ -69,7 +69,7 @@
   <!-- <pane-h header="Parents">
     <navs
       data="$ctrl.page.parentNavs"
-      details-url="'/portal/permission/details/'"
+      details-url="'/admin/permission/details/'"
       key="'parentId'"
       title-column="'parent.textDefault'"
       prefix="$ctrl.prefixParent"

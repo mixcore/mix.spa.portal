@@ -97,7 +97,7 @@ appShared.controller("SharedModuleDataController", [
     $scope.loadParams = async function () {
       $scope.dataContentId = $routeParams.id;
       $scope.backUrl =
-        "/portal/module-data/list/" + $routeParams.moduleContentId;
+        "/admin/module-data/list/" + $routeParams.moduleContentId;
       $scope.moduleContentId = $routeParams.moduleContentId;
     };
 
@@ -172,7 +172,7 @@ appShared.controller("SharedModuleDataController", [
         $scope.initModuleForm($scope.name);
         $rootScope.isBusy = false;
         $scope.$apply();
-        //$location.path('/portal/moduleData/details/' + resp.data.id);
+        //$location.path('/admin/moduleData/details/' + resp.data.id);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

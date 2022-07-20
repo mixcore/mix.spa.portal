@@ -40,7 +40,7 @@ appShared.factory("AppSettingsService", [
         return appSettings;
       } else {
         appSettings = { lang: culture, data: null };
-        var url = "/portal";
+        var url = "/admin";
         if (culture) {
           url += "/" + culture;
         }
@@ -104,7 +104,7 @@ appShared.factory("AppSettingsService", [
     };
 
     var getLinkCreateLanguage = function (keyword, isWrap) {
-      //return '<span data-key="/portal/language/details?k=' + keyword + '">[' + keyword + ']</span>';
+      //return '<span data-key="/admin/language/details?k=' + keyword + '">[' + keyword + ']</span>';
       return isWrap ? "[" + keyword + "]" : keyword;
     };
 

@@ -17,5 +17,5 @@ app.config(function (
       });
     }
   });
-  $routeProvider.otherwise({ redirectTo: "/portal" });
+  $routeProvider.otherwise({ redirectTo: "/admin" });
 });

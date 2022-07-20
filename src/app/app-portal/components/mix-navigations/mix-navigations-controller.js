@@ -101,7 +101,7 @@ app.controller("MixNavigationController", [
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
         $scope.$apply();
-        //$location.path('/portal/media/details/' + resp.data.id);
+        //$location.path('/admin/media/details/' + resp.data.id);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

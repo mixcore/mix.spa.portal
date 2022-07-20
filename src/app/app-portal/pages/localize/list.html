@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <filter-list request="request" callback="getList(pageIndex)"
-                            create-url="'/portal/localize/create'" create-text="'Create Keyword'"></filter-list>
+                            create-url="'/admin/localize/create'" create-text="'Create Keyword'"></filter-list>
                     </div>
                 </div>
             </nav>
@@ -72,7 +72,7 @@
                                 <td>
                                     <div class="btn-group btn-group-sm btn-group-sm float-end" role="group"
                                         aria-label="Actions">
-                                        <a href="/portal/localize/details/{{item.id}}" class="btn btn-link">
+                                        <a href="/admin/localize/details/{{item.id}}" class="btn btn-link">
                                             <span class="fa fa-pen text-primary"></span>
                                         </a>
                                         <a ng-click="remove(item.id);" class="btn btn-link">

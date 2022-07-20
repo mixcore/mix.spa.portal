@@ -181,7 +181,7 @@
         // ctrl.refDataModel = nav;
         // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
-        // $location.url('/portal/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/admin/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
 
       ctrl.removeRefData = async function (nav) {

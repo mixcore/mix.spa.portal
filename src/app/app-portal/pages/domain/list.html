@@ -17,7 +17,7 @@
             class=""
             request="request"
             callback="getList(pageIndex)"
-            create-url="'/portal/domain/create'"
+            create-url="'/admin/domain/create'"
             create-text="'Create Domain'"
           ></filter-list>
         </div>
@@ -89,7 +89,7 @@
                 <td class="">
                   <a
                     href=""
-                    ng-click="goToPath('/portal/domain/details/' + item.id)"
+                    ng-click="goToPath('/admin/domain/details/' + item.id)"
                     class="btn-link"
                     ng-bind="item.displayName"
                   >
@@ -138,7 +138,7 @@
                       <li>
                         <a
                           href=""
-                          ng-click="goToPath('/portal/domain/details/' + item.id)"
+                          ng-click="goToPath('/admin/domain/details/' + item.id)"
                           class="dropdown-item border-radius-md"
                         >
                           <span class="fas fa-pen"></span> Edit
@@ -157,7 +157,7 @@
                         <a
                           href=""
                           ng-if="item.type=='ListPost'"
-                          ng-click="goToPath('/portal/domain/domain-post/list/' + item.id)"
+                          ng-click="goToPath('/admin/domain/domain-post/list/' + item.id)"
                           class="dropdown-item border-radius-md"
                         >
                           <span class="fas fa-bars"></span> Child posts

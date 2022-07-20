@@ -13,7 +13,7 @@ app.controller("ForgotPasswordController", [
       authService.authentication.isAdmin
     ) {
       authService.referredUrl = $location.path();
-      $location.path("/portal");
+      $location.path("/admin");
     }
     $scope.pageClass = "page-forgot-password";
     $scope.success = false;

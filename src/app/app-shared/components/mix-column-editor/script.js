@@ -52,7 +52,7 @@
           ctrl.buildCreateUrl();
         }
         if (!ctrl.updateUrl) {
-          ctrl.updateUrl = "/portal/mix-database-data/details";
+          ctrl.updateUrl = "/admin/mix-database-data/details";
         }
         if (ctrl.model && ctrl.column.isSelect) {
           // Load options from system configutation by name if exist else load options from column configurations

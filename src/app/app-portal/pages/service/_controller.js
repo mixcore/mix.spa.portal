@@ -42,10 +42,10 @@ app.controller("ServiceController", [
       $rootScope.isBusy = false;
       $scope.$apply();
       // if($scope.parentId){
-      //     $location.url('/portal/mix-database-data/details?dataContentId='+ $scope.parentId);
+      //     $location.url('/admin/mix-database-data/details?dataContentId='+ $scope.parentId);
       // }
       // else{
-      //     $location.url('/portal/mix-database-data/list?mixDatabaseId='+ $scope.viewmodel.mixDatabaseId);
+      //     $location.url('/admin/mix-database-data/list?mixDatabaseId='+ $scope.viewmodel.mixDatabaseId);
       // }
     };
     $scope.getList = async function () {
@@ -100,12 +100,12 @@ app.controller("ServiceController", [
       }
     };
     $scope.preview = function (item) {
-      item.editUrl = "/portal/post/details/" + item.id;
+      item.editUrl = "/admin/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.edit = function (data) {
       $scope.goToPath(
-        "/portal/mix-database-data/details?dataContentId=" +
+        "/admin/mix-database-data/details?dataContentId=" +
           data.id +
           "&mixDatabaseId=" +
           $scope.mixDatabaseId

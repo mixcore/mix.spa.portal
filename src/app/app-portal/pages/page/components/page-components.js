@@ -158,7 +158,7 @@ function PageDetailsController($scope, $element, $attrs) {
       url:
         "/" +
         ctrl.currentLanguage +
-        "/Portal/" +
+        "/admin/" +
         type +
         "/AddEmptyProperty/" +
         i,

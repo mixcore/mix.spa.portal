@@ -60,7 +60,7 @@ appShared.factory('BaseODataService', ['$rootScope', '$routeParams', 'ApiService
         };
 
         var _delete = async function (params = []) {
-            var url = this.prefixUrl + '/portal';
+            var url = this.prefixUrl + '/admin';
             for (let i = 0; i < params.length; i++) {
                 if (params[i] != null) {
                     url += '/' + params[i];

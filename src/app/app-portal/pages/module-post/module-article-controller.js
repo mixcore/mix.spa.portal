@@ -64,7 +64,7 @@ app.controller("ModulePostController", [
       }
     };
     $scope.preview = function (item) {
-      item.editUrl = "/portal/post/details/" + item.id;
+      item.editUrl = "/admin/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.remove = function (moduleContentId, postId) {

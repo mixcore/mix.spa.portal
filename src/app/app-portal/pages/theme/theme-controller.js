@@ -89,14 +89,14 @@ app.controller("ThemeController", [
     };
     $scope.saveSuccessCallback = function () {
       apiService.getAllSettings().then(function () {
-        $location.path("/portal/theme/list");
+        $location.path("/admin/theme/list");
         $rootScope.isBusy = false;
         $scope.$apply();
       });
     };
     $scope.removeCallback = function () {
       apiService.getAllSettings().then(function () {
-        $location.path("/portal/theme/list");
+        $location.path("/admin/theme/list");
       });
     };
 

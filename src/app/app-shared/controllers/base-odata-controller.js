@@ -33,7 +33,7 @@ function BaseODataCtrl(
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
   } else {
-    $scope.referrerUrl = "/portal"; // document.referrer.substr(document.referrer.indexOf('/portal'));
+    $scope.referrerUrl = "/admin"; // document.referrer.substr(document.referrer.indexOf('/admin'));
   }
 
   $scope.getSingle = async function (params = []) {

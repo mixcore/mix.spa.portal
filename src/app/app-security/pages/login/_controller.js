@@ -19,7 +19,7 @@ app.controller("LoginController", [
     $scope.canLogin = true;
     if (authService.authentication && authService.isInRole("Owner")) {
       authService.referredUrl = $location.path();
-      $location.path("/portal");
+      $location.path("/admin");
     }
 
     $scope.pageClass = "page-login";

@@ -7,7 +7,7 @@ app.factory("RegisterServices", [
     //var serviceBase = 'http://ngauthenticationapi.azurewebsites.net/';
 
     var usersServiceFactory = {};
-    var apiUrl = "/portal/";
+    var apiUrl = "/admin/";
     var _register = async function (user) {
       var apiUrl = "/rest/mix-account/user/register";
       var req = {

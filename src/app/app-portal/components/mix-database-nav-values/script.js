@@ -33,10 +33,10 @@ modules.component("mixDatabaseNavValues", {
       ctrl.$onInit = async function () {
         ctrl.maxCol = ctrl.maxCol || 3;
         if (!ctrl.createUrl) {
-          ctrl.createUrl = "/portal/mix-database-data/create";
+          ctrl.createUrl = "/admin/mix-database-data/create";
         }
         if (!ctrl.updateUrl) {
-          ctrl.updateUrl = "/portal/mix-database-data/details";
+          ctrl.updateUrl = "/admin/mix-database-data/details";
         }
         if (!ctrl.columns) {
           var getFields = await columnService.initData(
@@ -114,7 +114,7 @@ modules.component("mixDatabaseNavValues", {
         // ctrl.refDataModel = nav;
         // var e = $(".pane-form-" + ctrl.mixDatabaseDataValue.column.referenceId)[0];
         // angular.element(e).triggerHandler('click');
-        // $location.url('/portal/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/admin/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
       ctrl.saveData = function (data) {
         $rootScope.isBusy = true;

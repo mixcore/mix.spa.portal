@@ -52,7 +52,7 @@ modules.component("mixDatabaseNavData", {
         ctrl.selected = nav;
         var e = $(".pane-form-" + ctrl.nav.data.id)[0];
         angular.element(e).triggerHandler("click");
-        // $location.url('/portal/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
+        // $location.url('/admin/mix-database-data/details?dataContentId='+ item.id +'&mixDatabaseId=' + item.mixDatabaseId+'&parentType=' + item.parentType+'&parentId=' + item.parentId);
       };
       ctrl.saveData = function (data) {
         $rootScope.isBusy = true;

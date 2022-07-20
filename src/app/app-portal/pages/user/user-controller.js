@@ -87,7 +87,7 @@ app.controller("UserController", [
     $scope.loadUsers = async function (pageIndex) {
       authService.fillAuthData().then(() => {
         if ($rootScope.isInRoles(["Owner", "Admin"])) {
-          $scope.createUrl = "/portal/user/create";
+          $scope.createUrl = "/admin/user/create";
         }
       });
 

@@ -67,7 +67,7 @@ app.controller("TemplateController", [
     };
     $scope.loadFolder = function (d) {
       $location.url(
-        "/portal/template/list/" +
+        "/admin/template/list/" +
           $routeParams.themeId +
           "?folderType=" +
           encodeURIComponent(d)
@@ -93,7 +93,7 @@ app.controller("TemplateController", [
             $scope.viewmodel.content = "<div></div>";
           }
           $scope.listUrl =
-            "/portal/template/list/" +
+            "/admin/template/list/" +
             $scope.viewmodel.themeId +
             "?folderType=" +
             encodeURIComponent($scope.viewmodel.folderType);
@@ -135,7 +135,7 @@ app.controller("TemplateController", [
       $scope.folderType = $routeParams.folderType; // ? $routeParams.folderType : 'Masters';
       var themeId = $routeParams.themeId;
       $scope.listUrl =
-        "/portal/template/list/" +
+        "/admin/template/list/" +
         themeId +
         "?folderType=" +
         encodeURIComponent($scope.folderType);

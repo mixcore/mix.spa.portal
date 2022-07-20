@@ -96,7 +96,7 @@
       };
       ctrl.updateRefData = function (item) {
         $location.url(
-          "/portal/mix-database-data/details?dataContentId=" +
+          "/admin/mix-database-data/details?dataContentId=" +
             item.id +
             "&mixDatabaseId=" +
             item.mixDatabaseId +

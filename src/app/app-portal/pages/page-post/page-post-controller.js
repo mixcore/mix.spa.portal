@@ -42,12 +42,12 @@ app.controller("PagePostController", [
         $scope.request.direction === "Asc";
       $scope.createUrl =
         $routeParams.post_type === "gallery"
-          ? "/portal/post/create-gallery"
+          ? "/admin/post/create-gallery"
           : `/portal/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.updateUrl =
         $routeParams.post_type === "gallery"
-          ? "/portal/post/gallery-details"
-          : "/portal/post/details";
+          ? "/admin/post/gallery-details"
+          : "/admin/post/details";
     };
     $scope.getList = async function (pageIndex) {
       if (pageIndex !== undefined) {
@@ -71,7 +71,7 @@ app.controller("PagePostController", [
       }
     };
     $scope.preview = function (item) {
-      item.editUrl = "/portal/post/details/" + item.id;
+      item.editUrl = "/admin/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.remove = function (pageId, postId) {

@@ -20,7 +20,7 @@ app.controller("loginController", [
       authService.authentication.isAdmin
     ) {
       authService.referredUrl = $location.path();
-      $location.path("/portal");
+      $location.path("/admin");
     }
 
     $scope.pageClass = "page-login";
@@ -37,7 +37,7 @@ app.controller("loginController", [
     });
     $scope.login = async function () {
       if (authService.referredUrl === "/init/login") {
-        authService.referredUrl = "/portal";
+        authService.referredUrl = "/admin";
       }
       $rootScope.isBusy = true;
       var result = await authService.login($scope.loginData);

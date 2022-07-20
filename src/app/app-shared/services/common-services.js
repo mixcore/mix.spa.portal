@@ -46,7 +46,7 @@ appShared.factory("CommonService", [
     };
 
     var _sendMail = async function (subject, body) {
-      var url = "/portal/sendmail";
+      var url = "/admin/sendmail";
       var req = {
         method: "POST",
         url: url,
@@ -93,7 +93,7 @@ appShared.factory("CommonService", [
     };
 
     var _genrateSitemap = async function () {
-      var url = "/portal";
+      var url = "/admin";
       url += "/sitemap";
       var req = {
         method: "GET",

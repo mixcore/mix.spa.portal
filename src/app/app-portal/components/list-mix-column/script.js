@@ -1,26 +1,49 @@
 modules.component("listMixColumn", {
   templateUrl: "/mix-app/views/app-portal/components/list-mix-column/view.html",
+  bindings: {
+    header: "=",
+    columns: "=",
+    relationships: "=",
+    removeAttributes: "=",
+  },
   controller: [
     "$rootScope",
     "$scope",
+    "ngAppSettings",
+    "RestMixDatabasePortalService",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, service) {
+    function ($rootScope, $scope, ngAppSettings, databaseService, service) {
       var ctrl = this;
+      ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.selectedCol = null;
-
+      ctrl.relationshipTypes = ["OneToMany", "ManyToMany"];
+      ctrl.defaultRelationship = {
+        leftId: null,
+        type: "OneToMany",
+        rightId: null,
+      };
       ctrl.$onInit = async function () {
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+        ctrl.databases = await databaseService.getList(ctrl.request);
         var getDefaultAttr = await service.getDefault();
         if (getDefaultAttr.success) {
           ctrl.defaultAttr = getDefaultAttr.data;
           ctrl.defaultAttr.options = [];
         }
+        $scope.$apply();
       };
       ctrl.addAttr = function () {
         if (ctrl.columns) {
           var t = angular.copy(ctrl.defaultAttr);
           t.priority = ctrl.columns.length + 1;
           ctrl.columns.push(t);
+        }
+      };
+      ctrl.addRelationship = function () {
+        if (ctrl.relationships) {
+          var t = angular.copy(ctrl.defaultRelationship);
+          t.priority = ctrl.relationships.length + 1;
+          ctrl.relationships.push(t);
         }
       };
       ctrl.removeAttribute = async function (attr, index) {
@@ -139,6 +162,10 @@ modules.component("listMixColumn", {
         ctrl.colRef = col;
         $("#modal-navs").modal("show");
       };
+      ctrl.showRelationships = function () {
+        $("#modal-relationships").modal("show");
+      };
+
       ctrl.referenceCallback = function (selected) {
         if (selected && selected.length) {
           ctrl.colRef.reference = selected;
@@ -148,9 +175,4 @@ modules.component("listMixColumn", {
       };
     },
   ],
-  bindings: {
-    header: "=",
-    columns: "=",
-    removeAttributes: "=",
-  },
 });

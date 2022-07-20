@@ -39,7 +39,7 @@ app.controller("PostController", [
       items: [],
     };
     $scope.additionalData = null;
-    $scope.createUrl = "/portal/post/create?";
+    $scope.createUrl = "/admin/post/create?";
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
     $scope.postType = {
@@ -139,7 +139,7 @@ app.controller("PostController", [
       }
     };
     $scope.preview = function (item) {
-      item.editUrl = "/portal/post/details/" + item.id;
+      item.editUrl = "/admin/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.onSelectType = function () {

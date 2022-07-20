@@ -11,7 +11,7 @@
       var ctrl = this;
       ctrl.colWidth = 3;
       ctrl.init = function () {
-        ctrl.editUrl = "/portal/module-data/details/" + ctrl.moduleContentId;
+        ctrl.editUrl = "/admin/module-data/details/" + ctrl.moduleContentId;
         ctrl.visible = $rootScope.visible;
         if (ctrl.data.items.length) {
           ctrl.min = ctrl.data.items[0].priority;

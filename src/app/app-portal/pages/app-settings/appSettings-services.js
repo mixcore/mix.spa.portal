@@ -31,7 +31,7 @@ app.factory("AppSettingsServices", [
       return await apiService.sendRequest(req);
     };
     // var _saveAppSettings = async function (name, content) {
-    //   var apiUrl = "/portal/app-settings/save-global/" + name;
+    //   var apiUrl = "/admin/app-settings/save-global/" + name;
     //   var req = {
     //     method: "POST",
     //     url: apiUrl,

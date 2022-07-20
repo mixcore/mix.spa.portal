@@ -167,12 +167,12 @@ appShared.controller("MixDatabaseDataClientController", [
       }
     };
     $scope.preview = function (item) {
-      item.editUrl = "/portal/post/details/" + item.id;
+      item.editUrl = "/admin/post/details/" + item.id;
       $rootScope.preview("post", item, item.title, "modal-lg");
     };
     $scope.edit = function (data) {
       $scope.goToPath(
-        "/portal/mix-database-data/details?dataContentId=" +
+        "/admin/mix-database-data/details?dataContentId=" +
           data.id +
           "&mixDatabaseId=" +
           $scope.mixDatabaseId

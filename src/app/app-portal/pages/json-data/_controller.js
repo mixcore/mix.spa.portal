@@ -44,15 +44,14 @@ app.controller("JsonDataController", [
         $scope.request.key += folder;
       }
       $location.url(
-        "/portal/json-data/list?folder=" +
-          encodeURIComponent($scope.request.key)
+        "/admin/json-data/list?folder=" + encodeURIComponent($scope.request.key)
       );
     };
     $scope.init = async function () {
       $rootScope.isBusy = true;
       $scope.filename = $routeParams.filename;
       $scope.folder = $routeParams.folder;
-      $scope.listUrl = "/portal/json-data/list?folder=" + $routeParams.folder;
+      $scope.listUrl = "/admin/json-data/list?folder=" + $routeParams.folder;
       $rootScope.isBusy = true;
       var response = await service.getFile(
         $routeParams.folder,

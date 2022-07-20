@@ -38,8 +38,7 @@ app.controller("ModuleDataController", [
     $scope.backUrl = `/portal/module-data/list/${$scope.moduleContentId}`;
     $scope.module = null;
     $scope.columns = [];
-    $scope.editDataUrl =
-      "/portal/module-data/details/" + $scope.moduleContentId;
+    $scope.editDataUrl = "/admin/module-data/details/" + $scope.moduleContentId;
     $scope.init = async function () {
       $scope.id = $routeParams.id;
     };

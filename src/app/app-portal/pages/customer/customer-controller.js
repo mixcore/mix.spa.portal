@@ -114,7 +114,7 @@ app.controller("CustomerController", [
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
         $scope.$apply();
-        //$location.path('/portal/customer/details/' + resp.data.id);
+        //$location.path('/admin/customer/details/' + resp.data.id);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

@@ -16,7 +16,7 @@
           <div class="btn-group flex-fill me-3">
             <a
               class="btn btn-primary ms-auto"
-              href="/portal/scheduler/create"
+              href="/admin/scheduler/create"
             >
               <span>Create</span>
             </button>
@@ -48,7 +48,7 @@
                       sort-model-id="{{item.name}}"
                     >
                       <td>
-                        <a href="/portal/scheduler/details/{{item.name}}"
+                        <a href="/admin/scheduler/details/{{item.name}}"
                           ><span ng-bind="item.name"></span
                         ></a>
                       </td>
@@ -66,7 +66,7 @@
                           aria-label="Actions"
                         >
                           <a
-                            href="/portal/scheduler/details/{{item.name}}"
+                            href="/admin/scheduler/details/{{item.name}}"
                             class="btn btn-link text-primary"
                           >
                             <span class="fa fa-pen"></span>

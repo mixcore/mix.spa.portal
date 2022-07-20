@@ -77,7 +77,7 @@
           var resp = await commonService.genrateSitemap();
           if (resp) {
             window.top.location.href =
-              "/portal/file/details?folder=" +
+              "/admin/file/details?folder=" +
               resp.fileFolder +
               "&filename=" +
               resp.fileName +

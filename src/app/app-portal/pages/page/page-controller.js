@@ -74,10 +74,9 @@ app.controller("PageController", [
       }
     };
     $scope.$watch("additionalData", function (newValue, oldValue) {
-      console.log(newValue, oldValue)
-    })
+      console.log(newValue, oldValue);
+    });
     $scope.getSingleSuccessCallback = function () {
-      
       $scope.loadAdditionalData();
       if ($routeParams.template) {
         $scope.viewmodel.view = $rootScope.findObjectByKey(
@@ -134,7 +133,9 @@ app.controller("PageController", [
       $scope.getList();
     };
     $scope.selectModule = (associations) => {
-      $scope.selectedModules = associations;
+      if (associations) {
+        $scope.selectedModules = associations;
+      }
     };
     $scope.goUp = async function (items, index) {
       items[index].priority -= 1;

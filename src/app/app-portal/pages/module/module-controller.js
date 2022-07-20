@@ -41,9 +41,9 @@ app.controller("ModuleController", [
       if ($scope.viewmodel.id > 0) {
         // module => list post or list product
         if ($scope.viewmodel.type.localeCompare("ListPost") == 0) {
-          $scope.contentUrl = "/portal/module-post/list/" + $scope.viewmodel.id;
+          $scope.contentUrl = "/admin/module-post/list/" + $scope.viewmodel.id;
         } else if ($scope.viewmodel.type.localeCompare("Data") == 0) {
-          $scope.contentUrl = "/portal/module-data/list/" + $scope.viewmodel.id;
+          $scope.contentUrl = "/admin/module-data/list/" + $scope.viewmodel.id;
         }
       }
       if ($scope.viewmodel.sysCategories) {
@@ -94,7 +94,7 @@ app.controller("ModuleController", [
       if (response.success) {
         $scope.viewmodel = response.data;
         $scope.editDataUrl =
-          "/portal/module-data/details/" + $scope.viewmodel.id;
+          "/admin/module-data/details/" + $scope.viewmodel.id;
         $scope.loadMoreModuleDatas();
         angular.forEach($scope.viewmodel.columns, function (e, i) {
           if (e.isDisplay) {

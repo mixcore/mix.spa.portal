@@ -34,7 +34,7 @@ appShared.factory("TranslatorService", [
         return translator;
       } else {
         translator = { lang: culture, data: null };
-        var url = "/portal";
+        var url = "/admin";
         if (culture) {
           url += "/" + culture;
         }
@@ -97,14 +97,14 @@ appShared.factory("TranslatorService", [
     };
 
     var getLinkCreateLanguage = function (keyword, isWrap) {
-      //return '<span data-key="/portal/language/details?k=' + keyword + '">[' + keyword + ']</span>';
+      //return '<span data-key="/admin/language/details?k=' + keyword + '">[' + keyword + ']</span>';
       return isWrap ? "[" + keyword + "]" : keyword;
     };
     var _translateUrl = async function (culture) {
       var viewType = document.getElementById("view-type").value;
       var viewId = document.getElementById("view-id").value;
       var url =
-        "/portal/translate-url/" + culture + "/" + viewType + "/" + viewId;
+        "/admin/translate-url/" + culture + "/" + viewType + "/" + viewId;
       var req = {
         method: "GET",
         url: url,

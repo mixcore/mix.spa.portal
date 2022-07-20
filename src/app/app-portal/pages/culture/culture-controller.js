@@ -33,12 +33,12 @@ app.controller("CultureController", [
     $scope.saveSuccessCallback = function () {
       apiService
         .initAllSettings()
-        .then(() => (window.location.href = "/portal/language/list"));
+        .then(() => (window.location.href = "/admin/language/list"));
     };
     $scope.removeCallback = function () {
       apiService
         .initAllSettings()
-        .then(() => (window.location.href = "/portal/language/list"));
+        .then(() => (window.location.href = "/admin/language/list"));
     };
     $scope.changeData = function (selected) {
       if (selected) {

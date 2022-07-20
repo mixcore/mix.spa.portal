@@ -86,7 +86,7 @@ appShared.controller("MediaController", [
               $scope
             );
           } else {
-            $rootScope.goToPath("/portal/media/list");
+            $rootScope.goToPath("/admin/media/list");
           }
           $rootScope.isBusy = false;
           $scope.$apply();
@@ -170,7 +170,7 @@ appShared.controller("MediaController", [
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
         $scope.$apply();
-        //$location.path('/portal/media/details/' + resp.data.id);
+        //$location.path('/admin/media/details/' + resp.data.id);
       } else {
         if (resp) {
           $rootScope.showErrors(resp.errors);

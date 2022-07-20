@@ -83,7 +83,7 @@ app.controller("SchedulerController", [
         : await service.createSchedule($scope.schedule);
       if (resp && resp.success) {
         $rootScope.isBusy = true;
-        $location.url("/portal/scheduler");
+        $location.url("/admin/scheduler");
         $scope.$apply();
       } else {
         if (resp) {

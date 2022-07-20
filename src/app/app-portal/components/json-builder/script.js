@@ -55,7 +55,7 @@
       };
       ctrl.loadFile = async function () {
         $rootScope.isBusy = true;
-        $scope.listUrl = "/portal/json-data/list?folder=" + ctrl.folder;
+        $scope.listUrl = "/admin/json-data/list?folder=" + ctrl.folder;
 
         var response = await fileService.getFile(ctrl.folder, ctrl.filename);
         if (response.success) {

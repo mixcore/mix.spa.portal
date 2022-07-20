@@ -51,12 +51,12 @@ app.controller("FileController", [
         $scope.request.folder += folder;
       }
       $location.url(
-        "/portal/file/list?folder=" + encodeURIComponent($scope.request.folder)
+        "/admin/file/list?folder=" + encodeURIComponent($scope.request.folder)
       );
     };
     $scope.loadFile = async function () {
       $rootScope.isBusy = true;
-      $scope.listUrl = "/portal/file/list?folder/" + $routeParams.folder;
+      $scope.listUrl = "/admin/file/list?folder/" + $routeParams.folder;
       $rootScope.isBusy = true;
       var response = await fileServices.getFile(
         $routeParams.folder,
@@ -84,7 +84,7 @@ app.controller("FileController", [
       }
       if ($routeParams.folder) {
         $scope.backUrl =
-          "/portal/file/list?folder=" +
+          "/admin/file/list?folder=" +
           $routeParams.folder.substring(
             0,
             $routeParams.folder.lastIndexOf("/")
