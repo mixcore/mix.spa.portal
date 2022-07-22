@@ -1,3 +1,5 @@
+// const { data } = require("jquery");
+
 modules.component("listMixColumn", {
   templateUrl: "/mix-app/views/app-portal/components/list-mix-column/view.html",
   bindings: {
@@ -38,6 +40,10 @@ modules.component("listMixColumn", {
           t.priority = ctrl.columns.length + 1;
           ctrl.columns.push(t);
         }
+      };
+      ctrl.selectReferenceDb = function (relationship) {
+        relationship.rightId = ctrl.referenceDb.id;
+        relationship.destinateDatabaseName = ctrl.referenceDb.systemName;
       };
       ctrl.addRelationship = function () {
         if (ctrl.relationships) {

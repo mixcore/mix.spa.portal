@@ -477,14 +477,12 @@
         <div class="col-6 mb-3">
           <div class="input-group">
             <span class="input-group-text">Database</span>
-            <select class="form-select" ng-model="relationship.rightId">
-              <option
-                ng-repeat="item in $ctrl.databases.data.items"
-                ng-value="item.id"
-              >
-                {{item.displayName}}
-              </option>
-            </select>
+            <select
+              class="form-select"
+              ng-model="$ctrl.referenceDb"
+              ng-change="$ctrl.selectReferenceDb(relationship, item)"
+              ng-options="item as item.displayName for item in $ctrl.databases.data.items"
+            ></select>
           </div>
         </div>
       </div>
