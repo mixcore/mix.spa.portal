@@ -45,7 +45,7 @@
       };
       ctrl.selectTheme = () => {
         ctrl.loadTemplates();
-        ctrl.createUrl = `/portal/template/create/${ctrl.theme.id}/${ctrl.folderType}`;
+        ctrl.createUrl = `/admin/template/create/${ctrl.theme.id}/${ctrl.folderType}`;
       };
       ctrl.selectTemplate = function () {
         ctrl.template = null;
@@ -62,7 +62,7 @@
         await ctrl.loadTemplate();
         await ctrl.loadThemes();
         await ctrl.loadTemplates();
-        ctrl.createUrl = `/portal/template/create/${ctrl.theme.id}/${ctrl.folderType}`;
+        ctrl.createUrl = `/admin/template/create/${ctrl.theme.id}/${ctrl.folderType}`;
         // ctrl.template = ctrl.templates.filter(
         //   (m) => m.id == ctrl.templateId
         // )[0];

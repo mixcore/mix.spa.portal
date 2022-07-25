@@ -43,7 +43,7 @@ app.controller("PagePostController", [
       $scope.createUrl =
         $routeParams.post_type === "gallery"
           ? "/admin/post/create-gallery"
-          : `/portal/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
+          : `/admin/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.updateUrl =
         $routeParams.post_type === "gallery"
           ? "/admin/post/gallery-details"

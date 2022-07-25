@@ -30,7 +30,7 @@ app.controller("RoleController", [
     $scope.role = { name: "" };
     $scope.initPermissions = async function () {
       let backUrl = "/admin/role/list";
-      $scope.createUrl = `/portal/mix-database-data/create?mixDatabaseName=sysPermission&dataContentId=default&guidParentId=${$scope.viewmodel.id}&parentType=Role&backUrl=${backUrl}`;
+      $scope.createUrl = `/admin/mix-database-data/create?mixDatabaseName=sysPermission&dataContentId=default&guidParentId=${$scope.viewmodel.id}&parentType=Role&backUrl=${backUrl}`;
       $scope.updateUrl = "/admin/mix-database-data/details";
     };
 

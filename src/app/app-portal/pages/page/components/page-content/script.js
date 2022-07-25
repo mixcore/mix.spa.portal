@@ -12,7 +12,7 @@
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
       ctrl.$onInit = function () {
-        ctrl.backUrl = `/portal/page/details`;
+        ctrl.backUrl = `/admin/page/details`;
       };
       ctrl.generateSeo = function () {
         if ($scope.viewmodel) {

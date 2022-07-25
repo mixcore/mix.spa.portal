@@ -77,13 +77,13 @@
       ctrl.edit = function (nav) {
         switch (ctrl.type) {
           case "Page":
-            ctrl.goToPath(`/portal/page/details/${nav.id}`);
+            ctrl.goToPath(`/admin/page/details/${nav.id}`);
             break;
           case "Post":
-            ctrl.goToPath(`/portal/post/details/${nav.id}`);
+            ctrl.goToPath(`/admin/post/details/${nav.id}`);
             break;
           case "Module":
-            ctrl.goToPath(`/portal/module/details/${nav.id}`);
+            ctrl.goToPath(`/admin/module/details/${nav.id}`);
             break;
         }
       };

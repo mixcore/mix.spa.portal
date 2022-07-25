@@ -38,7 +38,7 @@ app.controller("ModulePostController", [
     $scope.template = $routeParams.template || "";
 
     $scope.init = function () {
-      $scope.createUrl = `/portal/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
+      $scope.createUrl = `/admin/post/create?page_ids=${$scope.pageIds}&moduleIds=${$scope.moduleIds}&type=${$scope.type}&template=${$scope.template}`;
       $scope.getList();
     };
     $scope.getList = async function (pageIndex) {

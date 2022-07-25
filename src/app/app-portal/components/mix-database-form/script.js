@@ -22,7 +22,7 @@ modules.component("mixDatabaseForm", {
     "$scope",
     "$location",
     "$routeParams",
-    "RestMixDatabaseDataPortalService",
+    "MixDbService",
     function ($rootScope, $scope, $location, $routeParams, service) {
       var ctrl = this;
       ctrl.isBusy = false;
@@ -33,6 +33,7 @@ modules.component("mixDatabaseForm", {
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
+        service.initDbName(ctrl.mixDatabaseName);
         await ctrl.loadData();
       };
       ctrl.loadData = async function () {
@@ -55,7 +56,7 @@ modules.component("mixDatabaseForm", {
               ctrl.mixDatabaseName;
             ctrl.backUrl =
               ctrl.backUrl ??
-              `/portal/mix-database-data/list?mixDatabaseId=${ctrl.mixDataContent.mixDatabaseId}&mixDatabaseName=${ctrl.mixDataContent.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
+              `/admin/mix-database-data/list?mixDatabaseId=${ctrl.mixDataContent.mixDatabaseId}&mixDatabaseName=${ctrl.mixDataContent.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
             await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
@@ -95,7 +96,7 @@ modules.component("mixDatabaseForm", {
               case "Module":
                 ctrl.backUrl =
                   ctrl.backUrl ??
-                  `/portal/${ctrl.parentType.toLowerCase()}/details/${
+                  `/admin/${ctrl.parentType.toLowerCase()}/details/${
                     ctrl.intParentId
                   }`;
                 break;
@@ -103,7 +104,7 @@ modules.component("mixDatabaseForm", {
               default:
                 ctrl.backUrl =
                   ctrl.backUrl ??
-                  `/portal/mix-database-data/details?dataId=${ctrl.guidParentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
+                  `/admin/mix-database-data/details?dataId=${ctrl.guidParentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
                 break;
             }
           }

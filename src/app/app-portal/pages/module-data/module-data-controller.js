@@ -35,7 +35,7 @@ app.controller("ModuleDataController", [
     $scope.others = [];
     $scope.mixConfigurations = $rootScope.globalSettings;
     $scope.moduleContentId = $routeParams.moduleContentId;
-    $scope.backUrl = `/portal/module-data/list/${$scope.moduleContentId}`;
+    $scope.backUrl = `/admin/module-data/list/${$scope.moduleContentId}`;
     $scope.module = null;
     $scope.columns = [];
     $scope.editDataUrl = "/admin/module-data/details/" + $scope.moduleContentId;

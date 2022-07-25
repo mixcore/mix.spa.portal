@@ -10,7 +10,7 @@
     function ($rootScope) {
       var ctrl = this;
       ctrl.$onInit = function () {
-        ctrl.backUrl = `/portal/module/details`;
+        ctrl.backUrl = `/admin/module/details`;
       };
       ctrl.mixConfigurations = $rootScope.globalSettings;
     },

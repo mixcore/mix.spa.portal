@@ -174,7 +174,7 @@
       };
 
       ctrl.updateRefData = function (nav) {
-        ctrl.goToPath(`/portal/mix-database-data/details?dataContentId=${nav.data.id}
+        ctrl.goToPath(`/admin/mix-database-data/details?dataContentId=${nav.data.id}
                 &mixDatabaseId=${nav.data.mixDatabaseId}
                 &parentId=${ctrl.parentId}
                 &parentType=${ctrl.parentType}`);

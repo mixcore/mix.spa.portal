@@ -36,7 +36,7 @@ function BaseRestCtrl(
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
   } else {
-    $scope.referrerUrl = `/portal/${service.modelName.substr(
+    $scope.referrerUrl = `/admin/${service.modelName.substr(
       0,
       service.modelName.indexOf("/")
     )}/list`; // document.referrer);
@@ -61,7 +61,7 @@ function BaseRestCtrl(
   };
 
   $scope.goToDetail = function (id, type) {
-    const url = `/portal/${type}/details/${id}`;
+    const url = `/admin/${type}/details/${id}`;
     window.location.href = url;
   };
   $scope.getSingle = async function (id) {

@@ -16,7 +16,7 @@
       ctrl.translate = $rootScope.translate;
       ctrl.relatedData = {};
       ctrl.$onInit = function () {
-        ctrl.backUrl = `/portal/post/details`;
+        ctrl.backUrl = `/admin/post/details`;
       };
       ctrl.generateSeo = function () {
         if (ctrl.model) {

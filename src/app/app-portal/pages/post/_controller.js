@@ -148,7 +148,7 @@ app.controller("PostController", [
         $scope.loadAdditionalData();
       }
       $scope.request.postType = $scope.postType.mixDatabaseName;
-      $scope.createUrl = `/portal/post/create?type=${$scope.request.postType}`;
+      $scope.createUrl = `/admin/post/create?type=${$scope.request.postType}`;
       if ($routeParams.template) {
         $scope.createUrl += `&template=${$routeParams.template}`;
       }

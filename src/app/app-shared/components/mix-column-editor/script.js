@@ -111,7 +111,7 @@
       };
       ctrl.buildCreateUrl = function () {
         var backUrl = encodeURIComponent(`${$location.url()}`);
-        ctrl.createUrl = `/portal/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataContentId=default&guidParentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
+        ctrl.createUrl = `/admin/mix-database-data/create?mixDatabaseId=${ctrl.column.referenceId}&dataContentId=default&guidParentId=${ctrl.model.id}&parentType=Set&backUrl=${backUrl}`;
       };
       ctrl.initData = async function () {
         setTimeout(() => {

@@ -25,7 +25,7 @@ app.controller("MixDatabaseDataController", [
       $location,
       $routeParams,
       ngAppSettings,
-      service
+      mixDbService
     );
     $scope.queries = {};
     $scope.data = {};
@@ -65,7 +65,7 @@ app.controller("MixDatabaseDataController", [
       $scope.request.isGroup = $routeParams.isGroup || false;
       mixDbService.initDbName($scope.mixDatabaseName);
       mixDbService.getList($scope.request);
-      $scope.dataUrl = `/portal/mix-database-data/list?mixDatabaseId=${$scope.mixDatabaseId}&mixDatabaseName=${$scope.mixDatabaseName}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`;
+      $scope.dataUrl = `/admin/mix-database-data/list?mixDatabaseId=${$scope.mixDatabaseId}&mixDatabaseName=${$scope.mixDatabaseName}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`;
       if ($routeParams.backUrl) {
         $scope.backUrl = decodeURIComponent($routeParams.backUrl);
       }
@@ -97,7 +97,7 @@ app.controller("MixDatabaseDataController", [
         $location.url($scope.backUrl);
       } else {
         $location.url(
-          `/portal/mix-database-data/details?dataContentId=${data}&mixDatabaseTitle=${
+          `/admin/mix-database-data/details?dataContentId=${data}&mixDatabaseTitle=${
             $scope.mixDatabaseTitle
           }&backUrl=${encodeURIComponent($scope.dataUrl)}`
         );
@@ -112,15 +112,15 @@ app.controller("MixDatabaseDataController", [
     //   if ($location.path() == "/admin/mix-database-data/create") {
     //     let backUrl =
     //       $scope.backUrl ||
-    //       `/portal/mix-database-data/details?dataContentId=${$scope.viewmodel.id}`;
+    //       `/admin/mix-database-data/details?dataContentId=${$scope.viewmodel.id}`;
     //     $rootScope.goToSiteUrl(backUrl);
     //   } else {
     //     if ($scope.parentId && $scope.parentType == 'Set') {
-    //       $rootScope.goToSiteUrl(`/portal/mix-database-data/details?dataContentId=${$scope.parentId}`);
+    //       $rootScope.goToSiteUrl(`/admin/mix-database-data/details?dataContentId=${$scope.parentId}`);
     //     } else {
     //       let backUrl =
     //         $scope.backUrl ||
-    //         `/portal/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
+    //         `/admin/mix-database-data/list?mixDatabaseId=${$scope.viewmodel.mixDatabaseId}&mixDatabaseName=${$scope.viewmodel.mixDatabaseName}&mixDatabaseTitle=${$scope.viewmodel.mixDatabaseName}`;
     //       $rootScope.goToSiteUrl(backUrl);
     //     }
     //   }
@@ -132,7 +132,7 @@ app.controller("MixDatabaseDataController", [
     };
     $scope.edit = function (data) {
       $rootScope.goToPath(
-        `/portal/mix-database-data/details?dataContentId=${data.id}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`
+        `/admin/mix-database-data/details?dataContentId=${data.id}&mixDatabaseName=${$scope.mixDatabaseName}&mixDatabaseTitle=${$scope.mixDatabaseTitle}`
       );
     };
     $scope.remove = function (data) {
@@ -148,7 +148,7 @@ app.controller("MixDatabaseDataController", [
 
     $scope.removeConfirmed = async function (dataContentId) {
       $rootScope.isBusy = true;
-      var result = await service.delete([dataContentId]);
+      var result = await mixDbService.delete([dataContentId]);
       if (result.success) {
         if ($scope.removeCallback) {
           $rootScope.executeFunctionByName(
@@ -269,7 +269,7 @@ app.controller("MixDatabaseDataController", [
       });
       $scope.request.query = JSON.stringify(query);
       $rootScope.isBusy = true;
-      var resp = await service.getList($scope.request);
+      var resp = await mixDbService.getList($scope.request);
       if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {

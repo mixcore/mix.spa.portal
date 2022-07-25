@@ -142,7 +142,7 @@ app.controller("TemplateController", [
       var resp = await service.copy(id);
       if (resp && resp.success) {
         $location.url(
-          `/portal/template/details/${$scope.folderType}/${resp.data.id}`
+          `/admin/template/details/${$scope.folderType}/${resp.data.id}`
         );
         $scope.$apply();
       } else {

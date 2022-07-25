@@ -64,11 +64,11 @@
                 class="py-2 row"
               >
                 <div class="col-md-3">
-                  <p><b ng-bind="column.title"></b>:</p>
+                  <p><b ng-bind="column.displayName"></b>:</p>
                 </div>
                 <div class="col-md-9">
                   <mix-column-preview
-                    model="$ctrl.previewObject.data.item.obj[column.name]"
+                    model="$ctrl.previewObject.data.item[column.systemName]"
                     column="column"
                   >
                   </mix-column-preview>

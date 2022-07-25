@@ -27,7 +27,7 @@ function BaseCtrl($scope, $rootScope, $routeParams, ngAppSettings, service) {
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
   } else {
-    $scope.referrerUrl = `/portal/${service.modelName}/list`;
+    $scope.referrerUrl = `/admin/${service.modelName}/list`;
   }
   $scope.getSingle = async function () {
     $rootScope.isBusy = true;
