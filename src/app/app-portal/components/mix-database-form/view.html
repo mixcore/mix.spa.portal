@@ -81,6 +81,7 @@
         <div class="col-sm-12">
           <div
             ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
+            ng-if="column.dataType!='Reference'"
           >
             <mix-column-editor
               ng-if="column"

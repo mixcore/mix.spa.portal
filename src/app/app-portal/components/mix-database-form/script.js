@@ -48,16 +48,16 @@ modules.component("mixDatabaseForm", {
             ctrl.mixDataContent.intParentId = ctrl.intParentId;
             ctrl.mixDataContent.guidParentId = ctrl.guidParentId;
             ctrl.mixDataContent.parentType = ctrl.parentType;
-            ctrl.mixDatabaseId = ctrl.mixDataContent.mixDatabaseId;
-            ctrl.mixDatabaseName = ctrl.mixDataContent.mixDatabaseName;
+            // ctrl.mixDatabaseId = ctrl.mixDataContent.mixDatabaseId;
+            // ctrl.mixDatabaseName = ctrl.mixDataContent.mixDatabaseName;
             ctrl.mixDatabaseTitle =
               ctrl.mixDatabaseTitle ||
               $routeParams.mixDatabaseTitle ||
               ctrl.mixDatabaseName;
             ctrl.backUrl =
               ctrl.backUrl ??
-              `/admin/mix-database-data/list?mixDatabaseId=${ctrl.mixDataContent.mixDatabaseId}&mixDatabaseName=${ctrl.mixDataContent.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
-            await ctrl.loadDefaultModel();
+              `/admin/mix-database-data/list?mixDatabaseId=${ctrl.mixDataContent.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
+            // await ctrl.loadDefaultModel();
             ctrl.isBusy = false;
             $scope.$apply();
           } else {
@@ -73,65 +73,9 @@ modules.component("mixDatabaseForm", {
           (ctrl.mixDatabaseName || ctrl.mixDatabaseId) &&
           !ctrl.defaultData
         ) {
-          await ctrl.loadDefaultModel();
+          ctrl.mixDataContent = {};
+          //   await ctrl.loadDefaultModel();
           ctrl.isBusy = false;
-          $scope.$apply();
-        }
-      };
-      ctrl.loadDefaultModel = async function () {
-        if ($routeParams.intParentId) {
-          ctrl.intParentId = $routeParams.intParentId;
-        }
-        if ($routeParams.guidParentId) {
-          ctrl.guidParentId = $routeParams.guidParentId;
-        }
-        if ($routeParams.parentType) {
-          ctrl.parentType = $routeParams.parentType;
-        }
-        if (!ctrl.backUrl) {
-          if (ctrl.parentType) {
-            switch (ctrl.parentType) {
-              case "Post":
-              case "Page":
-              case "Module":
-                ctrl.backUrl =
-                  ctrl.backUrl ??
-                  `/admin/${ctrl.parentType.toLowerCase()}/details/${
-                    ctrl.intParentId
-                  }`;
-                break;
-
-              default:
-                ctrl.backUrl =
-                  ctrl.backUrl ??
-                  `/admin/mix-database-data/details?dataId=${ctrl.guidParentId}&mixDatabaseId=${ctrl.mixDatabaseId}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${$routeParams.mixDatabaseTitle}`;
-                break;
-            }
-          }
-        }
-        var getDefault = await service.initData(
-          ctrl.mixDatabaseName || ctrl.mixDatabaseId
-        );
-        ctrl.defaultData = getDefault.data;
-        if (ctrl.defaultData) {
-          ctrl.defaultData.id = null;
-          ctrl.defaultData.intParentId = ctrl.intParentId;
-          ctrl.defaultData.guidParentId = ctrl.guidParentId;
-          ctrl.defaultData.parentType = ctrl.parentType;
-          if (ctrl.columns) {
-            let otherColumns = ctrl.defaultData.columns.filter(
-              (m) =>
-                ctrl.columns.filter((n) => n.systemName == m.systemName)
-                  .length == 0
-            );
-            ctrl.columns = ctrl.columns.concat(otherColumns);
-          } else {
-            ctrl.columns = ctrl.defaultData.columns;
-          }
-        }
-
-        if (!ctrl.mixDataContent) {
-          ctrl.mixDataContent = angular.copy(ctrl.defaultData);
         }
       };
 

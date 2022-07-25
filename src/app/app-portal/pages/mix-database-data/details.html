@@ -1,12 +1,13 @@
-<div class="content-body py-3 pe-3" ng-init="initRouteParams()">
+<div class="content-body py-3 pe-3" ng-init="init()">
   <h3>Create {{mixDatabaseTitle}}'s data</h3>
   <p class="text-subtitle text-muted">
     Fill all of the following columns to create a new data for
-    {{mixDatabaseTitle}} database. aaa {{mixDatabaseName}}
+    {{mixDatabaseTitle}} database.
   </p>
 
   <mix-database-form
     ng-if="mixDatabaseId || mixDatabaseName || dataContentId"
+    columns="columns"
     mix-database-id="mixDatabaseId"
     mix-database-name="mixDatabaseName"
     mix-database-title="mixDatabaseTitle"
