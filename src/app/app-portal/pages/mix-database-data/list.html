@@ -150,13 +150,15 @@
             <div class="row">
                 <div class="col-12" ng-init="getList()">
                     <div class="mb-5 card">
-                        <mix-database-data-values ng-if="columns" on-duplicate="duplicate(data)" on-update="edit(data)"
-                            on-delete="remove(data)" columns="columns"
+                        <mix-database-data-values on-duplicate="duplicate(data)" on-update="edit(data)"
+                            on-delete="remove(data)"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
-                            on-send-mail="sendMail(data)" filter-type="request.filterType"
                             compare-type="request.compareType" on-filter-list="getList(0)" on-apply-list="applyList()"
-                            selected-list="selectedList" header="''" data="data.items"
-                            mix-database-name="mixDatabaseName" mix-database-title="mixDatabaseTitle" queries="queries">
+                            selected-list="selectedList" 
+                            header="''" 
+                            mix-database-name="mixDatabaseName"
+                             mix-database-title="mixDatabaseTitle" 
+                             queries="queries">
                         </mix-database-data-values>
                         <div class="card-body">
                             <div class="row">

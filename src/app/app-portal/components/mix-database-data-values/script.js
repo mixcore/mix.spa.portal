@@ -2,18 +2,21 @@ modules.component("mixDatabaseDataValues", {
   templateUrl:
     "/mix-app/views/app-portal/components/mix-database-data-values/view.html",
   bindings: {
-    header: "=",
-    data: "=",
-    canDrag: "=",
+    database: "=?",
     mixDatabaseName: "=?",
     mixDatabaseTitle: "=?",
     mixDatabaseId: "=?",
+    parentName: "=?",
+    parentId: "=?",
+    header: "=?",
+    data: "=?",
+    canDrag: "=?",
     queries: "=?",
     filterType: "=?",
     compareType: "=?",
-    selectedList: "=",
+    selectedList: "=?",
     selectSingle: "=?",
-    columns: "=?",
+    database: "=?",
     onFilterList: "&?",
     onApplyList: "&?",
     onSendMail: "&?",
@@ -24,31 +27,54 @@ modules.component("mixDatabaseDataValues", {
   controller: [
     "$rootScope",
     "$scope",
-    "RestMixDatabaseColumnPortalService",
-    "RestMixDatabaseDataPortalService",
-    function ($rootScope, $scope, columnService, dataService) {
+    "$location",
+    "ngAppSettings",
+    "RestMixDatabasePortalService",
+    "MixDbService",
+    function (
+      $rootScope,
+      $scope,
+      $location,
+      ngAppSettings,
+      databaseService,
+      dataService
+    ) {
       var ctrl = this;
+      ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];
       ctrl.compareTypes = ["or", "and"];
       ctrl.selectedProp = null;
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
+        dataService.initDbName(ctrl.mixDatabaseName);
+        ctrl.request.name = ctrl.mixDatabaseName;
+        ctrl.request.parentName = ctrl.parentName;
+        ctrl.request.parentId = ctrl.parentId;
         if (!ctrl.selectedList) {
           ctrl.selectedList = {
             action: "Delete",
             data: [],
           };
         }
-        if (!ctrl.columns) {
-          var getFields = await columnService.initData(
-            ctrl.mixDatabaseName || ctrl.mixDatabaseId
+        if (!ctrl.database) {
+          var getDatabase = await databaseService.getByName(
+            ctrl.mixDatabaseName
           );
-          if (getFields.success) {
-            ctrl.columns = getFields.data;
+          if (getDatabase.success) {
+            ctrl.database = getDatabase.data;
             $scope.$apply();
           }
         }
+        if (!ctrl.data) {
+          await ctrl.loadData();
+        }
+        ctrl.createUrl = `/admin/mix-database-data/create?mixDatabaseId=${ctrl.database.id}&mixDatabaseName=${ctrl.database.systemName}&mixDatabaseTitle=${ctrl.database.displayName}&dataContentId=default&parentId=${ctrl.parentId}&parentName=${ctrl.parentName}`;
+      };
+      ctrl.loadData = async function () {
+        var getData = await dataService.getList(ctrl.request);
+        ctrl.data = getData.data;
+        $scope.$apply();
       };
       ctrl.select = function (item) {
         if (item.isSelected) {
@@ -80,7 +106,7 @@ modules.component("mixDatabaseDataValues", {
       };
       ctrl.filter = function () {
         ctrl.data = [];
-        ctrl.onFilterList();
+        ctrl.loadData();
       };
       ctrl.sendMail = async function (data) {
         ctrl.onSendMail({ data: data });
@@ -94,7 +120,8 @@ modules.component("mixDatabaseDataValues", {
       };
 
       ctrl.update = function (data) {
-        ctrl.onUpdate({ data: data });
+        let url = `/admin/mix-database-data/details?dataContentId=${data.id}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
+        $location.url(url);
       };
 
       ctrl.delete = function (data) {
@@ -139,7 +166,7 @@ modules.component("mixDatabaseDataValues", {
 
       ctrl.view = function (item) {
         var obj = {
-          columns: ctrl.columns,
+          columns: ctrl.database.columns,
           item: item,
         };
         $rootScope.preview("mix-database-data", obj, null, "modal-lg");

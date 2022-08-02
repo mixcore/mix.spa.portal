@@ -3,9 +3,8 @@
     <div class="col-8"></div>
     <div class="col-4 mb-3">
       <actions
-        ng-if="!$ctrl.hideAction"
+        ng-if="!$ctrl.hideAction && $ctrl.backUrl"
         back-url="$ctrl.backUrl"
-        ng-if="$ctrl.backUrl"
       ></actions>
     </div>
   </div>
@@ -21,9 +20,6 @@
         aria-hidden="true"
         ng-if="$ctrl.isBusy"
       ></span>
-      <!-- <span ng-if="$ctrl.mixDatabaseName"
-        >{{$ctrl.mixDatabaseName}}'s Data </span> -->
-
       <a
         class="btn btn-link text-primary btn-sm float-end py-0"
         ng-if="$ctrl.backUrl"
@@ -31,9 +27,6 @@
       >
         <i class="fas fa-chevron-left"></i> List data
       </a>
-      <!-- <a class="btn btn-link text-primary btn-sm float-end py-0" expanded="true"
-        aria-controls="mixDatabaseId_{{$ctrl.mixDataContent.mixDatabaseId}} collapse">
-        <span class="far fa-minus-square text-primary"></span> Show/Hide</a> -->
       <a
         href="#"
         ng-if="$ctrl.mixDatabaseId==1"
@@ -80,8 +73,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div
-            ng-repeat="column in $ctrl.columns | orderBy:'priority' track by $index"
-            ng-if="column.dataType!='Reference'"
+            ng-repeat="column in $ctrl.database.columns | filter:{ dataType: '!Reference'} | orderBy:'priority' track by $index"
           >
             <mix-column-editor
               ng-if="column"
@@ -96,7 +88,55 @@
         </div>
       </div>
     </div>
-
+    <div
+      ng-if="$ctrl.database"
+      class="text-muted"
+      ng-repeat="ref in $ctrl.database.relationships"
+    >
+      <!-- Referrence -->
+      <div
+        class="alert alert-warning"
+        role="alert"
+        ng-if="!$ctrl.mixDataContent.id"
+      >
+        <i class="fas fa-exclamation-triangle me-3"></i> Please save the current
+        item to initialization a parent ID before input it child's data!
+      </div>
+      <div class="row" ng-if="$ctrl.mixDataContent.id">
+        <div class="mb-5 card">
+          <mix-database-data-values
+            ng-if="$ctrl.database.columns"
+            columns="$ctrl.database.columns"
+            header="''"
+            parent-id="$ctrl.mixDataContent.id"
+            parent-name="ref.sourceDatabaseName"
+            mix-database-name="ref.destinateDatabaseName"
+          >
+          </mix-database-data-values>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <em>
+                  Total items:
+                  <span ng-bind="data.totalItems" class="text-muted"></span
+                ></em>
+              </div>
+            </div>
+            <paging
+              class="small"
+              page="data.page"
+              page-size="data.pageSize"
+              total="data.totalItems"
+              ul-class="pagination justify-content-end m-0"
+              a-class="page-link"
+              paging-action="getList(page-1)"
+              scroll-top="true"
+            >
+            </paging>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="card-footer" ng-if="!$ctrl.hideAction">
       <button
         type="button"
@@ -122,7 +162,7 @@
   mix-database-id="$ctrl.mixDatabaseId"
   mix-database-name="$ctrl.mixDatabaseName"
   selected-list="$ctrl.selectedList"
-  columns="$ctrl.columns"
+  columns="$ctrl.database.columns"
 >
 </mix-database-data-filter>
 <modal-content-filter

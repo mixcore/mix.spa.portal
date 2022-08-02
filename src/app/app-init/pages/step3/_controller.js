@@ -57,7 +57,8 @@ app.controller("Step3Controller", [
       var response = await service.ajaxSubmitForm(frm, url);
       $rootScope.isBusy = false;
       if (response.success) {
-        window.top.location = "/init/step4";
+        $rootScope.goToPath("/init/step4");
+        $scope.$apply();
       } else {
         $rootScope.showErrors(response.errors);
         $rootScope.isBusy = false;
@@ -66,7 +67,7 @@ app.controller("Step3Controller", [
     };
     $scope.install = function (resp) {
       if (resp.success) {
-        window.top.location = "/init/step4";
+        $rootScope.goToPath("/init/step4");
       } else {
         $rootScope.showErrors(["Cannot install theme"]);
       }

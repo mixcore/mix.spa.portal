@@ -124,27 +124,6 @@
         <div class="text-muted" ng-switch-when="tuieditor">
             <tui-editor content="$ctrl.model[$ctrl.column.systemName]"></tui-editor>
         </div>
-        <div class="text-muted" ng-switch-when="reference">
-            <!-- Referrence -->
-            <div class="alert alert-warning" role="alert" ng-if="!$ctrl.model.id">
-                <i class="fas fa-exclamation-triangle me-3"></i> Please save the current
-                item to initialization a parent ID before input it child's data!
-            </div>
-            <div class="row" ng-if="$ctrl.model.id">
-                <div class="col-md-12 mb-3">
-                    <a href="{{$ctrl.createUrl}}" class="btn btn-sm btn-primary float-end px-4 me-2 text-white">
-                        <i class="fas fa-plus"></i> Create data
-                    </a>
-                </div>
-                <div class="col-md-12">
-                    <mix-database-nav-values mix-database-id="$ctrl.column.referenceId" 
-                        guid-parent-id="$ctrl.model.id"
-                        parent-type="'Set'" create-url="$ctrl.createUrl" update-url="$ctrl.updateUrl"
-                        on-update="$ctrl.updateRefData(data)" on-delete="$ctrl.removeRefData(data)">
-                    </mix-database-nav-values>
-                </div>
-            </div>
-        </div>
         <div class="text-muted" ng-switch-when="qrcode">
             <!--Text-->
             <qr-code model="$ctrl.model[$ctrl.column.systemName]"></qr-code>

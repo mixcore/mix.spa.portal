@@ -465,7 +465,7 @@
     <div class="row">
       <h3>Relationships</h3>
       <div class="row" ng-repeat="relationship in $ctrl.relationships">
-        <div class="col-6 mb-3">
+        <div class="col-4 mb-3">
           <div class="input-group">
             <span class="input-group-text">Type</span>
             <mix-select
@@ -474,7 +474,17 @@
             ></mix-select>
           </div>
         </div>
-        <div class="col-6 mb-3">
+        <div class="col-4 mb-3">
+          <div class="input-group">
+            <span class="input-group-text">Name</span>
+            <input
+              type="text"
+              class="form-control"
+              ng-model="relationship.displayName"
+            />
+          </div>
+        </div>
+        <div class="col-4 mb-3">
           <div class="input-group">
             <span class="input-group-text">Database</span>
             <select

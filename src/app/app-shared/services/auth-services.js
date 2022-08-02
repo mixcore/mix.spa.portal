@@ -61,7 +61,7 @@ appShared.factory("AuthService", [
       return resp;
     };
 
-    var _login = async function (loginData) {
+    var _login = async function (loginData, isRedirect = true) {
       var data = {
         UserName: loginData.username,
         Password: loginData.password,
@@ -81,21 +81,23 @@ appShared.factory("AuthService", [
         let encryptedData = resp.data;
         apiService.updateAuthData(encryptedData);
         apiService.getAllSettings().then(function () {
-          if ($routeParams.ReturnUrl) {
-            setTimeout(() => {
-              window.top.location = $routeParams.ReturnUrl;
-            }, 200);
-          } else if (
-            document.referrer &&
-            document.referrer.indexOf("init") === -1
-          ) {
-            setTimeout(() => {
-              window.top.location = document.referrer;
-            }, 200);
-          } else {
-            setTimeout(() => {
-              window.top.location = "/";
-            }, 200);
+          if (isRedirect) {
+            if ($routeParams.ReturnUrl) {
+              setTimeout(() => {
+                window.top.location = $routeParams.ReturnUrl;
+              }, 200);
+            } else if (
+              document.referrer &&
+              document.referrer.indexOf("init") === -1
+            ) {
+              setTimeout(() => {
+                window.top.location = document.referrer;
+              }, 200);
+            } else {
+              setTimeout(() => {
+                window.top.location = "/";
+              }, 200);
+            }
           }
         });
       } else {

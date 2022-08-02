@@ -33,7 +33,7 @@ app.controller("Step2Controller", [
               password: $scope.user.password,
               rememberMe: true,
             };
-            var result = await authService.login(loginData);
+            var result = await authService.login(loginData, false);
             if (result.success) {
               $rootScope.isBusy = false;
               $rootScope.goToPath("/init/step3");

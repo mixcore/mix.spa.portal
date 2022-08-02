@@ -68,11 +68,11 @@
               ctrl.options = options;
             } else {
               //   ctrl.options = options.filter(
-              //     (m) => m[belongTo] == ctrl.model.data[belongTo]
+              //     (m) => m[belongTo] == ctrl.model[belongTo]
               //   );
               $rootScope.$watch(
                 () => {
-                  return ctrl.model.data[belongTo];
+                  return ctrl.model[belongTo];
                 },
                 async function (newVal, oldVal) {
                   if (newVal != oldVal) {
@@ -82,7 +82,7 @@
                       });
                     }
                     ctrl.options = ctrl.allOptions.filter(
-                      (m) => m[belongTo] == ctrl.model.data[belongTo]
+                      (m) => m[belongTo] == ctrl.model[belongTo]
                     );
                   }
                 }
@@ -119,19 +119,17 @@
             case "datetime":
             case "date":
             case "time":
-              if (ctrl.model.data[ctrl.column.systemName]) {
-                ctrl.dateObj = new Date(
-                  ctrl.model.data[ctrl.column.systemName]
-                );
+              if (ctrl.model[ctrl.column.systemName]) {
+                ctrl.dateObj = new Date(ctrl.model[ctrl.column.systemName]);
               }
               break;
             case "array":
-              //   if (ctrl.column && !ctrl.model.data[ctrl.column.systemName]) {
-              //     ctrl.model.data[ctrl.column.systemName] =
+              //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
+              //     ctrl.model[ctrl.column.systemName] =
               //       ctrl.column.defaultValue;
               //     $scope.$apply();
               //   } else {
-              //     ctrl.model.data[ctrl.column.systemName] = JSON.stringify(
+              //     ctrl.model[ctrl.column.systemName] = JSON.stringify(
               //       ctrl.mode.data[ctrl.column.systemName]
               //     );
               //   }
@@ -139,7 +137,7 @@
               break;
             case "reference": // reference
               // if(ctrl.column.referenceId && ctrl.model.id){
-              //     ctrl.model.data[ctrl.column.systemName] = ctrl.column.referenceId;
+              //     ctrl.model[ctrl.column.systemName] = ctrl.column.referenceId;
               //     navService.getSingle(['default']).then(resp=>{
               //         resp.mixDatabaseId = ctrl.column.referenceId;
               //         resp.parentId = ctrl.parentId;
@@ -154,18 +152,17 @@
               if (
                 ctrl.column &&
                 ctrl.column.defaultValue &&
-                !ctrl.model.data[ctrl.column.systemName]
+                !ctrl.model[ctrl.column.systemName]
               ) {
-                ctrl.model.data[ctrl.column.systemName] = JSON.parse(
+                ctrl.model[ctrl.column.systemName] = JSON.parse(
                   ctrl.column.defaultValue
                 );
                 $scope.$apply();
               }
               break;
             default:
-              if (ctrl.column && !ctrl.model.data[ctrl.column.systemName]) {
-                ctrl.model.data[ctrl.column.systemName] =
-                  ctrl.column.defaultValue;
+              if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
+                ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
                 $scope.$apply();
               }
               break;
@@ -189,54 +186,52 @@
             break;
           case "double":
             if (ctrl.column.defaultValue) {
-              ctrl.model.data[ctrl.column.systemName] = parseFloat(
+              ctrl.model[ctrl.column.systemName] = parseFloat(
                 ctrl.mixDatabaseDataValue.column.defaultValue
               );
             }
             break;
           case "boolean":
             if (ctrl.column.defaultValue) {
-              ctrl.model.data[ctrl.column.systemName] =
+              ctrl.model[ctrl.column.systemName] =
                 ctrl.mixDatabaseDataValue.column.defaultValue == "true";
             }
             break;
 
           default:
             if (ctrl.column.defaultValue) {
-              ctrl.model.data[ctrl.column.systemName] =
-                ctrl.column.defaultValue;
+              ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
             }
             break;
         }
       };
       ctrl.updateJsonContent = function (content) {
-        ctrl.model.data[ctrl.column.systemName] = JSON.parse(content);
+        ctrl.model[ctrl.column.systemName] = JSON.parse(content);
         $scope.$apply();
       };
       ctrl.updateValue = function () {
         switch (ctrl.column.dataType.toLowerCase()) {
           case "datetime":
             if (ctrl.dateObj) {
-              ctrl.model.data[ctrl.column.systemName] =
+              ctrl.model[ctrl.column.systemName] =
                 ctrl.dateObj.toLocaleString();
             }
             break;
           case "date":
             if (ctrl.dateObj) {
-              ctrl.model.data[ctrl.column.systemName] =
+              ctrl.model[ctrl.column.systemName] =
                 ctrl.dateObj.toLocaleDateString();
             }
             break;
           case "time":
             if (ctrl.dateObj) {
-              ctrl.model.data[ctrl.column.systemName] =
+              ctrl.model[ctrl.column.systemName] =
                 ctrl.dateObj.toLocaleTimeString("en-GB");
             }
             break;
           default:
             if (ctrl.column.defaultValue) {
-              ctrl.model.data[ctrl.column.systemName] =
-                ctrl.column.defaultValue;
+              ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
             }
             break;
         }

@@ -18,11 +18,12 @@ modules.component("listMixColumn", {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.selectedCol = null;
-      ctrl.relationshipTypes = ["OneToMany", "ManyToMany"];
+      ctrl.relationshipTypes = ["OneToMany"];
       ctrl.defaultRelationship = {
         leftId: null,
         type: "OneToMany",
         rightId: null,
+        displayName: null,
       };
       ctrl.$onInit = async function () {
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;

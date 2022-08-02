@@ -5,7 +5,10 @@ modules.component("mixDatabaseForm", {
     mixDatabaseId: "=?",
     mixDatabaseName: "=?",
     mixDatabaseTitle: "=?",
+    parentId: "=?",
+    parentName: "=?",
     columns: "=?",
+    references: "=?",
     mixDataContentId: "=?",
     mixDataContent: "=?",
     parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
@@ -20,10 +23,10 @@ modules.component("mixDatabaseForm", {
   controller: [
     "$rootScope",
     "$scope",
-    "$location",
     "$routeParams",
+    "RestMixDatabasePortalService",
     "MixDbService",
-    function ($rootScope, $scope, $location, $routeParams, service) {
+    function ($rootScope, $scope, $routeParams, databaseService, service) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -33,14 +36,18 @@ modules.component("mixDatabaseForm", {
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
+        let getDatabase = await databaseService.getByName(ctrl.mixDatabaseName);
+        ctrl.database = getDatabase.data;
         service.initDbName(ctrl.mixDatabaseName);
         await ctrl.loadData();
+        $scope.$apply();
       };
       ctrl.loadData = async function () {
         /*
             If input is data id => load ctrl.mixDataContent from service and handle it independently
         */
         ctrl.isBusy = true;
+
         if (ctrl.mixDataContentId) {
           var getData = await service.getSingle([ctrl.mixDataContentId]);
           ctrl.mixDataContent = getData.data;
@@ -74,8 +81,13 @@ modules.component("mixDatabaseForm", {
           !ctrl.defaultData
         ) {
           ctrl.mixDataContent = {};
+
           //   await ctrl.loadDefaultModel();
           ctrl.isBusy = false;
+        }
+        if ($routeParams.parentId && $routeParams.parentName) {
+          ctrl.mixDataContent[`${$routeParams.parentName}Id`] =
+            $routeParams.parentId;
         }
       };
 
