@@ -3,7 +3,7 @@
     "/mix-app/views/app-portal/components/navigations/navigations.html",
   bindings: {
     modelName: "=",
-    leftId: "=",
+    parentId: "=",
     associations: "=",
     titleField: "=?",
 
@@ -29,7 +29,7 @@
         ctrl.associationRequest = angular.copy(ngAppSettings.request);
         ctrl.associationRequest.orderBy = "Priority";
         ctrl.associationRequest.direction = "Asc";
-        ctrl.associationRequest.leftId = ctrl.leftId;
+        ctrl.associationRequest.parentId = ctrl.parentId;
         var getAssociations = await service.getList(ctrl.associationRequest);
         ctrl.associations = getAssociations.data.items;
         ctrl.loadData();
@@ -41,7 +41,7 @@
             ctrl.associations[ctrl.associations.length - 1].priority || 0;
         }
         angular.forEach(ctrl.data, function (e, i) {
-          let nav = ctrl.associations.filter((m) => m.rightId == e.id)[0];
+          let nav = ctrl.associations.filter((m) => m.childId == e.id)[0];
           if (nav) {
             if (nav.priority == undefined) {
               nav.priority = maxPriority + 1;
@@ -69,8 +69,8 @@
         }
       };
       ctrl.removeItem = async (obj) => {
-        var nav = ctrl.associations.filter((m) => m.rightId == obj.id)[0];
-        $rootScope.removeObjectByKey(ctrl.associations, "rightId", obj.id);
+        var nav = ctrl.associations.filter((m) => m.childId == obj.id)[0];
+        $rootScope.removeObjectByKey(ctrl.associations, "childId", obj.id);
         if (nav && nav.id) {
           await service.delete([nav.id]);
           $rootScope.showMessage("saved", "success");
@@ -78,11 +78,11 @@
       };
       ctrl.selectItem = async (obj) => {
         var nav = {
-          leftId: ctrl.leftId,
-          rightId: obj.id,
+          parentId: ctrl.parentId,
+          childId: obj.id,
           priority: obj.priority,
         };
-        if (ctrl.leftId) {
+        if (ctrl.parentId) {
           var result = await service.save(nav);
           nav.id = result.data;
           $rootScope.showMessage("saved", "success");
@@ -108,12 +108,12 @@
       };
       ctrl.saveOrder = async () => {
         angular.forEach(ctrl.data, function (e, i) {
-          let nav = ctrl.associations.filter((m) => m.rightId == e.id)[0];
+          let nav = ctrl.associations.filter((m) => m.childId == e.id)[0];
           if (nav) {
             nav.priority = ctrl.data[i].priority;
           }
         });
-        if (ctrl.leftId) {
+        if (ctrl.parentId) {
           var result = await service.saveMany(ctrl.associations);
           if (result.success) {
             $rootScope.showMessage("saved", "success");

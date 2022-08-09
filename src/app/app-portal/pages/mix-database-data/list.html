@@ -151,7 +151,6 @@
                 <div class="col-12" ng-init="getList()">
                     <div class="mb-5 card">
                         <mix-database-data-values on-duplicate="duplicate(data)" on-update="edit(data)"
-                            on-delete="remove(data)"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
                             compare-type="request.compareType" on-filter-list="getList(0)" on-apply-list="applyList()"
                             selected-list="selectedList" 

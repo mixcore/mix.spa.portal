@@ -12,17 +12,25 @@ modules.component("listMixColumn", {
     "$rootScope",
     "$scope",
     "ngAppSettings",
+    "RestMixRelationshipPortalService",
     "RestMixDatabasePortalService",
     "RestMixDatabaseColumnPortalService",
-    function ($rootScope, $scope, ngAppSettings, databaseService, service) {
+    function (
+      $rootScope,
+      $scope,
+      ngAppSettings,
+      relationshipService,
+      databaseService,
+      service
+    ) {
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.selectedCol = null;
       ctrl.relationshipTypes = ["OneToMany"];
       ctrl.defaultRelationship = {
-        leftId: null,
+        parentId: null,
         type: "OneToMany",
-        rightId: null,
+        childId: null,
         displayName: null,
       };
       ctrl.$onInit = async function () {
@@ -33,6 +41,9 @@ modules.component("listMixColumn", {
           ctrl.defaultAttr = getDefaultAttr.data;
           ctrl.defaultAttr.options = [];
         }
+        angular.forEach(ctrl.relationships, (e, i) => {
+          e.database = ctrl.databases.data.items.find((m) => m.id == e.childId);
+        });
         $scope.$apply();
       };
       ctrl.addAttr = function () {
@@ -43,7 +54,7 @@ modules.component("listMixColumn", {
         }
       };
       ctrl.selectReferenceDb = function (relationship) {
-        relationship.rightId = ctrl.referenceDb.id;
+        relationship.childId = ctrl.referenceDb.id;
         relationship.destinateDatabaseName = ctrl.referenceDb.systemName;
       };
       ctrl.addRelationship = function () {
@@ -65,6 +76,21 @@ modules.component("listMixColumn", {
             $scope.$apply();
           } else {
             ctrl.columns.splice(index, 1);
+          }
+        }
+      };
+      ctrl.removeRelationship = async function (rel, index) {
+        if (confirm("Remove this relationship ?")) {
+          if (rel.id) {
+            $rootScope.isBusy = true;
+            var remove = await relationshipService.delete([rel.id]);
+            if (remove.success) {
+              ctrl.relationships.splice(index, 1);
+            }
+            $rootScope.isBusy = false;
+            $scope.$apply();
+          } else {
+            ctrl.relationships.splice(index, 1);
           }
         }
       };

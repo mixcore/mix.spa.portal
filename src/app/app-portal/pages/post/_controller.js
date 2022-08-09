@@ -11,6 +11,7 @@ app.controller("PostController", [
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
   "RestRelatedAttributeDataPortalService",
+  "MixDbService",
   function (
     $scope,
     $rootScope,
@@ -22,7 +23,8 @@ app.controller("PostController", [
     urlAliasService,
     dataService,
     columnService,
-    navService
+    navService,
+    mixDbService
   ) {
     BaseRestCtrl.call(
       this,
@@ -118,6 +120,7 @@ app.controller("PostController", [
       });
       if (resp.success) {
         $scope.viewmodel = resp.data;
+        mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
         if ($scope.getSingleSuccessCallback) {
           $scope.getSingleSuccessCallback();
         }
@@ -219,21 +222,30 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
-        $scope.additionalData.isClone = $scope.viewmodel.isClone;
-        $scope.additionalData.cultures = $scope.viewmodel.cultures;
-        $scope.additionalData.intParentId = $scope.viewmodel.id;
-        $scope.additionalData.parentType = "Post";
-        let result = await dataService.save($scope.additionalData);
-        if (!result.success) {
-          $rootScope.showErrors(result.errors);
+        $scope.additionalData.parentId = $scope.viewmodel.id;
+        var saveResult = await mixDbService.save($scope.additionalData);
+        if (saveResult.success) {
+          $rootScope.showMessage("Additional Data Saved", "success");
+          $scope.additionalData = saveResult.data;
         } else {
-          $scope.additionalData = result.data;
-          //   $scope.saveColumns();
+          $rootScope.showErrors(result.errors);
         }
+        // $scope.additionalData.isClone = $scope.viewmodel.isClone;
+        // $scope.additionalData.cultures = $scope.viewmodel.cultures;
+        // $scope.additionalData.intParentId = $scope.viewmodel.id;
+        // $scope.additionalData.parentType = "Post";
+        // let result = await dataService.save($scope.additionalData);
+        // if (!result.success) {
+        //   $rootScope.showErrors(result.errors);
+        // } else {
+        //   $scope.additionalData = result.data;
+        //   //   $scope.saveColumns();
+        // }
       }
       if ($scope.sysCategories.items.length) {
         await navService.saveMany($scope.sysCategories.items);
       }
+      $rootScope.showMessage("success", "success");
       $rootScope.isBusy = false;
       $scope.$apply();
     };
@@ -245,6 +257,8 @@ app.controller("PostController", [
       }
     };
     $scope.getSingleSuccessCallback = async function () {
+      mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+      await $scope.loadAdditionalData();
       //   $scope.defaultThumbnailImgWidth =
       //     ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
       //   $scope.defaultThumbnailImgHeight =
@@ -310,15 +324,12 @@ app.controller("PostController", [
       }
     };
     $scope.loadAdditionalData = async function () {
-      const obj = {
-        parentType: "Post",
-        parentId: $scope.viewmodel.id,
-        databaseName: $scope.viewmodel.mixDatabaseName || "",
-      };
-      const getData = await dataService.getAdditionalData(obj);
+      const getData = await mixDbService.getSingleByParent($scope.viewmodel.id);
       if (getData.success) {
         $scope.additionalData = getData.data;
         $scope.$apply();
+      } else {
+        $scope.additionalData = {};
       }
     };
     $scope.generateSeo = function () {

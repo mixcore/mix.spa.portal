@@ -5,8 +5,12 @@ modules.component("mixDatabaseForm", {
     mixDatabaseId: "=?",
     mixDatabaseName: "=?",
     mixDatabaseTitle: "=?",
+    mixDatabaseType: "=?",
     parentId: "=?",
     parentName: "=?",
+    postId: "=?",
+    pageId: "=?",
+    moduleId: "=?",
     columns: "=?",
     references: "=?",
     mixDataContentId: "=?",
@@ -18,15 +22,24 @@ modules.component("mixDatabaseForm", {
     backUrl: "=?",
     level: "=?",
     hideAction: "=?",
-    saveSuccess: "&?",
+    onSave: "&?",
+    onSaveSuccess: "&?",
   },
   controller: [
     "$rootScope",
     "$scope",
     "$routeParams",
+    "RestMixAssociationPortalService",
     "RestMixDatabasePortalService",
     "MixDbService",
-    function ($rootScope, $scope, $routeParams, databaseService, service) {
+    function (
+      $rootScope,
+      $scope,
+      $routeParams,
+      associationService,
+      databaseService,
+      service
+    ) {
       var ctrl = this;
       ctrl.isBusy = false;
       ctrl.attributes = [];
@@ -49,7 +62,9 @@ modules.component("mixDatabaseForm", {
         ctrl.isBusy = true;
 
         if (ctrl.mixDataContentId) {
-          var getData = await service.getSingle([ctrl.mixDataContentId]);
+          var getData = await service.getSingle([ctrl.mixDataContentId], {
+            loadNestedData: true,
+          });
           ctrl.mixDataContent = getData.data;
           if (ctrl.mixDataContent) {
             ctrl.mixDataContent.intParentId = ctrl.intParentId;
@@ -81,13 +96,22 @@ modules.component("mixDatabaseForm", {
           !ctrl.defaultData
         ) {
           ctrl.mixDataContent = {};
-
+          if (
+            ctrl.mixDatabaseType == "PageType" ||
+            ctrl.mixDatabaseType == "PostType" ||
+            ctrl.mixDatabaseType == "ModuleType"
+          ) {
+            ctrl.mixDataContent.parentId = ctrl.parentId;
+          }
           //   await ctrl.loadDefaultModel();
           ctrl.isBusy = false;
         }
         if ($routeParams.parentId && $routeParams.parentName) {
-          ctrl.mixDataContent[`${$routeParams.parentName}Id`] =
-            $routeParams.parentId;
+          ctrl.association = {
+            parentId: $routeParams.parentId,
+            parentDatabaseName: $routeParams.parentName,
+            childDatabaseName: ctrl.mixDatabaseName,
+          };
         }
       };
 
@@ -106,25 +130,46 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.submit = async function () {
         if (ctrl.validate()) {
-          ctrl.isBusy = true;
-
-          var saveResult = await service.save(ctrl.mixDataContent);
-          if (saveResult.success) {
-            ctrl.mixDataContent = saveResult.data;
-            if (ctrl.saveSuccess) {
-              ctrl.saveSuccess({ data: ctrl.mixDataContent });
-            }
-            ctrl.isBusy = false;
-            $rootScope.showMessage("success");
-            $scope.$apply();
+          if (ctrl.onSave) {
+            ctrl.onSave({ data: ctrl.mixDataContent });
           } else {
-            ctrl.isBusy = false;
-            if (saveResult) {
-              $rootScope.showErrors(saveResult.errors);
+            ctrl.isBusy = true;
+
+            var saveResult = await service.save(ctrl.mixDataContent);
+            if (saveResult.success) {
+              ctrl.mixDataContent = saveResult.data;
+              if (ctrl.association) {
+                let result = await ctrl.saveAssociation(ctrl.mixDataContent);
+                if (result.success) {
+                  ctrl.isBusy = false;
+                  $rootScope.showMessage("success");
+                  $scope.$apply();
+                } else {
+                  ctrl.isBusy = false;
+                  $rootScope.showErrors(result.errors);
+                  $scope.$apply();
+                }
+              } else {
+                if (ctrl.onSaveSuccess) {
+                  ctrl.onSaveSuccess({ data: ctrl.mixDataContent });
+                }
+                ctrl.isBusy = false;
+                $rootScope.showMessage("success");
+                $scope.$apply();
+              }
+            } else {
+              ctrl.isBusy = false;
+              if (saveResult) {
+                $rootScope.showErrors(saveResult.errors);
+              }
+              $scope.$apply();
             }
-            $scope.$apply();
           }
         }
+      };
+      ctrl.saveAssociation = async function (data) {
+        ctrl.association.childId = data.id;
+        return await associationService.save(ctrl.association);
       };
       ctrl.validate = function () {
         var isValid = true;

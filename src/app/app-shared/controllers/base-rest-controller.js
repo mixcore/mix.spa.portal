@@ -208,9 +208,7 @@ function BaseRestCtrl(
       }
 
       if (resp.success) {
-        $scope.viewmodel.id = resp.data;
-        $scope.getSingle([resp.data]);
-
+        $scope.viewmodel = resp.data;
         if ($scope.saveSuccessCallback) {
           $rootScope.executeFunctionByName(
             "saveSuccessCallback",

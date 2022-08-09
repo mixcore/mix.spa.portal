@@ -120,12 +120,36 @@ modules.component("mixDatabaseDataValues", {
       };
 
       ctrl.update = function (data) {
-        let url = `/admin/mix-database-data/details?dataContentId=${data.id}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}`;
+        let url = `/admin/mix-database-data/details?dataContentId=${data.id}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}&parentId=${ctrl.parentId}&parentName=${ctrl.parentName}`;
         $location.url(url);
       };
 
       ctrl.delete = function (data) {
-        ctrl.onDelete({ data: data });
+        $rootScope.showConfirm(
+          ctrl,
+          "removeConfirmed",
+          [data.id],
+          null,
+          "Remove",
+          "Deleted data will not able to recover, are you sure you want to delete this item?"
+        );
+      };
+
+      ctrl.removeConfirmed = async function (dataContentId) {
+        $rootScope.isBusy = true;
+        var result = await dataService.delete([dataContentId]);
+        if (result.success) {
+          if (ctrl.onDelete) {
+            ctrl.onDelete({ data: dataContentId });
+          }
+          await ctrl.loadData();
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          $rootScope.showErrors(result.errors);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
       };
 
       ctrl.filterData = function (item, attributeName) {

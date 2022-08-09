@@ -113,7 +113,7 @@
             ></mix-select>
           </div>
           <div class="flex-fill me-3">
-            <div class="" ng-if="col.dataType != 'Reference'">
+            <div class="">
               <input
                 ng-model="col.defaultValue"
                 placeholder="Default Value"
@@ -474,7 +474,7 @@
             ></mix-select>
           </div>
         </div>
-        <div class="col-4 mb-3">
+        <div class="col-3 mb-3">
           <div class="input-group">
             <span class="input-group-text">Name</span>
             <input
@@ -489,11 +489,20 @@
             <span class="input-group-text">Database</span>
             <select
               class="form-select"
-              ng-model="$ctrl.referenceDb"
+              ng-model="relationship.database"
               ng-change="$ctrl.selectReferenceDb(relationship, item)"
               ng-options="item as item.displayName for item in $ctrl.databases.data.items"
             ></select>
           </div>
+        </div>
+        <div class="col-1 mb-2">
+          <a
+            href=""
+            class="btn btn-outline-danger"
+            ng-click="$ctrl.removeRelationship(relationship, $index)"
+          >
+            <span class="fas fa-trash-alt"></span>
+          </a>
         </div>
       </div>
     </div>
@@ -544,7 +553,7 @@
                 <span class="input-group-text">Database</span>
                 <select
                   class="form-select"
-                  ng-model="$ctrl.relationship.rightId"
+                  ng-model="$ctrl.relationship.childId"
                 >
                   <option ng-if="$ctrl.allowNull" selected>-- select --</option>
                   <option
