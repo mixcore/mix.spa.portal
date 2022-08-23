@@ -20,6 +20,11 @@ app.controller("SchedulerController", [
       jobData: {
         data: {
           type: "Info",
+          from: {
+            connectionId: "",
+            userName: "",
+            avatar: "",
+          },
           title: "value",
           message: "content",
           data: {},

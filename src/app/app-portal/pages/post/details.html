@@ -6,7 +6,7 @@
   >
     <div
       class="container card page-header page-header-feature d-print-none mb-3"
-      style="background-image: url('{{viewmodel.imageUrl}}'); "
+      style="background-image: url('{{viewmodel.image}}'); "
     >
       <div class="page-title-wrapper row align-items-center pt-3">
         <div ng-if="viewmodel.title" class="col-6">
@@ -189,7 +189,7 @@
                           folder="viewmodel.seoName"
                           header="viewmodel.title"
                           description="viewmodel.excerpt"
-                          src-url="viewmodel.imageUrl"
+                          src-url="viewmodel.image"
                           src="viewmodel.image"
                           auto="'true'"
                         ></custom-image>
@@ -201,7 +201,7 @@
                           folder="viewmodel.seoName"
                           title="viewmodel.title"
                           description="viewmodel.excerpt"
-                          src-url="viewmodel.thumbnailUrl"
+                          src-url="viewmodel.thumbnail"
                           src="viewmodel.thumbnail"
                           auto="'true'"
                         >
@@ -331,6 +331,7 @@
       <div class="content-body py-3 pe-3">
         <section class="">
           <tabs-v class="mb-3" ng-if="viewmodel">
+            <pre>{{additionalData|json}}</pre>
             <pane-v icon="fas fa-feather-alt" header="Content">
               <post-content
                 model="viewmodel"

@@ -62,7 +62,10 @@ app.controller("HubMessagesController", [
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
       $scope.messages.push(msg);
-      if (msg.from.connectionId != $scope.hubRequest.from.connectionId) {
+      if (
+        !msg.from ||
+        msg.from.connectionId != $scope.hubRequest.from.connectionId
+      ) {
         $scope.newMsgCount += 1;
         $rootScope.showMessage(msg.title, msg.style);
       }

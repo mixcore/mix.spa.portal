@@ -7,7 +7,6 @@ app.controller("ModuleController", [
   "$routeParams",
   "ModuleRestService",
   "SharedModuleDataService",
-  "RestRelatedMixDatabasePortalService",
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
   function (
@@ -18,7 +17,6 @@ app.controller("ModuleController", [
     $routeParams,
     moduleServices,
     moduleDataService,
-    RestRelatedMixDatabasePortalService,
     dataService,
     columnService
   ) {
@@ -282,7 +280,6 @@ app.controller("ModuleController", [
       );
     };
     $scope.removeAttributeConfirmed = function (attr, index) {
-      RestRelatedMixDatabasePortalService.delete([]);
       $scope.viewmodel.attributeData.data.values.splice(index, 1);
     };
     $scope.loadAdditionalData = async function () {

@@ -2,7 +2,7 @@
   <div ng-if="viewmodel">
     <div
       class="container card page-header page-header-feature d-print-none mb-3"
-      style="background-image: url('{{viewmodel.imageUrl}}'); "
+      style="background-image: url('{{viewmodel.image}}'); "
     >
       <div class="page-title-wrapper row align-items-center pt-3">
         <div ng-if="viewmodel.title" class="col-6">
@@ -21,7 +21,7 @@
       <span class="mask bg-gradient-primary" style="opacity: 0.5"></span>
       <div
         class="page-thumbnail"
-        style="background-image: url({{viewmodel.thumbnailUrl}});    "
+        style="background-image: url({{viewmodel.image}});    "
       ></div>
     </div>
     <div class="page-body d-flex flex-row-reverse">
@@ -104,7 +104,7 @@
                       </div>
                     </div>
 
-                    <div ng-if="isAdmin" class="mb-3 mb-0">
+                    <div class="mb-3 mb-0">
                       <label class="form-label">Template</label>
                       <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"
@@ -118,7 +118,7 @@
                       </div>
                     </div>
 
-                    <div ng-if="isAdmin" class="mb-3 mb-0">
+                    <div class="mb-3 mb-0">
                       <label class="form-label">Master Template</label>
                       <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"
@@ -193,21 +193,8 @@
                           folder="viewmodel.seoName"
                           title="viewmodel.title"
                           description="viewmodel.excerpt"
-                          src-url="viewmodel.imageUrl"
+                          src-url="viewmodel.image"
                           src="viewmodel.image"
-                          auto="'true'"
-                        >
-                        </custom-image>
-                      </pill>
-                      <pill header="Thumbnail">
-                        <custom-image
-                          header="'Thumbnail upload'"
-                          type="'Pages'"
-                          folder="viewmodel.seoName"
-                          title="viewmodel.title"
-                          description="viewmodel.excerpt"
-                          src-url="viewmodel.thumbnailUrl"
-                          src="viewmodel.thumbnail"
                           auto="'true'"
                         >
                         </custom-image>
@@ -418,7 +405,6 @@
                 </pane-v>
                 <pane-v icon="fas fa-cog" header="" class="ms-auto">
                   <page-advanced
-                    ng-if="additionalData"
                     model="viewmodel"
                     additional-data="additionalData"
                   ></page-advanced>

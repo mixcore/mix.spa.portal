@@ -2,7 +2,7 @@
   <div ng-if="viewmodel">
     <div
       class="container card page-header page-header-feature d-print-none mb-3"
-      style="background-image: url('{{viewmodel.imageUrl}}'); "
+      style="background-image: url('{{viewmodel.image}}'); "
     >
       <div class="page-title-wrapper row align-items-center pt-3">
         <div ng-if="viewmodel.title" class="col-6">
@@ -21,7 +21,7 @@
       <span class="mask bg-gradient-primary" style="opacity: 0.5"></span>
       <div
         class="page-thumbnail"
-        style="background-image: url({{viewmodel.thumbnailUrl}});    "
+        style="background-image: url({{viewmodel.image}});    "
       ></div>
     </div>
     <div class="page-body d-flex flex-row-reverse">
@@ -192,8 +192,8 @@
                           folder="viewmodel.seoName"
                           title="viewmodel.title"
                           description="viewmodel.description"
-                          src-url="viewmodel.thumbnail"
-                          src="viewmodel.thumbnail"
+                          src-url="viewmodel.image"
+                          src="viewmodel.image"
                           auto="'true'"
                         >
                         </custom-image>

@@ -16,7 +16,7 @@ appShared.factory("MediaService", [
       return await apiService.sendRequest(req);
     };
     var _save = async function (objData, file, onUploadFileProgress) {
-      var url = this.prefixUrl + "/save";
+      var url = this.prefixUrl + "/upload-file";
       var fd = new FormData();
       var file = objData.mediaFile.file;
       objData.mediaFile.file = null;

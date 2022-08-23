@@ -62,14 +62,15 @@
           ctrl.mediaFile.extension = ctrl.formFile.name.substring(
             ctrl.formFile.name.lastIndexOf(".")
           );
-          if ($rootScope.isImage(ctrl.formFile)) {
+          if (false) {
+            //($rootScope.isImage(ctrl.formFile)) {
             ctrl.canUpload = false;
             mediaService.openCroppie(files[0], ctrl, ctrl.autoSave);
           } else {
             ctrl.mediaFile.file = ctrl.formFile;
             ctrl.canUpload = true;
+            ctrl.uploadFile(ctrl.formFile);
             if (ctrl.autoSave) {
-              ctrl.uploadFile(ctrl.formFile);
             }
             // ctrl.getBase64(ctrl.formFile);
           }
@@ -103,6 +104,7 @@
           if (file) {
             var response = await mediaService.uploadMedia(
               file,
+              "root",
               ctrl.onUploadFileProgress
             );
             if (response.success) {
