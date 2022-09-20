@@ -9,12 +9,14 @@ sharedComponents.component("mixStore", {
     "ngAppSettings",
     "CryptoService",
     "TenancyService",
+    "ThemeService",
     "StoreService",
     function (
       $scope,
       $rootScope,
       ngAppSettings,
       cryptoService,
+      tenancyService,
       themeService,
       service
     ) {
@@ -122,11 +124,33 @@ sharedComponents.component("mixStore", {
         $rootScope.isBusy = false;
         theme.installStatus = "downloading";
         ctrl.id = id;
-        var result = await themeService.install(theme);
+        var result = await tenancyService.install(theme);
 
         if (result.success) {
           $rootScope.isBusy = false;
           theme.installStatus = "finished";
+          $rootScope.showMessage("success");
+        } else {
+          $rootScope.isBusy = false;
+          theme.installStatus = "failed";
+          $rootScope.showErrors(result.errors);
+        }
+
+        if (ctrl.installCallback) {
+          ctrl.installCallback({ data: result });
+        }
+        $scope.$apply();
+      };
+      ctrl.installPortal = async function (theme, id) {
+        $rootScope.isBusy = false;
+        theme.installStatus = "downloading";
+        ctrl.id = id;
+        var result = await themeService.installPortal(theme);
+
+        if (result.success) {
+          $rootScope.isBusy = false;
+          theme.installStatus = "finished";
+          window.location = result.data;
           $rootScope.showMessage("success");
         } else {
           $rootScope.isBusy = false;

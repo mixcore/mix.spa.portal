@@ -23,6 +23,15 @@ appShared.factory("ThemeService", [
       };
       return await apiService.sendRequest(req);
     };
+    var _installPortal = async function (objData) {
+      var url = this.prefixUrl + "/install-portal";
+      var req = {
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objData),
+      };
+      return await apiService.sendRequest(req);
+    };
     var _export = async function (objData) {
       var url = this.prefixUrl + "/export";
       var req = {
@@ -44,6 +53,7 @@ appShared.factory("ThemeService", [
       return await apiService.sendRequest(req);
     };
     serviceFactory.install = _install;
+    serviceFactory.installPortal = _installPortal;
     serviceFactory.export = _export;
     serviceFactory.syncTemplates = _syncTemplates;
     serviceFactory.getExportData = _getExportData;
