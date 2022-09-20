@@ -32,15 +32,17 @@ sharedComponents.component("mixStore", {
         };
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
-        ctrl.themeRequest.postType = "theme";
-        ctrl.themeRequest.query.mixcore_versions = "2.0.1";
+        ctrl.themeRequest.mixDatabaseName = "mixcorePortalApp";
+        ctrl.themeRequest.queries = [
+          { fieldName: "mixcoreVersion", value: "2.0.1" },
+        ];
         ctrl.cateRequest = angular.copy(ngAppSettings.request);
         ctrl.cateRequest.mixDatabaseName = "sysCategory";
         ctrl.cateRequest.pageSize = null;
 
         ctrl.mixConfigurations = $rootScope.globalSettings;
-        let getCategories = await service.getCategories(ctrl.cateRequest);
-        ctrl.categories = getCategories.data.items;
+        // let getCategories = await service.getCategories(ctrl.cateRequest);
+        // ctrl.categories = getCategories.data.items;
         await ctrl.getThemes(ctrl.themeRequest);
         $scope.$apply();
       };
