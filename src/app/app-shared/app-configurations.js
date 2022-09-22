@@ -19,7 +19,6 @@ appShared.constant("ngAppSettings", {
     keyword: "",
     searchColumns: "title",
     searchMethod: "Like",
-    query: {},
   },
   restRequest: {
     pageSize: "20",
@@ -30,7 +29,6 @@ appShared.constant("ngAppSettings", {
     fromDate: null,
     toDate: null,
     keyword: "",
-    query: {},
   },
   privacies: ["VND", "USD"],
   pageSizes: ["", "5", "10", "15", "20"],

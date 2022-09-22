@@ -37,6 +37,18 @@
                   <!-- <label class="mb-2" for="customRange1">Sort by</label> -->
                   <select
                     class="form-select"
+                    ng-model="$ctrl.themeRequest.mixDatabaseName"
+                    ng-change="$ctrl.getThemes()"
+                  >
+                    <option
+                      ng-repeat="type in $ctrl.packageTypes"
+                      value="{{type.value}}"
+                    >
+                      {{type.title}}
+                    </option>
+                  </select>
+                  <select
+                    class="form-select"
                     ng-model="$ctrl.themeRequest.orderBy"
                     ng-change="$ctrl.getThemes()"
                   >

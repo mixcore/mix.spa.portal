@@ -25,6 +25,16 @@ sharedComponents.component("mixStore", {
       BaseHub.call(this, ctrl);
       ctrl.current = null;
       ctrl.viewMode = "list";
+      ctrl.packageTypes = [
+        {
+          title: "Mix Theme",
+          value: "mixcoreTheme",
+        },
+        {
+          title: "Mix Portal App",
+          value: "mixcorePortalApp",
+        },
+      ];
       ctrl.init = async function () {
         ctrl.startConnection("mixThemeHub", null, (err) => {
           console.log(err);
