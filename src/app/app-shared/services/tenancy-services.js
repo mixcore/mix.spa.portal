@@ -44,8 +44,18 @@ appShared.factory("TenancyService", [
       };
       return await apiService.sendRequest(req);
     };
+
+    var _import = async function (data) {
+      var req = {
+        method: "POST",
+        url: this.prefixUrl + "/import-theme",
+        data: JSON.stringify(data),
+      };
+      return await apiService.sendRequest(req);
+    };
     serviceFactory.install = _install;
     serviceFactory.export = _export;
+    serviceFactory.import = _import;
     serviceFactory.syncTemplates = _syncTemplates;
     serviceFactory.getExportData = _getExportData;
     return serviceFactory;

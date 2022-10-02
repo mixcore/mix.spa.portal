@@ -69,7 +69,13 @@ modules.component("mixDatabaseDataValues", {
         if (!ctrl.data) {
           await ctrl.loadData();
         }
-        ctrl.createUrl = `/admin/mix-database-data/create?mixDatabaseId=${ctrl.database.id}&mixDatabaseName=${ctrl.database.systemName}&mixDatabaseTitle=${ctrl.database.displayName}&dataContentId=default&parentId=${ctrl.parentId}&parentName=${ctrl.parentName}`;
+        ctrl.createUrl = `/admin/mix-database-data/create?mixDatabaseId=${
+          ctrl.database.id
+        }&mixDatabaseName=${ctrl.database.systemName}&mixDatabaseTitle=${
+          ctrl.database.displayName
+        }&dataContentId=default&parentId=${ctrl.parentId || ""}&parentName=${
+          ctrl.parentName || ""
+        }`;
       };
       ctrl.loadData = async function () {
         var getData = await dataService.getList(ctrl.request);

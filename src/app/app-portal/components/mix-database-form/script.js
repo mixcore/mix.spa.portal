@@ -7,6 +7,7 @@ modules.component("mixDatabaseForm", {
     mixDatabaseTitle: "=?",
     mixDatabaseType: "=?",
     parentId: "=?",
+    parentType: "=?", // MixContentType
     parentName: "=?",
     postId: "=?",
     pageId: "=?",
@@ -15,7 +16,6 @@ modules.component("mixDatabaseForm", {
     references: "=?",
     mixDataContentId: "=?",
     mixDataContent: "=?",
-    parentType: "=?", // attribute set = 1 | post = 2 | page = 3 | module = 4
     intParentId: "=?",
     guidParentId: "=?",
     defaultId: "=",
@@ -49,10 +49,12 @@ modules.component("mixDatabaseForm", {
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.$onInit = async function () {
         ctrl.level = ctrl.level || 0;
+        ctrl.canSave = ctrl.onSave != undefined;
         let getDatabase = await databaseService.getByName(ctrl.mixDatabaseName);
         ctrl.database = getDatabase.data;
         service.initDbName(ctrl.mixDatabaseName);
         await ctrl.loadData();
+        ctrl.isBusy = false;
         $scope.$apply();
       };
       ctrl.loadData = async function () {
@@ -96,11 +98,7 @@ modules.component("mixDatabaseForm", {
           !ctrl.defaultData
         ) {
           ctrl.mixDataContent = {};
-          if (
-            ctrl.mixDatabaseType == "PageType" ||
-            ctrl.mixDatabaseType == "PostType" ||
-            ctrl.mixDatabaseType == "ModuleType"
-          ) {
+          if (ctrl.parentId) {
             ctrl.mixDataContent.parentId = ctrl.parentId;
           }
           //   await ctrl.loadDefaultModel();

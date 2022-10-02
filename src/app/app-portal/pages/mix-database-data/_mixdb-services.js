@@ -7,8 +7,8 @@ app.factory("MixDbService", [
     var _initDbName = function (name) {
       serviceFactory.init(`mix-db/${name}`);
     };
-    var _getSingleByParent = async function (parentId) {
-      var url = `${this.prefixUrl}/get-by-parent/${parentId}`;
+    var _getSingleByParent = async function (parentType, parentId) {
+      var url = `${this.prefixUrl}/get-by-parent/${parentType}/${parentId}`;
       var req = {
         method: "GET",
         url: url,

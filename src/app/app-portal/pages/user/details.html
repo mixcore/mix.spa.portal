@@ -77,15 +77,14 @@
             </form>
           </div>
         </div>
-        <additional-value
-          ng-if="activedUser"
-          class="mb-4"
-          additional-data="activedUser.userData"
+        <mix-database-form
           mix-database-name="'sysUserData'"
-          parent-type="'User'"
+          mix-database-title="'User Info'"
+          mix-database-type="'AdditionalData'"
+          mix-data-content="additionalData"
           parent-id="activedUser.id"
         >
-        </additional-value>
+        </mix-database-form>
       </section>
       <!-- /.content -->
     </div>

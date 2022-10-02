@@ -7,6 +7,7 @@ app.controller("UserController", [
   "AuthService",
   "UserServices",
   "RestMixDatabaseDataPortalService",
+  "MixDbService",
   function (
     $scope,
     $rootScope,
@@ -14,7 +15,8 @@ app.controller("UserController", [
     $routeParams,
     authService,
     userServices,
-    dataService
+    dataService,
+    mixDbService
   ) {
     $scope.request = {
       pageSize: "10",
@@ -56,20 +58,34 @@ app.controller("UserController", [
       var response = await userServices.getUser(id, "portal");
       if (response.success) {
         $scope.activedUser = response.data;
-        $rootScope.isBusy = false;
-        if (!$rootScope.isInRole("Owner")) {
-          $scope.activedUser.roles = $scope.activedUser.roles.filter(
-            (role) => role.description != "Owner"
-          );
-        }
-        $scope.$apply();
+        $scope.loadAdditionalData();
       } else {
         $rootScope.showErrors(response.errors);
         $rootScope.isBusy = false;
         $scope.$apply();
       }
     };
-
+    $scope.loadAdditionalData = async function () {
+      mixDbService.initDbName("sysUserData");
+      const getData = await mixDbService.getSingleByParent(
+        "User",
+        $scope.activedUser.id
+      );
+      if (getData.success) {
+        $scope.additionalData = getData.data;
+        if (!$rootScope.isInRole("Owner")) {
+          $scope.activedUser.roles = $scope.activedUser.roles.filter(
+            (role) => role.description != "Owner"
+          );
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      } else {
+        $scope.additionalData = {};
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
     $scope.loadMyProfile = async function () {
       $rootScope.isBusy = true;
       var response = await userServices.getMyProfile();
@@ -152,21 +168,17 @@ app.controller("UserController", [
       $rootScope.isBusy = true;
       var resp = await userServices.saveUser($scope.activedUser);
       if (resp && resp.success) {
-        var saveInfo = await dataService.save($scope.activedUser.userData);
-        if (saveInfo.success) {
-          $rootScope.showMessage("Update successfully!", "success");
-          authService
-            .refreshToken(
-              authService.authentication.refreshToken,
-              authService.authentication.accessToken
-            )
-            .then(() => {
-              if ($scope.activedUser.id == authService.authentication.info.id) {
-                window.location = window.location;
-              }
-            });
+        if ($scope.additionalData) {
+          $scope.additionalData.parentType = "User";
+          $scope.additionalData.parentId = $scope.activedUser.id;
+          var saveResult = await mixDbService.save($scope.additionalData);
+          if (saveResult.success) {
+            $rootScope.showMessage("Additional Data Saved", "success");
+            $scope.additionalData = saveResult.data;
+          } else {
+            $rootScope.showErrors(result.errors);
+          }
         }
-
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

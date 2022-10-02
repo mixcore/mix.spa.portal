@@ -9,7 +9,7 @@
     function ($rootScope, $scope, cryptoService, commonService) {
       var ctrl = this;
       ctrl.$onInit = () => {
-        var key = cryptoService.parseKeys(ctrl.appSettings.ApiEncryptKey);
+        var key = cryptoService.parseKeys(ctrl.appSettings.apiEncryptKey);
         ctrl.apiKey = key.key;
         ctrl.iv = key.iv;
       };

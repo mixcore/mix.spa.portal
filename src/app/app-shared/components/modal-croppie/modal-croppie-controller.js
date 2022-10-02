@@ -25,9 +25,7 @@
     ctrl.mediaNavs = [];
     ctrl.media = {
       title: "",
-      mediaFile: {
-        file: null,
-      },
+      mediaFile: {},
     };
     ctrl.image_placeholder = "/mix-app/assets/img/image_placeholder.jpg";
     ctrl.options = null;
@@ -76,11 +74,12 @@
       if (!ctrl.autoSave) {
         $uibModalInstance.close(ctrl.cropped.image);
       } else {
-        ctrl.media.fileFolder = ctrl.folder || "Media";
-        ctrl.media.fileName = ctrl.media.mediaFile.fileName;
-        ctrl.media.extension = ctrl.media.mediaFile.extension;
+        // ctrl.media.fileFolder = ctrl.folder || "Media";
+        // ctrl.media.fileName = ctrl.media.mediaFile.fileName;
+        // ctrl.media.extension = ctrl.media.mediaFile.extension;
         ctrl.media.mediaFile.fileStream = ctrl.cropped.image;
-        var result = await mediaService.save(ctrl.media);
+        ctrl.media.mediaFile.folderName = ctrl.folder || "Media";
+        var result = await mediaService.saveFileStream(ctrl.media.mediaFile);
         if (result.success) {
           $uibModalInstance.close(result.data);
         }

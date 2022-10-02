@@ -222,7 +222,17 @@ appShared.factory("ApiService", [
         }
       );
     };
-
+    var _ajaxSubmitForm = async function (form, url) {
+      var req = {
+        method: "POST",
+        url: url,
+        headers: { "Content-Type": undefined },
+        contentType: false, // Not to set any content header
+        processData: false, // Not to process data
+        data: form,
+      };
+      return await _sendRequest(req);
+    };
     var _logOut = async function () {
       localStorageService.remove("authorizationData");
       window.top.location.href = "/security/login";
@@ -246,6 +256,7 @@ appShared.factory("ApiService", [
     factory.fillAuthData = _fillAuthData;
     factory.updateAuthData = _updateAuthData;
     factory.sendRequest = _sendRequest;
+    factory.ajaxSubmitForm = _ajaxSubmitForm;
     return factory;
   },
 ]);

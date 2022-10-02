@@ -120,7 +120,16 @@ appShared.factory("CommonService", [
       localStorageService.remove("translator");
     };
 
+    var _stopApplication = async function () {
+      var req = {
+        method: "GET",
+        url: "/rest/shared/stop-application/",
+      };
+      return await apiService.sendRequest(req, true);
+    };
+
     factory.sendMail = _sendMail;
+    factory.stopApplication = _stopApplication;
     factory.removeSettings = _removeSettings;
     factory.removeTranslator = _removeTranslator;
     factory.showAlertMsg = _showAlertMsg;

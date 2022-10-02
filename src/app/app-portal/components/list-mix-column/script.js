@@ -54,8 +54,8 @@ modules.component("listMixColumn", {
         }
       };
       ctrl.selectReferenceDb = function (relationship) {
-        relationship.childId = ctrl.referenceDb.id;
-        relationship.destinateDatabaseName = ctrl.referenceDb.systemName;
+        relationship.childId = relationship.database.id;
+        relationship.destinateDatabaseName = relationship.database.systemName;
       };
       ctrl.addRelationship = function () {
         if (ctrl.relationships) {

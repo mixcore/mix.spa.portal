@@ -24,6 +24,15 @@ appShared.factory("MediaService", [
       fd.append("file", file);
       return await serviceFactory.ajaxSubmitForm(fd, url, onUploadFileProgress);
     };
+    var _saveFileStream = async function (objData) {
+      var url = this.prefixUrl + "/upload-file-stream";
+      var req = {
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objData),
+      };
+      return await apiService.sendRequest(req);
+    };
     var _uploadMedia = async function (file, folder, onUploadFileProgress) {
       //var container = $(this).parents('.model-media').first().find('.custom-file').first();
       if (file !== null) {
@@ -74,6 +83,7 @@ appShared.factory("MediaService", [
     serviceFactory.openCroppie = _openCroppie;
     serviceFactory.cloneMedia = _cloneMedia;
     serviceFactory.uploadMedia = _uploadMedia;
+    serviceFactory.saveFileStream = _saveFileStream;
     serviceFactory.save = _save;
     return serviceFactory;
   },

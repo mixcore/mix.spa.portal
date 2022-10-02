@@ -71,7 +71,27 @@ app.controller("ThemeController", [
         $scope.$apply();
       }
     };
-
+    $scope.extract = async function () {
+      $rootScope.isBusy = true;
+      var frm = new FormData();
+      var url = "/rest/mix-tenancy/setup/extract-theme";
+      $scope.data.isCreateDefault = $scope.themeType === "materialkit";
+      $rootScope.isBusy = true;
+      // Looping over all files and add it to FormData object
+      frm.append("theme", theme);
+      // Adding one more key to FormData object
+      frm.append("model", angular.toJson($scope.data));
+      var response = await service.ajaxSubmitForm(frm, url);
+      $rootScope.isBusy = false;
+      if (response.success) {
+        $rootScope.goToPath("/init/step4");
+        $scope.$apply();
+      } else {
+        $rootScope.showErrors(response.errors);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
     $scope.export = async function () {
       $scope.exportThemeDto.themeId = $routeParams.id;
       $rootScope.isBusy = true;
@@ -89,7 +109,7 @@ app.controller("ThemeController", [
     };
     $scope.saveSuccessCallback = function () {
       apiService.getAllSettings().then(function () {
-        $location.path("/admin/theme/list");
+        // $location.path("/admin/theme/list");
         $rootScope.isBusy = false;
         $scope.$apply();
       });

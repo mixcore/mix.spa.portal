@@ -65,7 +65,7 @@
 
       ctrl.croppieCallback = function (result) {
         if (result) {
-          ctrl.srcUrl = result.filePath;
+          ctrl.srcUrl = result;
         } else if (ctrl.file) {
           ctrl.uploadFile(ctrl.file);
         }

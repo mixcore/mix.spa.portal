@@ -104,7 +104,7 @@
           if (file) {
             var response = await mediaService.uploadMedia(
               file,
-              "root",
+              null,
               ctrl.onUploadFileProgress
             );
             if (response.success) {
