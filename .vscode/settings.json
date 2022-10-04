@@ -3,5 +3,10 @@
   "editor.tabSize": 4,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "cSpell.words": ["Actived", "datetime", "mixcore"]
+  "cSpell.words": [
+    "Actived",
+    "datetime",
+    "mixcore",
+    "viewmodel"
+]
 }

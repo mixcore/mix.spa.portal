@@ -19,8 +19,8 @@
           <post-filter-list
             request="request"
             categories="categories"
-            post-types="postTypes"
-            callback="getList(pageIndex)"
+            post-types="additionalDatabases"
+            callback="filter(pageIndex)"
             create-url="createUrl"
             create-text="'Create Post'"
           >
@@ -232,7 +232,7 @@
             total="data.totalItems"
             ul-class="pagination justify-content-end m-0"
             a-class="page-link"
-            paging-action="getList(page-1)"
+            paging-action="filter(page-1)"
             scroll-top="true"
           >
           </paging>

@@ -82,14 +82,14 @@
       </select>
       <select
         class="form-select"
-        ng-model="$ctrl.request.postType"
+        ng-model="$ctrl.request.mixDatabaseName"
         ng-change="$ctrl.apply(0)"
       >
         <option
           ng-repeat="item in $ctrl.postTypes track by $index"
-          value="{{item.mixDatabaseName}}"
+          value="{{item.systemName}}"
         >
-          {{item.title}}
+          {{item.displayName}}
         </option>
       </select>
     </div>

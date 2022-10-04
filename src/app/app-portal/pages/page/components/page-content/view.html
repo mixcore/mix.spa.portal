@@ -13,16 +13,15 @@
 </div>
 <div class="row mb-5">
   <div class="col-12">
-    
-    <additional-value
-      ng-if="$ctrl.additionalData"
-      class="mb-4"
-      additional-data="$ctrl.additionalData"
-      mix-database-name="'sysPageColumn'"
-      parent-type="'Page'"
+    <mix-database-form
+      ng-if="!$ctrl.loadingData && $ctrl.model.mixDatabaseName"
+      mix-database-name="$ctrl.model.mixDatabaseName"
+      mix-database-title="$ctrl.model.mixDatabaseName"
+      mix-database-type="'AdditionalData'"
+      mix-data-content="$ctrl.additionalData"
       parent-id="$ctrl.model.id"
-      back-url="$ctrl.backUrl"
+      parent-type="'Page'"
     >
-    </additional-value>
+    </mix-database-form>
   </div>
 </div>

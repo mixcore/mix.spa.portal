@@ -4,6 +4,7 @@
   bindings: {
     model: "=",
     additionalData: "=",
+    loadingData: "=",
   },
   controller: [
     "$rootScope",

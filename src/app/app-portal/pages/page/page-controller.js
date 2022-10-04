@@ -8,8 +8,10 @@ app.controller("PageController", [
   "PageRestService",
   "PagePostRestService",
   "UrlAliasService",
+  "RestMixDatabasePortalService",
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
+  "MixDbService",
   function (
     $scope,
     $rootScope,
@@ -19,8 +21,10 @@ app.controller("PageController", [
     service,
     pagePostRestService,
     urlAliasService,
+    databaseService,
     dataService,
-    columnService
+    columnService,
+    mixDbService
   ) {
     BaseRestCtrl.call(
       this,
@@ -35,7 +39,7 @@ app.controller("PageController", [
     var pageModuleService = $rootScope.getRestService("mix-page-module");
     $scope.viewmodelType = "page";
     $scope.request.query = "level=0";
-    $scope.pageType = "";
+    $scope.pageType = {};
     $scope.pageTypes = $rootScope.globalSettings.pageTypes;
     $scope.selectedCategories = [];
     $scope.selectedTags = [];
@@ -55,6 +59,10 @@ app.controller("PageController", [
     $scope.additionalData = null;
     $scope.temp = null;
     $scope.postRequest = angular.copy(ngAppSettings.request);
+    $scope.additionalDatabaseRequest = angular.copy(ngAppSettings.request);
+    ($scope.additionalDatabaseRequest.searchColumns = "Type"),
+      ($scope.additionalDatabaseRequest.searchMethod = "Equal"),
+      ($scope.additionalDatabaseRequest.keyword = "AdditionalData");
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
     $scope.loadPosts = async function () {
@@ -73,11 +81,31 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
-    $scope.$watch("additionalData", function (newValue, oldValue) {
+    $scope.$watch("additionalDatabase", function (newValue, oldValue) {
       console.log(newValue, oldValue);
     });
+    $scope.init = async function () {
+      await $scope.loadAdditionalDatabases();
+      await $scope.getSingle();
+    };
+    $scope.initList = function () {
+      $scope.additionalDatabases.splice(0, 0, {
+        systemName: "",
+        displayName: "All",
+        id: 0,
+      });
+      $scope.getList();
+    };
     $scope.getSingleSuccessCallback = function () {
-      $scope.loadAdditionalData();
+      mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+      $scope.additionalDatabase = $rootScope.findObjectByKey(
+        $scope.additionalDatabases,
+        "systemName",
+        $scope.viewmodel.mixDatabaseName
+      );
+      if ($scope.additionalDatabase) {
+        $scope.loadAdditionalData();
+      }
       if ($routeParams.template) {
         $scope.viewmodel.view = $rootScope.findObjectByKey(
           $scope.viewmodel.templates,
@@ -85,6 +113,7 @@ app.controller("PageController", [
           $routeParams.template
         );
       }
+      $scope.$apply();
     };
     $scope.getListSuccessCallback = function () {
       $scope.canDrag =
@@ -92,17 +121,21 @@ app.controller("PageController", [
         $scope.request.direction !== "0";
     };
     $scope.loadAdditionalData = async function () {
-      let obj = {
-        parentType: "Page",
-        parentId: $scope.viewmodel.id,
-        databaseName: "sysPageColumn",
-        specificulture: $scope.request.culture,
-      };
-      let getData = await dataService.getAdditionalData(obj);
+      $scope.loadingData = true;
+      const getData = await mixDbService.getSingleByParent(
+        "Page",
+        $scope.viewmodel.id
+      );
       if (getData.success) {
         $scope.additionalData = getData.data;
-        $scope.$apply();
+        $scope.loadingData = false;
+      } else {
+        $scope.additionalData = {
+          parentType: "Page",
+        };
+        $scope.loadingData = false;
       }
+      $scope.$apply();
     };
     $scope.showChilds = function (id) {
       $("#childs-" + id).toggleClass("collapse");
@@ -156,6 +189,75 @@ app.controller("PageController", [
       $rootScope.isBusy = false;
       $scope.$apply();
     };
+    $scope.loadAdditionalDatabases = async function () {
+      let getTypes = await databaseService.getList(
+        $scope.additionalDatabaseRequest
+      );
+      if (getTypes.success) {
+        $scope.additionalDatabases = getTypes.data.items;
+
+        if ($scope.request.mixDatabaseName) {
+          $scope.additionalDatabase = $rootScope.findObjectByKey(
+            $scope.additionalDatabases,
+            "mixDatabaseName",
+            $scope.request.mixDatabaseName
+          );
+        }
+        $scope.request.mixDatabaseName = $routeParams.type || "";
+        $scope.$apply();
+      }
+    };
+    $scope.onSelectType = async function () {
+      if ($scope.viewmodel) {
+        $scope.viewmodel.mixDatabaseName = $scope.additionalDatabase.systemName;
+        mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+        await $scope.loadAdditionalData();
+      }
+      $scope.request.mixDatabaseName = $scope.additionalDatabase.systemName;
+      $scope.createUrl = `/admin/page/create?type=${$scope.request.mixDatabaseName}`;
+      if ($routeParams.template) {
+        $scope.createUrl += `&template=${$routeParams.template}`;
+      }
+      if (
+        $scope.additionalDatabase &&
+        (!$scope.viewmodel || !$scope.viewmodel.id)
+      ) {
+        await $scope.getDefault($scope.request.mixDatabaseName);
+      }
+      if ($scope.pageName == "pageList") {
+        await $scope.filter();
+      }
+    };
+    $scope.getDefault = async function (type = null) {
+      $rootScope.isBusy = true;
+      type = type || $routeParams.type;
+      var resp = await service.getDefault({
+        type: type || "",
+        template: $routeParams.template || "",
+      });
+      if (resp.success) {
+        $scope.viewmodel = resp.data;
+        mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+        if ($scope.getSingleSuccessCallback) {
+          $scope.getSingleSuccessCallback();
+        }
+
+        // $scope.viewmodel.createdDateTime = Date.now();
+        $scope.viewmodel.createdBy = $rootScope.authentication.username;
+
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      } else {
+        if (resp) {
+          $rootScope.showErrors(resp.errors);
+        }
+        if ($scope.getSingleFailCallback) {
+          $scope.getSingleFailCallback();
+        }
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      }
+    };
     $scope.saveAdditionalData = async () => {
       if ($scope.additionalData) {
         $scope.additionalData.isClone = $scope.viewmodel.isClone;
@@ -171,7 +273,7 @@ app.controller("PageController", [
     };
     $scope.savePageModules = async () => {
       angular.forEach($scope.selectedModules, (e) => {
-        e.leftId = $scope.viewmodel.id;
+        e.parentId = $scope.viewmodel.id;
       });
       var result = await pageModuleService.saveMany($scope.selectedModules);
       if (!result.success) {

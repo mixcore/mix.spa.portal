@@ -1,4 +1,4 @@
-<div class="page-wrapper d-flex flex-column pt-4 w-100" ng-init="getSingle()">
+<div class="page-wrapper d-flex flex-column pt-4 w-100" ng-init="init()">
   <div ng-if="viewmodel">
     <div
       class="container card page-header page-header-feature d-print-none mb-3"
@@ -103,8 +103,19 @@
                         />
                       </div>
                     </div>
+                    <div class="mb-3">
+                      <label class="form-label">Additional Database</label>
 
-                    <div class="mb-3 mb-0">
+                      <select
+                        ng-init="loadAdditionalDatabases()"
+                        class="form-select"
+                        ng-options="item as item.displayName for item in additionalDatabases track by item.id"
+                        ng-model="additionalDatabase"
+                        ng-change="onSelectType()"
+                      ></select>
+                      {{additionalDatabase}}
+                    </div>
+                    <!-- <div class="mb-3 mb-0">
                       <label class="form-label">Template</label>
                       <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"
@@ -130,7 +141,7 @@
                           ng-model="viewmodel.master"
                         ></select>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
