@@ -26,36 +26,47 @@ app.controller("AppSettingsController", [
     $scope.errors = [];
     $scope.statuses = ngAppSettings.contentStatuses;
     $scope.cultures = $rootScope.globalSettings.cultures;
-    $scope.getAppSettings = async function (id) {
+    $scope.settingTypes = [
+      "Global",
+      "Authentication",
+      "Portal",
+      "EPPlus",
+      "IPSecurity",
+      "MixHeart",
+      "Quartz",
+      "Smtp",
+      "Endpoint",
+      "Azure",
+      "Ocelot",
+      "Storage",
+      "Queue",
+    ];
+    $scope.type = "Global";
+    $scope.getAppSettings = async function (type) {
       $rootScope.isBusy = true;
-
-      var resp = await appSettingsServices.getAppSettings();
-      if (resp && resp.success) {
-        $scope.appSettings = JSON.stringify(resp.data);
-        $rootScope.initEditor();
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        if (resp) {
-          $rootScope.showErrors(resp.errors);
+      $scope.type = type;
+      $scope.appSettings = null;
+      setTimeout(async () => {
+        var resp = await appSettingsServices.getAppSettings($scope.type);
+        if (resp && resp.success) {
+          $scope.appSettings = JSON.stringify(resp.data, null, "\t");
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          if (resp) {
+            $rootScope.showErrors(resp.errors);
+          }
+          $rootScope.isBusy = false;
+          $scope.$apply();
         }
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
+      }, 200);
+    };
+    $scope.updateAppSettings = function (content) {
+      $scope.appSettings = content;
     };
     $scope.loadAppSettings = async function () {
       $rootScope.isBusy = true;
-
-      var response = await appSettingsServices.getAppSettings("global");
-      if (response && response.success) {
-        $scope.appSettings = response.data;
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      } else {
-        $rootScope.showErrors(response?.errors || ["Failed"]);
-        $rootScope.isBusy = false;
-        $scope.$apply();
-      }
+      await $scope.getAppSettings("Global");
 
       await apiService.initAllSettings();
       $scope.mixConfigurations = $rootScope.mixConfigurations;
@@ -70,15 +81,32 @@ app.controller("AppSettingsController", [
       //   });
     };
 
+    $scope.stopApplication = async function () {
+      $rootScope.isBusy = true;
+      await commonService.stopApplication();
+      $rootScope.showMessage("success", "success");
+      $rootScope.isBusy = false;
+      $scope.$apply();
+    };
+    $scope.clearCache = async function () {
+      $rootScope.isBusy = true;
+      await commonService.clearCache();
+      $rootScope.showMessage("success", "success");
+      $rootScope.isBusy = false;
+      $scope.$apply();
+    };
     $scope.saveAppSettings = async function (appSettings) {
       $rootScope.isBusy = true;
       var resp = await appSettingsServices.saveAppSettings(
-        "global",
+        $scope.type,
         appSettings
       );
       if (resp && resp.success) {
         $scope.appSettings = resp.data;
-        $rootScope.showMessage("success", "success");
+        $rootScope.showMessage(
+          "Please stop application to restart application pool",
+          "warning"
+        );
         $rootScope.isBusy = false;
         $scope.$apply();
       } else {

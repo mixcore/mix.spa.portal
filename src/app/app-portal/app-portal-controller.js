@@ -22,6 +22,7 @@ app.controller("AppPortalController", [
     appSettingsService,
     localStorageService
   ) {
+    BaseHub.call(this, $scope);
     $scope.isInit = false;
     $scope.pageTagName = "";
     $scope.pageTagTypeName = "";
@@ -34,7 +35,6 @@ app.controller("AppPortalController", [
     $scope.portalThemeSettings = {};
     $scope.init = function () {
       new ClipboardJS(".btn-clipboard");
-
       if (!$rootScope.isBusy) {
         $rootScope.isBusy = true;
 

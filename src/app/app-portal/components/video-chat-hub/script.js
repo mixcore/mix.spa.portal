@@ -1,5 +1,5 @@
 ﻿modules.component("videoChatHub", {
-  templateUrl: "/mix-app/views/app-client/components/video-chat-hub/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/video-chat-hub/view.html",
   bindings: {
     mixDatabaseName: "=",
     isSave: "=?",
@@ -43,7 +43,7 @@
       var _hub,
         _connect = function (username, onSuccess, onFailure) {
           var hub = new signalR.HubConnectionBuilder()
-            .withUrl("/videoChatHub")
+            .withUrl("/webRtcHub")
             .withAutomaticReconnect()
             .configureLogging(signalR.LogLevel.Information)
             .build();

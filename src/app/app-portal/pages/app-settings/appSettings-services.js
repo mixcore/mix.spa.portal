@@ -12,7 +12,7 @@ app.factory("AppSettingsServices", [
     var settings = $rootScope.globalSettings;
 
     var _getAppSettings = async function (name) {
-      var url = `/rest/shared/settings/${name}`;
+      var url = `/rest/settings/${name}`;
 
       var req = {
         method: "GET",
@@ -22,11 +22,11 @@ app.factory("AppSettingsServices", [
     };
 
     var _saveAppSettings = async function (name, appSettings) {
-      var url = `/rest/shared/settings/${name}`;
+      var url = `/rest/settings/${name}`;
       var req = {
         method: "POST",
         url: url,
-        data: JSON.stringify(appSettings),
+        data: appSettings,
       };
       return await apiService.sendRequest(req);
     };

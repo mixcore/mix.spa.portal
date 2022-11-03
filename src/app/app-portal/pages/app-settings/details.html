@@ -1,4 +1,4 @@
-<div class="d-flex flex-row-reverse">
+<div class="d-flex flex-row-reverse w-100">
   <aside class="bd-sidebar sub-sidebar">
     <nav class="bd-links p-3" aria-label="Sub-section navigation">
       <div class="btn-group w-100" role="group">
@@ -22,7 +22,7 @@
     <p class="text-subtitle text-muted">
       Use the filter side bar on the right to filter and search your settings.
     </p>
-    <section class="" ng-init="loadAppSettings()">
+    <section class="w-100" ng-init="loadAppSettings()">
       <form
         ng-if="appSettings"
         ng-class="{'submitted': submitted}"
@@ -30,11 +30,49 @@
         autocomplete="new-password"
       >
         <tabs-v>
+          <pane-v header="Shared Settings">
+            <div class="card card-body">
+              <div class="row">
+                <div class="w-1 mt-3">
+                  <select
+                    id="inputState"
+                    class="form-select col-sm"
+                    ng-model="type"
+                    ng-change="getAppSettings(type)"
+                  >
+                    <option ng-repeat="type in settingTypes" ng-value="type">
+                      {{type}}
+                    </option>
+                  </select>
+                  <a
+                    href=""
+                    ng-click="stopApplication()"
+                    class="btn btn-primary col-sm"
+                  >
+                    Stop Application
+                  </a>
+                  <a
+                    href=""
+                    ng-click="clearCache()"
+                    class="btn btn-primary col-sm"
+                  >
+                    Clear Cache
+                  </a>
+                </div>
+              </div>
+              <monaco-editor
+                ng-if="appSettings"
+                content="appSettings"
+                ext="'.json'"
+                update-content="updateAppSettings(content)"
+              ></monaco-editor>
+            </div>
+          </pane-v>
           <pane-v header="General" class="">
             <div class="mb-3">
-              <app-settings-general
+              <!-- <app-settings-general
                 app-settings="appSettings"
-              ></app-settings-general>
+              ></app-settings-general> -->
             </div>
 
             <div class="card card-body mb-3">
@@ -194,7 +232,7 @@
                                 aria-expanded="false" aria-label="Toggle navigation"><span
                                     class="far fa-edit text-primary"></span> Edit general settings</button>
 
-                        </h6>
+                        </h6
                         <p class="text-muted">Add a title and description to see how this product might
                             appear in a search engine listing.</p>
                     </div>

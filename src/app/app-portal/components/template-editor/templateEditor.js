@@ -49,9 +49,12 @@
       };
       ctrl.selectTemplate = function () {
         ctrl.template = null;
+        ctrl.templateId = null;
         setTimeout(() => {
-          ctrl.template = ctrl.selectedTemplate;
-          ctrl.templateId = ctrl.selectedTemplate.id;
+          if (ctrl.selectedTemplate.id) {
+            ctrl.template = ctrl.selectedTemplate;
+            ctrl.templateId = ctrl.selectedTemplate.id;
+          }
           $scope.$apply();
         }, 50);
       };
@@ -97,6 +100,7 @@
         ctrl.request.pageSize = 1000;
         let getTemplates = await service.getList(ctrl.request);
         ctrl.templates = getTemplates.data.items;
+        ctrl.templates.splice(0, 0, { id: null, fileName: "" });
         if (!ctrl.templateId && ctrl.templates.length) {
           ctrl.template = ctrl.templates[0];
           ctrl.templateId = ctrl.templates[0].id;

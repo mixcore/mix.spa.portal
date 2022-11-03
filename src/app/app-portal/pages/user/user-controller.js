@@ -168,6 +168,7 @@ app.controller("UserController", [
       $rootScope.isBusy = true;
       var resp = await userServices.saveUser($scope.activedUser);
       if (resp && resp.success) {
+        mixDbService.initDbName("sysUserData");
         if ($scope.additionalData) {
           $scope.additionalData.parentType = "User";
           $scope.additionalData.parentId = $scope.activedUser.id;

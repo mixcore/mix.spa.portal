@@ -5,6 +5,7 @@
     "$rootScope",
     function ($rootScope) {
       var ctrl = this;
+
       ctrl.$onInit = () => {
         ctrl.globalSettings = $rootScope.globalSettings;
         ctrl.isInRole = $rootScope.isInRole;
@@ -28,5 +29,7 @@
   ],
   bindings: {
     model: "=",
+    readPermissions: "=",
+    writePermissions: "=",
   },
 });
