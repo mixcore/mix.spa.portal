@@ -7,7 +7,7 @@ app.factory("FileServices", [
   "BaseRestService",
   function ($http, $rootScope, apiService, commonService, baseService) {
     var filesServiceFactory = angular.copy(baseService);
-    filesServiceFactory.init("mix-storage", true);
+    filesServiceFactory.initService("/rest", "mix-storage/file-system", true);
     var _getFile = async function (folder, filename) {
       var url =
         this.prefixUrl + "/details?folder=" + folder + "&filename=" + filename;
