@@ -15,7 +15,7 @@ app.controller("HighFrequencyMessagesController", [
     $scope.messages = [];
     $scope.mouses = [];
     $scope.init = function () {
-      $scope.connectHightFrequencyHub();
+      //   $scope.connectHightFrequencyHub();
     };
     $scope.connectHightFrequencyHub = () => {
       $scope.startConnection(

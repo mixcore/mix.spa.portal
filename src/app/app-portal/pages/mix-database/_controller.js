@@ -40,7 +40,6 @@ app.controller("MixDatabaseController", [
     $scope.request.orderBy = "CreatedDateTime";
     $scope.request.columns = "id,displayName,systemName,type,createdDatetime";
     $scope.saveDatabase = function () {
-      debugger;
       $scope.viewmodel.readPermissions = JSON.stringify(
         $scope.readPermissions.map((m) => m.text)
       );

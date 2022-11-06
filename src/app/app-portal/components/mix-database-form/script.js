@@ -62,7 +62,6 @@ modules.component("mixDatabaseForm", {
             If input is data id => load ctrl.mixDataContent from service and handle it independently
         */
         ctrl.isBusy = true;
-
         if (ctrl.mixDataContentId) {
           var getData = await service.getSingle([ctrl.mixDataContentId], {
             loadNestedData: true,

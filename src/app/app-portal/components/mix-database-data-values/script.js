@@ -126,7 +126,11 @@ modules.component("mixDatabaseDataValues", {
       };
 
       ctrl.update = function (data) {
-        let url = `/admin/mix-database-data/details?dataContentId=${data.id}&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${ctrl.mixDatabaseTitle}&parentId=${ctrl.parentId}&parentName=${ctrl.parentName}`;
+        let url = `/admin/mix-database-data/details?dataContentId=${
+          data.id
+        }&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${
+          ctrl.mixDatabaseTitle
+        }&parentId=${ctrl.parentId || ""}&parentName=${ctrl.parentName || ""}`;
         $location.url(url);
       };
 

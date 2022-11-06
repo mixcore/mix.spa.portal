@@ -58,7 +58,7 @@ app.factory("FileServices", [
       return await apiService.sendRequest(req);
     };
     var _uploadFile = async function (file, folder) {
-      var apiUrl = this.prefixUrl + "/file/upload-file";
+      var apiUrl = this.prefixUrl + "/upload-file";
       var fd = new FormData();
       fd.append("folder", folder);
       fd.append("file", file);
