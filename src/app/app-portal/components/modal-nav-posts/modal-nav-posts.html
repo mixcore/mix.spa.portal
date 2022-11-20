@@ -23,14 +23,16 @@
       </div>
       <!-- <div class="modal-body" style="height: calc(100vh - 143px);overflow-y: auto;"> -->
       <div class="modal-body">
-        <div class="tab-pane" ng-if="$ctrl.navs.length>0">
-          <navs
-            data="$ctrl.navs"
-            prefix="'post-nav'"
-            key="'postId'"
-            details-url="'/admin/post/details/'"
-            model="'nav-page-post'"
-          ></navs>
+        <div class="tab-pane">
+          <!-- {{$ctrl.data|json}} -->
+          <navigators
+            data="$ctrl.data.items"
+            parent-id="$ctrl.srcId"
+            associations="$ctrl.associations"
+            model-name="'module-post'"
+            callback="$ctrl.select(associations)"
+          >
+          </navigators>
         </div>
       </div>
       <div class="modal-footer">

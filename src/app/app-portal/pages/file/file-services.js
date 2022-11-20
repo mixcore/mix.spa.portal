@@ -43,7 +43,7 @@ app.factory("FileServices", [
 
     var _removeFile = async function (fullPath) {
       var req = {
-        method: "GET",
+        method: "DELETE",
         url: this.prefixUrl + "/delete/?fullPath=" + fullPath,
       };
       return await apiService.sendRequest(req);
@@ -65,12 +65,21 @@ app.factory("FileServices", [
       return await filesServiceFactory.ajaxSubmitForm(fd, apiUrl);
     };
 
+    var _extractFile = async function (file, folder) {
+      var apiUrl = this.prefixUrl + "/extract-file";
+      var fd = new FormData();
+      fd.append("folder", folder);
+      fd.append("file", file);
+      return await filesServiceFactory.ajaxSubmitForm(fd, apiUrl);
+    };
+
     filesServiceFactory.getFile = _getFile;
     filesServiceFactory.initFile = _initFile;
     filesServiceFactory.getFiles = _getFiles;
     filesServiceFactory.removeFile = _removeFile;
     filesServiceFactory.saveFile = _saveFile;
     filesServiceFactory.uploadFile = _uploadFile;
+    filesServiceFactory.extractFile = _extractFile;
     return filesServiceFactory;
   },
 ]);

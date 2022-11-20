@@ -51,18 +51,18 @@
                     >
                       <td>
                         <a href="/admin/configuration/details/{{item.id}}"
-                          ><span ng-bind="item.keyword"></span
+                          ><span ng-bind="item.displayName"></span
                         ></a>
                       </td>
                       <td>
                         <small class="text-black-50"
-                          ><span ng-bind="item.description"></span
+                          ><span ng-bind="item.systemName"></span
                         ></small>
                       </td>
                       <td>
-                        <small>
-                          <module-data-preview data="item.property" width="50">
-                          </module-data-preview>
+                        <small ng-bind="item.content">
+                          <!-- <module-data-preview data="item.property" width="50">
+                          </module-data-preview> -->
                         </small>
                       </td>
                       <td>

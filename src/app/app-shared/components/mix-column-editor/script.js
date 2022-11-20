@@ -123,6 +123,12 @@
                 ctrl.dateObj = new Date(ctrl.model[ctrl.column.systemName]);
               }
               break;
+            case "json":
+              if (ctrl.model[ctrl.column.systemName]) {
+                ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+              } else {
+                ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
+              }
             case "array":
               //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
               //     ctrl.model[ctrl.column.systemName] =

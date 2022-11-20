@@ -112,7 +112,7 @@
                   <div ng-if="item.post.image!=''">
                     <preview-image
                       img-height="50"
-                      img-src="item.post.imageUrl"
+                      img-src="item.post.image"
                     ></preview-image>
                   </div>
                 </td>
@@ -144,10 +144,7 @@
                       <span class="fas fa-eye"></span>
                     </a>
 
-                    <a
-                      ng-click="remove(item.moduleContentId,item.postId);"
-                      class="btn btn-link"
-                    >
+                    <a ng-click="remove(item.id);" class="btn btn-link">
                       <span class="fas fa-trash-alt text-danger"></span>
                     </a>
                   </div>

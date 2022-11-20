@@ -27,14 +27,20 @@
         <div class="content-body py-3 pe-3">
 
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-4">
                     <a class="btn btn-primary text-white px-3" ng-if="backUrl" href="{{backUrl}}"><i
                             class="fas fa-reply"></i>
                         Back</a>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
+                    <b>Upload</b>
                     <mix-file-upload folder="request.folder" on-success="loadFiles()">
                     </mix-file-upload>
+                </div>
+                <div class="col-4">
+                    <b>Extract</b>
+                    <mix-file-extract folder="request.folder" on-success="loadFiles()">
+                    </mix-file-extract>
                 </div>
             </div>
             <div class="card mb-5">

@@ -84,7 +84,7 @@
         };
         if (ctrl.parentId) {
           var result = await service.save(nav);
-          nav.id = result.data;
+          nav.id = result.data.id;
           $rootScope.showMessage("saved", "success");
         }
         ctrl.associations.push(nav);

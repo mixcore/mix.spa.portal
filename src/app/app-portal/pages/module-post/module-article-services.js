@@ -3,14 +3,31 @@ app.factory("ModulePostRestService", [
   "$rootScope",
   "ApiService",
   "CommonService",
-  "BaseService",
+  "BaseRestService",
   function ($rootScope, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("module-post");
-    var _delete = async function (moduleContentId, postId) {
-      var url = this.prefixUrl + "/delete/" + moduleContentId + "/" + postId;
+
+    var _search = async function (objData) {
+      var data = serviceFactory.parseQuery(objData);
+      var url = this.prefixUrl;
+
+      if (data) {
+        url += "/search?";
+        url = url.concat(data);
+      }
       var req = {
+        serviceBase: this.serviceBase,
         method: "GET",
+        url: url,
+      };
+      return await this.getRestApiResult(req);
+    };
+
+    var _delete = async function (id) {
+      var url = this.prefixUrl + "/" + id;
+      var req = {
+        method: "DELETE",
         url: url,
       };
       return await apiService.sendRequest(req);
@@ -23,6 +40,7 @@ app.factory("ModulePostRestService", [
       };
       return await apiService.sendRequest(req);
     };
+    serviceFactory.search = _search;
     serviceFactory.delete = _delete;
     serviceFactory.updateInfos = _updateInfos;
     return serviceFactory;

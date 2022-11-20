@@ -18,6 +18,7 @@
       var ctrl = this;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.navs = [];
+      ctrl.associations = [];
       ctrl.data = { items: [] };
       ctrl.loadPosts = async function (pageIndex) {
         // ctrl.request.query = ctrl.query + ctrl.srcId;
@@ -40,21 +41,21 @@
         var response = await postService.getList(ctrl.request);
         if (response.success) {
           ctrl.data = response.data;
-          ctrl.navs = [];
-          angular.forEach(response.data.items, function (e) {
-            var item = {
-              priority: e.priority,
-              description: e.title,
-              postId: e.id,
-              image: e.thumbnailUrl,
-              specificulture: e.specificulture,
-              post: e,
-              status: "Published",
-              isActived: false,
-            };
-            item[ctrl.srcColumn] = ctrl.srcId;
-            ctrl.navs.push(item);
-          });
+          //   ctrl.navs = [];
+          //   angular.forEach(response.data.items, function (e) {
+          //     var item = {
+          //       priority: e.priority,
+          //       description: e.title,
+          //       postId: e.id,
+          //       image: e.thumbnailUrl,
+          //       specificulture: e.specificulture,
+          //       post: e,
+          //       status: "Published",
+          //       isActived: false,
+          //     };
+          //     item[ctrl.srcColumn] = ctrl.srcId;
+          //     ctrl.navs.push(item);
+          //   });
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -62,6 +63,9 @@
           $rootScope.isBusy = false;
           $scope.$apply();
         }
+      };
+      ctrl.select = async (associations) => {
+        ctrl.associations = associations;
       };
       ctrl.saveSelected = function () {
         ctrl.selected = $rootScope.filterArray(

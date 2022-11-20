@@ -7,7 +7,6 @@ app.controller("ConfigurationController", [
   "$location",
   "ConfigurationService",
   "ApiService",
-  "CommonService",
   function (
     $scope,
     $rootScope,
@@ -15,7 +14,7 @@ app.controller("ConfigurationController", [
     $routeParams,
     $location,
     service,
-    commonService
+    apiService
   ) {
     BaseRestCtrl.call(
       this,
@@ -31,11 +30,11 @@ app.controller("ConfigurationController", [
       $scope.getList();
     };
     $scope.getSingleSuccessCallback = function () {
-      $scope.cates = ngAppSettings.enums.configuration_cates;
+      $scope.cates = ngAppSettings.enums?.configuration_cates;
       $scope.appSettings = $rootScope.globalSettings;
       $scope.request.category = $routeParams.category || "";
       if (!$scope.viewmodel.id) {
-        $scope.viewmodel.property.dataType = "Text";
+        $scope.viewmodel.dataType = "Text";
       }
       if (!$scope.viewmodel.category) {
         $scope.viewmodel.category = "Site";

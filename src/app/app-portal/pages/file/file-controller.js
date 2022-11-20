@@ -75,12 +75,14 @@ app.controller("FileController", [
     $scope.loadFiles = async function (folder) {
       if (folder) {
         $scope.request.folder +=
-          $scope.request.folder !== "" ? "wwwroot/" : "wwwroot";
+          $scope.request.folder !== ""
+            ? "MixContent/StaticFiles"
+            : "MixContent/StaticFiles";
         $scope.request.folder += folder;
       } else {
         $scope.request.folder = $routeParams.folder
           ? $routeParams.folder
-          : "wwwroot";
+          : "MixContent/StaticFiles";
       }
       if ($routeParams.folder) {
         $scope.backUrl =

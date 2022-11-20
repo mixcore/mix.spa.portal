@@ -130,7 +130,8 @@
         </div>
         <div class="text-muted" ng-switch-when="json">
             <!--Text-->
-            <monaco-editor content="$ctrl.model[$ctrl.column.systemName] | json"
+            {{$ctrl.jsonObj|json}}
+            <monaco-editor content="$ctrl.jsonObj | json"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor>
         </div>
