@@ -274,7 +274,13 @@
               <post-seo post="viewmodel"></post-seo>
             </pane-v>
             <pane-v icon="fas fa-search" header="Metadata">
+              <div ng-if="!viewmodel.id">
+                <span class="text-warning">
+                  Please save the Post then continue with this section
+                </span>
+              </div>
               <mix-metadata
+                ng-if="viewmodel.id"
                 ng-repeat="m in lstMetadata"
                 parent-id="viewmodel.id"
                 parent-type="'Post'"

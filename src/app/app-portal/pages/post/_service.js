@@ -4,7 +4,6 @@ app.factory("PostRestService", [
   function (baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.init("mix-post-content");
-
     var _filter = async function (request) {
       var url = `${this.prefixUrl}/filter`;
       var req = {

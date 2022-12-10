@@ -35,11 +35,6 @@ function BaseRestCtrl(
   $scope.translate = $rootScope.translate;
   if ($rootScope.referrerUrl) {
     $scope.referrerUrl = $rootScope.referrerUrl;
-  } else {
-    $scope.referrerUrl = `/admin/${service.modelName.substr(
-      0,
-      service.modelName.indexOf("/")
-    )}/list`; // document.referrer);
   }
 
   $scope.duplicate = async function (id) {

@@ -37,6 +37,9 @@ app.controller("PostController", [
       ngAppSettings,
       service
     );
+    if (!$scope.referrerUrl) {
+      $scope.referrerUrl = "/admin/post/list";
+    }
     $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.request.queries = [];
     $scope.defaultQuery = {

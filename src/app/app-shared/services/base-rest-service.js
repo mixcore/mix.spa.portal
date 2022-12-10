@@ -86,7 +86,7 @@ appShared.factory("BaseRestService", [
       }
       var querystring = _parseQuery(queries);
       var req = {
-        method: "GET",
+        method: "DELETE",
         url: `${url}?${querystring}`,
       };
       return await this.getRestApiResult(req);
