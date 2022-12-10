@@ -1,54 +1,132 @@
-﻿modules.component("relatedNavs", {
+﻿modules.component("relatedPosts", {
   templateUrl:
     "/mix-app/views/app-portal/pages/post/components/related-navigations/view.html",
   bindings: {
-    request: "=",
-    prefix: "=",
-    sourceId: "=",
-    culture: "=",
-    navs: "=",
-    data: "=",
-    categories: "=",
-    postTypes: "=",
-    loadData: "&",
+    title: "=",
+    parentId: "=",
+    parentType: "=",
+    description: "=?",
+    image: "=?",
   },
   controller: [
     "$rootScope",
     "$scope",
-    function ($rootScope, $scope) {
+    "ngAppSettings",
+    "PostPostRestService",
+    "PostRestService",
+    function ($rootScope, $scope, ngAppSettings, service, postService) {
       var ctrl = this;
       ctrl.selected = null;
-      ctrl.activeItem = function (item, index) {
-        var currentItem = $rootScope.findObjectByKey(
-          ctrl.navs,
-          ["sourceId", "destinationId"],
-          [ctrl.sourceId, item.id]
+      ctrl.posts = {
+        items: [],
+      };
+      ctrl.data = {
+        items: [],
+      };
+      ctrl.$onInit = async () => {
+        ctrl.request = angular.copy(ngAppSettings.request);
+        ctrl.postRequest = angular.copy(ngAppSettings.request);
+        ctrl.postRequest.pageSize = 5;
+        await ctrl.loadRelatedPosts();
+        await ctrl.loadPosts();
+      };
+      ctrl.addRelatedPost = async (post) => {
+        var tmp = ctrl.data.items.find(
+          (m) => m.child.id == post.id || m.parentId == post.id
         );
-        if (currentItem === null) {
-          currentItem = item;
-          currentItem.priority = ctrl.navs.length + 1;
-          ctrl.navs.push(currentItem);
-          ctrl.data.items.splice(index, 1);
+        if (!tmp) {
+          if (post) {
+            let dto = {
+              parentId: ctrl.parentId,
+              childId: post.id,
+            };
+            var resp = await service.create(dto);
+            if (resp.success) {
+              $rootScope.showMessage("Success", "success");
+              await ctrl.loadRelatedPosts();
+              $rootScope.isBusy = false;
+              $scope.$apply();
+            } else {
+              $rootScope.showErrors(resp.errors);
+              $rootScope.isBusy = false;
+              $scope.$apply();
+            }
+          }
+        } else {
+          $rootScope.showMessage(`${post.title} is existed`, "warning");
         }
       };
-      ctrl.updateOrders = function (index) {
-        ctrl.navs.splice(index, 1);
-        for (var i = 0; i < ctrl.data.length; i++) {
-          ctrl.navs[i].priority = i + 1;
+
+      ctrl.remove = function (id) {
+        if (
+          confirm(
+            "Deleted data will not able to recover, are you sure you want to delete this item?"
+          )
+        ) {
+          ctrl.removeConfirmed(id);
         }
       };
-      ctrl.load = async function (pageIndex) {
+
+      ctrl.removeConfirmed = async function (id) {
+        $rootScope.isBusy = true;
+        var result = await service.delete([id]);
+        if (result.success) {
+          ctrl.loadRelatedPosts();
+        } else {
+          $rootScope.showErrors(result.errors);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+      };
+
+      ctrl.loadPosts = async (pageIndex) => {
+        $rootScope.isBusy = true;
         if (pageIndex !== undefined) {
-          ctrl.request.pageIndex = pageIndex;
+          ctrl.postRequest.pageIndex = pageIndex;
         }
-        ctrl.data = await ctrl.loadData({ pageIndex: ctrl.request.pageIndex });
+        if (ctrl.postRequest.fromDate !== null) {
+          var d = new Date(ctrl.postRequest.fromDate);
+          ctrl.postRequest.fromDate = d.toISOString();
+        }
+        if (ctrl.postRequest.toDate !== null) {
+          var dt = new Date(ctrl.postRequest.toDate);
+          ctrl.postRequest.toDate = dt.toISOString();
+        }
+        let getData = await postService.filter(ctrl.postRequest);
+        if (getData.success) {
+          ctrl.posts = getData.data;
+          $rootScope.isBusy = false;
+        } else {
+          $rootScope.isBusy = false;
+          $rootScope.showErrors(getData.errors);
+        }
         $scope.$apply();
       };
-      ctrl.checkActived = function (item) {
-        if (ctrl.navs) {
-          return ctrl.navs.find(function (nav) {
-            return nav.destinationId === item.id;
-          });
+
+      ctrl.loadRelatedPosts = async (pageIndex) => {
+        if (ctrl.parentId) {
+          $rootScope.isBusy = true;
+          if (pageIndex !== undefined) {
+            ctrl.request.pageIndex = pageIndex;
+          }
+          if (ctrl.request.fromDate !== null) {
+            var d = new Date(ctrl.postRequest.fromDate);
+            ctrl.request.fromDate = d.toISOString();
+          }
+          if (ctrl.request.toDate !== null) {
+            var dt = new Date(ctrl.postRequest.toDate);
+            ctrl.postRequest.toDate = dt.toISOString();
+          }
+          ctrl.request.parentId = ctrl.parentId;
+          let getData = await service.search(ctrl.request);
+          if (getData.success) {
+            ctrl.data = getData.data;
+            $rootScope.isBusy = false;
+          } else {
+            $rootScope.isBusy = false;
+            $rootScope.showErrors(getData.errors);
+          }
+          $scope.$apply();
         }
       };
     },

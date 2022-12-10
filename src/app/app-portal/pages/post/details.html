@@ -285,26 +285,14 @@
             </pane-v>
             <pane-v icon="fas fa-list" header="Related">
               <div class="card card-body">
-                <!-- <related-navs
-                  request="request"
-                  source-id="viewmodel.id"
-                  categories="categories"
-                  post-types="additionalDatabases"
-                  culture="viewmodel.specificulture"
-                  prefix="'post'"
-                  navs="viewmodel.postNavs"
-                  data="relatedData"
-                  load-data="getListRelated(pageIndex)"
+                <related-posts
+                  parent-id="viewmodel.id"
+                  parent-type="'Post'"
+                  description="viewmodel.title"
+                  image="viewmodel.image"
                 >
-                </related-navs> -->
+                </related-posts>
               </div>
-
-              <!-- <related-navs request="request" source-id="viewmodel.id" culture="viewmodel.specificulture" prefix="'post'"
-                                navs="viewmodel.postNavs" data="relatedData" load-data="getListRelated(pageIndex)">
-                            </related-navs> -->
-              <!-- <related-navs request="$ctrl.request" source-id="$ctrl.model.id" culture="$ctrl.model.specificulture" prefix="'post'"
-                                navs="$ctrl.model.postNavs" data="$ctrl.relatedData" load-data="$ctrl.getListRelated(pageIndex)">
-                            </related-navs> -->
             </pane-v>
             <pane-v icon="fas fa-cubes" header="Parents">
               <post-parents post="viewmodel"></post-parents>

@@ -2,29 +2,25 @@
   templateUrl:
     "/mix-app/views/app-portal/pages/post/components/metadata/view.html",
   bindings: {
-    type: "=",
     title: "=",
     parentId: "=",
     parentType: "=",
-    metadataType: "=",
     description: "=?",
     image: "=?",
+    type: "=",
+    metadataType: "=",
     onDelete: "&",
     onUpdate: "&",
   },
   controller: [
     "$rootScope",
     "$scope",
-    "$location",
-    "$routeParams",
     "ngAppSettings",
     "RestMixDatabasePortalService",
     "MetadataService",
     function (
       $rootScope,
       $scope,
-      $location,
-      $routeParams,
       ngAppSettings,
       databaseService,
       metadataService
