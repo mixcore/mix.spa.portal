@@ -76,10 +76,8 @@
               </div>
             </div>
             <div ng-switch-when="module-data" class="">
-              <module-preview
-                module-id="$ctrl.previewObject.data.moduleContentId"
-                content-id="$ctrl.previewObject.data.id"
-              >
+              <h1>{{$ctrl.previewObject}}</h1>
+              <module-preview content-id="$ctrl.previewObject.data.id">
               </module-preview>
             </div>
             <div ng-switch-when="post" class="">

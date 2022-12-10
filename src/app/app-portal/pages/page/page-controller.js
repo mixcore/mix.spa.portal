@@ -314,42 +314,6 @@ app.controller("PageController", [
         $scope.$apply();
       }
     };
-    $scope.updateSysCategories = function (data) {
-      // Loop selected categories
-      angular.forEach($scope.selectedCategories, function (e) {
-        // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewmodel.sysCategories,
-          "id",
-          e.id
-        );
-        if (!current) {
-          $scope.viewmodel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sysCategory",
-          });
-        }
-      });
-    };
-    $scope.updateSysTags = function (data) {
-      // Loop selected categories
-      angular.forEach($scope.selectedTags, function (e) {
-        // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewmodel.sysTags,
-          "id",
-          e.id
-        );
-        if (!current) {
-          $scope.viewmodel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sysTag",
-          });
-        }
-      });
-    };
     $scope.removeAliasCallback = async function (index) {
       $scope.viewmodel.urlAliases.splice(index, 1);
       $scope.$apply();

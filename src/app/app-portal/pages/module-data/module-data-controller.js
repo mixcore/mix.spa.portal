@@ -7,8 +7,6 @@ app.controller("ModuleDataController", [
   "$location",
   "ModuleDataRestService",
   "ModuleRestService",
-  "ApiService",
-  "CommonService",
   function (
     $scope,
     $rootScope,
@@ -16,8 +14,7 @@ app.controller("ModuleDataController", [
     $routeParams,
     $location,
     service,
-    moduleService,
-    commonService
+    moduleService
   ) {
     BaseRestCtrl.call(
       this,

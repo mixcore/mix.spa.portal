@@ -3,7 +3,7 @@
   controller: [
     "$scope",
     "$rootScope",
-    "SharedModuleDataService",
+    "ModuleDataRestService",
     function ($scope, $rootScope, moduleDataService) {
       var ctrl = this;
       $rootScope.isBusy = false;
@@ -22,11 +22,7 @@
 
       ctrl.loadModuleData = async function () {
         $rootScope.isBusy = true;
-        var response = await moduleDataService.getModuleData(
-          ctrl.moduleContentId,
-          ctrl.contentId,
-          "portal"
-        );
+        var response = await moduleDataService.getSingle([ctrl.contentId]);
         if (response.success) {
           ctrl.data = response.data;
           $rootScope.isBusy = false;
@@ -40,7 +36,6 @@
     },
   ],
   bindings: {
-    moduleContentId: "=",
     contentId: "=",
   },
 });

@@ -97,7 +97,7 @@
             };
             switch (ctrl.ext) {
               case ".json":
-                ctrl.content = JSON.stringify(ctrl.content);
+                // ctrl.content = JSON.stringify(ctrl.content);
                 model.language = "json";
                 break;
               case ".webmanifest":

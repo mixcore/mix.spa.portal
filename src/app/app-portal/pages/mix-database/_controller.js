@@ -84,5 +84,41 @@ app.controller("MixDatabaseController", [
         }
       }
     };
+    $scope.backup = async function () {
+      if ($scope.viewmodel.id) {
+        $rootScope.isBusy = true;
+        var result = await databaseService.backup($scope.viewmodel);
+        if (result.success) {
+          $rootScope.showMessage(
+            `Backup ${$scope.viewmodel.systemName} is queued`,
+            "success"
+          );
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          $rootScope.showErrors(["Cannot backup database"]);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+      }
+    };
+    $scope.restore = async function () {
+      if ($scope.viewmodel.id) {
+        $rootScope.isBusy = true;
+        var result = await databaseService.restore($scope.viewmodel);
+        if (result.success) {
+          $rootScope.showMessage(
+            `Restore ${$scope.viewmodel.systemName} is queued`,
+            "success"
+          );
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          $rootScope.showErrors(["Cannot restore database"]);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+      }
+    };
   },
 ]);

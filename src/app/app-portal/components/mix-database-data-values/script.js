@@ -76,6 +76,7 @@ modules.component("mixDatabaseDataValues", {
         }&dataContentId=default&parentId=${ctrl.parentId || ""}&parentName=${
           ctrl.parentName || ""
         }`;
+        $scope.$apply();
       };
       ctrl.loadData = async function () {
         var getData = await dataService.getList(ctrl.request);

@@ -3,7 +3,7 @@
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div ng-if="$ctrl.model && $ctrl.column && !$ctrl.column.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
+<div ng-if="$ctrl.model && $ctrl.column && !$ctrl.column.columnConfigurations.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
     <div class="col-2">
         <h6 class="control-label m-0 text-primary" ng-bind="$ctrl.translate($ctrl.column.displayName)"></h6>
         <div>
@@ -129,9 +129,8 @@
             <qr-code model="$ctrl.model[$ctrl.column.systemName]"></qr-code>
         </div>
         <div class="text-muted" ng-switch-when="json">
-            <!--Text-->
-            {{$ctrl.jsonObj|json}}
-            <monaco-editor content="$ctrl.jsonObj | json"
+            
+            <monaco-editor ng-if="$ctrl.jsonObj" content="$ctrl.model[$ctrl.column.systemName]"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor>
         </div>
@@ -149,15 +148,15 @@
     </div>
 </div>
 <!-- TODO: Only allow stringValue -->
-<div ng-if="$ctrl.model && $ctrl.column.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
+<div ng-if="$ctrl.model && $ctrl.column.columnConfigurations.isSelect" ng-init="$ctrl.initData()" class="mb-3 row">
     <div class="col-2">
         <h6 class="control-label" ng-bind="$ctrl.translate($ctrl.column.displayName)"></h6>
     </div>
     <div class="col-10">
         <select ng-if="$ctrl.column.dataType!='icon'" class="form-select form-control"
             ng-model="$ctrl.model[$ctrl.column.systemName]">
-            <option ng-repeat="item in $ctrl.options track by $index" ng-value="item.value">
-                {{item.value}}
+            <option ng-repeat="item in $ctrl.column.columnConfigurations.allowedValues track by $index" ng-value="item">
+                {{item}}
             </option>
         </select>
     </div>

@@ -45,18 +45,8 @@ app.controller("PostController", [
       value: "",
     };
     $scope.viewmodelType = "post";
-    $scope.sysCategories = {
-      items: [],
-    };
     $scope.additionalData = null;
     $scope.createUrl = "/admin/post/create?";
-    $scope.selectedCategories = [];
-    $scope.selectedTags = [];
-    $scope.additionalDatabase = {
-      databaseName: "",
-      title: "All",
-    };
-    $scope.cateRequest = angular.copy(ngAppSettings.request);
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     ($scope.postTypeRequest.searchColumns = "Type"),
       ($scope.postTypeRequest.searchMethod = "Equal"),
@@ -78,7 +68,6 @@ app.controller("PostController", [
       }
       $scope.pageName = "postList";
       await $scope.loadAdditionalDatabases();
-      await $scope.loadCategories();
       $scope.filter();
     };
 
@@ -131,14 +120,13 @@ app.controller("PostController", [
         $scope.$apply();
       }
     };
-    $scope.loadCategories = async function () {
-      $scope.cateRequest.mixDatabaseName = "sysCategory";
-      var response = await dataService.getList($scope.cateRequest);
-      if (response.success) {
-        $scope.categories = response.data;
-        $scope.isBusy = false;
-        $scope.$apply();
-      }
+    $scope.loadMetadataDatabase = async function () {
+      var getMixDatabase = await databaseService.getByName(["Metadata"]);
+      let typeCol = getMixDatabase.data.columns.find(
+        (c) => c.systemName == "type"
+      );
+      $scope.lstMetadata = typeCol.columnConfigurations.allowedValues;
+      $scope.$apply();
     };
     $scope.loadAdditionalDatabases = async function () {
       let getTypes = await databaseService.getList($scope.postTypeRequest);
@@ -275,6 +263,7 @@ app.controller("PostController", [
       if ($scope.additionalData) {
         $scope.additionalData.parentType = "Post";
         $scope.additionalData.parentId = $scope.viewmodel.id;
+        mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
         var saveResult = await mixDbService.save($scope.additionalData);
         if (saveResult.success) {
           $rootScope.showMessage("Additional Data Saved", "success");
@@ -294,9 +283,6 @@ app.controller("PostController", [
         //   //   $scope.saveColumns();
         // }
       }
-      if ($scope.sysCategories.items.length) {
-        await navService.saveMany($scope.sysCategories.items);
-      }
       $rootScope.showMessage("success", "success");
       $rootScope.isBusy = false;
       $scope.$apply();
@@ -310,6 +296,7 @@ app.controller("PostController", [
     };
     $scope.getSingleSuccessCallback = async function () {
       mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+      await $scope.loadMetadataDatabase();
       await $scope.loadAdditionalData();
       //   $scope.defaultThumbnailImgWidth =
       //     ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
@@ -328,7 +315,6 @@ app.controller("PostController", [
         "systemName",
         $scope.request.additionalDatabase
       );
-      await $scope.loadCategories();
       $scope.loadAdditionalData();
       if (moduleIds) {
         for (var moduleContentId of moduleIds.split(",")) {
@@ -354,19 +340,7 @@ app.controller("PostController", [
           }
         }
       }
-      if ($scope.viewmodel.sysCategories) {
-        angular.forEach($scope.viewmodel.sysCategories, function (e) {
-          e.attributeData.obj.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
-        });
-      }
 
-      if ($scope.viewmodel.sysTags) {
-        angular.forEach($scope.viewmodel.sysTags, function (e) {
-          e.attributeData.obj.isActived = true;
-          $scope.selectedCategories.push(e.attributeData.obj);
-        });
-      }
       if ($routeParams.template) {
         $scope.viewmodel.view = $rootScope.findObjectByKey(
           $scope.viewmodel.templates,
@@ -377,6 +351,7 @@ app.controller("PostController", [
     };
     $scope.loadAdditionalData = async function () {
       $scope.loadingData = true;
+      mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
       const getData = await mixDbService.getSingleByParent(
         "Post",
         $scope.viewmodel.id
@@ -441,42 +416,7 @@ app.controller("PostController", [
       $scope.viewmodel.urlAliases.splice(index, 1);
       $scope.$apply();
     };
-    $scope.updateSysCategories = function (data) {
-      // Loop selected categories
-      angular.forEach($scope.selectedCategories, function (e) {
-        // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewmodel.sysCategories,
-          "id",
-          e.id
-        );
-        if (!current) {
-          $scope.viewmodel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sysCategory",
-          });
-        }
-      });
-    };
-    $scope.updateSysTags = function (data) {
-      // Loop selected categories
-      angular.forEach($scope.selectedTags, function (e) {
-        // add if not exist in sysCategories
-        var current = $rootScope.findObjectByKey(
-          $scope.viewmodel.sysTags,
-          "id",
-          e.id
-        );
-        if (!current) {
-          $scope.viewmodel.sysCategories.push({
-            id: e.id,
-            parentId: $scope.viewmodel.id,
-            mixDatabaseName: "sysTag",
-          });
-        }
-      });
-    };
+
     $scope.validate = function () {
       angular.forEach($scope.viewmodel.mixDatabaseNavs, function (nav) {
         if (nav.isActived) {

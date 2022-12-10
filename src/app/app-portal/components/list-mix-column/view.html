@@ -42,7 +42,7 @@
     >
       <li
         class="list-group-item m-0"
-        ng-repeat="col in $ctrl.columns track by $index"
+        ng-repeat="col in $ctrl.columns | orderBy:'priority' track by $index "
         dnd-draggable="col"
         dnd-type="'col'"
         dnd-effect-allowed="copyMove"
@@ -272,7 +272,7 @@
                           <input
                             type="checkbox"
                             class="form-check-input"
-                            ng-model="col.isSelect"
+                            ng-model="col.columnConfigurations.isSelect"
                             id="{{'select_' + $index}}"
                           />
                           <label
@@ -284,7 +284,7 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div ng-show="col.isSelect">
+                        <div ng-show="col.columnConfigurations.isSelect">
                           <div class="row my-2">
                             <div class="">
                               <div class="input-group mb-3">
@@ -302,19 +302,19 @@
 
                               <div
                                 class="row my-2 ms-2"
-                                ng-repeat="opt in col.options track by $index"
+                                ng-repeat="opt in col.columnConfigurations.allowedValues track by $index"
                               >
                                 <div class="col-md pl-4">
                                   <input
                                     type="text"
                                     class="form-control form-control-sm"
-                                    ng-model="col.options[$index].value"
+                                    ng-model="col.columnConfigurations.allowedValues[$index]"
                                   />
                                 </div>
                                 <div style="width: 5%">
                                   <a
                                     class="btn btn-sm"
-                                    ng-click="col.options.splice($index,1)"
+                                    ng-click="col.columnConfigurations.allowedValues.splice($index,1)"
                                   >
                                     <span
                                       class="fas fa-times text-danger"
@@ -425,7 +425,7 @@
       </li>
     </ul>
 
-    <div ng-show="col.isSelect">
+    <div ng-show="col.columnConfigurations.isSelect">
       <div class="row">
         <label class="col-sm-3 col-form-label">Title</label>
         <div class="col-sm-7">
@@ -438,25 +438,16 @@
           />
         </div>
       </div>
-      <div class="row" ng-repeat="opt in col.options track by $index">
+      <div
+        class="row"
+        ng-repeat="opt in col.columnConfigurations.allowedValues track by $index"
+      >
         <div class="col-md-10 row">
           <input
             type="text"
             class="col-7 form-control form-control-sm"
-            ng-model="col.options[$index].value"
+            ng-model="col.columnConfigurations.allowedValues[$index]"
           />
-          <select
-            class="col-5 form-control form-control-sm"
-            ng-model="col.options[$index].dataType"
-          >
-            <option
-              ng-repeat="item in $ctrl.dataTypes track by $index"
-              ng-value="item"
-            >
-              {{item}}
-            </option>
-          </select>
-
           <hr />
         </div>
       </div>

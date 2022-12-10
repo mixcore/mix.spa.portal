@@ -91,6 +91,7 @@ modules.component("mixDatabaseNavValues", {
         ctrl.request.mixDatabaseId = ctrl.mixDatabaseId || 0;
         ctrl.request.mixDatabaseName = ctrl.mixDatabaseName || null;
         ctrl.request.guidParentId = ctrl.guidParentId;
+        ctrl.request.intParentId = ctrl.intParentId;
         ctrl.request.parentType = ctrl.parentType;
         navService.getList(ctrl.request).then((resp) => {
           if (resp) {

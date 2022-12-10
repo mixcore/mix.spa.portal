@@ -3,7 +3,7 @@
   ng-submit="$ctrl.submit()"
   ng-if="$ctrl.database.columns.length"
 >
-  <div class="row">
+  <div class="row" ng-if="!$ctrl.hideAction">
     <div class="col-8"></div>
     <div class="col-4 mb-3">
       <actions back-url="$ctrl.backUrl"></actions>

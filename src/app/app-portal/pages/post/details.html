@@ -252,74 +252,6 @@
                   </div>
                 </div>
               </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-heading-categories">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapse-categories"
-                    aria-expanded="false"
-                    aria-controls="flush-collapse-categories"
-                  >
-                    Categories
-                  </button>
-                </h2>
-                <div
-                  id="flush-collapse-categories"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="flush-heading-categories"
-                  data-bs-parent="#accordionFlushExample"
-                >
-                  <div class="accordion-body">
-                    <modal-nav-metas
-                      ng-if="viewmodel"
-                      header="'Categories'"
-                      int-parent-id="viewmodel.id"
-                      is-open="'show'"
-                      parent-type="'Post'"
-                      type="''"
-                      mix-database-name="'sysCategory'"
-                      column-display="'title'"
-                      selected-list="sysCategories"
-                    ></modal-nav-metas>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-heading-tags">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapse-tags"
-                    aria-expanded="false"
-                    aria-controls="flush-collapse-tags"
-                  >
-                    Tags
-                  </button>
-                </h2>
-                <div
-                  id="flush-collapse-tags"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="flush-heading-tags"
-                  data-bs-parent="#accordionFlushExample"
-                >
-                  <div class="accordion-body">
-                    <modal-nav-metas
-                      ng-if="viewmodel.sysTags"
-                      header="'Tags'"
-                      parent-id="viewmodel.id"
-                      is-open="'show'"
-                      parent-type="'Post'"
-                      type="''"
-                      mix-database-name="'sysTag'"
-                      column-display="'title'"
-                      selected-list="viewmodel.sysTags"
-                    ></modal-nav-metas>
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="mb-5"></div>
           </div>
@@ -340,6 +272,16 @@
             </pane-v>
             <pane-v icon="fas fa-search" header="SEO">
               <post-seo post="viewmodel"></post-seo>
+            </pane-v>
+            <pane-v icon="fas fa-search" header="Metadata">
+              <mix-metadata
+                ng-repeat="m in lstMetadata"
+                parent-id="viewmodel.id"
+                parent-type="'Post'"
+                metadata-type="m"
+                description="viewmodel.title"
+                image="viewmodel.image"
+              ></mix-metadata>
             </pane-v>
             <pane-v icon="fas fa-list" header="Related">
               <div class="card card-body">

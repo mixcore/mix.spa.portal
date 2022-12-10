@@ -29,6 +29,7 @@
       apiService
     ) {
       var ctrl = this;
+      ctrl.jsonObj = {};
       ctrl.mediaFile = {};
       ctrl.icons = ngAppSettings.icons;
       ctrl.previousValue = null;
@@ -212,7 +213,8 @@
         }
       };
       ctrl.updateJsonContent = function (content) {
-        ctrl.model[ctrl.column.systemName] = JSON.parse(content);
+        // mysql connector not support Jobject
+        ctrl.model[ctrl.column.systemName] = content;
         $scope.$apply();
       };
       ctrl.updateValue = function () {

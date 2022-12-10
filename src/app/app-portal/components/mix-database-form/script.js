@@ -109,6 +109,14 @@ modules.component("mixDatabaseForm", {
             parentDatabaseName: $routeParams.parentName,
             childDatabaseName: ctrl.mixDatabaseName,
           };
+          var parentIdNameFieldName = `${$routeParams.parentName
+            .charAt(0)
+            .toLowerCase()}${
+            $routeParams.parentName.slice(1) || $routeParams.parentName
+          }Id`;
+          if (!ctrl.mixDataContent[parentIdNameFieldName]) {
+            ctrl.mixDataContent[parentIdNameFieldName] = $routeParams.parentId;
+          }
         }
       };
 

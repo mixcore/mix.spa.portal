@@ -96,12 +96,9 @@ modules.component("listMixColumn", {
       };
       ctrl.addOption = function (col, index) {
         var val = $("#option_" + index).val();
-        col.options = col.options || [];
-        var opt = {
-          value: val,
-          dataType: 7,
-        };
-        col.options.push(opt);
+        col.columnConfigurations.allowedValues =
+          col.columnConfigurations.allowedValues || [];
+        col.columnConfigurations.allowedValues.push(val);
         $("#option_" + index).val("");
       };
       ctrl.generateForm = function () {

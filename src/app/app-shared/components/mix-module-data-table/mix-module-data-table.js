@@ -62,9 +62,8 @@
       ctrl.toggleChildNavs = function (nav) {
         nav.showChildNavs = nav.childNavs.length > 0 && !nav.showChildNavs;
       };
-      ctrl.view = function (moduleContentId, contentId) {
+      ctrl.view = function (contentId) {
         var obj = {
-          moduleContentId: moduleContentId,
           id: contentId,
         };
         $rootScope.preview("module-data", obj, null, "modal-lg");
