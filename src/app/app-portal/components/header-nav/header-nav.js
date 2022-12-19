@@ -40,8 +40,7 @@
               authService.authentication &&
               authService.authentication.info.userData
             ) {
-              ctrl.avatar =
-                authService.authentication.info.userData.data.avatar;
+              ctrl.avatar = authService.authentication.info.userData.avatar;
             }
           });
         };

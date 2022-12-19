@@ -35,7 +35,7 @@
         ctrl.requestAssociation.contentType = ctrl.parentType;
         ctrl.requestAssociation.contentId = ctrl.parentId;
         ctrl.requestAssociation.metadataType = ctrl.metadataType;
-        // await ctrl.loadDatabase();
+        await ctrl.loadSuggestions();
         await ctrl.loadMetadata();
         $scope.$apply();
       };
@@ -56,15 +56,11 @@
       };
 
       ctrl.loadSuggestions = async () => {
-        if (ctrl.keyword) {
-          ctrl.request.keyword = ctrl.keyword;
-          ctrl.request.metadataType = ctrl.metadataType;
-          let getSuggestions = await metadataService.getList(ctrl.request);
-          if (getSuggestions.success) {
-            ctrl.suggestions = getSuggestions.data;
-          }
-        } else {
-          ctrl.suggestions = [];
+        ctrl.request.keyword = ctrl.keyword;
+        ctrl.request.metadataType = ctrl.metadataType;
+        let getSuggestions = await metadataService.getList(ctrl.request);
+        if (getSuggestions.success) {
+          ctrl.suggestions = getSuggestions.data;
         }
         $scope.$apply();
       };
@@ -99,6 +95,12 @@
         } else {
           $rootScope.showMessage(`${metadata.content} is existed`, "warning");
         }
+      };
+      ctrl.isActive = (metadata) => {
+        return (
+          ctrl.data.items.find((m) => m.metadata.content == metadata.content) !=
+          undefined
+        );
       };
       ctrl.addMetadata = async () => {
         if (ctrl.keyword) {

@@ -9,16 +9,15 @@
             class="form-control"
             placeholder="Type keyword and press enter to create new {{$ctrl.metadataType}} if not existed"
             ng-model="$ctrl.keyword"
-            ng-model-options="{debounce: 400}"
-            ng-change="$ctrl.loadSuggestions()"
             ng-enter="$ctrl.addMetadata()"
             ng-disabled="$ctrl.isBusy"
           />
         </div>
         <div class="col-12">
           <a
-            class="btn btn-link"
-            ng-repeat="item in $ctrl.suggestions.items"
+            class="mx-1 btn"
+            ng-repeat="item in $ctrl.suggestions.items | filter:$ctrl.keyword"
+            ng-class="{'btn-secondary': $ctrl.isActive(item), 'btn-primary': !$ctrl.isActive(item)}"
             ng-bind="item.content"
             ng-click="$ctrl.addLink(item)"
           ></a>
