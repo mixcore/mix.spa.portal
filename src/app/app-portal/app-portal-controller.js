@@ -68,26 +68,5 @@ app.controller("AppPortalController", [
         });
       }
     };
-    $rootScope.getRequest = function (key) {
-      key =
-        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
-      let lstRequest = localStorageService.get("requests") ?? {};
-      let request = lstRequest[key];
-      if (!request) {
-        request = angular.copy(ngAppSettings.request);
-        lstRequest[key] = request;
-        localStorageService.set("requests", lstRequest);
-      }
-      return request;
-    };
-    $rootScope.setRequest = function (req, key) {
-      key =
-        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
-      let lstRequest = localStorageService.get("requests") ?? {};
-      if (req) {
-        lstRequest[key] = req;
-        localStorageService.set("requests", lstRequest);
-      }
-    };
   },
 ]);

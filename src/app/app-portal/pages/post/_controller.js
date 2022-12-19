@@ -404,7 +404,7 @@ app.controller("PostController", [
       }
     };
     $scope.addAlias = async function () {
-      var getAlias = await urlAliasService.getSingle();
+      var getAlias = await urlAliasService.getDefault();
       if (getAlias.success) {
         $scope.viewmodel.urlAliases.push(getAlias.data);
         $rootScope.isBusy = false;

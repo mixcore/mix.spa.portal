@@ -300,7 +300,7 @@ app.controller("PageController", [
       //   }
     };
     $scope.addAlias = async function (alias) {
-      var getAlias = await urlAliasService.getSingle();
+      var getAlias = await urlAliasService.getDefault();
       if (getAlias.success) {
         if (alias) {
           getAlias.data.alias = alias;

@@ -3,10 +3,10 @@ app.factory("UrlAliasService", [
   "$rootScope",
   "ApiService",
   "CommonService",
-  "BaseService",
+  "BaseRestService",
   function ($rootScope, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("url-alias");
+    serviceFactory.initService("/rest/mix-library", "mix-url-alias");
 
     var _updateInfos = async function (pages) {
       var req = {

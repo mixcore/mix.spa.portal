@@ -127,20 +127,20 @@
             case "json":
               if (ctrl.model[ctrl.column.systemName]) {
                 ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+                ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
               } else {
                 ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
+                ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
               }
+              break;
             case "array":
-              //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
-              //     ctrl.model[ctrl.column.systemName] =
-              //       ctrl.column.defaultValue;
-              //     $scope.$apply();
-              //   } else {
-              //     ctrl.model[ctrl.column.systemName] = JSON.stringify(
-              //       ctrl.mode.data[ctrl.column.systemName]
-              //     );
-              //   }
-              //   $scope.$apply();
+              if (ctrl.model[ctrl.column.systemName]) {
+                ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+                ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
+              } else {
+                ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
+                ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
+              }
               break;
             case "reference": // reference
               // if(ctrl.column.referenceId && ctrl.model.id){

@@ -177,6 +177,7 @@ appShared.run([
   "CommonService",
   "AuthService",
   "TranslatorService",
+  "localStorageService",
   function (
     $http,
     $rootScope,
@@ -187,7 +188,8 @@ appShared.run([
     apiService,
     commonService,
     authService,
-    translatorService
+    translatorService,
+    localStorageService
   ) {
     $rootScope.currentContext = $rootScope;
     $rootScope.isBusy = false;
@@ -220,6 +222,28 @@ appShared.run([
       lblOK: "OK",
       lblCancel: "Cancel",
       context: $rootScope,
+    };
+
+    $rootScope.getRequest = function (key) {
+      key =
+        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
+      let lstRequest = localStorageService.get("requests") ?? {};
+      let request = lstRequest[key];
+      if (!request) {
+        request = angular.copy(ngAppSettings.request);
+        lstRequest[key] = request;
+        localStorageService.set("requests", lstRequest);
+      }
+      return request;
+    };
+    $rootScope.setRequest = function (req, key) {
+      key =
+        key || `request${$rootScope.generateKeyword($location.$$path, "_")}`;
+      let lstRequest = localStorageService.get("requests") ?? {};
+      if (req) {
+        lstRequest[key] = req;
+        localStorageService.set("requests", lstRequest);
+      }
     };
     $rootScope.range = function (max) {
       var input = [];

@@ -1,5 +1,5 @@
 "use strict";
-app.factory("MetadataService", [
+appShared.factory("MetadataService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);

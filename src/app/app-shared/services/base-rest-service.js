@@ -114,13 +114,19 @@ appShared.factory("BaseRestService", [
       };
       return await this.getRestApiResult(req);
     };
-    var _getList = async function (objData) {
+    var _getList = async function (objData, queries = null) {
       var data = serviceFactory.parseQuery(objData);
+
       var url = this.prefixUrl;
 
       if (data) {
         url += "?";
         url = url.concat(data);
+        if (queries) {
+          url += "&";
+          var extraQueries = serviceFactory.parseQuery(queries);
+          url = url.concat(extraQueries);
+        }
       }
       var req = {
         serviceBase: this.serviceBase,

@@ -109,7 +109,7 @@ function BaseRestCtrl(
     }
   };
 
-  $scope.getList = async function (pageIndex, params = []) {
+  $scope.getList = async function (pageIndex, extraQueries = null) {
     $rootScope.isBusy = true;
     if (pageIndex !== undefined) {
       $scope.request.pageIndex = pageIndex;
@@ -122,11 +122,11 @@ function BaseRestCtrl(
       var dt = new Date($scope.request.toDate);
       $scope.request.toDate = dt.toISOString();
     }
-    var resp = await service.getList($scope.request, params);
+    var resp = await service.getList($scope.request, extraQueries);
     if (resp && resp.success) {
       $scope.data = resp.data;
-      $.each($scope.data, function (i, data) {
-        $.each($scope.viewmodels, function (i, e) {
+      angular.forEach($scope.data, function (data) {
+        angular.forEach($scope.viewmodels, function (e) {
           if (e.dataContentId === data.id) {
             data.isHidden = true;
           }
@@ -136,7 +136,7 @@ function BaseRestCtrl(
         $scope.getListSuccessCallback();
       }
       if ($scope.isScrollTop) {
-        $("html, body").animate({ scrollTop: "0px" }, 500);
+        // $("html, body").animate({ scrollTop: "0px" }, 500);
       }
       $rootScope.isBusy = false;
       $scope.$apply();

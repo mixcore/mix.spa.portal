@@ -84,7 +84,7 @@
                         </div>
                       </td>
                       <td>
-                        <span ng-bind="item.metadata.content"></span>
+                        <a target="_blank" href="/search?md_{{$ctrl.metadataType}}={{item.metadata.seoContent}}" ng-bind="item.metadata.content"></span>
                       </td>
                       <td>
                         <span ng-bind="item.metadata.seoContent"></span>

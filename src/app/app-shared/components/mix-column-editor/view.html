@@ -130,13 +130,13 @@
         </div>
         <div class="text-muted" ng-switch-when="json">
             
-            <monaco-editor ng-if="$ctrl.jsonObj" content="$ctrl.model[$ctrl.column.systemName]"
+            <monaco-editor ng-if="$ctrl.jsonContent" content="$ctrl.jsonContent"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor>
         </div>
         <div class="text-muted" ng-switch-when="array">
             <!--Text-->
-            <monaco-editor content="$ctrl.model[$ctrl.column.systemName] | json"
+            <monaco-editor ng-if="$ctrl.arrayContent" content="$ctrl.arrayContent"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor>
         </div>
