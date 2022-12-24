@@ -151,6 +151,7 @@
                 <div class="col-12" ng-init="getList()">
                     <div class="mb-5 card">
                         <mix-database-data-values on-duplicate="duplicate(data)" on-update="edit(data)"
+                            data="data"
                             can-drag="request.orderBy === 'Priority' && request.direction === 'Asc'"
                             compare-type="request.compareType" on-filter-list="getList(0)" on-apply-list="applyList()"
                             selected-list="selectedList" 
@@ -162,10 +163,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <em> Total items: <span ng-bind="data.totalItems" class="text-muted"></span></em>
+                                    <em> Total items: <span ng-bind="data.pagingData.total" class="text-muted"></span></em>
                                 </div>
                             </div>
-                            <paging class="small" page="data.page" page-size="data.pageSize" total="data.totalItems"
+                            <paging class="small" page="data.pagingData.page" page-size="data.pagingData.pageSize" total="data.pagingData.total"
                                 ul-class="pagination justify-content-end m-0" a-class="page-link"
                                 paging-action="getList(page-1)" scroll-top="true">
                             </paging>

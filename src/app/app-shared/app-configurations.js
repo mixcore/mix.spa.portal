@@ -208,7 +208,6 @@ appShared.run([
       lblCancel: "Cancel",
       context: $rootScope,
     };
-
     $rootScope.isBusy = false;
     $rootScope.translator = translatorService;
     $rootScope.message = {

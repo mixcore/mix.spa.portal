@@ -56,7 +56,7 @@
       };
 
       ctrl.loadSuggestions = async () => {
-        ctrl.request.keyword = ctrl.keyword;
+        ctrl.request.keyword = "";
         ctrl.request.metadataType = ctrl.metadataType;
         let getSuggestions = await metadataService.getList(ctrl.request);
         if (getSuggestions.success) {
@@ -93,7 +93,8 @@
             }
           }
         } else {
-          $rootScope.showMessage(`${metadata.content} is existed`, "warning");
+          //   $rootScope.showMessage(`${metadata.content} is existed`, "warning");
+          await ctrl.removeConfirmed(tmp.id);
         }
       };
       ctrl.isActive = (metadata) => {
@@ -123,6 +124,7 @@
               if (resp.success) {
                 $rootScope.showMessage("Success", "success");
                 await ctrl.loadMetadata();
+                await ctrl.loadSuggestions();
                 ctrl.reset();
                 $rootScope.isBusy = false;
                 $scope.$apply();
@@ -141,7 +143,7 @@
 
       ctrl.reset = () => {
         ctrl.keyword = "";
-        ctrl.suggestions = [];
+        $scope.$apply();
       };
 
       ctrl.getOrCreateMetadata = async () => {

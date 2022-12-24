@@ -44,6 +44,7 @@ appShared.factory("ApiService", [
     };
 
     var _fillAuthData = async function () {
+      await _getAllSettings();
       var encryptedAuthData = localStorageService.get("authorizationData");
       if (encryptedAuthData) {
         if ($rootScope.globalSettings.isEncryptApi) {

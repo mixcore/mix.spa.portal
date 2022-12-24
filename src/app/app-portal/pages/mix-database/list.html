@@ -226,9 +226,9 @@
         <div class="card-body">
           <paging
             class="small"
-            page="request.pageIndex + 1"
-            page-size="request.pageSize"
-            total="data.totalItems"
+            page="data.pageIndex + 1"
+            page-size="data.pagingData.pageSize"
+            total="data.pagingData.total"
             ul-class="pagination justify-content-end m-0"
             a-class="page-link"
             paging-action="getList(page-1)"

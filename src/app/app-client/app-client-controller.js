@@ -72,8 +72,6 @@
                 $rootScope.isBusy = false;
                 $scope.$apply();
               });
-
-              // });
             } else {
               $scope.isInit = true;
               $rootScope.isInit = true;
