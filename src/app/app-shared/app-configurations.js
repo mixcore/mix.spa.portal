@@ -801,7 +801,7 @@ appShared.run([
       let ext = file.name.substring(file.name.lastIndexOf("."));
       return ext
         .toLowerCase()
-        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg)/g);
+        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp)/g);
     };
   },
 ]);

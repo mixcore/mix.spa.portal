@@ -8,11 +8,18 @@
   controller: [
     "$rootScope",
     "$scope",
-    function ($rootScope, $scope) {
+    "$routeParams",
+    function ($rootScope, $scope, $routeParams) {
       var ctrl = this;
       ctrl.translate = $rootScope.translate;
       ctrl.$onInit = function () {
         ctrl.isAdmin = $rootScope.isAdmin;
+        if ($routeParams.template) {
+          ctrl.defaultTemplate = $routeParams.template;
+        }
+        if ($routeParams.layout) {
+          ctrl.defaultLayout = $routeParams.layout;
+        }
       };
     },
   ],

@@ -4,21 +4,17 @@
   aria-expanded="false"
   data-bs-target="#{{$ctrl.item.title}}"
   aria-controls="contents-collapse"
-  ng-if="!$ctrl.item.isHiden"
+  ng-if="!$ctrl.item.isHidden"
 >
-  <object
+  <img
     ng-if="$ctrl.item.svg"
-    type="image/svg+xml"
-    data="/mix-app/assets/img/svg/{{$ctrl.item.svg}}"
-    class="me-3 text-primary"
-  >
-    <img
-      ng-src="/mix-app/assets/img/svg/{{$ctrl.item.svg}}"
-      class="me-3"
-      style=""
-    />
-  </object>
-
+    ng-src="/mix-app/assets/img/svg/{{$ctrl.item.svg}}"
+    class="me-3"
+  />
+  <i
+    ng-if="!$ctrl.item.svg && $ctrl.item.icon"
+    class="{{$ctrl.item.icon}} me-3"
+  ></i>
   <span
     ng-bind-html="$ctrl.translate($ctrl.item.title)"
     class="menu-item-title"

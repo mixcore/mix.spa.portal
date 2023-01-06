@@ -77,8 +77,8 @@ sharedComponents.component("customFile", {
               media.mediaFile = ctrl.mediaFile;
               var resp = await mediaService.save(media);
               if (resp && resp.success) {
-                ctrl.src = resp.data.fullPath;
-                ctrl.srcUrl = resp.data.fullPath;
+                ctrl.src = resp.data.targetUrl;
+                ctrl.srcUrl = resp.data.targetUrl;
                 $rootScope.isBusy = false;
                 $scope.$apply();
               } else {

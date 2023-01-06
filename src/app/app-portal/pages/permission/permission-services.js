@@ -5,7 +5,7 @@ app.factory("PermissionService", [
   "CommonService",
   function (baseService, apiService, commonService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("permission", true);
+    serviceFactory.initService("/rest/mix-services", "permission", true);
     var _updateInfos = async function (pages) {
       var req = {
         method: "POST",

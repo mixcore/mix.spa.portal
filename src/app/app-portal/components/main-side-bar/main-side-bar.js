@@ -18,10 +18,15 @@
     ) {
       var ctrl = this;
       ctrl.items = [];
-      ctrl.init = function () {
-        ctrl.items = JSON.parse($("#portal-menus").val()).items;
+      ctrl.init = async function () {
+        ctrl.items = await apiService.getPortalMenus();
+        if (!ctrl.items || !ctrl.items.length) {
+          ctrl.items = JSON.parse($("#portal-menus").val()).items;
+        }
       };
     },
   ],
-  bindings: {},
+  bindings: {
+    items: "=?",
+  },
 });

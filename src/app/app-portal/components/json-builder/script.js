@@ -1,7 +1,7 @@
 ﻿modules.component("jsonBuilder", {
   templateUrl: "/mix-app/views/app-portal/components/json-builder/view.html",
   bindings: {
-    data: "=?", // json obj (ex: { column1: 'some val' })
+    data: "=", // json obj (ex: { column1: 'some val' })
     folder: "=?", // filepath (ex: 'data/jsonfile.json')
     filename: "=?", // filepath (ex: 'data/jsonfile.json')
     allowedTypes: "=?", // string array ( ex: [ 'type1', 'type2' ] )
@@ -22,7 +22,8 @@
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.timestamp = Math.random();
       ctrl.templates = [
-        { type: "item", name: "i1", dataType: 7, value: "" },
+        { type: "item", name: "i1", dataType: "Text", value: "" },
+        { type: "string", dataType: "Text", value: "" },
         {
           type: "object",
           name: "o1",
@@ -49,8 +50,10 @@
           ctrl.parseObjToList(ctrl.data, arr);
           ctrl.dropzones.root = arr;
         } else {
+          ctrl.rootType = Array.isArray(ctrl.data) ? "array" : "object";
           ctrl.parseObjToList(ctrl.data, arr);
           ctrl.dropzones.root = arr;
+          ctrl.preview = angular.copy(ctrl.data);
         }
       };
       ctrl.loadFile = async function () {
@@ -60,7 +63,7 @@
         var response = await fileService.getFile(ctrl.folder, ctrl.filename);
         if (response.success) {
           ctrl.file = response.data;
-          ctrl.data = $.parseJSON(response.data.content);
+          ctrl.data = JSON.parse(response.data.content);
           $rootScope.isBusy = false;
           $scope.$apply();
         } else {
@@ -111,31 +114,40 @@
       ctrl.parseObjToList = function (item, items) {
         // key: the name of the object key
         // index: the ordinal position of the key within the object
-        Object.keys(item).forEach(function (key, index) {
-          var obj = {};
-          var objType = typeof item[key];
-          switch (objType) {
-            case "object":
-              if (Array.isArray(item[key])) {
-                obj = angular.copy(ctrl.templates[2]);
+        if (Array.isArray(item)) {
+          angular.forEach(item, (e) => {
+            var obj = angular.copy(ctrl.templates[1]);
+            obj.value = e;
+            // ctrl.parseObjToList(e, obj.columns[0].items);
+            items.push(obj);
+          });
+        } else {
+          Object.keys(item).forEach(function (key) {
+            var obj = {};
+            var objType = typeof item[key];
+            switch (objType) {
+              case "object":
+                if (Array.isArray(item[key])) {
+                  obj = angular.copy(ctrl.templates[2]);
+                  obj.name = key;
+                  ctrl.parseObjToList(item[key], obj.columns[0].items);
+                  items.push(obj);
+                } else {
+                  obj = angular.copy(ctrl.templates[1]);
+                  obj.name = key;
+                  ctrl.parseObjToList(item[key], obj.columns[0].items);
+                  items.push(obj);
+                }
+                break;
+              default:
+                obj = angular.copy(ctrl.templates[0]);
                 obj.name = key;
-                ctrl.parseObjToList(item[key], obj.columns[0].items);
+                obj.value = item[key];
                 items.push(obj);
-              } else {
-                obj = angular.copy(ctrl.templates[1]);
-                obj.name = key;
-                ctrl.parseObjToList(item[key], obj.columns[0].items);
-                items.push(obj);
-              }
-              break;
-            default:
-              obj = angular.copy(ctrl.templates[0]);
-              obj.name = key;
-              obj.value = item[key];
-              items.push(obj);
-              break;
-          }
-        });
+                break;
+            }
+          });
+        }
       };
       ctrl.parseObj = function (item, obj, name) {
         switch (item.type) {
@@ -163,6 +175,28 @@
             break;
         }
       };
+      ctrl.parseJsonObject = function () {
+        if (ctrl.rootType == "object") {
+          ctrl.data = {};
+          angular.forEach(ctrl.dropzones.root, (sub) => {
+            if (sub.type == "object") {
+              var o = {};
+              ctrl.parseObj(sub, o);
+              ctrl.data[sub.name] = o;
+            } else {
+              ctrl.data[sub.name] = sub.value;
+            }
+          });
+        } else {
+          ctrl.data = [];
+          if (ctrl.rootType == "array") {
+            angular.forEach(ctrl.dropzones.root, (sub) => {
+              ctrl.data.push(sub.value);
+            });
+          }
+        }
+        ctrl.onUpdate({ data: JSON.stringify(ctrl.data) });
+      };
       ctrl.select = function (item) {
         if (ctrl.selected == item) {
           ctrl.parseObj(item, ctrl.selectedModel);
@@ -173,25 +207,29 @@
         }
         ctrl.timestamp = Math.random();
       };
-      ctrl.addField = function (item) {
+      ctrl.addField = function () {
         var column = angular.copy(ctrl.templates[0]);
-        column.name = "f" + (item.columns[0].items.length + 1);
-        item.columns[0].items.push(column);
-        item.showMenu = false;
+        ctrl.dropzones.root.push(column);
+        ctrl.parseJsonObject();
+      };
+      ctrl.addString = function () {
+        var column = angular.copy(ctrl.templates[1]);
+        ctrl.dropzones.root.push(column);
+        ctrl.parseJsonObject();
       };
       ctrl.addObj = function (item) {
         var obj = angular.copy(ctrl.templates[1]);
         obj.name = "o" + (item.columns[0].items.length + 1);
         item.columns[0].items.push(obj);
         item.showMenu = false;
-        ctrl.update();
+        ctrl.parseJsonObject();
       };
       ctrl.addArray = function (item) {
         var obj = angular.copy(ctrl.templates[2]);
         obj.name = "a" + (item.columns[0].items.length + 1);
         item.columns[0].items.push(obj);
         item.showMenu = false;
-        ctrl.update();
+        ctrl.parseJsonObject();
       };
       ctrl.clone = function (item, list) {
         var obj = angular.copy(item);
@@ -199,13 +237,13 @@
         item.showMenu = false;
         obj.showMenu = false;
         list.items.push(obj);
-        ctrl.update();
+        ctrl.parseJsonObject();
       };
 
       ctrl.remove = function (index, list) {
         if (confirm("Remove this")) {
-          list.items.splice(index, 1);
-          ctrl.update();
+          list.splice(index, 1);
+          ctrl.parseJsonObject();
         }
       };
     },

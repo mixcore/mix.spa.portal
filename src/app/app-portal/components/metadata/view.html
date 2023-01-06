@@ -17,7 +17,7 @@
           <a
             class="mx-1 mt-1 btn"
             ng-repeat="item in $ctrl.suggestions.items | filter:$ctrl.keyword"
-            ng-class="{'btn-secondary': $ctrl.isActive(item), 'btn-primary': !$ctrl.isActive(item)}"
+            ng-class="{'btn-secondary': !$ctrl.isActive(item), 'btn-primary': $ctrl.isActive(item)}"
             ng-bind="item.content"
             ng-click="$ctrl.addLink(item)"
           ></a>
@@ -70,7 +70,7 @@
                     </tr>
                   </thead>
 
-                  <tbody class="sortable" ng-init="initList()">
+                  <tbody class="sortable">
                     <tr
                       ng-repeat="item in $ctrl.data.items track by $index"
                       class="sortable-item"

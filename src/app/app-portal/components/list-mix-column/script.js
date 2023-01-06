@@ -44,6 +44,7 @@ modules.component("listMixColumn", {
         angular.forEach(ctrl.relationships, (e, i) => {
           e.database = ctrl.databases.data.items.find((m) => m.id == e.childId);
         });
+        $rootScope.sortArray(ctrl.columns, "priority");
         $scope.$apply();
       };
       ctrl.addAttr = function () {
@@ -184,6 +185,7 @@ modules.component("listMixColumn", {
         angular.forEach(ctrl.columns, function (e, i) {
           e.priority = i;
         });
+        $scope.$apply();
       };
       ctrl.dragStart = function (index) {
         ctrl.dragStartIndex = index;

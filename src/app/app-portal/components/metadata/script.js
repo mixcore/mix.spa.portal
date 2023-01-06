@@ -1,6 +1,5 @@
 ﻿app.component("mixMetadata", {
-  templateUrl:
-    "/mix-app/views/app-portal/pages/post/components/metadata/view.html",
+  templateUrl: "/mix-app/views/app-portal/components/metadata/view.html",
   bindings: {
     title: "=",
     parentId: "=",
@@ -35,8 +34,10 @@
         ctrl.requestAssociation.contentType = ctrl.parentType;
         ctrl.requestAssociation.contentId = ctrl.parentId;
         ctrl.requestAssociation.metadataType = ctrl.metadataType;
-        await ctrl.loadSuggestions();
-        await ctrl.loadMetadata();
+        if (ctrl.parentId) {
+          await ctrl.loadSuggestions();
+          await ctrl.loadMetadata();
+        }
         $scope.$apply();
       };
       ctrl.loadMetadata = async function () {

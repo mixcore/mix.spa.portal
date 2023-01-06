@@ -60,6 +60,11 @@ appShared.factory("ApiService", [
       return {};
     };
 
+    var _getPortalMenus = async function () {
+      var authData = localStorageService.get("authorizationData");
+      return authData.portalMenus;
+    };
+
     var _updateAuthData = async function (encryptedData) {
       localStorageService.set("authorizationData", encryptedData);
     };
@@ -162,6 +167,7 @@ appShared.factory("ApiService", [
     var _sendRequest = async function (
       req,
       skipAuthorize = false,
+      token = null,
       retry = true
     ) {
       let apiVersion = req.apiVersion || appSettings.apiVersion;
@@ -185,6 +191,10 @@ appShared.factory("ApiService", [
       if (!skipAuthorize) {
         let _authentication = await _fillAuthData();
         req.headers.Authorization = `Bearer ${_authentication.accessToken}`;
+      }
+
+      if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
       }
 
       return $http(req).then(
@@ -255,6 +265,7 @@ appShared.factory("ApiService", [
     factory.getTranslator = _getTranslator;
     factory.refreshToken = _refreshToken;
     factory.fillAuthData = _fillAuthData;
+    factory.getPortalMenus = _getPortalMenus;
     factory.updateAuthData = _updateAuthData;
     factory.sendRequest = _sendRequest;
     factory.ajaxSubmitForm = _ajaxSubmitForm;

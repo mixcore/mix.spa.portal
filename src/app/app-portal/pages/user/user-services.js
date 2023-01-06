@@ -8,6 +8,15 @@ app.factory("UserServices", [
 
     var serviceBase = ngAuthSettings.serviceBase;
 
+    var _resendConfirmEmail = function (id) {
+      var url = `${apiUrl}/resend-confirm-email/${id}`;
+      var req = {
+        method: "GET",
+        url: serviceBase + url,
+      };
+
+      return apiService.sendRequest(req);
+    };
     var _getUserDemographicInfo = function () {
       var url = "/GetUserDemographicInfo";
       var req = {
@@ -129,6 +138,7 @@ app.factory("UserServices", [
     usersServiceFactory.importUsers = _importUsers;
     usersServiceFactory.getUsers = _getUsers;
     usersServiceFactory.getUser = _getUser;
+    usersServiceFactory.resendConfirmEmail = _resendConfirmEmail;
     usersServiceFactory.getMyProfile = _getMyProfile;
     usersServiceFactory.saveUser = _saveUser;
     usersServiceFactory.register = _register;

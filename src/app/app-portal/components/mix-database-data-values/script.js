@@ -79,6 +79,7 @@ modules.component("mixDatabaseDataValues", {
         $scope.$apply();
       };
       ctrl.loadData = async function () {
+        dataService.initDbName(ctrl.mixDatabaseName);
         var getData = await dataService.getList(ctrl.request);
         ctrl.data = getData.data;
         $scope.$apply();

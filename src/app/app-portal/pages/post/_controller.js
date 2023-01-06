@@ -48,7 +48,7 @@ app.controller("PostController", [
       value: "",
     };
     $scope.viewmodelType = "post";
-    $scope.additionalData = null;
+    $scope.additionalData = {};
     $scope.createUrl = "/admin/post/create?";
     $scope.postTypeRequest = angular.copy(ngAppSettings.request);
     ($scope.postTypeRequest.searchColumns = "Type"),
@@ -264,6 +264,7 @@ app.controller("PostController", [
     };
     $scope.saveSuccessCallback = async function () {
       if ($scope.additionalData) {
+        var creating = !$scope.additionalData.parentId;
         $scope.additionalData.parentType = "Post";
         $scope.additionalData.parentId = $scope.viewmodel.id;
         mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
@@ -271,6 +272,9 @@ app.controller("PostController", [
         if (saveResult.success) {
           $rootScope.showMessage("Additional Data Saved", "success");
           $scope.additionalData = saveResult.data;
+          if (creating) {
+            $location.url(`/admin/post/details/${$scope.viewmodel.id}`);
+          }
         } else {
           $rootScope.showErrors(result.errors);
         }
@@ -298,9 +302,11 @@ app.controller("PostController", [
       }
     };
     $scope.getSingleSuccessCallback = async function () {
+      if (!$scope.viewmodel.id) {
+        $scope.viewmodel.mixDatabaseName = $routeParams.type;
+      }
       mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
       await $scope.loadMetadataDatabase();
-      await $scope.loadAdditionalData();
       //   $scope.defaultThumbnailImgWidth =
       //     ngAppSettings.mixConfigurations.DefaultThumbnailImgWidth;
       //   $scope.defaultThumbnailImgHeight =
@@ -343,30 +349,28 @@ app.controller("PostController", [
           }
         }
       }
-
-      if ($routeParams.template) {
-        $scope.viewmodel.view = $rootScope.findObjectByKey(
-          $scope.viewmodel.templates,
-          "fileName",
-          $routeParams.template
-        );
-      }
     };
     $scope.loadAdditionalData = async function () {
-      $scope.loadingData = true;
-      mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
-      const getData = await mixDbService.getSingleByParent(
-        "Post",
-        $scope.viewmodel.id
-      );
-      if (getData.success) {
-        $scope.additionalData = getData.data;
-        $scope.loadingData = false;
-      } else {
-        $scope.additionalData = {};
-        $scope.loadingData = false;
+      if ($scope.viewmodel.mixDatabaseName) {
+        $scope.loadingData = true;
+        mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
+        if ($scope.viewmodel.id) {
+          const getData = await mixDbService.getSingleByParent(
+            "Post",
+            $scope.viewmodel.id
+          );
+          if (getData.success) {
+            $scope.additionalData = getData.data;
+            $scope.loadingData = false;
+          }
+          $scope.$apply();
+        } else {
+          $scope.additionalData = {
+            parentType: "Post",
+          };
+          $scope.loadingData = false;
+        }
       }
-      $scope.$apply();
     };
     $scope.generateSeo = function () {
       if ($scope.viewmodel) {

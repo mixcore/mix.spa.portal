@@ -199,6 +199,24 @@ app.controller("UserController", [
       }
     };
 
+    $scope.resendConfirmEmail = async function (id) {
+      if (id) {
+        $rootScope.isBusy = true;
+        var resp = await userServices.resendConfirmEmail(id);
+        if (resp && resp.success) {
+          $rootScope.showMessage("Sent mail successfully!", "success");
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          if (resp) {
+            $rootScope.showErrors(resp.errors);
+          }
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+      }
+    };
+
     $scope.register = async function (user) {
       $rootScope.isBusy = true;
       var resp = await userServices.register(user);
@@ -217,7 +235,6 @@ app.controller("UserController", [
     };
 
     $scope.updateRoleStatus = async function (role) {
-      console.log(role);
       var userRole = {
         userId: $scope.activedUser.id,
         roleId: role.id,

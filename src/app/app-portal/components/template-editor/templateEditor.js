@@ -4,6 +4,7 @@
   bindings: {
     templateId: "=",
     folderType: "=",
+    defaultTemplate: "=?",
     isReadonly: "=?",
     lineCount: "=?",
     hideJs: "=?",
@@ -101,10 +102,19 @@
         let getTemplates = await service.getList(ctrl.request);
         ctrl.templates = getTemplates.data.items;
         ctrl.templates.splice(0, 0, { id: null, fileName: "" });
-        if (!ctrl.templateId && ctrl.templates.length) {
-          ctrl.template = ctrl.templates[0];
-          ctrl.templateId = ctrl.templates[0].id;
-          ctrl.selectedTemplate = ctrl.template;
+        if (!ctrl.templateId && ctrl.templates.length > 1) {
+          if (ctrl.defaultTemplate) {
+            ctrl.template = ctrl.templates.find(
+              (m) => m.fileName == ctrl.defaultTemplate
+            );
+            ctrl.templateId = ctrl.template.id;
+            ctrl.selectedTemplate = ctrl.template;
+          }
+          if (!ctrl.template) {
+            ctrl.template = ctrl.templates[1];
+            ctrl.templateId = ctrl.templates[1].id;
+            ctrl.selectedTemplate = ctrl.template;
+          }
         }
         $scope.$apply();
       };

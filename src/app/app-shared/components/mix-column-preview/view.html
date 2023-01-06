@@ -30,6 +30,11 @@
     <div ng-switch-when="icon">
       <i class="{{$ctrl.model}}"> </i>
     </div>
+    <div ng-switch-when="color">
+      <span
+        style="position:absolute;margin-top:5px; width: 20px; height: 20px; background-color: {{$ctrl.model}};"
+      ></span>
+    </div>
     <div ng-switch-when="html">
       <p ng-bind-html="$ctrl.model"></p>
     </div>

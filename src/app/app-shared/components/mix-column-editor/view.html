@@ -129,16 +129,27 @@
             <qr-code model="$ctrl.model[$ctrl.column.systemName]"></qr-code>
         </div>
         <div class="text-muted" ng-switch-when="json">
-            
-            <monaco-editor ng-if="$ctrl.jsonContent" content="$ctrl.jsonContent"
+             <json-builder
+                ng-if="$ctrl.jsonObj" 
+                data="$ctrl.jsonObj"
+                on-update="$ctrl.updateJsonContent(data)"
+            >
+            </json-builder>
+            <!-- <monaco-editor ng-if="$ctrl.jsonContent" content="$ctrl.jsonContent"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
-            </monaco-editor>
+            </monaco-editor> -->
         </div>
         <div class="text-muted" ng-switch-when="array">
             <!--Text-->
-            <monaco-editor ng-if="$ctrl.arrayContent" content="$ctrl.arrayContent"
+            <json-builder
+                ng-if="$ctrl.jsonObj" 
+                data="$ctrl.jsonObj"
+                on-update="$ctrl.updateJsonContent(data)"
+            >
+            </json-builder>
+            <!-- <monaco-editor ng-if="$ctrl.arrayContent" content="$ctrl.arrayContent"
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
-            </monaco-editor>
+            </monaco-editor> -->
         </div>
         <div class="text-muted" ng-switch-when="tag">
             <!--Text-->

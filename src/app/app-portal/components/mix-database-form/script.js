@@ -62,7 +62,8 @@ modules.component("mixDatabaseForm", {
             If input is data id => load ctrl.mixDataContent from service and handle it independently
         */
         ctrl.isBusy = true;
-        if (ctrl.mixDataContentId) {
+        if (!ctrl.mixDataContent && ctrl.mixDataContentId) {
+          service.initDbName(ctrl.mixDatabaseName);
           var getData = await service.getSingle([ctrl.mixDataContentId], {
             loadNestedData: true,
           });
@@ -139,7 +140,7 @@ modules.component("mixDatabaseForm", {
             ctrl.onSave({ data: ctrl.mixDataContent });
           } else {
             ctrl.isBusy = true;
-
+            service.initDbName(ctrl.mixDatabaseName);
             var saveResult = await service.save(ctrl.mixDataContent);
             if (saveResult.success) {
               ctrl.mixDataContent = saveResult.data;

@@ -61,21 +61,21 @@
                     </label>
                 </div>
                 <div class="form-check form-switch mx-2">
-                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.isUnique"
+                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.columnConfigurations.isUnique"
                         id="{{'unique_' + $index}}" />
                     <label class="custom-control-label" for="{{'unique_' + $index}}">
                         Unique
                     </label>
                 </div>
                 <div class="form-check form-switch mx-2">
-                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.isRequire"
+                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.columnConfigurations.isRequire"
                         id="{{'required_' + $index}}" />
                     <label class="custom-control-label" for="{{'required_' + $index}}">
                         Required
                     </label>
                 </div>
                 <div class="form-check form-switch mx-2">
-                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.isSelect"
+                    <input type="checkbox" class="form-check-input" ng-model="$ctrl.column.columnConfigurations.isSelect"
                         id="{{'select_' + $index}}" />
                     <label class="custom-control-label" for="{{'select_' + $index}}">
                         Select
@@ -160,7 +160,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-2">
         <span class="form-check form-switch">
-            <input type="checkbox" ng-model="$ctrl.column.isEncrypt" />
+            <input type="checkbox" ng-model="$ctrl.column.columnConfigurations.isEncrypt" />
             <label class="custom-control-label">
                 <span>Encrypt</span>
             </label>
@@ -168,7 +168,7 @@
     </div>
     <div class="col-md-2">
         <span class="form-check form-switch">
-            <input type="checkbox" ng-model="$ctrl.column.isUnique" />
+            <input type="checkbox" ng-model="$ctrl.column.columnConfigurations.isUnique" />
             <label class="custom-control-label">
                 <span>Unique</span>
             </label>
@@ -176,7 +176,7 @@
     </div>
     <div class="col-md-2">
         <span class="form-check form-switch">
-            <input type="checkbox" ng-model="$ctrl.column.isRequire" />
+            <input type="checkbox" ng-model="$ctrl.column.columnConfigurations.isRequire" />
             <label class="custom-control-label">
                 <span>Required</span>
             </label>
@@ -184,7 +184,7 @@
     </div>
     <div class="col-md-2">
         <span class="form-check form-switch">
-            <input type="checkbox" ng-model="$ctrl.column.isSelect" />
+            <input type="checkbox" ng-model="$ctrl.column.columnConfigurations.isSelect" />
             <label class="custom-control-label">
                 <span>Select</span>
             </label>
