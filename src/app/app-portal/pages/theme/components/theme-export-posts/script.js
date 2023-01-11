@@ -5,13 +5,16 @@
     "$rootScope",
     "$scope",
     "ngAppSettings",
-    function ($rootScope, $scope, ngAppSettings) {
+    "BaseRestService",
+    function ($rootScope, $scope, ngAppSettings, baseRestService) {
       var ctrl = this;
-      var service = $rootScope.getRestService("mix-post");
+      var service = angular.copy(baseRestService);
+      service.initService("/rest/mix-library", "mix-post");
       ctrl.selectAllContent = false;
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
+        ctrl.request.pageSize = 10000;
         ctrl.getList();
       };
       ctrl.getList = async (postIndex) => {
