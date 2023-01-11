@@ -22,8 +22,19 @@
       ctrl.mixConfigurations = $rootScope.globalSettings;
       ctrl.timestamp = Math.random();
       ctrl.templates = [
-        { type: "item", name: "i1", dataType: "Text", value: "" },
-        { type: "string", dataType: "Text", value: "" },
+        {
+          type: "item",
+          name: "i1",
+          dataType: "Text",
+          value: "",
+          columns: [{ allowedTypes: ["item"], items: [] }],
+        },
+        {
+          type: "string",
+          dataType: "Text",
+          value: "",
+          columns: [{ allowedTypes: ["item"], items: [] }],
+        },
         {
           type: "object",
           name: "o1",
@@ -124,27 +135,29 @@
         } else {
           Object.keys(item).forEach(function (key) {
             var obj = {};
-            var objType = typeof item[key];
-            switch (objType) {
-              case "object":
-                if (Array.isArray(item[key])) {
-                  obj = angular.copy(ctrl.templates[2]);
+            if (item[key]) {
+              var objType = typeof item[key];
+              switch (objType) {
+                case "object":
+                  if (Array.isArray(item[key])) {
+                    obj = angular.copy(ctrl.templates[2]);
+                    obj.name = key;
+                    ctrl.parseObjToList(item[key], obj.columns[0].items);
+                    items.push(obj);
+                  } else {
+                    obj = angular.copy(ctrl.templates[1]);
+                    obj.name = key;
+                    ctrl.parseObjToList(item[key], obj.columns[0].items);
+                    items.push(obj);
+                  }
+                  break;
+                default:
+                  obj = angular.copy(ctrl.templates[0]);
                   obj.name = key;
-                  ctrl.parseObjToList(item[key], obj.columns[0].items);
+                  obj.value = item[key];
                   items.push(obj);
-                } else {
-                  obj = angular.copy(ctrl.templates[1]);
-                  obj.name = key;
-                  ctrl.parseObjToList(item[key], obj.columns[0].items);
-                  items.push(obj);
-                }
-                break;
-              default:
-                obj = angular.copy(ctrl.templates[0]);
-                obj.name = key;
-                obj.value = item[key];
-                items.push(obj);
-                break;
+                  break;
+              }
             }
           });
         }

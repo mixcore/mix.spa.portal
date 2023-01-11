@@ -65,6 +65,10 @@ app.controller("PostController", [
       if ($routeParams.type) {
         $scope.createUrl = `${$scope.createUrl}&type=${$routeParams.type}`;
         $scope.request.additionalDatabase = $routeParams.type;
+        $scope.request.mixDatabaseName = $routeParams.type;
+      }
+      if ($routeParams.layout) {
+        $scope.createUrl = `${$scope.createUrl}&layout=${$routeParams.layout}`;
       }
       if ($routeParams.page_ids) {
         $scope.createUrl = `${$scope.createUrl}&page_ids=${$routeParams.page_ids}`;

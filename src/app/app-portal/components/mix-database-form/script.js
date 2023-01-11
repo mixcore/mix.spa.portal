@@ -57,6 +57,9 @@ modules.component("mixDatabaseForm", {
         ctrl.isBusy = false;
         $scope.$apply();
       };
+      ctrl.translate = (keyword) => {
+        return $rootScope.translate(keyword);
+      };
       ctrl.loadData = async function () {
         /*
             If input is data id => load ctrl.mixDataContent from service and handle it independently

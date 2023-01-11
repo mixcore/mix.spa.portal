@@ -6,6 +6,8 @@
     parentId: "=",
     parentType: "=",
     description: "=?",
+    postTypes: "=?",
+    mixDatabaseName: "=?",
     image: "=?",
   },
   controller: [
@@ -26,6 +28,10 @@
       ctrl.$onInit = async () => {
         ctrl.request = angular.copy(ngAppSettings.request);
         ctrl.postRequest = angular.copy(ngAppSettings.request);
+        ctrl.postRequest.searchColumns = "title,excerpt";
+        if (ctrl.mixDatabaseName) {
+          ctrl.postRequest.mixDatabaseName = ctrl.mixDatabaseName;
+        }
         ctrl.postRequest.pageSize = 5;
         await ctrl.loadRelatedPosts();
         await ctrl.loadPosts();

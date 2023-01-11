@@ -28,6 +28,7 @@ modules.component("mixDatabaseDataValues", {
     "$rootScope",
     "$scope",
     "$location",
+    "$routeParams",
     "ngAppSettings",
     "RestMixDatabasePortalService",
     "MixDbService",
@@ -35,6 +36,7 @@ modules.component("mixDatabaseDataValues", {
       $rootScope,
       $scope,
       $location,
+      $routeParams,
       ngAppSettings,
       databaseService,
       dataService
@@ -80,7 +82,18 @@ modules.component("mixDatabaseDataValues", {
       };
       ctrl.loadData = async function () {
         dataService.initDbName(ctrl.mixDatabaseName);
-        var getData = await dataService.getList(ctrl.request);
+        ctrl.request.queries = [];
+        if (ctrl.queries) {
+          Object.keys(ctrl.queries).forEach((e) => {
+            if (ctrl.queries[e]) {
+              ctrl.request.queries.push({
+                fieldName: e,
+                value: ctrl.queries[e],
+              });
+            }
+          });
+        }
+        var getData = await dataService.filter(ctrl.request);
         ctrl.data = getData.data;
         $scope.$apply();
       };

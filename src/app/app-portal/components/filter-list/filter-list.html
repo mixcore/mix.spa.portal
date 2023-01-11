@@ -35,6 +35,43 @@
       />
     </div>
   </div>
+  <div class="col-12">
+    <div class="input-group mb-3">
+      <div
+        class="input-group-text"
+        id="btnGroupAddon"
+        ng-click="$ctrl.apply(0)"
+      >
+        <i class="mi mi-Search" style="top: 0"></i>
+      </div>
+      <input
+        ng-model="$ctrl.request.searchColumns"
+        ng-enter="$ctrl.apply(0)"
+        type="text"
+        class="form-control"
+        placeholder="Search Columns..."
+        aria-label="Search Columns..."
+        aria-describedby="btnGroupAddon"
+      />
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="input-group mb-3">
+      <select
+        class="form-select"
+        ng-model="$ctrl.request.searchMethod"
+        ng-change="$ctrl.apply(0)"
+      >
+        <option
+          ng-repeat="item in $ctrl.searchMethods track by $index"
+          value="{{item}}"
+        >
+          {{item}}
+        </option>
+      </select>
+    </div>
+  </div>
 
   <div class="col-12">
     <div class="input-group mb-3">

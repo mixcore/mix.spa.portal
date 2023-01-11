@@ -97,7 +97,17 @@
       class="text-muted"
       ng-repeat="ref in $ctrl.database.relationships"
     >
-      <!-- Referrence -->
+      <div class="col-2">
+        <h6
+          class="control-label m-0 text-primary"
+          ng-bind="$ctrl.translate(ref.displayName)"
+        ></h6>
+        <div>
+          <small class="text-muted">
+            {{$ctrl.translate(ref.destinateDatabaseName)}}
+          </small>
+        </div>
+      </div>
       <div
         class="alert alert-warning"
         role="alert"
@@ -126,9 +136,9 @@
             </div>
             <paging
               class="small"
-              page="data.page"
-              page-size="data.pageSize"
-              total="data.totalItems"
+              page="data.pagingData.page"
+              page-size="data.pagingData.pageSize"
+              total="data.pagingData.total"
               ul-class="pagination justify-content-end m-0"
               a-class="page-link"
               paging-action="getList(page-1)"

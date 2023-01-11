@@ -24,12 +24,9 @@ app.controller("MixDatabaseDataController", [
       mixDbService
     );
     $scope.queries = {};
-    $scope.data = {};
+    $scope.data = null;
     $scope.exportAll = true;
     $scope.mixConfigurations = $rootScope.globalSettings;
-    // $scope.request.orderBy = "Priority";
-    // $scope.request.direction = "Asc";
-
     $scope.filterType = "contain";
     $scope.defaultId = "default";
     $scope.importFile = {
@@ -46,6 +43,18 @@ app.controller("MixDatabaseDataController", [
       )}_${$routeParams.mixDatabaseId}`;
       $scope.request = $rootScope.getRequest($scope.requestKey);
       if ($routeParams.mixDatabaseId) {
+        $scope.request.mixDatabaseId = $routeParams.mixDatabaseId;
+      }
+      if ($routeParams.queryFields) {
+        if (Array.isArray($routeParams.queryFields)) {
+          angular.forEach($routeParams.queryFields, (e) => {
+            let val = e.split(":");
+            $scope.queries[val[0]] = val[1];
+          });
+        } else {
+          let val = $routeParams.queryFields.split(":");
+          $scope.queries[val[0]] = val[1];
+        }
         $scope.request.mixDatabaseId = $routeParams.mixDatabaseId;
       }
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
@@ -229,16 +238,18 @@ app.controller("MixDatabaseDataController", [
         var dt = new Date($scope.request.toDate);
         $scope.request.toDate = dt.toISOString();
       }
-      var query = {};
+      $scope.request.queries = [];
 
       Object.keys($scope.queries).forEach((e) => {
         if ($scope.queries[e]) {
-          query[e] = $scope.queries[e];
+          $scope.request.queries.push({
+            fieldName: e,
+            value: $scope.queries[e],
+          });
         }
       });
-      $scope.request.query = JSON.stringify(query);
       $rootScope.isBusy = true;
-      var resp = await mixDbService.getList($scope.request);
+      var resp = await mixDbService.filter($scope.request);
       if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
@@ -292,12 +303,16 @@ app.controller("MixDatabaseDataController", [
       }
       $scope.request.mixDatabaseName = $routeParams.mixDatabaseName;
       $scope.request.filterType = $routeParams.filterType || "contain";
+      $scope.request.queries = [];
+
       Object.keys($scope.queries).forEach((e) => {
         if ($scope.queries[e]) {
-          query[e] = $scope.queries[e];
+          $scope.request.queries.push({
+            fieldName: e,
+            value: $scope.queries[e],
+          });
         }
       });
-      $scope.request.query = JSON.stringify(query);
       var request = angular.copy($scope.request);
       $scope.exportAll = $scope.exportAll;
       if (exportAll) {
@@ -305,7 +320,7 @@ app.controller("MixDatabaseDataController", [
         request.pageIndex = 0;
       }
       $rootScope.isBusy = true;
-      var resp = await service.export(request);
+      var resp = await mixDbService.export(request);
       if (resp && resp.success) {
         if (resp.data) {
           window.top.location = resp.data.webPath;

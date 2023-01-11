@@ -67,6 +67,13 @@
           $(".sub-sidebar").toggle();
           // $('.navbar-brand').toggle();
         };
+        ctrl.clearCache = async function () {
+          $rootScope.isBusy = true;
+          await commonService.clearCache();
+          $rootScope.showMessage("success", "success");
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        };
         ctrl.showHelper = function (url) {
           $rootScope.helperUrl = url;
           $("#dev-helper-modal").modal("show");

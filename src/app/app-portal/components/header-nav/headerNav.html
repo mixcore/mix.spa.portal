@@ -119,6 +119,13 @@
         >
         <a
           href="#"
+          ng-click="$ctrl.clearCache()"
+          class="dropdown-item"
+          ng-if="$ctrl.isInRole('Owner')"
+          >Clear Cache</a
+        >
+        <a
+          href="#"
           ng-click="$ctrl.addPermission()"
           class="dropdown-item"
           ng-if="$ctrl.isInRole('Owner')"

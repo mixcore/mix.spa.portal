@@ -40,7 +40,7 @@
                 ng-model="$ctrl.model[$ctrl.column.systemName]"
                 placeholder="{{$ctrl.translate($ctrl.column.displayName)}}" />
         </div>
-        <div ng-switch-when="integer|double|currency">
+        <div ng-switch-when="integer">
             <!-- Number -->
             <input class="form-control {{$ctrl.inputClass}}" type="number"
                 ng-model="$ctrl.model[$ctrl.column.systemName]" placeholder="{{$ctrl.displayName}}" />

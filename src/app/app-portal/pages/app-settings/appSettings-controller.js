@@ -40,6 +40,7 @@ app.controller("AppSettingsController", [
       "Ocelot",
       "Storage",
       "Queue",
+      "Payments",
     ];
     $scope.type = "Global";
     $scope.getAppSettings = async function (type) {

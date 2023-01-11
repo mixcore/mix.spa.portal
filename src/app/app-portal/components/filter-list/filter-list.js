@@ -12,6 +12,7 @@
         fromDate: null,
         toDate: null,
       };
+      ctrl.searchMethods = ["Equal", "Like"];
       ctrl.init = async function () {
         if (!ctrl.arrOrderby) {
           ctrl.arrOrderby = ["Title", "Priority", "CreatedDateTime", "Status"];

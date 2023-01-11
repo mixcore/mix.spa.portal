@@ -116,6 +116,7 @@
       };
       ctrl.initData = async function () {
         setTimeout(() => {
+          ctrl.initDefaultValue();
           switch (ctrl.column.dataType.toLowerCase()) {
             case "datetime":
             case "date":
@@ -181,35 +182,47 @@
         return $rootScope.decrypt(encryptedData);
       };
       ctrl.initDefaultValue = async function () {
-        switch (ctrl.column.dataType) {
-          case "datetime":
-          case "date":
-          case "time":
-            if (ctrl.column.defaultValue) {
-              ctrl.dateObj = new Date(
-                ctrl.mixDatabaseDataValue.column.defaultValue
-              );
-            }
-            break;
-          case "double":
-            if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] = parseFloat(
-                ctrl.mixDatabaseDataValue.column.defaultValue
-              );
-            }
-            break;
-          case "boolean":
-            if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] =
-                ctrl.mixDatabaseDataValue.column.defaultValue == "true";
-            }
-            break;
+        if (
+          ctrl.model[ctrl.column.systemName] == null ||
+          ctrl.model[ctrl.column.systemName] == undefined
+        ) {
+          switch (ctrl.column.dataType) {
+            case "datetime":
+            case "date":
+            case "time":
+              if (ctrl.column.defaultValue) {
+                ctrl.dateObj = new Date(
+                  ctrl.mixDatabaseDataValue.column.defaultValue
+                );
+              }
+              break;
+            case "integer":
+              if (ctrl.column.defaultValue) {
+                ctrl.model[ctrl.column.systemName] = parseInt(
+                  ctrl.mixDatabaseDataValue.column.defaultValue
+                );
+              }
+              break;
+            case "double":
+              if (ctrl.column.defaultValue) {
+                ctrl.model[ctrl.column.systemName] = parseFloat(
+                  ctrl.mixDatabaseDataValue.column.defaultValue
+                );
+              }
+              break;
+            case "boolean":
+              if (ctrl.column.defaultValue) {
+                ctrl.model[ctrl.column.systemName] =
+                  ctrl.mixDatabaseDataValue.column.defaultValue == "true";
+              }
+              break;
 
-          default:
-            if (ctrl.column.defaultValue) {
-              ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
-            }
-            break;
+            default:
+              if (ctrl.column.defaultValue) {
+                ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              }
+              break;
+          }
         }
       };
       ctrl.updateJsonContent = function (content) {
