@@ -299,29 +299,11 @@
                                   placeholder="Please type in the value then enter to add to option list..."
                                 />
                               </div>
-
-                              <div
-                                class="row my-2 ms-2"
-                                ng-repeat="opt in col.columnConfigurations.allowedValues track by $index"
-                              >
-                                <div class="col-md pl-4">
-                                  <input
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    ng-model="col.columnConfigurations.allowedValues[$index]"
-                                  />
-                                </div>
-                                <div style="width: 5%">
-                                  <a
-                                    class="btn btn-sm"
-                                    ng-click="col.columnConfigurations.allowedValues.splice($index,1)"
-                                  >
-                                    <span
-                                      class="fas fa-times text-danger"
-                                    ></span>
-                                  </a>
-                                </div>
-                              </div>
+                              <json-builder
+                                ng-if="col.columnConfigurations.allowedValues"
+                                data="col.columnConfigurations.allowedValues"
+                                ng-if="col.columnConfigurations.allowedValues"
+                              ></json-builder>
                             </div>
                           </div>
                         </div>

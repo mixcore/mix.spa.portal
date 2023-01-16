@@ -12,7 +12,7 @@
             </small>
         </div>
     </div>
-    <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-10">
+    <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-10" ng-if="$ctrl.isInit">
         <div class="text-muted" ng-switch-default>
             <!--text-->
             <input class="form-control {{$ctrl.inputClass}}" type="text"
@@ -91,7 +91,7 @@
             <!--upload-->
             <media-file-upload header="'Media Upload'" type="'Medias'" folder="'Medias'" auto="'true'"
                 upload-options="$ctrl.column.columnConfigurations.upload"
-                src-url="$ctrl.model[$ctrl.column.systemName]" src="$ctrl.model[$ctrl.column.systemName]"
+                src="$ctrl.model[$ctrl.column.systemName]"
                 media-file="$ctrl.mediaFile">
             </media-file-upload>
         </div>

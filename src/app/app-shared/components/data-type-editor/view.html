@@ -1,6 +1,6 @@
 <div class="row mb-3">
   <label class="col-12 control-label" ng-bind="$ctrl.columnTitle"></label>
-  <div class="col-12" ng-switch="$ctrl.dataType.toLowerCase()">
+  <div class="col-12" ng-switch="$ctrl.datatype.toLowerCase()">
     <div ng-switch-default>
       <!--custom-->
       <input
@@ -101,7 +101,6 @@
         folder="'Medias'"
         auto="'true'"
         accept-types="$ctrl.column.columnConfigurations.upload.accepts"
-        src-url="$ctrl.data"
         src="$ctrl.data"
       >
       </media-file-upload>
@@ -112,7 +111,6 @@
         w="$ctrl.column.columnConfigurations.upload.width"
         h="$ctrl.column.columnConfigurations.upload.height"
         folder="'Medias'"
-        src-url="$ctrl.data"
         src="$ctrl.data"
         auto="'true'"
       >

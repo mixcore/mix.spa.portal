@@ -5,7 +5,6 @@
     header: "=?",
     description: "=?",
     src: "=",
-    srcUrl: "=",
     mediaFile: "=?",
     type: "=?",
     folder: "=?",
@@ -28,7 +27,12 @@
       ctrl.mediaNavs = [];
       ctrl.$onInit = function () {
         ctrl.autoSave = ctrl.auto === "true";
-        ctrl.srcUrl = ctrl.srcUrl || image_placeholder;
+        if (ctrl.src) {
+          ctrl.srcUrl = angular.copy(ctrl.src);
+        }
+        if (!ctrl.srcUrl) {
+          ctrl.srcUrl = image_placeholder;
+        }
         ctrl.mediaFile = ctrl.mediaFile || {};
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()

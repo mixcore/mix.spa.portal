@@ -29,7 +29,5 @@
   ],
   bindings: {
     model: "=",
-    readPermissions: "=",
-    writePermissions: "=",
   },
 });

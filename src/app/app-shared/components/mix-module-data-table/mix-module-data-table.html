@@ -64,8 +64,9 @@
           ng-repeat="col in $ctrl.columns track by $index"
         >
           <module-data-preview
+            ng-if="nav.data[col.systemName]"
             data="nav.data[col.systemName]"
-            datatype="col.datatype"
+            datatype="col.dataType"
             width="50"
             class="mb-0"
           >

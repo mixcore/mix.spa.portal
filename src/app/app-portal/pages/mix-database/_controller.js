@@ -28,8 +28,6 @@ app.controller("MixDatabaseController", [
       databaseService
     );
     $scope.defaultAttr = null;
-    $scope.readPermissions = [];
-    $scope.writePermissions = [];
     $scope.actions = ["Delete"];
     // $scope.request.selects = 'id,title,name,createdDateTime';
     $scope.orders = [
@@ -40,12 +38,6 @@ app.controller("MixDatabaseController", [
     $scope.request.orderBy = "CreatedDateTime";
     $scope.request.columns = "id,displayName,systemName,type,createdDatetime";
     $scope.saveDatabase = function () {
-      $scope.viewmodel.readPermissions = JSON.stringify(
-        $scope.readPermissions.map((m) => m.text)
-      );
-      $scope.viewmodel.writePermissions = JSON.stringify(
-        $scope.writePermissions.map((m) => m.text)
-      );
       $scope.save($scope.viewmodel);
     };
     $scope.getSingleSuccessCallback = async function () {
@@ -54,14 +46,6 @@ app.controller("MixDatabaseController", [
         if (getDefaultAttr.success) {
           $scope.defaultAttr = getDefaultAttr.data;
           $scope.defaultAttr.options = [];
-        }
-        if ($scope.viewmodel.readPermissions) {
-          $scope.readPermissions = JSON.parse($scope.viewmodel.readPermissions);
-        }
-        if ($scope.viewmodel.writePermissions) {
-          $scope.writePermissions = JSON.parse(
-            $scope.viewmodel.writePermissions
-          );
         }
         $scope.$apply();
       }

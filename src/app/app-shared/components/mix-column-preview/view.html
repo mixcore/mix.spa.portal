@@ -1,5 +1,5 @@
 <div class="rowx" ng-if="$ctrl.model">
-  <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-9x">
+  <div ng-switch="$ctrl.datatype.toLowerCase()" class="col-9x">
     <div ng-switch-default>
       <p ng-if="$ctrl.maxLength" ng-bind="$ctrl.model|trim:$ctrl.maxLength"></p>
       <p

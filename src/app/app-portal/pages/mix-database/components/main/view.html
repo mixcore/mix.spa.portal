@@ -31,13 +31,37 @@
 <div class="row mb-3">
   <div class="col">
     <label class="form-label">Read Permissions</label>
-    <tags-input min-length="1" ng-model="$ctrl.readPermissions"> </tags-input>
+    <json-builder
+      type="'array'"
+      str-data="$ctrl.model.readPermissions"
+    ></json-builder>
   </div>
 </div>
 <div class="row mb-3">
   <div class="col">
-    <label class="form-label">Write Permissions</label>
-    <tags-input min-length="1" ng-model="$ctrl.writePermissions"> </tags-input>
+    <label class="form-label">Create Permissions</label>
+    <json-builder
+      type="'array'"
+      str-data="$ctrl.model.createPermissions"
+    ></json-builder>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
+    <label class="form-label">Update Permissions</label>
+    <json-builder
+      type="'array'"
+      str-data="$ctrl.model.updatePermissions"
+    ></json-builder>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
+    <label class="form-label">Delete Permissions</label>
+    <json-builder
+      type="'array'"
+      str-data="$ctrl.model.deletePermissions"
+    ></json-builder>
   </div>
 </div>
 <div class="row mb-3">

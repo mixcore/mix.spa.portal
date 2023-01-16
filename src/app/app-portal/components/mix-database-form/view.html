@@ -118,6 +118,11 @@
       </div>
       <div class="row" ng-if="$ctrl.mixDataContent.id">
         <div class="mb-5 card">
+          <modal-nav-datas
+            parent-id="$ctrl.mixDataContent.id"
+            parent-database-name="ref.sourceDatabaseName"
+            mix-database-name="ref.destinateDatabaseName"
+          ></modal-nav-datas>
           <mix-database-data-values
             header="''"
             parent-id="$ctrl.mixDataContent.id"

@@ -1,11 +1,14 @@
 ﻿modules.component("jsonBuilder", {
   templateUrl: "/mix-app/views/app-portal/components/json-builder/view.html",
   bindings: {
-    data: "=", // json obj (ex: { column1: 'some val' })
+    data: "=?", // json obj (ex: { column1: 'some val' })
+    strData: "=", // json obj (ex: { column1: 'some val' })
     folder: "=?", // filepath (ex: 'data/jsonfile.json')
     filename: "=?", // filepath (ex: 'data/jsonfile.json')
     allowedTypes: "=?", // string array ( ex: [ 'type1', 'type2' ] )
     backUrl: "=?", // string array ( ex: [ 'type1', 'type2' ] )
+    showPreview: "=?",
+    type: "=?", // array / obj
     save: "&",
     onUpdate: "&",
   },
@@ -24,7 +27,7 @@
       ctrl.templates = [
         {
           type: "item",
-          name: "i1",
+          name: "",
           dataType: "Text",
           value: "",
           columns: [{ allowedTypes: ["item"], items: [] }],
@@ -61,6 +64,14 @@
           ctrl.parseObjToList(ctrl.data, arr);
           ctrl.dropzones.root = arr;
         } else {
+          if (!ctrl.data) {
+            if (ctrl.strData) {
+              ctrl.data = JSON.parse(ctrl.strData);
+            }
+            if (!ctrl.data && ctrl.type) {
+              ctrl.data = ctrl.type == "array" ? [] : {};
+            }
+          }
           ctrl.rootType = Array.isArray(ctrl.data) ? "array" : "object";
           ctrl.parseObjToList(ctrl.data, arr);
           ctrl.dropzones.root = arr;
@@ -120,6 +131,7 @@
           ],
         };
         ctrl.parseObj(obj, ctrl.model);
+        ctrl.strData = JSON.stringify(ctrl.model);
         ctrl.onUpdate({ data: ctrl.model });
       };
       ctrl.parseObjToList = function (item, items) {
@@ -208,6 +220,7 @@
             });
           }
         }
+        ctrl.strData = JSON.stringify(ctrl.data);
         ctrl.onUpdate({ data: JSON.stringify(ctrl.data) });
       };
       ctrl.select = function (item) {

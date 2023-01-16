@@ -57,7 +57,7 @@ appShared.controller("MediaController", [
     $scope.isImage = function (url) {
       return url
         .toLowerCase()
-        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp|jfif)/g);
+        .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp|jfif|webp)/g);
     };
     $scope.save = async function () {
       var data = $scope.viewmodel;

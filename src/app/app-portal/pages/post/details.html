@@ -279,9 +279,19 @@
                   Please save the Post then continue with this section
                 </span>
               </div>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1"
+                  ><i class="mi mi-Contact"></i
+                ></span>
+                <input
+                  ng-model="mdKeyword"
+                  class="form-control"
+                  placeholder="search metadata type (ex: Category / Tag ...)"
+                />
+              </div>
               <mix-metadata
                 ng-if="viewmodel.id"
-                ng-repeat="m in lstMetadata"
+                ng-repeat="m in lstMetadata | filter: mdKeyword"
                 parent-id="viewmodel.id"
                 parent-type="'Post'"
                 metadata-type="m"

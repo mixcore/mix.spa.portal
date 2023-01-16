@@ -100,8 +100,8 @@ modules.component("mixDatabaseDataValues", {
       ctrl.select = function (item) {
         if (item.isSelected) {
           if (ctrl.selectSingle == "true") {
-            ctrl.selectedList.data = [];
-            ctrl.selectedList.data.push(item);
+            ctrl.selectedList.data.items = [];
+            ctrl.selectedList.data.items.push(item);
           } else {
             var current = $rootScope.findObjectByKey(
               ctrl.selectedList,
@@ -109,7 +109,7 @@ modules.component("mixDatabaseDataValues", {
               item.id
             );
             if (!current) {
-              ctrl.selectedList.data.push(item);
+              ctrl.selectedList.data.items.push(item);
             }
           }
         } else {
@@ -117,16 +117,16 @@ modules.component("mixDatabaseDataValues", {
         }
       };
       ctrl.selectAll = function (isSelected) {
-        ctrl.selectedList.data = [];
-        angular.forEach(ctrl.data, function (e) {
+        ctrl.selectedList.data.items = [];
+        angular.forEach(ctrl.data.items, function (e) {
           e.isSelected = isSelected;
           if (isSelected) {
-            ctrl.selectedList.data.push(e.id);
+            ctrl.selectedList.data.items.push(e.id);
           }
         });
       };
       ctrl.filter = function () {
-        ctrl.data = [];
+        ctrl.data.items = [];
         ctrl.loadData();
       };
       ctrl.sendMail = async function (data) {
@@ -179,7 +179,7 @@ modules.component("mixDatabaseDataValues", {
 
       ctrl.filterData = function (item, attributeName) {
         return $rootScope.findObjectByKey(
-          item.data,
+          item.data.items,
           "attributeName",
           attributeName
         );
@@ -187,18 +187,18 @@ modules.component("mixDatabaseDataValues", {
 
       ctrl.dragStart = function (index) {
         ctrl.dragStartIndex = index;
-        ctrl.minPriority = ctrl.data[0].priority;
+        ctrl.minPriority = ctrl.data.items[0].priority;
       };
       ctrl.updateOrders = function (index, items) {
         if (index > ctrl.dragStartIndex) {
-          ctrl.data.splice(ctrl.dragStartIndex, 1);
+          ctrl.data.items.splice(ctrl.dragStartIndex, 1);
         } else {
-          ctrl.data.splice(ctrl.dragStartIndex + 1, 1);
+          ctrl.data.items.splice(ctrl.dragStartIndex + 1, 1);
         }
         ctrl.updateDataInfos();
       };
       ctrl.updateDataInfos = async function () {
-        angular.forEach(ctrl.data, async function (e, i) {
+        angular.forEach(ctrl.data.items, async function (e, i) {
           e.priority = ctrl.minPriority + i;
           var resp = await dataService.saveFields(e.id, {
             priority: e.priority,

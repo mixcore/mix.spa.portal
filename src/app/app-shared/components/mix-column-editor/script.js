@@ -165,16 +165,16 @@
                 ctrl.model[ctrl.column.systemName] = JSON.parse(
                   ctrl.column.defaultValue
                 );
-                $scope.$apply();
               }
               break;
             default:
-              if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
-                ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
-                $scope.$apply();
-              }
+              //   if (ctrl.column && !ctrl.model[ctrl.column.systemName]) {
+              //     ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              //   }
               break;
           }
+          ctrl.isInit = true;
+          $scope.$apply();
         }, 200);
       };
       ctrl.parseEncryptedData = function (data) {
@@ -186,37 +186,39 @@
           ctrl.model[ctrl.column.systemName] == null ||
           ctrl.model[ctrl.column.systemName] == undefined
         ) {
-          switch (ctrl.column.dataType) {
+          switch (ctrl.column.dataType.toLowerCase()) {
             case "datetime":
             case "date":
             case "time":
               if (ctrl.column.defaultValue) {
-                ctrl.dateObj = new Date(
-                  ctrl.mixDatabaseDataValue.column.defaultValue
-                );
+                ctrl.dateObj = new Date(ctrl.column.defaultValue);
               }
               break;
             case "integer":
               if (ctrl.column.defaultValue) {
                 ctrl.model[ctrl.column.systemName] = parseInt(
-                  ctrl.mixDatabaseDataValue.column.defaultValue
+                  ctrl.column.defaultValue
                 );
               }
               break;
             case "double":
               if (ctrl.column.defaultValue) {
                 ctrl.model[ctrl.column.systemName] = parseFloat(
-                  ctrl.mixDatabaseDataValue.column.defaultValue
+                  ctrl.column.defaultValue
                 );
               }
               break;
             case "boolean":
               if (ctrl.column.defaultValue) {
                 ctrl.model[ctrl.column.systemName] =
-                  ctrl.mixDatabaseDataValue.column.defaultValue == "true";
+                  ctrl.column.defaultValue == "true";
               }
               break;
-
+            case "upload":
+              if (ctrl.column.defaultValue) {
+                ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;
+              }
+              break;
             default:
               if (ctrl.column.defaultValue) {
                 ctrl.model[ctrl.column.systemName] = ctrl.column.defaultValue;

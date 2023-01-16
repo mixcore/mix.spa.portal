@@ -4,6 +4,7 @@
   bindings: {
     model: "=",
     column: "=",
+    datatype: "=?",
     maxLength: "=?",
     isShowTitle: "=?",
     inputClass: "=?",
@@ -23,27 +24,32 @@
         ctrl.uuid = $rootScope.generateUUID();
         var obj = $rootScope.testJSON(ctrl.model);
         ctrl.view = ctrl.model;
-        if (ctrl.column.isEncrypt) {
-          if (obj) {
-            ctrl.encryptedData = obj;
-            ctrl.model = ctrl.encryptedData.data;
-            ctrl.decrypted = $rootScope.decrypt(ctrl.encryptedData);
+        if (ctrl.column) {
+          if (!ctrl.datatype) {
+            ctrl.datatype = ctrl.column.dataType;
           }
-        } else {
-          if (obj && ctrl.maxLength) {
-            ctrl.view = JSON.stringify(ctrl.model);
+          if (ctrl.column.isEncrypt) {
+            if (obj) {
+              ctrl.encryptedData = obj;
+              ctrl.model = ctrl.encryptedData.data;
+              ctrl.decrypted = $rootScope.decrypt(ctrl.encryptedData);
+            }
+          } else {
+            if (obj && ctrl.maxLength) {
+              ctrl.view = JSON.stringify(ctrl.model);
+            }
           }
-        }
-        if (ctrl.maxLength && ctrl.view) {
-          ctrl.view = $filter("trim")(ctrl.view, ctrl.maxLength);
-        }
-        if (ctrl.column.dataType == 20 && ctrl.model) {
-          // youtube video
-          ctrl.model = $sce.trustAsResourceUrl(
-            "https://www.youtube.com/embed/" +
-              ctrl.model +
-              "?rel=0&showinfo=0&autoplay=0"
-          );
+          if (ctrl.maxLength && ctrl.view) {
+            ctrl.view = $filter("trim")(ctrl.view, ctrl.maxLength);
+          }
+          if (ctrl.column.dataType == 20 && ctrl.model) {
+            // youtube video
+            ctrl.model = $sce.trustAsResourceUrl(
+              "https://www.youtube.com/embed/" +
+                ctrl.model +
+                "?rel=0&showinfo=0&autoplay=0"
+            );
+          }
         }
         // if(ctrl.column.dataType == 24 && ctrl.model) // youtube video
         // {

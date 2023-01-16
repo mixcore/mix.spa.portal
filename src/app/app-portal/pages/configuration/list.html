@@ -60,10 +60,10 @@
                         ></small>
                       </td>
                       <td>
-                        <small ng-bind="item.content">
-                          <!-- <module-data-preview data="item.property" width="50">
-                          </module-data-preview> -->
-                        </small>
+                        <mix-column-preview
+                          model="item.content"
+                          datatype="item.dataType"
+                        ></mix-column-preview>
                       </td>
                       <td>
                         <small class="text-black-50"

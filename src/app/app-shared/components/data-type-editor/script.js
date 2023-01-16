@@ -3,7 +3,7 @@
     "/mix-app/views/app-shared/components/data-type-editor/view.html",
   bindings: {
     data: "=",
-    dataType: "=",
+    datatype: "=",
     inputClass: "=?",
     isShowTitle: "=?",
     columnTitle: "=?",
@@ -16,7 +16,7 @@
       this.dataTypes = ngAppSettings.dataTypes;
       ctrl.$onInit = function () {
         ctrl.obj = null;
-        switch (ctrl.dataType) {
+        switch (ctrl.datatype) {
           case "datetime":
           case "date":
           case "time":
@@ -36,7 +36,7 @@
         }
       };
       ctrl.updateValue = function () {
-        switch (ctrl.dataType) {
+        switch (ctrl.datatype) {
           case "datetime":
             if (ctrl.obj) {
               ctrl.data = ctrl.obj.toLocaleString();
