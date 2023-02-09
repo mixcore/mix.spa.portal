@@ -22,7 +22,7 @@
       </div>
       <div
         ng-repeat="col in $ctrl.database.columns | filter:{ dataType: '!Reference'} | orderBy:'priority' track by $index"
-        ng-if="$index < 3"
+        ng-if="$index < $ctrl.intShowColumn"
         class="col-md-2"
       >
         <div class="input-group input-group-sm">
@@ -41,22 +41,23 @@
       <label class="col-md-2">Created</label>
       <div class="col-md-3">
         <div class="input-group input-group-sm">
-          <select
+          <!-- <input type="text" ng-model="$ctrl.intShowColumn" /> -->
+          <!-- <select
             class="form-select form-select-sm me-2"
             ng-model="$ctrl.filterType"
           >
             <option ng-repeat="item in $ctrl.filterTypes" ng-value="item">
               {{item}}
             </option>
-          </select>
-          <select
+          </select> -->
+          <!-- <select
             class="form-select form-select-sm me-2"
             ng-model="$ctrl.compareType"
           >
             <option ng-repeat="item in $ctrl.compareTypes" ng-value="item">
               {{item}}
             </option>
-          </select>
+          </select> -->
           <a class="btn" ng-click="$ctrl.filter()"
             ><i class="fas fa-search"></i
           ></a>
@@ -122,7 +123,7 @@
               />
             </div>
             <div
-              ng-if="$index < 3 && column.dataType != 'Reference'"
+              ng-if="$index < $ctrl.intShowColumn && column.dataType != 'Reference'"
               ng-repeat="column in $ctrl.database.columns | filter:{ dataType: '!Reference'} | orderBy: 'priority' track by $index"
               class="col-md-2"
             >

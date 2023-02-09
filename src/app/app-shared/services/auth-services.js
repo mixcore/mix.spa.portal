@@ -169,10 +169,10 @@ appShared.factory("AuthService", [
     };
 
     var _isInRole = function (roleName) {
-      if (!this.authentication || !this.authentication.info) {
+      if (!this.authentication || !this.authentication.roles) {
         return false;
       }
-      var role = this.authentication.info.roles.filter(
+      var role = this.authentication.roles.filter(
         (m) => m.description == roleName && m.isActived
       );
       return role.length > 0;

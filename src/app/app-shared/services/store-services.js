@@ -8,11 +8,6 @@ appShared.factory("StoreService", [
     var _getThemes = async function (objData) {
       var data = serviceFactory.parseQuery(objData);
       var url = "/rest/post-content/filter";
-
-      if (data) {
-        url += "?";
-        url = url.concat(data);
-      }
       var req = {
         serviceBase: this.serviceBase,
         apiVersion: this.apiVersion,

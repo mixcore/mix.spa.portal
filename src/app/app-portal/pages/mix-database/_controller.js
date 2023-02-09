@@ -104,5 +104,23 @@ app.controller("MixDatabaseController", [
         }
       }
     };
+    $scope.updateSchema = async function () {
+      if ($scope.viewmodel.id) {
+        $rootScope.isBusy = true;
+        var result = await databaseService.updateSchema($scope.viewmodel);
+        if (result.success) {
+          $rootScope.showMessage(
+            "Please restart pool to apply new db schema",
+            "warning"
+          );
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          $rootScope.showErrors(["Cannot update database"]);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+      }
+    };
   },
 ]);

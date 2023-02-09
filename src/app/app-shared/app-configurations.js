@@ -401,7 +401,7 @@ appShared.run([
 
     $rootScope.showErrors = function (errors) {
       if (errors.length) {
-        $.each(errors, function (i, e) {
+        angular.forEach(errors, function (e) {
           $rootScope.showMessage(e, "danger");
         });
       } else {
@@ -424,7 +424,7 @@ appShared.run([
       // $rootScope.toast.show();
       var from = "bottom";
       var align = "right";
-      if ($ && $.notify) {
+      if (window.jQuery && $.notify) {
         $.notify(
           {
             icon: "fas fa-bell",
@@ -440,7 +440,7 @@ appShared.run([
           }
         );
       } else {
-        console.log(content);
+        alert(content);
       }
     };
     $rootScope.encrypt = function (message) {

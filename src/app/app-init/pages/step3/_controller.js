@@ -25,6 +25,7 @@ app.controller("Step3Controller", [
     $scope.init = async function () {
       await apiService.getGlobalSettings();
       $scope.form = document.getElementById("frm-theme");
+      $scope.request.mixDatabaseName = "mixcoreTheme";
       var getThemes = await storeService.getThemes($scope.request);
       if (getThemes.success) {
         $scope.themes = getThemes.data;

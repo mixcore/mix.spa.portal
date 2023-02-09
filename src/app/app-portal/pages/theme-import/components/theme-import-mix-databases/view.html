@@ -36,11 +36,12 @@
   <div class="row justify-content-md-left">
     <div
       class="col-md-4 mb-2"
-      ng-repeat="mixDatabase in $ctrl.data.items track by mixDatabase.id"
+      ng-repeat="mixDatabase in $ctrl.data track by mixDatabase.id"
     >
       <div class="form-check form-switch">
         <input
           type="checkbox"
+          ng-disabled="$ctrl.validate(mixDatabase)"
           class="form-check-input"
           ng-model="mixDatabase.isActived"
           ng-change="$ctrl.selectContent(mixDatabase, mixDatabase.isActived)"
@@ -50,6 +51,10 @@
           >{{mixDatabase.displayName}}</label
         >
       </div>
+      <div
+        class="row col-12 text-danger"
+        ng-bind="$ctrl.validate(mixDatabase)"
+      ></div>
 
       <div class="col-md-1"></div>
       <div class="col-md-11 small" ng-show="mixDatabase.isActived">

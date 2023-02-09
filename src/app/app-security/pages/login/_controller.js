@@ -32,7 +32,7 @@ app.controller("LoginController", [
 
     $scope.message = "";
     $scope.init = async function () {
-      $scope.returnUrl = document.referrer || "/";
+      $scope.returnUrl = $scope.getReturnUrl();
       $rootScope.isBusy = false;
       $scope.providers = await authService.getExternalLoginProviders();
       await apiService.getAllSettings();

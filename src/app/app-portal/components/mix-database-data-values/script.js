@@ -42,6 +42,7 @@ modules.component("mixDatabaseDataValues", {
       dataService
     ) {
       var ctrl = this;
+      ctrl.intShowColumn = 3;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.actions = ["Delete", "SendMail"];
       ctrl.filterTypes = ["contain", "equal"];

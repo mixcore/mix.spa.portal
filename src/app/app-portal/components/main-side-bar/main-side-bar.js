@@ -19,8 +19,10 @@
       var ctrl = this;
       ctrl.items = [];
       ctrl.init = async function () {
-        ctrl.items = await apiService.getPortalMenus();
-        if (!ctrl.items || !ctrl.items.length) {
+        var resp = await apiService.getPortalMenus();
+        if (resp.success && resp.data && resp.data.length) {
+          ctrl.items = resp.data;
+        } else {
           ctrl.items = JSON.parse($("#portal-menus").val()).items;
         }
       };

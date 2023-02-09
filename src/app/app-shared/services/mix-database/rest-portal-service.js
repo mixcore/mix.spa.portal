@@ -28,6 +28,14 @@ appShared.factory("RestMixDatabasePortalService", [
       };
       return await this.getRestApiResult(req);
     };
+    var _updateSchema = async function (data) {
+      var url = `${this.prefixUrl}/update/${data.systemName}`;
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await this.getRestApiResult(req);
+    };
     var _getByName = async function (name) {
       var url = `${this.prefixUrl}/get-by-name/${name}`;
       var req = {
@@ -39,6 +47,7 @@ appShared.factory("RestMixDatabasePortalService", [
     serviceFactory.migrate = _migrate;
     serviceFactory.backup = _backup;
     serviceFactory.restore = _restore;
+    serviceFactory.updateSchema = _updateSchema;
     serviceFactory.getByName = _getByName;
     return serviceFactory;
   },

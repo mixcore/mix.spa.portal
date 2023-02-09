@@ -122,7 +122,11 @@
             case "date":
             case "time":
               if (ctrl.model[ctrl.column.systemName]) {
-                ctrl.dateObj = new Date(ctrl.model[ctrl.column.systemName]);
+                var date = $filter("date")(
+                  ctrl.model[ctrl.column.systemName],
+                  "yyyy-MM-ddTHH:mm"
+                );
+                ctrl.dateObj = new Date(date);
               }
               break;
             case "json":

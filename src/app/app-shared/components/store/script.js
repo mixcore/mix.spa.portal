@@ -44,7 +44,7 @@ sharedComponents.component("mixStore", {
         };
         ctrl.themeRequest = angular.copy(ngAppSettings.request);
         ctrl.themeRequest.orderBy = "createdDatetime";
-        ctrl.themeRequest.mixDatabaseName = "mixcorePortalApp";
+        ctrl.themeRequest.mixDatabaseName = "mixcoreTheme";
         ctrl.themeRequest.queries = [
           { fieldName: "mixcoreVersion", value: "2.0.1" },
         ];
@@ -155,7 +155,12 @@ sharedComponents.component("mixStore", {
         $rootScope.isBusy = false;
         theme.installStatus = "downloading";
         ctrl.id = id;
-        var result = await themeService.installPortal(theme);
+        var result = null;
+        if (ctrl.themeRequest.mixDatabaseName == "mixcoreTheme") {
+          result = await themeService.install(theme);
+        } else {
+          result = await themeService.installPortal(theme);
+        }
 
         if (result.success) {
           $rootScope.isBusy = false;

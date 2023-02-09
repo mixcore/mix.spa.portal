@@ -66,8 +66,7 @@
           ctrl.mediaFile.extension = ctrl.formFile.name.substring(
             ctrl.formFile.name.lastIndexOf(".")
           );
-          if (false) {
-            //($rootScope.isImage(ctrl.formFile)) {
+          if (ctrl.uploadOptions.isCrop && $rootScope.isImage(ctrl.formFile)) {
             ctrl.canUpload = false;
             mediaService.openCroppie(files[0], ctrl, ctrl.autoSave);
           } else {
@@ -88,9 +87,9 @@
             ctrl.src = result;
             ctrl.mediaFile.fileStream = result;
           } else {
-            ctrl.src = result.filePath;
+            ctrl.src = result;
+            ctrl.srcUrl = result;
           }
-          $scope.$apply();
         } else if (ctrl.formFile) {
           if (ctrl.autoSave) {
             ctrl.uploadFile(ctrl.formFile);
@@ -106,6 +105,7 @@
         if (file !== null) {
           $rootScope.isBusy = true;
           if (file) {
+            ctrl.srcUrl = null;
             var response = await mediaService.uploadMedia(
               file,
               null,

@@ -195,7 +195,11 @@ app.controller("PageController", [
       );
       if (getTypes.success) {
         $scope.additionalDatabases = getTypes.data.items;
-
+        $scope.additionalDatabases.splice(0, 0, {
+          systemName: null,
+          displayName: "All",
+          id: 0,
+        });
         if ($scope.request.mixDatabaseName) {
           $scope.additionalDatabase = $rootScope.findObjectByKey(
             $scope.additionalDatabases,
@@ -208,10 +212,17 @@ app.controller("PageController", [
       }
     };
     $scope.onSelectType = async function () {
-      if ($scope.viewmodel) {
+      if (
+        $scope.viewmodel &&
+        $scope.additionalDatabase &&
+        $scope.additionalDatabase.systemName
+      ) {
         $scope.viewmodel.mixDatabaseName = $scope.additionalDatabase.systemName;
         mixDbService.initDbName($scope.viewmodel.mixDatabaseName);
         await $scope.loadAdditionalData();
+      } else {
+        $scope.viewmodel.mixDatabaseName = null;
+        $scope.additionalData = null;
       }
       $scope.request.mixDatabaseName = $scope.additionalDatabase.systemName;
       $scope.createUrl = `/admin/page/create?type=${$scope.request.mixDatabaseName}`;
@@ -259,7 +270,7 @@ app.controller("PageController", [
       }
     };
     $scope.saveAdditionalData = async () => {
-      if ($scope.additionalData) {
+      if ($scope.additionalDatabase.systemName && $scope.additionalData) {
         $scope.additionalData.isClone = $scope.viewmodel.isClone;
         $scope.additionalData.cultures = $scope.viewmodel.cultures;
         $scope.additionalData.intParentId = $scope.viewmodel.id;

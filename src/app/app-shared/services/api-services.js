@@ -61,8 +61,11 @@ appShared.factory("ApiService", [
     };
 
     var _getPortalMenus = async function () {
-      var authData = localStorageService.get("authorizationData");
-      return authData.portalMenus;
+      var req = {
+        method: "GET",
+        url: "/rest/mix-portal/common/portal-menus",
+      };
+      return _sendRequest(req);
     };
 
     var _updateAuthData = async function (encryptedData) {

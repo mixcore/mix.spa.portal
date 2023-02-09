@@ -1,6 +1,9 @@
 ﻿app.component("themeImportMixDatabases", {
   templateUrl:
     "/mix-app/views/app-portal/pages/theme-import/components/theme-import-mix-databases/view.html",
+  bindings: {
+    importThemeDto: "=",
+  },
   controller: [
     "$rootScope",
     "$scope",
@@ -12,25 +15,9 @@
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
-        ctrl.getList();
+        ctrl.data = ctrl.importThemeDto.mixDatabases;
       };
-      ctrl.getList = async (mixDatabaseIndex) => {
-        if (mixDatabaseIndex !== undefined) {
-          ctrl.request.mixDatabaseIndex = mixDatabaseIndex;
-        }
-        if (ctrl.request.fromDate !== null) {
-          var d = new Date(ctrl.request.fromDate);
-          ctrl.request.fromDate = d.toISOString();
-        }
-        if (ctrl.request.toDate !== null) {
-          var d = new Date(ctrl.request.toDate);
-          ctrl.request.toDate = d.toISOString();
-        }
-        let getData = await service.getList(ctrl.request);
-        if (getData.success) {
-          ctrl.data = getData.data;
-        }
-      };
+
       ctrl.selectContent = (mixDatabase, selected) => {
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
@@ -68,12 +55,18 @@
           e.isImportData = ctrl.selectAllData;
         });
       };
+      ctrl.validate = (mixDatabase) => {
+        if (
+          ctrl.importThemeDto.invalidDatabaseNames.indexOf(
+            mixDatabase.systemName
+          ) >= 0
+        ) {
+          return `${mixDatabase.systemName} is invalid`;
+        }
+      };
       ctrl.unionArray = (a, b) => {
         return [...new Set([...a, ...b])];
       };
     },
   ],
-  bindings: {
-    importThemeDto: "=",
-  },
 });

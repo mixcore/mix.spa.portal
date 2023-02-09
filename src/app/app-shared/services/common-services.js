@@ -19,7 +19,7 @@ appShared.factory("CommonService", [
         method: "GET",
         url: "/rest/shared/clear-cache",
       };
-      return await apiService.sendRequest(req, true);
+      return await apiService.sendRequest(req, false);
     };
 
     var _showAlertMsg = function (title, message) {
@@ -125,7 +125,7 @@ appShared.factory("CommonService", [
         method: "GET",
         url: "/rest/shared/stop-application/",
       };
-      return await apiService.sendRequest(req, true);
+      return await apiService.sendRequest(req, false);
     };
 
     factory.sendMail = _sendMail;

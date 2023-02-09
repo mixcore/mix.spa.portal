@@ -128,6 +128,10 @@
             <!--Text-->
             <qr-code model="$ctrl.model[$ctrl.column.systemName]"></qr-code>
         </div>
+        <div class="text-muted" ng-switch-when="barcode">
+            <!--Text-->
+            <bar-code model="$ctrl.model[$ctrl.column.systemName]"></bar-code>
+        </div>
         <div class="text-muted" ng-switch-when="json">
              <json-builder
                 ng-if="$ctrl.jsonObj" 

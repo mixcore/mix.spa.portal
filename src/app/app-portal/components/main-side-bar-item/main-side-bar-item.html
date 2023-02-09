@@ -15,11 +15,11 @@
     ng-if="!$ctrl.item.svg && $ctrl.item.icon"
     class="{{$ctrl.item.icon}} me-3"
   ></i>
-  <span
-    ng-bind-html="$ctrl.translate($ctrl.item.title)"
-    class="menu-item-title"
-  ></span>
-
+  <span class="menu-item-title">
+    <a class="btn btn-link" href="{{$ctrl.item.path}}">
+      <span ng-bind="$ctrl.item.title"></span>
+    </a>
+  </span>
   <span
     class="btn-group btn-group-sm position-absolute end-0 d-none mt-1x shadow me-2"
     ng-mouseenter="$ctrl.addClass($event)"
@@ -34,16 +34,6 @@
       href="{{m.path}}"
     >
       <span class="{{m.icon}}"></span>
-    </a>
-  </span>
-  <span
-    class="btn-group btn-group-sm position-absolute end-0 me-2"
-    role="group"
-    aria-label="Quick Actions"
-    ng-if="$ctrl.item.subMenus.length==0"
-  >
-    <a class="btn btn-light" href="{{$ctrl.item.path}}">
-      <span class="{{$ctrl.item.icon}}"></span>
     </a>
   </span>
 </div>

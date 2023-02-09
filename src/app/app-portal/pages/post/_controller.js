@@ -40,6 +40,7 @@ app.controller("PostController", [
     if (!$scope.referrerUrl) {
       $scope.referrerUrl = "/admin/post/list";
     }
+    $scope.request.searchColumns = "title";
     $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.request.queries = [];
     $scope.defaultQuery = {
@@ -140,7 +141,7 @@ app.controller("PostController", [
       if (getTypes.success) {
         $scope.additionalDatabases = getTypes.data.items;
         $scope.additionalDatabases.splice(0, 0, {
-          systemName: "",
+          systemName: null,
           displayName: "All",
           id: 0,
         });
@@ -267,7 +268,7 @@ app.controller("PostController", [
       });
     };
     $scope.saveSuccessCallback = async function () {
-      if ($scope.additionalData) {
+      if ($scope.additionalData && $scope.viewmodel.mixDatabaseName) {
         var creating = !$scope.additionalData.parentId;
         $scope.additionalData.parentType = "Post";
         $scope.additionalData.parentId = $scope.viewmodel.id;
