@@ -32,8 +32,10 @@ appShared.factory("BaseRestService", [
       apiVersion
     ) {
       this.modelName = modelName;
-      this.apiVersion = apiVersion || appSettings.apiVersion;
-      this.serviceBase = serviceBase || appSettings.serviceBase;
+      this.apiVersion =
+        apiVersion == undefined ? appSettings.apiVersion : apiVersion;
+      this.serviceBase =
+        serviceBase == undefined ? appSettings.serviceBase : serviceBase;
       if (!isGlobal && isGlobal != "true") {
         if ($rootScope.mixConfigurations || lang) {
           this.lang = lang || $rootScope.globalSettings.lang;
@@ -56,6 +58,7 @@ appShared.factory("BaseRestService", [
       var querystring = _parseQuery(queries);
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: `${url}?${querystring}`,
       };
@@ -71,6 +74,8 @@ appShared.factory("BaseRestService", [
       }
       var querystring = _parseQuery(queries);
       var req = {
+        serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: `${url}?${querystring}`,
       };
@@ -86,6 +91,8 @@ appShared.factory("BaseRestService", [
       }
       var querystring = _parseQuery(queries);
       var req = {
+        serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "DELETE",
         url: `${url}?${querystring}`,
       };
@@ -96,6 +103,8 @@ appShared.factory("BaseRestService", [
       var url = `${this.prefixUrl}/default`;
       var querystring = _parseQuery(queriesObj);
       var req = {
+        serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: `${url}?${querystring}`,
       };
@@ -109,6 +118,8 @@ appShared.factory("BaseRestService", [
         }
       }
       var req = {
+        serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: url,
       };
@@ -130,6 +141,7 @@ appShared.factory("BaseRestService", [
       }
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: url,
       };
@@ -146,6 +158,7 @@ appShared.factory("BaseRestService", [
       }
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "GET",
         url: url,
       };
@@ -161,6 +174,7 @@ appShared.factory("BaseRestService", [
       }
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "DELETE",
         url: url,
       };
@@ -181,6 +195,7 @@ appShared.factory("BaseRestService", [
       var url = this.prefixUrl;
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "POST",
         url: url,
         data: JSON.stringify(objData),
@@ -192,6 +207,7 @@ appShared.factory("BaseRestService", [
       var url = this.prefixUrl + "/" + id;
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "PUT",
         url: url,
         data: objData,
@@ -203,6 +219,7 @@ appShared.factory("BaseRestService", [
       var url = this.prefixUrl + "/" + id;
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "PATCH",
         url: url,
         data: JSON.stringify(objData),
@@ -212,6 +229,8 @@ appShared.factory("BaseRestService", [
 
     var _saveMany = async function (models) {
       var req = {
+        serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "POST",
         url: this.prefixUrl + "/save-many",
         data: JSON.stringify(models),
@@ -223,6 +242,7 @@ appShared.factory("BaseRestService", [
       var url = this.prefixUrl + "/list-action";
       var req = {
         serviceBase: this.serviceBase,
+        apiVersion: this.apiVersion,
         method: "POST",
         url: url,
         data: JSON.stringify(objData),

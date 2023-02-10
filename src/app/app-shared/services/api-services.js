@@ -173,8 +173,12 @@ appShared.factory("ApiService", [
       token = null,
       retry = true
     ) {
-      let apiVersion = req.apiVersion || appSettings.apiVersion;
-      let serviceBase = req.serviceBase || appSettings.serviceBase;
+      let apiVersion =
+        req.apiVersion == undefined ? appSettings.apiVersion : req.apiVersion;
+      let serviceBase =
+        req.serviceBase == undefined
+          ? appSettings.serviceBase
+          : req.serviceBase;
       var serviceUrl = `${serviceBase}/api/${apiVersion}`;
       if (req.url.indexOf(serviceUrl) < 0) {
         req.url = serviceUrl + req.url;
