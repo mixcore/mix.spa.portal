@@ -211,7 +211,7 @@ appShared.factory("ApiService", [
         async function (error) {
           if (error.status === 401 && retry) {
             return _refreshToken().then(() =>
-              _sendRequest(req, false, skipAuthorize)
+              _sendRequest(req, skipAuthorize, null, false)
             );
           } else if (
             error.status === 200 ||

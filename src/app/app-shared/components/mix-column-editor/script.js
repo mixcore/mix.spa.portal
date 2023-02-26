@@ -130,11 +130,14 @@
               }
               break;
             case "json":
-              if (ctrl.model[ctrl.column.systemName]) {
+              if (
+                ctrl.model[ctrl.column.systemName] &&
+                ctrl.model[ctrl.column.systemName]
+              ) {
                 ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
                 ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
               } else {
-                ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
+                ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue || "{}");
                 ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
               }
               break;
