@@ -58,6 +58,13 @@
                 </a>
               </div>
             </div>
+            <div ng-switch-when="object">
+              <json-builder
+                ng-if="$ctrl.previewObject.data"
+                data="$ctrl.previewObject.data"
+              >
+              </json-builder>
+            </div>
             <div ng-switch-when="mix-database-data">
               <div
                 ng-repeat="column in $ctrl.previewObject.data.columns | orderBy: 'priority' track by $index"
