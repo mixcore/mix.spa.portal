@@ -45,7 +45,7 @@
       <p ng-bind-html="$ctrl.model"></p>
     </div>
     <div ng-switch-when="boolean">
-      <input class="form-control" type="checkbox" ng-model="$ctrl.model" />
+      <input class="form-check-input" type="checkbox" ng-model="$ctrl.model" />
     </div>
     <div ng-switch-when="videoyoutube">
       <youtube-editor code="$ctrl.model" hide-input="'true'"></youtube-editor>

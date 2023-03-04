@@ -398,7 +398,13 @@ appShared.run([
         });
       }, 200);
     };
-
+    $rootScope.handleResponse = (response) => {
+      if (response.success) {
+        $rootScope.showMessage("success", "success");
+      } else {
+        $rootScope.showErrors(response.errors);
+      }
+    };
     $rootScope.showErrors = function (errors) {
       if (errors.length) {
         angular.forEach(errors, function (e) {

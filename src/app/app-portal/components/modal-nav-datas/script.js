@@ -8,8 +8,9 @@
     parentType: "=?",
     type: "=?",
     columnDisplay: "=?",
+    selectedIds: "=?",
     selectedList: "=?",
-    selectCallback: "&",
+    selectCallback: "&?",
     save: "&",
   },
   controller: [
@@ -61,11 +62,32 @@
         }
       };
       ctrl.select = async (item) => {
+        $rootScope.isBusy = true;
         if (item.isSelected) {
           ctrl.association.childId = item.id;
-          return await associationService.save(ctrl.association);
+          let result = await associationService.save(ctrl.association);
+          if (result.success) {
+            item.associationId = result.data.id;
+          }
+          $rootScope.handleResponse(result);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        } else {
+          let result = await associationService.deleteAssociation(
+            ctrl.parentDatabaseName,
+            ctrl.mixDatabaseName,
+            ctrl.parentId,
+            item.id
+          );
+          $rootScope.handleResponse(result);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
+        if (ctrl.selectCallback) {
+          ctrl.selectCallback();
         }
       };
+
       ctrl.filter = function () {
         ctrl.data = [];
         ctrl.loadData();
@@ -85,6 +107,11 @@
         }
         var getData = await dataService.filter(ctrl.request);
         ctrl.data = getData.data;
+        angular.forEach(ctrl.data.items, (e) => {
+          if (ctrl.selectedIds.includes(e.id)) {
+            e.isSelected = true;
+          }
+        });
         $scope.$apply();
       };
       ctrl.update = function (data) {

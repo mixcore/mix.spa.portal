@@ -96,6 +96,7 @@ modules.component("mixDatabaseDataValues", {
         }
         var getData = await dataService.filter(ctrl.request);
         ctrl.data = getData.data;
+        ctrl.selectedIds = ctrl.data.items.map((m) => m.id);
         $scope.$apply();
       };
       ctrl.select = function (item) {

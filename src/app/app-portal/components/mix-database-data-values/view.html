@@ -1,3 +1,12 @@
+<modal-nav-datas
+  ng-if="$ctrl.data && $ctrl.parentName && $ctrl.parentId"
+  selected-ids="$ctrl.selectedIds"
+  parent-id="$ctrl.parentId"
+  parent-database-name="$ctrl.parentName"
+  mix-database-name="$ctrl.mixDatabaseName"
+  select-callback="$ctrl.loadData()"
+></modal-nav-datas>
+
 <div class="border-left-0 border-bottom-0 border-right-0">
   <div class="card-header py-1">
     <span ng-bind="$ctrl.header"></span>
