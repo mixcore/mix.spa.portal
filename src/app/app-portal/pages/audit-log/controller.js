@@ -30,6 +30,7 @@ app.controller("AuditLogController", [
     //   "createdDateTime",
     //   "createdBy",
     // ];
+    $scope.request.status = null;
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
 

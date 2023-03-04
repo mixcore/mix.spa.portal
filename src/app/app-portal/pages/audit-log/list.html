@@ -17,8 +17,6 @@
             class=""
             request="request"
             callback="getList(pageIndex)"
-            create-url="'/admin/audit-log/create'"
-            create-text="'Create Audit Log'"
           ></filter-list>
         </div>
       </nav>
@@ -89,7 +87,7 @@
                 <td class="">
                   <a
                     href=""
-                    ng-click="goToPath('/admin/audit-log/details/' + item.id)"
+                    ng-click="view(item)"
                     class="btn-link"
                     ng-bind="item.endpoint|trim:50"
                   >
@@ -119,46 +117,6 @@
                   <small ng-if="item.status == 'Schedule'">🟡</small>
                   <small ng-if="item.status == 'Draft'">🔴</small>
                   <small ng-if="item.status == 'Deleted'">⚫️</small>
-                </td>
-                <td>
-                  <div class="dropdown float-lg-end ms-auto pe-1">
-                    <a
-                      href="javascript:;"
-                      class="cursor-pointer"
-                      id="dropdownTable2"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i
-                        class="fa fa-ellipsis-h text-secondary"
-                        aria-hidden="true"
-                      ></i>
-                    </a>
-                    <ul
-                      class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
-                      aria-labelledby="dropdownTable2"
-                      style=""
-                    >
-                      <li>
-                        <a
-                          href=""
-                          ng-click="goToPath('/admin/audit-log/details/' + item.id)"
-                          class="dropdown-item border-radius-md"
-                        >
-                          <span class="fas fa-pen"></span> Edit
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href=""
-                          ng-click="remove(item.id);"
-                          class="dropdown-item border-radius-md text-danger"
-                        >
-                          <i class="fas fa-trash-alt"></i> Delete
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
                 </td>
               </tr>
             </tbody>
