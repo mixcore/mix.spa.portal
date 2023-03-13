@@ -55,14 +55,16 @@ app.controller("UserController", [
     $scope.loadUser = async function () {
       $rootScope.isBusy = true;
       var id = $routeParams.id;
-      var response = await userServices.getUser(id, "portal");
-      if (response.success) {
-        $scope.activedUser = response.data;
-        $scope.loadAdditionalData();
-      } else {
-        $rootScope.showErrors(response.errors);
-        $rootScope.isBusy = false;
-        $scope.$apply();
+      if (id) {
+        var response = await userServices.getUser(id, "portal");
+        if (response.success) {
+          $scope.activedUser = response.data;
+          $scope.loadAdditionalData();
+        } else {
+          $rootScope.showErrors(response.errors);
+          $rootScope.isBusy = false;
+          $scope.$apply();
+        }
       }
     };
     $scope.loadAdditionalData = async function () {
