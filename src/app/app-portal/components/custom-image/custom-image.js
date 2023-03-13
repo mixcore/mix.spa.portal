@@ -87,7 +87,6 @@
       }.bind(ctrl);
 
       ctrl.selectFile = function (files) {
-        debugger;
         if (files !== undefined && files !== null && files.length > 0) {
           ctrl.file = files[0];
           ctrl.mediaFile.fileFolder = ctrl.folder || "Media";
