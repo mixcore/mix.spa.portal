@@ -2,6 +2,7 @@
 app.controller("UserController", [
   "$scope",
   "$rootScope",
+  "$location",
   "ngAppSettings",
   "$routeParams",
   "AuthService",
@@ -11,6 +12,7 @@ app.controller("UserController", [
   function (
     $scope,
     $rootScope,
+    $location,
     ngAppSettings,
     $routeParams,
     authService,
@@ -53,9 +55,9 @@ app.controller("UserController", [
     };
 
     $scope.loadUser = async function () {
-      $rootScope.isBusy = true;
       var id = $routeParams.id;
       if (id) {
+        $rootScope.isBusy = true;
         var response = await userServices.getUser(id, "portal");
         if (response.success) {
           $scope.activedUser = response.data;
@@ -183,6 +185,7 @@ app.controller("UserController", [
           }
         }
         $rootScope.isBusy = false;
+
         $scope.$apply();
       } else {
         if (resp) {
@@ -226,6 +229,7 @@ app.controller("UserController", [
         $scope.activedUser = resp.data;
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
+        $location.url("/admin/user/list");
         $scope.$apply();
       } else {
         if (resp) {
@@ -248,6 +252,7 @@ app.controller("UserController", [
       if (resp && resp.success) {
         $rootScope.showMessage("Update successfully!", "success");
         $rootScope.isBusy = false;
+        $location.url("/admin/user/list");
         $scope.$apply();
       } else {
         if (resp) {
