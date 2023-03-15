@@ -66,8 +66,16 @@ app.controller("AuditLogController", [
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
       $scope.messages.push(msg);
-      console.log($scope.messages);
       $scope.$apply();
+
+      setTimeout(() => {
+        $("body,html").animate(
+          {
+            scrollTop: $("#log-stream-container").height(), // Scroll to top of body
+          },
+          500
+        );
+      }, 200);
     };
     $scope.getMessageType = function (type) {
       switch (type) {
