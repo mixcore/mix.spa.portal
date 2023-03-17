@@ -65,6 +65,9 @@ app.controller("AuditLogController", [
     };
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
+      if (msg.data) {
+        msg.data = JSON.parse(msg.data);
+      }
       $scope.messages.push(msg);
       $scope.$apply();
 
