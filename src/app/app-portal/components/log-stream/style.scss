@@ -1,0 +1,21 @@
+log-stream {
+    #modal-log-stream{
+        .modal-body{
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+    }
+  .nav-link {
+    position: relative;
+
+    .new-msg-count {
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      top: -5px;
+      right: 5px;
+      background-color: red;
+      padding: 2px 4px 0;
+    }
+  }
+}
