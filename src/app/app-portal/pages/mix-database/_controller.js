@@ -29,6 +29,7 @@ app.controller("MixDatabaseController", [
     );
     $scope.defaultAttr = null;
     $scope.actions = ["Delete"];
+    $scope.viewmodelType = "mix-database";
     // $scope.request.selects = 'id,title,name,createdDateTime';
     $scope.orders = [
       { title: "Id", value: "Id" },
