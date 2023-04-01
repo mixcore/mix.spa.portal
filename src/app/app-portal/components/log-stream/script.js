@@ -37,6 +37,7 @@ app.controller("LogStreamController", [
     $scope.readMessages = function () {
       $scope.newMsgCount = 0;
       $("#modal-log-stream").modal("show");
+      $scope.scrollToBot();
     };
     $scope.receiveMessage = function (msg) {
       switch (msg.action) {
@@ -52,6 +53,9 @@ app.controller("LogStreamController", [
       }
       $scope.messages.push(msg);
       $scope.$apply();
+      $scope.scrollToBot();
+    };
+    $scope.scrollToBot = () => {
       let container = $("#modal-log-stream").find(".modal-body")[0];
       setTimeout(() => {
         let h = $("#modal-log-stream").find(".table").height();
@@ -68,6 +72,7 @@ app.controller("LogStreamController", [
         case "Success":
           return "success";
         case "Error":
+          $scope.newMsgCount += 1;
           return "danger";
         case "Warning":
           return "warning";

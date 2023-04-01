@@ -59,11 +59,15 @@
               </div>
             </div>
             <div ng-switch-when="object">
-              <json-builder
+              <pre
+                class="{{$ctrl.previewObject.data.objClass}}"
+                ng-bind="$ctrl.previewObject.data|json"
+              ></pre>
+              <!-- <json-builder
                 ng-if="$ctrl.previewObject.data"
                 data="$ctrl.previewObject.data"
               >
-              </json-builder>
+              </json-builder> -->
             </div>
             <div ng-switch-when="mix-database-data">
               <div

@@ -90,12 +90,11 @@
                   </div>
                 </td>
                 <td class="">
-                  <a
-                    href=""
-                    ng-click="view(item)"
-                    class="btn-link"
-                    ng-bind="item.endpoint|trim:50"
-                  >
+                  <a href="" ng-click="view(item)" class="btn-link">
+                    <span
+                      ng-bind="item.endpoint|trim:50"
+                      ng-class="{'text-danger': !item.success}"
+                    ></span>
                   </a>
                 </td>
                 <td>

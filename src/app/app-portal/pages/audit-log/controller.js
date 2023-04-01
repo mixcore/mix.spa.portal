@@ -95,6 +95,7 @@ app.controller("AuditLogController", [
       }
     };
     $scope.view = function (item) {
+      item.objClass = item.success ? "text-success" : "text-danger";
       $rootScope.preview("object", item, null, "modal-lg");
     };
   },
