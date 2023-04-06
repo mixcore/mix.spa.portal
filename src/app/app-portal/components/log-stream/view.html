@@ -31,6 +31,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><i class="mi mi-ActionCenter"></i> Api Logs</h5>
+        <input
+          type="text"
+          class="mx-2"
+          placeholder="filter data"
+          ng-model="keyword"
+        />
         <button
           type="button"
           class="btn-close"
@@ -52,7 +58,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="msg in messages">
+            <tr ng-repeat="msg in messages | filter:keyword">
               <td>
                 <a href="#" class="nav-link d-flex lh-1 text-reset">
                   <span

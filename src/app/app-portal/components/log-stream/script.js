@@ -10,6 +10,7 @@ app.controller("LogStreamController", [
   function ($scope, $rootScope, authService) {
     BaseHub.call(this, $scope);
     authService.fillAuthData();
+    $scope.keyword = "";
     $scope.newMsgCount = 0;
     $scope.messages = [];
     $scope.onConnected = () => {
