@@ -46,7 +46,12 @@ app.controller("HubMessagesController", [
           $scope.$apply();
           break;
         case "MemberList":
-          $scope.members = msg.data;
+          // filter unique member by username
+          $scope.members = msg.data.filter(
+            (value, index, array) =>
+              array.indexOf(array.find((u) => u.username == value.username)) ===
+              index
+          );
           $scope.$apply();
           break;
         case "NewMember":
