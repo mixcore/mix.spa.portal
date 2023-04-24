@@ -81,10 +81,7 @@
                 <span ng-bind="msg.message" class="text-{{msg.style}}"></span>
               </td>
               <td>
-                <span
-                  ng-bind="msg.data | json"
-                  class="text-{{msg.style}}"
-                ></span>
+                <pre ng-bind="msg.data | json" class="text-{{msg.style}}"></pre>
               </td>
               <td>
                 <span

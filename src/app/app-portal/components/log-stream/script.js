@@ -14,7 +14,7 @@ app.controller("LogStreamController", [
     $scope.newMsgCount = 0;
     $scope.messages = [];
     $scope.onConnected = () => {
-      $scope.joinRoom("portal");
+      //   $scope.joinRoom("portal");
     };
     $scope.init = function () {
       $scope.startConnection(
@@ -49,7 +49,11 @@ app.controller("LogStreamController", [
     };
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
-      if (msg.data) {
+      if (
+        msg.data &&
+        !angular.isObject(msg.data) &&
+        msg.data.indexOf("{") == 0
+      ) {
         msg.data = JSON.parse(msg.data);
       }
       $scope.messages.push(msg);

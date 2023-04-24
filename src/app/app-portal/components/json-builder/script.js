@@ -2,7 +2,7 @@
   templateUrl: "/mix-app/views/app-portal/components/json-builder/view.html",
   bindings: {
     data: "=?", // json obj (ex: { column1: 'some val' })
-    strData: "=", // json obj (ex: { column1: 'some val' })
+    strData: "=?", // json obj (ex: { column1: 'some val' })
     folder: "=?", // filepath (ex: 'data/jsonfile.json')
     filename: "=?", // filepath (ex: 'data/jsonfile.json')
     allowedTypes: "=?", // string array ( ex: [ 'type1', 'type2' ] )
@@ -20,6 +20,7 @@
     "ngAppSettings",
     function ($rootScope, $scope, $location, fileService, ngAppSettings) {
       var ctrl = this;
+      ctrl.editMode = "json";
       ctrl.file = null;
       ctrl.translate = $rootScope.translate;
       ctrl.mixConfigurations = $rootScope.globalSettings;
@@ -74,6 +75,7 @@
           }
           ctrl.rootType = Array.isArray(ctrl.data) ? "array" : "object";
           ctrl.parseObjToList(ctrl.data, arr);
+          ctrl.strData = JSON.stringify(ctrl.data);
           ctrl.dropzones.root = arr;
           ctrl.preview = angular.copy(ctrl.data);
         }
@@ -133,6 +135,13 @@
         ctrl.parseObj(obj, ctrl.model);
         ctrl.strData = JSON.stringify(ctrl.model);
         ctrl.onUpdate({ data: ctrl.model });
+      };
+      ctrl.updateJsonContent = function (strData) {
+        if (strData) {
+          ctrl.model = JSON.parse(strData);
+          ctrl.strData = strData;
+          ctrl.onUpdate({ data: ctrl.model });
+        }
       };
       ctrl.parseObjToList = function (item, items) {
         // key: the name of the object key

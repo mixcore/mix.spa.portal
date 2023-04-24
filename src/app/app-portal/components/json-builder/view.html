@@ -1,6 +1,16 @@
 <div class="mix-tree-view" ng-init="$ctrl.init()">
   <div class="row">
-    <div ng-repeat="(zone, items) in $ctrl.dropzones" class="col-md-12">
+    <select class="form-control form-control-sm" ng-model="$ctrl.editMode">
+      <option value="json">json editor</option>
+      <option value="text">text editor</option>
+    </select>
+  </div>
+  <div class="row">
+    <div
+      ng-show="$ctrl.editMode == 'json'"
+      ng-repeat="(zone, items) in $ctrl.dropzones"
+      class="col-md-12"
+    >
       <div class="row">
         <button
           type="button"
@@ -141,14 +151,14 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12" ng-if="$ctrl.showPreview">
-      <h3>Preview</h3>
-      <code>
-        <pre>
-{{$ctrl.strData|json}}
-     </pre
-        >
-      </code>
+    <div ng-show="$ctrl.editMode != 'json'" class="col-md-12">
+      <monaco-editor
+        ng-if="$ctrl.strData"
+        content="$ctrl.strData"
+        update-content="$ctrl.updateJsonContent(content)"
+        ext="'.json'"
+      >
+      </monaco-editor>
     </div>
   </div>
 </div>

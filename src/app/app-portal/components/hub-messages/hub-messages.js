@@ -66,6 +66,13 @@ app.controller("HubMessagesController", [
     };
     $scope.newMessage = function (msg) {
       msg.style = $scope.getMessageType(msg.type);
+      if (
+        msg.data &&
+        !angular.isObject(msg.data) &&
+        msg.data.indexOf("{") == 0
+      ) {
+        msg.data = JSON.parse(msg.data);
+      }
       $scope.messages.push(msg);
       if (
         !msg.from ||
