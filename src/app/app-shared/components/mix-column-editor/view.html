@@ -155,6 +155,34 @@
                 update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
             </monaco-editor> -->
         </div>
+        <div class="text-muted" ng-switch-when="arraymedia">
+            <div class="mb-1">
+                <button
+                        type="button"
+                        class="btn btn-light"
+                        ng-click="$ctrl.addField()"
+                        title="Add column"
+                        >
+                        <span class="fa fa-plus text-primary"></span>
+                    </button>
+            </div>
+            <div class="mb-1" ng-repeat="m in $ctrl.jsonObj track by $index" >
+                <div class="input-group">
+                    <input class="form-control" type="text" ng-model="m" ng-change="$ctrl.updateJsonColumn($index, m)"/>
+                    <button
+                        type="button"
+                        class="btn btn-light"
+                        ng-click="$ctrl.removeField($index)"
+                        title="Add column"
+                        >
+                        <span class="fa fa-trash text-danger"></span>
+                    </button>
+                </div>
+                    
+                <preview-image img-height="25" img-src="m"></preview-image>
+            </div>
+        </div>
+        </div>
         <div class="text-muted" ng-switch-when="tag">
             <!--Text-->
             <tags-input ng-model="$ctrl.model[$ctrl.column.systemName]">

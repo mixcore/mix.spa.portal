@@ -14,7 +14,7 @@ app.controller("HubMessagesController", [
     $scope.newMsgCount = 0;
     $scope.messages = [];
     $scope.onConnected = () => {
-      $scope.joinRoom("portal");
+      //   $scope.joinRoom("portal");
     };
     $scope.init = function () {
       $scope.startConnection(

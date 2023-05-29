@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "3": "^2.1.0",
-    "@microsoft/signalr-protocol-msgpack": "^6.0.2",
+    "@microsoft/signalr-protocol-msgpack": "^7.0.5",
     "@popperjs/core": "^2.9.2",
     "angular": "^1.8.2",
     "angular-animate": "^1.8.2",

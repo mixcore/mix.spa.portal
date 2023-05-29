@@ -3,12 +3,12 @@
     "/mix-app/views/app-portal/components/media-file-upload/view.html",
   bindings: {
     header: "=?",
-    description: "=?",
+    accept: "=?",
     src: "=",
-    mediaFile: "=?",
+    srcUrl: "=",
+    fileModel: "=?",
     type: "=?",
-    folder: "=?",
-    auto: "=",
+    auto: "=?",
     uploadOptions: "=?",
     onDelete: "&?",
     onUpdate: "&?",
@@ -33,7 +33,6 @@
         if (!ctrl.srcUrl) {
           ctrl.srcUrl = image_placeholder;
         }
-        ctrl.mediaFile = ctrl.mediaFile || {};
         ctrl.isImage = ctrl.srcUrl
           .toLowerCase()
           .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp)/g);
@@ -56,26 +55,20 @@
       ctrl.selectFile = function (files) {
         if (files !== undefined && files !== null && files.length > 0) {
           ctrl.formFile = files[0];
-          ctrl.mediaFile.fileFolder = ctrl.folder ? ctrl.folder : "Media";
-          ctrl.mediaFile.title = ctrl.title ? ctrl.title : "";
-          ctrl.mediaFile.description = ctrl.description ? ctrl.description : "";
-          ctrl.mediaFile.fileName = ctrl.formFile.name.substring(
-            0,
-            ctrl.formFile.name.lastIndexOf(".")
-          );
-          ctrl.mediaFile.extension = ctrl.formFile.name.substring(
-            ctrl.formFile.name.lastIndexOf(".")
-          );
-          if (ctrl.uploadOptions.isCrop && $rootScope.isImage(ctrl.formFile)) {
+          if (
+            ctrl.uploadOptions &&
+            ctrl.uploadOptions.isCrop &&
+            $rootScope.isImage(ctrl.formFile)
+          ) {
             ctrl.canUpload = false;
             mediaService.openCroppie(files[0], ctrl, ctrl.autoSave);
           } else {
-            ctrl.mediaFile.file = ctrl.formFile;
             ctrl.canUpload = true;
-            ctrl.uploadFile(ctrl.formFile);
             if (ctrl.autoSave) {
+              ctrl.uploadFile(ctrl.formFile);
+            } else {
+              ctrl.getBase64(ctrl.formFile);
             }
-            // ctrl.getBase64(ctrl.formFile);
           }
         }
       };
@@ -85,7 +78,7 @@
           ctrl.isImage = true;
           if (!ctrl.autoSave) {
             ctrl.src = result;
-            ctrl.mediaFile.fileStream = result;
+            ctrl.fileStream = result;
           } else {
             ctrl.src = result;
             ctrl.srcUrl = result;
@@ -94,7 +87,7 @@
           if (ctrl.autoSave) {
             ctrl.uploadFile(ctrl.formFile);
           } else {
-            ctrl.mediaFile.file = ctrl.formFile;
+            ctrl.fileModel.file = ctrl.formFile;
             ctrl.getBase64(ctrl.formFile);
           }
           //   ctrl.uploadFile(ctrl.formFile);
@@ -132,15 +125,16 @@
           var reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = function () {
-            if (ctrl.mediaFile) {
-              ctrl.mediaFile.fileName = file.name.substring(
+            debugger;
+            if (ctrl.fileModel) {
+              ctrl.fileModel.filename = file.name.substring(
                 0,
                 file.name.lastIndexOf(".")
               );
-              ctrl.mediaFile.extension = file.name.substring(
+              ctrl.fileModel.extension = file.name.substring(
                 file.name.lastIndexOf(".")
               );
-              ctrl.mediaFile.fileStream = reader.result;
+              ctrl.fileModel.fileBase64 = reader.result;
             }
             ctrl.srcUrl = reader.result;
             ctrl.isImage =

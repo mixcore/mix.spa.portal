@@ -543,7 +543,7 @@ gulp.task("watch", function () {
 gulp.task(
   "portalView-watch",
   gulp.series("min:views", function (done) {
-    browserSync.reload();
+    //browserSync.reload();
     done();
   })
 );
@@ -551,7 +551,7 @@ gulp.task(
 gulp.task(
   "portalJS-watch",
   gulp.series("clean:js", "min:js", function (done) {
-    browserSync.reload();
+    //browserSync.reload();
     done();
   })
 );
@@ -559,7 +559,7 @@ gulp.task(
 gulp.task(
   "portalCSS-watch",
   gulp.series("min:css", function (done) {
-    browserSync.reload();
+    //browserSync.reload();
     done();
   })
 );

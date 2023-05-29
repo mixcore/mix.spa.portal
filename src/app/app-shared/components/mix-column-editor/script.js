@@ -142,12 +142,19 @@
               }
               break;
             case "array":
+            case "arraymedia":
               if (ctrl.model[ctrl.column.systemName]) {
-                ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+                if (Array.isArray(ctrl.model[ctrl.column.systemName])) {
+                  ctrl.jsonObj = ctrl.model[ctrl.column.systemName];
+                } else {
+                  ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+                }
                 ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
+                ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
               } else {
                 ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
                 ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
+                ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
               }
               break;
             case "reference": // reference
@@ -183,6 +190,18 @@
           ctrl.isInit = true;
           $scope.$apply();
         }, 200);
+      };
+      ctrl.addField = () => {
+        if (Array.isArray(ctrl.jsonObj)) {
+          ctrl.jsonObj.push("");
+          ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
+        }
+      };
+      ctrl.removeField = (index) => {
+        if (Array.isArray(ctrl.jsonObj)) {
+          ctrl.jsonObj.splice(index, 1);
+          ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
+        }
       };
       ctrl.parseEncryptedData = function (data) {
         var encryptedData = $rootScope.testJSON(data);
@@ -232,6 +251,12 @@
               }
               break;
           }
+        }
+      };
+      ctrl.updateJsonColumn = (index, value) => {
+        if (Array.isArray(ctrl.jsonObj)) {
+          ctrl.jsonObj[index] = value;
+          ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
         }
       };
       ctrl.updateJsonContent = function (content) {

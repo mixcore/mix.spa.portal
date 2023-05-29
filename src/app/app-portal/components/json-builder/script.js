@@ -20,7 +20,7 @@
     "ngAppSettings",
     function ($rootScope, $scope, $location, fileService, ngAppSettings) {
       var ctrl = this;
-      ctrl.editMode = "json";
+      ctrl.editMode = "text";
       ctrl.file = null;
       ctrl.translate = $rootScope.translate;
       ctrl.mixConfigurations = $rootScope.globalSettings;

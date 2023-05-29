@@ -32,15 +32,18 @@ modules.component("mixDatabaseForm", {
     "RestMixAssociationPortalService",
     "RestMixDatabasePortalService",
     "MixDbService",
+    "AuthService",
     function (
       $rootScope,
       $scope,
       $routeParams,
       associationService,
       databaseService,
-      service
+      service,
+      authService
     ) {
       var ctrl = this;
+      BaseHub.call(this, ctrl);
       ctrl.isBusy = false;
       ctrl.attributes = [];
       ctrl.isInRole = $rootScope.isInRole;
@@ -54,8 +57,41 @@ modules.component("mixDatabaseForm", {
         ctrl.database = getDatabase.data;
         service.initDbName(ctrl.mixDatabaseName);
         await ctrl.loadData();
+        ctrl.connectHub();
         ctrl.isBusy = false;
         $scope.$apply();
+      };
+      ctrl.connectHub = () => {
+        ctrl.startConnection(
+          "mixDbCommandHub",
+          authService.authentication.accessToken,
+          (err) => {
+            if (
+              authService.authentication.refreshToken &&
+              err.message.indexOf("401") >= 0
+            ) {
+              authService.refreshToken().then(async () => {
+                $scope.startConnection(
+                  "portalHub",
+                  authService.authentication.accessToken
+                );
+              });
+            }
+          }
+        );
+      };
+      ctrl.hubCreateData = function () {
+        let msg = {
+          connectionId: "",
+          mixDbName: ctrl.mixDatabaseName,
+          requestedBy: "",
+          body: ctrl.mixDataContent,
+        };
+        ctrl.connection.invoke("CreateData", JSON.stringify(msg));
+        $rootScope.showMessage("Request Sent", "success");
+      };
+      ctrl.receiveMessage = function (msg) {
+        $rootScope.showMessage("Success", "success");
       };
       ctrl.translate = (keyword) => {
         return $rootScope.translate(keyword);
@@ -108,11 +144,21 @@ modules.component("mixDatabaseForm", {
           ctrl.isBusy = false;
         }
         if ($routeParams.parentId && $routeParams.parentName) {
-          ctrl.association = {
-            parentId: $routeParams.parentId,
-            parentDatabaseName: $routeParams.parentName,
-            childDatabaseName: ctrl.mixDatabaseName,
-          };
+          var getAssociation = await associationService.getAssociation(
+            $routeParams.parentName,
+            ctrl.mixDatabaseName,
+            $routeParams.parentId,
+            ctrl.mixDataContent.id
+          );
+          if (getAssociation.success) {
+            ctrl.association = getAssociation.data;
+          } else {
+            ctrl.association = {
+              parentId: $routeParams.parentId,
+              parentDatabaseName: $routeParams.parentName,
+              childDatabaseName: ctrl.mixDatabaseName,
+            };
+          }
           var parentIdNameFieldName = `${$routeParams.parentName
             .charAt(0)
             .toLowerCase()}${

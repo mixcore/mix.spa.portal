@@ -16,13 +16,21 @@ appShared.factory("MediaService", [
       return await apiService.sendRequest(req);
     };
     var _save = async function (objData, file, onUploadFileProgress) {
-      var url = this.prefixUrl + "/upload-file";
-      var fd = new FormData();
-      var file = objData.mediaFile.file;
-      objData.mediaFile.file = null;
-      fd.append("model", angular.toJson(objData));
-      fd.append("file", file);
-      return await serviceFactory.ajaxSubmitForm(fd, url, onUploadFileProgress);
+      if (file) {
+        var url = this.prefixUrl + "/upload-file";
+        var fd = new FormData();
+        //   var file = objData.mediaFile.file;
+        //   objData.mediaFile.file = null;
+        fd.append("model", angular.toJson(objData));
+        fd.append("file", file);
+        return await serviceFactory.ajaxSubmitForm(
+          fd,
+          url,
+          onUploadFileProgress
+        );
+      } else if (objData.fileBase64) {
+        this.saveFileStream(objData);
+      }
     };
     var _saveFileStream = async function (objData) {
       var url = this.prefixUrl + "/upload-file-stream";

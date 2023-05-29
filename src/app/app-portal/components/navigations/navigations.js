@@ -30,9 +30,12 @@
         ctrl.associationRequest.orderBy = "Priority";
         ctrl.associationRequest.direction = "Asc";
         ctrl.associationRequest.parentId = ctrl.parentId;
+        await ctrl.loadAssociations();
+        ctrl.loadData();
+      };
+      ctrl.loadAssociations = async () => {
         var getAssociations = await service.getList(ctrl.associationRequest);
         ctrl.associations = getAssociations.data.items;
-        ctrl.loadData();
       };
       ctrl.loadData = async () => {
         var maxPriority = 0;
@@ -66,6 +69,7 @@
         }
         if (ctrl.callback) {
           ctrl.callback({ associations: ctrl.associations });
+          await ctrl.loadAssociations();
         }
       };
       ctrl.removeItem = async (obj) => {
