@@ -146,8 +146,7 @@ app.controller("MixDatabaseDataController", [
       if ($scope.validateDataFile()) {
         $rootScope.isBusy = true;
         var form = document.getElementById("form-portal");
-        var result = await service.import(
-          $scope.mixDatabaseName,
+        var result = await mixDbService.import(
           form["import-data-inp"].files[0]
         );
         if (result.success) {

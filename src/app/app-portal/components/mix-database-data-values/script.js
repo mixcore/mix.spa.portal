@@ -8,6 +8,7 @@ modules.component("mixDatabaseDataValues", {
     mixDatabaseId: "=?",
     parentName: "=?",
     parentId: "=?",
+    guidParentId: "=?",
     header: "=?",
     data: "=?",
     canDrag: "=?",
@@ -54,6 +55,7 @@ modules.component("mixDatabaseDataValues", {
         ctrl.request.name = ctrl.mixDatabaseName;
         ctrl.request.parentName = ctrl.parentName;
         ctrl.request.parentId = ctrl.parentId;
+        ctrl.request.guidParentId = ctrl.guidParentId;
         if (!ctrl.selectedList) {
           ctrl.selectedList = {
             action: "Delete",
@@ -76,9 +78,9 @@ modules.component("mixDatabaseDataValues", {
           ctrl.database.id
         }&mixDatabaseName=${ctrl.database.systemName}&mixDatabaseTitle=${
           ctrl.database.displayName
-        }&dataContentId=default&parentId=${ctrl.parentId || ""}&parentName=${
-          ctrl.parentName || ""
-        }`;
+        }&dataContentId=default&guidParentId=${
+          ctrl.guidParentId || ""
+        }&parentId=${ctrl.parentId || ""}&parentName=${ctrl.parentName || ""}`;
         $scope.$apply();
       };
       ctrl.loadData = async function () {
@@ -147,7 +149,9 @@ modules.component("mixDatabaseDataValues", {
           data.id
         }&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${
           ctrl.mixDatabaseTitle
-        }&parentId=${ctrl.parentId || ""}&parentName=${ctrl.parentName || ""}`;
+        }&guidParentId=${ctrl.guidParentId || ""}&parentId=${
+          ctrl.parentId || ""
+        }&parentName=${ctrl.parentName || ""}`;
         $location.url(url);
       };
 

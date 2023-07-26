@@ -7,6 +7,12 @@
           <h3 class="page-title">
             All Posts (<span ng-bind="data.pagingData.total"></span> items)
           </h3>
+          <a
+            ng-click="syncProducts()"
+            class="btn btn-primary text-white m-0 mb-3 ng-binding ng-scope"
+          >
+            Sync Posts</a
+          >
         </div>
       </div>
     </div>

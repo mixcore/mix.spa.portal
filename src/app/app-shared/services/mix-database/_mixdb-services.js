@@ -27,6 +27,12 @@ appShared.factory("MixDbService", [
       };
       return await this.getRestApiResult(req);
     };
+    var _import = async function (file) {
+      var url = `${this.prefixUrl}/import`;
+      var frm = new FormData();
+      frm.append("file", file);
+      return await this.ajaxSubmitForm(frm, url);
+    };
     var _getSingleByParent = async function (parentType, parentId) {
       var url = `${this.prefixUrl}/get-by-parent/${parentType}/${parentId}`;
       var req = {
@@ -38,6 +44,7 @@ appShared.factory("MixDbService", [
     serviceFactory.initDbName = _initDbName;
     serviceFactory.filter = _filter;
     serviceFactory.export = _export;
+    serviceFactory.import = _import;
     serviceFactory.getSingleByParent = _getSingleByParent;
     return serviceFactory;
   },

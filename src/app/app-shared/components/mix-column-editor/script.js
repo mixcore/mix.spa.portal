@@ -130,15 +130,19 @@
               }
               break;
             case "json":
-              if (
-                ctrl.model[ctrl.column.systemName] &&
-                ctrl.model[ctrl.column.systemName]
-              ) {
-                ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+            case "arrayradio":
+              if (ctrl.model[ctrl.column.systemName]) {
+                if (typeof ctrl.model[ctrl.column.systemName] === "object") {
+                  ctrl.jsonObj = ctrl.model[ctrl.column.systemName];
+                } else {
+                  ctrl.jsonObj = JSON.parse(ctrl.model[ctrl.column.systemName]);
+                  ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
+                }
                 ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
               } else {
                 ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue || "{}");
                 ctrl.jsonContent = JSON.stringify(ctrl.jsonObj, null, "\t");
+                ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
               }
               break;
             case "array":
@@ -152,7 +156,7 @@
                 ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
                 ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
               } else {
-                ctrl.jsonObj = JSON.parse(ctrl.column.defaultValue);
+                ctrl.jsonObj = [];
                 ctrl.arrayContent = JSON.stringify(ctrl.jsonObj, null, "\t");
                 ctrl.model[ctrl.column.systemName] = ctrl.jsonObj;
               }
@@ -268,14 +272,12 @@
         switch (ctrl.column.dataType.toLowerCase()) {
           case "datetime":
             if (ctrl.dateObj) {
-              ctrl.model[ctrl.column.systemName] =
-                ctrl.dateObj.toLocaleString();
+              ctrl.model[ctrl.column.systemName] = ctrl.dateObj.toISOString();
             }
             break;
           case "date":
             if (ctrl.dateObj) {
-              ctrl.model[ctrl.column.systemName] =
-                ctrl.dateObj.toLocaleDateString();
+              ctrl.model[ctrl.column.systemName] = ctrl.dateObj.toISOString();
             }
             break;
           case "time":

@@ -240,6 +240,44 @@ appShared.factory("ApiService", [
         }
       );
     };
+    var _sendPureRequest = async function (req) {
+      if (!req.headers) {
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+      }
+      return $http(req).then(
+        function (resp) {
+          return { success: true, data: resp.data };
+        },
+        async function (error) {
+          if (
+            error.status === 200 ||
+            error.status === 201 ||
+            error.status === 204 ||
+            error.status === 205
+          ) {
+            return {
+              success: true,
+              status: err.status,
+              errors: [error.statusText || error.status],
+            };
+          } else {
+            if (error.data) {
+              return { success: false, errors: [error.data] };
+            } else {
+              return {
+                success: false,
+                errors: [error.statusText || error.status],
+              };
+            }
+          }
+        },
+        function (progress) {
+          console.log("uploading: " + Math.floor(progress) + "%");
+        }
+      );
+    };
     var _ajaxSubmitForm = async function (form, url) {
       var req = {
         method: "POST",
@@ -275,6 +313,7 @@ appShared.factory("ApiService", [
     factory.getPortalMenus = _getPortalMenus;
     factory.updateAuthData = _updateAuthData;
     factory.sendRequest = _sendRequest;
+    factory.sendPureRequest = _sendPureRequest;
     factory.ajaxSubmitForm = _ajaxSubmitForm;
     return factory;
   },

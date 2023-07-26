@@ -48,13 +48,13 @@
         </div>
         <div ng-switch-when="double">
             <!-- Number -->
-            <input class="form-control {{$ctrl.inputClass}}" type="number"
+            <input class="form-control {{$ctrl.inputClass}}" type="number" step="any"
                 ng-model="$ctrl.model[$ctrl.column.systemName]" placeholder="{{$ctrl.displayName}}" />
             <label class="control-label" ng-bind="$ctrl.model[$ctrl.column.systemName] | currency:''"></label>
         </div>
         <div ng-switch-when="currency">
             <!-- Number -->
-            <input class="form-control {{$ctrl.inputClass}}" type="number"
+            <input class="form-control {{$ctrl.inputClass}}" type="text" max="3"
                 ng-model="$ctrl.model[$ctrl.column.systemName]" placeholder="{{$ctrl.displayName}}" />
             <label class="control-label" ng-bind="$ctrl.model[$ctrl.column.systemName] | currency:''"></label>
         </div>
@@ -132,6 +132,15 @@
             <!--Text-->
             <bar-code model="$ctrl.model[$ctrl.column.systemName]"></bar-code>
         </div>
+        <div class="text-muted" ng-switch-when="arrayradio">
+             <json-builder
+                ng-if="$ctrl.jsonObj" 
+                data="$ctrl.jsonObj"
+                edit-mode="'text'"
+                on-update="$ctrl.updateJsonContent(data)"
+            >
+            </json-builder>
+        </div>
         <div class="text-muted" ng-switch-when="json">
              <json-builder
                 ng-if="$ctrl.jsonObj" 
@@ -139,15 +148,13 @@
                 on-update="$ctrl.updateJsonContent(data)"
             >
             </json-builder>
-            <!-- <monaco-editor ng-if="$ctrl.jsonContent" content="$ctrl.jsonContent"
-                update-content="$ctrl.updateJsonContent(content)" ext="'.json'">
-            </monaco-editor> -->
         </div>
         <div class="text-muted" ng-switch-when="array">
             <!--Text-->
             <json-builder
                 ng-if="$ctrl.jsonObj" 
                 data="$ctrl.jsonObj"
+                edit-mode="'text'"
                 on-update="$ctrl.updateJsonContent(data)"
             >
             </json-builder>

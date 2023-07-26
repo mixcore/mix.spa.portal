@@ -1,7 +1,8 @@
 <modal-nav-datas
-  ng-if="$ctrl.data && $ctrl.parentName && $ctrl.parentId"
+  ng-if="$ctrl.data && $ctrl.parentName && ($ctrl.parentId || $ctrl.guidParentId)"
   selected-ids="$ctrl.selectedIds"
   parent-id="$ctrl.parentId"
+  guid-parent-id="$ctrl.guidParentId"
   parent-database-name="$ctrl.parentName"
   mix-database-name="$ctrl.mixDatabaseName"
   select-callback="$ctrl.loadData()"
@@ -148,7 +149,7 @@
                 class="text-black-50 align-middle"
                 title="{{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}"
               >
-                {{item.createdDateTime | utcToLocal:'dd.MM.yy'}}
+                {{item.createdDateTime | utcToLocal:'dd.MM.yy hh:mm a'}}
               </small>
             </div>
             <div class="col-md-3 border-0">

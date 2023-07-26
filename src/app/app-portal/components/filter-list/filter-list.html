@@ -70,6 +70,15 @@
           {{item}}
         </option>
       </select>
+      <input
+        ng-model="$ctrl.request.pageIndex"
+        ng-enter="$ctrl.apply()"
+        type="text"
+        class="form-control"
+        placeholder="Search Columns..."
+        aria-label="Search Columns..."
+        aria-describedby="btnGroupAddon"
+      />
     </div>
   </div>
 

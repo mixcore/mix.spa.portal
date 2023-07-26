@@ -66,6 +66,12 @@
                           aria-label="Actions"
                         >
                           <a
+                            ng-click="execute(item.name)"
+                            class="btn btn-link text-primary"
+                          >
+                            <span class="fa fa-fire"></span>
+                          </a>
+                          <a
                             href="/admin/scheduler/details/{{item.name}}"
                             class="btn btn-link text-primary"
                           >

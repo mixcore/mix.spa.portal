@@ -28,6 +28,9 @@ app.controller("AppSettingsController", [
     $scope.cultures = $rootScope.globalSettings.cultures;
     $scope.settingTypes = [
       "Global",
+      "Log",
+      "RateLimit",
+      "Kiotviet",
       "Authentication",
       "Portal",
       "EPPlus",
@@ -41,6 +44,8 @@ app.controller("AppSettingsController", [
       "Storage",
       "Queue",
       "Payments",
+      "GoogleFirebase",
+      "GoogleCredential",
     ];
     $scope.type = "Global";
     $scope.getAppSettings = async function (type) {

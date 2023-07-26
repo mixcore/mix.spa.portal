@@ -98,6 +98,14 @@ app.controller("SchedulerController", [
         $scope.$apply();
       }
     };
+    $scope.execute = async function (name) {
+      try {
+        $rootScope.isBusy = true;
+        await service.execute(name);
+        $rootScope.isBusy = false;
+        $scope.$apply();
+      } catch {}
+    };
     $scope.updateJobData = function (content) {
       try {
         $scope.schedule.jobData = JSON.parse(content);

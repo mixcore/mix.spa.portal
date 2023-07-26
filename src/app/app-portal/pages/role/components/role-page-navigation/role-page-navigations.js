@@ -1,6 +1,11 @@
 ﻿modules.component("rolePageNav", {
   templateUrl:
     "/mix-app/views/app-portal/pages/role/components/role-page-navigation/role-page-navigations.html",
+  bindings: {
+    prefix: "=",
+    page: "=",
+    callback: "&",
+  },
   controller: [
     "$rootScope",
     "$scope",
@@ -32,9 +37,4 @@
       //};
     },
   ],
-  bindings: {
-    prefix: "=",
-    page: "=",
-    callback: "&",
-  },
 });

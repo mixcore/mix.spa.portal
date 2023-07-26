@@ -142,4 +142,43 @@
       />
     </div>
   </div>
+  <div class="col-12">
+    <div class="input-group">
+      <a
+        ng-click="$ctrl.addMetadataQuery()"
+        class="btn btn-link btn-success text-white"
+      >
+        Add Metadata
+      </a>
+      <a
+        ng-click="$ctrl.clearMetadataQuery()"
+        class="btn btn-link btn-danger text-white"
+      >
+        Clear
+      </a>
+    </div>
+  </div>
+
+  <div class="col-12" ng-repeat="md in  $ctrl.request.metadataQueries">
+    <div class="input-group">
+      <input
+        ng-model="md.fieldName"
+        type="text"
+        class="form-control"
+        placeholder="Type..."
+      />
+      <input
+        ng-model="md.value"
+        type="text"
+        class="form-control"
+        placeholder="Value..."
+        ng-enter="$ctrl.apply()"
+      />
+      <input
+        ng-model="md.isRequired"
+        type="checkbox"
+        placeholder="Metadata Value..."
+      />
+    </div>
+  </div>
 </div>

@@ -38,6 +38,7 @@ app.controller("MixDatabaseController", [
     ];
     $scope.request.orderBy = "CreatedDateTime";
     $scope.request.columns = "id,displayName,systemName,type,createdDatetime";
+    $scope.request.searchColumns = "displayName,systemName";
     $scope.saveDatabase = function () {
       $scope.save($scope.viewmodel);
     };

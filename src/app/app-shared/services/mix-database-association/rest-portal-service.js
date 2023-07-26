@@ -11,7 +11,9 @@ appShared.factory("RestMixAssociationPortalService", [
       parentId,
       childId
     ) => {
-      var url = `${serviceFactory.prefixUrl}/${parentDbName}/${childDbName}/${parentId}/${childId}`;
+      var url = `${serviceFactory.prefixUrl}/${parentDbName}/${childDbName}/${
+        parentId || guidParentId
+      }/${childId}`;
       var req = {
         serviceBase: serviceFactory.serviceBase,
         apiVersion: serviceFactory.apiVersion,
@@ -24,6 +26,7 @@ appShared.factory("RestMixAssociationPortalService", [
       parentDbName,
       childDbName,
       parentId,
+      guidParentId,
       childId
     ) => {
       var url = `${serviceFactory.prefixUrl}/${parentDbName}/${childDbName}/${parentId}/${childId}`;

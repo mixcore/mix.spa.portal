@@ -15,7 +15,13 @@
       ctrl.searchMethods = ["Equal", "Like"];
       ctrl.init = async function () {
         if (!ctrl.arrOrderby) {
-          ctrl.arrOrderby = ["Title", "Priority", "CreatedDateTime", "Status"];
+          ctrl.arrOrderby = [
+            "Title",
+            "Priority",
+            "CreatedDateTime",
+            "LastModified",
+            "Status",
+          ];
         }
         ctrl.request.orderBy = ctrl.request.orderBy || ctrl.arrOrderby[0];
         ctrl.directions = ["Asc", "Desc"];

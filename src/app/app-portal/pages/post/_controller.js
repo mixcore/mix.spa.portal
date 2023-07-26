@@ -43,6 +43,7 @@ app.controller("PostController", [
     $scope.request.searchColumns = "title";
     $scope.request.culture = $rootScope.globalSettings.defaultCulture;
     $scope.request.queries = [];
+    $scope.request.metadataQueries = [];
     $scope.defaultQuery = {
       fieldName: "",
       compareOperator: "Equal",
@@ -86,6 +87,14 @@ app.controller("PostController", [
         compareOperator: operator,
       };
     };
+    $scope.syncProducts = async function () {
+      $rootScope.isBusy = true;
+      let names = $scope.data.items.map((m) => {
+        return m.title;
+      });
+      await service.syncProducts(names);
+      $rootScope.isBusy = false;
+    };
     $scope.filter = async function (pageIndex) {
       $rootScope.isBusy = true;
       if (pageIndex !== undefined) {
@@ -102,7 +111,13 @@ app.controller("PostController", [
       var resp = await service.filter($scope.request);
       if (resp && resp.success) {
         $scope.data = resp.data;
-        $.each($scope.data, function (i, data) {
+        $.each($scope.data.items, function (i, data) {
+          if (data.image) {
+            data.image = `${data.image.substring(
+              0,
+              data.image.lastIndexOf(".")
+            )}-XS.${data.image.substring(data.image.lastIndexOf(".") + 1)}`;
+          }
           $.each($scope.viewmodels, function (i, e) {
             if (e.dataContentId === data.id) {
               data.isHidden = true;

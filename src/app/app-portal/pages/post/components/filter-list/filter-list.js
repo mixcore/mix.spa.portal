@@ -43,6 +43,17 @@
           });
         });
       };
+      ctrl.addMetadataQuery = () => {
+        ctrl.request.metadataQueries.push({
+          fieldName: "",
+          value: "",
+          isRequired: false,
+        });
+      };
+      ctrl.clearMetadataQuery = () => {
+        ctrl.request.metadataQueries = [];
+        ctrl.apply();
+      };
       ctrl.changeLang = function (culture) {
         if (culture) {
           ctrl.selectedCulture = culture;

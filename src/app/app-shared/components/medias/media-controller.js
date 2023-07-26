@@ -52,6 +52,11 @@ appShared.controller("MediaController", [
     $scope.getListSuccessCallback = function () {
       angular.forEach($scope.data.items, function (e) {
         e.isImage = $scope.isImage(e.fullPath);
+        if (e.isImage) {
+          e.fullPath = `${e.fullPath.split(".")[0]}-XXS.${
+            e.fullPath.split(".")[1]
+          }`;
+        }
       });
     };
     $scope.isImage = function (url) {

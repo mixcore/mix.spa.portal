@@ -93,8 +93,7 @@ appShared.factory("CommonService", [
     };
 
     var _genrateSitemap = async function () {
-      var url = "/admin";
-      url += "/sitemap";
+      var url = "/api/v2/rest/shared/sitemap";
       var req = {
         method: "GET",
         url: url,

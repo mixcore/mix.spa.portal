@@ -86,7 +86,7 @@
               "/admin/file/details?folder=" +
               resp.fileFolder +
               "&filename=" +
-              resp.fileName +
+              resp.filename +
               resp.extension;
           } else {
             $rootScope.isBusy = false;

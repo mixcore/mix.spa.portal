@@ -9,6 +9,7 @@
     backUrl: "=?", // string array ( ex: [ 'type1', 'type2' ] )
     showPreview: "=?",
     type: "=?", // array / obj
+    editMode: "=?", // array / obj
     save: "&",
     onUpdate: "&",
   },
@@ -20,7 +21,7 @@
     "ngAppSettings",
     function ($rootScope, $scope, $location, fileService, ngAppSettings) {
       var ctrl = this;
-      ctrl.editMode = "text";
+
       ctrl.file = null;
       ctrl.translate = $rootScope.translate;
       ctrl.mixConfigurations = $rootScope.globalSettings;
@@ -60,6 +61,9 @@
       ctrl.strModel = null;
       ctrl.init = async function () {
         var arr = [];
+        if (!ctrl.editMode) {
+          ctrl.editMode = "json";
+        }
         if (!ctrl.data && ctrl.filename) {
           await ctrl.loadFile();
           ctrl.parseObjToList(ctrl.data, arr);

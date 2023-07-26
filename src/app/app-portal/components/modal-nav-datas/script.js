@@ -4,6 +4,7 @@
     mixDatabaseId: "=?",
     mixDatabaseName: "=?",
     parentDatabaseName: "=?",
+    guidParentId: "=?",
     parentId: "=?",
     parentType: "=?",
     type: "=?",
@@ -41,6 +42,7 @@
       ctrl.$onInit = async function () {
         ctrl.association = {
           parentId: ctrl.parentId,
+          guidParentId: ctrl.guidParentId,
           parentDatabaseName: ctrl.parentDatabaseName,
           childDatabaseName: ctrl.mixDatabaseName,
         };
@@ -63,7 +65,7 @@
       };
       ctrl.select = async (item) => {
         $rootScope.isBusy = true;
-        if (item.isSelected) {
+        if (item.isSelected && (ctrl.parentId || ctrl.guidParentId)) {
           ctrl.association.childId = item.id;
           let result = await associationService.save(ctrl.association);
           if (result.success) {
@@ -77,6 +79,7 @@
             ctrl.parentDatabaseName,
             ctrl.mixDatabaseName,
             ctrl.parentId,
+            ctrl.guidParentId,
             item.id
           );
           $rootScope.handleResponse(result);
@@ -101,6 +104,7 @@
               ctrl.request.queries.push({
                 fieldName: e,
                 value: ctrl.queries[e],
+                compareOperator: 'Like',
               });
             }
           });
@@ -119,7 +123,9 @@
           data.id
         }&mixDatabaseName=${ctrl.mixDatabaseName}&mixDatabaseTitle=${
           ctrl.mixDatabaseTitle
-        }&parentId=${ctrl.parentId || ""}&parentName=${ctrl.parentName || ""}`;
+        }&parentId=${ctrl.parentId || ""}&parentName=${
+          ctrl.parentName || ""
+        }&guidParentId=${ctrl.guidParentId || ""}`;
         $location.url(url);
       };
     },
