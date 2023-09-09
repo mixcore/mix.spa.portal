@@ -565,9 +565,9 @@ gulp.task(
 );
 
 gulp.task("serve", function () {
-  browserSync.init({
-    proxy: "https://localhost:5001/",
-  });
+  //   browserSync.init({
+  //     proxy: "https://localhost:5001/",
+  //   });
   gulp.watch("./app/**/**/*.html", ["portalView-watch"]);
   gulp.watch("./app/**/**/*.js", ["portalJS-watch"]);
   gulp.watch("./app/**/**/*.css", ["portalCSS-watch"]);

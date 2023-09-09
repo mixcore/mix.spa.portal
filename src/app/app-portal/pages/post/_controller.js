@@ -112,12 +112,6 @@ app.controller("PostController", [
       if (resp && resp.success) {
         $scope.data = resp.data;
         $.each($scope.data.items, function (i, data) {
-          if (data.image) {
-            data.image = `${data.image.substring(
-              0,
-              data.image.lastIndexOf(".")
-            )}-XS.${data.image.substring(data.image.lastIndexOf(".") + 1)}`;
-          }
           $.each($scope.viewmodels, function (i, e) {
             if (e.dataContentId === data.id) {
               data.isHidden = true;

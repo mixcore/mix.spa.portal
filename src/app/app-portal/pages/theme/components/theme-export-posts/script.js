@@ -14,7 +14,7 @@
       ctrl.selectAllData = false;
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.$onInit = async () => {
-        ctrl.request.pageSize = null;
+        ctrl.request.pageSize = 1000;
         ctrl.getList();
       };
       ctrl.getList = async (postIndex) => {

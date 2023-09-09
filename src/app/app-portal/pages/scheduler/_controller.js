@@ -16,6 +16,26 @@ app.controller("SchedulerController", [
       "Month",
       "Year",
     ];
+    $scope.templates = {
+      "Mix.Scheduler.Jobs.KeepPoolAliveJob": {
+        domain: "https://example.com",
+      },
+      "Mix.Scheduler.Jobs.PublishScheduledPostsJob": {},
+      "Mix.Scheduler.Jobs.SendMessageQueueJob": {
+        data: {
+          topic: "",
+          action: "",
+          data: {},
+        },
+      },
+      "Mix.Scheduler.Jobs.SendPortalMessageJob": {
+        data: {
+          topic: "",
+          action: "",
+          data: "",
+        },
+      },
+    };
     $scope.schedule = {
       jobData: {
         data: {
@@ -41,6 +61,13 @@ app.controller("SchedulerController", [
       intervalType: "Second",
       repeatCount: null,
     };
+    $scope.updateMessageTemplate = () => {
+      $scope.schedule.jobData = null;
+      setTimeout(() => {
+        $scope.schedule.jobData = $scope.templates[$scope.schedule.jobName];
+        $scope.$apply();
+      }, 200);
+    };
     $scope.init = function () {
       $scope.getTriggers();
       $scope.getJobs();
@@ -62,12 +89,16 @@ app.controller("SchedulerController", [
           $scope.schedule.name = $scope.trigger.name;
           $scope.schedule.jobName = $scope.trigger.jobName;
           $scope.schedule.groupName = $scope.trigger.group;
-          $scope.schedule.interval = $scope.trigger.repeatInterval;
+          //   $scope.schedule.interval = $scope.trigger.repeatInterval;
           $scope.schedule.repeatCount = $scope.trigger.repeatCount;
-          if ($scope.trigger.jobDataMap.data) {
-            $scope.schedule.jobData = JSON.parse(
-              $scope.trigger.jobDataMap.data
-            );
+          if ($scope.trigger.jobDataMap) {
+            if ($scope.trigger.jobDataMap.data) {
+              $scope.schedule.jobData = {
+                data: JSON.parse($scope.trigger.jobDataMap.data),
+              };
+            } else {
+              $scope.schedule.jobData = $scope.trigger.jobDataMap;
+            }
           }
           $rootScope.isBusy = false;
           $scope.$apply();

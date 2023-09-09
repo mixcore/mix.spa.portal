@@ -86,8 +86,8 @@ app.controller("Step1Controller", [
       localDbConnectionString:
         "Server=(localdb)\\MSSQLLocalDB;Initial Catalog=" +
         rand +
-        "-mix-cms.db;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
-      sqliteDbConnectionString: "Data Source=MixContent\\mix-cms.db",
+        "-mix-cms.sqlite;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
+      sqliteDbConnectionString: "Data Source=MixContent\\mix-cms.sqlite",
       localDbName: rand + "-mix-cms",
       databaseServer: "",
       databasePort: "",

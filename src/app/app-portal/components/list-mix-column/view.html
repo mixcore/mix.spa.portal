@@ -239,6 +239,15 @@
                       </div>
                       <div class="row mb-3">
                         <div class="mb-3">
+                          <label class="form-label">
+                            Editor ({{col.columnConfigurations.editor}})
+                          </label>
+                          <mix-select
+                            model="col.columnConfigurations.editor"
+                            options="$ctrl.dataTypes"
+                          ></mix-select>
+                        </div>
+                        <div class="mb-3">
                           <label class="form-label"> Max Length </label>
                           <input
                             type="number"

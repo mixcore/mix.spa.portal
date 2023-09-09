@@ -1,72 +1,90 @@
 <div class="container py-4 w-100">
-    <form id="frm-theme">
-        <div class="text-center mb-4">
-            <a href=""><img src="/mix-app/css/portal/img/mixcore-logo-green.svg" alt="Mixcore CMS" height="36"></a>
-        </div>
-        <div class="card card-md">
-            <!-- <div class="card-body text-center py-4 p-sm-5">
+  <form id="frm-theme">
+    <div class="text-center mb-4">
+      <a href=""
+        ><img
+          src="/mix-app/css/portal/img/mixcore-logo-green.svg"
+          alt="Mixcore CMS"
+          height="36"
+      /></a>
+    </div>
+    <div class="card card-md">
+      <!-- <div class="card-body text-center py-4 p-sm-5">
             <img src="/mix-app/css/portal/img/illustrations/undraw_Setup_wizard_re_nday.svg" height="128" class="mb-n2"
                 height="120" alt="">
             <h1 class="mt-5">Welcome to Mixcore!</h1>
             <p class="text-muted">Let start your dream together!</p>
         </div>
         <div class="hr-text hr-text-center hr-text-spaceless">your data</div> -->
-            <div class="card-body">
-                <!-- /////////////////////////////////////////////////////// -->
-                <div ng-init="init()">
-                    <h1 class="lead mb-5 mt-3">
-                        You can start <strong>Mixcore</strong> with blank theme or with our default
-                        beautiful themes.
-                    </h1>
-                    <!-- <hr> -->
+      <div class="card-body">
+        <!-- /////////////////////////////////////////////////////// -->
+        <div ng-init="init()">
+          <h1 class="lead mb-5 mt-3">
+            You can start <strong>Mixcore</strong> with blank theme or with our
+            default beautiful themes.
+          </h1>
+          <!-- <hr> -->
 
-                    <tabs-v select-callback="selectPane(pane)">
-                        <pane-v header="Mixcore Store">
+          <tabs-v select-callback="selectPane(pane)">
+            <!-- <pane-v header="Mixcore Store">
                             <mix-store install-callback="install(data)"></mix-store>
-                        </pane-v>
-                        <pane-v header="Blank Theme">
-
-                            <h1>Blank Theme</h1>
-                            <p>
-                                Choose this theme only if you want to build your theme from scratch.
-                            </p>
-                        </pane-v>
-                        <pane-v header="Upload your theme">
-                            <api-file form-name="'theme'" posted-file="theme"></api-file>
-                            <small class="form-text text-muted">Mixcore Themes
-                                <a target="_blank" href="https://themes.mixcore.org/">list</a>.</small>
-                        </pane-v>
-                    </tabs-v>
-                    <!-- <div class="teng-disaxt-end">
+                        </pane-v> -->
+            <pane-v header="Blank Theme">
+              <h1>Blank Theme</h1>
+              <p>
+                Choose this theme only if you want to build your theme from
+                scratch.
+              </p>
+            </pane-v>
+            <pane-v header="Upload your theme">
+              <api-file form-name="'theme'" posted-file="theme"></api-file>
+              <small class="form-text text-muted"
+                >Mixcore Themes
+                <a target="_blank" href="https://themes.mixcore.org/">list</a
+                >.</small
+              >
+            </pane-v>
+          </tabs-v>
+          <!-- <div class="teng-disaxt-end">
                         <button bled="themeType ==='custom' && !form['theme'].files.length"
                             class="btn btn-primary" style="min-width: 200px" ng-click="submit()">
                             Continue to my portal <i class="fa fa-angle-right"></i>
                         </button>
                     </div> -->
-                </div>
-                <!-- /////////////////////////////////////////////////////// -->
-            </div>
         </div>
-        <div class="row align-items-center mt-3">
-            <div class="col-4">
-                <div class="progress">
-                    <div class="progress-bar" style="width: 75%" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                        aria-valuemax="100">
-                        <span class="visually-hidden">25% Complete</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="btn-list justify-content-end" ng-if="canContinue">
-                    <!-- <a href="#" class="btn btn-link link-secondary">
+        <!-- /////////////////////////////////////////////////////// -->
+      </div>
+    </div>
+    <div class="row align-items-center mt-3">
+      <div class="col-4">
+        <div class="progress">
+          <div
+            class="progress-bar"
+            style="width: 75%"
+            role="progressbar"
+            aria-valuenow="25"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <span class="visually-hidden">25% Complete</span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="btn-list justify-content-end" ng-if="canContinue">
+          <!-- <a href="#" class="btn btn-link link-secondary">
                         Set up later
                     </a> -->
-                    <button ng-disabled="themeType ==='custom' && !form['theme'].files.length" class="btn btn-primary"
-                        style="min-width: 200px" ng-click="submit()">
-                        Continue
-                    </button>
-                </div>
-            </div>
+          <button
+            ng-disabled="themeType ==='custom' && !form['theme'].files.length"
+            class="btn btn-primary"
+            style="min-width: 200px"
+            ng-click="submit()"
+          >
+            Continue
+          </button>
         </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>

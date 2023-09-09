@@ -213,6 +213,8 @@ appShared.factory("ApiService", [
             return _refreshToken().then(() =>
               _sendRequest(req, skipAuthorize, null, false)
             );
+          } else if (error.status === 401) {
+            window.location.href = "/security/login";
           } else if (
             error.status === 200 ||
             error.status === 201 ||

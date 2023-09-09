@@ -12,7 +12,8 @@
             </small>
         </div>
     </div>
-    <div ng-switch="$ctrl.column.dataType.toLowerCase()" class="col-10" ng-if="$ctrl.isInit">
+    {{$ctrl.column.columnConfigurations.editor}}
+    <div ng-switch="$ctrl.column.columnConfigurations.editor.toLowerCase()" class="col-10" ng-if="$ctrl.isInit">
         <div class="text-muted" ng-switch-default>
             <!--text-->
             <input class="form-control {{$ctrl.inputClass}}" type="text"

@@ -60,6 +60,7 @@
             </div>
             <div ng-switch-when="object">
               <pre
+                style="text-wrap: wrap"
                 class="{{$ctrl.previewObject.data.objClass}}"
                 ng-bind="$ctrl.previewObject.data|json"
               ></pre>

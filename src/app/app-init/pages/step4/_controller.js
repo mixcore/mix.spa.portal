@@ -28,6 +28,7 @@ app.controller("Step4Controller", [
           $rootScope.showErrors(result.errors);
         }
         $rootScope.isBusy = false;
+        $scope.$apply();
       }
     };
   },

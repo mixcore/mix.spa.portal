@@ -42,6 +42,7 @@ app.controller("MixDatabaseController", [
     $scope.saveDatabase = function () {
       $scope.save($scope.viewmodel);
     };
+
     $scope.getSingleSuccessCallback = async function () {
       if (!$scope.defaultAttr) {
         var getDefaultAttr = await databaseColumnService.getDefault();

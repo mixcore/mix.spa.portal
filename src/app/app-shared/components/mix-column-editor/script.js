@@ -117,7 +117,7 @@
       ctrl.initData = async function () {
         setTimeout(() => {
           ctrl.initDefaultValue();
-          switch (ctrl.column.dataType.toLowerCase()) {
+          switch (ctrl.column.columnConfigurations.editor.toLowerCase()) {
             case "datetime":
             case "date":
             case "time":
@@ -216,7 +216,7 @@
           ctrl.model[ctrl.column.systemName] == null ||
           ctrl.model[ctrl.column.systemName] == undefined
         ) {
-          switch (ctrl.column.dataType.toLowerCase()) {
+          switch (ctrl.column.columnConfigurations.editor.toLowerCase()) {
             case "datetime":
             case "date":
             case "time":
@@ -269,7 +269,7 @@
         // $scope.$apply();
       };
       ctrl.updateValue = function () {
-        switch (ctrl.column.dataType.toLowerCase()) {
+        switch (ctrl.column.columnConfigurations.editor.toLowerCase()) {
           case "datetime":
             if (ctrl.dateObj) {
               ctrl.model[ctrl.column.systemName] = ctrl.dateObj.toISOString();

@@ -66,6 +66,9 @@ function BaseHub(scope) {
     // Create a function that the hub can call to broadcast messages.
 
     scope.connection.on("receive_message", (msg) => {
+      if (msg && !angular.isObject(msg) && msg.indexOf("{") == 0) {
+        msg = JSON.parse(msg);
+      }
       scope.receiveMessage(msg);
     });
     scope.connection.onreconnected((connectionId) => {

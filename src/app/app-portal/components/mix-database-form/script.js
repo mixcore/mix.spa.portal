@@ -29,6 +29,7 @@ modules.component("mixDatabaseForm", {
     "$rootScope",
     "$scope",
     "$routeParams",
+    "$location",
     "RestMixAssociationPortalService",
     "RestMixDatabasePortalService",
     "MixDbService",
@@ -37,6 +38,7 @@ modules.component("mixDatabaseForm", {
       $rootScope,
       $scope,
       $routeParams,
+      $location,
       associationService,
       databaseService,
       service,
@@ -72,7 +74,7 @@ modules.component("mixDatabaseForm", {
             ) {
               authService.refreshToken().then(async () => {
                 $scope.startConnection(
-                  "portalHub",
+                  "mixDbCommandHub",
                   authService.authentication.accessToken
                 );
               });
@@ -82,16 +84,40 @@ modules.component("mixDatabaseForm", {
       };
       ctrl.hubCreateData = function () {
         let msg = {
-          connectionId: "",
+          connectionId: ctrl.hubRequest.from.connectionId,
           mixDbName: ctrl.mixDatabaseName,
           requestedBy: "",
           body: ctrl.mixDataContent,
         };
-        ctrl.connection.invoke("CreateData", JSON.stringify(msg));
+        if (!ctrl.mixDataContent.id) {
+          ctrl.connection.invoke("CreateData", JSON.stringify(msg));
+        } else {
+          ctrl.connection.invoke("UpdateData", JSON.stringify(msg));
+        }
         $rootScope.showMessage("Request Sent", "success");
       };
       ctrl.receiveMessage = function (msg) {
-        $rootScope.showMessage("Success", "success");
+        switch (msg.action) {
+          case "MyConnection":
+            ctrl.hubRequest.from = msg.data;
+            break;
+          case "NewMessage":
+            if (msg.type == "Success") {
+              $rootScope.showMessage(msg.title, "success");
+              ctrl.back();
+            }
+            if (msg.type == "Error") {
+              $rootScope.showErrors([msg.title]);
+            }
+            break;
+        }
+      };
+      ctrl.back = function () {
+        if (ctrl.backUrl) {
+          $location.url(ctrl.backUrl);
+        } else {
+          window.history.back();
+        }
       };
       ctrl.translate = (keyword) => {
         return $rootScope.translate(keyword);
