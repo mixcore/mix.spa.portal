@@ -49,6 +49,9 @@
       ctrl.previousId = null;
       ctrl.options = [];
       ctrl.$onInit = async function () {
+        ctrl.editor = ctrl.column.columnConfigurations.editor
+          ? ctrl.column.columnConfigurations.editor.toLowerCase()
+          : ctrl.column.dataType.toLowerCase();
         if (!ctrl.createUrl && ctrl.model && ctrl.column.referenceId) {
           ctrl.buildCreateUrl();
         }

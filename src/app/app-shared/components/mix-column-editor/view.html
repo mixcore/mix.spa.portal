@@ -8,12 +8,11 @@
         <h6 class="control-label m-0 text-primary" ng-bind="$ctrl.translate($ctrl.column.displayName)"></h6>
         <div>
             <small class="text-muted">
-                {{$ctrl.translate($ctrl.column.systemName)}}: {{$ctrl.translate($ctrl.column.dataType)}}
+                {{$ctrl.translate($ctrl.column.systemName)}}: {{$ctrl.translate($ctrl.editor)}}
             </small>
         </div>
     </div>
-    {{$ctrl.column.columnConfigurations.editor}}
-    <div ng-switch="$ctrl.column.columnConfigurations.editor.toLowerCase()" class="col-10" ng-if="$ctrl.isInit">
+    <div ng-switch="$ctrl.editor" class="col-10" ng-if="$ctrl.editor">
         <div class="text-muted" ng-switch-default>
             <!--text-->
             <input class="form-control {{$ctrl.inputClass}}" type="text"
