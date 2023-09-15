@@ -1,12 +1,12 @@
 ﻿app.component("themeExportPosts", {
-  templateUrl :
-      "/mix-app/views/app-portal/pages/theme/components/theme-export-posts/view.html",
-  controller : [
+  templateUrl:
+    "/mix-app/views/app-portal/pages/theme/components/theme-export-posts/view.html",
+  controller: [
     "$rootScope",
     "$scope",
     "ngAppSettings",
     "BaseRestService",
-    function($rootScope, $scope, ngAppSettings, baseRestService) {
+    function ($rootScope, $scope, ngAppSettings, baseRestService) {
       var ctrl = this;
       var service = angular.copy(baseRestService);
       service.initService("/rest/mix-portal", "mix-post");
@@ -38,25 +38,40 @@
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
         post.isExportData = selected && post.isExportData;
-        let contentIds = post.contents.map(function(obj) { return obj.id; });
+        let contentIds = post.contents.map(function (obj) {
+          return obj.id;
+        });
         ctrl.exportThemeDto.content.postIds = ctrl.updateArray(
-            ctrl.exportThemeDto.content.postIds, [ post.id ], selected);
+          ctrl.exportThemeDto.content.postIds,
+          [post.id],
+          selected,
+        );
         ctrl.exportThemeDto.content.postContentIds = ctrl.updateArray(
-            ctrl.exportThemeDto.content.postContentIds, contentIds, selected);
+          ctrl.exportThemeDto.content.postContentIds,
+          contentIds,
+          selected,
+        );
         if (!selected) {
           ctrl.selectData(post, false);
         }
       };
       ctrl.selectData = (post, selected) => {
         ctrl.selectAllData = ctrl.selectAllData && selected;
-        let contentIds = post.contents.map(function(obj) { return obj.id; });
+        let contentIds = post.contents.map(function (obj) {
+          return obj.id;
+        });
         ctrl.exportThemeDto.associations.postIds = ctrl.updateArray(
-            ctrl.exportThemeDto.associations.postIds, [ post.id ], selected);
-        ctrl.exportThemeDto.associations.postContentIds =
-            ctrl.updateArray(ctrl.exportThemeDto.associations.postContentIds,
-                             contentIds, selected);
+          ctrl.exportThemeDto.associations.postIds,
+          [post.id],
+          selected,
+        );
+        ctrl.exportThemeDto.associations.postContentIds = ctrl.updateArray(
+          ctrl.exportThemeDto.associations.postContentIds,
+          contentIds,
+          selected,
+        );
       };
-      ctrl.updateArray = function(src, arr, selected) {
+      ctrl.updateArray = function (src, arr, selected) {
         if (selected) {
           src = ctrl.unionArray(src, arr);
         } else {
@@ -64,18 +79,20 @@
         }
         return src;
       };
-      ctrl.selectAll = function(arr) {
-        angular.forEach(arr, function(e) {
+      ctrl.selectAll = function (arr) {
+        angular.forEach(arr, function (e) {
           ctrl.selectContent(e, ctrl.selectAllContent);
           ctrl.selectData(e, ctrl.selectAllData);
           e.isActived = ctrl.selectAllContent;
           e.isExportData = ctrl.selectAllData;
         });
       };
-      ctrl.unionArray = (a, b) => { return [...new Set([...a, ...b ]) ]; };
+      ctrl.unionArray = (a, b) => {
+        return [...new Set([...a, ...b])];
+      };
     },
   ],
-  bindings : {
-    exportThemeDto : "=",
+  bindings: {
+    exportThemeDto: "=",
   },
 });

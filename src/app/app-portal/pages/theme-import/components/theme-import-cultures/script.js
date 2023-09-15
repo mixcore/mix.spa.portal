@@ -1,16 +1,18 @@
 ﻿app.component("themeImportCultures", {
-  templateUrl :
-      "/mix-app/views/app-portal/pages/theme-import/components/theme-import-cultures/view.html",
-  controller : [
+  templateUrl:
+    "/mix-app/views/app-portal/pages/theme-import/components/theme-import-cultures/view.html",
+  controller: [
     "$rootScope",
     "$scope",
     "ngAppSettings",
-    function($rootScope, $scope, ngAppSettings) {
+    function ($rootScope, $scope, ngAppSettings) {
       var ctrl = this;
       var service = $rootScope.getRestService("culture");
       ctrl.selectAllContent = false;
       ctrl.request = angular.copy(ngAppSettings.request);
-      ctrl.$onInit = async () => { ctrl.getList(); };
+      ctrl.$onInit = async () => {
+        ctrl.getList();
+      };
       ctrl.getList = async (cultureIndex) => {
         if (cultureIndex !== undefined) {
           ctrl.request.cultureIndex = cultureIndex;
@@ -32,29 +34,36 @@
         ctrl.selectAllContent = ctrl.selectAllContent && selected;
         ctrl.selectAllData = ctrl.selectAllData && selected;
         culture.isImportData = selected && culture.isImportData;
-        ctrl.updateContent([ culture.id ], selected);
+        ctrl.updateContent([culture.id], selected);
       };
-      ctrl.updateContent = function(arr, selected) {
+      ctrl.updateContent = function (arr, selected) {
         if (selected) {
-          ctrl.importThemeDto.cultureIds =
-              ctrl.unionArray(ctrl.importThemeDto.cultureIds, arr);
+          ctrl.importThemeDto.cultureIds = ctrl.unionArray(
+            ctrl.importThemeDto.cultureIds,
+            arr,
+          );
         } else {
           ctrl.importThemeDto.cultureIds =
-              ctrl.importThemeDto.cultureIds.filter((m) => arr.indexOf(m) < 0);
+            ctrl.importThemeDto.cultureIds.filter((m) => arr.indexOf(m) < 0);
           ctrl.updateData(arr, false);
         }
       };
-      ctrl.selectAll = function(arr) {
+      ctrl.selectAll = function (arr) {
         // ctrl.selectedList.data = [];
-        var ids = arr.map(function(obj) { return obj.id; });
+        var ids = arr.map(function (obj) {
+          return obj.id;
+        });
         ctrl.updateContent(ids, ctrl.selectAllContent);
-        angular.forEach(arr,
-                        function(e) { e.isActived = ctrl.selectAllContent; });
+        angular.forEach(arr, function (e) {
+          e.isActived = ctrl.selectAllContent;
+        });
       };
-      ctrl.unionArray = (a, b) => { return [...new Set([...a, ...b ]) ]; };
+      ctrl.unionArray = (a, b) => {
+        return [...new Set([...a, ...b])];
+      };
     },
   ],
-  bindings : {
-    importThemeDto : "=",
+  bindings: {
+    importThemeDto: "=",
   },
 });

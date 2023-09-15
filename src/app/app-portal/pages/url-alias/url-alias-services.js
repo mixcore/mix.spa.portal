@@ -4,15 +4,15 @@ app.factory("UrlAliasService", [
   "ApiService",
   "CommonService",
   "BaseRestService",
-  function($rootScope, apiService, commonService, baseService) {
+  function ($rootScope, apiService, commonService, baseService) {
     var serviceFactory = Object.create(baseService);
     serviceFactory.initService("/rest/mix-portal", "mix-url-alias");
 
-    var _updateInfos = async function(pages) {
+    var _updateInfos = async function (pages) {
       var req = {
-        method : "POST",
-        url : this.prefixUrl + "/update-infos",
-        data : JSON.stringify(pages),
+        method: "POST",
+        url: this.prefixUrl + "/update-infos",
+        data: JSON.stringify(pages),
       };
       return await apiService.sendRequest(req);
     };
