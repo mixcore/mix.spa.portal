@@ -8,6 +8,7 @@ app.controller("MixDatabaseController", [
   "RestMixDatabaseDataPortalService",
   "RestMixDatabaseColumnPortalService",
   "RestMixDatabasePortalService",
+  "RestMixDatabaseContextService",
   function (
     $scope,
     $rootScope,
@@ -16,7 +17,8 @@ app.controller("MixDatabaseController", [
     $routeParams,
     databaseDataService,
     databaseColumnService,
-    databaseService
+    databaseService,
+    dbContextService
   ) {
     BaseRestCtrl.call(
       this,
@@ -44,6 +46,15 @@ app.controller("MixDatabaseController", [
     };
 
     $scope.getSingleSuccessCallback = async function () {
+      $scope.viewmodel.mixDatabaseContextId = $routeParams.mixDatabaseContextId;
+      if ($scope.viewmodel.mixDatabaseContextId) {
+        var resp = await dbContextService.getSingle([
+          $scope.viewmodel.mixDatabaseContextId,
+        ]);
+        if (resp.success) {
+          $scope.dbContext = resp.data;
+        }
+      }
       if (!$scope.defaultAttr) {
         var getDefaultAttr = await databaseColumnService.getDefault();
         if (getDefaultAttr.success) {
@@ -124,6 +135,10 @@ app.controller("MixDatabaseController", [
           $scope.$apply();
         }
       }
+    };
+
+    $scope.back = function () {
+      window.history.back();
     };
   },
 ]);

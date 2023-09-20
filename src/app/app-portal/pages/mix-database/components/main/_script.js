@@ -23,11 +23,15 @@
             true,
             true
           );
+          if (ctrl.schema) {
+            ctrl.model.systemName = `${ctrl.schema}_${ctrl.model.systemName}`;
+          }
         }
       };
     },
   ],
   bindings: {
     model: "=",
+    schema: "=?",
   },
 });

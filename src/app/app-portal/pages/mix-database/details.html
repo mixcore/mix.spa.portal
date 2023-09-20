@@ -17,7 +17,7 @@
           <div class="card-body">
             <div class="btn-toolbar d-flex mb-3" role="group" aria-label="">
               <div class="btn-group me-2">
-                <a href="/admin/mix-database/list" class="btn btn-light me-1">
+                <a ng-click="back()" class="btn btn-light me-1">
                   <i class="fa fa-chevron-left"></i>
                 </a>
               </div>
@@ -227,7 +227,8 @@
             <statuses status="viewmodel.status"></statuses>
             <div class="mb-3"></div>
 
-            <mix-database-main model="viewmodel"> </mix-database-main>
+            <mix-database-main schema="dbContext.schema" model="viewmodel">
+            </mix-database-main>
           </div>
         </div>
       </nav>

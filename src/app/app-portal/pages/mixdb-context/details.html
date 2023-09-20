@@ -148,14 +148,18 @@
                 <div class="col">
                   <label class="form-label">Connection String</label>
                   <div class="input-group">
-                    <input
-                      type="text"
+                    <textarea
                       class="form-control"
                       ng-model="viewmodel.connectionString"
-                    />
+                    ></textarea>
                   </div>
                 </div>
               </div>
+
+              <mixdb-context-databases
+                ng-if="viewmodel"
+                model="viewmodel"
+              ></mixdb-context-databases>
             </div>
           </div>
         </form>
