@@ -145,7 +145,7 @@ appShared.controller("VideoCallController", [
       $scope.request.uid = $scope.user.info.id;
       $scope.request.data = $scope.user.info;
       $scope.message.connection = $scope.user.info;
-      $scope.connection.invoke("join", $scope.request);
+      $scope.connection.invoke("join", window.location.host);
     };
     $scope.toggle = function () {
       $scope.isHide = !$scope.isHide;

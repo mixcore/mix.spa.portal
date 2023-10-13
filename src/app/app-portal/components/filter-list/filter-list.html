@@ -141,18 +141,20 @@
       </select>
     </div>
   </div>
-
   <div class="col-12">
     <div class="input-group">
       <input
-        type="date"
+        type="datetime-local"
         data-date-format="dd.MM.yyyy"
         ng-model="$ctrl.dateRange.fromDate"
         class="form-control"
         ng-change="$ctrl.updateDate()"
       />
+    </div>
+
+    <div class="col-12">
       <input
-        type="date"
+        type="datetime-local"
         data-date-format="dd.MM.yyyy"
         ng-model="$ctrl.dateRange.toDate"
         class="form-control"

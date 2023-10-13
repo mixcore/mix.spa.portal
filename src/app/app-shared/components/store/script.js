@@ -32,7 +32,7 @@ sharedComponents.component("mixStore", {
         },
         {
           title: "Mix Portal App",
-          value: "mixcorePortalApp",
+          value: "mixApplicationPackage",
         },
       ];
       ctrl.init = async function () {

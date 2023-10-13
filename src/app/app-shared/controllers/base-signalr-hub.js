@@ -21,7 +21,7 @@ function BaseHub(scope) {
   };
 
   scope.connect = function () {
-    scope.connection.invoke("join", scope.player);
+    scope.connection.invoke("join", window.location.host);
   };
   scope.sendGroupMessage = function () {
     scope.connection.invoke(
@@ -72,6 +72,7 @@ function BaseHub(scope) {
       scope.receiveMessage(msg);
     });
     scope.connection.onreconnected((connectionId) => {
+      scope.connect();
       if (scope.onConnected) {
         scope.onConnected();
       }
@@ -79,7 +80,7 @@ function BaseHub(scope) {
     scope.connection
       .start()
       .then(function () {
-        console.log("connection started", scope.connection);
+        scope.connect();
         if (scope.onConnected) {
           scope.onConnected();
         }
@@ -103,6 +104,7 @@ function BaseHub(scope) {
       scope.connection
         .start()
         .then(function () {
+          scope.connect();
           if (scope.onConnected) {
             scope.onConnected();
           }

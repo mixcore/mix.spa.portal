@@ -31,7 +31,7 @@ app.controller("MixApplicationController", [
     $scope.current = null;
     $scope.themeRequest = angular.copy(ngAppSettings.request);
     $scope.themeRequest.orderBy = "createdDatetime";
-    $scope.themeRequest.mixDatabaseName = "mixcorePortalApp";
+    $scope.themeRequest.mixDatabaseName = "mixApplicationPackage";
     $scope.themeRequest.queries = [
       { fieldName: "mixcoreVersion", value: "2.0.1" },
     ];
@@ -120,7 +120,7 @@ app.controller("MixApplicationController", [
       }
     };
     $scope.select = function (theme) {
-      $scope.viewmodel.packateFilePath = theme.additionalData.source;
+      $scope.viewmodel.packateFilePath = theme.additionalData.builtSourceCode;
       $scope.current = theme;
       // TODO: verify user - theme to enable install
       $scope.current.canInstall = true;

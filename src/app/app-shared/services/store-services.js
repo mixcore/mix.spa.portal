@@ -3,11 +3,17 @@ appShared.factory("StoreService", [
   "BaseRestService",
   function (baseService) {
     var serviceFactory = Object.create(baseService);
-    serviceFactory.init("", null, "en-us", "https://market.mixcore.net", "v2");
+    serviceFactory.init(
+      "",
+      null,
+      "en-us",
+      "https://dev-mixcore.azurewebsites.net",
+      "v2"
+    );
     // Define more service methods here
     var _getThemes = async function (objData) {
       var data = serviceFactory.parseQuery(objData);
-      var url = "/rest/post-content/filter";
+      var url = "/rest/mixcore/post-content/filter";
       var req = {
         serviceBase: this.serviceBase,
         apiVersion: this.apiVersion,
