@@ -46,6 +46,19 @@ app.controller("MixApplicationController", [
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
 
+    $scope.generateBaseRoute = (forceRename) => {
+      if (
+        forceRename ||
+        ($scope.viewmodel.displayName && !$scope.viewmodel.baseRoute)
+      ) {
+        $scope.viewmodel.baseRoute = `/app/${$rootScope.generateKeyword(
+          $scope.viewmodel.displayName,
+          "-",
+          false,
+          true
+        )}`;
+      }
+    };
     $scope.init = async function () {
       $scope.startConnection("mixThemeHub", null, (err) => {
         console.log(err);
@@ -82,7 +95,9 @@ app.controller("MixApplicationController", [
           if (index >= 0) {
             $scope.progress = progress;
             if (progress == 100) {
-              $scope.installStatus = "Installing";
+              setTimeout(() => {
+                $location.url("/admin/mix-application/list");
+              }, 200);
             }
             $scope.$apply();
           }
@@ -128,6 +143,16 @@ app.controller("MixApplicationController", [
     };
     $scope.back = function () {
       $scope.viewMode = "list";
+    };
+    $scope.validate = function () {
+      if ($scope.viewmodel.baseRoute.indexOf("/app/") != 0) {
+        $rootScope.showErrors(['baseRoute must start with "/app/"']);
+        return false;
+      }
+      return true;
+    };
+    $scope.updateAppSettings = (data) => {
+      $scope.viewmodel.appSettings = data;
     };
   },
 ]);
