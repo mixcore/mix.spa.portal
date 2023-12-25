@@ -13,6 +13,7 @@
     function ($rootScope, $scope, service, viewmodel, connectionManager) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
+      $scope.host = `${$rootScope.globalSettings.domain}/${ctrl.host}`;
       ctrl.mixConfigurations = $rootScope.globalSettings;
 
       ctrl.init = function () {

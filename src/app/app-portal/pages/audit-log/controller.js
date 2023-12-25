@@ -26,6 +26,7 @@ app.controller("AuditLogController", [
       service
     );
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     authService.fillAuthData();
     $scope.request.status = null;
     $scope.messages = [];

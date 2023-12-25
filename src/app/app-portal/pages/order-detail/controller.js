@@ -24,6 +24,7 @@ app.controller("OrderDetailController", [
       service
     );
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     $scope.progress = 0;
     $scope.viewMode = "list";
     $scope.current = null;

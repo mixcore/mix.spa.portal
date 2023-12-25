@@ -26,6 +26,7 @@ app.controller("TemplateController", [
       service
     );
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     $scope.folderTypes = [
       "Masters",
       "Layouts",

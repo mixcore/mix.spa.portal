@@ -25,7 +25,7 @@ appShared.factory("ApiService", [
         accessToken: _authentication.accessToken,
       };
       if (_authentication) {
-        var apiUrl = `/rest/mix-account/user/renew-token`;
+        var apiUrl = `/rest/auth/user/renew-token`;
         var req = {
           method: "POST",
           url: apiUrl,
@@ -294,7 +294,7 @@ appShared.factory("ApiService", [
     var _logOut = async function () {
       localStorageService.remove("authorizationData");
       window.top.location.href = "/security/login";
-      //   var apiUrl = "/rest/mix-account/logout";
+      //   var apiUrl = "/rest/auth/logout";
       //   var req = {
       //     method: "GET",
       //     url: apiUrl,

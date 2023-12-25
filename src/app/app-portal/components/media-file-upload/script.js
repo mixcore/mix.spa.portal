@@ -5,7 +5,7 @@
     header: "=?",
     accept: "=?",
     src: "=",
-    srcUrl: "=",
+    srcUrl: "=?",
     fileModel: "=?",
     type: "=?",
     auto: "=?",
@@ -30,12 +30,14 @@
         if (ctrl.src) {
           ctrl.srcUrl = angular.copy(ctrl.src);
         }
-        if (!ctrl.srcUrl) {
-          ctrl.srcUrl = image_placeholder;
-        }
-        ctrl.isImage = ctrl.srcUrl
-          .toLowerCase()
-          .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp)/g);
+        // if (!ctrl.srcUrl) {
+        //   ctrl.srcUrl = image_placeholder;
+        // }
+        ctrl.isImage =
+          ctrl.srcUrl != undefined &&
+          ctrl.srcUrl
+            .toLowerCase()
+            .match(/([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png|svg|webp)/g);
         ctrl.maxHeight = ctrl.maxHeight || "200px";
         ctrl.id = Math.floor(Math.random() * 100);
         if (ctrl.uploadOptions) {

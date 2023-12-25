@@ -18,7 +18,7 @@
             request="request"
             callback="getList(pageIndex)"
             create-url="'/admin/mix-application/create'"
-            create-text="'Create Tenant'"
+            create-text="'Create Application'"
           ></filter-list>
         </div>
       </nav>
@@ -105,9 +105,9 @@
                 </td>
                 <td>
                   <a
-                    href="{{item.primaryDomain}}"
+                    href="{{item.baseHref}}"
                     target="_blank"
-                    ng-bind="item.primaryDomain"
+                    ng-bind="item.baseHref"
                   ></a>
                 </td>
                 <td class="text-secondary">

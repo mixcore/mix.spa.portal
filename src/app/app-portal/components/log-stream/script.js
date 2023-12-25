@@ -9,6 +9,7 @@ app.controller("LogStreamController", [
   "AuthService",
   function ($scope, $rootScope, authService) {
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     authService.fillAuthData();
     $scope.keyword = "";
     $scope.newMsgCount = 0;

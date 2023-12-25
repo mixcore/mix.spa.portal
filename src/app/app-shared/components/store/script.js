@@ -23,6 +23,7 @@ sharedComponents.component("mixStore", {
       var ctrl = this;
       ctrl.categories = [];
       BaseHub.call(this, ctrl);
+      $scope.host = `${$rootScope.globalSettings.domain}/${ctrl.host}`;
       ctrl.current = null;
       ctrl.viewMode = "list";
       ctrl.packageTypes = [

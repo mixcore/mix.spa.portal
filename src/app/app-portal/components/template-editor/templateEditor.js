@@ -38,6 +38,7 @@
       );
       var ctrl = this;
       BaseHub.call(this, ctrl);
+      $scope.host = `${$rootScope.globalSettings.domain}/${ctrl.host}`;
       ctrl.themeRequest = angular.copy(ngAppSettings.request);
       ctrl.request = angular.copy(ngAppSettings.request);
       ctrl.isNull = false;

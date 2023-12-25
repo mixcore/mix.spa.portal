@@ -26,6 +26,7 @@ app.controller("MixApplicationController", [
       service
     );
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     $scope.progress = 0;
     $scope.viewMode = "list";
     $scope.current = null;
@@ -38,7 +39,7 @@ app.controller("MixApplicationController", [
     $scope.request.columns = [
       "id",
       "displayName",
-      "baseRoute",
+      "baseHref",
       "detailUrl",
       "createdDateTime",
       "createdBy",
@@ -46,12 +47,12 @@ app.controller("MixApplicationController", [
     $scope.canDrag =
       $scope.request.orderBy !== "Priority" || $scope.request.direction !== "0";
 
-    $scope.generateBaseRoute = (forceRename) => {
+    $scope.generateBaseHref = (forceRename) => {
       if (
         forceRename ||
-        ($scope.viewmodel.displayName && !$scope.viewmodel.baseRoute)
+        ($scope.viewmodel.displayName && !$scope.viewmodel.baseHref)
       ) {
-        $scope.viewmodel.baseRoute = `/app/${$rootScope.generateKeyword(
+        $scope.viewmodel.baseHref = `/app/${$rootScope.generateKeyword(
           $scope.viewmodel.displayName,
           "-",
           false,
@@ -66,15 +67,17 @@ app.controller("MixApplicationController", [
       $scope.onConnected = () => {
         $scope.joinRoom("Theme");
       };
-      await $scope.getThemes();
+      if (!$scope.viewmodel.id) {
+        await $scope.getThemes();
+      }
     };
     $scope.install = async function () {
       $rootScope.isBusy = true;
       $scope.installStatus = "Downloading";
       var resp = await service.install($scope.viewmodel);
       if (resp && resp.success) {
-        $scope.data = resp.data;
         $rootScope.isBusy = false;
+        $("html, body").animate({ scrollTop: "0px" }, 500);
         $scope.$apply();
       } else {
         if (resp) {
@@ -84,8 +87,31 @@ app.controller("MixApplicationController", [
         $scope.$apply();
       }
     };
-    $scope.receiveMessage = function (resp) {
-      let msg = JSON.parse(resp);
+    $scope.restore = async function () {
+      $rootScope.isBusy = true;
+      $scope.installStatus = "Restoring";
+      $("html, body").animate({ scrollTop: "0px" }, 500);
+      var resp = await service.restore({
+        appId: $scope.viewmodel.id,
+        packageFilePath: $scope.viewmodel.appSettings.activePackage,
+      });
+      if (resp && resp.success) {
+        $scope.data = resp.data;
+        $rootScope.isBusy = false;
+        $scope.installStatus = "Finished";
+        $scope.status = "";
+        $scope.$apply();
+      } else {
+        if (resp) {
+          $rootScope.showErrors(resp.errors || ["Failed"]);
+        }
+        $rootScope.isBusy = false;
+        $scope.installStatus = "";
+        $scope.status = "";
+        $scope.$apply();
+      }
+    };
+    $scope.receiveMessage = function (msg) {
       switch (msg.action) {
         case "Downloading":
           var index = $scope.data.items.findIndex(
@@ -94,17 +120,19 @@ app.controller("MixApplicationController", [
           var progress = Math.round(msg.message);
           if (index >= 0) {
             $scope.progress = progress;
-            if (progress == 100) {
-              setTimeout(() => {
-                $location.url("/admin/mix-application/list");
-              }, 200);
-            }
             $scope.$apply();
           }
           break;
-
+        case "Finished":
+          $scope.installStatus = "Finished";
+          $location.url("/admin/mix-application/list");
+          $scope.$apply();
+          break;
         default:
-          console.log(msg);
+          setTimeout(() => {
+            $scope.status = msg.message;
+            $scope.$apply();
+          }, 200);
           break;
       }
     };
@@ -135,7 +163,9 @@ app.controller("MixApplicationController", [
       }
     };
     $scope.select = function (theme) {
-      $scope.viewmodel.packateFilePath = theme.additionalData.builtSourceCode;
+      $scope.viewmodel.packageFilePath = theme.additionalData.builtSourceCode;
+      $scope.viewmodel.displayName = theme.additionalData.title;
+      $scope.generateBaseHref(true);
       $scope.current = theme;
       // TODO: verify user - theme to enable install
       $scope.current.canInstall = true;
@@ -145,8 +175,8 @@ app.controller("MixApplicationController", [
       $scope.viewMode = "list";
     };
     $scope.validate = function () {
-      if ($scope.viewmodel.baseRoute.indexOf("/app/") != 0) {
-        $rootScope.showErrors(['baseRoute must start with "/app/"']);
+      if ($scope.viewmodel.baseHref.indexOf("/mixapp/") != 0) {
+        $rootScope.showErrors(['baseHref must start with "/mixapp/"']);
         return false;
       }
       return true;

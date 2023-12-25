@@ -9,7 +9,7 @@ app.factory("RegisterServices", [
     var usersServiceFactory = {};
     var apiUrl = "/admin/";
     var _register = async function (user) {
-      var apiUrl = "/rest/mix-account/user/register";
+      var apiUrl = "/rest/auth/user/register";
       var req = {
         method: "POST",
         url: apiUrl,

@@ -9,7 +9,7 @@
     function ($rootScope, $scope) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
-
+      $scope.host = `${$rootScope.globalSettings.domain}/${ctrl.host}`;
       ctrl.user = {
         loggedIn: false,
         connection: {},

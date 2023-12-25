@@ -3,6 +3,7 @@ appShared.controller("VideoCallController", [
   "$scope",
   function ($scope) {
     BaseHub.call(this, $scope);
+    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     $scope.user = {
       loggedIn: false,
       info: {},

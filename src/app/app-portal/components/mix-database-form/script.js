@@ -46,6 +46,7 @@ modules.component("mixDatabaseForm", {
     ) {
       var ctrl = this;
       BaseHub.call(this, ctrl);
+      $scope.host = `${$rootScope.globalSettings.domain}/${ctrl.host}`;
       ctrl.isBusy = false;
       ctrl.attributes = [];
       ctrl.isInRole = $rootScope.isInRole;

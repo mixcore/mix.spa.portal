@@ -34,7 +34,7 @@
         </div>
         <h3 class="text-primary" ng-if="$ctrl.progress">Loaded {{$ctrl.progress}}%</h3>
     </div>
-    <div ng-if="!$ctrl.isImage && $ctrl.srcUrl !== '/'">
+    <div ng-if="!$ctrl.isImage && $ctrl.srcUrl">
         <a href="{{$ctrl.srcUrl}}" target="_blank">View</a>
     </div>
 </div>

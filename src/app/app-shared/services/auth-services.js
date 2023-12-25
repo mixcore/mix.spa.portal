@@ -23,14 +23,14 @@ appShared.factory("AuthService", [
       _logOut();
 
       return $http
-        .post("/rest/mix-account/user/register", registration)
+        .post("/rest/auth/user/register", registration)
         .then(function (response) {
           return response;
         });
     };
 
     var _forgotPassword = async function (data) {
-      var apiUrl = "/rest/mix-account/user/forgot-password";
+      var apiUrl = "/rest/auth/user/forgot-password";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -41,7 +41,7 @@ appShared.factory("AuthService", [
     };
 
     var _resetPassword = async function (data) {
-      var apiUrl = "/rest/mix-account/user/reset-password";
+      var apiUrl = "/rest/auth/user/reset-password";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -52,7 +52,7 @@ appShared.factory("AuthService", [
     };
 
     var _getExternalLoginProviders = async function (data) {
-      var apiUrl = "/rest/mix-account/user/get-external-login-providers";
+      var apiUrl = "/rest/auth/user/get-external-login-providers";
       var req = {
         method: "GET",
         url: apiUrl,
@@ -70,7 +70,7 @@ appShared.factory("AuthService", [
         ReturnUrl: "",
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/rest/mix-account/user/login";
+      var apiUrl = "/rest/auth/user/login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -119,7 +119,7 @@ appShared.factory("AuthService", [
         externalAccessToken: loginData.accessToken,
       };
       var message = cryptoService.encryptAES(JSON.stringify(data));
-      var apiUrl = "/rest/mix-account/user/external-login";
+      var apiUrl = "/rest/auth/user/external-login";
       var req = {
         method: "POST",
         url: apiUrl,
@@ -144,7 +144,7 @@ appShared.factory("AuthService", [
       localStorageService.remove("authorizationData");
       window.top.location.href = "/security/login";
 
-      //     var apiUrl = "/rest/mix-account/logout";
+      //     var apiUrl = "/rest/auth/logout";
       //   var req = {
       //     method: "GET",
       //     url: apiUrl,
