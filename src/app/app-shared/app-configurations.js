@@ -196,6 +196,7 @@ appShared.run([
     $rootScope.translator = translatorService;
     $rootScope.errors = [];
     $rootScope.breadCrumbs = [];
+    $rootScope.globalSettings = localStorageService.get("globalSettings");
     $rootScope.message = {
       title: "",
       content: "",
