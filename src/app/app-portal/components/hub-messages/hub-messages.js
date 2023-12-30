@@ -10,7 +10,7 @@ app.controller("HubMessagesController", [
   "AuthService",
   function ($scope, $rootScope, authService) {
     BaseHub.call(this, $scope);
-    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
+
     authService.fillAuthData();
     $scope.newMsgCount = 0;
     $scope.messages = [];

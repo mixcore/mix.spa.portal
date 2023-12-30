@@ -135,11 +135,6 @@ modules.component("mixDatabaseForm", {
           });
           ctrl.mixDataContent = getData.data;
           if (ctrl.mixDataContent) {
-            ctrl.mixDataContent.intParentId = ctrl.intParentId;
-            ctrl.mixDataContent.guidParentId = ctrl.guidParentId;
-            ctrl.mixDataContent.parentType = ctrl.parentType;
-            // ctrl.mixDatabaseId = ctrl.mixDataContent.mixDatabaseId;
-            // ctrl.mixDatabaseName = ctrl.mixDataContent.mixDatabaseName;
             ctrl.mixDatabaseTitle =
               ctrl.mixDatabaseTitle ||
               $routeParams.mixDatabaseTitle ||
@@ -170,31 +165,37 @@ modules.component("mixDatabaseForm", {
           //   await ctrl.loadDefaultModel();
           ctrl.isBusy = false;
         }
-        if ($routeParams.parentId && $routeParams.parentName) {
-          var getAssociation = await associationService.getAssociation(
-            $routeParams.parentName,
-            ctrl.mixDatabaseName,
-            $routeParams.parentId,
-            ctrl.mixDataContent.id
-          );
-          if (getAssociation.success) {
-            ctrl.association = getAssociation.data;
-          } else {
-            ctrl.association = {
-              parentId: $routeParams.parentId,
-              parentDatabaseName: $routeParams.parentName,
-              childDatabaseName: ctrl.mixDatabaseName,
-            };
-          }
-          var parentIdNameFieldName = `${$routeParams.parentName
-            .charAt(0)
-            .toLowerCase()}${
-            $routeParams.parentName.slice(1) || $routeParams.parentName
-          }Id`;
-          if (!ctrl.mixDataContent[parentIdNameFieldName]) {
-            ctrl.mixDataContent[parentIdNameFieldName] = $routeParams.parentId;
-          }
+        if ($routeParams.parentId) {
+          ctrl.mixDataContent.parentId = $routeParams.parentId;
+          ctrl.mixDataContent.parentDatabaseName = $routeParams.parentName;
+          ctrl.mixDataContent.childDatabaseName = ctrl.mixDatabaseName;
         }
+        // TODO: refactor db relationship
+        // if ($routeParams.parentId && $routeParams.parentName) {
+        //   var getAssociation = await associationService.getAssociation(
+        //     $routeParams.parentName,
+        //     ctrl.mixDatabaseName,
+        //     $routeParams.parentId,
+        //     ctrl.mixDataContent.id
+        //   );
+        //   if (getAssociation.success) {
+        //     ctrl.association = getAssociation.data;
+        //   } else {
+        //     ctrl.association = {
+        //       parentId: $routeParams.parentId,
+        //       parentDatabaseName: $routeParams.parentName,
+        //       childDatabaseName: ctrl.mixDatabaseName,
+        //     };
+        //   }
+        //   var parentIdNameFieldName = `${$routeParams.parentName
+        //     .charAt(0)
+        //     .toLowerCase()}${
+        //     $routeParams.parentName.slice(1) || $routeParams.parentName
+        //   }Id`;
+        //   if (!ctrl.mixDataContent[parentIdNameFieldName]) {
+        //     ctrl.mixDataContent[parentIdNameFieldName] = $routeParams.parentId;
+        //   }
+        // }
       };
 
       ctrl.reload = async function () {
@@ -205,8 +206,12 @@ modules.component("mixDatabaseForm", {
           ctrl.mixDataContent = ctrl.selectedList.data[0];
           ctrl.mixDataContent.mixDatabaseId = ctrl.mixDatabaseId;
           ctrl.mixDataContent.mixDatabaseName = ctrl.mixDatabaseName;
-          ctrl.mixDataContent.intParentId = ctrl.intParentId;
-          ctrl.mixDataContent.guidParentId = ctrl.guidParentId;
+          if (ctrl.parentId) {
+            ctrl.mixDataContent.parentId = ctrl.parentId;
+          }
+          if (ctrl.guidParentId) {
+            ctrl.mixDataContent.parentId = ctrl.guidParentId;
+          }
           ctrl.mixDataContent.parentType = ctrl.parentType;
         }
       };

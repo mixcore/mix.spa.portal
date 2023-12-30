@@ -11,6 +11,7 @@ modules.component("listMixColumn", {
   controller: [
     "$rootScope",
     "$scope",
+    "$routeParams",
     "ngAppSettings",
     "RestMixRelationshipPortalService",
     "RestMixDatabasePortalService",
@@ -18,6 +19,7 @@ modules.component("listMixColumn", {
     function (
       $rootScope,
       $scope,
+      $routeParams,
       ngAppSettings,
       relationshipService,
       databaseService,
@@ -35,6 +37,7 @@ modules.component("listMixColumn", {
       };
       ctrl.$onInit = async function () {
         ctrl.dataTypes = $rootScope.globalSettings.dataTypes;
+        ctrl.request.mixDatabaseContextId = $routeParams.mixDatabaseContextId;
         ctrl.databases = await databaseService.getList(ctrl.request);
         var getDefaultAttr = await service.getDefault();
         if (getDefaultAttr.success) {

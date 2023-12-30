@@ -71,7 +71,7 @@ app.controller("UserController", [
     };
     $scope.loadAdditionalData = async function () {
       mixDbService.initDbName("sysUserData");
-      const getData = await mixDbService.getSingleByParent(
+      const getData = await mixDbService.getSingleByGuidParent(
         "User",
         $scope.activedUser.id
       );

@@ -41,11 +41,20 @@ appShared.factory("MixDbService", [
       };
       return await this.getRestApiResult(req);
     };
+    var _getSingleByGuidParent = async function (parentType, parentId) {
+      var url = `${this.prefixUrl}/get-by-guid-parent/${parentType}/${parentId}`;
+      var req = {
+        method: "GET",
+        url: url,
+      };
+      return await this.getRestApiResult(req);
+    };
     serviceFactory.initDbName = _initDbName;
     serviceFactory.filter = _filter;
     serviceFactory.export = _export;
     serviceFactory.import = _import;
     serviceFactory.getSingleByParent = _getSingleByParent;
+    serviceFactory.getSingleByGuidParent = _getSingleByGuidParent;
     return serviceFactory;
   },
 ]);

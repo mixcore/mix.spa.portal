@@ -23,7 +23,6 @@ app.controller("AppPortalController", [
     localStorageService
   ) {
     BaseHub.call(this, $scope);
-    $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
     $scope.isInit = false;
     $scope.pageTagName = "";
     $scope.pageTagTypeName = "";

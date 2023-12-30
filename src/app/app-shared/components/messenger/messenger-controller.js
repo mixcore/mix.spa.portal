@@ -24,7 +24,7 @@ appShared.controller("MessengerController", [
     $scope.loadMsgButton = function () {};
     $scope.init = function () {
       BaseHub.call(this, $scope);
-      $scope.host = `${$rootScope.globalSettings.domain}/${$scope.host}`;
+
       authService.fillAuthData().then(() => {
         $scope.user.loggedIn = true;
         $scope.user.info = {
